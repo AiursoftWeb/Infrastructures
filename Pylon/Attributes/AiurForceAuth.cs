@@ -14,13 +14,13 @@ namespace Aiursoft.Pylon.Attributes
         private string _preferController { get; set; } = null;
         private string _preferAction { get; set; } = null;
         private bool? _justTry { get; set; } = false;
-        private bool _PreferPageSet { get; set; } = false;
+        private bool _preferPageSet { get; set; } = false;
         private bool _register { get; set; } = false;
 
         private bool _hasAPreferPage => (true
             && !string.IsNullOrEmpty(_preferController)
             && !string.IsNullOrEmpty(_preferAction))
-            || _PreferPageSet;
+            || _preferPageSet;
 
         private string _preferPage
         {
@@ -44,7 +44,7 @@ namespace Aiursoft.Pylon.Attributes
             _preferController = preferController;
             _preferAction = preferAction;
             _justTry = justTry ? true as bool? : null;
-            _PreferPageSet = true;
+            _preferPageSet = true;
             _register = register;
         }
 

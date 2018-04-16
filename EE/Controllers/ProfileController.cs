@@ -47,7 +47,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Courses(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByNameAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -91,10 +91,10 @@ namespace Aiursoft.EE.Controllers
                 _dbContext.Subscriptions.Remove(sub);
                 await _dbContext.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Subscriptions), new { id = user.Id });
+            return RedirectToAction(nameof(Subscriptions), new { id = user.UserName });
         }
 
-        public async Task<IActionResult> Followings(string id)//Viewing user id
+        public async Task<IActionResult> Followings(string id)//Viewing user name
         {
             var user = await _userManager.FindByNameAsync(id);
             if (user == null)
@@ -116,7 +116,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Followers(string id)
         {
-            var user = await _userManager.FindByNameAsync(id);
+            var user = await _userManager.FindByNameAsync(id);//Viewing user name
             if (user == null)
             {
                 return NotFound();

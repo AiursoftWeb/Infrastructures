@@ -1,9 +1,8 @@
 ﻿@model Aiursoft.EE.Models.ProfileViewModels.SharedLeftContent
-
 <div class="col-md-3" style="max-width:250px;">
     <div class="card mt-3 mb-3">
         <a class="card-body" href="@Values.AccountServerAddress/Account/Avatar">
-            <img src="@Model.HeadImgUrl" id="changeimage" data-toggle="tooltip" data-placement="bottom" title="Click to change avatar." />
+            <img src="@Model.HeadImgUrl?w=183&h=183" style="width:180px;height:183px;" data-toggle="tooltip" data-placement="bottom" title="Click to change avatar." />
         </a>
         <div class="card-footer">
             <h5 class="text-center">@Model.UserName</h5>

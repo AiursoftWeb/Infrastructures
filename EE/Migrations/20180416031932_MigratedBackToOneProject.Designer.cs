@@ -11,9 +11,10 @@ using System;
 namespace Aiursoft.EE.Migrations
 {
     [DbContext(typeof(EEDbContext))]
-    partial class EEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180416031932_MigratedBackToOneProject")]
+    partial class MigratedBackToOneProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
