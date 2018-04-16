@@ -16,3 +16,4 @@ bundle.js
 appsettings.Production.json
 appsettings.Development.json
 *.log
+CDN/fonts/
