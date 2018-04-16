@@ -1,0 +1,48 @@
+﻿@model Aiursoft.Developer.Models.FilesViewModels.DeleteFileViewModel
+@{
+    ViewData["Title"] = "Delete" + Model.FileName;
+    Layout = "_AppLayout";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Files" asp-action="Index">Files</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong>Caution!</strong> You are about to delete "@Model.FileName"! If you are confirmed to continue, you will lose this file. This process is not recoverable!
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-trash ico"></i>
+            Delete File
+        </div>
+        <div class="card-body">
+            <div class="col-xs-12">
+                <form asp-controller="Files" asp-action="DeleteFile" method="post">
+                    <input type="hidden" asp-for="FileId" />
+                    <div class="box-content bordered danger">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FileName"></label>
+                                    <input asp-for="FileName" readonly="readonly" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12 margin-top-30">
+                                <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">Back to files</a>
+                                <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">Confirm to delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿@model Aiursoft.Pylon.Models.API.OAuthViewModels.AuthorizeConfirmViewModel
+@{
+    ViewData["Title"] = "Authorize Confirm";
+}
+
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Authorize Confirm</div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" style="width:100px;height:100px;" src="@(Model.UserIcon)?w=100&h=100">
+            </div>
+            <div class="text-center mt-4 mb-5">
+                <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
+                <p>Do you want to use your identity to sign in </p>
+                <p><strong>@Html.DisplayFor(t => t.AppName)</strong>?</p>
+            </div>
+            <p>@Html.DisplayFor(t => t.AppName) has following permissions:</p>
+            <ul>
+                @if (Model.ViewOpenId)
+                {
+                    <li><label asp-for="ViewOpenId"></label></li>
+                }
+                @if (Model.ViewPhoneNumber)
+                {
+                    <li><label asp-for="ViewPhoneNumber"></label></li>
+                }
+                @if (Model.ChangePhoneNumber)
+                {
+                    <li><label asp-for="ChangePhoneNumber"></label></li>
+                }
+                @if (Model.ConfirmEmail)
+                {
+                    <li><label asp-for="ConfirmEmail"></label></li>
+                }
+                @if (Model.ChangeBasicInfo)
+                {
+                    <li><label asp-for="ChangeBasicInfo"></label></li>
+                }
+                @if (Model.ChangePassword)
+                {
+                    <li><label asp-for="ChangePassword"></label></li>
+                }
+            </ul>
+            <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post">
+                <input asp-for="AppId" type="hidden" />
+                <input asp-for="ToRedirect" type="hidden" />
+                <input asp-for="State" type="hidden" />
+                <input asp-for="Scope" type="hidden" />
+                <input asp-for="ResponseType" type="hidden" />
+                <p>
+                    <a asp-action="Authorize" asp-controller="OAuth"
+                       asp-route-redirect_uri="@Model.ToRedirect"
+                       asp-route-state="@Model.State"
+                       asp-route-appid="@Model.AppId"
+                       asp-route-scope="@Model.Scope"
+                       asp-route-response_type="@Model.ResponseType"
+                       asp-route-forceConfirm="true">
+                        Click here
+                    </a>to switch to another account.
+                </p>
+
+                <div class="row">
+                    <div class="col-md-4 mt-3">
+                        <button class="btn btn-block btn-success" data-disable-with="Processing..." type="submit">Allow</button>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">Deny</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

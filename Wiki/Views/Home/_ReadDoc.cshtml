@@ -1,0 +1,22 @@
+@model Aiursoft.Wiki.Models.WikiViewModel
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Values.ProjectName Wiki Center</li>
+        <li class="breadcrumb-item">@Model.CurrentCollection.CollectionTitle</li>
+        <li class="breadcrumb-item active">@Model.CurrentArticle.ArticleTitle</li>
+    </ol>
+    <article>
+        <div class="markdown-body">@Html.Raw(Model.RenderedContent)</div>
+    </article>
+    <div class="mb-3 mt-3">
+        <a class="btn btn-info" href="@Configuration["GitHubEditPath"]@Model.CurrentCollection.CollectionTitle/@(Model.CurrentArticle.ArticleTitle).md" target="_blank">
+            <i class="fa fa-github"></i>
+            Edit in Github
+        </a>
+        <a class="btn btn-success" href="javascript:$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fa fa-caret-up"></i>
+            Back to top
+        </a>
+    </div>
+</div>

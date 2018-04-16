@@ -1,0 +1,61 @@
+﻿@model Aiursoft.Developer.Models.FilesViewModels.UploadFileViewModel
+@{
+    ViewData["Title"] = "Upload new file";
+    Layout = "_AppLayout";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Files" asp-action="Index">Files</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-upload"></i>
+            Upload File To @Model.BucketName
+        </div>
+        <div class="card-body">
+            <div class="col-xs-12">
+                <form class="box-content" asp-controller="Files" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="AppId" />
+                    <input type="hidden" asp-for="BucketId" />
+                    <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
+                    <p class="help margin-top-10">Only 1000Mb max.</p>
+                    <div class="form-group">
+                        <label asp-for="AliveDays"></label>
+                        <input class="form-control" asp-for="AliveDays" type="number" placeholder="Enter the alive time (days) of the file..." />
+                        <span asp-validation-for="AliveDays" class="text-danger"></span>
+                    </div>
+                    <div class="margin-top-30">
+                        <button type="submit" data-disable-with="Uploading..." class="btn btn-primary">Upload</button>
+                        <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">Back to files</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link href="@Values.CdnServerAddress/node_modules/dropify/dist/css/dropify.css" rel="stylesheet">
+}
+@section js{
+    <script src="@Values.CdnServerAddress/node_modules/dropify/dist/js/dropify.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropify').dropify();
+        });
+    </script>
+}

@@ -1,0 +1,92 @@
+﻿@model Aiursoft.Developer.Models.FilesViewModels.ViewFilesViewModel
+@{
+    ViewData["Title"] = "All files";
+    Layout = "_AppLayout";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Files" asp-action="Index">Files</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-database ico"></i>
+            Files of @Model.BucketName (Top 200)
+        </div>
+        <div class="card-body">
+            <div class="col-xs-12">
+                <table class="table table-striped datatable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Size(Kb)</th>
+                            <th>Downloads</th>
+                            <th>Deadline</th>
+                            <th>Download</th>
+                            <th>Danger Zone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var file in Model.AllFiles)
+                        {
+                            <tr>
+                                <td>@file.FileKey</td>
+                                <td>@file.RealFileName</td>
+                                <td>@string.Format("{0:N}", Math.Round(d: (decimal)file.JFileSize / 1024, decimals: 2))</td>
+                                <td>@file.DownloadTimes</td>
+                                <td>@((file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0)).ToShortDateString())</td>
+                                @if (Model.OpenToRead)
+                                {
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <a href="@file.GetInternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    More
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="@file.GetInternetPath" target="_blank">Open</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.GetInternetPath">Copy link</a>
+                                                    <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">Get One-time link</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="btn-group">
+                                                <a class="btn btn-warning waves-effect waves-light" href="@file.GetInternetPath?sd=true" target="_blank">Download</a>
+                                                <a class="btn btn-info waves-effect waves-light" href="@file.GetInternetPath" target="_blank">Open</a>
+                                                <a class="btn btn-success waves-effect waves-light" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.GetInternetPath">Copy link</a>
+                                            </div>*@
+                                    </td>
+                                }
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <a class="btn btn-danger waves-effect waves-light" asp-controller="Files" asp-action="DeleteFile" asp-route-id="@file.FileKey">Delete</a>
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" href="@file.GetInternetPath" target="_blank">Rename</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="mt-3">
+                    <a asp-controller="Files" asp-action="UploadFile" asp-route-id="@Model.BucketId" class="btn btn-success">Upload new file</a>
+                    <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId" class="btn btn-info">Back to App</a>
+                    <a asp-controller="Bucket" asp-action="Index" class="btn btn-secondary">Back to All buckets</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

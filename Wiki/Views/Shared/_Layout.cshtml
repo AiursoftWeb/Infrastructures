@@ -1,0 +1,110 @@
+﻿@model Aiursoft.Wiki.Models.WikiViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@Values.ProjectName - Document Center</title>
+
+    <link rel="icon" type="image/x-icon" href="@Values.CdnServerAddress/favicon.ico">
+    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@Values.CdnServerAddress/dist/AiurDashboard.min.css" rel="stylesheet">
+    @RenderSection("css", required: false)
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">@Values.ProjectName Wiki Center</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                @foreach (var collection in Model.Collections)
+                {
+                    <li class="nav-item @(Model.CurrentCollection.CollectionId==collection.CollectionId?"active":"")">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti@(collection.CollectionId)" data-parent="#exampleAccordion">
+                            <i class="fa fa-fw fa-sitemap"></i>
+                            <span class="nav-link-text">@collection.CollectionTitle</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="collapseMulti@(collection.CollectionId)">
+                            @foreach (var article in collection.Articles)
+                            {
+                                <li>
+                                    <a href="/ReadDoc/@collection.CollectionTitle/@(article.ArticleTitle).md">@article.ArticleTitle</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Values.WikiServerAddress" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name))?.HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown02">
+                            <a class="dropdown-item" href="@Values.AccountServerAddress">Settings</a>
+                            <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
+                        </div>
+                    </li>
+                }
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </li>
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                            <i class="fa fa-fw fa-sign-out"></i>Sign in
+                        </a>
+                    </li>
+                }
+            </ul>
+            <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        @RenderBody()
+        <footer class="sticky-footer">
+            <div class="ml-3">
+                <small>
+                    <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+                        {
+                            Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
+                            Path = Context.Request.Path
+                        }))">Language(语言)</a>
+                </small> |
+                <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
+            </div>
+        </footer>
+
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
+        <script src="@Values.CdnServerAddress/dist/AiurDashboard.min.js"></script>
+        @RenderSection("Scripts", required: false)
+    </div>
+</body>
+</html>

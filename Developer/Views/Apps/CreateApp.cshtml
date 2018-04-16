@@ -1,0 +1,97 @@
+﻿@model Aiursoft.Developer.Models.AppsViewModels.CreateAppViewModel
+@{
+    ViewData["Title"] = "Create New App";
+    Layout = "_AppLayout";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a asp-controller="Apps" asp-action="AllApps">All Apps</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="ModelOnly"></div>
+        </div>
+    }
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-bar-chart"></i>
+            Create new app
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-8 my-auto">
+                    <form asp-controller="Apps" asp-action="CreateApp" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="AppName"></label>
+                            <input asp-for="AppName" type="text" class="form-control" placeholder="Enter your app name...">
+                            <span asp-validation-for="AppName" class="text-danger"></span>
+                            <small id="emailHelp" class="form-text text-muted">Your app name will be shown when calling API.</small>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppDescription"></label>
+                            <textarea class="form-control" asp-for="AppDescription" rows="3" placeholder="Enter a short description about your app..."></textarea>
+                            <span asp-validation-for="AppDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppPlatform"></label>
+                            <select class="form-control" asp-for="AppPlatform">
+                                <option value="0">Cross Platform</option>
+                                <option value="1">Android</option>
+                                <option value="2">iOS</option>
+                                <option value="3">Windows Desktop</option>
+                                <option value="4">Windows UWP</option>
+                                <option value="5">Linux</option>
+                                <option value="6">Mac OS</option>
+                                <option value="7">Web \ HTML \ PWA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppCategory"></label>
+                            <select class="form-control" asp-for="AppCategory">
+                                <option value="0">Development</option>
+                                <option value="1">App for @Values.ProjectName</option>
+                                <option value="2">App for pages</option>
+                                <option value="3">Books</option>
+                                <option value="4">Business</option>
+                                <option value="5">Communication</option>
+                                <option value="6">Education</option>
+                                <option value="7">Entertainment</option>
+                                <option value="8">Fashion</option>
+                                <option value="9">Finance</option>
+                                <option value="10">Food &amp; Drink</option>
+                                <option value="11">Game</option>
+                            </select>
+                        </div>
+                        <label>Upload your app icon</label>
+                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="/images/appdefaulticon.png" />
+                        <p class="small text-muted">Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg.</p>
+
+                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary mt-3">Create</button>
+                        <button type="reset" class="btn btn-danger mt-3">Clear</button>
+                        <a class="btn btn-info mt-3" asp-controller="Apps" asp-action="AllApps">Back to list</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link href="@Values.CdnServerAddress/node_modules/dropify/dist/css/dropify.css" rel="stylesheet">
+}
+@section js{
+    <script src="@Values.CdnServerAddress/node_modules/dropify/dist/js/dropify.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropify').dropify();
+        });
+    </script>
+}

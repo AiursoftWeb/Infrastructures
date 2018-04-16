@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewData["Title"] - @Values.ProjectName Developer Center</title>
+    <link rel="icon" type="image/x-icon" href="@Values.CdnServerAddress/favicon.ico">
+    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@Values.CdnServerAddress/dist/AiurMarket.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="@Values.WWWServerAddress">Aiursoft</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Learn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Downloads</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Samples</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Values.WikiServerAddress" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="#">OAuth</a>
+                            <a class="dropdown-item" href="#">OSS</a>
+                            <a class="dropdown-item" href="#">Message Queue</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
+                </ul>
+                <div class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="@Values.WikiServerAddress" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <a class="dropdown-item" asp-controller="Apps" asp-action="Index">Dashboard</a>
+                                    <a class="dropdown-item" href="@Values.AccountServerAddress">Settings</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                    Sign in
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                    Sign up
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    
+        @RenderBody()
+    
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <ul class="bd-footer-links">
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Statement</a></li>
+                <li><a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
+                <li><a href="/docs/4.0/about/history/">Company</a></li>
+            </ul>
+            <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
+        </div>
+    </footer>
+
+    <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
+    <script src="@Values.CdnServerAddress/dist/AiurMarket.min.js"></script>
+    @RenderSection("js", required: false)
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.SecurityViewModel
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "Security";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="Index">Management Center</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Well done!</strong> You have successfully updated your profile.
+        </div>
+    }
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="col-md-6">
+    <div class="card mb-3">
+        <div class="card-header">
+            Change Password
+        </div>
+        <div class="card-body">
+            <div class="row">
+                    <form asp-controller="Account" asp-action="Security" method="post" class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="OldPassword"></label>
+                            <input asp-for="OldPassword" type="password" class="form-control">
+                            <span asp-validation-for="OldPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NewPassword"></label>
+                            <input asp-for="NewPassword" type="password" class="form-control">
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RepeatPassword"></label>
+                            <input asp-for="RepeatPassword" type="password" class="form-control">
+                            <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+                        </div>
+                        <button type="submit" data-disable-with="Changing..." class="btn btn-danger">Change Password</button>
+                        <button type="reset" class="btn btn-primary">Clear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

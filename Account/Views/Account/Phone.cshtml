@@ -1,0 +1,86 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.PhoneViewModel
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "Phone";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="Index">Management Center</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Well done!</strong> You have successfully updated your phone number.
+        </div>
+    }
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                Bind Phone
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <form asp-controller="Account" asp-action="Unbind" method="post" class="col-md-12">
+                        @if (Model.PhoneNumberConfirmed)
+                        {
+                            <div class="form-group">
+                                <label asp-for="CurrentPhoneNumber"></label>
+                                <input asp-for="CurrentPhoneNumber" type="text" disabled="disabled" class="form-control">
+                            </div>
+                            <input data-disable-with="Unbinding..." type="submit" value="Unbind" class="btn btn-danger">
+                        }
+                        else
+                        {
+                            <p class="text-danger">You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below.</p>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                Change Phone number
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <form asp-controller="Account" asp-action="Phone" method="post" class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="NewPhoneNumber"></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <select class="custom-select">
+                                        <option selected>+86</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                    </select>
+                                </div>
+                                <input asp-for="NewPhoneNumber" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="NewPhoneNumber" class="text-danger"></span>
+                        </div>
+                        <button type="submit" data-disable-with="Sending..." class="btn btn-success">Send verification passcode</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

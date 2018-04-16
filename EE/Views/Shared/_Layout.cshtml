@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html ng-app="ee">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Aiursoft.EE</title>
+    <link rel="icon" type="image/x-icon" href="@Values.CdnServerAddress/favicon.ico">
+    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@Values.CdnServerAddress/dist/AiurMarket.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Aiursoft EE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <form class="form-inline ml-3" asp-controller="Home" asp-action="Search" method="get">
+                    <input class="form-control" type="search" name="word" placeholder="Search in EE">
+                    <button class="sr-only" data-disable-with="Searching..." type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav mr-auto ml-3">
+                    <li class="nav-item"><a class="nav-link" href="#">Learn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Live</a></li>
+                </ul>
+                <div class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" asp-controller="Course" asp-action="Create">Course</a>
+                            </div>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown mr-5">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <p class="nav-text-muted">Signed in as @((await UserManager.FindByNameAsync(User.Identity.Name)).NickName)</p>
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Overview" asp-route-id="@User.Identity.Name">Your profile</a>
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">Your subscription</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Values.AccountServerAddress">Settings</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                    Sign in
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                    Sign up
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <ul class="bd-footer-links">
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Statement</a></li>
+                <li><a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
+                <li><a href="#">Company</a></li>
+            </ul>
+            <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
+        </div>
+    </footer>
+    <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
+    <script src="@Values.CdnServerAddress/dist/AiurMarket.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

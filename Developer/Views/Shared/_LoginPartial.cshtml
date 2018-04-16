@@ -1,0 +1,20 @@
+﻿
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="dropdown">
+        <a class="dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" href="" data-toggle="dropdown">Hello @((await UserManager.FindByNameAsync(User.Identity.Name)).NickName)!<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">Settings</li>
+            <li><a asp-controller="Apps" asp-action="Index">Dashboard</a></li>
+            <li><a href="@(new AiurUrl(Values.AccountServerAddress))">Account Settings</a></li>
+            <li class="dropdown-header">Account</li>
+            <li><a href="javascript:$('#logoutForm').submit()">Log out</a></li>
+        </ul>
+    </li>
+    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+}
+else
+{
+    <li><a asp-controller="Auth" asp-action="GoAuth">Log in</a></li>
+}

@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Aiursoft.EE.Models
+{
+    public class Course
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool Finished { get; set; } = false;
+        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public double Price { get; set; } = 0;
+        public bool DisplayOwnerInfo { get; set; }
+
+        [InverseProperty(nameof(Chapter.Course))]
+        public IEnumerable<Chapter> Chapters { get; set; }
+
+        [InverseProperty(nameof(Subscription.Course))]
+        public IEnumerable<Subscription> Subscribers { get; set; }
+
+        public string OwnerId { get; set; }
+        [ForeignKey(nameof(OwnerId))]
+        public EEUser Owner { get; set; }
+    }
+}

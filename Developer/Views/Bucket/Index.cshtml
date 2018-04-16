@@ -1,0 +1,71 @@
+﻿@model Aiursoft.Developer.Models.BucketViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "All Buckets";
+    Layout = "_AppLayout";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Bucket" asp-action="Index">Buckets</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox ico"></i>
+            All Buckets Of Object Storage Service
+        </div>
+        <div class="card-body">
+            <div class="col-xs-12">
+                <table class="table table-striped datatable">
+                    <thead>
+                        <tr>
+                            <th>Bucket ID</th>
+                            <th>Bucket Name</th>
+                            <th>Files count</th>
+                            <th>Open to read</th>
+                            <th>Open to upload</th>
+                            <th style="width: 460px">Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var buc in Model.AllBuckets)
+                        {
+                            <tr>
+                                <td>@buc.BucketId</td>
+                                <td>@buc.BucketName</td>
+                                <td>@buc.FileCount</td>
+                                <td>
+                                    <div class="switch success">
+                                        <input type="checkbox" asp-for="@buc.OpenToRead" readonly="readonly">
+                                        <label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="switch warning">
+                                        <input type="checkbox" asp-for="@buc.OpenToUpload" readonly="readonly">
+                                        <label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-secondary waves-effect waves-light">Edit</a>
+                                        <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger waves-effect waves-light">Delete</a>
+                                        <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info waves-effect waves-light">View Files</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col-md-12 margin-top-30">
+                    <a asp-controller="Bucket" asp-action="CreateBucket" class="btn btn-success">Create New Bucket</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

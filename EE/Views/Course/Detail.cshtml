@@ -1,0 +1,73 @@
+﻿@model Aiursoft.EE.Models.CourseViewModels.DetailViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+<ol class="breadcrumb mt-4">
+    <li class="breadcrumb-item">
+        <a asp-controller="Apps" asp-action="Index">Aiursoft EE</a>
+    </li>
+    <li class="breadcrumb-item active">
+        <a asp-controller="Apps" asp-action="AllApps">@ViewContext.RouteData.Values["controller"].ToString()</a>
+    </li>
+    <li class="breadcrumb-item active">@ViewContext.RouteData.Values["action"].ToString()</li>
+</ol>
+<div class="row">
+    <div class="col-sm-6">
+        <h1>@Model.Name</h1>
+    </div>
+    <div class="col-sm-6 mb-3 text-right">
+        @if (!Model.Subscribed)
+        {
+            <form id="sub-form" asp-controller="Course" asp-action="Subscribe" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+            </form>
+            <a href="javascript:$('#sub-form').submit()" class="btn btn-primary">Subscribe</a>
+        }
+        else
+        {
+            <form id="unsub-form" asp-controller="Course" asp-action="UnSubscribe" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+            </form>
+            <a href="javascript:$('#unsub-form').submit()" class="btn btn-danger">UnSubscribe</a>
+        }
+        <a href="#" class="btn btn-success">Share</a>
+        <a href="#" class="btn btn-warning">Contact</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-bar-chart"></i>
+                @Model.Name
+            </div>
+            <div class="card-body">
+                <h3>Course Description</h3>
+                <p>@Html.Raw(Model.Description)</p>
+                @if (!Model.IsOwner)
+                {
+                    <a href="#" class="btn btn-success">Start learning</a>
+                }
+                else
+                {
+                    <a href="#" class="btn btn-success">Upload chapter</a>
+                    <a href="#" class="btn btn-warning">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete course</a>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.DisplayOwnerInfo)
+    {
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    About @Model.AuthorName
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

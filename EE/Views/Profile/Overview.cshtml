@@ -1,0 +1,49 @@
+﻿@model Aiursoft.EE.Models.ProfileViewModels.OverviewViewModel
+@{
+    ViewData["Title"] = "My Courses";
+}
+
+<div class="row">
+    @(await Html.PartialAsync("_Left", Model.LeftContent))
+    <div class="col-md-9 mt-3">
+        @(await Html.PartialAsync("_Up", Model.UpContent))
+
+        <div class="row">
+            @if (Model.CoursesDisplaying.Count() == 0)
+            {
+                <div class="col-md-12">
+                    @if (Model.LeftContent.IsMe)
+                    {
+                        <p class="text-center">
+                            You did not create any course!
+                        </p>
+                        <p class="text-center">
+                            <a class="btn btn-primary text-center" asp-controller="Course" asp-action="Create">Create one</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-center">
+                            He did not create any course!
+                        </p>
+                    }
+                </div>
+            }
+            @foreach (var course in Model.CoursesDisplaying)
+            {
+                <div class="col-md-6">
+                    <div class="card mt-3 mb-3">
+                        <div class="card-header">
+                            <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Id">
+                                @course.Name
+                            </a>
+                        </div>
+                        <div class="card-body profile-courses-content">
+                            @course.Description
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

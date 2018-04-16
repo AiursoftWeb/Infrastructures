@@ -1,0 +1,71 @@
+﻿@model Aiursoft.EE.Models.CourseViewModels.CreateViewModel
+@{
+    ViewData["Title"] = "Create new course";
+}
+<ol class="breadcrumb mt-4">
+    <li class="breadcrumb-item">
+        <a asp-controller="Apps" asp-action="Index">Aiursoft EE</a>
+    </li>
+    <li class="breadcrumb-item active">
+        <a asp-controller="Apps" asp-action="AllApps">@ViewContext.RouteData.Values["controller"].ToString()</a>
+    </li>
+    <li class="breadcrumb-item active">@ViewContext.RouteData.Values["action"].ToString()</li>
+</ol>
+<div class="row">
+    <div class="col-12">
+        <h1>Create New Course</h1>
+    </div>
+</div>
+@if (!Model.ModelStateValid)
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong>Invalid Input!</strong>
+        <div asp-validation-summary="ModelOnly"></div>
+    </div>
+}
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-bar-chart"></i>
+        Course Basic Info
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <form class="col-md-12" asp-controller="Course" asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter the name of your new course...">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label>Upload your course icon</label>
+                    <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@Values.DeveloperServerAddress/images/appdefaulticon.png" />
+                    <p class="small text-muted">Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg.</p>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <text-angular ng-model="HtmlContent" class="textarea-block" rows="10">
+                    </text-angular>
+                    <input asp-for="Description" type="hidden" value="{{HtmlContent}}">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input">
+                        This course is completly free.
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label asp-for="DisplayOwnerInfo" class="form-check-label">
+                        <input asp-for="DisplayOwnerInfo" type="checkbox" class="form-check-input">
+                        Display author description in the course view page.
+                    </label>
+                </div>
+                <button type="submit" data-disable-with="Submitting..." class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

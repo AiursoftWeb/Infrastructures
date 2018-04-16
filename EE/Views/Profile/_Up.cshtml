@@ -1,0 +1,60 @@
+﻿@model Aiursoft.EE.Models.ProfileViewModels.SharedUpContent
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <div class="nav-link @(Model.ActivePanel==0 ? "active" : "")">
+            <i class="fa fa-book muted"></i>
+            <a class=" text-muted" asp-controller="Profile" asp-action="Overview" asp-route-id="@User.Identity.Name">
+                Overview
+            </a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <div class="nav-link @(Model.ActivePanel==1 ? "active" : "")">
+            <i class="fa fa-server muted"></i>
+            <a class=" text-muted" asp-controller="Profile" asp-action="Courses" asp-route-id="@User.Identity.Name">
+                Courses
+            </a>
+            @if (Model.CoursesCount > 0)
+            {
+                <span class="badge badge-info">@Model.CoursesCount</span>
+            }
+        </div>
+    </li>
+    <li class="nav-item">
+        <div class="nav-link @(Model.ActivePanel==2 ? "active" : "")">
+            <i class="fa fa-hashtag muted"></i>
+            <a class=" text-muted" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">
+                Subscription
+            </a>
+            @if (Model.SubScribeCount > 0)
+            {
+                <span class="badge badge-info">@Model.SubScribeCount</span>
+            }
+        </div>
+    </li>
+    <li class="nav-item">
+        <div class="nav-link @(Model.ActivePanel==3 ? "active" : "")">
+            <i class="fa fa-reply muted"></i>
+            <a class=" text-muted" asp-controller="Profile" asp-action="Followings" asp-route-id="@User.Identity.Name">
+                Following
+            </a>
+            @if (Model.FollowingCount > 0)
+            {
+                <span class="badge badge-info">@Model.FollowingCount</span>
+            }
+        </div>
+    </li>
+    <li class="nav-item">
+        <div class="nav-link @(Model.ActivePanel==4 ? "active" : "")">
+            <i class="fa fa-share muted"></i>
+            <a class=" text-muted" asp-controller="Profile" asp-action="Followers" asp-route-id="@User.Identity.Name">
+                Follower
+            </a>
+            @if (Model.FollowerCount > 0)
+            {
+                <span class="badge badge-info">@Model.FollowerCount</span>
+            }
+        </div>
+    </li>
+</ul>

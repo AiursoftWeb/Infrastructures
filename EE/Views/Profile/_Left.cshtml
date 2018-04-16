@@ -1,0 +1,43 @@
+﻿@model Aiursoft.EE.Models.ProfileViewModels.SharedLeftContent
+
+<div class="col-md-3" style="max-width:250px;">
+    <div class="card mt-3 mb-3">
+        <a class="card-body" href="@Values.AccountServerAddress/Account/Avatar">
+            <img src="@Model.HeadImgUrl" id="changeimage" data-toggle="tooltip" data-placement="bottom" title="Click to change avatar." />
+        </a>
+        <div class="card-footer">
+            <h5 class="text-center">@Model.UserName</h5>
+        </div>
+        <div class="card-footer">
+            <i class="fa fa-envelope"></i>
+            <a href="mailto:@Model.Email">@Model.Email</a>
+        </div>
+        @if (!Model.IsMe)
+        {
+            <div class="card-footer">
+                @if (Model.AlreadyFollowed)
+                {
+                    <form method="post" asp-controller="Profile" asp-action="UnFollow" id="UnFollowForm">
+                        <input type="hidden" name="id" value="@Model.UserId" />
+                        <input type="hidden" name="redirectAction" value="Overview" />
+                    </form>
+                    <a class="btn btn-outline-danger" href="javascript:$('#UnFollowForm').submit()" style="width:140px;">
+                        UnFollow
+                        <i class="fa fa-star"></i>
+                    </a>
+                }
+                else
+                {
+                    <form method="post" asp-controller="Profile" asp-action="Follow" id="FollowForm">
+                        <input type="hidden" name="id" value="@Model.UserId" />
+                    </form>
+                    <a class="btn btn-outline-primary" href="javascript:$('#FollowForm').submit()" style="width:140px;">
+                        Follow
+                        <i class="fa fa-star-o"></i>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+    <p class=" muted">@Model.Bio</p>
+</div>

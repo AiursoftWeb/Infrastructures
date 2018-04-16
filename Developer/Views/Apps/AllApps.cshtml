@@ -1,0 +1,40 @@
+﻿@model Aiursoft.Developer.Models.AppsViewModels.AllAppsViewModel
+@{
+    ViewData["Title"] = "All Apps";
+    Layout = "_AppLayout";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="row">
+        @foreach (var app in Model.AllApps)
+        {
+            <div class="col-xl-3 col-sm-4 col-xs-12 mb-3">
+                <div class="card text-white bg-danger o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-list"></i>
+                        </div>
+                        <div class="mr-5">@Html.DisplayFor(t => app.AppName)</div>
+                        <div class="mr-5 small">@Html.DisplayFor(t => app.AppDescription)</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@app.AppId">
+                        <span class="float-left">Edit Settings</span>
+                        <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        }
+        <div class="col-12 mt-3 mb-3">
+            <div class="text-center">
+                <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">Create App</a>
+            </div>
+        </div>
+    </div>
+</div>

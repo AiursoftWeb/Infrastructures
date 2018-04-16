@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Aiursoft.Wiki.Models
+
+@inject SignInManager<WikiUser> SignInManager
+@inject UserManager<WikiUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" class="hidden"></form>
+    <li>
+        <a href="@Values.AccountServerAddress" title="Manage">Hello @((await UserManager.FindByNameAsync(User.Identity.Name)).NickName)!</a>
+    </li>
+    <li>
+        <a href="javascript:$('#logoutForm').submit()">Log out</a>
+    </li>
+}
+else
+{
+    <li><a asp-area="" asp-controller="Auth" asp-action="GoAuth">Log in</a></li>
+}

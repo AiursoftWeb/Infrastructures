@@ -1,0 +1,39 @@
+﻿@model Aiursoft.Pylon.Models.Stargate.ListenAddressModels.ChannelAddressModel
+@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket Connection Test - Channel @Model.Id</title>
+</head>
+<body>
+    WebSocket Connection Test - Channel @Model.Id
+    <script src="@Aiursoft.Pylon.Values.CdnServerAddress/node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+    function GetWSAddress(){
+        var ishttps = 'https:' == document.location.protocol ? true: false;
+        var host  = window.location.host;
+        var head = ishttps ? "wss://" : "ws://"
+        return head + host;
+    }
+    var webSocket;
+    $().ready(function () {
+        webSocket = new WebSocket(GetWSAddress() +"/Listen/Channel/@Model.Id?Key=@Model.Key");
+        webSocket.onopen = function () {
+            $("#spanStatus").text("connected");
+        };
+        webSocket.onmessage = function (evt) {
+            window.scrollTo(0,document.body.scrollHeight);
+            $("#spanStatus").append('<p>'+evt.data+'</p>');
+        };
+        webSocket.onerror = function (evt) {
+            alert(evt.message);
+        };
+        webSocket.onclose = function () {
+            $("#spanStatus").text("disconnected");
+        };
+    });
+    </script>
+    <div id="spanStatus"></div>
+</body>

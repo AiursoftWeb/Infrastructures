@@ -1,0 +1,15 @@
+﻿<footer class="footer">
+    <ul class="list-inline">
+        <li>@DateTime.Now.Year © @Values.ProjectName.</li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Help</a></li>
+        <li>
+            <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+                 {
+                     Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
+                     Path = Context.Request.Path
+                 }))">Language(语言)</a>
+        </li>
+    </ul>
+</footer>
