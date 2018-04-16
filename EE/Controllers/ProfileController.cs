@@ -1,13 +1,11 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

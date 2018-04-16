@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Aiursoft.Developer.Models;
-using Aiursoft.Pylon.Models;
-using Microsoft.AspNetCore.Builder;
 using Aiursoft.Pylon.Models.Developer;
 
 namespace Aiursoft.Developer.Data

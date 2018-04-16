@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Version>0.8.0</Version>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Aiursoft.CDN</AssemblyName>
+    <PackageId>Aiursoft.CDN</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>The place for shared static resources of Aiursoft web apps.</Description>
+    <PackageTags>CDN</PackageTags>
+    <PackageIconUrl>https://oss.aiursoft.com/MyPersonalFiles/512x512.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/CDN</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/CDN.git</RepositoryUrl>
+ 
+  </PropertyGroup>
+
+</Project>

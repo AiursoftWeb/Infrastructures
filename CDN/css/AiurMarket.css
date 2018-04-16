@@ -1,0 +1,90 @@
+body {
+    padding-top: 50px;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.bd-footer {
+    font-size: 85%;
+    text-align: center;
+    background-color: #f7f7f7
+}
+
+.bd-footer a {
+    font-weight: 500;
+    color: #495057
+}
+
+.bd-footer a:focus, .bd-footer a:hover {
+    color: #007bff
+}
+
+.bd-footer p {
+    margin-bottom: 0
+}
+
+@media (min-width: 576px) {
+    .bd-footer {
+        text-align: left
+    }
+}
+
+.bd-footer-links {
+    padding-left: 0;
+    margin-bottom: 1rem
+}
+
+.bd-footer-links li {
+    display: inline-block
+}
+
+.bd-footer-links li+li {
+    margin-left: 1rem
+}
+
+.profile-courses-content {
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word
+}
+
+.nav-text-muted {
+    color: #868e96 !important;
+    margin: 0;
+    font-size: 0.9rem;
+    padding: 0.25rem 1.5rem
+}
+
+.aiuruser-img {
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 1rem;
+}
+
+.muted {
+    color: #868e96 !important
+}
+
+.pricing-header {
+    max-width: 700px;
+}
+
+.card-deck .card {
+    min-width: 220px;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}

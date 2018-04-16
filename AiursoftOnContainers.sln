@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Stargate", "Starga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wiki", "Wiki\Aiursoft.Wiki.csproj", "{92E4723E-17B6-41AC-8EC0-59C13A40B495}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.CDN", "CDN\Aiursoft.CDN.csproj", "{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{92E4723E-17B6-41AC-8EC0-59C13A40B495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92E4723E-17B6-41AC-8EC0-59C13A40B495}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92E4723E-17B6-41AC-8EC0-59C13A40B495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
