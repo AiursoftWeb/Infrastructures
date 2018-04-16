@@ -27,7 +27,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -45,7 +45,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
-            if (JResult.code != ErrorType.Success && JResult.code != ErrorType.WrongKey)
+            if (JResult.Code != ErrorType.Success && JResult.Code != ErrorType.WrongKey)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -60,7 +60,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -76,7 +76,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -91,7 +91,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurCollection<IUserEmail>>(result);
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }

@@ -27,8 +27,8 @@ namespace Aiursoft.API.Attributes
             {
                 var arg = new AiurProtocal
                 {
-                    code = ErrorType.Unauthorized,
-                    message = "We can not validate your access token!"
+                    Code = ErrorType.Unauthorized,
+                    Message = "We can not validate your access token!"
                 };
                 context.Result = new JsonResult(arg);
             }
@@ -36,8 +36,8 @@ namespace Aiursoft.API.Attributes
             {
                 var arg = new AiurProtocal
                 {
-                    code = ErrorType.Unauthorized,
-                    message = "Your access token is already Timeout!"
+                    Code = ErrorType.Unauthorized,
+                    Message = "Your access token is already Timeout!"
                 };
                 context.Result = new JsonResult(arg);
             }

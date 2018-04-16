@@ -86,7 +86,7 @@ namespace Aiursoft.API.Controllers
             }
             catch (CultureNotFoundException)
             {
-                return Json(new AiurProtocal { message = "Not a language.", code = ErrorType.InvalidInput });
+                return Json(new AiurProtocal { Message = "Not a language.", Code = ErrorType.InvalidInput });
             }
         }
 
@@ -98,19 +98,19 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Value == AccessToken);
             if (target == null)
             {
-                return Json(new ValidateAccessTokenViewModel { code = ErrorType.Unauthorized, message = "We can not validate your access token!" });
+                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Unauthorized, Message = "We can not validate your access token!" });
             }
             else if (!target.IsAlive)
             {
-                return Json(new ValidateAccessTokenViewModel { code = ErrorType.Timeout, message = "Your access token is already Timeout!" });
+                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Timeout, Message = "Your access token is already Timeout!" });
             }
             else
             {
                 return Json(new ValidateAccessTokenViewModel
                 {
                     AppId = target.ApplyAppId,
-                    code = ErrorType.Success,
-                    message = "Successfully validated access token."
+                    Code = ErrorType.Success,
+                    Message = "Successfully validated access token."
                 });
             }
         }
@@ -120,7 +120,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
             var AppValidateState = await ApiService.IsValidAppAsync(model.AppId, model.AppSecret);
-            if (AppValidateState.code != ErrorType.Success)
+            if (AppValidateState.Code != ErrorType.Success)
             {
                 return Json(AppValidateState);
             }
@@ -133,8 +133,8 @@ namespace Aiursoft.API.Controllers
             await _dbContext.SaveChangesAsync();
             return Json(new AccessTokenViewModel
             {
-                code = ErrorType.Success,
-                message = "Successfully get access token.",
+                Code = ErrorType.Success,
+                Message = "Successfully get access token.",
                 AccessToken = newAC.Value,
                 DeadTime = newAC.CreateTime + newAC.AliveTime
             });
@@ -148,11 +148,11 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Value == AccessToken);
             if (target == null)
             {
-                return Json(new ValidateAccessTokenViewModel { code = ErrorType.Unauthorized, message = "We can not validate your access token!" });
+                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Unauthorized, Message = "We can not validate your access token!" });
             }
             else if (!target.IsAlive)
             {
-                return Json(new ValidateAccessTokenViewModel { code = ErrorType.Timeout, message = "Your access token is already Timeout!" });
+                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Timeout, Message = "Your access token is already Timeout!" });
             }
 
             var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
@@ -160,8 +160,8 @@ namespace Aiursoft.API.Controllers
             {
                 AppId = target.ApplyAppId,
                 Grants = new List<Grant>(),
-                code = ErrorType.Success,
-                message = "Successfully get all your users"
+                Code = ErrorType.Success,
+                Message = "Successfully get all your users"
             };
             model.Grants.AddRange(grants);
             return Json(model);

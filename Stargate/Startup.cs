@@ -15,10 +15,6 @@ namespace Aiursoft.Stargate
 {
     public class Startup
     {
-        public static Counter MessageIdCounter { get; set; } = new Counter();
-        public static Counter ListenerIdCounter { get; set; } = new Counter();
-        public static Random RandomObject { get; set; } = new Random();
-
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -36,6 +32,7 @@ namespace Aiursoft.Stargate
             services.AddTransient<Debugger>();
             services.AddTransient<WebSocketPusher>();
             services.AddSingleton<IHostedService, TimedCleaner>();
+            services.AddSingleton<Counter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

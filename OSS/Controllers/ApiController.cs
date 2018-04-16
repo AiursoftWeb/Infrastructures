@@ -87,8 +87,8 @@ namespace Aiursoft.OSS.Controllers
             {
                 AppId = appLocal.AppId,
                 Buckets = buckets,
-                code = ErrorType.Success,
-                message = "Successfully get your buckets!"
+                Code = ErrorType.Success,
+                Message = "Successfully get your buckets!"
             };
             return Json(viewModel);
         }
@@ -134,8 +134,8 @@ namespace Aiursoft.OSS.Controllers
             var viewModel = new CreateBucketViewModel
             {
                 BucketId = newBucket.BucketId,
-                code = ErrorType.Success,
-                message = "Successfully created your bucket!"
+                Code = ErrorType.Success,
+                Message = "Successfully created your bucket!"
             };
             return Json(viewModel);
         }
@@ -180,8 +180,8 @@ namespace Aiursoft.OSS.Controllers
             }
             var viewModel = new ViewBucketViewModel(targetBucket)
             {
-                code = ErrorType.Success,
-                message = "Successfully get your bucket info!",
+                Code = ErrorType.Success,
+                Message = "Successfully get your bucket info!",
                 FileCount = await _dbContext.OSSFile.Where(t => t.BucketId == targetBucket.BucketId).CountAsync()
             };
             return Json(viewModel);
@@ -215,8 +215,8 @@ namespace Aiursoft.OSS.Controllers
             var viewModel = new ViewOneFileViewModel
             {
                 File = file,
-                code = ErrorType.Success,
-                message = "Successfully get that file!"
+                Code = ErrorType.Success,
+                Message = "Successfully get that file!"
             };
             return Json(viewModel);
         }
@@ -265,9 +265,9 @@ namespace Aiursoft.OSS.Controllers
             //Return json
             return Json(new UploadFileViewModel
             {
-                code = ErrorType.Success,
+                Code = ErrorType.Success,
                 FileKey = newFile.FileKey,
-                message = "Successfully uploaded your file.",
+                Message = "Successfully uploaded your file.",
                 Path = newFile.GetInternetPath
             });
         }
@@ -293,8 +293,8 @@ namespace Aiursoft.OSS.Controllers
             {
                 AllFiles = allFiles,
                 BucketId = bucket.BucketId,
-                message = "Successfully get all your files of that bucket.",
-                code = ErrorType.Success
+                Message = "Successfully get all your files of that bucket.",
+                Code = ErrorType.Success
             };
             return Json(viewModel);
         }

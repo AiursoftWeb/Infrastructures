@@ -38,7 +38,6 @@ namespace Aiursoft.API.Controllers
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
         private readonly AiurSMSSender _smsSender;
-        private readonly IConfiguration _configuration;
 
         public UserController(
             UserManager<APIUser> userManager,
@@ -47,8 +46,7 @@ namespace Aiursoft.API.Controllers
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
             AiurEmailSender emailSender,
-            AiurSMSSender smsSender,
-            IConfiguration configuration)
+            AiurSMSSender smsSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -57,7 +55,6 @@ namespace Aiursoft.API.Controllers
             _localizer = localizer;
             _emailSender = emailSender;
             _smsSender = smsSender;
-            _configuration = configuration;
         }
 
         [ForceValidateAccessToken]
@@ -73,7 +70,7 @@ namespace Aiursoft.API.Controllers
             var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
-                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
             if (!app.App.ChangeBasicInfo)
             {
@@ -92,7 +89,7 @@ namespace Aiursoft.API.Controllers
                 targetUser.Bio = model.NewBio;
             }
             await _dbContext.SaveChangesAsync();
-            return Json(new AiurProtocal { code = ErrorType.Success, message = "Successfully changed this user's nickname!" });
+            return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's nickname!" });
         }
 
         [ForceValidateAccessToken]
@@ -108,7 +105,7 @@ namespace Aiursoft.API.Controllers
             var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
-                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
             if (!app.App.ChangePassword)
             {
@@ -118,11 +115,11 @@ namespace Aiursoft.API.Controllers
             await _userManager.UpdateAsync(targetUser);
             if (result.Succeeded)
             {
-                return Json(new AiurProtocal { code = ErrorType.Success, message = "Successfully changed this user's password!" });
+                return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's password!" });
             }
             else
             {
-                return Json(new AiurProtocal { code = ErrorType.WrongKey, message = result.Errors.First().Description });
+                return Json(new AiurProtocal { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
             }
         }
 
@@ -143,7 +140,7 @@ namespace Aiursoft.API.Controllers
             }
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
-                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
             if (!app.App.ViewPhoneNumber)
             {
@@ -151,8 +148,8 @@ namespace Aiursoft.API.Controllers
             }
             return Json(new AiurValue<string>(targetUser.PhoneNumber)
             {
-                code = ErrorType.Success,
-                message = "Successfully get the target user's phone number."
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's phone number."
             });
         }
 
@@ -173,7 +170,7 @@ namespace Aiursoft.API.Controllers
             }
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
-                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
             if (!app.App.ChangePhoneNumber)
             {
@@ -208,12 +205,12 @@ namespace Aiursoft.API.Controllers
             }
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
-                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
             return Json(new AiurCollection<IUserEmail>(targetUser.Emails)
             {
-                code = ErrorType.Success,
-                message = "Successfully get the target user's emails."
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's emails."
             });
         }
 
@@ -247,7 +244,7 @@ namespace Aiursoft.API.Controllers
                     UserId = user.Id
                 });
                 await _emailSender.SendEmail(model.Email, "Reset Password",
-                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", _configuration["Emailpassword"]);
+                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
                 return RedirectToAction(nameof(ForgotPasswordSent));
             }
             return View(model);

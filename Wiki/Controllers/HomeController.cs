@@ -84,8 +84,8 @@ namespace Aiursoft.Wiki.Controllers
             await _seeder.Seed();
             return Json(new AiurProtocal
             {
-                code = ErrorType.Success,
-                message = "Seeded"
+                Code = ErrorType.Success,
+                Message = "Seeded"
             });
         }
 

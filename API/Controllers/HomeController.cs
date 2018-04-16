@@ -43,8 +43,8 @@ namespace Aiursoft.API.Controllers
             {
                 Signedin = User.Identity.IsAuthenticated,
                 ServerTime = DateTime.Now,
-                code  = ErrorType.Success,
-                message = "Server started successfully!",
+                Code  = ErrorType.Success,
+                Message = "Server started successfully!",
                 Local = _localizer["en"],
                 User = cuser
             });

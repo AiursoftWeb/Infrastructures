@@ -1,11 +1,5 @@
-using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +28,17 @@ namespace Aiursoft.Pylon
             return SupportedCultures;
         }
 
+        public static IApplicationBuilder UseAiursoftSupportedCultures(this IApplicationBuilder app, string defaultLanguage = "en")
+        {
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultLanguage),
+                SupportedCultures = GetSupportedLanguages(),
+                SupportedUICultures = GetSupportedLanguages()
+            });
+            return app;
+        }
+
         public static IApplicationBuilder UseAiursoftAuthenticationFromConfiguration(this IApplicationBuilder app, IConfiguration configuration, string appName)
         {
             var AppId = configuration[$"{appName}AppId"];
@@ -44,17 +49,6 @@ namespace Aiursoft.Pylon
                 throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
             }
             return app.UseAiursoftAuthentication(AppId, AppSecret);
-        }
-        
-        public static IApplicationBuilder UseAiursoftSupportedCultures(this IApplicationBuilder app, string defaultLanguage = "en")
-        {
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(defaultLanguage),
-                SupportedCultures = GetSupportedLanguages(),
-                SupportedUICultures = GetSupportedLanguages()
-            });
-            return app;
         }
 
         public static IApplicationBuilder UseAiursoftAuthentication(this IApplicationBuilder app, string appId, string appSecret)
@@ -98,9 +92,9 @@ namespace Aiursoft.Pylon
 
         public static IActionResult SignoutRootServer(this Controller controller, AiurUrl ToRedirect)
         {
-            var r = controller.HttpContext.Request;
-            string serverPosition = $"{r.Scheme}://{r.Host}{ToRedirect}";
-            var toRedirect = new AiurUrl(Values.ApiServerAddress, "oauth", "UserSignout", new UserSignoutAddressModel
+            var request = controller.HttpContext.Request;
+            string serverPosition = $"{request.Scheme}://{request.Host}{ToRedirect}";
+            var toRedirect = new AiurUrl(Values.ApiServerAddress, "OAuth", "UserSignout", new UserSignoutAddressModel
             {
                 ToRedirect = serverPosition
             });
@@ -111,8 +105,8 @@ namespace Aiursoft.Pylon
         {
             return controller.Json(new AiurProtocal
             {
-                code = errorType,
-                message = errorMessage
+                Code = errorType,
+                Message = errorMessage
             });
         }
         

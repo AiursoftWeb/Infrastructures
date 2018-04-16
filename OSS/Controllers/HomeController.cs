@@ -17,8 +17,8 @@ namespace Aiursoft.OSS.Controllers
         {
             return Json(new AiurProtocal
             {
-                code = ErrorType.Success,
-                message = $"Welcome to Aiursoft OSS system. Please View our document at: '{Values.WikiServerAddress}'."
+                Code = ErrorType.Success,
+                Message = $"Welcome to Aiursoft OSS system. Please View our document at: '{Values.WikiServerAddress}'."
             });
         }
 

@@ -128,13 +128,13 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             var result = await UserService.ChangePasswordAsync(cuser.Id, await AppsContainer.AccessToken()(), model.OldPassword, model.NewPassword);
-            if (result.code == ErrorType.Success)
+            if (result.Code == ErrorType.Success)
             {
                 return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
             else
             {
-                ModelState.AddModelError(string.Empty, result.message);
+                ModelState.AddModelError(string.Empty, result.Message);
                 model.ModelStateValid = false;
                 model.Recover(cuser);
                 return View(model);
@@ -197,7 +197,7 @@ namespace Aiursoft.Account.Controllers
             if (correctToken)
             {
                 var result = await UserService.SetPhoneNumberAsync(user.Id, await AppsContainer.AccessToken()(), model.NewPhoneNumber);
-                if (result.code == ErrorType.Success)
+                if (result.Code == ErrorType.Success)
                 {
                     user.PhoneNumber = model.NewPhoneNumber;
                     await _userManager.UpdateAsync(user);
@@ -219,7 +219,7 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var result = await UserService.SetPhoneNumberAsync(user.Id, await AppsContainer.AccessToken()(), string.Empty);
-            if (result.code == ErrorType.Success)
+            if (result.Code == ErrorType.Success)
             {
                 user.PhoneNumber = string.Empty;
                 await _userManager.UpdateAsync(user);

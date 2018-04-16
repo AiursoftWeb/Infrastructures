@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Get(url);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }

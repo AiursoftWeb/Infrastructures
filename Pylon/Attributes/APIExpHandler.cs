@@ -20,8 +20,8 @@ namespace Aiursoft.Pylon.Attributes
                 case AiurUnexceptedResponse exp:
                     var arg = new AiurProtocal
                     {
-                        code = exp.Response.code,
-                        message = exp.Response.message
+                        Code = exp.Response.Code,
+                        Message = exp.Response.Message
                     };
                     context.ExceptionHandled = true;
                     context.Result = new JsonResult(arg);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -9,18 +10,29 @@ namespace Aiursoft.Pylon.Services
 {
     public class AiurEmailSender
     {
-        public async Task SendEmail(string target, string subject, string content, string password)
+        private readonly IConfiguration _configuration;
+
+        public AiurEmailSender(IConfiguration configuration)
         {
-            SmtpClient client = new SmtpClient("smtp.mxhichina.com");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("service@aiursoft.com", password);
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("service@aiursoft.com");
+            _configuration = configuration;
+        }
+
+        public async Task SendEmail(string target, string subject, string content)
+        {
+            var client = new SmtpClient("smtp.mxhichina.com")
+            {
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"])
+            };
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("service@aiursoft.com"),
+                Body = content,
+                Subject = subject,
+                IsBodyHtml = true,
+                BodyEncoding = Encoding.UTF8
+            };
             mailMessage.To.Add(target);
-            mailMessage.Body = content;
-            mailMessage.Subject = subject;
-            mailMessage.IsBodyHtml = true;
-            mailMessage.BodyEncoding = Encoding.UTF8;
             await Task.Factory.StartNew(() => client.Send(mailMessage));
         }
     }

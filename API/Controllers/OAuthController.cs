@@ -223,8 +223,8 @@ namespace Aiursoft.API.Controllers
                 }
                 return Json(new AiurValue<int>(pack.Code)
                 {
-                    code = ErrorType.Success,
-                    message = "Auth success."
+                    Code = ErrorType.Success,
+                    Message = "Auth success."
                 });
             }
             else if (result.RequiresTwoFactor)
@@ -341,7 +341,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
-            return Json(new AiurProtocal { message = "Successfully signed out!", code = ErrorType.Success });
+            return Json(new AiurProtocal { Message = "Successfully signed out!", Code = ErrorType.Success });
         }
 
         public async Task<IActionResult> UserSignout(UserSignoutAddressModel model)
@@ -387,8 +387,8 @@ namespace Aiursoft.API.Controllers
             {
                 openid = targetPack.UserId,
                 scope = "scope",
-                message = "Successfully get user openid",
-                code = ErrorType.Success
+                Message = "Successfully get user openid",
+                Code = ErrorType.Success
             };
             return Json(viewModel);
         }
@@ -403,17 +403,17 @@ namespace Aiursoft.API.Controllers
 
             if (target == null)
             {
-                return Json(new AiurProtocal { message = "Invalid Access Token!", code = ErrorType.WrongKey });
+                return Json(new AiurProtocal { Message = "Invalid Access Token!", Code = ErrorType.WrongKey });
             }
             else if (!target.IsAlive)
             {
-                return Json(new AiurProtocal { message = "Access Token is timeout!", code = ErrorType.Timeout });
+                return Json(new AiurProtocal { Message = "Access Token is timeout!", Code = ErrorType.Timeout });
             }
             var user = await _userManager.FindByIdAsync(model.openid);
             var viewModel = new UserInfoViewModel
             {
-                code = 0,
-                message = "Successfully get target user info.",
+                Code = 0,
+                Message = "Successfully get target user info.",
                 User = user
             };
             return Json(viewModel);

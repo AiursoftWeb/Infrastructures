@@ -56,7 +56,7 @@ namespace Kahla.Server.Controllers
             {
                 LatestVersion = _configuration["AppVersion"],
                 OldestSupportedVersion = _configuration["AppVersion"],
-                message = "Successfully get the lastest version number for Kahla."
+                Message = "Successfully get the lastest version number for Kahla."
             });
         }
 
@@ -64,9 +64,9 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> AuthByPassword(AuthByPasswordAddressModel model)
         {
             var pack = await OAuthService.PasswordAuthAsync(Extends.CurrentAppId, model.Email, model.Password);
-            if (pack.code != ErrorType.Success)
+            if (pack.Code != ErrorType.Success)
             {
-                return this.Protocal(ErrorType.Unauthorized, pack.message);
+                return this.Protocal(ErrorType.Unauthorized, pack.Message);
             }
             var user = await _authService.AuthApp(new AuthResultAddressModel
             {
@@ -75,8 +75,8 @@ namespace Kahla.Server.Controllers
             }, isPersistent: true);
             return Json(new AiurProtocal()
             {
-                code = ErrorType.Success,
-                message = "Auth success."
+                Code = ErrorType.Success,
+                Message = "Auth success."
             });
         }
 
@@ -90,8 +90,8 @@ namespace Kahla.Server.Controllers
             iconPath = await StorageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
             return Json(new AiurValue<string>(iconPath)
             {
-                code = ErrorType.Success,
-                message = "Successfully uploaded your file!"
+                Code = ErrorType.Success,
+                Message = "Successfully uploaded your file!"
             });
         }
 
@@ -108,8 +108,8 @@ namespace Kahla.Server.Controllers
             var signedIn = user != null;
             return Json(new AiurValue<bool>(signedIn)
             {
-                code = ErrorType.Success,
-                message = "Successfully get your signin status."
+                Code = ErrorType.Success,
+                Message = "Successfully get your signin status."
             });
         }
 
@@ -119,8 +119,8 @@ namespace Kahla.Server.Controllers
             var user = await GetKahlaUser();
             return Json(new AiurValue<KahlaUser>(user)
             {
-                code = ErrorType.Success,
-                message = "Successfully get your information."
+                Code = ErrorType.Success,
+                Message = "Successfully get your information."
             });
         }
 
@@ -171,8 +171,8 @@ namespace Kahla.Server.Controllers
                 list.OrderByDescending(t => t.LatestMessageTime).ToList();
             return Json(new AiurCollection<ContactInfo>(list)
             {
-                code = ErrorType.Success,
-                message = "Successfully get all your friends."
+                Code = ErrorType.Success,
+                Message = "Successfully get all your friends."
             });
         }
         [HttpPost]
@@ -215,8 +215,8 @@ namespace Kahla.Server.Controllers
             await _pusher.NewFriendRequestEvent(target.Id, user.Id);
             return Json(new AiurValue<int>(request.Id)
             {
-                code = ErrorType.Success,
-                message = "Successfully created your request!"
+                Code = ErrorType.Success,
+                Message = "Successfully created your request!"
             });
         }
         [HttpPost]
@@ -259,8 +259,8 @@ namespace Kahla.Server.Controllers
                 .ToListAsync();
             return Json(new AiurCollection<Request>(requests)
             {
-                code = ErrorType.Success,
-                message = "Successfully get your requests list."
+                Code = ErrorType.Success,
+                Message = "Successfully get your requests list."
             });
         }
 
@@ -275,8 +275,8 @@ namespace Kahla.Server.Controllers
 
             return Json(new AiurCollection<KahlaUser>(users)
             {
-                code = ErrorType.Success,
-                message = "Search result is shown."
+                Code = ErrorType.Success,
+                Message = "Search result is shown."
             });
         }
 
@@ -314,8 +314,8 @@ namespace Kahla.Server.Controllers
             await _dbContext.SaveChangesAsync();
             return Json(new AiurCollection<Message>(allMessages)
             {
-                code = ErrorType.Success,
-                message = "Successfully get all your messages."
+                Code = ErrorType.Success,
+                Message = "Successfully get all your messages."
             });
         }
         [HttpPost]
@@ -361,8 +361,8 @@ namespace Kahla.Server.Controllers
             var model = new UserDetailViewModel();
             if (target == null)
             {
-                model.message = "We can not find target user.";
-                model.code = ErrorType.NotFound;
+                model.Message = "We can not find target user.";
+                model.Code = ErrorType.NotFound;
                 return Json(model);
             }
             var conversation = await _dbContext.FindConversation(user.Id, target.Id);
@@ -371,16 +371,16 @@ namespace Kahla.Server.Controllers
                 model.User = target;
                 model.AreFriends = true;
                 model.ConversationId = conversation.Id;
-                model.message = "Found that user.";
-                model.code = ErrorType.Success;
+                model.Message = "Found that user.";
+                model.Code = ErrorType.Success;
             }
             else
             {
                 model.User = target;
                 model.AreFriends = false;
                 model.ConversationId = 0;
-                model.message = "Found that user.";
-                model.code = ErrorType.Success;
+                model.Message = "Found that user.";
+                model.Code = ErrorType.Success;
             }
             return Json(model);
         }
@@ -399,14 +399,14 @@ namespace Kahla.Server.Controllers
                 pTarget.AnotherUserId = pTarget.AnotherUser(user.Id).Id;
                 return Json(new AiurValue<Conversation>(pTarget)
                 {
-                    code = ErrorType.Success,
-                    message = "Successfully get target conversation."
+                    Code = ErrorType.Success,
+                    Message = "Successfully get target conversation."
                 });
             }
             return Json(new AiurValue<Conversation>(target)
             {
-                code = ErrorType.Success,
-                message = "Successfully get target conversation."
+                Code = ErrorType.Success,
+                Message = "Successfully get target conversation."
             });
         }
 
@@ -414,7 +414,7 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> InitPusher()
         {
             var user = await GetKahlaUser();
-            if (user.CurrentChannel == -1 || (await ChannelService.ValidateChannelAsync(user.CurrentChannel, user.ConnectKey)).code != ErrorType.Success)
+            if (user.CurrentChannel == -1 || (await ChannelService.ValidateChannelAsync(user.CurrentChannel, user.ConnectKey)).Code != ErrorType.Success)
             {
                 var channel = await _pusher.Init();
                 user.CurrentChannel = channel.ChannelId;
@@ -423,8 +423,8 @@ namespace Kahla.Server.Controllers
             }
             var model = new InitPusherViewModel
             {
-                code = ErrorType.Success,
-                message = "Successfully get your channel.",
+                Code = ErrorType.Success,
+                Message = "Successfully get your channel.",
                 ChannelId = user.CurrentChannel,
                 ConnectKey = user.ConnectKey,
                 ServerPath = new AiurUrl(Values.StargateListenAddress, "Listen", "Channel", new ChannelAddressModel

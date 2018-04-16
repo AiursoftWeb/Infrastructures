@@ -23,7 +23,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (jResult.code != ErrorType.Success && jResult.code != ErrorType.HasDoneAlready)
+            if (jResult.Code != ErrorType.Success && jResult.Code != ErrorType.HasDoneAlready)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -38,7 +38,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<ViewMyBucketsViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -56,7 +56,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<CreateBucketViewModel>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -75,7 +75,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -89,7 +89,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Get(url);
             var jResult = JsonConvert.DeserializeObject<ViewBucketViewModel>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -105,7 +105,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -120,7 +120,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<ViewOneFileViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -136,7 +136,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.PostFile(url, FilePath);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -151,7 +151,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await http.Get(path);
             var jResult = JsonConvert.DeserializeObject<ViewAllFilesViewModel>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
@@ -168,7 +168,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }

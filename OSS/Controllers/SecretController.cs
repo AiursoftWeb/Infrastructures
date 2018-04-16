@@ -47,8 +47,8 @@ namespace Aiursoft.OSS.Controllers
             await _dbContext.SaveChangesAsync();
             return Json(new AiurValue<string>(newSecret.Value)
             {
-                code = ErrorType.Success,
-                message = "Successfully created your onetime secret!"
+                Code = ErrorType.Success,
+                Message = "Successfully created your onetime secret!"
             });
         }
     }

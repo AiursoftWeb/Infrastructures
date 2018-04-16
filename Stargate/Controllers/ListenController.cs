@@ -35,8 +35,8 @@ namespace Aiursoft.Stargate.Controllers
             {
                 return Json(new AiurProtocal
                 {
-                    code = ErrorType.Unauthorized,
-                    message = "Wrong connection key!"
+                    Code = ErrorType.Unauthorized,
+                    Message = "Wrong connection key!"
                 });
             }
             await _pusher.Accept(HttpContext);

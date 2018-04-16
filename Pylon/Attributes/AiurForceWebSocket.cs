@@ -17,8 +17,8 @@ namespace Aiursoft.Pylon.Attributes
             {
                 var arg = new AiurProtocal
                 {
-                    code = ErrorType.InvalidInput,
-                    message = "Wrong protocal!"
+                    Code = ErrorType.InvalidInput,
+                    Message = "Wrong protocal!"
                 };
                 context.Result = new JsonResult(arg);
             }

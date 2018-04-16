@@ -54,8 +54,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
-                throw new Exception(JResult.message);
+            if (JResult.Code != ErrorType.Success)
+                throw new Exception(JResult.Message);
             return JResult;
         }
 
@@ -70,8 +70,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-            if (JResult.code != ErrorType.Success)
-                throw new Exception(JResult.message);
+            if (JResult.Code != ErrorType.Success)
+                throw new Exception(JResult.Message);
             return JResult;
         }
     }

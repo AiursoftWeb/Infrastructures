@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             });
             var result = await httpContainer.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
-            if (jResult.code != ErrorType.Success)
+            if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }

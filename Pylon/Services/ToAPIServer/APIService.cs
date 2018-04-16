@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<ValidateAccessTokenViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -37,7 +37,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
@@ -51,7 +51,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<AllUserGrantedViewModel>(result);
 
-            if (JResult.code != ErrorType.Success)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }

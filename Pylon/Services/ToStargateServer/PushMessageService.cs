@@ -27,7 +27,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             });
             var result = await _httpService.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (!noexception && jResult.code != ErrorType.Success)
+            if (!noexception && jResult.Code != ErrorType.Success)
             {
                 throw new AiurUnexceptedResponse(jResult);
             }

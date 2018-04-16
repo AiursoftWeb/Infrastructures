@@ -89,7 +89,7 @@ namespace Aiursoft.Developer.Controllers
             }
             catch (AiurUnexceptedResponse e)
             {
-                ModelState.AddModelError(string.Empty, e.Response.message);
+                ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
                 model.Recover(this, cuser);
                 return View(model);
@@ -129,7 +129,7 @@ namespace Aiursoft.Developer.Controllers
             }
             catch (AiurUnexceptedResponse e)
             {
-                ModelState.AddModelError(string.Empty, e.Response.message);
+                ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
                 model.Recover(cuser, 1);
                 return View(model);

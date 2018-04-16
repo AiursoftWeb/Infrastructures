@@ -33,8 +33,8 @@ namespace Aiursoft.Stargate.Controllers
         {
             return Json(new AiurProtocal
             {
-                code = ErrorType.Success,
-                message = "Welcome to Aiursoft Message queue server!"
+                Code = ErrorType.Success,
+                Message = "Welcome to Aiursoft Message queue server!"
             });
         }
 

@@ -41,15 +41,15 @@ namespace Aiursoft.Developer.Controllers
             var _target = await _dbContext.Apps.FindAsync(model.AppId);
             if (_target == null)
             {
-                return Json(new AiurProtocal { message = "Target app did not found.", code = ErrorType.NotFound });
+                return Json(new AiurProtocal { Message = "Target app did not found.", Code = ErrorType.NotFound });
             }
             else if (_target.AppSecret != model.AppSecret)
             {
-                return Json(new AiurProtocal { message = "Wrong secret.", code = ErrorType.WrongKey });
+                return Json(new AiurProtocal { Message = "Wrong secret.", Code = ErrorType.WrongKey });
             }
             else
             {
-                return Json(new AiurProtocal { message = "Correct app info.", code = ErrorType.Success });
+                return Json(new AiurProtocal { Message = "Correct app info.", Code = ErrorType.Success });
             }
         }
         //http://developer.aiursoft.obisoft.com.cn/api/AppInfo?AppId=29bf5250a6d93d47b6164ac2821d5009
@@ -63,12 +63,12 @@ namespace Aiursoft.Developer.Controllers
 
             if (target == null)
             {
-                return Json(new AiurProtocal { message = "Not found.", code = ErrorType.NotFound });
+                return Json(new AiurProtocal { Message = "Not found.", Code = ErrorType.NotFound });
             }
             return Json(new AppInfoViewModel
             {
-                message = "Successfully get target app info.",
-                code = ErrorType.Success,
+                Message = "Successfully get target app info.",
+                Code = ErrorType.Success,
                 App = target
             });
         }

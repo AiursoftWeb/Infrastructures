@@ -19,10 +19,13 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class MessageController : Controller
     {
-        private StargateDbContext _dbContext;
-        public MessageController(StargateDbContext dbContext)
+        private readonly StargateDbContext _dbContext;
+        private readonly Counter _counter;
+        public MessageController(StargateDbContext dbContext,
+            Counter counter)
         {
             _dbContext = dbContext;
+            _counter = counter;
         }
 
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
@@ -46,30 +49,30 @@ namespace Aiursoft.Stargate.Controllers
             {
                 return Json(new AiurProtocal
                 {
-                    code = ErrorType.NotFound,
-                    message = "We can not find your channel!"
+                    Code = ErrorType.NotFound,
+                    Message = "We can not find your channel!"
                 });
             }
             if (channel.AppId != app.AppId)
             {
                 return Json(new AiurProtocal
                 {
-                    code = ErrorType.Unauthorized,
-                    message = "The channel you wanna create message is not your app's channel!"
+                    Code = ErrorType.Unauthorized,
+                    Message = "The channel you wanna create message is not your app's channel!"
                 });
             }
             //Create Message
             var message = new Message
             {
-                Id = Startup.MessageIdCounter.GetUniqueNo,
+                Id = _counter.GetUniqueNo,
                 ChannelId = channel.Id,
                 Content = model.MessageContent
             };
             StargateMemory.Messages.Add(message);
             return Json(new AiurProtocal
             {
-                code = ErrorType.Success,
-                message = $"You have successfully created a message at channel:{channel.Id}!"
+                Code = ErrorType.Success,
+                Message = $"You have successfully created a message at channel:{channel.Id}!"
             });
         }
     }

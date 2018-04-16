@@ -21,8 +21,8 @@ namespace Aiursoft.Pylon.Models
     }
     public class AiurProtocal
     {
-        public virtual ErrorType code { get; set; }
-        public virtual string message { get; set; }
+        public virtual ErrorType Code { get; set; }
+        public virtual string Message { get; set; }
     }
     public class AiurValue<T> : AiurProtocal
     {

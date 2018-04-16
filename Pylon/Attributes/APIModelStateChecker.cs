@@ -36,8 +36,8 @@ namespace Aiursoft.Pylon.Attributes
             }
             var arg = new AiurCollection<string>(list)
             {
-                code = ErrorType.InvalidInput,
-                message = "Your input contains several errors!"
+                Code = ErrorType.InvalidInput,
+                Message = "Your input contains several errors!"
             };
             return new JsonResult(arg);
         }
