@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  Account:
+    image: aiursoft/account:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Account/Dockerfile
+    ports:
+      - "8000:80"
