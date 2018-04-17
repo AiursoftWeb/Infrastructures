@@ -1,8 +1,8 @@
 FROM microsoft/aspnetcore-build AS build
 WORKDIR /src
 COPY . /src
-RUN dotnet restore
 WORKDIR /src/Account
+RUN dotnet restore
 RUN dotnet publish --no-restore -c Release -o /app
 
 FROM microsoft/aspnetcore

@@ -7,3 +7,13 @@ services:
       dockerfile: Account/Dockerfile
     ports:
       - "8000:80"
+    depends_on:
+      - sql.data
+
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+    environment:
+     - ACCEPT_EULA=Y
+     - SA_PASSWORD=yourStrong(!)Password
+    ports:
+     - "1433:1433"
