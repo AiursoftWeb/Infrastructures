@@ -40,7 +40,7 @@ namespace Aiursoft.Account
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -49,10 +49,10 @@ namespace Aiursoft.Account
             }
             else
             {
-		if(!Convert.ToBoolean(Configuration["AllowHttp"]))
-		{
+                if (!Convert.ToBoolean(Configuration["AllowHttp"]))
+                {
                     app.UseEnforceHttps();
-		}
+                }
                 app.UseExceptionHandler("/Error/ServerException");
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
