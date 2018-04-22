@@ -1,6 +1,6 @@
 version: '3.4'
 services:
-  sql.data:
+  db:
     image: microsoft/mssql-server-linux:2017-latest
     environment:
      - ACCEPT_EULA=Y
@@ -8,7 +8,7 @@ services:
     ports:
      - "1433:1433"
 
-  Account:
+  account:
     image: aiursoft/account:${TAG:-latest}
     build:
       context: .
@@ -16,4 +16,4 @@ services:
     ports:
       - "8000:80"
     depends_on:
-      - sql.data
+      - db
