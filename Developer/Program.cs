@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using Aiursoft.Developer.Data;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Aiursoft.Pylon;
 
 namespace Aiursoft.Developer
 {
@@ -7,7 +9,9 @@ namespace Aiursoft.Developer
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDbContext<DeveloperDbContext>()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using Aiursoft.Stargate.Data;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Aiursoft.Pylon;
 
 namespace Aiursoft.Stargate
 {
@@ -7,7 +9,9 @@ namespace Aiursoft.Stargate
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDbContext<StargateDbContext>()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)

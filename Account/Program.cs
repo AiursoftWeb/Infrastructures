@@ -12,8 +12,8 @@ namespace Aiursoft.Account
         public static void Main(string[] args)
         {
             BuildWebHost(args)
-            .MigrateDbContext<AccountDbContext>()
-            .Run();
+                .MigrateDbContext<AccountDbContext>()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)

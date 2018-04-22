@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
+using Kahla.Server.Data;
+using Aiursoft.Pylon;
 
 namespace Kahla.Server
 {
@@ -7,7 +9,9 @@ namespace Kahla.Server
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDbContext<KahlaDbContext>()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)

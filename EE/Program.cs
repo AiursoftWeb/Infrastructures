@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aiursoft.EE.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Aiursoft.Pylon;
 
 namespace Aiursoft.EE
 {
@@ -14,7 +9,9 @@ namespace Aiursoft.EE
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDbContext<EEDbContext>()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
