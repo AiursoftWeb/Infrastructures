@@ -147,7 +147,6 @@ namespace Aiursoft.Pylon
 
                     retry.Execute(() =>
                     {
-                        context.Database.EnsureDeleted();
                         context.Database.Migrate();
                         seeder?.Invoke(context, services);
                     });
