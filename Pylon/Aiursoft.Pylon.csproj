@@ -25,5 +25,6 @@
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Twilio" Version="5.10.0" />
+    <PackageReference Include="Polly" Version="5.8.0" />
   </ItemGroup>
 </Project>

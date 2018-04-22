@@ -10,6 +10,12 @@ using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Polly;
+using Polly.Retry;
 
 namespace Aiursoft.Pylon
 {
@@ -109,13 +115,53 @@ namespace Aiursoft.Pylon
                 Message = errorMessage
             });
         }
-        
+
         public static void SetClientLang(this Controller controller, string culture)
         {
             controller.HttpContext.Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+        }
+
+        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
+        {
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<TContext>>();
+                var context = services.GetService<TContext>();
+                var configuration = services.GetService<IConfiguration>();
+
+                var connectionString = configuration.GetConnectionString("DatabaseConnection");
+                try
+                {
+                    logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
+                    logger.LogInformation($"Connection string is {connectionString}");
+                    var retry = Policy.Handle<Exception>().WaitAndRetry(new TimeSpan[]
+                    {
+                        TimeSpan.FromSeconds(5),
+                        TimeSpan.FromSeconds(10),
+                        TimeSpan.FromSeconds(15),
+                    });
+
+                    retry.Execute(() =>
+                    {
+                        context.Database.EnsureDeleted();
+                        context.Database.Migrate();
+                        seeder?.Invoke(context, services);
+                    });
+
+
+                    logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, $"An error occurred while migrating the database used on context {typeof(TContext).Name}");
+                }
+            }
+
+            return webHost;
         }
     }
 }
