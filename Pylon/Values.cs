@@ -13,6 +13,35 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Pylon
 {
+    public class ServiceLocation
+    {
+        public readonly string Account;
+        public readonly string API;
+        public readonly string CDN;
+        public readonly string Colossus;
+        public readonly string Developer;
+        public readonly string EE;
+        public readonly string OSS;
+        public readonly string Stargate;
+        public readonly string Wiki;
+        public readonly string KahlaHome;
+        public readonly string KahlaServer;
+
+        public ServiceLocation(IConfiguration configuration)
+        {
+            Account = configuration["Dependencies:AccountPath"];
+            API = configuration["Dependencies:APIPath"];
+            CDN = configuration["Dependencies:CDNPath"];
+            Colossus = configuration["Dependencies:ColossusPath"];
+            Developer = configuration["Dependencies:DeveloperPath"];
+            EE = configuration["Dependencies:EEPath"];
+            OSS = configuration["Dependencies:OSSPath"];
+            Stargate = configuration["Dependencies:StargatePath"];
+            Wiki = configuration["Dependencies:WikiPath"];
+            KahlaHome = configuration["Dependencies:KahlaHomePath"];
+            KahlaServer = configuration["Dependencies:KahlaServerPath"];
+        }
+    }
     public static class Values
     {
         public static string ProjectName = "Aiursoft";

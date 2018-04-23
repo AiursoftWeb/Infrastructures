@@ -134,6 +134,7 @@ namespace Aiursoft.Pylon
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var context = services.GetService<TContext>();
                 var configuration = services.GetService<IConfiguration>();
+                var env = services.GetService<IHostingEnvironment>();
 
                 var connectionString = configuration.GetConnectionString("DatabaseConnection");
                 try
@@ -149,9 +150,12 @@ namespace Aiursoft.Pylon
 
                     retry.Execute(() =>
                     {
-                        context.Database.EnsureDeleted();
-                        context.Database.Migrate();
-                        seeder?.Invoke(context, services);
+                        if (env.IsDevelopment())
+                        {
+                            context.Database.EnsureDeleted();
+                            context.Database.Migrate();
+                            seeder?.Invoke(context, services);
+                        }
                     });
 
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
