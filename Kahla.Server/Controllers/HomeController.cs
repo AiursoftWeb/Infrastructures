@@ -12,9 +12,16 @@ namespace Kahla.Server.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ServiceLocation _serviceLocation;
+
+        public HomeController(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+
         public IActionResult Index()
         {
-            return this.Protocal(ErrorType.Success, "Welcome to kahla server! View our wiki at: " + Values.WikiServerAddress);
+            return this.Protocal(ErrorType.Success, "Welcome to kahla server! View our wiki at: " + _serviceLocation.Wiki);
         }
 
         public IActionResult Error()

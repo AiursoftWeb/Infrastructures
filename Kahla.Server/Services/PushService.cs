@@ -17,13 +17,21 @@ namespace Kahla.Server.Services
     {
         private readonly KahlaDbContext _dbContext;
         private readonly PushMessageService _pushMessageService;
+        private readonly AppsContainer _appsContainer;
+        private readonly ChannelService _channelService;
+
         public PushKahlaMessageService(
             KahlaDbContext dbContext,
-            PushMessageService pushMessageService)
+            PushMessageService pushMessageService,
+            AppsContainer appsContainer,
+            ChannelService channelService)
         {
             _dbContext = dbContext;
             _pushMessageService = pushMessageService;
+            _appsContainer = appsContainer;
+            _channelService = channelService;
         }
+
         private string _CammalSer(object obj)
         {
             return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
@@ -34,14 +42,14 @@ namespace Kahla.Server.Services
 
         public async Task<CreateChannelViewModel> Init()
         {
-            var token = AppsContainer.AccessToken();
-            var channel = await ChannelService.CreateChannelAsync(await token(), "");
+            var token = await _appsContainer.AccessToken();
+            var channel = await _channelService.CreateChannelAsync(token, "");
             return channel;
         }
 
         public async Task NewMessageEvent(string recieverId, int conversationId, string Content, KahlaUser sender)
         {
-            var token = AppsContainer.AccessToken();
+            var token = await _appsContainer.AccessToken();
             var user = await _dbContext.Users.FindAsync(recieverId);
             var channel = user.CurrentChannel;
             var nevent = new NewMessageEvent
@@ -52,12 +60,12 @@ namespace Kahla.Server.Services
                 Content = Content
             };
             if (channel != -1)
-                await _pushMessageService.PushMessageAsync(await token(), channel, _CammalSer(nevent), true);
+                await _pushMessageService.PushMessageAsync(token, channel, _CammalSer(nevent), true);
         }
 
         public async Task NewFriendRequestEvent(string recieverId, string requesterId)
         {
-            var token = AppsContainer.AccessToken();
+            var token = await _appsContainer.AccessToken();
             var user = await _dbContext.Users.FindAsync(recieverId);
             var channel = user.CurrentChannel;
             var nevent = new NewFriendRequest
@@ -66,12 +74,12 @@ namespace Kahla.Server.Services
                 RequesterId = requesterId
             };
             if (channel != -1)
-                await _pushMessageService.PushMessageAsync(await token(), channel, _CammalSer(nevent), true);
+                await _pushMessageService.PushMessageAsync(token, channel, _CammalSer(nevent), true);
         }
 
         public async Task WereDeletedEvent(string recieverId)
         {
-            var token = AppsContainer.AccessToken();
+            var token = await _appsContainer.AccessToken();
             var user = await _dbContext.Users.FindAsync(recieverId);
             var channel = user.CurrentChannel;
             var nevent = new WereDeletedEvent
@@ -79,12 +87,12 @@ namespace Kahla.Server.Services
                 Type = EventType.WereDeletedEvent
             };
             if (channel != -1)
-                await _pushMessageService.PushMessageAsync(await token(), channel, _CammalSer(nevent), true);
+                await _pushMessageService.PushMessageAsync(token, channel, _CammalSer(nevent), true);
         }
 
         public async Task FriendAcceptedEvent(string recieverId)
         {
-            var token = AppsContainer.AccessToken();
+            var token = await _appsContainer.AccessToken();
             var user = await _dbContext.Users.FindAsync(recieverId);
             var channel = user.CurrentChannel;
             var nevent = new FriendAcceptedEvent
@@ -92,7 +100,7 @@ namespace Kahla.Server.Services
                 Type = EventType.FriendAcceptedEvent
             };
             if (channel != -1)
-                await _pushMessageService.PushMessageAsync(await token(), channel, _CammalSer(nevent), true);
+                await _pushMessageService.PushMessageAsync(token, channel, _CammalSer(nevent), true);
         }
     }
 }

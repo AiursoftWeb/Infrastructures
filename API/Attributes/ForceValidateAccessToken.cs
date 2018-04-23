@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Aiursoft.API.Data;
 
 namespace Aiursoft.API.Attributes
 {
@@ -17,9 +19,9 @@ namespace Aiursoft.API.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            var controller = context.Controller as UserController;
+            var _dbContext = context.HttpContext.RequestServices.GetService<APIDbContext>();
             var accessToken = context.HttpContext.Request.Query[nameof(WithAccessTokenAddressModel.AccessToken)].ToString();
-            var target = controller._dbContext
+            var target = _dbContext
                 .AccessToken
                 .SingleOrDefault(t => t.Value == accessToken);
 

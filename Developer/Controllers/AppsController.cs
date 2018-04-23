@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Developer.Controllers
 {
@@ -28,6 +29,7 @@ namespace Aiursoft.Developer.Controllers
         private readonly StorageService _storageService;
         private readonly OSSApiService _ossApiService;
         private readonly AppsContainer _appsContainer;
+        private readonly CoreApiService _coreApiService;
 
         public AppsController(
         UserManager<DeveloperUser> userManager,
@@ -37,7 +39,8 @@ namespace Aiursoft.Developer.Controllers
         ServiceLocation serviceLocation,
         StorageService storageService,
         OSSApiService ossApiService,
-        AppsContainer appsContainer)
+        AppsContainer appsContainer,
+        CoreApiService coreApiService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,6 +50,7 @@ namespace Aiursoft.Developer.Controllers
             _storageService = storageService;
             _ossApiService = ossApiService;
             _appsContainer = appsContainer;
+            _coreApiService = coreApiService;
         }
 
         public async Task<IActionResult> Index()
@@ -111,7 +115,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _dbContext);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _ossApiService, _appsContainer);
             model.JustHaveUpdated = JustHaveUpdated;
             return View(model);
         }
@@ -123,7 +127,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _dbContext);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _ossApiService, _appsContainer);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(model.AppId);

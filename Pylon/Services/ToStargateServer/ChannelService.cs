@@ -13,21 +13,26 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
 {
     public class ChannelService
     {
-        public readonly ServiceLocation _serviceLocation;
-        public ChannelService(ServiceLocation serviceLocation)
+        private readonly ServiceLocation _serviceLocation;
+        private readonly HTTPService _http;
+
+        public ChannelService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
             _serviceLocation = serviceLocation;
+            _http = http;
         }
+
         public async Task<CreateChannelViewModel> CreateChannelAsync(string AccessToken, string Description)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "CreateChannel", new { });
             var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
             {
                 AccessToken = AccessToken,
                 Description = Description
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -36,13 +41,12 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
 
         public async Task<AiurProtocal> ValidateChannelAsync(int Id, string Key)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ValidateChannel", new ChannelAddressModel
             {
                 Id = Id,
                 Key = Key
             });
-            var result = await httpContainer.Get(url);
+            var result = await _http.Get(url);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }

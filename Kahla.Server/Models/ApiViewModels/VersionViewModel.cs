@@ -11,6 +11,6 @@ namespace Kahla.Server.Models.ApiViewModels
     {
         public string LatestVersion { get; set; }
         public string OldestSupportedVersion { get; set; }
-        public string DownloadAddress { get; set; } = Values.KahlaAddress;
+        public string DownloadAddress { get; set; }
     }
 }

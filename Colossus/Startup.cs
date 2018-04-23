@@ -38,11 +38,14 @@ namespace Aiursoft.Colossus
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddScoped<UrlConverter>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddTransient<AuthService<ColossusUser>>();
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            services.AddSingleton<ServiceLocation>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<StorageService>();
+            services.AddTransient<AuthService<ColossusUser>>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

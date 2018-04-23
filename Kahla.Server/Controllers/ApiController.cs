@@ -34,13 +34,26 @@ namespace Kahla.Server.Controllers
         private readonly PushKahlaMessageService _pusher;
         private readonly IConfiguration _configuration;
         private readonly AuthService<KahlaUser> _authService;
+        private readonly ServiceLocation _serviceLocation;
+        private readonly OAuthService _oauthService;
+        private readonly ChannelService _channelService;
+        private readonly StorageService _storageService;
+        private readonly AppsContainer _appsContainer;
+        private readonly UserService _userService;
 
-        public ApiController(UserManager<KahlaUser> userManager,
+        public ApiController(
+            UserManager<KahlaUser> userManager,
             SignInManager<KahlaUser> signInManager,
             KahlaDbContext dbContext,
             PushKahlaMessageService pushService,
             IConfiguration configuration,
-            AuthService<KahlaUser> authService)
+            AuthService<KahlaUser> authService,
+            ServiceLocation serviceLocation,
+            OAuthService oauthService,
+            ChannelService channelService,
+            StorageService storageService,
+            AppsContainer appsContainer,
+            UserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -48,6 +61,12 @@ namespace Kahla.Server.Controllers
             _pusher = pushService;
             _configuration = configuration;
             _authService = authService;
+            _serviceLocation = serviceLocation;
+            _oauthService = oauthService;
+            _channelService = channelService;
+            _storageService = storageService;
+            _appsContainer = appsContainer;
+            _userService = userService;
         }
 
         public IActionResult Version()
@@ -56,14 +75,15 @@ namespace Kahla.Server.Controllers
             {
                 LatestVersion = _configuration["AppVersion"],
                 OldestSupportedVersion = _configuration["AppVersion"],
-                Message = "Successfully get the lastest version number for Kahla."
+                Message = "Successfully get the lastest version number for Kahla.",
+                DownloadAddress = _serviceLocation.KahlaHome
             });
         }
 
         [HttpPost]
         public async Task<IActionResult> AuthByPassword(AuthByPasswordAddressModel model)
         {
-            var pack = await OAuthService.PasswordAuthAsync(Extends.CurrentAppId, model.Email, model.Password);
+            var pack = await _oauthService.PasswordAuthAsync(Extends.CurrentAppId, model.Email, model.Password);
             if (pack.Code != ErrorType.Success)
             {
                 return this.Protocal(ErrorType.Unauthorized, pack.Message);
@@ -87,7 +107,7 @@ namespace Kahla.Server.Controllers
         {
             string iconPath = string.Empty;
             var file = Request.Form.Files.First();
-            iconPath = await StorageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
+            iconPath = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
             return Json(new AiurValue<string>(iconPath)
             {
                 Code = ErrorType.Success,
@@ -98,7 +118,7 @@ namespace Kahla.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterKahla(RegisterKahlaAddressModel model)
         {
-            var result = await OAuthService.AppRegisterAsync(model.Email, model.Password, model.ConfirmPassword);
+            var result = await _oauthService.AppRegisterAsync(model.Email, model.Password, model.ConfirmPassword);
             return Json(result);
         }
 
@@ -140,11 +160,10 @@ namespace Kahla.Server.Controllers
             {
                 cuser.Bio = model.Bio;
             }
-            await UserService.ChangeProfileAsync(cuser.Id, await AppsContainer.AccessToken()(), cuser.NickName, cuser.HeadImgUrl, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgUrl, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return this.Protocal(ErrorType.Success, "Successfully set your personal info.");
         }
-
 
         [KahlaRequireCredential]
         public async Task<IActionResult> MyFriends([Required]bool? orderByName)
@@ -175,6 +194,7 @@ namespace Kahla.Server.Controllers
                 Message = "Successfully get all your friends."
             });
         }
+
         [HttpPost]
         [KahlaRequireCredential]
         public async Task<IActionResult> DeleteFriend([Required]string id)
@@ -190,6 +210,7 @@ namespace Kahla.Server.Controllers
             await _pusher.WereDeletedEvent(target.Id);
             return this.Protocal(ErrorType.Success, "Successfully deleted your friend relationship.");
         }
+
         [HttpPost]
         [KahlaRequireCredential]
         public async Task<IActionResult> CreateRequest([Required]string id)
@@ -219,6 +240,7 @@ namespace Kahla.Server.Controllers
                 Message = "Successfully created your request!"
             });
         }
+
         [HttpPost]
         [KahlaRequireCredential]
         public async Task<IActionResult> CompleteRequest(CompleteRequestAddressModel model)
@@ -318,6 +340,7 @@ namespace Kahla.Server.Controllers
                 Message = "Successfully get all your messages."
             });
         }
+
         [HttpPost]
         [KahlaRequireCredential]
         public async Task<IActionResult> SendMessage(SendMessageAddressModel model)
@@ -414,7 +437,7 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> InitPusher()
         {
             var user = await GetKahlaUser();
-            if (user.CurrentChannel == -1 || (await ChannelService.ValidateChannelAsync(user.CurrentChannel, user.ConnectKey)).Code != ErrorType.Success)
+            if (user.CurrentChannel == -1 || (await _channelService.ValidateChannelAsync(user.CurrentChannel, user.ConnectKey)).Code != ErrorType.Success)
             {
                 var channel = await _pusher.Init();
                 user.CurrentChannel = channel.ChannelId;
@@ -427,7 +450,7 @@ namespace Kahla.Server.Controllers
                 Message = "Successfully get your channel.",
                 ChannelId = user.CurrentChannel,
                 ConnectKey = user.ConnectKey,
-                ServerPath = new AiurUrl(Values.StargateListenAddress, "Listen", "Channel", new ChannelAddressModel
+                ServerPath = new AiurUrl(_serviceLocation.StargateListenAddress, "Listen", "Channel", new ChannelAddressModel
                 {
                     Id = user.CurrentChannel,
                     Key = user.ConnectKey

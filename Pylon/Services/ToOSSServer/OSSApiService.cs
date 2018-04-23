@@ -12,22 +12,26 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 {
     public class OSSApiService
     {
-        public readonly ServiceLocation _serviceLocation;
-        public OSSApiService(ServiceLocation serviceLocation)
+        private readonly ServiceLocation _serviceLocation;
+        private readonly HTTPService _http;
+
+        public OSSApiService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
             _serviceLocation = serviceLocation;
+            _http = http;
         }
 
         public async Task<AiurProtocal> DeleteAppAsync(string AccessToken, string AppId)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteApp", new { });
             var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
             {
                 AccessToken = AccessToken,
                 AppId = AppId
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success && jResult.Code != ErrorType.HasDoneAlready)
                 throw new AiurUnexceptedResponse(jResult);
@@ -36,12 +40,11 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<ViewMyBucketsViewModel> ViewMyBucketsAsync(string AccessToken)
         {
-            var HTTPContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewMyBuckets", new ViewMyBucketsAddressModel
             {
                 AccessToken = AccessToken
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<ViewMyBucketsViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -51,7 +54,6 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<CreateBucketViewModel> CreateBucketAsync(string AccessToken, string BucketName, bool OpenToRead, bool OpenToUpload)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "CreateBucket", new { });
             var form = new AiurUrl(string.Empty, new CreateBucketAddressModel
             {
@@ -60,7 +62,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 OpenToRead = OpenToRead,
                 OpenToUpload = OpenToUpload
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<CreateBucketViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -69,7 +71,6 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<AiurProtocal> EditBucketAsync(string AccessToken, int BucketId, string NewBucketName, bool OpenToRead, bool OpenToUpload)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "EditBucket", new { });
             var form = new AiurUrl(string.Empty, new EditBucketAddressModel
             {
@@ -79,7 +80,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 OpenToRead = OpenToRead,
                 OpenToUpload = OpenToUpload
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -88,12 +89,11 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<ViewBucketViewModel> ViewBucketDetailAsync(int BucketId)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewBucketDetail", new ViewBucketDetailAddressModel
             {
                 BucketId = BucketId
             });
-            var result = await httpContainer.Get(url);
+            var result = await _http.Get(url);
             var jResult = JsonConvert.DeserializeObject<ViewBucketViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -102,14 +102,13 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<AiurProtocal> DeleteBucketAsync(string AccessToken, int BucketId)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteBucket", new { });
             var form = new AiurUrl(string.Empty, new DeleteBucketAddressModel
             {
                 AccessToken = AccessToken,
                 BucketId = BucketId
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -118,12 +117,11 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<ViewOneFileViewModel> ViewOneFileAsync(int FileKey)
         {
-            var HTTPContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewOneFile", new ViewOneFileAddressModel
             {
                 FileKey = FileKey
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<ViewOneFileViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -133,14 +131,13 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<UploadFileViewModel> UploadFile(string AccessToken, int BucketId, string FilePath, int AliveDays)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "UploadFile", new UploadFileAddressModel
             {
                 AccessToken = AccessToken,
                 BucketId = BucketId,
                 AliveDays = AliveDays
             });
-            var result = await httpContainer.PostFile(url, FilePath);
+            var result = await _http.PostFile(url, FilePath);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -149,13 +146,12 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<ViewAllFilesViewModel> ViewAllFilesAsync(string AccessToken, int BucketId)
         {
-            var http = new HTTPService();
             var path = new AiurUrl(_serviceLocation.OSS, "api", "viewallfiles", new CommonAddressModel
             {
                 AccessToken = AccessToken,
                 BucketId = BucketId
             });
-            var result = await http.Get(path);
+            var result = await _http.Get(path);
             var jResult = JsonConvert.DeserializeObject<ViewAllFilesViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -164,7 +160,6 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
 
         public async Task<AiurProtocal> DeleteFileAsync(string AccessToken, int FileKey, int BucketId)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteFile", new { });
             var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
             {
@@ -172,7 +167,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 BucketId = BucketId,
                 FileKey = FileKey
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

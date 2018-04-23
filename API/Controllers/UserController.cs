@@ -34,7 +34,7 @@ namespace Aiursoft.API.Controllers
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
         private readonly ILogger _logger;
-        public readonly APIDbContext _dbContext;
+        private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
         private readonly AiurSMSSender _smsSender;

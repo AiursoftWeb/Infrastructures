@@ -21,17 +21,22 @@ namespace Aiursoft.Stargate.Controllers
     {
         private readonly StargateDbContext _dbContext;
         private readonly Counter _counter;
-        public MessageController(StargateDbContext dbContext,
-            Counter counter)
+        private readonly CoreApiService _coreApiService;
+
+        public MessageController(
+            StargateDbContext dbContext,
+            Counter counter,
+            CoreApiService coreApiService)
         {
             _dbContext = dbContext;
             _counter = counter;
+            _coreApiService = coreApiService;
         }
 
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
         {
             //Ensure app is created
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == app.AppId);
             if (appLocal == null)
             {

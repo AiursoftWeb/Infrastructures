@@ -12,6 +12,7 @@ using Aiursoft.Pylon.Models.API;
 using Aiursoft.Developer.Data;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Developer.Models.AppsViewModels
 {
@@ -19,22 +20,32 @@ namespace Aiursoft.Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewAppViewModel() { }
-        public static async Task<ViewAppViewModel> SelfCreateAsync(DeveloperUser User, App ThisApp, DeveloperDbContext _dbContext)
+        public static async Task<ViewAppViewModel> SelfCreateAsync(
+            DeveloperUser User,
+            App ThisApp,
+            CoreApiService coreApiService,
+            OSSApiService ossApiService,
+            AppsContainer appsContainer)
         {
             var model = new ViewAppViewModel(User, ThisApp);
-            await model.Recover(User, ThisApp, _dbContext);
+            await model.Recover(User, ThisApp, coreApiService, ossApiService, appsContainer);
             return model;
         }
 
-        public async Task Recover(DeveloperUser User, App ThisApp, DeveloperDbContext _dbContext)
+        public async Task Recover(
+            DeveloperUser User,
+            App ThisApp,
+            CoreApiService coreApiService,
+            OSSApiService ossApiService,
+            AppsContainer appsContainer)
         {
             base.Recover(User, 1);
-            var token = AppsContainer.AccessToken(ThisApp.AppId, ThisApp.AppSecret);
+            var token = await appsContainer.AccessToken(ThisApp.AppId, ThisApp.AppSecret);
 
-            var buckets = await ApiService.ViewMyBucketsAsync(await token());
+            var buckets = await ossApiService.ViewMyBucketsAsync(token);
             Buckets = buckets.Buckets;
 
-            var grants = await Pylon.Services.ToAPIServer.ApiService.AllUserGrantedAsync(await token());
+            var grants = await coreApiService.AllUserGrantedAsync(token);
             Grants = grants.Grants;
         }
 

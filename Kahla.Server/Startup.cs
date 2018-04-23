@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Http;
 using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Kahla.Server
 {
@@ -39,10 +41,15 @@ namespace Kahla.Server
 
             services.AddMvc();
             services.AddSingleton<ServiceLocation>();
-            services.AddTransient<AuthService<KahlaUser>>();
-            services.AddTransient<HTTPService>();
-            services.AddTransient<PushMessageService>();
-            services.AddTransient<PushKahlaMessageService>();
+            services.AddSingleton<AppsContainer>();
+            services.AddScoped<AuthService<KahlaUser>>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<OAuthService>();
+            services.AddScoped<ChannelService>();
+            services.AddScoped<StorageService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<PushMessageService>();
+            services.AddScoped<PushKahlaMessageService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

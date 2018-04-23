@@ -22,13 +22,21 @@ namespace Aiursoft.Stargate.Controllers
     {
         private StargateDbContext _dbContext;
         private Debugger _debugger;
+        private readonly AppsContainer _appsContainer;
+        private readonly ChannelService _channelService;
+
         public HomeController(
             StargateDbContext dbContext,
-            Debugger debugger)
+            Debugger debugger,
+            AppsContainer appsContainer,
+            ChannelService channelService)
         {
             _dbContext = dbContext;
             _debugger = debugger;
+            _appsContainer = appsContainer;
+            _channelService = channelService;
         }
+
         public IActionResult Index()
         {
             return Json(new AiurProtocal
@@ -40,11 +48,11 @@ namespace Aiursoft.Stargate.Controllers
 
         public async Task<IActionResult> IntegratedTest()
         {
-            var token = AppsContainer.AccessToken();
-            var result = await ChannelService.CreateChannelAsync(await token(), "Test Channel");
+            var token = await _appsContainer.AccessToken();
+            var result = await _channelService.CreateChannelAsync(token, "Test Channel");
             await Task.Factory.StartNew(async () =>
             {
-                await _debugger.SendDebuggingMessages(await token(), result.ChannelId);
+                await _debugger.SendDebuggingMessages(token, result.ChannelId);
             });
             var model = new ChannelAddressModel
             {
@@ -58,6 +66,7 @@ namespace Aiursoft.Stargate.Controllers
         {
             return View("Test", model);
         }
+
         public IActionResult Error()
         {
             return this.Protocal(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");

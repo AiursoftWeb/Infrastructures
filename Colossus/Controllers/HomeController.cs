@@ -9,15 +9,21 @@ using Aiursoft.Pylon.Attributes;
 using System.IO;
 using Aiursoft.Pylon;
 using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.Colossus.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
-        public HomeController(IConfiguration configuration)
+        private readonly StorageService _storageService;
+
+        public HomeController(
+            IConfiguration configuration,
+            StorageService storageService)
         {
             _configuration = configuration;
+            _storageService = storageService;
         }
 
         [AiurForceAuth("", "", justTry: true)]
@@ -35,7 +41,7 @@ namespace Aiursoft.Colossus.Controllers
                 return Redirect("/");
             }
             var file = Request.Form.Files.First();
-            var path = await Pylon.Services.StorageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
+            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
             return Json(new
             {
                 message = "Uploaded!",

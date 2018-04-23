@@ -27,17 +27,23 @@ namespace Aiursoft.Developer.Controllers
         private readonly SignInManager<DeveloperUser> _signInManager;
         private readonly ILogger _logger;
         private readonly DeveloperDbContext _dbContext;
+        private readonly AppsContainer _appsContainer;
+        private readonly OSSApiService _ossApiService;
 
         public BucketController(
-        UserManager<DeveloperUser> userManager,
-        SignInManager<DeveloperUser> signInManager,
-        ILoggerFactory loggerFactory,
-        DeveloperDbContext _context)
+            UserManager<DeveloperUser> userManager,
+            SignInManager<DeveloperUser> signInManager,
+            ILoggerFactory loggerFactory,
+            DeveloperDbContext dbContext,
+            AppsContainer appsContainer,
+            OSSApiService ossApiService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<BucketController>();
-            _dbContext = _context;
+            _dbContext = dbContext;
+            _appsContainer = appsContainer;
+            _ossApiService = ossApiService;
         }
 
         public async Task<IActionResult> Index()
@@ -46,7 +52,7 @@ namespace Aiursoft.Developer.Controllers
             var allBuckets = new List<Bucket>();
             foreach (var app in cuser.MyApps)
             {
-                var appInfo = await ApiService.ViewMyBucketsAsync(await AppsContainer.AccessToken(app.AppId, app.AppSecret)());
+                var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
                 allBuckets.AddRange(appInfo.Buckets);
             }
             var model = new IndexViewModel(cuser)
@@ -83,8 +89,8 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = AppsContainer.AccessToken(app.AppId, app.AppSecret);
-                var result = await ApiService.CreateBucketAsync(await token(), model.NewBucketName, model.OpenToRead, model.OpenToUpload);
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var result = await _ossApiService.CreateBucketAsync(token, model.NewBucketName, model.OpenToRead, model.OpenToUpload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
@@ -99,7 +105,7 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> EditBucket(int id)//BucketId
         {
             var cuser = await GetCurrentUserAsync();
-            var bucket = await ApiService.ViewBucketDetailAsync(id);
+            var bucket = await _ossApiService.ViewBucketDetailAsync(id);
             var model = new EditBucketViewModel(cuser, bucket)
             {
                 AppId = bucket.BelongingAppId
@@ -120,11 +126,11 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var app = await _dbContext.Apps.FindAsync(model.AppId);
-                var token = AppsContainer.AccessToken(app.AppId, app.AppSecret);
-                var bucket = await ApiService.ViewBucketDetailAsync(model.BucketId);
-                if (bucket.BelongingAppId != app.AppId || app.CreaterId != cuser.Id) return Unauthorized();
-
-                await ApiService.EditBucketAsync(await token(), model.BucketId, model.NewBucketName, model.OpenToRead, model.OpenToUpload);
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var bucket = await _ossApiService.ViewBucketDetailAsync(model.BucketId);
+                if (bucket.BelongingAppId != app.AppId || app.CreaterId != cuser.Id)
+                    return Unauthorized();
+                await _ossApiService.EditBucketAsync(token, model.BucketId, model.NewBucketName, model.OpenToRead, model.OpenToUpload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = model.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
@@ -139,7 +145,7 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> DeleteBucket(int Id)//BucketId
         {
             var cuser = await GetCurrentUserAsync();
-            var bucket = await ApiService.ViewBucketDetailAsync(Id);
+            var bucket = await _ossApiService.ViewBucketDetailAsync(Id);
             var model = new DeleteBucketViewModel(cuser)
             {
                 BucketName = bucket.BucketName,
@@ -157,13 +163,13 @@ namespace Aiursoft.Developer.Controllers
             {
                 var app = await _dbContext.Apps.FindAsync(model.AppId);
                 var cuser = await GetCurrentUserAsync();
-                var token = AppsContainer.AccessToken(app.AppId, app.AppSecret);
-                var bucket = await ApiService.ViewBucketDetailAsync(model.BucketId);
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var bucket = await _ossApiService.ViewBucketDetailAsync(model.BucketId);
                 if (bucket.BelongingAppId != app.AppId || app.CreaterId != cuser.Id)
                 {
                     return Unauthorized();
                 }
-                await ApiService.DeleteBucketAsync(await token(), model.BucketId);
+                await _ossApiService.DeleteBucketAsync(token, model.BucketId);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = model.AppId });
             }
             return View(model);

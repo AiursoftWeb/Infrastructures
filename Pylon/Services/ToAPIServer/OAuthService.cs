@@ -12,14 +12,19 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 {
     public class OAuthService
     {
-        public readonly ServiceLocation _serviceLocation;
-        public OAuthService(ServiceLocation serviceLocation)
+        private readonly ServiceLocation _serviceLocation;
+        private readonly HTTPService _http;
+
+        public OAuthService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
             _serviceLocation = serviceLocation;
+            _http = http;
         }
+
         public async Task<AiurValue<int>> PasswordAuthAsync(string appid, string email, string password)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.API, "OAuth", "PasswordAuth", new { });
             var form = new AiurUrl(string.Empty, new PasswordAuthAddressModel
             {
@@ -27,14 +32,13 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Email = email,
                 Password = password
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurValue<int>>(result);
             return jResult;
         }
 
         public async Task<AiurProtocal> AppRegisterAsync(string email, string password, string confirmPassword)
         {
-            var httpContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.API, "OAuth", "AppRegister", new { });
             var form = new AiurUrl(string.Empty, new AppRegisterAddressModel
             {
@@ -42,21 +46,20 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Password = password,
                 ConfirmPassword = confirmPassword
             });
-            var result = await httpContainer.Post(url, form);
+            var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }
 
         public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(int code, string AccessToken)
         {
-            var HTTPContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.API, "OAuth", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
                 AccessToken = AccessToken,
                 Code = code,
                 grant_type = "authorization_code"
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -66,14 +69,13 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<UserInfoViewModel> OpenIdToUserInfo(string AccessToken, string openid)
         {
-            var HTTPContainer = new HTTPService();
             var url = new AiurUrl(_serviceLocation.API, "oauth", "UserInfo", new UserInfoAddressModel
             {
                 access_token = AccessToken,
                 openid = openid,
                 lang = "en-US"
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new Exception(JResult.Message);
