@@ -32,19 +32,22 @@ namespace Aiursoft.API.Controllers
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
+        private readonly DeveloperApiService _developerApiService;
 
         public ApiController(
             UserManager<APIUser> userManager,
             SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
             APIDbContext _context,
-            IStringLocalizer<ApiController> localizer)
+            IStringLocalizer<ApiController> localizer,
+            DeveloperApiService developerApiService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = _context;
             _localizer = localizer;
+            _developerApiService = developerApiService;
         }
 
         private void _ApplyCultureCookie(string culture)
@@ -119,7 +122,7 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
-            var AppValidateState = await ApiService.IsValidAppAsync(model.AppId, model.AppSecret);
+            var AppValidateState = await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
             if (AppValidateState.Code != ErrorType.Success)
             {
                 return Json(AppValidateState);

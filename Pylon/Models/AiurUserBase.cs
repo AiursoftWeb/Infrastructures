@@ -30,6 +30,7 @@ namespace Aiursoft.Pylon.Models
             Bio = model.User.Bio;
             EmailConfirmed = model.User.EmailConfirmed;
         }
+
         [JsonProperty]
         public override string Id { get => base.Id; set => base.Id = value; }
         [JsonProperty]
@@ -39,7 +40,7 @@ namespace Aiursoft.Pylon.Models
         [JsonProperty]
         public virtual string Sex { get; set; }
         [JsonProperty]
-        public virtual string HeadImgUrl { get; set; } = $@"{Values.DeveloperServerAddress}/images/appdefaulticon.png";
+        public virtual string HeadImgUrl { get; set; }
         [JsonProperty]
         public virtual string PreferedLanguage { get; set; } = "UnSet";
         [JsonProperty]

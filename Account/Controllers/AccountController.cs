@@ -24,19 +24,28 @@ namespace Aiursoft.Account.Controllers
         private readonly ILogger _logger;
         private readonly AccountDbContext _dbContext;
         private readonly AiurSMSSender _sender;
+        private readonly UserService _userService;
+        private readonly StorageService _storageService;
+        private readonly AppsContainer _appsContainer;
 
         public AccountController(
             UserManager<AccountUser> userManager,
             SignInManager<AccountUser> signInManager,
             ILoggerFactory loggerFactory,
             AccountDbContext context,
-            AiurSMSSender sender)
+            AiurSMSSender sender,
+            UserService userService,
+            StorageService storageService,
+            AppsContainer appsContainer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _dbContext = context;
             _sender = sender;
+            _userService = userService;
+            _storageService = storageService;
+            _appsContainer = appsContainer;
         }
 
         public async Task<IActionResult> Index(bool? JustHaveUpdated)
@@ -61,7 +70,7 @@ namespace Aiursoft.Account.Controllers
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await UserService.ChangeProfileAsync(cuser.Id, await AppsContainer.AccessToken()(), cuser.NickName, string.Empty, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, string.Empty, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -70,7 +79,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Email(bool JustHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var emails = await UserService.ViewAllEmailsAsync(await AppsContainer.AccessToken()(), user.Id);
+            var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
             var model = new EmailViewModel(user)
             {
                 Emails = emails.Items,
@@ -101,8 +110,8 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            cuser.HeadImgUrl = await StorageService.SaveToOSS(Request.Form.Files.First(), Values.UsersIconBucketId, 365);
-            await UserService.ChangeProfileAsync(cuser.Id, await AppsContainer.AccessToken()(), string.Empty, cuser.HeadImgUrl, string.Empty);
+            cuser.HeadImgUrl = await _storageService.SaveToOSS(Request.Form.Files.First(), Values.UsersIconBucketId, 365);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, string.Empty);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
@@ -127,7 +136,7 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            var result = await UserService.ChangePasswordAsync(cuser.Id, await AppsContainer.AccessToken()(), model.OldPassword, model.NewPassword);
+            var result = await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
             if (result.Code == ErrorType.Success)
             {
                 return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
@@ -144,7 +153,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Phone(bool JustHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var phone = await UserService.ViewPhoneNumberAsync(user.Id, await AppsContainer.AccessToken()());
+            var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessToken());
             var model = new PhoneViewModel(user)
             {
                 CurrentPhoneNumber = phone.Value,
@@ -196,7 +205,7 @@ namespace Aiursoft.Account.Controllers
             var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
             if (correctToken)
             {
-                var result = await UserService.SetPhoneNumberAsync(user.Id, await AppsContainer.AccessToken()(), model.NewPhoneNumber);
+                var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), model.NewPhoneNumber);
                 if (result.Code == ErrorType.Success)
                 {
                     user.PhoneNumber = model.NewPhoneNumber;
@@ -218,7 +227,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> UnBind()
         {
             var user = await GetCurrentUserAsync();
-            var result = await UserService.SetPhoneNumberAsync(user.Id, await AppsContainer.AccessToken()(), string.Empty);
+            var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), string.Empty);
             if (result.Code == ErrorType.Success)
             {
                 user.PhoneNumber = string.Empty;

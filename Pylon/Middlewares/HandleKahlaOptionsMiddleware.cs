@@ -15,7 +15,7 @@ namespace Aiursoft.Pylon.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, ServiceLocation serviceLocation)
         {
             context.Response.Headers.Add("Cache-Control", "no-cache");
             context.Response.Headers.Add("Expires", "-1");
@@ -25,7 +25,7 @@ namespace Aiursoft.Pylon.Middlewares
             }
             else
             {
-                context.Response.Headers.Add("Access-Control-Allow-Origin", Values.KahlaAppAddress);
+                context.Response.Headers.Add("Access-Control-Allow-Origin", serviceLocation.KahlaApp);
             }
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             if (context.Request.Method == "OPTIONS")

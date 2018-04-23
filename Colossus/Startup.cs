@@ -38,6 +38,7 @@ namespace Aiursoft.Colossus
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddScoped<UrlConverter>();
             services.AddSingleton<ServiceLocation>();
             services.AddTransient<AuthService<ColossusUser>>();
             services.AddMvc()

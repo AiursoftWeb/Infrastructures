@@ -21,16 +21,19 @@ namespace Aiursoft.OSS.Controllers
     public class SecretController : Controller
     {
         private readonly OSSDbContext _dbContext;
+        private readonly CoreApiService _coreApiService;
         public SecretController(
-            OSSDbContext dbContext)
+            OSSDbContext dbContext,
+            CoreApiService coreApiService)
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
+            _coreApiService = coreApiService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Generate(GenerateAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == app.AppId);
             var file = await _dbContext.OSSFile.Include(t => t.BelongingBucket).SingleOrDefaultAsync(t => t.FileKey == model.Id);
             if (file == null || file.BelongingBucket.BelongingAppId != appLocal.AppId)

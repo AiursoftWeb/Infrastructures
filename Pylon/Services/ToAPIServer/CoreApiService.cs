@@ -10,45 +10,54 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToAPIServer
 {
-    public class ApiService
+    public class CoreApiService
     {
-        public async static Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string AccessToken)
+        private readonly ServiceLocation _serviceLocation;
+        private readonly HTTPService _http;
+        public CoreApiService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
-            var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "api", "ValidateAccessToken", new
+            _serviceLocation = serviceLocation;
+            _http = http;
+        }
+
+        public async Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string AccessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "api", "ValidateAccessToken", new
             {
-                AccessToken = AccessToken
+                AccessToken
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<ValidateAccessTokenViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
-        public async static Task<AccessTokenViewModel> AccessTokenAsync(string AppId, string AppSecret)
+
+        public async Task<AccessTokenViewModel> AccessTokenAsync(string AppId, string AppSecret)
         {
-            var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "API", "AccessToken", new AccessTokenAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "API", "AccessToken", new AccessTokenAddressModel
             {
                 AppId = AppId,
                 AppSecret = AppSecret
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
-        public async static Task<AllUserGrantedViewModel> AllUserGrantedAsync(string AccessToken)
+
+        public async Task<AllUserGrantedViewModel> AllUserGrantedAsync(string AccessToken)
         {
-            var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "API", "AllUserGranted", new
+            var url = new AiurUrl(_serviceLocation.API, "API", "AllUserGranted", new
             {
-                AccessToken = AccessToken
+                AccessToken
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AllUserGrantedViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)

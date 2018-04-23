@@ -9,17 +9,25 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToOSSServer
 {
-    public static class SecretService
+    public class SecretService
     {
-        public static async Task<AiurValue<string>> GenerateAsync(int id, string accessToken)
+        private readonly ServiceLocation _serviceLoation;
+        private readonly HTTPService _http;
+        public SecretService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
-            var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "Secret", "Generate", new GenerateAddressModel
+            _serviceLoation = serviceLocation;
+            _http = http;
+        }
+        public async Task<AiurValue<string>> GenerateAsync(int id, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLoation.OSS, "Secret", "Generate", new GenerateAddressModel
             {
                 Id = id,
                 AccessToken = accessToken
             });
-            var result = await httpContainer.Get(url);
+            var result = await _http.Get(url);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

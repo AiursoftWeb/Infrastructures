@@ -10,28 +10,37 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToDeveloperServer
 {
-    public class ApiService
+    public class DeveloperApiService
     {
-        public async static Task<AiurProtocal> IsValidAppAsync(string AppId, string AppSecret)
+        private readonly ServiceLocation _serviceLocation;
+        private readonly HTTPService _http;
+        public DeveloperApiService(
+            ServiceLocation serviceLocation,
+            HTTPService http)
         {
-            var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.DeveloperServerAddress, "api", "IsValidApp", new IsValidateAppAddressModel
+            _serviceLocation = serviceLocation;
+            _http = http;
+        }
+
+        public async Task<AiurProtocal> IsValidAppAsync(string AppId, string AppSecret)
+        {
+            var url = new AiurUrl(_serviceLocation.Developer, "api", "IsValidApp", new IsValidateAppAddressModel
             {
                 AppId = AppId,
                 AppSecret = AppSecret
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return JResult;
         }
-        public async static Task<AppInfoViewModel> AppInfoAsync(string AppId)
+
+        public async Task<AppInfoViewModel> AppInfoAsync(string AppId)
         {
-            var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.DeveloperServerAddress, "api", "AppInfo", new AppInfoAddressModel
+            var url = new AiurUrl(_serviceLocation.Developer, "api", "AppInfo", new AppInfoAddressModel
             {
                 AppId = AppId
             });
-            var result = await HTTPContainer.Get(url);
+            var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
 
             //if (JResult.code != ErrorType.Success)

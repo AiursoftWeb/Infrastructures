@@ -17,6 +17,8 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.API
 {
@@ -42,11 +44,14 @@ namespace Aiursoft.API
                 .AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<ServiceLocation>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<DeveloperApiService>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
+
             services.AddMvc()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
+                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                    .AddDataAnnotationsLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -33,6 +33,7 @@ namespace Aiursoft.EE
             services.AddIdentity<EEUser, IdentityRole>()
                 .AddEntityFrameworkStores<EEDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddScoped<UrlConverter>();
             services.AddSingleton<ServiceLocation>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddTransient<AuthService<EEUser>>();

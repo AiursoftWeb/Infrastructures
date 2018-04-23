@@ -20,6 +20,7 @@ using Aiursoft.Pylon.Models.OSS.ApiAddressModels;
 using Aiursoft.Pylon;
 using Aiursoft.OSS.Services;
 using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
 
 namespace Aiursoft.OSS.Controllers
 {
@@ -31,20 +32,26 @@ namespace Aiursoft.OSS.Controllers
         private readonly OSSDbContext _dbContext;
         private readonly ImageCompresser _imageCompresser;
         private readonly IConfiguration _configuration;
+        private readonly ServiceLocation _serviceLocation;
+        private readonly CoreApiService _coreApiService;
         public ApiController(
             OSSDbContext dbContext,
             ImageCompresser imageCompresser,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ServiceLocation serviceLocation,
+            CoreApiService coreApiService)
         {
             _dbContext = dbContext;
             _imageCompresser = imageCompresser;
             _configuration = configuration;
+            _serviceLocation = serviceLocation;
+            _coreApiService = coreApiService;
         }
 
         [HttpPost]
         public async Task<JsonResult> DeleteApp(DeleteAppAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             if (app.AppId != model.AppId)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app you try to delete is not the accesstoken you granted!");
@@ -64,7 +71,7 @@ namespace Aiursoft.OSS.Controllers
 
         public async Task<JsonResult> ViewMyBuckets(ViewMyBucketsAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == app.AppId);
             if (appLocal == null)
             {
@@ -97,7 +104,7 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> CreateBucket([FromForm]CreateBucketAddressModel model)
         {
             //Update app info
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.Include(t => t.MyBuckets).SingleOrDefaultAsync(t => t.AppId == app.AppId);
             if (appLocal == null)
             {
@@ -143,7 +150,7 @@ namespace Aiursoft.OSS.Controllers
         [HttpPost]
         public async Task<JsonResult> EditBucket([FromForm]EditBucketAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var existing = _dbContext.Bucket.Exists(t => t.BucketName == model.NewBucketName && t.BucketId != model.BucketId);
             if (existing)
             {
@@ -190,7 +197,7 @@ namespace Aiursoft.OSS.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteBucket([FromForm]DeleteBucketAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
             if (bucket.BelongingAppId != app.AppId)
             {
@@ -211,6 +218,7 @@ namespace Aiursoft.OSS.Controllers
 
             var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             file.JFileSize = new FileInfo(path).Length;
+            file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
 
             var viewModel = new ViewOneFileViewModel
             {
@@ -225,7 +233,7 @@ namespace Aiursoft.OSS.Controllers
         [FileChecker]
         public async Task<JsonResult> UploadFile(UploadFileAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             //try find the target bucket
             var targetBucket = await _dbContext.Bucket.FindAsync(model.BucketId);
             if (targetBucket == null || targetBucket.BelongingAppId != app.AppId)
@@ -262,20 +270,22 @@ namespace Aiursoft.OSS.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
+            // Get Internet path
+            newFile.InternetPath = new AiurUrl(_serviceLocation.OSS, newFile.BelongingBucket.BucketName, newFile.RealFileName, new { }).ToString();
             //Return json
             return Json(new UploadFileViewModel
             {
                 Code = ErrorType.Success,
                 FileKey = newFile.FileKey,
                 Message = "Successfully uploaded your file.",
-                Path = newFile.GetInternetPath
+                Path = newFile.InternetPath
             });
         }
 
         public async Task<JsonResult> ViewAllFiles(CommonAddressModel model)
         {
             //Analyse app
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
             //Security
             if (bucket.BelongingAppId != app.AppId)
@@ -288,6 +298,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 file.JFileSize = new FileInfo(path).Length;
+                file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
             }
             var viewModel = new ViewAllFilesViewModel
             {
@@ -303,7 +314,7 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> DeleteFile(DeleteFileAddressModel model)
         {
             //Analyse app
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
             var file = await _dbContext.OSSFile.FindAsync(model.FileKey);
             if (bucket == null || file == null)

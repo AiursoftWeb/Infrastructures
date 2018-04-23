@@ -12,15 +12,18 @@ namespace Aiursoft.Developer.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly SignInManager<DeveloperUser> _signInManager;
-        public readonly ILogger _logger;
+        private readonly SignInManager<DeveloperUser> _signInManager;
+        private readonly ILogger _logger;
+        private readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             SignInManager<DeveloperUser> signInManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ServiceLocation serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
+            _serviceLocation = serviceLocation;
         }
 
         [AiurForceAuth("Apps", "Index", justTry: true)]
@@ -40,7 +43,7 @@ namespace Aiursoft.Developer.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignoutRootServer(new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public IActionResult Error()

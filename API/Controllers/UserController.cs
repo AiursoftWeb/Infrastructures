@@ -38,6 +38,8 @@ namespace Aiursoft.API.Controllers
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
         private readonly AiurSMSSender _smsSender;
+        private readonly DeveloperApiService _developerApiService;
+        private readonly ServiceLocation _serviceLocation;
 
         public UserController(
             UserManager<APIUser> userManager,
@@ -46,7 +48,9 @@ namespace Aiursoft.API.Controllers
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
             AiurEmailSender emailSender,
-            AiurSMSSender smsSender)
+            AiurSMSSender smsSender,
+            DeveloperApiService developerApiService,
+            ServiceLocation serviceLocation)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -55,6 +59,8 @@ namespace Aiursoft.API.Controllers
             _localizer = localizer;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _developerApiService = developerApiService;
+            _serviceLocation = serviceLocation;
         }
 
         [ForceValidateAccessToken]
@@ -67,7 +73,7 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
@@ -102,7 +108,7 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
@@ -132,7 +138,7 @@ namespace Aiursoft.API.Controllers
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
-            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
             if (targetUser == null)
             {
@@ -162,7 +168,7 @@ namespace Aiursoft.API.Controllers
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
-            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
             if (targetUser == null)
             {
@@ -197,7 +203,7 @@ namespace Aiursoft.API.Controllers
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
-            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
             if (targetUser == null)
             {
@@ -238,7 +244,7 @@ namespace Aiursoft.API.Controllers
                     return RedirectToAction(nameof(ForgotPasswordSent));
                 }
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = new AiurUrl(Values.ApiServerAddress, "User", nameof(ResetPassword), new
+                var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
                 {
                     Code = code,
                     UserId = user.Id

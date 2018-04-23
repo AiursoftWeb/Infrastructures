@@ -12,13 +12,17 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
     public class PushMessageService
     {
         private readonly HTTPService _httpService;
-        public PushMessageService(HTTPService httpService)
+        private readonly ServiceLocation _serviceLocation;
+        public PushMessageService(
+            HTTPService httpService,
+            ServiceLocation serviceLocation)
         {
             _httpService = httpService;
+            _serviceLocation = serviceLocation;
         }
         public async Task<AiurProtocal> PushMessageAsync(string AccessToken, int ChannelId, string MessageContent, bool noexception = false)
         {
-            var url = new AiurUrl(Values.StargateServerAddress, "Message", "PushMessage", new { });
+            var url = new AiurUrl(_serviceLocation.Stargate, "Message", "PushMessage", new { });
             var form = new AiurUrl(string.Empty, new PushMessageAddressModel
             {
                 AccessToken = AccessToken,

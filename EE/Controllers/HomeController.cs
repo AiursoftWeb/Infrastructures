@@ -20,15 +20,18 @@ namespace Aiursoft.EE.Controllers
         public readonly SignInManager<EEUser> _signInManager;
         public readonly ILogger _logger;
         public readonly EEDbContext _dbContext;
+        private readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             SignInManager<EEUser> signInManager,
             ILoggerFactory loggerFactory,
-            EEDbContext dbContext)
+            EEDbContext dbContext,
+            ServiceLocation serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
             _dbContext = dbContext;
+            _serviceLocation = serviceLocation;
         }
 
         [AiurForceAuth("", "", justTry: true)]
@@ -57,7 +60,7 @@ namespace Aiursoft.EE.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignoutRootServer(new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public async Task<IActionResult> Search(string word)

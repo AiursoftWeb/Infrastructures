@@ -19,6 +19,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Developer
 {
@@ -41,7 +43,13 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddSingleton<AppsContainer>();
             services.AddSingleton<ServiceLocation>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<OSSApiService>();
+            services.AddScoped<StorageService>();
+            services.AddScoped<SecretService>();
             services.AddTransient<AuthService<DeveloperUser>>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);

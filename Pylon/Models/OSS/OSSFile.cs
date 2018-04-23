@@ -31,24 +31,11 @@ namespace Aiursoft.Pylon.Models.OSS
         [JsonIgnore]
         public Bucket BelongingBucket { get; set; }
 
-
+        [JsonIgnore]
         [InverseProperty(nameof(Secret.File))]
         public IEnumerable<Secret> Secrets { get; set; }
 
-        private string _internetPath { get; set; } = null;
         [NotMapped]
-        [JsonProperty(PropertyName = nameof(GetInternetPath))]
-        public virtual string GetInternetPath
-        {
-            get
-            {
-                if (this._internetPath == null)
-                {
-                    _internetPath = new AiurUrl(Values.OssServerAddress, BelongingBucket.BucketName, RealFileName, new { }).ToString();
-                }
-                return _internetPath;
-            }
-            set { this._internetPath = value; }
-        }
+        public string InternetPath { get; set; }
     }
 }

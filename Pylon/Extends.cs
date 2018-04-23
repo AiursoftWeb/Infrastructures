@@ -98,11 +98,11 @@ namespace Aiursoft.Pylon
             });
         }
 
-        public static IActionResult SignoutRootServer(this Controller controller, AiurUrl ToRedirect)
+        public static IActionResult SignoutRootServer(this Controller controller, string apiServerAddress, AiurUrl ToRedirect)
         {
             var request = controller.HttpContext.Request;
             string serverPosition = $"{request.Scheme}://{request.Host}{ToRedirect}";
-            var toRedirect = new AiurUrl(Values.ApiServerAddress, "OAuth", "UserSignout", new UserSignoutAddressModel
+            var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignout", new UserSignoutAddressModel
             {
                 ToRedirect = serverPosition
             });

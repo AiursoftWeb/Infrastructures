@@ -16,13 +16,16 @@ namespace Aiursoft.Account.Controllers
     {
         public readonly SignInManager<AccountUser> _signInManager;
         public readonly ILogger _logger;
+        public readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             SignInManager<AccountUser> signInManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ServiceLocation serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
+            _serviceLocation = serviceLocation;
         }
 
         [AiurForceAuth(preferController: "Account", preferAction: "Index", justTry: true)]
@@ -42,7 +45,7 @@ namespace Aiursoft.Account.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignoutRootServer(new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
     }
 }

@@ -13,6 +13,8 @@ using System;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Account
 {
@@ -34,9 +36,13 @@ namespace Aiursoft.Account
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddSingleton<ServiceLocation>();
+            services.AddSingleton<AppsContainer>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<UserService>();
+            services.AddScoped<StorageService>();
             services.AddTransient<AuthService<AccountUser>>();
             services.AddTransient<AiurSMSSender>();
-            services.AddSingleton<ServiceLocation>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
         }

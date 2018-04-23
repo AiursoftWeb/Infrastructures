@@ -10,12 +10,18 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToOSSServer
 {
-    public static class ApiService
+    public class OSSApiService
     {
-        public static async Task<AiurProtocal> DeleteAppAsync(string AccessToken, string AppId)
+        public readonly ServiceLocation _serviceLocation;
+        public OSSApiService(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+
+        public async Task<AiurProtocal> DeleteAppAsync(string AccessToken, string AppId)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "DeleteApp", new { });
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteApp", new { });
             var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
             {
                 AccessToken = AccessToken,
@@ -28,10 +34,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<ViewMyBucketsViewModel> ViewMyBucketsAsync(string AccessToken)
+        public async Task<ViewMyBucketsViewModel> ViewMyBucketsAsync(string AccessToken)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "ViewMyBuckets", new ViewMyBucketsAddressModel
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewMyBuckets", new ViewMyBucketsAddressModel
             {
                 AccessToken = AccessToken
             });
@@ -43,10 +49,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return JResult;
         }
 
-        public static async Task<CreateBucketViewModel> CreateBucketAsync(string AccessToken, string BucketName, bool OpenToRead, bool OpenToUpload)
+        public async Task<CreateBucketViewModel> CreateBucketAsync(string AccessToken, string BucketName, bool OpenToRead, bool OpenToUpload)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "CreateBucket", new { });
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "CreateBucket", new { });
             var form = new AiurUrl(string.Empty, new CreateBucketAddressModel
             {
                 AccessToken = AccessToken,
@@ -61,10 +67,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<AiurProtocal> EditBucketAsync(string AccessToken, int BucketId, string NewBucketName, bool OpenToRead, bool OpenToUpload)
+        public async Task<AiurProtocal> EditBucketAsync(string AccessToken, int BucketId, string NewBucketName, bool OpenToRead, bool OpenToUpload)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "EditBucket", new { });
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "EditBucket", new { });
             var form = new AiurUrl(string.Empty, new EditBucketAddressModel
             {
                 AccessToken = AccessToken,
@@ -80,10 +86,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<ViewBucketViewModel> ViewBucketDetailAsync(int BucketId)
+        public async Task<ViewBucketViewModel> ViewBucketDetailAsync(int BucketId)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "ViewBucketDetail", new ViewBucketDetailAddressModel
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewBucketDetail", new ViewBucketDetailAddressModel
             {
                 BucketId = BucketId
             });
@@ -94,10 +100,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<AiurProtocal> DeleteBucketAsync(string AccessToken, int BucketId)
+        public async Task<AiurProtocal> DeleteBucketAsync(string AccessToken, int BucketId)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "DeleteBucket", new { });
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteBucket", new { });
             var form = new AiurUrl(string.Empty, new DeleteBucketAddressModel
             {
                 AccessToken = AccessToken,
@@ -110,10 +116,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<ViewOneFileViewModel> ViewOneFileAsync(int FileKey)
+        public async Task<ViewOneFileViewModel> ViewOneFileAsync(int FileKey)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "ViewOneFile", new ViewOneFileAddressModel
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "ViewOneFile", new ViewOneFileAddressModel
             {
                 FileKey = FileKey
             });
@@ -125,10 +131,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return JResult;
         }
 
-        public static async Task<UploadFileViewModel> UploadFile(string AccessToken, int BucketId, string FilePath, int AliveDays)
+        public async Task<UploadFileViewModel> UploadFile(string AccessToken, int BucketId, string FilePath, int AliveDays)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "UploadFile", new UploadFileAddressModel
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "UploadFile", new UploadFileAddressModel
             {
                 AccessToken = AccessToken,
                 BucketId = BucketId,
@@ -141,10 +147,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<ViewAllFilesViewModel> ViewAllFilesAsync(string AccessToken, int BucketId)
+        public async Task<ViewAllFilesViewModel> ViewAllFilesAsync(string AccessToken, int BucketId)
         {
             var http = new HTTPService();
-            var path = new AiurUrl(Values.OssServerAddress, "api", "viewallfiles", new CommonAddressModel
+            var path = new AiurUrl(_serviceLocation.OSS, "api", "viewallfiles", new CommonAddressModel
             {
                 AccessToken = AccessToken,
                 BucketId = BucketId
@@ -156,10 +162,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public static async Task<AiurProtocal> DeleteFileAsync(string AccessToken, int FileKey, int BucketId)
+        public async Task<AiurProtocal> DeleteFileAsync(string AccessToken, int FileKey, int BucketId)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.OssServerAddress, "api", "DeleteFile", new { });
+            var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteFile", new { });
             var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
             {
                 AccessToken = AccessToken,

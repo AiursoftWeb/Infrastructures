@@ -24,17 +24,29 @@ namespace Aiursoft.Developer.Controllers
         private readonly SignInManager<DeveloperUser> _signInManager;
         private readonly ILogger _logger;
         private readonly DeveloperDbContext _dbContext;
+        private readonly ServiceLocation _serviceLocation;
+        private readonly StorageService _storageService;
+        private readonly OSSApiService _ossApiService;
+        private readonly AppsContainer _appsContainer;
 
         public AppsController(
         UserManager<DeveloperUser> userManager,
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
-        DeveloperDbContext _context)
+        DeveloperDbContext _context,
+        ServiceLocation serviceLocation,
+        StorageService storageService,
+        OSSApiService ossApiService,
+        AppsContainer appsContainer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AppsController>();
             _dbContext = _context;
+            _serviceLocation = serviceLocation;
+            _storageService = storageService;
+            _ossApiService = ossApiService;
+            _appsContainer = appsContainer;
         }
 
         public async Task<IActionResult> Index()
@@ -74,11 +86,11 @@ namespace Aiursoft.Developer.Controllers
             string iconPath = string.Empty;
             if (Request.Form.Files.Count == 0 || Request.Form.Files.First().Length < 1)
             {
-                iconPath = Values.DeveloperServerAddress + "/images/appdefaulticon.png";
+                iconPath = $"{_serviceLocation.CDN}/images/appdefaulticon.png";
             }
             else
             {
-                iconPath = await StorageService.SaveToOSS(Request.Form.Files.First(), Values.AppsIconBucketId, 365);
+                iconPath = await _storageService.SaveToOSS(Request.Form.Files.First(), Values.AppsIconBucketId, 365);
             }
 
             var _newApp = new App(cuser.Id, model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
@@ -176,7 +188,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return new UnauthorizedResult();
             }
-            await ApiService.DeleteAppAsync(await AppsContainer.AccessToken(target.AppId, target.AppSecret)(), target.AppId);
+            await _ossApiService.DeleteAppAsync(await _appsContainer.AccessToken(target.AppId, target.AppSecret), target.AppId);
             _dbContext.Apps.Remove(target);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(AllApps));
@@ -192,12 +204,12 @@ namespace Aiursoft.Developer.Controllers
         [FileChecker]
         public async Task<IActionResult> ChangeIcon(string AppId)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(ViewApp), new { id = AppId, JustHaveUpdated = true });
             }
             var appExists = await _dbContext.Apps.FindAsync(AppId);
-            appExists.AppIconAddress = await StorageService.SaveToOSS(Request.Form.Files.First(), Values.AppsIconBucketId, 365);
+            appExists.AppIconAddress = await _storageService.SaveToOSS(Request.Form.Files.First(), Values.AppsIconBucketId, 365);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = AppId, JustHaveUpdated = true });
         }

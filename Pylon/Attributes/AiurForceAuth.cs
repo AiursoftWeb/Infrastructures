@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Pylon.Attributes
 {
@@ -86,8 +87,9 @@ namespace Aiursoft.Pylon.Attributes
         private RedirectResult _Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
         {
             var r = context.HttpContext.Request;
+            var urlConverter = context.HttpContext.RequestServices.GetService<UrlConverter>();
             string serverPosition = $"{r.Scheme}://{r.Host}";
-            string url = UrlConverter.UrlWithAuth(serverPosition, page, justTry, register);
+            string url = urlConverter.UrlWithAuth(serverPosition, page, justTry, register);
             return new RedirectResult(url);
         }
     }

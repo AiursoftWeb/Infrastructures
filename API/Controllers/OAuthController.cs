@@ -44,26 +44,32 @@ namespace Aiursoft.API.Controllers
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<OAuthController> _localizer;
+        private readonly ServiceLocation _serviceLocation;
+        private readonly DeveloperApiService _apiService;
 
         public OAuthController(
             UserManager<APIUser> userManager,
             SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
             APIDbContext _context,
-            IStringLocalizer<OAuthController> localizer)
+            IStringLocalizer<OAuthController> localizer,
+            ServiceLocation serviceLocation,
+            DeveloperApiService developerApiService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<OAuthController>();
             _dbContext = _context;
             _localizer = localizer;
+            _serviceLocation = serviceLocation;
+            _apiService = developerApiService;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            var app = (await ApiService.AppInfoAsync(model.appid)).App;
+            var app = (await _apiService.AppInfoAsync(model.appid)).App;
             if (app == null)
             {
                 return NotFound();
@@ -98,7 +104,7 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            var app = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (app == null)
             {
                 return NotFound();
@@ -143,7 +149,7 @@ namespace Aiursoft.API.Controllers
         [Authorize]
         public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmAddressModel model)
         {
-            var app = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (app == null)
             {
                 return NotFound();
@@ -193,7 +199,7 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
         {
-            var app = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (app == null)
             {
                 return NotFound();
@@ -244,7 +250,7 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
-            var app = (await ApiService.AppInfoAsync(model.appid)).App;
+            var app = (await _apiService.AppInfoAsync(model.appid)).App;
             if (app == null)
             {
                 return NotFound();
@@ -260,7 +266,7 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var capp = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (capp == null)
             {
                 return NotFound();
@@ -282,7 +288,8 @@ namespace Aiursoft.API.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
-                PreferedLanguage = model.PreferedLanguage
+                PreferedLanguage = model.PreferedLanguage,
+                HeadImgUrl = $"{ _serviceLocation.CDN}/images/userdefaulticon.png"
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -317,7 +324,8 @@ namespace Aiursoft.API.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
-                PreferedLanguage = "en"
+                PreferedLanguage = "en",
+                HeadImgUrl = $"{ _serviceLocation.CDN}/images/userdefaulticon.png"
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -372,7 +380,7 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
             }
-            var capp = (await ApiService.AppInfoAsync(targetPack.ApplyAppId)).App;
+            var capp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
             if (capp == null)
             {
                 return this.Protocal(ErrorType.NotFound, "App not found.");

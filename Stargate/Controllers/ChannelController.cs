@@ -22,15 +22,19 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class ChannelController : Controller
     {
-        private StargateDbContext _dbContext;
-        public ChannelController(StargateDbContext dbContext)
+        private readonly StargateDbContext _dbContext;
+        private readonly CoreApiService _coreApiService;
+        public ChannelController(
+            StargateDbContext dbContext,
+            CoreApiService coreApiService)
         {
             _dbContext = dbContext;
+            _coreApiService = coreApiService;
         }
 
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == app.AppId);
             if (appLocal == null)
             {
@@ -85,7 +89,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> CreateChannel([FromForm]CreateChannelAddressModel model)
         {
             //Update app info
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var appLocal = await _dbContext.Apps.Include(t => t.Channels).SingleOrDefaultAsync(t => t.Id == app.AppId);
             if (appLocal == null)
             {
@@ -118,7 +122,7 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteChannel([FromForm]DeleteChannelAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             var channel = await _dbContext.Channels.FindAsync(model);
             if (channel.AppId != app.AppId)
             {
@@ -137,7 +141,7 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteApp([FromForm]DeleteAppAddressModel model)
         {
-            var app = await ApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
             if (app.AppId != model.AppId)
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });

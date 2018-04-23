@@ -13,10 +13,15 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
 {
     public class ChannelService
     {
-        public static async Task<CreateChannelViewModel> CreateChannelAsync(string AccessToken, string Description)
+        public readonly ServiceLocation _serviceLocation;
+        public ChannelService(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+        public async Task<CreateChannelViewModel> CreateChannelAsync(string AccessToken, string Description)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.StargateServerAddress, "Channel", "CreateChannel", new { });
+            var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "CreateChannel", new { });
             var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
             {
                 AccessToken = AccessToken,
@@ -29,10 +34,10 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             return jResult;
         }
 
-        public static async Task<AiurProtocal> ValidateChannelAsync(int Id, string Key)
+        public async Task<AiurProtocal> ValidateChannelAsync(int Id, string Key)
         {
             var httpContainer = new HTTPService();
-            var url = new AiurUrl(Values.StargateServerAddress, "Channel", "ValidateChannel", new ChannelAddressModel
+            var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ValidateChannel", new ChannelAddressModel
             {
                 Id = Id,
                 Key = Key

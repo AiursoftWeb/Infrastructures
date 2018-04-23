@@ -16,19 +16,24 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly UserManager<T> _userManager;
         private readonly SignInManager<T> _signInManager;
-
+        private readonly OAuthService _oauthService;
+        private readonly AppsContainer _appsContainer;
         public AuthService(
             UserManager<T> userManager,
-            SignInManager<T> signInManager)
+            SignInManager<T> signInManager,
+            OAuthService oauthService,
+            AppsContainer appsContainer) 
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _oauthService = oauthService;
+            _appsContainer = appsContainer;
         }
 
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
-            var openId = await OAuthService.CodeToOpenIdAsync(model.code, await AppsContainer.AccessToken()());
-            var userinfo = await OAuthService.OpenIdToUserInfo(AccessToken: await AppsContainer.AccessToken()(), openid: openId.openid);
+            var openId = await _oauthService.CodeToOpenIdAsync(model.code, await _appsContainer.AccessToken());
+            var userinfo = await _oauthService.OpenIdToUserInfo(AccessToken: await _appsContainer.AccessToken(), openid: openId.openid);
             var current = await _userManager.FindByIdAsync(userinfo.User.Id);
             if (current == null)
             {

@@ -11,9 +11,18 @@ using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Pylon.Services
 {
-    public static class StorageService
+    public class StorageService
     {
-        private static async Task<string> _SaveLocally(IFormFile file, SaveFileOptions options = SaveFileOptions.RandomName, string name = "")
+        private readonly OSSApiService _ossApiService;
+        private readonly AppsContainer _appsContainer;
+        public StorageService(
+            OSSApiService ossApiService,
+            AppsContainer appsContainer)
+        {
+            _ossApiService = ossApiService;
+            _appsContainer = appsContainer;
+        }
+        private async Task<string> _SaveLocally(IFormFile file, SaveFileOptions options = SaveFileOptions.RandomName, string name = "")
         {
             string directoryPath = GetCurrentDirectory() + DirectorySeparatorChar + $@"Storage" + DirectorySeparatorChar;
             if (Exists(directoryPath) == false)
@@ -38,14 +47,14 @@ namespace Aiursoft.Pylon.Services
             fileStream.Close();
             return localFilePath;
         }
-        public static async Task<string> SaveToOSS(IFormFile file, int BucketId, int AliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string AccessToken = null, string name = "", bool deleteLocal = true)
+        public async Task<string> SaveToOSS(IFormFile file, int BucketId, int AliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string AccessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);
             if (AccessToken == null)
             {
-                AccessToken = await AppsContainer.AccessToken()();
+                AccessToken = await _appsContainer.AccessToken();
             }
-            var fileAddress = await ApiService.UploadFile(AccessToken, BucketId, localFilePath, AliveDays);
+            var fileAddress = await _ossApiService.UploadFile(AccessToken, BucketId, localFilePath, AliveDays);
             if (deleteLocal)
             {
                 File.Delete(localFilePath);

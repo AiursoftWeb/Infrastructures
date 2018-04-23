@@ -10,6 +10,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToStargateServer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Stargate
 {
@@ -27,13 +28,15 @@ namespace Aiursoft.Stargate
             services.AddDbContext<StargateDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddMvc();
-            services.AddTransient<HTTPService>();
-            services.AddTransient<PushMessageService>();
-            services.AddTransient<Debugger>();
-            services.AddTransient<WebSocketPusher>();
+
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<PushMessageService>();
+            services.AddScoped<Debugger>();
+            services.AddScoped<WebSocketPusher>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

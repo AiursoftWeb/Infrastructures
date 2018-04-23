@@ -11,12 +11,18 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToAPIServer
 {
-    public static class UserService
+    public class UserService
     {
-        public async static Task<AiurProtocal> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconAddress, string newBio)
+        public readonly ServiceLocation _serviceLocation;
+        public UserService(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+
+        public async Task<AiurProtocal> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconAddress, string newBio)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "User", "ChangeProfile", new ChangeProfileAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "ChangeProfile", new ChangeProfileAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -32,10 +38,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async static Task<AiurProtocal> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
+        public async Task<AiurProtocal> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "User", "ChangePassword", new ChangePasswordAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "ChangePassword", new ChangePasswordAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -50,10 +56,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async static Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
+        public async Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -65,10 +71,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async static Task<AiurProtocal> SetPhoneNumberAsync(string penId, string accessToken, string phoneNumber)
+        public async Task<AiurProtocal> SetPhoneNumberAsync(string penId, string accessToken, string phoneNumber)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = penId,
@@ -81,10 +87,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async static Task<AiurCollection<IUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
+        public async Task<AiurCollection<IUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
         {
             var HTTPContainer = new HTTPService();
-            var url = new AiurUrl(Values.ApiServerAddress, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId

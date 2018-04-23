@@ -35,6 +35,7 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddScoped<UrlConverter>();
             services.AddSingleton<ServiceLocation>();
             services.AddTransient<AuthService<WikiUser>>();
             services.AddTransient<Seeder>();

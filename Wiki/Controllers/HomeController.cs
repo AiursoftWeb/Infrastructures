@@ -25,16 +25,19 @@ namespace Aiursoft.Wiki.Controllers
         public readonly ILogger _logger;
         public readonly WikiDbContext _dbContext;
         public readonly Seeder _seeder;
+        public readonly ServiceLocation _serviceLocation;
         public HomeController(
             SignInManager<WikiUser> signInManager,
             ILoggerFactory loggerFactory,
             WikiDbContext _context,
-            Seeder seeder)
+            Seeder seeder,
+            ServiceLocation serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
             this._dbContext = _context;
             _seeder = seeder;
+            _serviceLocation = serviceLocation;
         }
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
         public async Task<IActionResult> Index()//Title
@@ -94,7 +97,7 @@ namespace Aiursoft.Wiki.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return this.SignoutRootServer(new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public IActionResult Error()

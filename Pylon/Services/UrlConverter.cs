@@ -4,13 +4,18 @@ using Aiursoft.Pylon;
 
 namespace Aiursoft.Pylon.Services
 {
-
-    public static class UrlConverter
+    public class UrlConverter
     {
-        private static AiurUrl _GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
+        public readonly ServiceLocation _serviceLocation;
+        public UrlConverter(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+
+        private AiurUrl _GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
         {
             var action = register ? "register" : "authorize";
-            var url = new AiurUrl(Values.ApiServerAddress, "oauth", action, new AuthorizeAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "oauth", action, new AuthorizeAddressModel
             {
                 appid = Extends.CurrentAppId,
                 redirect_uri = destination.ToString(),
@@ -22,7 +27,7 @@ namespace Aiursoft.Pylon.Services
             return url;
         }
 
-        public static string UrlWithAuth(string serverRoot, string path, bool? justTry, bool register)
+        public string UrlWithAuth(string serverRoot, string path, bool? justTry, bool register)
         {
             return _GenerateAuthUrl(new AiurUrl(serverRoot, "Auth", "AuthResult", new { }), path, justTry, register).ToString();
         }
