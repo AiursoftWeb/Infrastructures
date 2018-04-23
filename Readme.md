@@ -17,7 +17,6 @@ We strongly suggest using `Visual Studio Code` to edit this project. Instead, yo
 
 | Service Name | Service Address |
 |--|--|
-|Nexus|localhost:4999|
 |Account|localhost:5000|
 |API|localhost:5001|
 |CDN|localhost:5002|
