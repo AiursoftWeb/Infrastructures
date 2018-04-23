@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Values.DeveloperServerAddress/Apps">
+                    <a class="nav-link" href="@ServiceLocation.Developer/Apps">
                         <i class="fa fa-fw fa-code"></i>
                         <span class="nav-link-text">
                             @Localizer["Develope"]
@@ -133,11 +133,11 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="@Values.WikiServerAddress" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" href="@Values.AccountServerAddress">@Localizer["Settings"]</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
                         <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">@Localizer["Sign out"]</a>
                     </div>
                 </li>

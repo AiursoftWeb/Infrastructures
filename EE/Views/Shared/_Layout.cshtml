@@ -45,7 +45,7 @@
                                     <a class="dropdown-item" asp-controller="Profile" asp-action="Overview" asp-route-id="@User.Identity.Name">Your profile</a>
                                     <a class="dropdown-item" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">Your subscription</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="@Values.AccountServerAddress">Settings</a>
+                                    <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
                                     <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
                                 </div>
                             </li>
