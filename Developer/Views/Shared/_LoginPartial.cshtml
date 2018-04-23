@@ -7,7 +7,7 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">Settings</li>
             <li><a asp-controller="Apps" asp-action="Index">Dashboard</a></li>
-            <li><a href="@(new AiurUrl(Values.AccountServerAddress))">Account Settings</a></li>
+            <li><a href="@(new AiurUrl(ServiceLocation.Account))">Account Settings</a></li>
             <li class="dropdown-header">Account</li>
             <li><a href="javascript:$('#logoutForm').submit()">Log out</a></li>
         </ul>

@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
-    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@Values.CdnServerAddress/dist/AiurDashboard.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurDashboard.min.css" rel="stylesheet">
     @RenderSection("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Wiki">
-                    <a class="nav-link" href="@Values.WikiServerAddress">
+                    <a class="nav-link" href="@ServiceLocation.Wiki">
                         <i class="fa fa-fw fa-book"></i>
                         <span class="nav-link-text">Read Doc</span>
                     </a>
@@ -130,11 +130,11 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="@Values.WikiServerAddress" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" href="@Values.AccountServerAddress">Settings</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
                         <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
                     </div>
                 </li>
@@ -163,7 +163,7 @@
         <footer class="sticky-footer">
             <div class="ml-3">
                 <small>
-                    <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+                    <a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new
                         {
                             Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                             Path = Context.Request.Path
@@ -172,7 +172,6 @@
                 <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
             </div>
         </footer>
-
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fa fa-angle-up"></i>
         </a>
@@ -194,8 +193,8 @@
                 </div>
             </div>
         </div>
-        <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
-        <script src="@Values.CdnServerAddress/dist/AiurDashboard.min.js"></script>
+        <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
+        <script src="@ServiceLocation.CDN/dist/AiurDashboard.min.js"></script>
         @RenderSection("js", required: false)
     </div>
 </body>

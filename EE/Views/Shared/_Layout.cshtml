@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Aiursoft.EE</title>
-    <link rel="icon" type="image/x-icon" href="@Values.CdnServerAddress/favicon.ico">
-    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@Values.CdnServerAddress/dist/AiurMarket.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="@ServiceLocation.CDN/favicon.ico">
+    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -77,14 +77,14 @@
             <ul class="bd-footer-links">
                 <li><a href="#">Privacy</a></li>
                 <li><a href="#">Statement</a></li>
-                <li><a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
+                <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
                 <li><a href="#">Company</a></li>
             </ul>
             <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
         </div>
     </footer>
-    <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
-    <script src="@Values.CdnServerAddress/dist/AiurMarket.min.js"></script>
+    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
+    <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

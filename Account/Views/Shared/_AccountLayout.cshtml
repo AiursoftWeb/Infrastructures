@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Account Management Center"]</title>
-    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@Values.CdnServerAddress/dist/AiurDashboard.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurDashboard.min.css" rel="stylesheet">
     @RenderSection("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -166,7 +166,7 @@
         <footer class="sticky-footer">
             <div class="ml-3">
                 <small>
-                    <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+                    <a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new
                         {
                             Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                             Path = Context.Request.Path
@@ -197,8 +197,8 @@
                 </div>
             </div>
         </div>
-        <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
-        <script src="@Values.CdnServerAddress/dist/AiurDashboard.min.js"></script>
+        <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
+        <script src="@ServiceLocation.CDN/dist/AiurDashboard.min.js"></script>
         @RenderSection("js", required: false)
     </div>
 </body>

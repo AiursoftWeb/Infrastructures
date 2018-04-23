@@ -5,7 +5,7 @@
         <li><a href="#">@Localizer["Terms"]</a></li>
         <li><a href="#">@Localizer["Help"]</a></li>
         <li>
-            <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+            <a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new
                  {
                      Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                      Path = Context.Request.Path
