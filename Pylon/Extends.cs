@@ -140,7 +140,7 @@ namespace Aiursoft.Pylon
                 {
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
                     logger.LogInformation($"Connection string is {connectionString}");
-                    var retry = Policy.Handle<SqlException>().WaitAndRetry(new TimeSpan[]
+                    var retry = Policy.Handle<Exception>().WaitAndRetry(new TimeSpan[]
                     {
                         TimeSpan.FromSeconds(5),
                         TimeSpan.FromSeconds(10),
@@ -149,7 +149,7 @@ namespace Aiursoft.Pylon
 
                     retry.Execute(() =>
                     {
-                        context.Database.EnsureCreated();
+                        context.Database.EnsureDeleted();
                         context.Database.Migrate();
                         seeder?.Invoke(context, services);
                     });

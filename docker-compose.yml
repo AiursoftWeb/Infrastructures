@@ -6,7 +6,7 @@ services:
      - ACCEPT_EULA=Y
      - SA_PASSWORD=Pass@word
     ports:
-     - "5433:1433"
+     - "1433:1433"
 
   account:
     image: aiursoft/account:${TAG:-latest}
