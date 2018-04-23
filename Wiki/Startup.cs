@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
 using Aiursoft.Wiki.Services;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Wiki
 {
@@ -35,8 +37,12 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddScoped<UrlConverter>();
             services.AddSingleton<ServiceLocation>();
+            services.AddSingleton<AppsContainer>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<OAuthService>();
             services.AddTransient<AuthService<WikiUser>>();
             services.AddTransient<Seeder>();
             services.AddMvc();

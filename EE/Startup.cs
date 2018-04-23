@@ -14,6 +14,9 @@ using Aiursoft.EE.Services;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.EE
 {
@@ -33,12 +36,19 @@ namespace Aiursoft.EE
             services.AddIdentity<EEUser, IdentityRole>()
                 .AddEntityFrameworkStores<EEDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddScoped<UrlConverter>();
-            services.AddSingleton<ServiceLocation>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddTransient<AuthService<EEUser>>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            services.AddSingleton<AppsContainer>();
+            services.AddSingleton<ServiceLocation>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<StorageService>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<OSSApiService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<OAuthService>();
+            services.AddTransient<AuthService<EEUser>>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -15,6 +15,9 @@ using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Aiursoft.Colossus
 {
@@ -42,9 +45,14 @@ namespace Aiursoft.Colossus
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
+            services.AddSingleton<AppsContainer>();
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<StorageService>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<OSSApiService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<OAuthService>();
             services.AddTransient<AuthService<ColossusUser>>();
         }
 

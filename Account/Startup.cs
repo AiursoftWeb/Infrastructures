@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Aiursoft.Account
 {
@@ -39,6 +40,10 @@ namespace Aiursoft.Account
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<AppsContainer>();
             services.AddScoped<UrlConverter>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<OAuthService>();
+            services.AddScoped<OSSApiService>();
             services.AddScoped<UserService>();
             services.AddScoped<StorageService>();
             services.AddTransient<AuthService<AccountUser>>();

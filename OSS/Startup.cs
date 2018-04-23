@@ -9,6 +9,8 @@ using Aiursoft.OSS.Services;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.OSS
 {
@@ -34,6 +36,8 @@ namespace Aiursoft.OSS
             services.AddMvc();
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<CoreApiService>();
             services.AddTransient<ImageCompresser>();
         }
 

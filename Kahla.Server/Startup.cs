@@ -17,6 +17,7 @@ using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Kahla.Server
 {
@@ -44,7 +45,9 @@ namespace Kahla.Server
             services.AddSingleton<AppsContainer>();
             services.AddScoped<AuthService<KahlaUser>>();
             services.AddScoped<HTTPService>();
+            services.AddScoped<CoreApiService>();
             services.AddScoped<OAuthService>();
+            services.AddScoped<OSSApiService>();
             services.AddScoped<ChannelService>();
             services.AddScoped<StorageService>();
             services.AddScoped<UserService>();

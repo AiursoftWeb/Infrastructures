@@ -11,6 +11,7 @@ using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Stargate
 {
@@ -32,8 +33,10 @@ namespace Aiursoft.Stargate
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();
+            services.AddSingleton<AppsContainer>();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
+            services.AddScoped<ChannelService>();
             services.AddScoped<PushMessageService>();
             services.AddScoped<Debugger>();
             services.AddScoped<WebSocketPusher>();

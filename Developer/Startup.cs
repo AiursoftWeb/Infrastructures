@@ -48,6 +48,7 @@ namespace Aiursoft.Developer
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
+            services.AddScoped<CoreApiService>();
             services.AddScoped<OSSApiService>();
             services.AddScoped<OAuthService>();
             services.AddScoped<StorageService>();
