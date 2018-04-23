@@ -6,13 +6,15 @@ services:
      - ACCEPT_EULA=Y
      - SA_PASSWORD=Pass@word
     ports:
-     - "1433:1433"
+     - "5433:1433"
 
   account:
     image: aiursoft/account:${TAG:-latest}
     build:
       context: .
       dockerfile: Account/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "8000:80"
     depends_on:

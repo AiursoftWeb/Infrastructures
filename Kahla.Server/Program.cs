@@ -18,7 +18,6 @@ namespace Kahla.Server
         {
             var host = WebHost.CreateDefaultBuilder(args)
                  .UseStartup<Startup>()
-                 .UseUrls("http://*:5005")
                  .Build();
 
             return host;

@@ -49,10 +49,7 @@ namespace Aiursoft.Account
             }
             else
             {
-                if (!Convert.ToBoolean(Configuration["AllowHttp"]))
-                {
-                    app.UseEnforceHttps();
-                }
+                app.UseEnforceHttps();
                 app.UseExceptionHandler("/Error/ServerException");
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
