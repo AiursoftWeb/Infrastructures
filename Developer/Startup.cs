@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Developer
 {
@@ -48,6 +49,7 @@ namespace Aiursoft.Developer
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<OSSApiService>();
+            services.AddScoped<OAuthService>();
             services.AddScoped<StorageService>();
             services.AddScoped<SecretService>();
             services.AddTransient<AuthService<DeveloperUser>>();
