@@ -32,6 +32,7 @@ namespace Aiursoft.OSS
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddMvc();
+            services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddTransient<ImageCompresser>();
         }

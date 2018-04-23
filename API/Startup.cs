@@ -41,6 +41,7 @@ namespace Aiursoft.API
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddSingleton<IHostedService, TimedCleaner>();
+            services.AddSingleton<ServiceLocation>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
             services.AddMvc()

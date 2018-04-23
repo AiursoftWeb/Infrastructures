@@ -31,6 +31,7 @@ namespace Aiursoft.Stargate
             services.AddTransient<PushMessageService>();
             services.AddTransient<Debugger>();
             services.AddTransient<WebSocketPusher>();
+            services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();
         }

@@ -38,6 +38,7 @@ namespace Kahla.Server
             services.ConfigureApplicationCookie(t => t.Cookie.SameSite = SameSiteMode.None);
 
             services.AddMvc();
+            services.AddSingleton<ServiceLocation>();
             services.AddTransient<AuthService<KahlaUser>>();
             services.AddTransient<HTTPService>();
             services.AddTransient<PushMessageService>();

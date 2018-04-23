@@ -41,6 +41,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddSingleton<ServiceLocation>();
             services.AddTransient<AuthService<DeveloperUser>>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);

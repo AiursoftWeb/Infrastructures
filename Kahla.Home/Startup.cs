@@ -17,6 +17,7 @@ namespace Kahla.Home
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ServiceLocation>();
             services.AddMvc();
         }
 
