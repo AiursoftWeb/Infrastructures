@@ -154,7 +154,14 @@ namespace Aiursoft.Pylon
                         {
                             context.Database.EnsureDeleted();
                             context.Database.Migrate();
-                            seeder?.Invoke(context, services);
+                            try
+                            {
+                                seeder?.Invoke(context, services);
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.LogError(ex, $"An error occurred while seeding the database used on context {typeof(TContext).Name}");
+                            }
                         }
                     });
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Developer.Data
 {
@@ -30,6 +31,7 @@ namespace Aiursoft.Developer.Data
             var config = services.GetService<IConfiguration>();
             var usermanager = services.GetService<UserManager<DeveloperUser>>();
             var serviceLocation = services.GetService<ServiceLocation>();
+            var logger = services.GetRequiredService<ILogger<DeveloperDbContext>>();
 
             var firstUserName = config["SeedUserEmail"];
             var firstUserPass = config["SeedUserPassword"];
@@ -37,6 +39,8 @@ namespace Aiursoft.Developer.Data
             var firstAppId = config["DeveloperAppId"];
             var firstAppSecret = config["DeveloperAppSecret"];
 
+
+            logger.LogInformation("Seeding developer database...");
             var newuser = new DeveloperUser
             {
                 Id = "01307818-4d2d-43d1-acde-c91e333b3ade",
@@ -47,6 +51,7 @@ namespace Aiursoft.Developer.Data
                 HeadImgUrl = $"{serviceLocation.CDN}/images/userdefaulticon.png"
             };
             usermanager.CreateAsync(newuser, firstUserPass).Wait();
+
             var newApp = new App(newuser.Id, "Developer", "Seeded developer app", Category.AppForAiur, Platform.Web, firstAppId, firstAppSecret)
             {
                 CreaterId = newuser.Id,
@@ -54,6 +59,8 @@ namespace Aiursoft.Developer.Data
             };
             this.Apps.Add(newApp);
             this.SaveChanges();
+            
+            logger.LogInformation("the developer database was successfully seeded!");
         }
     }
 }

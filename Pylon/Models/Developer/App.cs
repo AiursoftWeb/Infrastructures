@@ -14,7 +14,7 @@ namespace Aiursoft.Pylon.Models.Developer
         public App() { }
         public App(string seed, string name, string description, Category category, Platform platform, string forceAppId = null, string forceAppSecret = null)
         {
-            if (forceAppId != null && forceAppSecret != null)
+            if (!string.IsNullOrWhiteSpace(forceAppId) && !string.IsNullOrWhiteSpace(forceAppSecret))
             {
                 this.AppId = forceAppId;
                 this.AppSecret = forceAppSecret;
