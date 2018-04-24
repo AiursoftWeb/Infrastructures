@@ -37,15 +37,10 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<AppsContainer>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<OAuthService>();
-            services.AddTransient<AuthService<WikiUser>>();
-            services.AddTransient<Seeder>();
             services.AddMvc();
+
+            services.AddAiursoftAuth<WikiUser>();
+            services.AddTransient<Seeder>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

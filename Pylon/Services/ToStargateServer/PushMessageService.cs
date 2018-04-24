@@ -20,6 +20,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             _httpService = httpService;
             _serviceLocation = serviceLocation;
         }
+
         public async Task<AiurProtocal> PushMessageAsync(string AccessToken, int ChannelId, string MessageContent, bool noexception = false)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Message", "PushMessage", new { });

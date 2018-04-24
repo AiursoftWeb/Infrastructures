@@ -47,6 +47,7 @@ namespace Aiursoft.Pylon.Services
             fileStream.Close();
             return localFilePath;
         }
+
         public async Task<string> SaveToOSS(IFormFile file, int BucketId, int AliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string AccessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);

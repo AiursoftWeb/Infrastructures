@@ -44,18 +44,11 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddSingleton<AppsContainer>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<OSSApiService>();
-            services.AddScoped<OAuthService>();
-            services.AddScoped<StorageService>();
-            services.AddScoped<SecretService>();
-            services.AddTransient<AuthService<DeveloperUser>>();
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            services.AddAiursoftAuth<DeveloperUser>();
+            services.AddScoped<SecretService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, DeveloperDbContext dbContext)

@@ -42,16 +42,17 @@ namespace Aiursoft.API
 
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
-
-            services.AddMvc()
-                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                    .AddDataAnnotationsLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

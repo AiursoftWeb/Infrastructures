@@ -33,12 +33,13 @@ namespace Aiursoft.OSS
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddMvc();
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
             services.AddTransient<ImageCompresser>();
+
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

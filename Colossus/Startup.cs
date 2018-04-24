@@ -45,15 +45,7 @@ namespace Aiursoft.Colossus
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-            services.AddSingleton<AppsContainer>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<StorageService>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<OSSApiService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<OAuthService>();
-            services.AddTransient<AuthService<ColossusUser>>();
+            services.AddAiursoftAuth<ColossusUser>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -439,7 +439,7 @@ namespace Kahla.Server.Controllers
             var user = await GetKahlaUser();
             if (user.CurrentChannel == -1 || (await _channelService.ValidateChannelAsync(user.CurrentChannel, user.ConnectKey)).Code != ErrorType.Success)
             {
-                var channel = await _pusher.Init();
+                var channel = await _pusher.Init(user.Id);
                 user.CurrentChannel = channel.ChannelId;
                 user.ConnectKey = channel.ConnectKey;
                 await _userManager.UpdateAsync(user);

@@ -37,19 +37,13 @@ namespace Aiursoft.Account
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<AppsContainer>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<OAuthService>();
-            services.AddScoped<OSSApiService>();
-            services.AddScoped<UserService>();
-            services.AddScoped<StorageService>();
-            services.AddTransient<AuthService<AccountUser>>();
-            services.AddTransient<AiurSMSSender>();
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            services.AddAiursoftAuth<AccountUser>();
+            services.AddScoped<UserService>();
+            services.AddTransient<AiurSMSSender>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountDbContext dbContext)

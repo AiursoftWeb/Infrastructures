@@ -20,7 +20,7 @@ namespace Aiursoft.Stargate.Controllers
         private IPusher<WebSocket> _pusher;
 
         public ListenController(StargateDbContext dbContext,
-            WebSocketPusher pusher)
+            IPusher<WebSocket> pusher)
         {
             _dbContext = dbContext;
             _pusher = pusher;

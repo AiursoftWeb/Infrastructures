@@ -13,6 +13,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
     {
         private readonly ServiceLocation _serviceLoation;
         private readonly HTTPService _http;
+
         public SecretService(
             ServiceLocation serviceLocation,
             HTTPService http)
@@ -20,6 +21,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             _serviceLoation = serviceLocation;
             _http = http;
         }
+
         public async Task<AiurValue<string>> GenerateAsync(int id, string accessToken)
         {
             var url = new AiurUrl(_serviceLoation.OSS, "Secret", "Generate", new GenerateAddressModel

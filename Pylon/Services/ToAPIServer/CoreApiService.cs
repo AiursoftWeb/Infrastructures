@@ -14,6 +14,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;
+
         public CoreApiService(
             ServiceLocation serviceLocation,
             HTTPService http)

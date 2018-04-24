@@ -18,6 +18,9 @@ using Polly;
 using Polly.Retry;
 using System.Threading;
 using System.Data.SqlClient;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Pylon
 {
@@ -174,6 +177,20 @@ namespace Aiursoft.Pylon
             }
 
             return webHost;
+        }
+
+        public static IServiceCollection AddAiursoftAuth<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        {
+            services.AddSingleton<AppsContainer>();
+            services.AddSingleton<ServiceLocation>();
+            services.AddScoped<HTTPService>();
+            services.AddScoped<UrlConverter>();
+            services.AddScoped<OSSApiService>();
+            services.AddScoped<StorageService>();
+            services.AddScoped<CoreApiService>();
+            services.AddScoped<OAuthService>();
+            services.AddTransient<AuthService<TUser>>();
+            return services;
         }
     }
 }

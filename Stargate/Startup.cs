@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
+using System.Net.WebSockets;
 
 namespace Aiursoft.Stargate
 {
@@ -38,8 +39,9 @@ namespace Aiursoft.Stargate
             services.AddScoped<CoreApiService>();
             services.AddScoped<ChannelService>();
             services.AddScoped<PushMessageService>();
+
             services.AddScoped<Debugger>();
-            services.AddScoped<WebSocketPusher>();
+            services.AddScoped<IPusher<WebSocket>, WebSocketPusher>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

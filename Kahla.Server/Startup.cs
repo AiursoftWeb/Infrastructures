@@ -41,15 +41,9 @@ namespace Kahla.Server
             services.ConfigureApplicationCookie(t => t.Cookie.SameSite = SameSiteMode.None);
 
             services.AddMvc();
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<AppsContainer>();
-            services.AddScoped<AuthService<KahlaUser>>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<OAuthService>();
-            services.AddScoped<OSSApiService>();
+            services.AddAiursoftAuth<KahlaUser>();
+
             services.AddScoped<ChannelService>();
-            services.AddScoped<StorageService>();
             services.AddScoped<UserService>();
             services.AddScoped<PushMessageService>();
             services.AddScoped<PushKahlaMessageService>();

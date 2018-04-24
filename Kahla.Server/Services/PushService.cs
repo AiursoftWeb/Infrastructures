@@ -40,10 +40,10 @@ namespace Kahla.Server.Services
             });
         }
 
-        public async Task<CreateChannelViewModel> Init()
+        public async Task<CreateChannelViewModel> Init(string userId)
         {
             var token = await _appsContainer.AccessToken();
-            var channel = await _channelService.CreateChannelAsync(token, "");
+            var channel = await _channelService.CreateChannelAsync(token, $"Kahla User Channel for Id:{userId}");
             return channel;
         }
 
