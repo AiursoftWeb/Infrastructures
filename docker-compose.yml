@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.6'
 services:
   db:
     image: microsoft/mssql-server-linux:2017-latest
@@ -19,6 +19,8 @@ services:
       - "5000:80"
     depends_on:
       - db
+    network_mode: "host"
+      
 
   api:
     image: aiursoft/api:${TAG:-latest}
@@ -31,6 +33,7 @@ services:
       - "5001:80"
     depends_on:
       - db
+    network_mode: "host"
 
   cdn:
     image: aiursoft/cdn:${TAG:-latest}
@@ -51,4 +54,5 @@ services:
       - "5004:80"
     depends_on:
       - db
+    network_mode: "host"
 

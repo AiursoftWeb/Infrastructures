@@ -21,7 +21,7 @@ We strongly suggest using `Visual Studio Code` to edit this project. Instead, yo
 |API|localhost:5001|
 |CDN|localhost:5002|
 |Colossus|localhost:5003|
-|Developer|localhost:5004
+|Developer|localhost:5004|
 |EE|localhost:5005|
 |OSS|localhost:5006|
 |Stargate|localhost:5007|
