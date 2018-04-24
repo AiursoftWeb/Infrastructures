@@ -15,8 +15,9 @@ services:
       dockerfile: Account/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS http://+:5000
     ports:
-      - "5000:80"
+      - "5000:5000"
     depends_on:
       - db
     network_mode: "host"
@@ -29,8 +30,9 @@ services:
       dockerfile: API/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS http://+:5001
     ports:
-      - "5001:80"
+      - "5001:5001"
     depends_on:
       - db
     network_mode: "host"
@@ -50,6 +52,7 @@ services:
       dockerfile: Developer/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS http://+:5004
     ports:
       - "5004:80"
     depends_on:
