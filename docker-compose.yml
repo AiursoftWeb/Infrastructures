@@ -40,3 +40,15 @@ services:
     ports:
       - "5002:80"
 
+  developer:
+    image: aiursoft/developer:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Developer/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5004:80"
+    depends_on:
+      - db
+

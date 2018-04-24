@@ -10,7 +10,7 @@ namespace Aiursoft.Developer
         public static void Main(string[] args)
         {
             BuildWebHost(args)
-                .MigrateDbContext<DeveloperDbContext>()
+                .MigrateDbContext<DeveloperDbContext>((db, services) => db.Seed(services))
                 .Run();
         }
 

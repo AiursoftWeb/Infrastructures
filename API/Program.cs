@@ -10,7 +10,7 @@ namespace Aiursoft.API
         public static void Main(string[] args)
         {
             BuildWebHost(args)
-                .MigrateDbContext<APIDbContext>()
+                .MigrateDbContext<APIDbContext>((db, services) => db.Seed(services))
                 .Run();
         }
 

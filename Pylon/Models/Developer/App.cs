@@ -12,10 +12,18 @@ namespace Aiursoft.Pylon.Models.Developer
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public App() { }
-        public App(string seed, string name, string description, Category category, Platform platform)
+        public App(string seed, string name, string description, Category category, Platform platform, string forceAppId = null, string forceAppSecret = null)
         {
-            this.AppId = (seed + DateTime.Now.ToString()).GetMD5();
-            this.AppSecret = (seed + this.AppId + DateTime.Now.ToString() + StringOperation.RandomString(15)).GetMD5();
+            if (forceAppId != null && forceAppSecret != null)
+            {
+                this.AppId = forceAppId;
+                this.AppSecret = forceAppSecret;
+            }
+            else
+            {
+                this.AppId = (seed + DateTime.Now.ToString()).GetMD5();
+                this.AppSecret = (seed + this.AppId + DateTime.Now.ToString() + StringOperation.RandomString(15)).GetMD5();
+            }
             this.AppName = name;
             this.AppDescription = description;
             this.AppCategory = category;
