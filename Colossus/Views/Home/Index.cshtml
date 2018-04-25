@@ -18,17 +18,20 @@
     </div>
 </div>
 <main role="main" class="container">
+
     <div class="row">
         <div class="col-md-12">
             <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
             <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
-                <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
+                <input type="file" name="file" class="dropify" data-max-file-size="1000M" data-height="300" />
                 <p class="help margin-top-10">Only 1000MB max.</p>
                 <div class="progress mb-3">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
                 </div>
                 <div class="col-xs-12 mt-3 mb-3">
                     <input id="uploadButton" type="button" disabled="disabled" class="btn btn-lg btn-success">
+                    <a id="copyButton" class="btn btn-lg btn-secondary" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="https://www.baidu.com">Copy link</a>
+                    <a id="openButton" class="btn btn-lg btn-primary" href="javascript:void(0);" target="_blank">Open</a>
                 </div>
                 <p class="text-danger" id="message"></p>
                 <input class="form-control mb-3" type="text" disabled="disabled" value="" id="address" />
@@ -98,71 +101,5 @@
             $('.dropify').dropify();
         });
     </script>
-    <script>
-        //User just came.
-        var init = function () {
-            $('#address').hide();
-            $('#uploadButton').hide();
-            $('.progress').hide();
-            $('#uploadButton').attr('value', 'Upload to share');
-        }
-
-        //User just put a file.
-        var ready = function () {
-            $('.progress-bar').css('width', '0%');
-            $('.progress').show();
-            $('#uploadButton').show();
-            $('#uploadButton').removeAttr('disabled');
-            $('#uploadButton').attr('value', 'Upload to share');
-            $('#message').html('');
-            $('#address').hide();
-        }
-
-        //User uploading the file.
-        var uploading = function () {
-            $('#uploadButton').attr('disabled', 'true');
-            $('#uploadButton').attr('value', 'Uploading...');
-            $.ajax({
-                url: '/Home/Upload',
-                type: 'POST',
-                enctype: 'multipart/form-data',
-                data: new FormData($('#fileform')[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                xhr: function () {
-                    var myXhr = $.ajaxSettings.xhr();
-                    if (myXhr.upload) {
-                        myXhr.upload.addEventListener('progress', function (e) {
-                            if (e.lengthComputable) {
-                                $('.progress-bar').css('width', 100 * e.loaded / e.total + '%');
-                                $('#message').html(Math.round(e.loaded / e.total * 100) + "%");
-                                if (e.loaded == e.total) {
-                                    processing();
-                                }
-                            }
-                        }, false);
-                    }
-                    return myXhr;
-                },
-                success: finish
-            });
-        }
-
-        //User uploaded the file and verifing
-        var processing = function () {
-            $('#message').html('Please be patient while we are verifying your file...');
-        }
-
-        //File validated!
-        var finish = function (e) {
-            ready();
-            $('#address').val(e.value);
-            $('#address').show();
-        }
-
-        $(':file').on('change', ready);
-        $('#uploadButton').on('click', uploading);
-        init();
-    </script>
+    <script src="~/js/site.js"></script>
 }
