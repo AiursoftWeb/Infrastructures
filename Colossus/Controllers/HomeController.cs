@@ -33,7 +33,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
-        [FileChecker]
+        [FileChecker(MaxSize = 30 * 1024 * 1024)]
         public async Task<IActionResult> Upload()
         {
             if (!ModelState.IsValid)
@@ -41,7 +41,7 @@ namespace Aiursoft.Colossus.Controllers
                 return Redirect("/");
             }
             var file = Request.Form.Files.First();
-            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
+            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
             return Json(new
             {
                 message = "Uploaded!",

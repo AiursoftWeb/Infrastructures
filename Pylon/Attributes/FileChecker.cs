@@ -8,8 +8,9 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Attributes
 {
-    public class FileChecker: ActionFilterAttribute
+    public class FileChecker : ActionFilterAttribute
     {
+        public long MaxSize { get; set; } = -1;
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
@@ -39,7 +40,7 @@ namespace Aiursoft.Pylon.Attributes
                 return;
             }
             // Too large
-            if (file.Length > Values.MaxFileSize)
+            if ((MaxSize != -1 && file.Length > MaxSize) || file.Length > Values.MaxFileSize)
             {
                 context.ModelState.AddModelError("", "Please provide a file which is smaller than 1GB!");
                 return;
