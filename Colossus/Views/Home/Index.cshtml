@@ -17,32 +17,28 @@
         </div>
     </div>
 </div>
-
 <main role="main" class="container">
-
     <div class="row">
         <div class="col-md-12">
             <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
             <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
                 <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
                 <p class="help margin-top-10">Only 1000MB max.</p>
-                <div class="col-xs-12 mt-3 mb-3">
-                    <input id="uploadButton" type="button" class="btn btn-lg btn-success">
-                </div>
                 <div class="progress mb-3">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                </div>
+                <div class="col-xs-12 mt-3 mb-3">
+                    <input id="uploadButton" type="button" disabled="disabled" class="btn btn-lg btn-success">
                 </div>
                 <p class="text-danger" id="message"></p>
                 <input class="form-control mb-3" type="text" disabled="disabled" value="" id="address" />
             </form>
         </div>
     </div>
-
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Pricing</h1>
         <p class="lead">Quickly upload anything to share it with anyone. Create a one-time link to share a secret file and view log to statistic file download times.</p>
     </div>
-
     <div class="card-deck mb-3 text-center">
         <div class="card mb-4 box-shadow">
             <div class="card-header">
@@ -91,7 +87,6 @@
         </div>
     </div>
 
-
 </main>
 @section css{
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
@@ -104,32 +99,27 @@
         });
     </script>
     <script>
+        //User just came.
         var init = function () {
+            $('#address').hide();
+            $('#uploadButton').hide();
+            $('.progress').hide();
+            $('#uploadButton').attr('value', 'Upload to share');
+        }
+
+        //User just put a file.
+        var ready = function () {
             $('.progress-bar').css('width', '0%');
+            $('.progress').show();
+            $('#uploadButton').show();
             $('#uploadButton').removeAttr('disabled');
             $('#uploadButton').attr('value', 'Upload to share');
             $('#message').html('');
             $('#address').hide();
         }
-        var update = function (e) {
-            if (e.lengthComputable) {
-                $('.progress-bar').css('width', 100 * e.loaded / e.total + '%');
-                $('#message').html(Math.round(e.loaded / e.total * 100) + "%");
-                if (e.loaded == e.total) {
-                    processing();
-                }
-            }
-        }
-        var processing = function () {
-            $('#message').html('Please be patient while we are verifying your file...');
-        }
-        var finish = function (e) {
-            init();
-            $('#address').val(e.value);
-            $('#address').show();
-        }
-        $(':file').on('change', init);
-        $('#uploadButton').on('click', function () {
+
+        //User uploading the file.
+        var uploading = function () {
             $('#uploadButton').attr('disabled', 'true');
             $('#uploadButton').attr('value', 'Uploading...');
             $.ajax({
@@ -143,13 +133,36 @@
                 xhr: function () {
                     var myXhr = $.ajaxSettings.xhr();
                     if (myXhr.upload) {
-                        myXhr.upload.addEventListener('progress', update, false);
+                        myXhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                $('.progress-bar').css('width', 100 * e.loaded / e.total + '%');
+                                $('#message').html(Math.round(e.loaded / e.total * 100) + "%");
+                                if (e.loaded == e.total) {
+                                    processing();
+                                }
+                            }
+                        }, false);
                     }
                     return myXhr;
                 },
                 success: finish
             });
-        });
+        }
+
+        //User uploaded the file and verifing
+        var processing = function () {
+            $('#message').html('Please be patient while we are verifying your file...');
+        }
+
+        //File validated!
+        var finish = function (e) {
+            ready();
+            $('#address').val(e.value);
+            $('#address').show();
+        }
+
+        $(':file').on('change', ready);
+        $('#uploadButton').on('click', uploading);
         init();
     </script>
 }

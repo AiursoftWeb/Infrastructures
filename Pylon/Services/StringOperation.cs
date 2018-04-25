@@ -20,11 +20,13 @@ namespace Aiursoft.Pylon.Services
             }
             return sBuilder.ToString();
         }
+
         public static string GetMD5(this string SourceString)
         {
             string hash = GetMd5Hash(MD5.Create(), SourceString);
             return hash;
         }
+
         public static string GetMD5(this byte[] data)
         {
             using (var md5 = MD5.Create())
@@ -34,6 +36,7 @@ namespace Aiursoft.Pylon.Services
                 return hex.Replace("-", "");
             }
         }
+
         public static string OTake(this string source, int Count)
         {
             if (source.Length <= Count)
@@ -59,6 +62,7 @@ namespace Aiursoft.Pylon.Services
             }
             return false;
         }
+
         public static string ORemoveHTML(this string Content)
         {
             string s = string.Empty;
@@ -74,6 +78,7 @@ namespace Aiursoft.Pylon.Services
             }
             return s + Content;
         }
+
         private static Random _staticRan { get; set; } = new Random();
         public static string RandomString(int count)
         {
@@ -96,6 +101,7 @@ namespace Aiursoft.Pylon.Services
             }
             return checkCode;
         }
+
         public static string FormatTimeAgo(TimeSpan ToFormat)
         {
             if (ToFormat.TotalMinutes < 1)
