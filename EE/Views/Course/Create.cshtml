@@ -37,7 +37,7 @@
                     <input asp-for="Name" class="form-control" placeholder="Enter the name of your new course...">
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 ">
+                <div class="form-group">
                     <label>Upload your course icon</label>
                     <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.CDN/images/appdefaulticon.png" />
                     <p class="small text-muted">Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg.</p>
@@ -68,14 +68,19 @@
 
 @section Styles {
     <link rel='stylesheet' href='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular.css'>
+    <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
 
 @section Scripts {
+    <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script src='@ServiceLocation.CDN/node_modules/angular/angular.js'></script>
     <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular-rangy.min.js'></script>
     <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular-sanitize.min.js'></script>
     <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular.min.js'></script>
     <script>
         angular.module('ee', ['textAngular']);
+        $(document).ready(function () {
+            $('.dropify').dropify();
+        });
     </script>
 }
