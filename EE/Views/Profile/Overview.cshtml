@@ -2,12 +2,10 @@
 @{
     ViewData["Title"] = "My Courses";
 }
-
 <div class="row">
     @(await Html.PartialAsync("_Left", Model.LeftContent))
     <div class="col-md-9 mt-3">
         @(await Html.PartialAsync("_Up", Model.UpContent))
-
         <div class="row">
             @if (Model.CoursesDisplaying.Count() == 0)
             {
@@ -38,8 +36,8 @@
                                 @course.Name
                             </a>
                         </div>
-                        <div class="card-body profile-courses-content">
-                            @course.Description
+                        <div class="card-body profile-courses-content ee-card">
+                            @course.Description?.ORemoveHTML()
                         </div>
                     </div>
                 </div>

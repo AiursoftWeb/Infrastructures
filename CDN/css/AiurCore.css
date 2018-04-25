@@ -5,3 +5,8 @@ html {
 .jumbotron {
     padding: 6rem 1rem;
 }
+
+.ee-card {
+    padding: 0;
+    margin: 1.25rem;
+}
