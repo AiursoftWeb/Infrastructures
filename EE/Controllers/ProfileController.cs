@@ -82,6 +82,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Followings(string id)//Viewing user name
         {
+            var cuser = await GetCurrentUserAsync();
             var user = await _userManager.FindByNameAsync(id);
             if (user == null)
             {
@@ -94,7 +95,8 @@ namespace Aiursoft.EE.Controllers
                 .Where(t => t.TriggerId == user.Id).ToListAsync();
             var model = new FollowingsViewModel
             {
-                Followings = followings
+                Followings = followings,
+                IsMe = cuser?.Id == user.Id 
             };
             await model.Restore(user, 3, _dbContext, await GetCurrentUserAsync());
             return View(model);

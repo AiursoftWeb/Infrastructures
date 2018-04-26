@@ -18,9 +18,12 @@
                         <p>Lorem ipsum dolor sit amet.</p>
                     </div>
                     <div class="col-sm-2">
-                        <a class="btn btn-danger mt-3" id="follow" href="javascript:unfollow('@fol.ReceiverId')">
-                            UnFollow
-                        </a>
+                        @if (!Model.IsMe)
+                        {
+                            <a class="btn btn-danger mt-3" id="follow" href="javascript:unfollow('@fol.ReceiverId')">
+                                UnFollow
+                            </a>
+                        }
                     </div>
                     <hr />
                 }
