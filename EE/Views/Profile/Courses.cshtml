@@ -2,42 +2,43 @@
 @{
     ViewData["Title"] = "My Courses";
 }
-
-<div class="row">
-    @(await Html.PartialAsync("_Left", Model.LeftContent))
-    <div class="col-md-9 mt-3">
-        @(await Html.PartialAsync("_Up", Model.UpContent))
-        <div class="row">
-            @if (Model.AllCourses.Count() == 0)
-            {
-                <div class="col-md-12">
-                    @if (Model.LeftContent.IsMe)
-                    {
-                        <p class="text-center">
-                            You did not create any course!
-                        </p>
-                        <p class="text-center">
-                            <a class="btn btn-primary text-center" asp-controller="Course" asp-action="Create">Create one</a>
-                        </p>
-                    }
-                    else
-                    {
-                        <p class="text-center">
-                            He did not create any course!
-                        </p>
-                    }
-                </div>
-            }
-            @foreach (var cour in Model.AllCourses)
-            {
-                <div class="col-sm-10">
-                    <a asp-controller="Course" asp-action="Detail" asp-route-id="@cour.Id">
-                        <h3 class="mt-3">@(cour.Name ?? "Null")</h3>
-                    </a>
-                    <p>@(cour.Description?.ORemoveHTML() ?? "null")<p>
-                </div>
-                <hr />
-            }
+<div class="container">
+    <div class="row">
+        @(await Html.PartialAsync("_Left", Model.LeftContent))
+        <div class="col-md-9 mt-3">
+            @(await Html.PartialAsync("_Up", Model.UpContent))
+            <div class="row">
+                @if (Model.AllCourses.Count() == 0)
+                {
+                    <div class="col-md-12">
+                        @if (Model.LeftContent.IsMe)
+                        {
+                            <p class="text-center">
+                                You did not create any course!
+                            </p>
+                            <p class="text-center">
+                                <a class="btn btn-primary text-center" asp-controller="Course" asp-action="Create">Create one</a>
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="text-center">
+                                He did not create any course!
+                            </p>
+                        }
+                    </div>
+                }
+                @foreach (var cour in Model.AllCourses)
+                {
+                    <div class="col-sm-10">
+                        <a asp-controller="Course" asp-action="Detail" asp-route-id="@cour.Id">
+                            <h3 class="mt-3">@(cour.Name ?? "Null")</h3>
+                        </a>
+                        <p>@(cour.Description?.ORemoveHTML() ?? "null")<p>
+                    </div>
+                    <hr />
+                }
+            </div>
         </div>
     </div>
 </div>

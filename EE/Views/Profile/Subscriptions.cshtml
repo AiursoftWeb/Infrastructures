@@ -2,31 +2,33 @@
 @{
     ViewData["Title"] = "My Courses";
 }
+<div class="container">
 
-<div class="row">
-    @(await Html.PartialAsync("_Left", Model.LeftContent))
-    <div class="col-md-9 mt-3">
-        @(await Html.PartialAsync("_Up", Model.UpContent))
-        <div class="row">
-            @foreach (var sub in Model.MySubscriptions)
-            {
-                <div class="col-sm-10">
-                    <a asp-controller="Course" asp-action="Detail" asp-route-id="@sub.CourseId">
-                        <h3 class="mt-3">@sub.Course.Name</h3>
-                    </a>
-                    <p>@sub.Course.Description.ORemoveHTML()</p>
-                </div>
-                @if (Model.LeftContent.IsMe)
+    <div class="row">
+        @(await Html.PartialAsync("_Left", Model.LeftContent))
+        <div class="col-md-9 mt-3">
+            @(await Html.PartialAsync("_Up", Model.UpContent))
+            <div class="row">
+                @foreach (var sub in Model.MySubscriptions)
                 {
-                    <div class="col-sm-2">
-                        <form id="subform@(sub.Id)" asp-controller="Profile" asp-action="UnSubscribe" method="post">
-                            <input type="hidden" name="id" value="@sub.Id" />
-                        </form>
-                        <a href="javascript:$('#subform@(sub.Id)').submit()" class="btn btn-outline-danger mt-3">UnSubscribe</a>
+                    <div class="col-sm-10">
+                        <a asp-controller="Course" asp-action="Detail" asp-route-id="@sub.CourseId">
+                            <h3 class="mt-3">@sub.Course.Name</h3>
+                        </a>
+                        <p>@sub.Course.Description.ORemoveHTML()</p>
                     </div>
+                    @if (Model.LeftContent.IsMe)
+                    {
+                        <div class="col-sm-2">
+                            <form id="subform@(sub.Id)" asp-controller="Profile" asp-action="UnSubscribe" method="post">
+                                <input type="hidden" name="id" value="@sub.Id" />
+                            </form>
+                            <a href="javascript:$('#subform@(sub.Id)').submit()" class="btn btn-outline-danger mt-3">UnSubscribe</a>
+                        </div>
+                    }
+                    <hr />
                 }
-                <hr />
-            }
+            </div>
         </div>
     </div>
 </div>
