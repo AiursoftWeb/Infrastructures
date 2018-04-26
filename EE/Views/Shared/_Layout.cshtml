@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Aiursoft.EE</title>
+    <title>@ViewData["Title"] - @Values.ProjectName EE</title>
     <link rel="icon" type="image/x-icon" href="@ServiceLocation.CDN/favicon.ico">
     <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
     <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">Aiursoft EE</a>
+            <a class="navbar-brand" href="/">@Values.ProjectName EE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -112,6 +112,7 @@
     </footer>
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
     <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
+    <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

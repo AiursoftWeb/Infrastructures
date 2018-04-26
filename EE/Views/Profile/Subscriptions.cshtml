@@ -20,10 +20,7 @@
                     @if (Model.LeftContent.IsMe)
                     {
                         <div class="col-sm-2">
-                            <form id="subform@(sub.Id)" asp-controller="Profile" asp-action="UnSubscribe" method="post">
-                                <input type="hidden" name="id" value="@sub.Id" />
-                            </form>
-                            <a href="javascript:$('#subform@(sub.Id)').submit()" class="btn btn-outline-danger mt-3">UnSubscribe</a>
+                            <a id="subscribe" href="javascript:unsubscribe(@sub.CourseId)" class="btn btn-danger mt-3">UnSubscribe</a>
                         </div>
                     }
                     <hr />

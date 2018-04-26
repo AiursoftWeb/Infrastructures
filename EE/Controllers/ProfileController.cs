@@ -78,20 +78,6 @@ namespace Aiursoft.EE.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [AiurForceAuth]
-        public async Task<IActionResult> UnSubscribe(int id) // sub Id
-        {
-            var user = await GetCurrentUserAsync();
-            var sub = await _dbContext.Subscriptions.SingleOrDefaultAsync(t => t.Id == id && t.UserId == user.Id);
-            if (sub != null)
-            {
-                _dbContext.Subscriptions.Remove(sub);
-                await _dbContext.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Subscriptions), new { id = user.UserName });
-        }
-
         public async Task<IActionResult> Followings(string id)//Viewing user name
         {
             var user = await _userManager.FindByNameAsync(id);
@@ -135,6 +121,7 @@ namespace Aiursoft.EE.Controllers
         [AiurForceAuth]
         public async Task<IActionResult> Follow(string id)//Target user id
         {
+#warning Required to migrate as a API.
             var cuser = await GetCurrentUserAsync();
             var user = await _userManager.FindByIdAsync(id);
             var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == cuser.Id && t.ReceiverId == user.Id);
@@ -154,6 +141,7 @@ namespace Aiursoft.EE.Controllers
         [AiurForceAuth]
         public async Task<IActionResult> UnFollow(string id, string redirectAction)//target user id
         {
+#warning Required to migrate as a API.
             var cuser = await GetCurrentUserAsync();
             var user = await _userManager.FindByIdAsync(id);
             var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == cuser.Id && t.ReceiverId == user.Id);
@@ -166,7 +154,7 @@ namespace Aiursoft.EE.Controllers
             {
                 return RedirectToAction(redirectAction, new { id = user.Id });
             }
-            else if(redirectAction == nameof(Followings))
+            else if (redirectAction == nameof(Followings))
             {
                 return RedirectToAction(redirectAction, new { id = cuser.Id });
             }
