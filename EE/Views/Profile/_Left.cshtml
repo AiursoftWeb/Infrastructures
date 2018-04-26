@@ -16,23 +16,14 @@
             <div class="card-footer">
                 @if (Model.AlreadyFollowed)
                 {
-                    <form method="post" asp-controller="Profile" asp-action="UnFollow" id="UnFollowForm">
-                        <input type="hidden" name="id" value="@Model.UserId" />
-                        <input type="hidden" name="redirectAction" value="Overview" />
-                    </form>
-                    <a class="btn btn-outline-danger" href="javascript:$('#UnFollowForm').submit()" style="width:140px;">
+                    <a class="btn btn-danger" id="follow" href="javascript:unfollow('@Model.UserId')" style="width:100%">
                         UnFollow
-                        <i class="fa fa-star"></i>
                     </a>
                 }
                 else
                 {
-                    <form method="post" asp-controller="Profile" asp-action="Follow" id="FollowForm">
-                        <input type="hidden" name="id" value="@Model.UserId" />
-                    </form>
-                    <a class="btn btn-outline-primary" href="javascript:$('#FollowForm').submit()" style="width:140px;">
+                    <a class="btn btn-primary" id="follow" href="javascript:follow('@Model.UserId')" style="width:100%">
                         Follow
-                        <i class="fa fa-star-o"></i>
                     </a>
                 }
             </div>

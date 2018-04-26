@@ -29,7 +29,7 @@ namespace Aiursoft.EE.Models.ProfileViewModels
             UpContent = new SharedUpContent
             {
                 ActivePanel = panel,
-                UserId = user.Id,
+                UserName = user.UserName,
                 SubScribeCount = await dbContext
                     .Subscriptions
                     .Where(t => t.UserId == user.Id)
@@ -62,7 +62,7 @@ namespace Aiursoft.EE.Models.ProfileViewModels
     }
     public class SharedUpContent
     {
-        public string UserId { get; set; }
+        public string UserName { get; set; }
         public int ActivePanel { get; set; } = -1;
         public int SubScribeCount { get; set; } = -1;
         public int FollowingCount { get; set; } = -1;

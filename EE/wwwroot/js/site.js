@@ -25,3 +25,31 @@ var unsubscribe = function (id) {
         }
     });
 }
+
+var follow = function (id) {
+    $.post('/Profile/Follow/' + id, function (data) {
+        if (data.code == 0) {
+            $('#follow')
+                .removeClass('btn-primary')
+                .addClass('btn-danger')
+                .attr('href', 'javascript:unfollow("' + id + '")')
+                .html('Unfollow');
+        } else {
+            alert(data.message);
+        }
+    })
+}
+
+var unfollow = function (id) {
+    $.post('/Profile/UnFollow/' + id, function (data) {
+        if (data.code == 0) {
+            $('#follow')
+                .removeClass('btn-danger')
+                .addClass('btn-primary')
+                .attr('href', 'javascript:follow("' + id + '")')
+                .html('follow');
+        } else {
+            alert(data.message);
+        }
+    })
+}

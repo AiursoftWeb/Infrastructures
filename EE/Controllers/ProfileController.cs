@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.EE.Controllers
 {
@@ -118,47 +120,51 @@ namespace Aiursoft.EE.Controllers
         }
 
         [HttpPost]
-        [AiurForceAuth]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        [AiurForceAuth("", "", false)]
         public async Task<IActionResult> Follow(string id)//Target user id
         {
-#warning Required to migrate as a API.
-            var cuser = await GetCurrentUserAsync();
-            var user = await _userManager.FindByIdAsync(id);
-            var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == cuser.Id && t.ReceiverId == user.Id);
+            var currentUser = await GetCurrentUserAsync();
+            var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
+            if (user == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+            }
+            var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
             if (follow == null)
             {
                 _dbContext.Follows.Add(new Follow
                 {
-                    TriggerId = cuser.Id,
+                    TriggerId = currentUser.Id,
                     ReceiverId = user.Id
                 });
                 await _dbContext.SaveChangesAsync();
+                return this.Protocal(ErrorType.Success, "You have successfully followed the target user!");
             }
-            return RedirectToAction(nameof(Overview), new { id = user.Id });
+            return this.Protocal(ErrorType.HasDoneAlready, "You have already followed the target user!");
         }
 
         [HttpPost]
-        [AiurForceAuth]
-        public async Task<IActionResult> UnFollow(string id, string redirectAction)//target user id
+        [APIExpHandler]
+        [APIModelStateChecker]
+        [AiurForceAuth("", "", false)]
+        public async Task<IActionResult> UnFollow(string id)//Target User Id
         {
-#warning Required to migrate as a API.
-            var cuser = await GetCurrentUserAsync();
-            var user = await _userManager.FindByIdAsync(id);
-            var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == cuser.Id && t.ReceiverId == user.Id);
+            var currentUser = await GetCurrentUserAsync();
+            var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
+            if (user == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+            }
+            var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
             if (follow != null)
             {
                 _dbContext.Follows.Remove(follow);
                 await _dbContext.SaveChangesAsync();
+                return this.Protocal(ErrorType.Success, "You have successfully unfollowed the target user!");
             }
-            if (redirectAction == nameof(Overview))
-            {
-                return RedirectToAction(redirectAction, new { id = user.Id });
-            }
-            else if (redirectAction == nameof(Followings))
-            {
-                return RedirectToAction(redirectAction, new { id = cuser.Id });
-            }
-            throw new InvalidOperationException();
+            return this.Protocal(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
         }
 
         private async Task<EEUser> GetCurrentUserAsync()
