@@ -37,6 +37,32 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-fw fa-bell"></i>
+                                    <span class="indicator text-warning">
+                                        <i class="fa fa-fw fa-circle"></i>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">New Alerts:</h6>
+                                    <div class="dropdown-divider"></div>
+                                    @for (int i = 0; i < 7; i++)
+                                    {
+                                        <a class="dropdown-item" href="#">
+                                            <span class="text-success">
+                                                <strong>
+                                                    <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
+                                                </strong>
+                                            </span>
+                                            <span class="small float-right text-muted">11:21 AM</span>
+                                            <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    <a class="dropdown-item small" href="#">View all alerts</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown mr-5">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
