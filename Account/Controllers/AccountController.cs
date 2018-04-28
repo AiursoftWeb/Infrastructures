@@ -13,6 +13,7 @@ using Aiursoft.Pylon.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -89,11 +90,13 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
-        //[HttpPost]
-        public async Task<IActionResult> SendMail(string email)// The id was email address from submit path.
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> SendMail([EmailAddress]string email)
         {
             var user = await GetCurrentUserAsync();
-            var result = await _userService.SendConfirmationEmailAsync(user.Id, email);
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
             return Json(result);
         }
 
