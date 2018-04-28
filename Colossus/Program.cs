@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Aiursoft.Colossus.Data;
+using Aiursoft.Pylon;
 
 namespace Aiursoft.Colossus
 {
@@ -15,6 +17,7 @@ namespace Aiursoft.Colossus
         public static void Main(string[] args)
         {
             BuildWebHost(args)
+                .MigrateDbContext<ColossusDbContext>(null)
                 .Run();
         }
 
