@@ -47,7 +47,7 @@
                         @if (!mail.Validated)
                         {
                             <span class="badge badge-danger">Not validated!</span>
-                            <button class="btn-sm btn btn-secondary float-right">Send Validation Email</button>
+                            <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">Send Validation Email</button>
                         }
                     </li>
                 }
@@ -55,3 +55,6 @@
         </div>
     </div>
 </div>
+@section js{
+<script src="~/js/site.js"></script>
+}
