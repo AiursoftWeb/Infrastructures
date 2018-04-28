@@ -313,7 +313,7 @@ namespace Aiursoft.API.Controllers
 
         public async Task<IActionResult> EnterSMSCode(string Email)
         {
-            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == Email.ToLower());
             if (mail == null)
             {
                 return NotFound();
