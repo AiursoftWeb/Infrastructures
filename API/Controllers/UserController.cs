@@ -245,51 +245,43 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> MethodSelection(string id)//User id
         {
-            var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == id);
+
             if (user == null)
             {
                 return NotFound();
             }
-            if (user.PhoneNumberConfirmed)
+            var model = new MethodSelectionViewModel
             {
-
-            }
-            return View();
-        }
-        // [HttpGet]
-        // public IActionResult SelectPasswordMethod()
-        // {
-        //     return View();
-        // }
-
-        #region Forgot Password with email
-        [HttpGet]
-        public IActionResult ForgotPasswordViaEmail()
-        {
-            return View();
+                AccountName = user.Email
+            };
+            model.SMSResetAvaliable = user.PhoneNumberConfirmed;
+            model.PhoneNumber = user.PhoneNumber;
+            model.AvaliableEmails = user.Emails.Where(t => t.Validated);
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
         {
-            if (ModelState.IsValid)
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                {
-                    return RedirectToAction(nameof(ForgotPasswordSent));
-                }
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
-                {
-                    Code = code,
-                    UserId = user.Id
-                });
-                await _emailSender.SendEmail(model.Email, "Reset Password",
-                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
-                return RedirectToAction(nameof(ForgotPasswordSent));
+                return NotFound();
             }
-            return View(model);
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
+            {
+                Code = code,
+                UserId = user.Id
+            });
+            await _emailSender.SendEmail(model.Email, "Reset Password",
+                $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
+            return RedirectToAction(nameof(ForgotPasswordSent));
         }
 
         [HttpGet]
@@ -297,7 +289,7 @@ namespace Aiursoft.API.Controllers
         {
             return View();
         }
-        #endregion
+
         #region Forgot Password with SMS
         [HttpGet]
         public IActionResult ForgotPasswordViaSMS()

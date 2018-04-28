@@ -26,30 +26,6 @@ namespace Aiursoft.API.Data
         public DbSet<AppGrant> LocalAppGrant { get; set; }
         public DbSet<UserEmail> UserEmails { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
-
-        public void SyncEmail()
-        {
-            var users = Users.Include(t => t.Emails).ToList();
-            foreach (var user in users)
-            {
-                bool hasPrimaryEmail = user.Emails.Exists(t => t.EmailAddress == user.Email.ToLower());
-                if (user.Emails.Count() == 0 || !hasPrimaryEmail)
-                {
-                    var primaryEmail = new UserEmail
-                    {
-                        OwnerId = user.Id,
-                        EmailAddress = user.Email.ToLower()
-                    };
-                    UserEmails.Add(primaryEmail);
-                    SaveChanges();
-                }
-            }
-        }
-
         public void Seed(IServiceProvider services)
         {
             var config = services.GetService<IConfiguration>();
@@ -69,17 +45,20 @@ namespace Aiursoft.API.Data
                 Email = firstUserName,
                 NickName = "Demo User",
                 PreferedLanguage = "en",
-                HeadImgUrl = $"{serviceLocation.CDN}/images/userdefaulticon.png"
+                HeadImgUrl = $"{serviceLocation.CDN}/images/userdefaulticon.png",
+                PhoneNumber = "13312121212",
+                PhoneNumberConfirmed = true
             };
             usermanager.CreateAsync(newuser, firstUserPass).Wait();
 
             var primaryMail = new UserEmail
             {
                 EmailAddress = newuser.Email.ToLower(),
-                OwnerId = newuser.Id
+                OwnerId = newuser.Id,
+                Validated = true
             };
             this.UserEmails.Add(primaryMail);
-            
+
             this.SaveChanges();
             logger.LogInformation("Successfully seeded user to API!");
         }
