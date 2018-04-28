@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API
 {
-    public class IUserEmail
+    public class AiurUserEmail
     {
         [Key]
         public int Id { get; set; }

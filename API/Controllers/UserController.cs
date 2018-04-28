@@ -213,7 +213,7 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
-            return Json(new AiurCollection<IUserEmail>(targetUser.Emails)
+            return Json(new AiurCollection<AiurUserEmail>(targetUser.Emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
@@ -221,39 +221,67 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult SelectPasswordMethod()
-        {
-            return View();
-        }
-
-        #region Forgot Password with email
-        [HttpGet]
-        public IActionResult ForgotPasswordViaEmail()
+        public IActionResult ForgotPasswordFor()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
+        public async Task<IActionResult> ForgotPasswordFor(ForgotPasswordForViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
+                var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+                if (mail == null)
                 {
-                    return RedirectToAction(nameof(ForgotPasswordSent));
+                    ModelState.AddModelError(nameof(model.Email), $"The account with Email: {model.Email} was not found!");
+                    return View(model);
                 }
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
-                {
-                    Code = code,
-                    UserId = user.Id
-                });
-                await _emailSender.SendEmail(model.Email, "Reset Password",
-                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
-                return RedirectToAction(nameof(ForgotPasswordSent));
+                return RedirectToAction(nameof(MethodSelection), new { id = mail.OwnerId });
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MethodSelection(string id)//User id
+        {
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var model = new MethodSelectionViewModel
+            {
+                AccountName = user.Email
+            };
+            model.SMSResetAvaliable = user.PhoneNumberConfirmed;
+            model.PhoneNumber = user.PhoneNumber.Substring(user.PhoneNumber.Length - 4);
+            model.AvaliableEmails = user.Emails.Where(t => t.Validated);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
+        {
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
+            {
+                Code = code,
+                UserId = user.Id
+            });
+            await _emailSender.SendEmail(model.Email, "Reset Password",
+                $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
+            return RedirectToAction(nameof(ForgotPasswordSent));
         }
 
         [HttpGet]
@@ -261,45 +289,35 @@ namespace Aiursoft.API.Controllers
         {
             return View();
         }
-        #endregion
-        #region Forgot Password with SMS
-        [HttpGet]
-        public IActionResult ForgotPasswordViaSMS()
-        {
-            var model = new ForgotPasswordViaEmailViewModel();
-            return View(model);
-        }
 
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaEmailViewModel model)
         {
-            if (ModelState.IsValid)
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                {
-                    model.ModelStateValid = false;
-                    ModelState.AddModelError("", $"We can't find an account with email:`{model.Email}`!");
-                    return View(model);
-                }
-                if (user.PhoneNumberConfirmed == false)
-                {
-                    model.ModelStateValid = false;
-                    ModelState.AddModelError("", "Your account did not bind a valid phone number!");
-                    return View(model);
-                }
-                var code = StringOperation.RandomString(6);
-                user.SMSPasswordResetToken = code;
-                await _userManager.UpdateAsync(user);
-                await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
-                return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
+                return NotFound();
             }
-            return View(model);
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            if (user.PhoneNumberConfirmed == false)
+            {
+                return NotFound();
+            }
+            var code = StringOperation.RandomString(6);
+            user.SMSPasswordResetToken = code;
+            await _userManager.UpdateAsync(user);
+            await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
+            return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
         }
 
         public async Task<IActionResult> EnterSMSCode(string Email)
         {
-            var user = await _userManager.FindByEmailAsync(Email);
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == Email.ToLower());
+            if (mail == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
             if (user == null || user.PhoneNumberConfirmed == false)
             {
                 return NotFound();
@@ -336,14 +354,14 @@ namespace Aiursoft.API.Controllers
                 return View(model);
             }
         }
-        #endregion
+
         #region Reset password
         [HttpGet]
         public IActionResult ResetPassword(string code = null)
         {
             if (code == null)
             {
-                return RedirectToAction(nameof(SelectPasswordMethod));
+                return RedirectToAction(nameof(ForgotPasswordFor));
             }
             var model = new ResetPasswordViewModel
             {

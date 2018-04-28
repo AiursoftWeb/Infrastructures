@@ -58,7 +58,7 @@ namespace Aiursoft.API.Models
         }
     }
 
-    public class UserEmail : IUserEmail
+    public class UserEmail : AiurUserEmail
     {
         [JsonIgnore]
         public string OwnerId { get; set; }
