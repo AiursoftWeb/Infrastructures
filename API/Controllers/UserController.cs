@@ -220,9 +220,26 @@ namespace Aiursoft.API.Controllers
             });
         }
 
+        [HttpGet]
         public IActionResult ForgotPasswordFor()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPasswordFor(ForgotPasswordForViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+                if (mail == null)
+                {
+                    ModelState.AddModelError(nameof(model.Email), $"The account with Email: {model.Email} was not found!");
+                    return View(model);
+                }
+                throw new NotImplementedException();
+            }
+            return View(model);
         }
 
         // [HttpGet]
@@ -348,7 +365,7 @@ namespace Aiursoft.API.Controllers
         {
             if (code == null)
             {
-                return RedirectToAction(nameof(SelectPasswordMethod));
+                return RedirectToAction(nameof(ForgotPasswordFor));
             }
             var model = new ResetPasswordViewModel
             {
