@@ -87,6 +87,23 @@ namespace Aiursoft.EE.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AiurForceAuth]
+        public async Task<IActionResult> Upload(int id)//Course Id
+        {
+            var course = await _dbContext
+                .Courses
+                .Include(t => t.Chapters)
+                .SingleOrDefaultAsync(t => t.Id == id);
+            var user = await GetCurrentUserAsync();
+            if (course == null || course.OwnerId != user.Id)
+            {
+                return NotFound();
+            }
+            var model = new UploadViewModel();
+            return View(model);
+        }
+
         [HttpPost]
         [AiurForceAuth("", "", false)]
         [APIExpHandler]
