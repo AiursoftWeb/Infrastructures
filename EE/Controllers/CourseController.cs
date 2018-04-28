@@ -80,7 +80,7 @@ namespace Aiursoft.EE.Controllers
                 Name = course.Name,
                 Description = course.Description,
                 Subscribed = Subscribed,
-                IsOwner = user.Id == course.OwnerId,
+                IsOwner = user?.Id == course.OwnerId,
                 AuthorName = course.Owner.NickName,
                 DisplayOwnerInfo = course.DisplayOwnerInfo
             };
