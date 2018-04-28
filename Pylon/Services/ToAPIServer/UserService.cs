@@ -101,5 +101,19 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
+
+        public async Task<AiurProtocal> SendConfirmationEmailAsync(string userId, string email)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new
+            {
+                Id = userId,
+                Email = email
+            });
+            var result = await _http.Get(url);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
     }
 }
