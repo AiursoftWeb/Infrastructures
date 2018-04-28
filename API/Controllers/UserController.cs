@@ -220,11 +220,16 @@ namespace Aiursoft.API.Controllers
             });
         }
 
-        [HttpGet]
-        public IActionResult SelectPasswordMethod()
+        public IActionResult ForgotPasswordFor()
         {
             return View();
         }
+
+        // [HttpGet]
+        // public IActionResult SelectPasswordMethod()
+        // {
+        //     return View();
+        // }
 
         #region Forgot Password with email
         [HttpGet]
