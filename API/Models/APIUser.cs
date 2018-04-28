@@ -65,5 +65,7 @@ namespace Aiursoft.API.Models
         [JsonIgnore]
         [ForeignKey(nameof(OwnerId))]
         public APIUser Owner { get; set; }
+
+        public string ValidateToken { get; set; }
     }
 }

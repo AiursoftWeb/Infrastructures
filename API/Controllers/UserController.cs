@@ -26,6 +26,7 @@ using Aiursoft.API.Attributes;
 using Aiursoft.API.Models.UserViewModels;
 using Microsoft.Extensions.Configuration;
 using static Aiursoft.Pylon.Services.ExtendMethods;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.API.Controllers
 {
@@ -218,6 +219,61 @@ namespace Aiursoft.API.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
             });
+        }
+
+        [ForceValidateAccessToken]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> SendConfirmationEmail(string id, [EmailAddress]string email)//User Id
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == email.ToLower());
+            if (useremail.OwnerId != user.Id)
+            {
+                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {id}");
+            }
+            if (useremail.Validated)
+            {
+                return this.Protocal(ErrorType.HasDoneAlready, $"The email :{email} was already validated!");
+            }
+            var token = StringOperation.RandomString(30);
+            useremail.ValidateToken = token;
+            await _dbContext.SaveChangesAsync();
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
+            {
+                userId = user.Id,
+                code = token
+            });
+            await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
+                $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+            return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
+        }
+
+        public async Task<IActionResult> EmailConfirm(string userId, string code)
+        {
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var mailObject = await _dbContext
+                .UserEmails
+                .SingleOrDefaultAsync(t => t.ValidateToken == code);
+
+            if (mailObject == null || mailObject.OwnerId != user.Id)
+            {
+                return NotFound();
+            }
+            if (!mailObject.Validated)
+            {
+                _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
+            }
+            mailObject.Validated = true;
+            await _dbContext.SaveChangesAsync();
+            return View();
         }
 
         [HttpGet]
