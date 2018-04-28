@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aiursoft.Pylon.Services;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Middlewares

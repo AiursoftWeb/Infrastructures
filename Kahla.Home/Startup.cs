@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Services;
 
 namespace Kahla.Home
 {

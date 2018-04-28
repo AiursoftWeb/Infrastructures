@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon;
 using Microsoft.Extensions.Logging;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.API.Data
 {
