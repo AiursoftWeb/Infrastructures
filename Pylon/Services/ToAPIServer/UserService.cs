@@ -88,7 +88,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async Task<AiurCollection<IUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
+        public async Task<AiurCollection<AiurUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
             {
@@ -96,7 +96,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId
             });
             var result = await _http.Get(url);
-            var JResult = JsonConvert.DeserializeObject<AiurCollection<IUserEmail>>(result);
+            var JResult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;

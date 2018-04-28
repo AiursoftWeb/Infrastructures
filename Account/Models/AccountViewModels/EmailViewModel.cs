@@ -12,7 +12,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public EmailViewModel() { }
         public EmailViewModel(AccountUser user) : base(user, 1, "Avatar") { }
 
-        public IEnumerable<IUserEmail> Emails { get; set; }
+        public IEnumerable<AiurUserEmail> Emails { get; set; }
         public string PrimaryEmail { get; set; }
         public void Recover(AccountUser user)
         {

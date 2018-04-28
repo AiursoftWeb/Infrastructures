@@ -1,0 +1,19 @@
+﻿@model Aiursoft.API.Models.UserViewModels.ForgotPasswordForViewModel
+@{
+    ViewData["Title"] = Localizer["Forgot password"];
+}
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">@Localizer["Forgot password"]</div>
+        <div class="card-body">
+            <div class="text-center mt-4 mb-5">
+                <h4>@Localizer["Forgot password"]</h4>
+                <p>@Localizer["We have to make sure that you are the owner of the account:"]</p>
+            </div>
+            <form asp-controller="User" asp-action="ForgotPasswordFor" method="post">
+                <button class="btn btn-success btn-block" data-disable-with="Checking..." type="submit">@Localizer["By Email"]</button>
+                <button class="btn btn-success btn-block mt-3" data-disable-with="Checking..." type="submit">@Localizer["By SMS"]</button>
+            </form>
+        </div>
+    </div>
+</div>

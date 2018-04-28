@@ -213,7 +213,7 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
             }
-            return Json(new AiurCollection<IUserEmail>(targetUser.Emails)
+            return Json(new AiurCollection<AiurUserEmail>(targetUser.Emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
@@ -237,11 +237,25 @@ namespace Aiursoft.API.Controllers
                     ModelState.AddModelError(nameof(model.Email), $"The account with Email: {model.Email} was not found!");
                     return View(model);
                 }
-                throw new NotImplementedException();
+                return RedirectToAction(nameof(MethodSelection), new { id = mail.OwnerId });
             }
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MethodSelection(string id)//User id
+        {
+            var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.PhoneNumberConfirmed)
+            {
+
+            }
+            return View();
+        }
         // [HttpGet]
         // public IActionResult SelectPasswordMethod()
         // {
