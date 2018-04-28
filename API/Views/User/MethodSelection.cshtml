@@ -12,7 +12,8 @@
             </div>
             @if(Model.SMSResetAvaliable)
             {
-                <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordFor" method="post">
+                <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaSMS" method="post">
+                    <input type="hidden" name="Email" value="@avaliableMail.EmailAddress" />
                     <button class="btn btn-success btn-block" data-disable-with="Checking..." type="submit">Send SMS to @Model.PhoneNumber</button>
                 </form>
             }

@@ -291,43 +291,34 @@ namespace Aiursoft.API.Controllers
         }
 
         #region Forgot Password with SMS
-        [HttpGet]
-        public IActionResult ForgotPasswordViaSMS()
-        {
-            var model = new ForgotPasswordViaEmailViewModel();
-            return View(model);
-        }
-
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaEmailViewModel model)
         {
-            if (ModelState.IsValid)
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                {
-                    model.ModelStateValid = false;
-                    ModelState.AddModelError("", $"We can't find an account with email:`{model.Email}`!");
-                    return View(model);
-                }
-                if (user.PhoneNumberConfirmed == false)
-                {
-                    model.ModelStateValid = false;
-                    ModelState.AddModelError("", "Your account did not bind a valid phone number!");
-                    return View(model);
-                }
-                var code = StringOperation.RandomString(6);
-                user.SMSPasswordResetToken = code;
-                await _userManager.UpdateAsync(user);
-                await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
-                return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
+                return NotFound();
             }
-            return View(model);
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            if (user.PhoneNumberConfirmed == false)
+            {
+                return NotFound();
+            }
+            var code = StringOperation.RandomString(6);
+            user.SMSPasswordResetToken = code;
+            await _userManager.UpdateAsync(user);
+            await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
+            return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
         }
 
         public async Task<IActionResult> EnterSMSCode(string Email)
         {
-            var user = await _userManager.FindByEmailAsync(Email);
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
             if (user == null || user.PhoneNumberConfirmed == false)
             {
                 return NotFound();
