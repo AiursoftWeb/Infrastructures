@@ -14,7 +14,7 @@
             {
                 <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaSMS" method="post">
                     <input type="hidden" name="Email" value="@Model.AccountName" />
-                    <button class="btn btn-success btn-block" data-disable-with="Checking..." type="submit">Send SMS to @Model.PhoneNumber</button>
+                    <button class="btn btn-success btn-block" data-disable-with="Checking..." type="submit">Send SMS to *******@Model.PhoneNumber</button>
                 </form>
             }
             @foreach(var avaliableMail in Model.AvaliableEmails)

@@ -259,7 +259,7 @@ namespace Aiursoft.API.Controllers
                 AccountName = user.Email
             };
             model.SMSResetAvaliable = user.PhoneNumberConfirmed;
-            model.PhoneNumber = user.PhoneNumber;
+            model.PhoneNumber = user.PhoneNumber.Substring(user.PhoneNumber.Length - 4);
             model.AvaliableEmails = user.Emails.Where(t => t.Validated);
             return View(model);
         }
@@ -290,7 +290,6 @@ namespace Aiursoft.API.Controllers
             return View();
         }
 
-        #region Forgot Password with SMS
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaEmailViewModel model)
         {
@@ -355,7 +354,7 @@ namespace Aiursoft.API.Controllers
                 return View(model);
             }
         }
-        #endregion
+
         #region Reset password
         [HttpGet]
         public IActionResult ResetPassword(string code = null)
