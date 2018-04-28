@@ -93,8 +93,8 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> SendMail(string email)// The id was email address from submit path.
         {
             var user = await GetCurrentUserAsync();
-            return this.Protocal(ErrorType.Success, "Debug message!");
-            //var result = await _userService.SendConfirmationEmailAsync(user.Id, email);
+            var result = await _userService.SendConfirmationEmailAsync(user.Id, email);
+            return Json(result);
         }
 
         public async Task<IActionResult> Avatar(bool JustHaveUpdated)
