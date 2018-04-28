@@ -14,14 +14,14 @@
             {
                 <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaSMS" method="post">
                     <input type="hidden" name="Email" value="@Model.AccountName" />
-                    <button class="btn btn-success btn-block" data-disable-with="Checking..." type="submit">Send SMS to *******@Model.PhoneNumber</button>
+                    <button class="btn btn-primary btn-block" data-disable-with="Checking..." type="submit">Send SMS to *******@Model.PhoneNumber</button>
                 </form>
             }
             @foreach(var avaliableMail in Model.AvaliableEmails)
             {
                 <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaEmail" method="post">
                     <input type="hidden" name="Email" value="@avaliableMail.EmailAddress" />
-                    <button class="btn btn-success btn-block" data-disable-with="Sending Email..." type="submit">Send Email to @avaliableMail.EmailAddress</button>
+                    <button class="btn btn-primary btn-block" data-disable-with="Sending Email..." type="submit">Send Email to @avaliableMail.EmailAddress</button>
                 </form>
             }
         </div>
