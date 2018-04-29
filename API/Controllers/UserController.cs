@@ -258,9 +258,9 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
+        [ForceValidateAccessToken]
         public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
         {
             var accessToken = await _dbContext
