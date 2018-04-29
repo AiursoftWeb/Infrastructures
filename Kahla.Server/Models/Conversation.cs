@@ -43,6 +43,7 @@ namespace Kahla.Server.Models
         [ForeignKey(nameof(TargetId))]
         public KahlaUser TargetUser { get; set; }
         [NotMapped]
+        // Only a property for convience.
         public string AnotherUserId { get; set; }
 
         public KahlaUser AnotherUser(string myId) => myId == RequesterId ? TargetUser : RequestUser;
@@ -105,7 +106,7 @@ namespace Kahla.Server.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateTime JoinTime { get; set; }
+        public DateTime JoinTime { get; set; } = DateTime.Now;
 
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]

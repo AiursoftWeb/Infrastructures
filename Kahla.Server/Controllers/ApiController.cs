@@ -420,7 +420,16 @@ namespace Kahla.Server.Controllers
             {
                 var pTarget = target as PrivateConversation;
                 pTarget.AnotherUserId = pTarget.AnotherUser(user.Id).Id;
-                return Json(new AiurValue<Conversation>(pTarget)
+                return Json(new AiurValue<PrivateConversation>(pTarget)
+                {
+                    Code = ErrorType.Success,
+                    Message = "Successfully get target conversation."
+                });
+            }
+            else if (target is GroupConversation)
+            {
+                var gtarget = target as GroupConversation;
+                return Json(new AiurValue<GroupConversation>(gtarget)
                 {
                     Code = ErrorType.Success,
                     Message = "Successfully get target conversation."
@@ -428,21 +437,20 @@ namespace Kahla.Server.Controllers
             }
             else
             {
-                // Group talk part.
                 throw new NotImplementedException();
             }
         }
 
         [KahlaRequireCredential]
-        public async Task<IActionResult> CreateGroupConversation([Required]string groupName)
+        public async Task<IActionResult> CreateGroupConversation(CreateGroupConversationAddressModel model)
         {
             var user = await GetKahlaUser();
-            var exsists = _dbContext.GroupConversations.Exists(t => t.GroupName == groupName);
+            var exsists = _dbContext.GroupConversations.Exists(t => t.GroupName == model.GroupName);
             if (exsists)
             {
-                return this.Protocal(ErrorType.NotEnoughResources, $"A group with name: {groupName} was already exists!");
+                return this.Protocal(ErrorType.NotEnoughResources, $"A group with name: {model.GroupName} was already exists!");
             }
-            var createdGroup = await _dbContext.CreateGroup(groupName);
+            var createdGroup = await _dbContext.CreateGroup(model.GroupName);
             var newRelationship = new UserGroupRelation
             {
                 UserId = user.Id,
@@ -458,11 +466,32 @@ namespace Kahla.Server.Controllers
             });
         }
 
-        // [KahlaRequireCredential]
-        // public async Task<IActionResult> InviteUser()
-        // {
-
-        // }
+        [KahlaRequireCredential]
+        [HttpPost]
+        public async Task<IActionResult> JoinGroup([Required]string groupName)
+        {
+            var user = await GetKahlaUser();
+            var group = _dbContext.GroupConversations.SingleOrDefaultAsync(t => t.GroupName == groupName);
+            if (group == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"We can not find a group with name: {groupName}!");
+            }
+            var joined = _dbContext.UserGroupRelations.Exists(t => t.UserId == user.Id && t.GroupId == group.Id);
+            if (joined)
+            {
+                return this.Protocal(ErrorType.HasDoneAlready, $"You have already joined the group: {groupName}!");
+            }
+            // All checked and able to join him.
+            // Warning: Currently we do not have invitation system for invitation control is too complicated.
+            var newRelationship = new UserGroupRelation
+            {
+                UserId = user.Id,
+                GroupId = group.Id
+            };
+            _dbContext.UserGroupRelations.Add(newRelationship);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocal(ErrorType.Success, $"You have successfully joint the group: {groupName}!");
+        }
 
         [KahlaRequireCredential]
         public async Task<IActionResult> InitPusher()
