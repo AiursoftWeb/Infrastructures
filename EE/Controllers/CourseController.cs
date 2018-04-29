@@ -4,6 +4,7 @@ using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +20,18 @@ namespace Aiursoft.EE.Controllers
         public readonly UserManager<EEUser> _userManager;
         public readonly SignInManager<EEUser> _signInManager;
         public readonly EEDbContext _dbContext;
+        public readonly ServiceLocation _serviceLocation;
 
         public CourseController(
             UserManager<EEUser> userManager,
             SignInManager<EEUser> signInManager,
-            EEDbContext _context)
+            EEDbContext dbContext,
+            ServiceLocation serviceLocation)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _dbContext = _context;
+            _dbContext = dbContext;
+            _serviceLocation = serviceLocation;
         }
 
         [AiurForceAuth]
@@ -49,6 +53,7 @@ namespace Aiursoft.EE.Controllers
             var course = new Course
             {
                 Description = model.Description,
+                CourseImage = $"{_serviceLocation.CDN}/images/thumbnail.svg",
                 Name = model.Name,
                 Price = model.Price,
                 OwnerId = user.Id

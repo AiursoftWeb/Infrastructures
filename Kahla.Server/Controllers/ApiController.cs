@@ -26,8 +26,6 @@ namespace Kahla.Server.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    [Route("/api/{action=Index}/{id?}")]
-    [Route("/debugapi/{action=Index}/{id?}")]
     public class ApiController : Controller
     {
         private readonly UserManager<KahlaUser> _userManager;

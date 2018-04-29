@@ -11,9 +11,10 @@ using System;
 namespace Aiursoft.EE.Migrations
 {
     [DbContext(typeof(EEDbContext))]
-    partial class EEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180429165616_CreateImageProperty")]
+    partial class CreateImageProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

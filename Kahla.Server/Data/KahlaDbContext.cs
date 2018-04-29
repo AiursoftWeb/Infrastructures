@@ -11,9 +11,13 @@ namespace Kahla.Server.Data
 {
     public class KahlaDbContext : IdentityDbContext<KahlaUser>
     {
-        public KahlaDbContext(DbContextOptions<KahlaDbContext> options)
+        private readonly ServiceLocation _serviceLocation;
+        public KahlaDbContext(
+            DbContextOptions<KahlaDbContext> options,
+            ServiceLocation serviceLocation)
             : base(options)
         {
+            _serviceLocation = serviceLocation;
         }
 
         public DbSet<Message> Messages { get; set; }
@@ -102,6 +106,15 @@ namespace Kahla.Server.Data
             var belation = await this.PrivateConversations.SingleOrDefaultAsync(t => t.RequesterId == userId2 && t.TargetId == userId1);
             if (relation != null) this.PrivateConversations.Remove(relation);
             if (belation != null) this.PrivateConversations.Remove(belation);
+        }
+
+        public void CreateGroup(string groupName)
+        {
+            this.GroupConversations.Add(new GroupConversation
+            {
+                GroupName = groupName,
+                GroupImage = $"{_serviceLocation.CDN}/images/appdefaulticon.png"
+            });
         }
 
         public void AddFriend(string userId1, string userId2)
