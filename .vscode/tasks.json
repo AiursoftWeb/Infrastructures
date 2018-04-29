@@ -20,6 +20,16 @@
                 "${workspaceFolder}/EE/Aiursoft.EE.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildKahla",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Kahla.Server/Kahla.Server.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

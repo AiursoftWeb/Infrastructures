@@ -26,6 +26,8 @@ namespace Kahla.Server.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
+    [Route("/api/{action=Index}/{id?}")]
+    [Route("/debugapi/{action=Index}/{id?}")]
     public class ApiController : Controller
     {
         private readonly UserManager<KahlaUser> _userManager;
@@ -426,11 +428,23 @@ namespace Kahla.Server.Controllers
                     Message = "Successfully get target conversation."
                 });
             }
-            return Json(new AiurValue<Conversation>(target)
+            else
             {
-                Code = ErrorType.Success,
-                Message = "Successfully get target conversation."
-            });
+                // Group talk part.
+                throw new NotImplementedException();
+            }
+        }
+
+        [KahlaRequireCredential]
+        public async Task<IActionResult> CreateGroupConversation()
+        {
+            throw new NotImplementedException();
+        }
+
+        [KahlaRequireCredential]
+        public async Task<IActionResult> InviteUser()
+        {
+            throw new NotImplementedException();
         }
 
         [KahlaRequireCredential]
