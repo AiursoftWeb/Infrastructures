@@ -466,12 +466,12 @@ namespace Kahla.Server.Controllers
             });
         }
 
-        [KahlaRequireCredential]
         [HttpPost]
+        [KahlaRequireCredential]
         public async Task<IActionResult> JoinGroup([Required]string groupName)
         {
             var user = await GetKahlaUser();
-            var group = _dbContext.GroupConversations.SingleOrDefaultAsync(t => t.GroupName == groupName);
+            var group = await _dbContext.GroupConversations.SingleOrDefaultAsync(t => t.GroupName == groupName);
             if (group == null)
             {
                 return this.Protocal(ErrorType.NotFound, $"We can not find a group with name: {groupName}!");
@@ -491,6 +491,33 @@ namespace Kahla.Server.Controllers
             _dbContext.UserGroupRelations.Add(newRelationship);
             await _dbContext.SaveChangesAsync();
             return this.Protocal(ErrorType.Success, $"You have successfully joint the group: {groupName}!");
+        }
+
+        [HttpPost]
+        [KahlaRequireCredential]
+        public async Task<IActionResult> LeaveGroup(string groupName)
+        {
+            var user = await GetKahlaUser();
+            var group = await _dbContext.GroupConversations.SingleOrDefaultAsync(t => t.GroupName == groupName);
+            if (group == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"We can not find a group with name: {groupName}!");
+            }
+            var joined = await _dbContext.UserGroupRelations.SingleOrDefaultAsync(t => t.UserId == user.Id && t.GroupId == group.Id);
+            if (joined != null)
+            {
+                return this.Protocal(ErrorType.HasDoneAlready, $"You did not joined the group: {groupName} at all!");
+            }
+            _dbContext.UserGroupRelations.Remove(joined);
+            await _dbContext.SaveChangesAsync();
+
+            var islast = _dbContext.UserGroupRelations.Exists(t => t.GroupId == group.Id);
+            if (islast)
+            {
+                _dbContext.GroupConversations.Remove(group);
+                await _dbContext.SaveChangesAsync();
+            }
+            return this.Protocal(ErrorType.Success, $"You have successfully leaved the group: {groupName}!");
         }
 
         [KahlaRequireCredential]
