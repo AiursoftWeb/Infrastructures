@@ -241,6 +241,7 @@ namespace Aiursoft.API.Controllers
             {
                 var token = StringOperation.RandomString(30);
                 useremail.ValidateToken = token;
+                useremail.LastSendTime = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
                 var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
                 {
