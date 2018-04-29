@@ -224,6 +224,7 @@ namespace Aiursoft.API.Controllers
         [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
+        [HttpPost]
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
             var accessToken = await _dbContext
@@ -256,6 +257,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully set");
         }
 
+        [HttpPost]
         [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]

@@ -73,12 +73,12 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async Task<AiurProtocal> SetPhoneNumberAsync(string penId, string accessToken, string phoneNumber)
+        public async Task<AiurProtocal> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
-                OpenId = penId,
+                OpenId = openId,
                 Phone = phoneNumber
             });
             var result = await _http.Get(url);
@@ -102,15 +102,32 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
+        public async Task<AiurProtocal> BindNewEmailAsync(string openId, string newEmail, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "BindNewEmail", new { });
+            var form = new AiurUrl(string.Empty, new BindNewEmailAddressModel
+            {
+                OpenId = openId,
+                NewEmail = newEmail,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
         public async Task<AiurProtocal> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new SendConfirmationEmailAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new { });
+            var form = new AiurUrl(string.Empty, new SendConfirmationEmailAddressModel
             {
                 AccessToken = accessToken,
                 Id = userId,
                 Email = email
             });
-            var result = await _http.Get(url);
+            var result = await _http.Post(url, form);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jresult;
         }
