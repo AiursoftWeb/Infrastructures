@@ -203,7 +203,15 @@ namespace Aiursoft.API.Controllers
             var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
+            if (accessToken == null || !accessToken.IsAlive)
+            {
+                var arg = new AiurProtocal
+                {
+                    Code = ErrorType.Unauthorized,
+                    Message = "We can not validate your access token!"
+                };
+                return new JsonResult(arg);
+            }
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
             if (targetUser == null)
@@ -221,7 +229,6 @@ namespace Aiursoft.API.Controllers
             });
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         [HttpPost]
