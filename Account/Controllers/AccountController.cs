@@ -92,7 +92,17 @@ namespace Aiursoft.Account.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<IActionResult> SendMail([EmailAddress]string email)
+        public async Task<IActionResult> AddEmail([EmailAddress]string email)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.BindNewEmailAsync(user.Id, email, token);
+            return RedirectToAction(nameof(Email));
+        }
+
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> SendEmail([EmailAddress]string email)
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
