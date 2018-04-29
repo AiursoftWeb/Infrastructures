@@ -90,14 +90,19 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> AddEmail([EmailAddress]string email)
+        [HttpPost]
+        public async Task<IActionResult> Email(EmailViewModel model)
         {
             var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
             var token = await _appsContainer.AccessToken();
-            var result = await _userService.BindNewEmailAsync(user.Id, email, token);
-            return RedirectToAction(nameof(Email));
+            var result = await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
+            return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
         }
 
         [APIExpHandler]
