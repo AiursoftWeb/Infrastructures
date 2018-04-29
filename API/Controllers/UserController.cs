@@ -236,16 +236,20 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.HasDoneAlready, $"The email :{email} was already validated!");
             }
-            var token = StringOperation.RandomString(30);
-            useremail.ValidateToken = token;
-            await _dbContext.SaveChangesAsync();
-            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
+            //limit the sending frenquency to 3 minutes.
+            if (DateTime.Now > useremail.LastSendTime + new TimeSpan(0, 3, 0))
             {
-                userId = user.Id,
-                code = token
-            });
-            await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
-                $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+                var token = StringOperation.RandomString(30);
+                useremail.ValidateToken = token;
+                await _dbContext.SaveChangesAsync();
+                var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
+                {
+                    userId = user.Id,
+                    code = token
+                });
+                await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
+                    $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+            }
             return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
         }
 

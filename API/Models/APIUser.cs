@@ -67,5 +67,7 @@ namespace Aiursoft.API.Models
         public APIUser Owner { get; set; }
 
         public string ValidateToken { get; set; }
+        
+        public DateTime LastSendTime { get; set; } = DateTime.MinValue;
     }
 }
