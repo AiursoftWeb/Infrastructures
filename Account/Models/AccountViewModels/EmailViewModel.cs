@@ -16,6 +16,8 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public IEnumerable<AiurUserEmail> Emails { get; set; }
         public string PrimaryEmail { get; set; }
         [Required]
+        [MaxLength(30)]
+        [EmailAddress]
         public string NewEmail { get; set; }
         public void Recover(AccountUser user)
         {

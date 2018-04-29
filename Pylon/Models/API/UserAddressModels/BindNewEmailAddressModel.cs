@@ -10,7 +10,7 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
         [Required]
         public string OpenId { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(30)]
         [EmailAddress]
         public string NewEmail { get; set; }
     }
