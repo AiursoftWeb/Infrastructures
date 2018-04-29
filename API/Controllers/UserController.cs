@@ -395,7 +395,12 @@ namespace Aiursoft.API.Controllers
                 model.ModelStateValid = false;
                 return View(model);
             }
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
             if (user.SMSPasswordResetToken.ToLower().Trim() == model.Code.ToLower().Trim())
             {
                 user.SMSPasswordResetToken = string.Empty;
@@ -433,7 +438,12 @@ namespace Aiursoft.API.Controllers
             {
                 return View(model);
             }
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(mail.OwnerId);
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, $"Can not find target user with email '{model.Email}'.");
