@@ -108,13 +108,16 @@ namespace Kahla.Server.Data
             if (belation != null) this.PrivateConversations.Remove(belation);
         }
 
-        public void CreateGroup(string groupName)
+        public async Task<GroupConversation> CreateGroup(string groupName)
         {
-            this.GroupConversations.Add(new GroupConversation
+            var newGroup = new GroupConversation
             {
                 GroupName = groupName,
                 GroupImage = $"{_serviceLocation.CDN}/images/appdefaulticon.png"
-            });
+            };
+            this.GroupConversations.Add(newGroup);
+            await this.SaveChangesAsync();
+            return newGroup;
         }
 
         public void AddFriend(string userId1, string userId2)

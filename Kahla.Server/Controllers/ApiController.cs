@@ -434,16 +434,35 @@ namespace Kahla.Server.Controllers
         }
 
         [KahlaRequireCredential]
-        public async Task<IActionResult> CreateGroupConversation()
+        public async Task<IActionResult> CreateGroupConversation([Required]string groupName)
         {
-            throw new NotImplementedException();
+            var user = await GetKahlaUser();
+            var exsists = _dbContext.GroupConversations.Exists(t => t.GroupName == groupName);
+            if (exsists)
+            {
+                return this.Protocal(ErrorType.NotEnoughResources, $"A group with name: {groupName} was already exists!");
+            }
+            var createdGroup = await _dbContext.CreateGroup(groupName);
+            var newRelationship = new UserGroupRelation
+            {
+                UserId = user.Id,
+                GroupId = createdGroup.Id,
+                ReadTimeStamp = DateTime.MinValue
+            };
+            _dbContext.UserGroupRelations.Add(newRelationship);
+            await _dbContext.SaveChangesAsync();
+            return Json(new AiurValue<int>(createdGroup.Id)
+            {
+                Code = ErrorType.Success,
+                Message = "You have successfully created a new group and joined it!"
+            });
         }
 
-        [KahlaRequireCredential]
-        public async Task<IActionResult> InviteUser()
-        {
-            throw new NotImplementedException();
-        }
+        // [KahlaRequireCredential]
+        // public async Task<IActionResult> InviteUser()
+        // {
+
+        // }
 
         [KahlaRequireCredential]
         public async Task<IActionResult> InitPusher()
