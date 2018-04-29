@@ -224,17 +224,65 @@ namespace Aiursoft.API.Controllers
         [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<IActionResult> SendConfirmationEmail(string id, [EmailAddress]string email)//User Id
+        public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == email.ToLower());
+            var accessToken = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
+
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var user = await _userManager.FindByIdAsync(model.OpenId);
+            var emailexists = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.NewEmail);
+            if (emailexists != null)
+            {
+                return this.Protocal(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
+            {
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
+            }
+            if (!app.App.ConfirmEmail)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to bind new email!");
+            }
+            var mail = new UserEmail
+            {
+                OwnerId = user.Id,
+                EmailAddress = model.NewEmail,
+                Validated = false
+            };
+            _dbContext.UserEmails.Add(mail);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocal(ErrorType.Success, "Successfully set");
+        }
+
+        [ForceValidateAccessToken]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
+        {
+            var accessToken = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
+
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var user = await _userManager.FindByIdAsync(model.Id);
+            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (useremail.OwnerId != user.Id)
             {
-                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {id}");
+                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.Id}");
             }
             if (useremail.Validated)
             {
-                return this.Protocal(ErrorType.HasDoneAlready, $"The email :{email} was already validated!");
+                return this.Protocal(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
+            {
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
+            }
+            if (!app.App.ConfirmEmail)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
             }
             //limit the sending frenquency to 3 minutes.
             if (DateTime.Now > useremail.LastSendTime + new TimeSpan(0, 3, 0))

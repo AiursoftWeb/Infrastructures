@@ -104,7 +104,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocal> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new
+            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new SendConfirmationEmailAddressModel
             {
                 AccessToken = accessToken,
                 Id = userId,

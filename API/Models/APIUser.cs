@@ -65,9 +65,9 @@ namespace Aiursoft.API.Models
         [JsonIgnore]
         [ForeignKey(nameof(OwnerId))]
         public APIUser Owner { get; set; }
-
+        [JsonIgnore]
         public string ValidateToken { get; set; }
-        
+        [JsonIgnore]
         public DateTime LastSendTime { get; set; } = DateTime.MinValue;
     }
 }
