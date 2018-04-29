@@ -441,6 +441,7 @@ namespace Kahla.Server.Controllers
             }
         }
 
+        [HttpPost]
         [KahlaRequireCredential]
         public async Task<IActionResult> CreateGroupConversation(CreateGroupConversationAddressModel model)
         {
