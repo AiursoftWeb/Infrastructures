@@ -89,7 +89,7 @@
                 {
                     <li><a href="@foot.Value">@foot.Key</a></li>
                 }
-                <li><a href="/docs/4.0/about/history/">Company</a></li>
+                <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
             </ul>
             <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
         </div>
