@@ -552,6 +552,7 @@ namespace Aiursoft.API.Controllers
             {
                 return View(model);
             }
+            // What if the user deleted all his emails?
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (mail == null)
             {
