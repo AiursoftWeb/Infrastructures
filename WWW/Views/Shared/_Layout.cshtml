@@ -1,72 +1,102 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Aiursoft.WWW</title>
-
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewData["Title"] - @Values.ProjectName Home</title>
+    <link rel="icon" type="image/x-icon" href="@ServiceLocation.CDN/favicon.ico">
+    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Aiursoft.WWW</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            <a class="navbar-brand" href="@ServiceLocation.WWW">Aiursoft</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Learn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Downloads</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Samples</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@ServiceLocation.Wiki" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="#">OAuth</a>
+                            <a class="dropdown-item" href="#">OSS</a>
+                            <a class="dropdown-item" href="#">Message Queue</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
                 </ul>
-                @await Html.PartialAsync("_LoginPartial")
+                <div class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="@ServiceLocation.Wiki" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded" src="@((await UserManager.FindByNameAsync(User.Identity.Name)).HeadImgUrl)?w=200&h=200" style="width:20px;height:20px;" />
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <a class="dropdown-item" asp-controller="Apps" asp-action="Index">Dashboard</a>
+                                    <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                    Sign in
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                    Sign up
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+                </div>
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Aiursoft.WWW</p>
-        </footer>
-    </div>
+    @RenderBody()
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <ul class="bd-footer-links">
+                @foreach(var foot in Values.Footer)
+                {
+                    <li><a href="@foot.Value">@foot.Key</a></li>
+                }
+                <li><a href="/docs/4.0/about/history/">Company</a></li>
+            </ul>
+            <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
+        </div>
+    </footer>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
+    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
+    <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
+    @RenderSection("js", required: false)
 </body>
 </html>
