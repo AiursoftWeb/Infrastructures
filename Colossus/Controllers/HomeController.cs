@@ -10,6 +10,8 @@ using System.IO;
 using Aiursoft.Pylon;
 using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.Identity;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -17,13 +19,19 @@ namespace Aiursoft.Colossus.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly StorageService _storageService;
+        private readonly SignInManager<ColossusUser> _signInManager;
+        private readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             IConfiguration configuration,
-            StorageService storageService)
+            StorageService storageService,
+            SignInManager<ColossusUser> signInManager,
+            ServiceLocation serviceLocation)
         {
             _configuration = configuration;
             _storageService = storageService;
+            _signInManager = signInManager;
+            _serviceLocation = serviceLocation;
         }
 
         [AiurForceAuth("", "", justTry: true)]
@@ -63,9 +71,12 @@ namespace Aiursoft.Colossus.Controllers
             return View();
         }
 
-        public IActionResult Error()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
         {
-            return View();
+            await _signInManager.SignOutAsync();
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
     }
 }
