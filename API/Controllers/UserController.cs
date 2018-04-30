@@ -267,6 +267,46 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
+        public async Task<IActionResult> DeleteEmail(DeleteEmailAddressModel model)
+        {
+            var accessToken = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
+            if (accessToken == null || !accessToken.IsAlive)
+            {
+                var arg = new AiurProtocal
+                {
+                    Code = ErrorType.Unauthorized,
+                    Message = "We can not validate your app's access token!"
+                };
+                return new JsonResult(arg);
+            }
+            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var user = await _userManager.FindByIdAsync(model.OpenId);
+            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.ThatEmail.ToLower());
+            if (useremail == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+            }
+            if (useremail.OwnerId != user.Id)
+            {
+                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
+            {
+                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
+            }
+            if (!app.App.ConfirmEmail)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
+            }
+            _dbContext.UserEmails.Remove(useremail);
+            return this.Protocal(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
+        }
+
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
         public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
         {
             var accessToken = await _dbContext
@@ -284,6 +324,10 @@ namespace Aiursoft.API.Controllers
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var user = await _userManager.FindByIdAsync(model.Id);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (useremail == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+            }
             if (useremail.OwnerId != user.Id)
             {
                 return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.Id}");

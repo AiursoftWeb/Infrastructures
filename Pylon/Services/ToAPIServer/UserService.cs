@@ -118,6 +118,22 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jResult;
         }
 
+        public async Task<AiurProtocal> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "DeleteEmail", new { });
+            var form = new AiurUrl(string.Empty, new DeleteEmailAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId,
+                ThatEmail = thatEmail
+            });
+            var result = await _http.Post(url, form);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
         public async Task<AiurProtocal> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new { });
