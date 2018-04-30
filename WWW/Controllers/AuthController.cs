@@ -15,9 +15,9 @@ namespace Aiursoft.WWW.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly AuthService<DeveloperUser> _authService;
+        private readonly AuthService<WWWUser> _authService;
         public AuthController(
-            AuthService<DeveloperUser> authService)
+            AuthService<WWWUser> authService)
         {
             _authService = authService;
         }
