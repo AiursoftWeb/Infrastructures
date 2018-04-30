@@ -301,6 +301,7 @@ namespace Aiursoft.API.Controllers
                 return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
             }
             _dbContext.UserEmails.Remove(useremail);
+            await _dbContext.SaveChangesAsync();
             return this.Protocal(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
         }
 
