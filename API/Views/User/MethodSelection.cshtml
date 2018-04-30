@@ -10,6 +10,25 @@
                 <h4>@Localizer["Forgot password"]</h4>
                 <p>@Localizer["We have to make sure that you are the owner of the account:"]@Model.AccountName</p>
             </div>
+            @if(!Model.SMSResetAvaliable || Model.AvaliableEmails.Count() < 1)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <strong>Invalid Input!</strong>
+                    <div>
+                        <ul>
+                            @if(!Model.SMSResetAvaliable)
+                            {
+                                <li>You did not bind a phone and can not reset your password via sms.</li>
+                            }
+                            @if(Model.AvaliableEmails.Count() < 1)
+                            {
+                                <li>You did not bind a email and can not reset your password via email.</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
             @if(Model.SMSResetAvaliable)
             {
                 <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaSMS" method="post">
@@ -17,6 +36,7 @@
                     <button class="btn btn-primary btn-block" data-disable-with="Checking..." type="submit">Send SMS to *******@Model.PhoneNumber</button>
                 </form>
             }
+
             @foreach(var avaliableMail in Model.AvaliableEmails)
             {
                 <form class="mt-3" asp-controller="User" asp-action="ForgotPasswordViaEmail" method="post">

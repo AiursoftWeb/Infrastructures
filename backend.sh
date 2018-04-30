@@ -44,4 +44,8 @@ cd Colossus
 dotnet publish --no-restore -c Release
 cd ..
 
+cd WWW
+dotnet publish --no-restore -c Release
+cd ..
+
 exit

@@ -44,4 +44,8 @@ cd Colossus
 dotnet restore
 cd ..
 
+cd WWW
+dotnet restore
+cd ..
+
 exit
