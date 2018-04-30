@@ -114,6 +114,16 @@ namespace Aiursoft.Account.Controllers
             var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
             return Json(result);
         }
+        
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> DeleteEmail([EmailAddress]string email)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.DeleteEmailAsync(user.Id, email, token);
+            return Json(result);
+        }
 
         public async Task<IActionResult> Avatar(bool JustHaveUpdated)
         {
