@@ -17,7 +17,11 @@
             <h1>@Model.Name</h1>
         </div>
         <div class="col-sm-6 mb-3 text-right">
-            @if (!Model.Subscribed)
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a id="subscribe" asp-controller="Course" asp-action="DetailAuth" asp-route-id="@Model.Id" class="btn btn-primary">Subscribe</a>
+            }
+            else if (!Model.Subscribed)
             {
                 <a id="subscribe" href="javascript:subscribe(@Model.Id)" class="btn btn-primary">Subscribe</a>
             }
@@ -25,12 +29,10 @@
             {
                 <a id="subscribe" href="javascript:unsubscribe(@Model.Id)" class="btn btn-danger">UnSubscribe</a>
             }
-            <a href="#" class="btn btn-success">Share</a>
-            <a href="#" class="btn btn-warning">Contact</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-bar-chart"></i>
@@ -45,7 +47,7 @@
                     }
                     else
                     {
-                        <a asp-controller="Course" asp-action="Upload" asp-route-id="@Model.Id" class="btn btn-success">Upload chapter</a>
+                        <a asp-controller="Chapter" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-success">Upload chapter</a>
                         <a href="#" class="btn btn-warning">Edit</a>
                         <a href="#" class="btn btn-danger">Delete course</a>
                     }

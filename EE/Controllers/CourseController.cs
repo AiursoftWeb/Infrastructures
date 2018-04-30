@@ -63,6 +63,12 @@ namespace Aiursoft.EE.Controllers
             return RedirectToAction(nameof(Detail), new { id = course.Id });
         }
 
+        [AiurForceAuth]
+        public IActionResult DetailAuth(int id)//Course id
+        {
+            return RedirectToAction(nameof(Detail), new { id = id });
+        }
+
         [HttpGet]
         public async Task<IActionResult> Detail(int id)//Course Id
         {
