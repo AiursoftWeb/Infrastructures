@@ -30,6 +30,26 @@
                 "${workspaceFolder}/Kahla.Server/Kahla.Server.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildDeveloper",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Developer/Aiursoft.Developer.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildWWW",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/WWW/Aiursoft.WWW.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

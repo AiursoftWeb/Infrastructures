@@ -93,6 +93,68 @@
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
             }
+        },
+        {
+            "name": "Developer",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildDeveloper",
+            "program": "${workspaceFolder}/Developer/bin/Debug/netcoreapp2.0/Aiursoft.Developer.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Developer",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "WWW",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildWWW",
+            "program": "${workspaceFolder}/WWW/bin/Debug/netcoreapp2.0/Aiursoft.WWW.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/WWW",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         }
     ]
 }
