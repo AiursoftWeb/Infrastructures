@@ -113,8 +113,6 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            //if (jResult.Code != ErrorType.Success)
-            //throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
 
@@ -129,8 +127,6 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            //if (jResult.Code != ErrorType.Success)
-                //throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
 
