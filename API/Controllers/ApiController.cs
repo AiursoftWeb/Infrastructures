@@ -8,10 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Identity;
-using Aiursoft.API.Models;
-using Aiursoft.API.Services;
 using Microsoft.Extensions.Logging;
-using Aiursoft.API.Data;
 using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
@@ -21,6 +18,10 @@ using Aiursoft.Pylon.Models.API.ApiAddressModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
+using Aiursoft.API.Attributes;
+using Aiursoft.API.Models;
+using Aiursoft.API.Services;
+using Aiursoft.API.Data;
 using Aiursoft.API.Models.ApiViewModels;
 
 namespace Aiursoft.API.Controllers
@@ -145,18 +146,11 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
+        [ForceValidateAccessToken]
         public async Task<IActionResult> AllUserGranted(string AccessToken)
         {
             var target = await _dbContext.AccessToken
                 .SingleOrDefaultAsync(t => t.Value == AccessToken);
-            if (target == null)
-            {
-                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Unauthorized, Message = "We can not validate your access token!" });
-            }
-            else if (!target.IsAlive)
-            {
-                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Timeout, Message = "Your access token is already Timeout!" });
-            }
 
             var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
             var model = new AllUserGrantedViewModel
@@ -168,6 +162,19 @@ namespace Aiursoft.API.Controllers
             };
             model.Grants.AddRange(grants);
             return Json(model);
+        }
+
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        [ForceValidateAccessToken]
+        public async Task<IActionResult> DropGrants(string accessToken)
+        {
+            var target = await _dbContext.AccessToken
+                .SingleOrDefaultAsync(t => t.Value == accessToken);
+            _dbContext.LocalAppGrant.Delete(t => t.AppID == target.ApplyAppId);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");
         }
 
         private async Task<APIUser> GetCurrentUserAsync()

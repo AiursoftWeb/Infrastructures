@@ -65,5 +65,17 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
+
+        public async Task<AiurProtocal> DropGrantsAsync(string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "API", "DropGrants", new { });
+            var form = new AiurUrl(string.Empty, new
+            {
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            return jResult;
+        }
     }
 }
