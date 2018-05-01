@@ -41,6 +41,7 @@ namespace Aiursoft.EE
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             services.AddAiursoftAuth<EEUser>();
+            services.AddTransient<ScriptsFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
