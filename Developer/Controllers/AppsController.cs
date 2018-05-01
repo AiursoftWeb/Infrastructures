@@ -139,6 +139,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return new UnauthorizedResult();
             }
+            bool permissionChanged = false;
             target.AppName = model.AppName;
             target.AppDescription = model.AppDescription;
             target.EnableOAuth = model.EnableOAuth;
@@ -148,14 +149,44 @@ namespace Aiursoft.Developer.Controllers
             target.PrivacyStatementUrl = model.PrivacyStatementUrl;
             target.LicenseUrl = model.LicenseUrl;
             target.AppDomain = model.AppDomain;
-            target.ViewOpenId = model.ViewOpenId;
-            target.ViewPhoneNumber = model.ViewPhoneNumber;
-            target.ChangePhoneNumber = model.ChangePhoneNumber;
-            target.ConfirmEmail = model.ConfirmEmail;
-            target.ChangeBasicInfo = model.ChangeBasicInfo;
-            target.ChangePassword = model.ChangePassword;
+            //Permissions
+            target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionChanged);
+            target.ViewPhoneNumber = _ChangePermission(target.ViewPhoneNumber, model.ViewPhoneNumber, ref permissionChanged);
+            target.ChangePhoneNumber = _ChangePermission(target.ChangePhoneNumber, model.ChangePhoneNumber, ref permissionChanged);
+            target.ConfirmEmail = _ChangePermission(target.ConfirmEmail, model.ConfirmEmail, ref permissionChanged);
+            target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionChanged);
+            target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionChanged);
+            if(permissionChanged)
+            {
+                var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
+                await _coreApiService.DropGrantsAsync(token);
+            }
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = target.AppId, JustHaveUpdated = true });
+        }
+
+        private bool _ChangePermission(bool inDatabase, bool newValue, ref bool changemark)
+        {
+            //More permission
+            if (inDatabase == false && newValue == true)
+            {
+                changemark = true;
+                return true;
+            }
+            //Less permission
+            else if (inDatabase == true && newValue == false)
+            {
+                return false;
+            }
+            //Not changed
+            else if (inDatabase == newValue)
+            {
+                return newValue;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         public async Task<IActionResult> DeleteApp(string id)
