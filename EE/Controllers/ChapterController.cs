@@ -47,9 +47,28 @@ namespace Aiursoft.EE.Controllers
             }
             var model = new CreateViewModel
             {
-                CourseName = course.Name
+                CourseName = course.Name,
+                CourseId = course.Id
             };
             return View(model);
+        }
+
+        [HttpPost]
+        [AiurForceAuth]
+        public async Task<IActionResult> Create(CreateViewModel model)
+        {
+            var course = await _dbContext.Courses.SingleOrDefaultAsync(t => t.Id == model.CourseId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            _dbContext.Chapters.Add(new Chapter
+            {
+                Name = model.NewChapterTitle,
+                CourseId = model.CourseId
+            });
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(CourseController.Detail), "Course");
         }
     }
 }

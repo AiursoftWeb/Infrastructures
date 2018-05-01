@@ -33,6 +33,7 @@
         <div class="card-body">
             <div class="row">
                 <form class="col-md-12" asp-controller="Chapter" asp-action="Create" method="post">
+                    <input asp-for="CourseId" type="hidden" />
                     <div class="form-group">
                         <label asp-for="NewChapterTitle"></label>
                         <input asp-for="NewChapterTitle" class="form-control" placeholder="Enter the title of your new chapter...">
