@@ -2,6 +2,10 @@ language: csharp
 mono: none
 dotnet: 2.0.0
 dist: trusty
+before_install:
+  - chmod +x ./restore.sh
+  - chmod +x ./backend.sh
+  - chmod +x ./frontend.sh
 install:
   - ./restore.sh
 script:
