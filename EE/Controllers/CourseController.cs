@@ -79,6 +79,9 @@ namespace Aiursoft.EE.Controllers
                 .Courses
                 .Include(t => t.Owner)
                 .SingleOrDefaultAsync(t => t.Id == id);
+            var chapters = _dbContext
+                .Chapters
+                .Where(t => t.CourseId == course.Id);
             var user = await GetCurrentUserAsync();
             var Subscribed = user == null ? false : await _dbContext
                 .Subscriptions
@@ -96,7 +99,8 @@ namespace Aiursoft.EE.Controllers
                 Subscribed = Subscribed,
                 IsOwner = user?.Id == course.OwnerId,
                 AuthorName = course.Owner.NickName,
-                DisplayOwnerInfo = course.DisplayOwnerInfo
+                DisplayOwnerInfo = course.DisplayOwnerInfo,
+                Chapters = chapters
             };
             return View(model);
         }

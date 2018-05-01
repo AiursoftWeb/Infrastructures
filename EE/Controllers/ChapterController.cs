@@ -68,7 +68,7 @@ namespace Aiursoft.EE.Controllers
                 CourseId = model.CourseId
             });
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(CourseController.Detail), "Course");
+            return RedirectToAction(nameof(CourseController.Detail), "Course", new { id = model.CourseId });
         }
     }
 }
