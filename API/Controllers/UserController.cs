@@ -224,20 +224,13 @@ namespace Aiursoft.API.Controllers
         [APIExpHandler]
         [APIModelStateChecker]
         [HttpPost]
+        [ForceValidateAccessToken]
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
             var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-            if (accessToken == null || !accessToken.IsAlive)
-            {
-                var arg = new AiurProtocal
-                {
-                    Code = ErrorType.Unauthorized,
-                    Message = "We can not validate your app's access token!"
-                };
-                return new JsonResult(arg);
-            }
+
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var user = await _userManager.FindByIdAsync(model.OpenId);
             var emailexists = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.NewEmail);
@@ -267,20 +260,13 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
+        [ForceValidateAccessToken]
         public async Task<IActionResult> DeleteEmail(DeleteEmailAddressModel model)
         {
             var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-            if (accessToken == null || !accessToken.IsAlive)
-            {
-                var arg = new AiurProtocal
-                {
-                    Code = ErrorType.Unauthorized,
-                    Message = "We can not validate your app's access token!"
-                };
-                return new JsonResult(arg);
-            }
+
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var user = await _userManager.FindByIdAsync(model.OpenId);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.ThatEmail.ToLower());
@@ -308,20 +294,13 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
+        [ForceValidateAccessToken]
         public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
         {
             var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-            if (accessToken == null || !accessToken.IsAlive)
-            {
-                var arg = new AiurProtocal
-                {
-                    Code = ErrorType.Unauthorized,
-                    Message = "We can not validate your app's access token!"
-                };
-                return new JsonResult(arg);
-            }
+
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
             var user = await _userManager.FindByIdAsync(model.Id);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
