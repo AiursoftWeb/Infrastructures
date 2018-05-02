@@ -49,7 +49,7 @@ namespace Aiursoft.WWW
             {
                 app.UseEnforceHttps();
                 app.UseExceptionHandler("/Error/ServerException");
-                app.UseExceptionHandler("/Error/Code{0}");
+                app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
             app.UseAiursoftSupportedCultures();
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "WWW");
