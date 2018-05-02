@@ -45,10 +45,12 @@
         </div>
     </div>
 </div>
-@section css{
+@section css {
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
-@section js{
+@section js {
+    <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
     <script>
         $(document).ready(function () {
             $('.dropify').progressloader('/Files/UploadFile','#fileform');
