@@ -28,18 +28,16 @@
         </div>
         <div class="card-body">
             <div class="col-xs-12">
-                <form class="box-content" asp-controller="Files" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+                <form id="fileform" class="box-content">
                     <input type="hidden" asp-for="AppId" />
                     <input type="hidden" asp-for="BucketId" />
                     <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
-                    <p class="help margin-top-10">Only 1000Mb max.</p>
                     <div class="form-group">
                         <label asp-for="AliveDays"></label>
                         <input class="form-control" asp-for="AliveDays" type="number" placeholder="Enter the alive time (days) of the file..." />
                         <span asp-validation-for="AliveDays" class="text-danger"></span>
                     </div>
                     <div class="margin-top-30">
-                        <button type="submit" data-disable-with="Uploading..." class="btn btn-primary">Upload</button>
                         <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">Back to files</a>
                     </div>
                 </form>
@@ -51,9 +49,9 @@
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
 @section js{
-    <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.dropify').progressloader('/Files/UploadFile','#fileform');
             $('.dropify').dropify();
         });
     </script>
