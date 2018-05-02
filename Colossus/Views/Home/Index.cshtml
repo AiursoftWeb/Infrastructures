@@ -84,14 +84,12 @@
 }
 @section js{
     <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="~/js/progress-loader.js"></script>
     <script>
         $(document).ready(function () {
+            $('.dropify').progressloader('/Home/Upload','#fileform');
             $('.dropify').dropify();
         });
     </script>
-    <script src="~/js/progress-loader.js"></script>
-    <script>
-        $('.dropify').progressloader('/Home/Upload','#fileform');
-    </script>
-    <!-- <script src="~/js/site.js"></script> -->
+
 }

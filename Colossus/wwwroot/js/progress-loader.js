@@ -1,6 +1,5 @@
 (function ($) {
     $.fn.progressloader = function (url, formname) {
-
         var createElements = function (initor) {
             var maxSize = initor.attr('data-max-file-size');
 
