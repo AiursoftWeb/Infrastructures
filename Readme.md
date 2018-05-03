@@ -26,7 +26,7 @@ We strongly suggest using `Visual Studio Code` to edit this project. Instead, yo
 |OSS|localhost:5006|
 |Stargate|localhost:5007|
 |Wiki|localhost:5008|
-|Kahla.Home|ocalhost:5009|
+|Kahla.Home|localhost:5009|
 |Kahla.Server|localhost:5010|
 |Kahla.App|localhost:8001|
 |WWW|localhost:5011|
