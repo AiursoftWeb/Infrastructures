@@ -84,7 +84,8 @@
 }
 @section js{
     <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
+    <script src="~/js/jquery-progress-upload.js"></script>
+    <script src="~/js/site.js"></script>
     <script>
         $(document).ready(function () {
             $('.dropify').progressloader('/Home/Upload','#fileform');
