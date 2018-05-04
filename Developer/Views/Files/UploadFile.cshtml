@@ -57,11 +57,10 @@
         $(document).ready(function () {
             var settings = {
                 onFinish :function() {
-                    window.location.href = '/File/ViewFiles/@Model.BucketId'
+                    //window.location.href = '/File/ViewFiles/@Model.BucketId'
                 }
              };
             $('.dropify').setProgressedUploader(settings);
-            //$('.dropify').progressloader('/Files/UploadFile','#fileform');
             $('.dropify').dropify();
         });
     </script>
