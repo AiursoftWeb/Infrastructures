@@ -23,15 +23,10 @@
             <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
             <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
                 <input type="file" name="file" class="dropify" data-max-file-size="30M" data-height="300" />
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <input type="button" class="btn btn-success" value="Left" />
-                    <button type="button" class="btn btn-warning">Middle</button>
-                    <button type="button" class="btn btn-primary">Right</button>
-                </div>
-                <div class="btn-group" role="group">                
-                    <input class="btn btn-success" id="uploadButton" value="Upload" />
-                    <a  class="btn btn-warning" id="copyButton" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="https://oss.aiursoft.com/ColossusPublic/O0GM5PWETR.xz">Copy link</a>
-                    <a class="btn btn-primary" id="openButton"  href="https://oss.aiursoft.com/ColossusPublic/O0GM5PWETR.xz">Open</a>            
+                <div>
+                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
+                    <button id="copyButton" class="btn btn-warning" id="copyButton" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">Copy Link</button>
+                    <a id="openButton" class="btn btn-primary" id="openButton" href="#" target="_blank">Open in new page</a>
                 </div>
             </form>
         </div>

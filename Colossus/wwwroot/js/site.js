@@ -1,16 +1,24 @@
 $(document).ready(function () {
-    //$('.dropify').progressloader('/Home/Upload','#fileform');
+    var uploadButton = $('#uploadButton');
+    var copyButton = $('#copyButton');
+    var openButton = $('#openButton');
     var settings = {
         onInit: function (elements) {
-
+            uploadButton.hide();
+            copyButton.hide();
+            openButton.hide();
         },
 
         onGetFile: function (elements) {
-
+            copyButton.hide();
+            openButton.hide();
+            uploadButton.show();
+            uploadButton.val('Upload');
         },
 
         onStartSubmitting: function (elements) {
-
+            uploadButton.val('Uploading...');
+            uploadButton.prop('disabled', true);
         },
 
         onProcessing: function (elements) {
@@ -18,9 +26,16 @@ $(document).ready(function () {
         },
 
         onFinish: function (elements, data) {
-            alert(data.value)
+            uploadButton.val('Upload');
+            uploadButton.prop('disabled', false);
+            copyButton.show();
+            openButton.show();
+            copyButton.attr('data-clipboard-text', data.value);
+            openButton.attr('href', data.value);
+            elements.message.html(data.value);
+            //alert(data.value)
         }
     };
-    $('.dropify').progressloader(settings);
+    $('.dropify').setProgressedUploader(settings);
     $('.dropify').dropify();
 });
