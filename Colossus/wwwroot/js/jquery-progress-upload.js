@@ -1,94 +1,84 @@
+var settings = {
+    onInit: function (elements) {
+
+    },
+
+    onGetFile: function (elements) {
+
+    },
+
+    onStartSubmitting: function (elements) {
+
+    },
+
+    onProcessing: function (elements) {
+
+    },
+
+    onFinish: function (elements, data) {
+
+    }
+};
+
 (function ($) {
-    $.fn.progressloader = function (url, formname, callback) {
+    $.fn.progressloader = function (settings) {
         var createElements = function (initor) {
-            var maxSize = initor.attr('data-max-file-size');
-
-            var label = '<p>Only ' + maxSize + ' max.</p>';
-
             var progressbar = '\
-            <div id="progress" class="progress mb-3">\
-            <div id="progressbar" role="progressbar"></div>\
-            </div>'
-
-            var buttons = '\
-            <div class="btn-group" role="group">\
-                <button type="button" id="uploadButton"></button>\
-                <a type="button" id="copyButton" data-toggle="tooltip" data-original-title="copied!" data-trigger="click"></a>\
-                <a type="button" id="openButton"></a>\
+            <div id="progress">\
+                <div id="progressbar" role="progressbar"></div>\
             </div>';
 
             var message = '<p id="message"></p>';
-
-            var address = '<input class="" type="text" id="address" />'
-
-            initor.after(address);
             initor.after(message);
-            initor.after(buttons);
             initor.after(progressbar);
-            initor.after(label);
-            return initor;
         }
 
         var getElements = function () {
-            var uploader = {
+            var elements = {
                 progress: $('#progress'),
                 progressbar: $('#progressbar'),
-                uploadButton: $('#uploadButton'),
-                copyButton: $('#copyButton'),
-                openButton: $('#openButton'),
-                message: $('#message'),
-                address: $('#address'),
+                message: $('#message')
             };
-            return uploader;
+            return elements;
         }
 
-        var setClass = function (uploader) {
-            uploader.progressbar.css('width', '0%');
-            uploader.progressbar.addClass('progress-bar progress-bar-striped progress-bar-animated');
-            uploader.uploadButton.addClass('btn btn-success');
-            uploader.uploadButton.html('Upload');
-            uploader.copyButton.addClass('btn btn-warning');
-            uploader.copyButton.html('Copy link');
-            uploader.openButton.addClass('btn btn-primary');
-            uploader.openButton.html('Open');
-            uploader.message.addClass('text-danger');
-            uploader.address.addClass('form-control mb-3');
-            uploader.address.prop('disabled', true);
-            if ($.fn.tooltip) {
-                $('[data-toggle="tooltip"]').tooltip();
+        var setClass = function (elements) {
+            elements.progress.addClass('progress mb-3 mt-3');
+            elements.progressbar.css('width', '0%');
+            elements.progressbar.addClass('progress-bar progress-bar-striped progress-bar-animated');
+            elements.message.addClass('text-danger');
+        }
+
+        //Occurs when page loads.
+        var init = function (elements) {
+            elements.progress.hide();
+            if (settings.onInit) {
+                settings.onInit(elements);
             }
-            return uploader;
-        };
-
-        var init = function (uploader) {
-            uploader.copyButton.hide();
-            uploader.openButton.hide();
-            uploader.address.hide();
-            uploader.uploadButton.hide();
-            uploader.progress.hide();
         }
 
-        var ready = function () {
-            var uploader = getElements();
-            uploader.copyButton.hide();
-            uploader.openButton.hide();
-            uploader.progressbar.css('width', '0%');
-            uploader.progress.show();
-            uploader.uploadButton.show();
-            uploader.uploadButton.removeAttr('disabled');
-            uploader.message.html('');
-            uploader.address.hide();
+        //Occurs when user put in a file
+        var getFile = function () {
+            var elements = getElements();
+            elements.progressbar.css('width', '0%');
+            elements.progress.show();
+            elements.message.html('0%');
+            if (settings.onGetFile) {
+                settings.onGetFile(elements);
+            }
         }
 
-        var uploading = function () {
-            var uploader = getElements();
-            uploader.uploadButton.attr('disabled', 'true');
-            uploader.uploadButton.attr('value', 'Uploading...');
+        var startSubmitting = function () {
+            event.preventDefault();
+            var elements = getElements();
+            if (settings.onStartSubmitting) {
+                settings.onStartSubmitting(elements);
+            }
             $.ajax({
-                url: url,
-                type: 'POST',
-                enctype: 'multipart/form-data',
-                data: new FormData($(formname)[0]),
+                url: form.attr('action'),
+                type: form.attr('method'),
+                enctype: form.attr('enctype'),
+                data: new FormData(form[0]),
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -97,10 +87,10 @@
                     if (myXhr.upload) {
                         myXhr.upload.addEventListener('progress', function (e) {
                             if (e.lengthComputable) {
-                                uploader.progressbar.css('width', 100 * e.loaded / e.total + '%');
-                                uploader.message.html(Math.round(e.loaded / e.total * 100) + "%");
+                                elements.progressbar.css('width', 100 * e.loaded / e.total + '%');
+                                elements.message.html(Math.round(e.loaded / e.total * 100) + "%");
                                 if (e.loaded == e.total) {
-                                    processing(uploader);
+                                    processing(elements);
                                 }
                             }
                         }, false);
@@ -111,29 +101,27 @@
             });
         }
 
-        var processing = function (uploader) {
-            uploader.message.html('Please be patient while we are verifying your file...');
+        var processing = function (elements) {
+            if (settings.onProcessing) {
+                settings.onProcessing(elements);
+            }
+            elements.message.html('Please be patient while we are verifying your file...');
         }
 
-        var finish = function (e) {
-            ready();
-            var uploader = getElements();
-            uploader.address.val(e.value);
-            uploader.copyButton.show();
-            uploader.openButton.show();
-            uploader.copyButton.attr('data-clipboard-text', e.value);
-            uploader.openButton.attr('href', e.value);
-            uploader.address.show();
-            if (callback) {
-                callback(e)
+        var finish = function (data) {
+            var elements = getElements();
+            getFile();
+            if (settings.onFinish) {
+                settings.onFinish(elements, data);
             }
         }
 
         createElements(this);
-        var uploader = getElements();
-        setClass(uploader);
-        init(uploader);
-        this.on('change', ready);
-        uploader.uploadButton.on('click', uploading);
+        var elements = getElements();
+        var form = this.parents().filter("form").first();
+        setClass(elements);
+        init(elements);
+        this.on('change', getFile);
+        form.submit(startSubmitting);
     }
-}(jQuery));
+}(jQuery))
