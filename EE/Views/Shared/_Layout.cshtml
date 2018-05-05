@@ -13,11 +13,14 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">@Values.ProjectName EE</a>
+            <a class="navbar-brand" href="@ServiceLocation.WWW">@Values.ProjectName</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item"><a class="nav-link" href="/">EE</a></li>
+                </ul>
                 <form class="form-inline ml-3" asp-controller="Home" asp-action="Search" method="get">
                     <input class="form-control" type="search" name="word" placeholder="Search in EE">
                     <button class="sr-only" data-disable-with="Searching..." type="submit">Search</button>

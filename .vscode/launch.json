@@ -186,6 +186,37 @@
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
             }
+        },
+        {
+            "name": "KahlaHome",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildKahlaHome",
+            "program": "${workspaceFolder}/Kahla.Home/bin/Debug/netcoreapp2.0/Kahla.Home.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Kahla.Home",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         }
     ]
 }

@@ -60,6 +60,16 @@
                 "${workspaceFolder}/Colossus/Aiursoft.Colossus.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildKahlaHome",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Kahla.Home/Kahla.Home.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
