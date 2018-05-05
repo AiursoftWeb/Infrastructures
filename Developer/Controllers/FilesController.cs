@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.Developer.Controllers
 {
@@ -170,7 +171,16 @@ namespace Aiursoft.Developer.Controllers
             var app = await _dbContext.Apps.FindAsync(model.AppId);
             string accessToken = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
             var file = Request.Form.Files.First();
-            await _storageService.SaveToOSS(file, model.BucketId, model.AliveDays, SaveFileOptions.SourceName, accessToken);
+            try
+            {
+                await _storageService.SaveToOSS(file, model.BucketId, model.AliveDays, SaveFileOptions.SourceName, accessToken);
+            }
+            catch (AiurUnexceptedResponse e) when (e.Response.Code == ErrorType.HasDoneAlready)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                return View(model);
+            }
             return RedirectToAction(nameof(ViewFiles), new { id = model.BucketId });
         }
 
