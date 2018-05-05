@@ -35,12 +35,16 @@ namespace Aiursoft.Pylon
             RequireUppercase = false,
             RequireNonAlphanumeric = false
         };
-        
+
         public static readonly Dictionary<string, string> Footer = new Dictionary<string, string>
         {
-            {"Company", "https://company.aiursoft.com"},
+            {"Company", "#"},
             {"Privacy", "https://docs.aiursoft.com/Privacy"},
-            {"Statement", "https://docs.aiursoft.com/Statement"},
+            {"Terms", "https://docs.aiursoft.com/Statement"},
+            {"Security", "#"},
+            {"Status", "#"},
+            {"Wiki", "https://wiki.aiursoft.com"},
+            {"Blog", "#"}
         };
     }
 }
