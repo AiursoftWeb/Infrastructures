@@ -34,6 +34,7 @@ namespace Aiursoft.OSS.Controllers
         private readonly IConfiguration _configuration;
         private readonly ServiceLocation _serviceLocation;
         private readonly CoreApiService _coreApiService;
+        private readonly object _obj = new object();
         public ApiController(
             OSSDbContext dbContext,
             ImageCompresser imageCompresser,
@@ -250,15 +251,18 @@ namespace Aiursoft.OSS.Controllers
                 AliveDays = model.AliveDays,
                 UploadTime = DateTime.Now
             };
-            // Ensure there not exists file with the same file name.
-            var exists = _dbContext.OSSFile.Exists(t => t.RealFileName == newFile.RealFileName && t.BucketId == newFile.BucketId);
-            if (exists)
+            //Ensure there not exists file with the same file name.
+            lock (_obj)
             {
-                return this.Protocal(ErrorType.HasDoneAlready, "There already exists a file with that name.");
+                var exists = _dbContext.OSSFile.Exists(t => t.RealFileName == newFile.RealFileName && t.BucketId == newFile.BucketId);
+                if (exists)
+                {
+                    return this.Protocal(ErrorType.HasDoneAlready, "There already exists a file with that name.");
+                }
+                //Save to database
+                _dbContext.OSSFile.Add(newFile);
+                _dbContext.SaveChanges();
             }
-            //Save to database
-            _dbContext.OSSFile.Add(newFile);
-            await _dbContext.SaveChangesAsync();
             //Try saving file.
             string DirectoryPath = _configuration["StoragePath"] + $"{_}Storage{_}{targetBucket.BucketName}{_}";
             if (Directory.Exists(DirectoryPath) == false)
