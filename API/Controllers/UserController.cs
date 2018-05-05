@@ -91,7 +91,7 @@ namespace Aiursoft.API.Controllers
             {
                 targetUser.HeadImgUrl = model.NewIconAddress;
             }
-            if (!string.IsNullOrEmpty(model.NewBio))
+            if (!string.Equals(model.NewBio, "Not_Mofified"))
             {
                 targetUser.Bio = model.NewBio;
             }

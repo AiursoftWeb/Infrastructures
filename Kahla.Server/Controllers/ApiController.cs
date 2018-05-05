@@ -156,10 +156,7 @@ namespace Kahla.Server.Controllers
             {
                 cuser.HeadImgUrl = model.HeadImgUrl;
             }
-            if (!string.IsNullOrEmpty(model.Bio))
-            {
-                cuser.Bio = model.Bio;
-            }
+            cuser.Bio = model.Bio;
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgUrl, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return this.Protocal(ErrorType.Success, "Successfully set your personal info.");

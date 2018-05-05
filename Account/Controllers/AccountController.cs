@@ -147,7 +147,7 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             cuser.HeadImgUrl = await _storageService.SaveToOSS(Request.Form.Files.First(), Values.UsersIconBucketId, 365);
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, string.Empty);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, "Not_Mofified");
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
