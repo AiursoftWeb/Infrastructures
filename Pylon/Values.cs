@@ -39,6 +39,7 @@ namespace Aiursoft.Pylon
         public static readonly Dictionary<string, string> Footer = new Dictionary<string, string>
         {
             {"Home", "https://www.aiursoft.com"},
+            {"Develope", "https://developer.aiursoft.com"},
             {"Company", "#"},
             {"Privacy", "https://docs.aiursoft.com/Privacy"},
             {"Terms", "https://docs.aiursoft.com/Statement"},
