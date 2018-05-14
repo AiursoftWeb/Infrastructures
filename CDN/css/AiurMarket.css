@@ -103,7 +103,7 @@ h1,h2,h3,h4,h5,h6 {
     font-weight: 700
 }
 
-header .masthead {
+header.masthead {
     position: relative;
     background-color: #343a40;
     background: url(../images/bg-masthead.jpg) no-repeat center center;
@@ -115,7 +115,7 @@ header .masthead {
     padding-bottom: 8rem
 }
 
-header .masthead .overlay {
+header.masthead .overlay {
     position: absolute;
     background-color: #212529;
     height: 100%;
@@ -125,17 +125,17 @@ header .masthead .overlay {
     opacity: .3
 }
 
-header .masthead h1 {
+header.masthead h1 {
     font-size: 2rem
 }
 
 @media (min-width: 768px) {
-    header .masthead {
+    header.masthead {
         padding-top:12rem;
         padding-bottom: 12rem
     }
 
-    header .masthead h1 {
+    header.masthead h1 {
         font-size: 3rem
     }
 }
@@ -212,7 +212,7 @@ header .masthead h1 {
     opacity: .3
 }
 
-footer .footer {
+footer.footer {
     padding-top: 4rem;
     padding-bottom: 4rem
 }
