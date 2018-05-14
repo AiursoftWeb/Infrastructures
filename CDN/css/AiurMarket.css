@@ -107,6 +107,7 @@ header.masthead {
     position: relative;
     background-color: #343a40;
     background: url(../images/bg-masthead.jpg) no-repeat center center;
+    background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -194,6 +195,7 @@ header.masthead h1 {
     position: relative;
     background-color: #343a40;
     background: url(../images/bg-masthead.jpg) no-repeat center center;
+    background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
