@@ -41,7 +41,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
-        [FileChecker(MaxSize = 30 * 1024 * 1024)]
+        [FileChecker(MaxSize = 1000 * 1024 * 1024)]
         public async Task<IActionResult> Upload()
         {
             if (!ModelState.IsValid)
