@@ -20,18 +20,15 @@ namespace Aiursoft.WWW.Controllers
     {
         public readonly SignInManager<WWWUser> _signInManager;
         public readonly ILogger _logger;
-        public readonly EEDbContext _dbContext;
         private readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             SignInManager<WWWUser> signInManager,
             ILoggerFactory loggerFactory,
-            EEDbContext dbContext,
             ServiceLocation serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
-            _dbContext = dbContext;
             _serviceLocation = serviceLocation;
         }
 
