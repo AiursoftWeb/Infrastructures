@@ -30,5 +30,14 @@ namespace Aiursoft.WWW.Controllers
 
             return View();
         }
+
+                [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation(4, "User logged out.");
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+        }
     }
 }
