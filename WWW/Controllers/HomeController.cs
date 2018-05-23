@@ -11,6 +11,23 @@ namespace Aiursoft.WWW.Controllers
 {
     public class HomeController : Controller
     {
+        public readonly SignInManager<WWWUser> _signInManager;
+        public readonly ILogger _logger;
+        public readonly EEDbContext _dbContext;
+        private readonly ServiceLocation _serviceLocation;
+
+        public HomeController(
+            SignInManager<WWWUser> signInManager,
+            ILoggerFactory loggerFactory,
+            EEDbContext dbContext,
+            ServiceLocation serviceLocation)
+        {
+            _signInManager = signInManager;
+            _logger = loggerFactory.CreateLogger<HomeController>();
+            _dbContext = dbContext;
+            _serviceLocation = serviceLocation;
+        }
+
         [AiurForceAuth("", "", justTry: true)]
         public IActionResult Index()
         {
@@ -31,7 +48,7 @@ namespace Aiursoft.WWW.Controllers
             return View();
         }
 
-                [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
