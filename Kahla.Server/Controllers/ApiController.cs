@@ -40,6 +40,7 @@ namespace Kahla.Server.Controllers
         private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
         private readonly UserService _userService;
+        private readonly object _obj = new object();
 
         public ApiController(
             UserManager<KahlaUser> userManager,
@@ -200,7 +201,7 @@ namespace Kahla.Server.Controllers
             var target = await _dbContext.Users.FindAsync(id);
             if (target == null)
                 return this.Protocal(ErrorType.NotFound, "We can not find target user.");
-            if (!await _dbContext.AreFriends(user.Id, target.Id))
+            if (!await _dbContext.AreFriendsAsync(user.Id, target.Id))
                 return this.Protocal(ErrorType.NotEnoughResources, "He is not your friend at all.");
             await _dbContext.RemoveFriend(user.Id, target.Id);
             await _dbContext.SaveChangesAsync();
@@ -218,18 +219,22 @@ namespace Kahla.Server.Controllers
                 return this.Protocal(ErrorType.NotFound, "We can not find your target user!");
             if (target.Id == user.Id)
                 return this.Protocal(ErrorType.RequireAttention, "You can't request yourself!");
-            var pending = _dbContext.Requests
-                .Where(t => t.CreatorId == user.Id)
-                .Where(t => t.TargetId == id)
-                .Exists(t => !t.Completed);
-            if (pending)
-                return this.Protocal(ErrorType.HasDoneAlready, "There are some pending request hasn't been completed!");
-            var areFriends = await _dbContext.AreFriends(user.Id, target.Id);
-            if (areFriends)
-                return this.Protocal(ErrorType.HasDoneAlready, "You two are already friends!");
-            var request = new Request { CreatorId = user.Id, TargetId = id };
-            _dbContext.Requests.Add(request);
-            await _dbContext.SaveChangesAsync();
+            Request request = null;
+            lock (_obj)
+            {
+                var pending = _dbContext.Requests
+                    .Where(t => t.CreatorId == user.Id)
+                    .Where(t => t.TargetId == id)
+                    .Exists(t => !t.Completed);
+                if (pending)
+                    return this.Protocal(ErrorType.HasDoneAlready, "There are some pending request hasn't been completed!");
+                var areFriends = _dbContext.AreFriends(user.Id, target.Id);
+                if (areFriends)
+                    return this.Protocal(ErrorType.HasDoneAlready, "You two are already friends!");
+                request = new Request { CreatorId = user.Id, TargetId = id };
+                _dbContext.Requests.Add(request);
+                _dbContext.SaveChanges();
+            }
             await _pusher.NewFriendRequestEvent(target.Id, user.Id);
             return Json(new AiurValue<int>(request.Id)
             {
@@ -253,7 +258,7 @@ namespace Kahla.Server.Controllers
             request.Completed = true;
             if (model.Accept)
             {
-                if (await _dbContext.AreFriends(request.CreatorId, request.TargetId))
+                if (await _dbContext.AreFriendsAsync(request.CreatorId, request.TargetId))
                 {
                     await _dbContext.SaveChangesAsync();
                     return this.Protocal(ErrorType.RequireAttention, "You two are already friends.");
@@ -385,7 +390,7 @@ namespace Kahla.Server.Controllers
                 model.Code = ErrorType.NotFound;
                 return Json(model);
             }
-            var conversation = await _dbContext.FindConversation(user.Id, target.Id);
+            var conversation = await _dbContext.FindConversationAsync(user.Id, target.Id);
             if (conversation != null)
             {
                 model.User = target;

@@ -85,8 +85,16 @@ namespace Kahla.Server.Data
             }
             return true;
         }
+        public PrivateConversation FindConversation(string userId1, string userId2)
+        {
+            var relation = this.PrivateConversations.SingleOrDefault(t => t.RequesterId == userId1 && t.TargetId == userId2);
+            var belation = this.PrivateConversations.SingleOrDefault(t => t.RequesterId == userId2 && t.TargetId == userId1);
+            if (relation != null) return relation;
+            else if (belation != null) return belation;
+            else return null;
+        }
 
-        public async Task<PrivateConversation> FindConversation(string userId1, string userId2)
+        public async Task<PrivateConversation> FindConversationAsync(string userId1, string userId2)
         {
             var relation = await this.PrivateConversations.SingleOrDefaultAsync(t => t.RequesterId == userId1 && t.TargetId == userId2);
             var belation = await this.PrivateConversations.SingleOrDefaultAsync(t => t.RequesterId == userId2 && t.TargetId == userId1);
@@ -94,9 +102,16 @@ namespace Kahla.Server.Data
             else if (belation != null) return belation;
             else return null;
         }
-        public async Task<bool> AreFriends(string userId1, string userId2)
+
+        public async Task<bool> AreFriendsAsync(string userId1, string userId2)
         {
-            var conversation = await FindConversation(userId1, userId2);
+            var conversation = await FindConversationAsync(userId1, userId2);
+            return conversation != null;
+        }
+
+        public bool AreFriends(string userId1, string userId2)
+        {
+            var conversation = FindConversation(userId1, userId2);
             return conversation != null;
         }
 
