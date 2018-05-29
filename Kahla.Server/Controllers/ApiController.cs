@@ -219,6 +219,9 @@ namespace Kahla.Server.Controllers
                 return this.Protocal(ErrorType.NotFound, "We can not find your target user!");
             if (target.Id == user.Id)
                 return this.Protocal(ErrorType.RequireAttention, "You can't request yourself!");
+            var areFriends = await _dbContext.AreFriendsAsync(user.Id, target.Id);
+            if (areFriends)
+                return this.Protocal(ErrorType.HasDoneAlready, "You two are already friends!");
             Request request = null;
             lock (_obj)
             {
@@ -228,9 +231,6 @@ namespace Kahla.Server.Controllers
                     .Exists(t => !t.Completed);
                 if (pending)
                     return this.Protocal(ErrorType.HasDoneAlready, "There are some pending request hasn't been completed!");
-                var areFriends = _dbContext.AreFriends(user.Id, target.Id);
-                if (areFriends)
-                    return this.Protocal(ErrorType.HasDoneAlready, "You two are already friends!");
                 request = new Request { CreatorId = user.Id, TargetId = id };
                 _dbContext.Requests.Add(request);
                 _dbContext.SaveChanges();
