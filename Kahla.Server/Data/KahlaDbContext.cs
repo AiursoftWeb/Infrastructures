@@ -140,7 +140,8 @@ namespace Kahla.Server.Data
             this.PrivateConversations.Add(new PrivateConversation
             {
                 RequesterId = userId1,
-                TargetId = userId2
+                TargetId = userId2,
+                AESKey = StringOperation.RandomString(30)
             });
         }
     }
