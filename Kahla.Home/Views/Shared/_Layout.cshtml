@@ -11,22 +11,9 @@
 </head>
 <body>
     @RenderBody()
-    <!-- <footer class="py-6 px-3 text-gray text-center">
-        <p class="copyright">© @DateTime.Now.Year @Values.ProjectName, Inc. All rights reserved.</p>
-    </footer> -->
-    <div class="footer container-lg px-3" role="contentinfo">
-        <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6">
-            <ul class="list-style-none d-flex flex-wrap ">
-                @foreach(var foot in Values.Footer)
-                {
-                    <li class="mr-3"><a href="@foot.Value">@foot.Key</a></li>
-                }
-            </ul>
-        </div>
-        <div class="d-flex flex-justify-center pb-6">
-            <span class="f6 text-gray-light"></span>
-        </div>
-    </div>
+    <footer class="py-6 px-3 text-gray text-center">
+        <a href="@ServiceLocation.WWW" class="copyright">© @DateTime.Now.Year @Values.ProjectName. All rights reserved.</a>
+    </footer>
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
     <script src="@ServiceLocation.CDN/dist/AiurProduct.min.js"></script>
 </body>
