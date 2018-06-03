@@ -25,6 +25,7 @@ namespace Aiursoft.OSS
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureLargeFileUploadable();
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;

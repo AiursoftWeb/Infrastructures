@@ -52,6 +52,7 @@ namespace Aiursoft.Developer.Controllers
                 return Json(new AiurProtocal { Message = "Correct app info.", Code = ErrorType.Success });
             }
         }
+        
         //http://developer.aiursoft.obisoft.com.cn/api/AppInfo?AppId=29bf5250a6d93d47b6164ac2821d5009
         [APIExpHandler]
         [APIModelStateChecker]
