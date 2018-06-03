@@ -12,7 +12,11 @@
 <body>
     @RenderBody()
     <footer class="py-6 px-3 text-gray text-center">
-        <a href="@ServiceLocation.WWW" class="copyright">© @DateTime.Now.Year @Values.ProjectName. All rights reserved.</a>
+        <p class="copyright">© @DateTime.Now.Year 
+            <a class="text-gray" href="@ServiceLocation.WWW">@Values.ProjectName</a>
+            -
+             All rights reserved.
+        </p>
     </footer>
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
     <script src="@ServiceLocation.CDN/dist/AiurProduct.min.js"></script>
