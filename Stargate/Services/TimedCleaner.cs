@@ -15,13 +15,16 @@ namespace Aiursoft.Stargate.Services
         private readonly ILogger _logger;
         private Timer _timer;
         private IServiceScopeFactory _scopeFactory;
+        private TimeoutCleaner _timeoutCleaner;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            TimeoutCleaner timeoutCleaner)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _timeoutCleaner = timeoutCleaner;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -39,7 +42,7 @@ namespace Aiursoft.Stargate.Services
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
-                    await TimeoutCleaner.AllClean(dbContext);
+                    await _timeoutCleaner.AllClean(dbContext);
                 }
             }
             catch (Exception ex)

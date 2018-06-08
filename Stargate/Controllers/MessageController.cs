@@ -20,15 +20,18 @@ namespace Aiursoft.Stargate.Controllers
     public class MessageController : Controller
     {
         private readonly StargateDbContext _dbContext;
+        private StargateMemory _memoryContext;
         private readonly Counter _counter;
         private readonly CoreApiService _coreApiService;
 
         public MessageController(
             StargateDbContext dbContext,
+            StargateMemory memoryContext,
             Counter counter,
             CoreApiService coreApiService)
         {
             _dbContext = dbContext;
+            _memoryContext = memoryContext;
             _counter = counter;
             _coreApiService = coreApiService;
         }
@@ -73,7 +76,7 @@ namespace Aiursoft.Stargate.Controllers
                 ChannelId = channel.Id,
                 Content = model.MessageContent
             };
-            StargateMemory.Messages.Add(message);
+            _memoryContext.Messages.Add(message);
             return Json(new AiurProtocal
             {
                 Code = ErrorType.Success,

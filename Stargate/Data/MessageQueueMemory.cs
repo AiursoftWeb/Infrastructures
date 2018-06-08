@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Data
 {
-    public static class StargateMemory
+    public class StargateMemory
     {
-        public static List<Message> Messages { get; set; } = new List<Message>();
+        public List<Message> Messages { get; set; } = new List<Message>();
     }
 }

@@ -17,12 +17,15 @@ namespace Aiursoft.Stargate.Controllers
     public class ListenController : Controller
     {
         private StargateDbContext _dbContext;
+        private StargateMemory _memoryContext;
         private IPusher<WebSocket> _pusher;
 
         public ListenController(StargateDbContext dbContext,
+            StargateMemory memoryContext,
             IPusher<WebSocket> pusher)
         {
             _dbContext = dbContext;
+            _memoryContext = memoryContext;
             _pusher = pusher;
         }
 
@@ -45,7 +48,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 try
                 {
-                    var nextMessages = StargateMemory
+                    var nextMessages = _memoryContext
                         .Messages
                         .Where(t => t.ChannelId == model.Id)
                         .Where(t => t.CreateTime > lastReadTime)
