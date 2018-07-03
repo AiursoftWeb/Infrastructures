@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace Aiursoft.Stargate.Migrations
 {
-    public partial class MigratedToSQLServer : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,11 +25,11 @@ namespace Aiursoft.Stargate.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AppId = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     ConnectKey = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    LifeTime = table.Column<TimeSpan>(nullable: false)
+                    LifeTime = table.Column<TimeSpan>(nullable: false),
+                    AppId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

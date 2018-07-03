@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace Aiursoft.OSS.Migrations
 {
-    public partial class MigratedBackToSQLServer : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,10 +25,10 @@ namespace Aiursoft.OSS.Migrations
                 {
                     BucketId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BelongingAppId = table.Column<string>(nullable: true),
                     BucketName = table.Column<string>(nullable: true),
                     OpenToRead = table.Column<bool>(nullable: false),
-                    OpenToUpload = table.Column<bool>(nullable: false)
+                    OpenToUpload = table.Column<bool>(nullable: false),
+                    BelongingAppId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,10 +47,12 @@ namespace Aiursoft.OSS.Migrations
                 {
                     FileKey = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BucketId = table.Column<int>(nullable: false),
-                    DownloadTimes = table.Column<int>(nullable: false),
+                    RealFileName = table.Column<string>(nullable: true),
                     FileExtension = table.Column<string>(nullable: true),
-                    RealFileName = table.Column<string>(nullable: true)
+                    DownloadTimes = table.Column<int>(nullable: false),
+                    BucketId = table.Column<int>(nullable: false),
+                    UploadTime = table.Column<DateTime>(nullable: false),
+                    AliveDays = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,11 +71,11 @@ namespace Aiursoft.OSS.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Value = table.Column<string>(nullable: true),
                     FileId = table.Column<int>(nullable: false),
-                    UseTime = table.Column<DateTime>(nullable: false),
                     Used = table.Column<bool>(nullable: false),
-                    UserIpAddress = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    UseTime = table.Column<DateTime>(nullable: false),
+                    UserIpAddress = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

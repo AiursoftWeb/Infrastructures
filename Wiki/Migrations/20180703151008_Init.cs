@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace Aiursoft.Developer.Migrations
+namespace Aiursoft.Wiki.Migrations
 {
-    public partial class MigratedBackToWindows : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +13,9 @@ namespace Aiursoft.Developer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,27 +26,26 @@ namespace Aiursoft.Developer.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    AccountCreateTime = table.Column<DateTime>(nullable: false),
-                    Bio = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    HeadImgUrl = table.Column<string>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    PreferedLanguage = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    Sex = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    AccountCreateTime = table.Column<DateTime>(nullable: false),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    Bio = table.Column<string>(nullable: true),
+                    NickName = table.Column<string>(nullable: true),
+                    Sex = table.Column<string>(nullable: true),
+                    HeadImgUrl = table.Column<string>(nullable: true),
+                    PreferedLanguage = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,17 +53,16 @@ namespace Aiursoft.Developer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permissions",
+                name: "Collections",
                 columns: table => new
                 {
-                    PermissionId = table.Column<int>(nullable: false)
+                    CollectionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DeleteAble = table.Column<bool>(nullable: false),
-                    PermissionName = table.Column<string>(nullable: true)
+                    CollectionTitle = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permissions", x => x.PermissionId);
+                    table.PrimaryKey("PK_Collections", x => x.CollectionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,9 +71,9 @@ namespace Aiursoft.Developer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,46 +87,14 @@ namespace Aiursoft.Developer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Apps",
-                columns: table => new
-                {
-                    AppId = table.Column<string>(nullable: false),
-                    AppCategory = table.Column<int>(nullable: false),
-                    AppCreateTime = table.Column<DateTime>(nullable: false),
-                    AppDescription = table.Column<string>(nullable: true),
-                    AppDomain = table.Column<string>(nullable: true),
-                    AppIconAddress = table.Column<string>(nullable: true),
-                    AppName = table.Column<string>(nullable: true),
-                    AppPlatform = table.Column<int>(nullable: false),
-                    AppSecret = table.Column<string>(nullable: true),
-                    CreaterId = table.Column<string>(nullable: true),
-                    DebugMode = table.Column<bool>(nullable: false),
-                    EnableOAuth = table.Column<bool>(nullable: false),
-                    ForceConfirmation = table.Column<bool>(nullable: false),
-                    ForceInputPassword = table.Column<bool>(nullable: false),
-                    LicenseUrl = table.Column<string>(nullable: true),
-                    PrivacyStatementUrl = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Apps", x => x.AppId);
-                    table.ForeignKey(
-                        name: "FK_Apps_AspNetUsers_CreaterId",
-                        column: x => x.CreaterId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,45 +172,59 @@ namespace Aiursoft.Developer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppPermissions",
+                name: "Article",
                 columns: table => new
                 {
-                    AppPermissionId = table.Column<int>(nullable: false)
+                    ArticleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AppId = table.Column<string>(nullable: true),
-                    PermissionId = table.Column<int>(nullable: false)
+                    ArticleTitle = table.Column<string>(nullable: true),
+                    ArticleContent = table.Column<string>(nullable: true),
+                    CreateTime = table.Column<DateTime>(nullable: false),
+                    CollectionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppPermissions", x => x.AppPermissionId);
+                    table.PrimaryKey("PK_Article", x => x.ArticleId);
                     table.ForeignKey(
-                        name: "FK_AppPermissions_Apps_AppId",
-                        column: x => x.AppId,
-                        principalTable: "Apps",
-                        principalColumn: "AppId",
+                        name: "FK_Article_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
+                        principalColumn: "CollectionId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CommentContent = table.Column<string>(nullable: true),
+                    CreateTime = table.Column<DateTime>(nullable: false),
+                    ArticleId = table.Column<int>(nullable: false),
+                    CommentUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_AppPermissions_Permissions_PermissionId",
-                        column: x => x.PermissionId,
-                        principalTable: "Permissions",
-                        principalColumn: "PermissionId",
+                        name: "FK_Comment_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "ArticleId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_CommentUserId",
+                        column: x => x.CommentUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppPermissions_AppId",
-                table: "AppPermissions",
-                column: "AppId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppPermissions_PermissionId",
-                table: "AppPermissions",
-                column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Apps_CreaterId",
-                table: "Apps",
-                column: "CreaterId");
+                name: "IX_Article_CollectionId",
+                table: "Article",
+                column: "CollectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -285,13 +264,20 @@ namespace Aiursoft.Developer.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ArticleId",
+                table: "Comment",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_CommentUserId",
+                table: "Comment",
+                column: "CommentUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AppPermissions");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -308,16 +294,19 @@ namespace Aiursoft.Developer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Apps");
-
-            migrationBuilder.DropTable(
-                name: "Permissions");
+                name: "Comment");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Article");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Collections");
         }
     }
 }
