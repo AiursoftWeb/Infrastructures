@@ -11,6 +11,7 @@ namespace Aiursoft.Pylon.Models.API
         public string AppID { get; set; }
         public DateTime GrantTime { get; set; } = DateTime.Now;
         public string APIUserId { get; set; }
+        [NotMapped]
         public virtual AiurUserBase UserInfo { get; set; }
     }
 }

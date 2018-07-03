@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace Aiursoft.API.Migrations
 {
-    public partial class MigratedBackToSQLServer : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,10 +14,10 @@ namespace Aiursoft.API.Migrations
                 {
                     AccessTokenId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AliveTime = table.Column<TimeSpan>(nullable: false),
+                    Value = table.Column<string>(nullable: true),
                     ApplyAppId = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    AliveTime = table.Column<TimeSpan>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,9 +29,9 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,27 +42,27 @@ namespace Aiursoft.API.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    AccountCreateTime = table.Column<DateTime>(nullable: false),
-                    Bio = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    HeadImgUrl = table.Column<string>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    PreferedLanguage = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    Sex = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    AccountCreateTime = table.Column<DateTime>(nullable: false),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    Bio = table.Column<string>(nullable: true),
+                    NickName = table.Column<string>(nullable: true),
+                    Sex = table.Column<string>(nullable: true),
+                    HeadImgUrl = table.Column<string>(nullable: true),
+                    PreferedLanguage = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    SMSPasswordResetToken = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,9 +75,9 @@ namespace Aiursoft.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,9 +96,9 @@ namespace Aiursoft.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,11 +179,11 @@ namespace Aiursoft.API.Migrations
                 name: "LocalAppGrant",
                 columns: table => new
                 {
-                    AppGrantId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    APIUserId = table.Column<string>(nullable: true),
                     AppID = table.Column<string>(nullable: true),
-                    GrantTime = table.Column<DateTime>(nullable: false)
+                    GrantTime = table.Column<DateTime>(nullable: false),
+                    APIUserId = table.Column<string>(nullable: true),
+                    AppGrantId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -203,12 +202,12 @@ namespace Aiursoft.API.Migrations
                 {
                     OAuthPackId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AliveTime = table.Column<TimeSpan>(nullable: false),
-                    ApplyAppId = table.Column<string>(nullable: true),
                     Code = table.Column<int>(nullable: false),
-                    CreateTime = table.Column<DateTime>(nullable: false),
+                    ApplyAppId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     IsUsed = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    CreateTime = table.Column<DateTime>(nullable: false),
+                    AliveTime = table.Column<TimeSpan>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,6 +215,29 @@ namespace Aiursoft.API.Migrations
                     table.ForeignKey(
                         name: "FK_OAuthPack_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserEmails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EmailAddress = table.Column<string>(nullable: true),
+                    Validated = table.Column<bool>(nullable: false),
+                    OwnerId = table.Column<string>(nullable: true),
+                    ValidateToken = table.Column<string>(nullable: true),
+                    LastSendTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserEmails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserEmails_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -269,6 +291,11 @@ namespace Aiursoft.API.Migrations
                 name: "IX_OAuthPack_UserId",
                 table: "OAuthPack",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserEmails_OwnerId",
+                table: "UserEmails",
+                column: "OwnerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -296,6 +323,9 @@ namespace Aiursoft.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "OAuthPack");
+
+            migrationBuilder.DropTable(
+                name: "UserEmails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
