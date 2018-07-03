@@ -3,6 +3,7 @@ using SixLabors.ImageSharp;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Aiursoft.OSS.Services
 {

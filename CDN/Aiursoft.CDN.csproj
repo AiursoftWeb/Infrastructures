@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <Version>0.8.0</Version>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Version>0.9.1</Version>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Aiursoft.CDN</AssemblyName>
     <PackageId>Aiursoft.CDN</PackageId>
     <Company>Aiursoft</Company>
@@ -15,7 +15,5 @@
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/CDN.git</RepositoryUrl>
- 
   </PropertyGroup>
-
 </Project>

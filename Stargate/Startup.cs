@@ -46,7 +46,7 @@ namespace Aiursoft.Stargate
             services.AddScoped<IPusher<WebSocket>, WebSocketPusher>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
