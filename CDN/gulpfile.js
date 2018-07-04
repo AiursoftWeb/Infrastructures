@@ -103,7 +103,7 @@ gulp.task('clean', function () {
     del('fonts/**/*');
 })
 
-gulp.task("bundle", function () {
+gulp.task("bundle", function (done) {
     packages.forEach(function (package) {
         gulp.src(supportedfonts)
             .pipe(flatten())
@@ -124,4 +124,5 @@ gulp.task("bundle", function () {
                 .pipe(gulp.dest('dist'));
         }
     });
+    done();
 });
