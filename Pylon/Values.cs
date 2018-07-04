@@ -21,8 +21,6 @@ namespace Aiursoft.Pylon
         public static string Schema = "https";
         public static string WSSchema = "wss";
         public static long MaxFileSize = 1000 * 1024 * 1024;
-        public static int AppsIconBucketId { get; set; } = 2;
-        public static int UsersIconBucketId { get; set; } = 3;
         public static string GitHubOrganizationAddress { get; private set; } = "https://github.com/AiursoftWeb/";
         public static string FacebookAddress { get; private set; } = "https://facebook.com/";
         public static string TwitterAddress { get; private set; } = "https://twitter.com/";

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Services;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -28,6 +29,7 @@ namespace Aiursoft.Account.Controllers
         private readonly UserService _userService;
         private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<AccountUser> userManager,
@@ -37,7 +39,8 @@ namespace Aiursoft.Account.Controllers
             AiurSMSSender sender,
             UserService userService,
             StorageService storageService,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,6 +50,7 @@ namespace Aiursoft.Account.Controllers
             _userService = userService;
             _storageService = storageService;
             _appsContainer = appsContainer;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index(bool? JustHaveUpdated)
@@ -146,7 +150,7 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            cuser.HeadImgUrl = await _storageService.SaveToOSS(Request.Form.Files.First(), Values.UsersIconBucketId, 365);
+            cuser.HeadImgUrl = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 365);
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, "Not_Mofified");
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
