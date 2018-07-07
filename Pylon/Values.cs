@@ -44,7 +44,8 @@ namespace Aiursoft.Pylon
             {"Security", "#"},
             {"Status", "#"},
             {"Wiki", "https://wiki.aiursoft.com"},
-            {"Blog", "#"}
+            {"Blog", "#"},
+            {"GitZab", "https://gitzab.com/Aiursoft"}
         };
     }
 }
