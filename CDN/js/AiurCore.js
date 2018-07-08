@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Activate clipboard tool
-    new Clipboard('[data-clipboard-text]');
+    new ClipboardJS('[data-clipboard-text]');
 
     // Activate tooltip tool
     $('[data-toggle="tooltip"]').tooltip();
