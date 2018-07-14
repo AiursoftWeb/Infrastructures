@@ -47,7 +47,7 @@
                     }
                     else
                     {
-                        <a asp-controller="Chapter" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-success">Upload chapter</a>
+                        <a asp-controller="Section" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-success">Create new section</a>
                         <a href="#" class="btn btn-warning">Edit</a>
                         <a href="#" class="btn btn-danger">Delete course</a>
                     }
@@ -69,3 +69,12 @@
         }
     </div>
 </div>
+
+@foreach(var sec in Model.Sections)
+{
+    <h2>@sec.SectionName</h2>
+    @if(Model.IsOwner)
+    {
+        <a href="#">Edit</a>
+    }
+}

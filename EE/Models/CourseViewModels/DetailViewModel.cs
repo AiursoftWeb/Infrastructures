@@ -15,5 +15,7 @@ namespace Aiursoft.EE.Models.CourseViewModels
 
         public bool IsOwner { get; set; }
         public bool DisplayOwnerInfo { get; set; }
+
+        public IEnumerable<Section> Sections { get; set; }
     }
 }

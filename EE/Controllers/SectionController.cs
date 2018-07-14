@@ -1,0 +1,55 @@
+using System;
+using Microsoft.AspNetCore.Mvc;
+using Aiursoft.EE.Data;
+using Aiursoft.EE.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Aiursoft.Pylon.Attributes;
+using Microsoft.EntityFrameworkCore;
+
+namespace Aiursoft.EE.Controllers
+{
+    public class SectionController : Controller
+    {
+        private readonly EEDbContext _dbContext;
+        private readonly UserManager<EEUser> _userManager;
+        public SectionController(
+            EEDbContext dbContext,
+            UserManager<EEUser> userManager)
+        {
+            _dbContext = dbContext;
+            _userManager = userManager;
+        }
+
+        [AiurForceAuth]
+        // Create new section
+        public async Task<IActionResult> Create(int id) // Course Id
+        {
+            var course = await _dbContext
+                .Courses
+                .SingleOrDefaultAsync(t => t.Id == id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (course.OwnerId != user.Id)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
+
+        private async Task<EEUser> GetCurrentUserAsync()
+        {
+            if (User.Identity.Name == null)
+            {
+                return null;
+            }
+            return await _userManager.FindByNameAsync(User.Identity.Name);
+        }
+    }
+}

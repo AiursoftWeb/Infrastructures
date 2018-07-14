@@ -79,6 +79,7 @@ namespace Aiursoft.EE.Controllers
             var course = await _dbContext
                 .Courses
                 .Include(t => t.Owner)
+                .Include(t => t.Sections)
                 .SingleOrDefaultAsync(t => t.Id == id);
             var user = await GetCurrentUserAsync();
             var Subscribed = user == null ? false : await _dbContext
@@ -98,6 +99,7 @@ namespace Aiursoft.EE.Controllers
                 IsOwner = user?.Id == course.OwnerId,
                 AuthorName = course.Owner.NickName,
                 DisplayOwnerInfo = course.DisplayOwnerInfo,
+                Sections = course.Sections
             };
             return View(model);
         }
