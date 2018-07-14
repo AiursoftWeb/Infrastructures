@@ -43,7 +43,8 @@ namespace Aiursoft.EE.Controllers
 
             var model = new CreateViewModel
             {
-                CourseName = course.Name
+                CourseName = course.Name,
+                CourseId = course.Id
             };
             return View(model);
         }
