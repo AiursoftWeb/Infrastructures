@@ -15,8 +15,8 @@ namespace Aiursoft.EE.Models
         public DateTime CreateTime { get; set; }
         public bool IsFree { get; set; }
 
-        public int CourseId { get; set; }
-        [ForeignKey(nameof(CourseId))]
-        public Course Course { get; set; }
+        public int SectionId { get; set; }
+        [ForeignKey(nameof(SectionId))]
+        public Section Context { get; set; }
     }
 }

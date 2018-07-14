@@ -17,8 +17,9 @@ namespace Aiursoft.EE.Models
         public double Price { get; set; } = 0;
         public bool DisplayOwnerInfo { get; set; }
 
-        [InverseProperty(nameof(Chapter.Course))]
-        public IEnumerable<Chapter> Chapters { get; set; }
+
+        [InverseProperty(nameof(Section.Context))]
+        public IEnumerable<Section> Sections { get; set; }
 
         [InverseProperty(nameof(Subscription.Course))]
         public IEnumerable<Subscription> Subscribers { get; set; }
