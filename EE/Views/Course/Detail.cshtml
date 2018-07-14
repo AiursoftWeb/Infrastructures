@@ -32,7 +32,33 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <!-- <p>All Sections</p> -->
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Sections</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach(var sec in Model.Sections)
+                    {
+                        <li class="list-group-item">
+                            <a href="#">@sec.SectionName</a>
+                        </li>
+                    }
+                </ul>
+                <a class="card-footer clearfix small z-1" asp-controller="Section" asp-action="Create" asp-route-id="@Model.Id">
+                    <span class="float-left">Create new</span>
+                    <span class="float-right">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-bar-chart"></i>
@@ -47,7 +73,6 @@
                     }
                     else
                     {
-                        <a asp-controller="Section" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-success">Create new section</a>
                         <a href="#" class="btn btn-warning">Edit</a>
                         <a href="#" class="btn btn-danger">Delete course</a>
                     }
@@ -56,7 +81,7 @@
         </div>
         @if (Model.DisplayOwnerInfo)
         {
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header">
                         About @Model.AuthorName
@@ -68,13 +93,6 @@
             </div>
         }
     </div>
+    
+    <div class="mb-5"></div>
 </div>
-
-@foreach(var sec in Model.Sections)
-{
-    <h2>@sec.SectionName</h2>
-    @if(Model.IsOwner)
-    {
-        <a href="#">Edit</a>
-    }
-}
