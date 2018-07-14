@@ -3,7 +3,8 @@
     ViewData["Title"] = "Create new section";
 }
 <h1>Create new section for @Model.CourseName</h1>
-<form asp-controller="Section" asp-action="Create" asp-route-id="@Model.CourseId" method="POST">
+<form asp-controller="Section" asp-action="Create" method="POST">
+    <input type="hidden" asp-for="CourseId" />
     <label asp-for="NewSectionName"></label>
     <input asp-for="NewSectionName" />
     <input type="submit" value="Create"/>

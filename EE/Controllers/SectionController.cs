@@ -49,6 +49,34 @@ namespace Aiursoft.EE.Controllers
             return View(model);
         }
 
+        [AiurForceAuth]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateViewModel model)//Course Id
+        {
+            var course = await _dbContext
+                .Courses
+                .SingleOrDefaultAsync(t => t.Id == model.CourseId);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (course.OwnerId != user.Id)
+            {
+                return NotFound();
+            }
+            var newSection = new Section
+            {
+                SectionName = model.NewSectionName,
+                CourseId = model.CourseId
+            };
+            _dbContext.Sections.Add(newSection);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(CourseController.Detail), "Course", new { id = course.Id });
+        }
+
         private async Task<EEUser> GetCurrentUserAsync()
         {
             if (User.Identity.Name == null)

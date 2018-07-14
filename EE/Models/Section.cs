@@ -11,7 +11,7 @@ namespace Aiursoft.EE.Models
         [Key]
         public int Id { get; set; }
 
-        public int SectionName { get; set; }
+        public string SectionName { get; set; }
 
         public int CourseId { get; set; }
         [ForeignKey(nameof(CourseId))]

@@ -4,14 +4,16 @@ using Aiursoft.EE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.EE.Migrations
 {
     [DbContext(typeof(EEDbContext))]
-    partial class EEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180714141928_ChangeSectionNameType")]
+    partial class ChangeSectionNameType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
