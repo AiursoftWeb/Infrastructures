@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.EE.Models.SectionViewModels;
 
 namespace Aiursoft.EE.Controllers
 {
@@ -40,7 +41,11 @@ namespace Aiursoft.EE.Controllers
                 return NotFound();
             }
 
-            return View();
+            var model = new CreateViewModel
+            {
+                CourseName = course.Name
+            };
+            return View(model);
         }
 
         private async Task<EEUser> GetCurrentUserAsync()
