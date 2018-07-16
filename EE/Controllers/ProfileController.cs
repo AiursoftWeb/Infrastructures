@@ -169,6 +169,12 @@ namespace Aiursoft.EE.Controllers
             return this.Protocal(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
         }
 
+        [AiurForceAuth]
+        public async Task<IActionResult> EditDes()
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<EEUser> GetCurrentUserAsync()
         {
             if (User.Identity.Name == null)

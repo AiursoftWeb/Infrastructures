@@ -9,6 +9,7 @@ namespace Aiursoft.EE.Models.CourseViewModels
     public class DetailViewModel
     {
         public string Name { get; set; }
+        public string TeacherDescription { get; set; }
         public string Description { get; set; }
         [Display(Name = "What you will learn")]
         public string WhatYouWillLearn { get; set; }

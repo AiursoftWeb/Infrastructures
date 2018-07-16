@@ -29,5 +29,9 @@
             </div>
         }
     </div>
-    <p class=" muted">@Model.Bio</p>
+    <p class="muted">@Model.Bio</p>
+    @if (Model.IsMe)
+    {
+        <a asp-controller="Profile" asp-action="EditDes">Edit teacher description</a>
+    }
 </div>

@@ -10,6 +10,8 @@ namespace Aiursoft.EE.Models
 {
     public class EEUser : AiurUserBase
     {
+        public string LongDescription { get; set; }
+
         [InverseProperty(nameof(Subscription.User))]
         public IEnumerable<Subscription> Subscriptions { get; set; }
 

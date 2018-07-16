@@ -95,6 +95,7 @@ namespace Aiursoft.EE.Controllers
             var model = new DetailViewModel
             {
                 Id = id,
+                TeacherDescription = course.Owner.LongDescription,
                 Name = course.Name,
                 Description = course.Description,
                 Subscribed = Subscribed,
