@@ -18,7 +18,7 @@
   "author": "Anduin",
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.7.2",
+    "angular": "^1.4.6",
     "animate.css": "^3.5.2",
     "bootstrap": "^4.1.1",
     "bootstrap-fileinput": "^4.4.5",
