@@ -58,6 +58,7 @@ namespace Aiursoft.EE.Controllers
                 Description = _scriptsFilter.Filt(model.Description),
                 CourseImage = $"{_serviceLocation.CDN}/images/thumbnail.svg",
                 DisplayOwnerInfo = model.DisplayOwnerInfo,
+                WhatYouWillLearn = model.WhatYouWillLearn
                 Name = model.Name,
                 Price = model.Price,
                 OwnerId = user.Id

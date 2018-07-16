@@ -12,6 +12,7 @@ namespace Aiursoft.EE.Models
         public string CourseImage { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public string WhatYouWillLearn { get; set; } = string.Empty;
         public bool Finished { get; set; } = false;
         public DateTime CreateTime { get; set; } = DateTime.Now;
         public double Price { get; set; } = 0;

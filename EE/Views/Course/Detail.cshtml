@@ -32,6 +32,7 @@
         </div>
     </div>
     <div class="row">
+        <!-- Sections-->
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
@@ -49,6 +50,12 @@
                             <a href="#">@sec.SectionName</a>
                         </li>
                     }
+                    @if(Model.Sections.Count()==0)
+                    {
+                        <li class="list-group-item">
+                            There is no section for this course!
+                        </li>
+                    }
                 </ul>
                 <a class="card-footer clearfix small z-1" asp-controller="Section" asp-action="Create" asp-route-id="@Model.Id">
                     <span class="float-left">Create new</span>
@@ -58,6 +65,7 @@
                 </a>
             </div>
         </div>
+        <!-- Course Discription -->
         <div class="col-md-9">
             <div class="card mb-3">
                 <div class="card-header">
@@ -79,6 +87,7 @@
                 </div>
             </div>
         </div>
+        <!-- About Author -->
         @if (Model.DisplayOwnerInfo)
         {
             <div class="col-md-12">
@@ -93,6 +102,5 @@
             </div>
         }
     </div>
-    
     <div class="mb-5"></div>
 </div>
