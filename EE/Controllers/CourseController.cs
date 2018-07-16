@@ -58,7 +58,7 @@ namespace Aiursoft.EE.Controllers
                 Description = _scriptsFilter.Filt(model.Description),
                 CourseImage = $"{_serviceLocation.CDN}/images/thumbnail.svg",
                 DisplayOwnerInfo = model.DisplayOwnerInfo,
-                WhatYouWillLearn = model.WhatYouWillLearn
+                WhatYouWillLearn = model.WhatYouWillLearn,
                 Name = model.Name,
                 Price = model.Price,
                 OwnerId = user.Id
@@ -101,7 +101,8 @@ namespace Aiursoft.EE.Controllers
                 IsOwner = user?.Id == course.OwnerId,
                 AuthorName = course.Owner.NickName,
                 DisplayOwnerInfo = course.DisplayOwnerInfo,
-                Sections = course.Sections
+                Sections = course.Sections,
+                WhatYouWillLearn = course.WhatYouWillLearn
             };
             return View(model);
         }

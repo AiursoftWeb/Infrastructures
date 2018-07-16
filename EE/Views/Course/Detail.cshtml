@@ -32,8 +32,53 @@
         </div>
     </div>
     <div class="row">
+        <!-- Course Discription -->
+        <div class="col-md-9">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    @Model.Name
+                </div>
+                <div class="card-body">
+                    <h3>Course Description</h3>
+                    <p>@Html.Raw(Model.Description)</p>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    What you will learn from course: @Model.Name
+                </div>
+                <div class="card-body">
+                    <p>@Html.Raw(Model.WhatYouWillLearn)</p>
+                    @if (!Model.IsOwner)
+                    {
+                        <a href="#" class="btn btn-success">Start learning</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-warning">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete course</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- About Author -->
+        @if (Model.DisplayOwnerInfo)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        About @Model.AuthorName
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. </p>
+                    </div>
+                </div>
+            </div>
+        }
         <!-- Sections-->
-        <div class="col-md-3">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <!-- <p>All Sections</p> -->
@@ -65,42 +110,6 @@
                 </a>
             </div>
         </div>
-        <!-- Course Discription -->
-        <div class="col-md-9">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-bar-chart"></i>
-                    @Model.Name
-                </div>
-                <div class="card-body">
-                    <h3>Course Description</h3>
-                    <p>@Html.Raw(Model.Description)</p>
-                    @if (!Model.IsOwner)
-                    {
-                        <a href="#" class="btn btn-success">Start learning</a>
-                    }
-                    else
-                    {
-                        <a href="#" class="btn btn-warning">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete course</a>
-                    }
-                </div>
-            </div>
-        </div>
-        <!-- About Author -->
-        @if (Model.DisplayOwnerInfo)
-        {
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        About @Model.AuthorName
-                    </div>
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet</p>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
     <div class="mb-5"></div>
 </div>

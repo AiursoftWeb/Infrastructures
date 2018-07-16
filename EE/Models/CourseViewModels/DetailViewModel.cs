@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace Aiursoft.EE.Models.CourseViewModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        [Display(Name = "What you will learn")]
+        public string WhatYouWillLearn { get; set; }
         public bool Subscribed { get; set; }
         public int Id { get; set; }
         public string AuthorName { get; set; }
