@@ -67,7 +67,7 @@
                             <input asp-for="DisplayOwnerInfo" type="checkbox" class="form-check-input">
                             Display author description in the course view page.
                         </label>
-                        <a asp-controller="Profile" asp-action="EditDes" target="_blank">Edit teacher description</a>
+                        <a asp-controller="Profile" asp-action="EditDes" target="_blank">Edit teacher introduction</a>
                     </div>
                     <button type="submit" data-disable-with="Submitting..." class="btn btn-primary">Submit</button>
                 </form>
@@ -77,7 +77,7 @@
 </div>
 @section Styles {
     <link rel='stylesheet' href='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular.css'>
-    <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+    <link rel='stylesheet' href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css">
 }
 
 @section Scripts {

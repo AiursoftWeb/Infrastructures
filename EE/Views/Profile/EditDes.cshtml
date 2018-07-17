@@ -1,0 +1,22 @@
+@model Aiursoft.EE.Models.ProfileViewModels.EditDesViewModel
+@{
+    ViewData["Title"] = "Edit teacher introdcution";
+}
+
+<div class="container">
+    <div class="row">
+        @(await Html.PartialAsync("_Left", Model.LeftContent))
+        <div class="col-md-9 mt-3">
+            @(await Html.PartialAsync("_Up", Model.UpContent))
+            <form asp-controller="Profile" asp-action="EditDes" class="form-group" method="POST">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="NewDes"></label>
+                    <textarea class="form-control" asp-for="NewDes" type="text" rows="5"></textarea>
+                    <span asp-validation-for="NewDes" class="text-danger"></span>
+                </div>
+                <button type="submit" data-disable-with="Saving..." class="btn btn-primary mt-3">Save</button>
+            </form>
+        </div>
+    </div>
+</div>

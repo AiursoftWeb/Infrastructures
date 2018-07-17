@@ -96,7 +96,7 @@ namespace Aiursoft.EE.Controllers
             var model = new FollowingsViewModel
             {
                 Followings = followings,
-                IsMe = cuser?.Id == user.Id 
+                IsMe = cuser?.Id == user.Id
             };
             await model.Restore(user, 3, _dbContext, await GetCurrentUserAsync());
             return View(model);
@@ -168,11 +168,32 @@ namespace Aiursoft.EE.Controllers
             }
             return this.Protocal(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
         }
-
+        
         [AiurForceAuth]
         public async Task<IActionResult> EditDes()
         {
-            throw new NotImplementedException();
+            var user = await GetCurrentUserAsync();
+            var model = new EditDesViewModel
+            {
+                NewDes = user.LongDescription
+            };
+            await model.Restore(user, int.MaxValue, _dbContext, user);
+            return View(model);
+        }
+
+        [AiurForceAuth]
+        [HttpPost]
+        public async Task<IActionResult> EditDes(EditDesViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                await model.Restore(user, int.MaxValue, _dbContext, user);
+                return View(model);
+            }
+            user.LongDescription = model.NewDes;
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(Overview), new { id = user.UserName });
         }
 
         private async Task<EEUser> GetCurrentUserAsync()
