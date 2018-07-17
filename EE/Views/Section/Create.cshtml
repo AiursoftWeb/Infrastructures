@@ -1,11 +1,27 @@
 @model Aiursoft.EE.Models.SectionViewModels.CreateViewModel;
 @{
-    ViewData["Title"] = "Create new section";
+    ViewData["Title"] = "Create new section for " + Model.CourseName;
 }
-<h1>Create new section for @Model.CourseName</h1>
-<form asp-controller="Section" asp-action="Create" method="POST">
-    <input type="hidden" asp-for="CourseId" />
-    <label asp-for="NewSectionName"></label>
-    <input asp-for="NewSectionName" />
-    <input type="submit" value="Create" data-disable-with="Creating"/>
-</form>
+
+<div class="container">
+    <div class="card mb-3 mt-3">
+        <div class="card-header">
+            <i class="fa fa-bar-chart"></i>
+            Create new section for @Model.CourseName
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <form class="col-md-9 mt-3" asp-controller="Section" asp-action="Create" method="POST">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CourseId" />
+                    <div class="form-group">
+                        <label asp-for="NewSectionName"></label>
+                        <input class="form-control" asp-for="NewSectionName" />
+                        <span asp-validation-for="NewSectionName" class="text-danger"></span>
+                    </div>
+                    <input class="btn btn-primary mt-3" type="submit" value="Create" data-disable-with="Creating"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
