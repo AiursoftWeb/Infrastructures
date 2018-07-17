@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.EE.Models.SectionViewModels;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.EE.Controllers
 {
@@ -75,6 +77,23 @@ namespace Aiursoft.EE.Controllers
             _dbContext.Sections.Add(newSection);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(CourseController.Detail), "Course", new { id = course.Id });
+        }
+
+        [AiurForceAuth]
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> Drop(int id) //Section Id
+        {
+            var user = await GetCurrentUserAsync();
+            var section = await _dbContext.Sections.SingleOrDefaultAsync(t => t.Id == id);
+            if (section == null)
+            {
+                return NotFound();
+            }
+            _dbContext.Sections.Remove(section);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocal(ErrorType.Success, $"Successfully deleted the section '{section.SectionName}'!");
         }
 
         private async Task<EEUser> GetCurrentUserAsync()

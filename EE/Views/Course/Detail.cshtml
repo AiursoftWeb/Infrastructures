@@ -77,7 +77,7 @@
                 </div>
             </div>
         }
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
@@ -150,14 +150,17 @@
             }).then((result) => {
                 console.log(result)
                 if (result) {
-                    //Delete it
-                    
-                    swal({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        timer: 1300,
-                        type: 'success'
-                    })
+                    $.post('/section/Drop/' + id, { }, function(data) {
+                        if (data.code == 0) {
+                            swal({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: data.message,
+                                timer: 1800
+                            });
+                            window.location.reload();
+                        }
+                    });
                 }
             });
         }
