@@ -153,10 +153,10 @@ namespace Aiursoft.Pylon
 
                     retry.Execute(() =>
                     {
+                        // Migrate even in production level.
+                        context.Database.Migrate();
                         if (env.IsDevelopment())
                         {
-                            context.Database.EnsureDeleted();
-                            context.Database.Migrate();
                             try
                             {
                                 seeder?.Invoke(context, services);
@@ -167,7 +167,6 @@ namespace Aiursoft.Pylon
                             }
                         }
                     });
-
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
                 }
                 catch (Exception ex)

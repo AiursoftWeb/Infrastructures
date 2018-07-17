@@ -16,6 +16,6 @@ namespace Aiursoft.EE.Models.CourseViewModels
         [Display(Name = "What you will learn")]
         public string WhatYouWillLearn { get; set; }
         public double Price { get; set; }
-        public bool DisplayOwnerInfo { get; set; }
+        public bool DisplayOwnerInfo { get; set; } = true;
     }
 }
