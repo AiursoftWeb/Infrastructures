@@ -70,7 +70,7 @@ namespace Aiursoft.EE.Controllers
 
         //For users who did not sign in but clicked subscribe
         [AiurForceAuth]
-        public IActionResult DetailAuth(int id)//Course id
+        public IActionResult DetailAuth(int id)// Course id
         {
             return RedirectToAction(nameof(Detail), new { id = id });
         }
@@ -83,6 +83,11 @@ namespace Aiursoft.EE.Controllers
                 .Include(t => t.Owner)
                 .Include(t => t.Sections)
                 .SingleOrDefaultAsync(t => t.Id == id);
+            var allChapters = await _dbContext
+                .Chapters
+                .Include(t => t.Context)
+                .Where(t => t.Context.CourseId == course.Id)
+                .ToListAsync();
             var user = await GetCurrentUserAsync();
             var Subscribed = user == null ? false : await _dbContext
                 .Subscriptions
@@ -107,23 +112,6 @@ namespace Aiursoft.EE.Controllers
             };
             return View(model);
         }
-
-        // [HttpGet]
-        // [AiurForceAuth]
-        // public async Task<IActionResult> Upload(int id)//Course Id
-        // {
-        //     var course = await _dbContext
-        //         .Courses
-        //         .Include(t => t.Chapters)
-        //         .SingleOrDefaultAsync(t => t.Id == id);
-        //     var user = await GetCurrentUserAsync();
-        //     if (course == null || course.OwnerId != user.Id)
-        //     {
-        //         return NotFound();
-        //     }
-        //     var model = new UploadViewModel();
-        //     return View(model);
-        // }
 
         [HttpPost]
         [AiurForceAuth("", "", false)]
