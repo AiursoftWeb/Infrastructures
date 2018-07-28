@@ -51,7 +51,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         private ViewAppViewModel(DeveloperUser User, App ThisApp) : base(User)
         {
-            if (ThisApp.CreaterId != User.Id)
+            if (ThisApp.CreatorId != User.Id)
             {
                 throw new InvalidOperationException("The app is not the user's app!");
             }

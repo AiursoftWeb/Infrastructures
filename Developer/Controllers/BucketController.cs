@@ -128,7 +128,7 @@ namespace Aiursoft.Developer.Controllers
                 var app = await _dbContext.Apps.FindAsync(model.AppId);
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 var bucket = await _ossApiService.ViewBucketDetailAsync(model.BucketId);
-                if (bucket.BelongingAppId != app.AppId || app.CreaterId != cuser.Id)
+                if (bucket.BelongingAppId != app.AppId || app.CreatorId != cuser.Id)
                     return Unauthorized();
                 await _ossApiService.EditBucketAsync(token, model.BucketId, model.NewBucketName, model.OpenToRead, model.OpenToUpload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = model.AppId, JustHaveUpdated = true });
@@ -165,7 +165,7 @@ namespace Aiursoft.Developer.Controllers
                 var cuser = await GetCurrentUserAsync();
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 var bucket = await _ossApiService.ViewBucketDetailAsync(model.BucketId);
-                if (bucket.BelongingAppId != app.AppId || app.CreaterId != cuser.Id)
+                if (bucket.BelongingAppId != app.AppId || app.CreatorId != cuser.Id)
                 {
                     return Unauthorized();
                 }

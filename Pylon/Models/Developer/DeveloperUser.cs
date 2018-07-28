@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Models.Developer
 {
     public class DeveloperUser : AiurUserBase
     {
-        [InverseProperty(nameof(App.Creater))]
+        [InverseProperty(nameof(App.Creator))]
         public virtual List<App> MyApps { get; set; } = new List<App>();
     }
 }

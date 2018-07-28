@@ -57,10 +57,10 @@ namespace Aiursoft.Pylon.Models.Developer
         public bool ChangeBasicInfo { get; set; }
         public bool ChangePassword { get; set; }
 
-        public virtual string CreaterId { get; set; }
-        [ForeignKey(nameof(CreaterId))]
+        public virtual string CreatorId { get; set; }
+        [ForeignKey(nameof(CreatorId))]
         [JsonIgnore]
-        public virtual DeveloperUser Creater { get; set; }
+        public virtual DeveloperUser Creator { get; set; }
 
         [Url]
         [Display(Name = "Privacy Statement Url")]

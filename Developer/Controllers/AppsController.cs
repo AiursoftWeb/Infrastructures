@@ -69,7 +69,7 @@ namespace Aiursoft.Developer.Controllers
             var cuser = await GetCurrentUserAsync();
             var model = new AllAppsViewModel(cuser)
             {
-                AllApps = _dbContext.Apps.Where(t => t.CreaterId == cuser.Id)
+                AllApps = _dbContext.Apps.Where(t => t.CreatorId == cuser.Id)
             };
             return View(model);
         }
@@ -103,7 +103,7 @@ namespace Aiursoft.Developer.Controllers
 
             var _newApp = new App(cuser.Id, model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
             {
-                CreaterId = cuser.Id,
+                CreatorId = cuser.Id,
                 AppIconAddress = iconPath
             };
             _dbContext.Apps.Add(_newApp);
@@ -139,7 +139,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
-            else if (target.CreaterId != cuser.Id)
+            else if (target.CreatorId != cuser.Id)
             {
                 return new UnauthorizedResult();
             }
@@ -197,7 +197,7 @@ namespace Aiursoft.Developer.Controllers
         {
             var cuser = await GetCurrentUserAsync();
             var _target = await _dbContext.Apps.FindAsync(id);
-            if (_target.CreaterId != cuser.Id)
+            if (_target.CreatorId != cuser.Id)
             {
                 return new UnauthorizedResult();
             }
@@ -223,7 +223,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
-            else if (target.CreaterId != cuser.Id)
+            else if (target.CreatorId != cuser.Id)
             {
                 return new UnauthorizedResult();
             }
