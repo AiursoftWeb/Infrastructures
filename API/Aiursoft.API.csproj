@@ -11,10 +11,10 @@
     <Description>All core API implementations for Aiursoft authorization.</Description>
     <PackageTags>api</PackageTags>
     <PackageIconUrl>https://oss.aiursoft.com/MyPersonalFiles/512x512.png</PackageIconUrl>
-    <PackageProjectUrl>https://gitzab.com/Aiursoft/API</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/API</PackageProjectUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitzab.com/Aiursoft/API.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/API.git</RepositoryUrl>
  
   </PropertyGroup>
 
