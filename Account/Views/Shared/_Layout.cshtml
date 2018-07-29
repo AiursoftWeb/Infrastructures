@@ -78,7 +78,7 @@
                 }
                 <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
             </ul>
-            <p>&copy; @DateTime.Now.Year - @Values.ProjectName</p>
+            <p>&copy; @DateTime.Now.Year - @Values.ProjectName <a href="http://www.miitbeian.gov.cn" target="_blank">辽ICP备17004979号-1</a></p>
         </div>
     </footer>
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
