@@ -41,11 +41,8 @@ namespace Aiursoft.Pylon
             {"Company", "#"},
             {"Privacy", "https://docs.aiursoft.com/Privacy"},
             {"Terms", "https://docs.aiursoft.com/Statement"},
-            {"Security", "#"},
-            {"Status", "#"},
             {"Wiki", "https://wiki.aiursoft.com"},
-            {"Blog", "#"},
-            {"GitZab", "https://gitzab.com/Aiursoft"}
+            {"GitHub", "https://github.com/AiursoftWeb"}
         };
     }
 }
