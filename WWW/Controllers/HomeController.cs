@@ -38,11 +38,6 @@ namespace Aiursoft.WWW.Controllers
             return View();
         }
 
-        public IActionResult Terms()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
