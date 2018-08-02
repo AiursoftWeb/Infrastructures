@@ -75,6 +75,8 @@
                                     <p class="nav-text-muted">Signed in as @((await UserManager.FindByNameAsync(User.Identity.Name)).NickName)</p>
                                     <a class="dropdown-item" asp-controller="Profile" asp-action="Overview" asp-route-id="@User.Identity.Name">Your profile</a>
                                     <a class="dropdown-item" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">Your subscription</a>
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">Wishlist</a>
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Subscriptions" asp-route-id="@User.Identity.Name">Watch History</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
                                     <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
