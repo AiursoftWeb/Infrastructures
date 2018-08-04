@@ -21,6 +21,8 @@ using System.Data.SqlClient;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Html;
 
 namespace Aiursoft.Pylon
 {
@@ -190,6 +192,18 @@ namespace Aiursoft.Pylon
             services.AddScoped<OAuthService>();
             services.AddTransient<AuthService<TUser>>();
             return services;
+        }
+
+        public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
+        {
+            var content = new HtmlContentBuilder();
+            var culture = "zh-CN";
+            var serviceLocation = page.Context.RequestServices.GetRequiredService<ServiceLocation>();
+            if (culture == "zh-CN")
+            {
+                content.SetHtmlContent("<a href='http://www.miitbeian.gov.cn' target='_blank'>¡…ICP±∏17004979∫≈-1</a>");
+            }
+            return content;
         }
     }
 }
