@@ -34,6 +34,12 @@
                     </div>
                 </div>
                 <button class="btn btn-primary btn-block" data-disable-with="Signing up..." type="submit">@Localizer["Sign up"]</button>
+                <label class="w-100">
+                    @Localizer["By register, you agree to our "]
+                    <a class="d-block float-right" style="float:right" href="@Values.Footer["Terms"]" target="_blank">
+                        @Localizer["Terms"].
+                    </a>
+                </label>
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
