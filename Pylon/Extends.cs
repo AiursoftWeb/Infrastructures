@@ -194,6 +194,11 @@ namespace Aiursoft.Pylon
             return services;
         }
 
+        public static IHtmlContent UseAiurFooter()
+        {
+            throw new NotImplementedException();
+        }
+
         public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
         {
             var content = new HtmlContentBuilder();
