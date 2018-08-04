@@ -40,7 +40,7 @@ namespace Aiursoft.Pylon
             {"Develope", "https://developer.aiursoft.com"},
             {"Company", "#"},
             {"Privacy", "https://docs.aiursoft.com/Privacy"},
-            {"Terms", "https://docs.aiursoft.com/Statement"},
+            {"Terms", "https://www.aiursoft.com/docs/terms"},
             {"Wiki", "https://wiki.aiursoft.com"},
             {"GitHub", "https://github.com/AiursoftWeb"}
         };
