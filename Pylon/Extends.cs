@@ -156,7 +156,7 @@ namespace Aiursoft.Pylon
                     retry.Execute(() =>
                     {
                         // Migrate even in production level.
-                        context.Database.Migrate();
+                         context.Database.Migrate();
                         if (env.IsDevelopment())
                         {
                             try
@@ -196,12 +196,13 @@ namespace Aiursoft.Pylon
 
         public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
         {
+            var requestCultureFeature = page.Context.Features.Get<IRequestCultureFeature>();
+            var requestCulture = requestCultureFeature.RequestCulture.UICulture.IetfLanguageTag;
+            
             var content = new HtmlContentBuilder();
-            var culture = "zh-CN";
-            var serviceLocation = page.Context.RequestServices.GetRequiredService<ServiceLocation>();
-            if (culture == "zh-CN")
+            if (requestCulture == "zh")
             {
-                content.SetHtmlContent("<a href='http://www.miitbeian.gov.cn' target='_blank'>¡…ICP±∏17004979∫≈-1</a>");
+                content.SetHtmlContent("<a href='http://www.miitbeian.gov.cn' target='_blank'>ËæΩICPÂ§á17004979Âè∑-1</a>");
             }
             return content;
         }
