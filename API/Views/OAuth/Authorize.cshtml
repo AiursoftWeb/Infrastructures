@@ -2,10 +2,10 @@
 @{
     ViewData["Title"] = Localizer["Sign in"];
 }
+
 <div class="container">
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">@Localizer["Login to"] @Model.AppName</div>
-
         <div class="card-body">
             <div class="text-center">
                 <img class="rounded" src="@(Model.AppImageUrl)?w=100&h=100">
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label asp-for="Password" class="w-100">
                         @Localizer["Password"]
-                        <a class="d-block float-right" style="float:right" asp-controller="User" asp-action="ForgotpasswordFor" target="_blank">
+                        <a class="d-block float-right" asp-controller="User" asp-action="ForgotpasswordFor" target="_blank">
                             @Localizer["Forgot Password?"]
                         </a>
                     </label>
