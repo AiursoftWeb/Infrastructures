@@ -89,7 +89,7 @@ namespace Aiursoft.Wiki.Controllers
         public async Task<IActionResult> Seed(string Secret)
         {
             var secretInConfig = _configuration["ContentUpdateSecret"];
-            if (!string.Equals(Secret, secretInConfig))
+            if (!string.Equals(Secret, secretInConfig) || string.IsNullOrWhiteSpace(secretInConfig))
             {
                 return NotFound();
             }
