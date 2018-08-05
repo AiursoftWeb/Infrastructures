@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
     <link rel="icon" type="image/x-icon" href="@ServiceLocation.CDN/favicon.ico">
-    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@ServiceLocation.CDN/dist/AiurDashboard.min.css" rel="stylesheet">
+    @this.UseAiurDashboardCSS()
     @RenderSection("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

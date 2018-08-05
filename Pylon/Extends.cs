@@ -221,5 +221,14 @@ namespace Aiursoft.Pylon
             content.SetHtmlContent("<a class='scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>");
             return content;
         }
+
+        public static IHtmlContent UseAiurDashboardCSS(this RazorPage page)
+        {
+            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            var content = new HtmlContentBuilder();
+            content.SetHtmlContent($"<link href='{serviceLocation.CDN}/dist/AiurCore.min.css' rel='stylesheet'><link href='{serviceLocation.CDN}/dist/AiurDashboard.min.css' rel='stylesheet'>");
+            return content;
+                
+        }
     }
 }
