@@ -72,11 +72,13 @@
                 }
                 <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
             </ul>
-            <p>&copy; @DateTime.Now.Year - @Values.ProjectName
+            <p>
+                &copy; @DateTime.Now.Year - @Values.ProjectName
                 @this.UseChinaRegisterInfo()
             </p>
         </div>
     </footer>
+    @this.UseScrollToTop()
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
     <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
     @RenderSection("js", required: false)
