@@ -214,5 +214,12 @@ namespace Aiursoft.Pylon
             }
             return content;
         }
+
+        public static IHtmlContent UseScrollToTop(this RazorPage page)
+        {
+            var content = new HtmlContentBuilder();
+            content.SetHtmlContent("<a class='scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>");
+            return content;
+        }
     }
 }
