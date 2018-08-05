@@ -16,29 +16,35 @@ using Markdig;
 using Aiursoft.Pylon.Services;
 using Newtonsoft.Json;
 using Aiursoft.Wiki.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Wiki.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly SignInManager<WikiUser> _signInManager;
-        public readonly ILogger _logger;
-        public readonly WikiDbContext _dbContext;
-        public readonly Seeder _seeder;
-        public readonly ServiceLocation _serviceLocation;
+        private readonly SignInManager<WikiUser> _signInManager;
+        private readonly ILogger _logger;
+        private readonly WikiDbContext _dbContext;
+        private readonly Seeder _seeder;
+        private readonly ServiceLocation _serviceLocation;
+        private readonly IConfiguration _configuration;
+
         public HomeController(
             SignInManager<WikiUser> signInManager,
             ILoggerFactory loggerFactory,
             WikiDbContext _context,
             Seeder seeder,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
-            this._dbContext = _context;
+            _dbContext = _context;
             _seeder = seeder;
             _serviceLocation = serviceLocation;
+            _configuration = configuration;
         }
+
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
         public async Task<IActionResult> Index()//Title
         {
@@ -72,14 +78,21 @@ namespace Aiursoft.Wiki.Controllers
             };
             return View(model);
         }
+
         public async Task<IActionResult> ToJson()
         {
             var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
             return Json(database);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Seed()
+        public async Task<IActionResult> Seed(string Secret)
         {
+            var secretInConfig = _configuration["ContentUpdateSecret"];
+            if (!string.Equals(Secret, secretInConfig))
+            {
+                return NotFound();
+            }
             if (_seeder.Seeding)
             {
                 return this.Protocal(ErrorType.Pending, $"Seeding...");
