@@ -95,7 +95,7 @@
                             Path = Context.Request.Path
                         }))">Language(语言)</a>
                 </small>
-                @foreach(var foot in Values.Footer)
+                @foreach (var foot in Values.Footer)
                 {
                     <small class="mr-2 ml-2">
                         <a href="@foot.Value">@foot.Key</a>
@@ -104,10 +104,7 @@
                 <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
             </div>
         </footer>
-
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
+        @this.UseScrollToTop()
         <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
         <script src="@ServiceLocation.CDN/dist/AiurDashboard.min.js"></script>
         @RenderSection("Scripts", required: false)

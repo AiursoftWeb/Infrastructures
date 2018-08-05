@@ -85,7 +85,7 @@
     <footer class="bd-footer text-muted">
         <div class="container-fluid p-3 p-md-5">
             <ul class="bd-footer-links">
-                @foreach(var foot in Values.Footer)
+                @foreach (var foot in Values.Footer)
                 {
                     <li><a href="@foot.Value">@foot.Key</a></li>
                 }
@@ -97,7 +97,7 @@
             </p>
         </div>
     </footer>
-
+    @this.UseScrollToTop()
     <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
     <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
     @RenderSection("js", required: false)
