@@ -8,10 +8,7 @@ $(document).ready(function () {
         }
     });
     $(document).on('click', 'a.scroll-to-top', function (event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: ($($anchor.attr('href')).offset().top)
-        }, 1000, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
         event.preventDefault();
     });
 });
