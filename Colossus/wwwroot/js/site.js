@@ -17,6 +17,9 @@ $(document).ready(function () {
         },
 
         onStartSubmitting: function (elements) {
+            if ('Notification' in window) {
+                Notification.requestPermission((result) => { })
+            }
             uploadButton.val('Uploading...');
             uploadButton.prop('disabled', true);
         },
