@@ -33,7 +33,14 @@ $(document).ready(function () {
             copyButton.attr('data-clipboard-text', data.value);
             openButton.attr('href', data.value);
             elements.message.html(data.value);
-            //alert(data.value)
+            var notification = new Notification('Upload Finished!', {
+                icon: 'https://cdn.aiursoft.com/favicon.ico',
+                body: "Your file was successfully uploaded!",
+            });
+            notification.onclick = function (event) {
+                event.preventDefault();
+                window.focus();
+            };
         }
     };
     $('.dropify').setProgressedUploader(settings);
