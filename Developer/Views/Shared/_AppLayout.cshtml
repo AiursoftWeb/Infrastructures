@@ -197,8 +197,8 @@
                 </div>
             </div>
         </div>
-        <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
-        <script src="@ServiceLocation.CDN/dist/AiurDashboard.min.js"></script>
+
+        @this.UseAiurDashboardJs()
         @RenderSection("js", required: false)
     </div>
 </body>
