@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.1.0
+dotnet: latest
 dist: trusty
 before_install:
   - chmod +x ./restore.sh
