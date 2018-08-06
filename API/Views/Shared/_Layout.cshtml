@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - @Values.ProjectName</title>
     @this.UseAiurFavicon()
-    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@ServiceLocation.CDN/dist/AiurDashboard.min.css" rel="stylesheet">
+    @this.UseAiurDashboardCSS()
 </head>
 <body class="bg-dark lines">
     @RenderBody()
-    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
-    <script src="@ServiceLocation.CDN/dist/AiurDashboard.min.js"></script>
+    @this.UseAiurDashboardJs()
     @RenderSection("scripts", required: false)
 </body>
 </html>

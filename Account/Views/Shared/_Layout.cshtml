@@ -9,8 +9,7 @@
     <meta name="author" content="">
     <title>@ViewData["Title"] - @Values.ProjectName @Localizer["Account"]</title>
     @this.UseAiurFavicon()
-    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
+    @this.UseAiurMarketCSS()
     @RenderSection("css", required: false)
 </head>
 <body>
@@ -84,8 +83,7 @@
         </div>
     </footer>
     @this.UseScrollToTop()
-    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
-    <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
+    @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
 </body>
 </html>

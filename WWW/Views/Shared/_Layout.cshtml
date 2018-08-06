@@ -8,8 +8,7 @@
     <meta name="author" content="">
     <title>@ViewData["Title"] - @Values.ProjectName</title>
     @this.UseAiurFavicon()
-    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
+    @this.UseAiurMarketCSS()
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 </head>
 <body>
@@ -113,8 +112,7 @@
         </div>
     </footer>
     @this.UseScrollToTop()
-    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
-    <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
+    @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
 </body>
 </html>

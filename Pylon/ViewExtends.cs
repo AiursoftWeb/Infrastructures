@@ -16,7 +16,7 @@ namespace Aiursoft.Pylon
 
         public static IHtmlContentBuilder AppendStyleSheet(this IHtmlContentBuilder content, string path)
         {
-            return content.AppendHtmlLine($"<link href='{path}/dist/AiurCore.min.css' rel='stylesheet' />");
+            return content.AppendHtmlLine($"<link href='{path}' rel='stylesheet' />");
         }
 
         public static IHtmlContent UseAiurFooter()
@@ -61,6 +61,21 @@ namespace Aiursoft.Pylon
             return new HtmlContentBuilder()
                 .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
                 .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+        }
+
+        public static IHtmlContent UseAiurMarketCSS(this RazorPage page)
+        {
+            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            return new HtmlContentBuilder()
+                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
+                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurMarket.min.css");
+        }
+        public static IHtmlContent UseAiurMarketJs(this RazorPage page)
+        {
+            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            return new HtmlContentBuilder()
+                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
+                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurMarket.min.js");
         }
 
         public static IHtmlContent UseAiurFavicon(this RazorPage page)

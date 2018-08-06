@@ -8,8 +8,7 @@
     <meta name="author" content="">
     <title>@ViewData["Title"] - @Values.ProjectName Developer Center</title>
     @this.UseAiurFavicon()
-    <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
-    <link href="@ServiceLocation.CDN/dist/AiurMarket.min.css" rel="stylesheet">
+    @this.UseAiurMarketCSS()
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -98,8 +97,7 @@
         </div>
     </footer>
     @this.UseScrollToTop()
-    <script src="@ServiceLocation.CDN/dist/AiurCore.min.js"></script>
-    <script src="@ServiceLocation.CDN/dist/AiurMarket.min.js"></script>
+    @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
 </body>
 </html>
