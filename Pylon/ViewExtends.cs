@@ -52,5 +52,13 @@ namespace Aiursoft.Pylon
             content.SetHtmlContent($"<script src='{serviceLocation.CDN}/dist/AiurCore.min.js'></script><script src='{serviceLocation.CDN}/dist/AiurDashboard.min.js'></script>");
             return content;
         }
+
+        public static IHtmlContent UseAiurFavicon(this RazorPage page)
+        {
+            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            var content = new HtmlContentBuilder();
+            content.SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.CDN}/favicon.ico'>");
+            return content;
+        }
     }
 }
