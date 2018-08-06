@@ -9,6 +9,16 @@ namespace Aiursoft.Pylon
 {
     public static class ViewExtends
     {
+        public static IHtmlContentBuilder AppendJavaScript(this IHtmlContentBuilder content, string path)
+        {
+            return content.AppendHtmlLine($"<script src='{path}'></script>");
+        }
+
+        public static IHtmlContentBuilder AppendStyleSheet(this IHtmlContentBuilder content, string path)
+        {
+            return content.AppendHtmlLine($"<link href='{path}/dist/AiurCore.min.css' rel='stylesheet' />");
+        }
+
         public static IHtmlContent UseAiurFooter()
         {
             throw new NotImplementedException();
@@ -40,25 +50,24 @@ namespace Aiursoft.Pylon
         public static IHtmlContent UseAiurDashboardCSS(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            var content = new HtmlContentBuilder();
-            content.SetHtmlContent($"<link href='{serviceLocation.CDN}/dist/AiurCore.min.css' rel='stylesheet'><link href='{serviceLocation.CDN}/dist/AiurDashboard.min.css' rel='stylesheet'>");
-            return content;
+            return new HtmlContentBuilder()
+                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
+                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
         }
 
         public static IHtmlContent UseAiurDashboardJs(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            var content = new HtmlContentBuilder();
-            content.SetHtmlContent($"<script src='{serviceLocation.CDN}/dist/AiurCore.min.js'></script><script src='{serviceLocation.CDN}/dist/AiurDashboard.min.js'></script>");
-            return content;
+            return new HtmlContentBuilder()
+                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
+                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
         }
 
         public static IHtmlContent UseAiurFavicon(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            var content = new HtmlContentBuilder();
-            content.SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.CDN}/favicon.ico'>");
-            return content;
+            return new HtmlContentBuilder()
+                .SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.CDN}/favicon.ico'>");
         }
     }
 }
