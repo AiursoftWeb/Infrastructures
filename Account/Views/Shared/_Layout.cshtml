@@ -60,7 +60,6 @@
                             </li>
                         }
                     </ul>
-                    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
                 </div>
             </div>
 
@@ -83,6 +82,7 @@
         </div>
     </footer>
     @this.UseScrollToTop()
+    @this.UseAiurLogoutter()
     @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
 </body>

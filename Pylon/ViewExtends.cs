@@ -9,14 +9,38 @@ namespace Aiursoft.Pylon
 {
     public static class ViewExtends
     {
-        public static IHtmlContentBuilder AppendJavaScript(this IHtmlContentBuilder content, string path)
+        private static IHtmlContentBuilder AppendJavaScript(this IHtmlContentBuilder content, string path)
         {
             return content.AppendHtmlLine($"<script src='{path}'></script>");
         }
 
-        public static IHtmlContentBuilder AppendStyleSheet(this IHtmlContentBuilder content, string path)
+        private static IHtmlContentBuilder AppendStyleSheet(this IHtmlContentBuilder content, string path)
         {
             return content.AppendHtmlLine($"<link href='{path}' rel='stylesheet' />");
+        }
+
+        public static IHtmlContent UseAiurLogoutter(this RazorPage page)
+        {
+            var template = @"<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                <div class='modal-dialog' role='document'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h5 class='modal-title' id='exampleModalLabel'>Ready to Leave?</h5>
+                                            <button class='close' type='button' data-dismiss='modal' aria-label='Close'>
+                                                <span aria-hidden='true'>×</span>
+                                            </button>
+                                        </div>
+                                        <div class='modal-body'>Select 'Logout' below if you are ready to end your current session.</div>
+                                        <div class='modal-footer'>
+                                            <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
+                                            <a class='btn btn-primary' href='javascript:$('#logoutForm').submit()'>Logout</a>
+                                        </div>
+                                        <form class='hidden' action='/Home/Logoff' method='post' id='logoutForm'></form>
+                                    </div>
+                                </div>
+                            </div>";
+            return new HtmlContentBuilder()
+                .SetHtmlContent(template);
         }
 
         public static IHtmlContent UseAiurFooter()
@@ -70,6 +94,7 @@ namespace Aiursoft.Pylon
                 .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
                 .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurMarket.min.css");
         }
+
         public static IHtmlContent UseAiurMarketJs(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
