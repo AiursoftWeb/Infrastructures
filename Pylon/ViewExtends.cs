@@ -43,7 +43,7 @@ namespace Aiursoft.Pylon
         public static IHtmlContent UseScrollToTop(this RazorPage page)
         {
             var content = new HtmlContentBuilder();
-            content.SetHtmlContent("<a class='scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>");
+            content.SetHtmlContent("<a class='aiur-scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>");
             return content;
         }
 

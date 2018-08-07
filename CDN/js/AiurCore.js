@@ -12,4 +12,9 @@ $(document).ready(function () {
         }, 'medium');
         return this;
     }
+
+    $(document).on('click', 'a.aiur-scroll-to-top', function (event) {
+        $('html, body').animate({ scrollTop: 0 }, 'medium');
+        event.preventDefault();
+    });
 });
