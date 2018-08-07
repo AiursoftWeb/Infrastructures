@@ -13,6 +13,16 @@ $(document).ready(function () {
         return this;
     }
 
+    //Aiur Scroll to top
+    $(document).scroll(function () {
+        var scrollDistance = $(this).scrollTop();
+        if (scrollDistance > 100) {
+            $('.aiur-scroll-to-top').fadeIn();
+        } else {
+            $('.aiur-scroll-to-top').fadeOut();
+        }
+    });
+
     $(document).on('click', 'a.aiur-scroll-to-top', function (event) {
         $('html, body').animate({ scrollTop: 0 }, 'medium');
         event.preventDefault();
