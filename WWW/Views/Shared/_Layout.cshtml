@@ -45,7 +45,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown02">
                                     <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
-                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()">Sign out</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Sign out</a>
                                 </div>
                             </li>
                         }
@@ -63,7 +63,6 @@
                             </li>
                         }
                     </ul>
-                    <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
                 </div>
             </div>
         </div>
@@ -112,6 +111,7 @@
         </div>
     </footer>
     @this.UseScrollToTop()
+    @this.UseAiurLogoutter()
     @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
 </body>
