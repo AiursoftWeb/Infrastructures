@@ -21,8 +21,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Views\" />
-  </ItemGroup>
 </Project>
