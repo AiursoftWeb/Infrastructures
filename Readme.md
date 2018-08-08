@@ -1,4 +1,6 @@
 ﻿# Aiursoft On Containers
+ 
+ [![Build Status](https://travis-ci.org/AiursoftWeb/WebApp.svg?branch=master)](https://travis-ci.org/AiursoftWeb/WebApp)
 
 One project to run all Aiursoft micro-services
 
