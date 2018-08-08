@@ -13,6 +13,7 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
+using Microsoft.Extensions.Localization;
 
 namespace Aiursoft.WWW.Controllers
 {
@@ -21,15 +22,18 @@ namespace Aiursoft.WWW.Controllers
         public readonly SignInManager<WWWUser> _signInManager;
         public readonly ILogger _logger;
         private readonly ServiceLocation _serviceLocation;
+        private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(
             SignInManager<WWWUser> signInManager,
             ILoggerFactory loggerFactory,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            IStringLocalizer<HomeController> localizer)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
             _serviceLocation = serviceLocation;
+            _localizer = localizer;
         }
 
         [AiurForceAuth("", "", justTry: true)]
