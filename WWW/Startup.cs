@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
 using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace Aiursoft.WWW
 {
@@ -33,7 +34,8 @@ namespace Aiursoft.WWW
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
             services.AddAiursoftAuth<WWWUser>();
         }
 
