@@ -36,6 +36,9 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         [Display(Name = "Change your password")]
         public bool ChangePassword { get; set; }
 
+        public string TermsUrl { get; set; }
+        public string PStatementUrl { get; set; }
+
         public string GetRegexRedirectUrl()
         {
             var url = new Uri(ToRedirect);

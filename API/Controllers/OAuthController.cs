@@ -175,7 +175,9 @@ namespace Aiursoft.API.Controllers
                 ChangePhoneNumber = app.ChangePhoneNumber,
                 ConfirmEmail = app.ConfirmEmail,
                 ChangeBasicInfo = app.ChangeBasicInfo,
-                ChangePassword = app.ChangePassword
+                ChangePassword = app.ChangePassword,
+                TermsUrl = app.LicenseUrl,
+                PStatementUrl = app.PrivacyStatementUrl
             };
             return View(viewModel);
         }

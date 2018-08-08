@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Authorize Confirm";
 }
-
 <div class="container">
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">Authorize Confirm</div>
@@ -59,14 +58,17 @@
                         Click here
                     </a>to switch to another account.
                 </p>
-
                 <div class="row">
                     <div class="col-md-4 mt-3">
-                        <button class="btn btn-block btn-success" data-disable-with="Processing..." type="submit">Allow</button>
+                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">Allow</button>
                     </div>
                     <div class="col-md-4 mt-3">
                         <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">Deny</a>
                     </div>
+                </div>
+                <div>
+                    <a href="@Model.TermsUrl" target="_blank">View License</a>
+                    <a href="@Model.PStatementUrl" target="_blank">View Privacy Statement</a>
                 </div>
             </form>
         </div>
