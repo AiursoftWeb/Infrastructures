@@ -277,6 +277,11 @@ namespace Aiursoft.Account.Controllers
             throw new InvalidOperationException();
         }
 
+        public async Task<IActionResult> Applications()
+        {
+            throw new InvalidOperationException();
+        }
+
         private async Task<AccountUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users.SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
