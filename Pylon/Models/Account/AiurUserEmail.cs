@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Aiursoft.Pylon.Models.API
+namespace Aiursoft.Pylon.Models.Account
 {
     public class AiurUserEmail
     {

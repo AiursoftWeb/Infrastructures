@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Models.API.OAuthViewModels
+namespace Aiursoft.Pylon.Models.Account.OAuthViewModels
 {
     public class AuthorizeConfirmAddressModel
     {

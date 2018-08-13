@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
+namespace Aiursoft.Pylon.Models.Account.OAuthAddressModels
 {
     public class PasswordAuthAddressModel
     {

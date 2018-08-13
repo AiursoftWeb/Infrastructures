@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
+namespace Aiursoft.Pylon.Models.Account.OAuthAddressModels
 {
     public class CodeToOpenIdAddressModel
     {

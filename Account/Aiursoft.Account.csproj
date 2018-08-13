@@ -17,4 +17,18 @@
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\OAuth\Autherror.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\OAuth\Authorize.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\OAuth\AuthorizeConfirm.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\OAuth\Register.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
 </Project>
