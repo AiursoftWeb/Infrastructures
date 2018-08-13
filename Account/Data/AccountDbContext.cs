@@ -15,5 +15,9 @@ namespace Aiursoft.Account.Data
         {
 
         }
+
+        public DbSet<OAuthPack> OAuthPack { get; set; }
+        public DbSet<AppGrant> LocalAppGrant { get; set; }
+        public DbSet<UserEmail> UserEmails { get; set; }
     }
 }

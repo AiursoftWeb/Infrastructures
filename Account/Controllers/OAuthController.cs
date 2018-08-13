@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Aiursoft.API.Services;
-using Aiursoft.API.Models;
+using Aiursoft.Account.Services;
+using Aiursoft.Account.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Aiursoft.API.Models.OAuthViewModels;
-using Aiursoft.API.Data;
+using Aiursoft.Account.Models.OAuthViewModels;
+using Aiursoft.Account.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
@@ -22,7 +22,7 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models.Developer;
 
-namespace Aiursoft.API.Controllers
+namespace Aiursoft.Account.Controllers
 {
     public class OAuthController : Controller
     {
@@ -39,19 +39,19 @@ namespace Aiursoft.API.Controllers
         //Do jobs
         //Return success message
 
-        private readonly UserManager<APIUser> _userManager;
-        private readonly SignInManager<APIUser> _signInManager;
+        private readonly UserManager<AccountUser> _userManager;
+        private readonly SignInManager<AccountUser> _signInManager;
         private readonly ILogger _logger;
-        private readonly APIDbContext _dbContext;
+        private readonly AccountDbContext _dbContext;
         private readonly IStringLocalizer<OAuthController> _localizer;
         private readonly ServiceLocation _serviceLocation;
         private readonly DeveloperApiService _apiService;
 
         public OAuthController(
-            UserManager<APIUser> userManager,
-            SignInManager<APIUser> signInManager,
+            UserManager<AccountUser> userManager,
+            SignInManager<AccountUser> signInManager,
             ILoggerFactory loggerFactory,
-            APIDbContext _context,
+            AccountDbContext _context,
             IStringLocalizer<OAuthController> localizer,
             ServiceLocation serviceLocation,
             DeveloperApiService developerApiService)
@@ -285,7 +285,7 @@ namespace Aiursoft.API.Controllers
                 model.Recover(capp.AppName, capp.AppIconAddress);
                 return View(model);
             }
-            var user = new APIUser
+            var user = new AccountUser
             {
                 UserName = model.Email,
                 Email = model.Email,
@@ -321,7 +321,7 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");
             }
-            var user = new APIUser
+            var user = new AccountUser
             {
                 UserName = model.Email,
                 Email = model.Email,
@@ -437,7 +437,7 @@ namespace Aiursoft.API.Controllers
             }
         }
 
-        private async Task<APIUser> GetCurrentUserAsync(string Email)
+        private async Task<AccountUser> GetCurrentUserAsync(string Email)
         {
             var mail = await _dbContext
                 .UserEmails
@@ -446,7 +446,7 @@ namespace Aiursoft.API.Controllers
             return mail.Owner;
         }
 
-        private async Task<APIUser> GetCurrentUserAsync()
+        private async Task<AccountUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users
                 .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);

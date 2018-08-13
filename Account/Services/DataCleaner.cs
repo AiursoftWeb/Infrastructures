@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.API.Data;
+using Aiursoft.Account.Data;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.API.Services
+namespace Aiursoft.Account.Services
 {
     public class TimedCleaner : IHostedService, IDisposable
     {
@@ -39,7 +39,7 @@ namespace Aiursoft.API.Services
                 _logger.LogInformation("Cleaner task started!");
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<APIDbContext>();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
                     await AllClean(dbContext);
                 }
             }
@@ -49,11 +49,11 @@ namespace Aiursoft.API.Services
             }
         }
 
-        public async Task AllClean(APIDbContext _dbContext)
+        public async Task AllClean(AccountDbContext _dbContext)
         {
             try
             {
-                await ClearTimeOutAccessToken(_dbContext);
+                await ClearTimeOutOAuthPack(_dbContext);
                 _logger.LogInformation("Clean finished!");
             }
             catch (Exception e)
@@ -62,9 +62,10 @@ namespace Aiursoft.API.Services
             }
         }
 
-        public Task ClearTimeOutAccessToken(APIDbContext _dbContext)
+        public Task ClearTimeOutOAuthPack(AccountDbContext _dbContext)
         {
-            _dbContext.AccessToken.Delete(t => !t.IsAlive);
+            _dbContext.OAuthPack.Delete(t => t.IsUsed == true);
+            _dbContext.OAuthPack.Delete(t => !t.IsAlive);
             return _dbContext.SaveChangesAsync();
         }
 

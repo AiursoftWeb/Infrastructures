@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.API.Models.OAuthViewModels
+namespace Aiursoft.Account.Models.OAuthViewModels
 {
     public class AuthorizeViewModel : IAuthorizeViewModel
     {

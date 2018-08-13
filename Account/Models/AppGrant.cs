@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.API.Models
+namespace Aiursoft.Account.Models
 {
     public class AppGrant : Grant
     {
         [JsonIgnore]
         public int AppGrantId { get; set; }
         [JsonIgnore]
-        public APIUser User { get; set; }
+        public AccountUser User { get; set; }
 
         public override AiurUserBase UserInfo => User;
     }

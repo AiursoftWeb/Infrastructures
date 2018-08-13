@@ -36,10 +36,6 @@ namespace Aiursoft.API
             services.AddDbContext<APIDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddIdentity<APIUser, IdentityRole>(options => options.Password = Values.PasswordOptions)
-                .AddEntityFrameworkStores<APIDbContext>()
-                .AddDefaultTokenProviders();
-
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.API.Models
+namespace Aiursoft.Account.Models
 {
     public class OAuthPack
     {
@@ -15,7 +15,7 @@ namespace Aiursoft.API.Models
 
         [ForeignKey(nameof(UserId))]
         [JsonIgnore]
-        public virtual APIUser User { get; set; }
+        public virtual AccountUser User { get; set; }
         public virtual string UserId { get; set; }
 
         public virtual bool IsUsed { get; set; }

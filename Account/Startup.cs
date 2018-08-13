@@ -16,6 +16,8 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Account.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Account
 {
@@ -32,7 +34,8 @@ namespace Aiursoft.Account
         {
             services.AddDbContext<AccountDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
-            services.AddIdentity<AccountUser, IdentityRole>()
+
+            services.AddIdentity<AccountUser, IdentityRole>(options => options.Password = Values.PasswordOptions)
                 .AddEntityFrameworkStores<AccountDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -41,12 +44,13 @@ namespace Aiursoft.Account
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
+            services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddAiursoftAuth<AccountUser>();
             services.AddScoped<UserService>();
             services.AddTransient<AiurSMSSender>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountDbContext dbContext)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, AccountDbContext dbContext)
         {
             if (env.IsDevelopment())
             {

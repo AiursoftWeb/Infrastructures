@@ -28,23 +28,17 @@ namespace Aiursoft.API.Controllers
 {
     public class ApiController : Controller
     {
-        private readonly UserManager<APIUser> _userManager;
-        private readonly SignInManager<APIUser> _signInManager;
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly DeveloperApiService _developerApiService;
 
         public ApiController(
-            UserManager<APIUser> userManager,
-            SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
             DeveloperApiService developerApiService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = _context;
             _localizer = localizer;
@@ -175,12 +169,6 @@ namespace Aiursoft.API.Controllers
             _dbContext.LocalAppGrant.Delete(t => t.AppID == target.ApplyAppId);
             await _dbContext.SaveChangesAsync();
             return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");
-        }
-
-        private async Task<APIUser> GetCurrentUserAsync()
-        {
-            return await _dbContext.Users
-                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
     }
 }
