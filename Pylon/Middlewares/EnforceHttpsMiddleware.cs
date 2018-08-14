@@ -34,9 +34,9 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 context.Response.Headers.Add("Strict-Transport-Security", "max-age=15552001; includeSubDomains; preload");
             }
-            if (context.Request.Headers.ContainsKey("x-forwarded-proto") && context.Request.Headers["x-forwarded-proto"] == "INTERNAL")
+            if (context.Request.Headers.ContainsKey("x-forwarded-for") && context.Request.Headers["x-forwarded-for"] == "localhost")
             {
-                _logger.LogInformation("Internal Request Handled! Header with 'x-forwarded-proto' values 'INTERNAL'!");
+                _logger.LogInformation("Internal Request Handled.");
                 await _next.Invoke(context);
             }
             else if (!context.Request.IsHttps)

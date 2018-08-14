@@ -29,7 +29,7 @@ namespace Aiursoft.Pylon.Services
             {
                 url.Address = url.Address.Replace("https://", "http://");
                 request = WebRequest.CreateHttp(url.ToString());
-                request.Headers.Add("x-forwarded-proto", "INTERNAL");
+                request.Headers.Add("x-forwarded-for", "localhost");
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Aiursoft.Pylon.Services
             {
                 url.Address = url.Address.Replace("https://", "http://");
                 request = WebRequest.CreateHttp(url.ToString());
-                request.Headers.Add("x-forwarded-proto", "INTERNAL");
+                request.Headers.Add("x-forwarded-for", "localhost");
             }
             else
             {
