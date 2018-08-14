@@ -15,15 +15,18 @@ namespace Aiursoft.Wiki.Services
     public class Seeder
     {
         public bool Seeding { get; set; } = false;
-        public WikiDbContext _dbContext { get; set; }
+        private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly HTTPService _http;
 
         public Seeder(
             WikiDbContext dbContext,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            HTTPService http)
         {
             _dbContext = dbContext;
             _configuration = configuration;
+            _http = http;
         }
         
         public async Task Seed()
@@ -34,8 +37,7 @@ namespace Aiursoft.Wiki.Services
                 _dbContext.Article.Delete(t => true);
                 _dbContext.Collections.Delete(t => true);
                 await _dbContext.SaveChangesAsync();
-                var http = new HTTPService();
-                var result = await http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"));
+                var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"));
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
                 foreach (var collection in sourceObject)
                 {
@@ -50,7 +52,7 @@ namespace Aiursoft.Wiki.Services
                         var newarticle = new Article
                         {
                             ArticleTitle = article.ArticleTitle,
-                            ArticleContent = await http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md")),
+                            ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md")),
                             CollectionId = newCollection.CollectionId
                         };
                         _dbContext.Article.Add(newarticle);

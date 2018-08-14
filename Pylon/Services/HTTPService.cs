@@ -15,6 +15,7 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly ILogger _logger;
         private readonly CookieContainer _cc;
+
         public HTTPService(ILogger<HTTPService> logger)
         {
             _logger = logger;
