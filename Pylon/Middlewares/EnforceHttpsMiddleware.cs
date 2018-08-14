@@ -29,7 +29,11 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 context.Response.Headers.Add("Strict-Transport-Security", "max-age=15552001; includeSubDomains; preload");
             }
-            if (!context.Request.IsHttps)
+            if (context.Request.Headers.ContainsKey("x-forwarded-proto") && context.Request.Headers["x-forwarded-proto"] == "INTERNAL")
+            {
+                await _next.Invoke(context);
+            }
+            else if (!context.Request.IsHttps)
             {
                 await HandleNonHttpsRequest(context);
             }

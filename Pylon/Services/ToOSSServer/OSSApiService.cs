@@ -31,7 +31,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 AccessToken = AccessToken,
                 AppId = AppId
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success && jResult.Code != ErrorType.HasDoneAlready)
                 throw new AiurUnexceptedResponse(jResult);
@@ -44,7 +44,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             {
                 AccessToken = AccessToken
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<ViewMyBucketsViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -62,7 +62,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 OpenToRead = OpenToRead,
                 OpenToUpload = OpenToUpload
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<CreateBucketViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -80,7 +80,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 OpenToRead = OpenToRead,
                 OpenToUpload = OpenToUpload
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -93,7 +93,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             {
                 BucketId = BucketId
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewBucketViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -108,7 +108,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 AccessToken = AccessToken,
                 BucketId = BucketId
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -121,7 +121,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             {
                 FileKey = FileKey
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<ViewOneFileViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -151,7 +151,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 AccessToken = AccessToken,
                 BucketId = BucketId
             });
-            var result = await _http.Get(path);
+            var result = await _http.Get(path, true);
             var jResult = JsonConvert.DeserializeObject<ViewAllFilesViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
@@ -167,7 +167,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 BucketId = BucketId,
                 FileKey = FileKey
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

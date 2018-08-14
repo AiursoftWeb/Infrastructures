@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Email = email,
                 Password = password
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<int>>(result);
             return jResult;
         }
@@ -46,7 +46,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Password = password,
                 ConfirmPassword = confirmPassword
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }
@@ -59,7 +59,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Code = code,
                 grant_type = "authorization_code"
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -75,7 +75,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 openid = openid,
                 lang = "en-US"
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new Exception(JResult.Message);

@@ -34,7 +34,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewIconAddress = newIconAddress,
                 NewBio = newBio
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
             if (JResult.Code != ErrorType.Success)
@@ -51,7 +51,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OldPassword = oldPassword,
                 NewPassword = newPassword
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
             if (JResult.Code != ErrorType.Success && JResult.Code != ErrorType.WrongKey)
@@ -66,7 +66,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken,
                 OpenId = openId
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
@@ -81,7 +81,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId,
                 Phone = phoneNumber
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
@@ -95,7 +95,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken,
                 OpenId = openId
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
@@ -111,7 +111,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewEmail = newEmail,
                 AccessToken = accessToken
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }
@@ -125,7 +125,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId,
                 ThatEmail = thatEmail
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }
@@ -139,7 +139,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Id = userId,
                 Email = email
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jresult;
         }

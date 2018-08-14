@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
                 AccessToken = AccessToken,
                 Description = Description
             });
-            var result = await _http.Post(url, form);
+            var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

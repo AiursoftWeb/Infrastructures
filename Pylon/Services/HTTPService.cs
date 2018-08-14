@@ -18,17 +18,27 @@ namespace Aiursoft.Pylon.Services
         }
         public CookieContainer CC = new CookieContainer();
 
-        public async Task<string> Get(AiurUrl Url)
+        public async Task<string> Get(AiurUrl Url, bool internalRequest = false)
         {
             var request = WebRequest.CreateHttp(Url.ToString());
+            if (internalRequest)
+            {
+                request.Headers.Add("x-forwarded-proto", "INTERNAL");
+                Url.Address = Url.Address.Replace("https://", "http://");
+            }
             request.CookieContainer = CC;
             request.Method = "GET";
             request.ContentType = "text/html;charset=utf-8";
             return await HTTPMethods.ReadFromResponseAsync(request);
         }
-        public async Task<string> Post(AiurUrl Url, AiurUrl postDataStr)
+        public async Task<string> Post(AiurUrl Url, AiurUrl postDataStr, bool internalRequest = false)
         {
             var request = WebRequest.CreateHttp(Url.ToString());
+            if (internalRequest)
+            {
+                request.Headers.Add("x-forwarded-proto", "INTERNAL");
+                Url.Address = Url.Address.Replace("https://", "http://");
+            }
             request.CookieContainer = CC;
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";

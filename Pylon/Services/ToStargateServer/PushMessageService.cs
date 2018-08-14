@@ -30,7 +30,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
                 ChannelId = ChannelId,
                 MessageContent = MessageContent
             });
-            var result = await _httpService.Post(url, form);
+            var result = await _httpService.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (!noexception && jResult.Code != ErrorType.Success)
             {
