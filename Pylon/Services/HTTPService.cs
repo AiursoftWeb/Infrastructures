@@ -41,6 +41,7 @@ namespace Aiursoft.Pylon.Services
             request.ContentType = "text/html;charset=utf-8";
             return await HTTPMethods.ReadFromResponseAsync(request);
         }
+
         public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest = false)
         {
             HttpWebRequest request = null;

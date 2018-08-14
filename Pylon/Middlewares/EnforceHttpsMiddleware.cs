@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,16 @@ namespace Aiursoft.Pylon.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
+        private readonly ILogger _logger;
 
-        public EnforceHttpsMiddleware(RequestDelegate next,
-            IConfiguration configuration)
+        public EnforceHttpsMiddleware(
+            RequestDelegate next,
+            IConfiguration configuration,
+            ILogger<EnforceHttpsMiddleware> logger)
         {
             _next = next;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -31,10 +36,12 @@ namespace Aiursoft.Pylon.Middlewares
             }
             if (context.Request.Headers.ContainsKey("x-forwarded-proto") && context.Request.Headers["x-forwarded-proto"] == "INTERNAL")
             {
+                _logger.LogInformation("Internal Request Handled! Header with 'x-forwarded-proto' values 'INTERNAL'!");
                 await _next.Invoke(context);
             }
             else if (!context.Request.IsHttps)
             {
+                _logger.LogWarning("Insecure HTTP request handed! Redirecting the user...");
                 await HandleNonHttpsRequest(context);
             }
             else
