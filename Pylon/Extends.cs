@@ -56,7 +56,7 @@ namespace Aiursoft.Pylon
         {
             var AppId = configuration[$"{appName}AppId"];
             var AppSecret = configuration[$"{appName}AppSecret"];
-            Console.WriteLine($"Got AppId={AppId}, AppSecret={AppSecret}");
+            Console.WriteLine($"Got AppId={AppId}, AppSecret={AppSecret.SubString(0, 5)}xxstrongappsecretxxxxxxxxxx");
             if (string.IsNullOrWhiteSpace(AppId) || string.IsNullOrWhiteSpace(AppSecret))
             {
                 throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
