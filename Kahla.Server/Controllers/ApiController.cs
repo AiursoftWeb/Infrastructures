@@ -181,7 +181,7 @@ namespace Kahla.Server.Controllers
                     UnReadAmount = conversation.GetUnReadAmount(user.Id),
                     Discriminator = conversation.Discriminator,
                     UserId = conversation is PrivateConversation ? (conversation as PrivateConversation).AnotherUser(user.Id).Id : null,
-                    AESKey = conversation.AESKey
+                    AesKey = conversation.AESKey
                 });
             }
             list = orderByName == true ?
