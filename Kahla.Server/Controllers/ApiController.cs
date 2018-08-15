@@ -180,7 +180,8 @@ namespace Kahla.Server.Controllers
                     LatestMessageTime = conversation.GetLatestMessage().SendTime,
                     UnReadAmount = conversation.GetUnReadAmount(user.Id),
                     Discriminator = conversation.Discriminator,
-                    UserId = conversation is PrivateConversation ? (conversation as PrivateConversation).AnotherUser(user.Id).Id : null
+                    UserId = conversation is PrivateConversation ? (conversation as PrivateConversation).AnotherUser(user.Id).Id : null,
+                    AESKey = conversation.AESKey
                 });
             }
             list = orderByName == true ?
