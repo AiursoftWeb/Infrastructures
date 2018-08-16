@@ -15,18 +15,20 @@ namespace Aiursoft.Pylon.Services
     {
         public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename, bool download = false)
         {
-            await Task.Delay(0);
-            var fileInfo = new FileInfo(path);
-            var extension = filename.Substring(filename.LastIndexOf('.') + 1);
-            long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
-            var _etag = Convert.ToString(etagHash, 16);
-            controller.Response.Headers.Add("ETag", '\"' + _etag + '\"');
-            if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == _etag)
+            return await Task.Run<IActionResult>(() =>
             {
-                return new StatusCodeResult(304);
-            }
-            controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
-            return controller.PhysicalFile(path, MIME.GetContentType(extension, download));
+                var fileInfo = new FileInfo(path);
+                var extension = filename.Substring(filename.LastIndexOf('.') + 1);
+                long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
+                var _etag = Convert.ToString(etagHash, 16);
+                controller.Response.Headers.Add("ETag", '\"' + _etag + '\"');
+                if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == _etag)
+                {
+                    return new StatusCodeResult(304);
+                }
+                controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
+                return controller.PhysicalFile(path, MIME.GetContentType(extension, download));
+            });
         }
     }
 }
