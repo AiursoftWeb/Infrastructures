@@ -60,31 +60,39 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Setlang(string host, string path)
+        public IActionResult Setlang(SetlangAddressModel model)
         {
             return View(new SetlangViewModel
             {
-                Host = host,
-                Path = path
+                Host = model.Host,
+                Path = model.Path
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetLang(string culture, string host, string path)
+        public async Task<IActionResult> SetLang(SetlangViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(new SetlangViewModel
+                {
+                    Host = model.Host,
+                    Path = model.Path
+                });
+            }
             try
             {
-                _ApplyCultureCookie(culture);
+                _ApplyCultureCookie(model.Culture);
                 var user = await GetCurrentUserAsync();
                 if (user != null)
                 {
-                    user.PreferedLanguage = culture;
+                    user.PreferedLanguage = model.Culture;
                     await _userManager.UpdateAsync(user);
                 }
-                string toGo = new AiurUrl(host, "Api", "SetSonLang", new
+                string toGo = new AiurUrl(model.Host, "Api", "SetSonLang", new
                 {
-                    Culture = culture,
-                    ReturnUrl = path
+                    model.Culture,
+                    ReturnUrl = model.Path
                 }).ToString();
                 return Redirect(toGo);
             }

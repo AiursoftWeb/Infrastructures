@@ -11,23 +11,23 @@ namespace Aiursoft.Pylon.Models
     {
         public string Address { get; set; }
         public Dictionary<string, string> Params { get; set; } = new Dictionary<string, string>();
-        public AiurUrl(string Address)
+        public AiurUrl(string address)
         {
-            this.Address = Address;
+            this.Address = address;
         }
-        public AiurUrl(string Address, object Param) : this(Address)
+        public AiurUrl(string address, object param) : this(address)
         {
-            var t = Param.GetType();
+            var t = param.GetType();
             foreach (var prop in t.GetProperties())
             {
-                if (prop.GetValue(Param) != null)
+                if (prop.GetValue(param) != null)
                 {
-                    Params.Add(prop.Name, prop.GetValue(Param).ToString());
+                    Params.Add(prop.Name, prop.GetValue(param).ToString());
                 }
             }
         }
-        public AiurUrl(string Host, string Path, object Param) : this(Host + Path, Param) { }
-        public AiurUrl(string Host, string ControllerName, string ActionName, object Param) : this(Host, $"/{WebUtility.UrlEncode(ControllerName)}/{WebUtility.UrlEncode(ActionName)}", Param) { }
+        public AiurUrl(string host, string path, object param) : this(host + path, param) { }
+        public AiurUrl(string host, string controllerName, string actionName, object param) : this(host, $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param) { }
         public override string ToString()
         {
             string Params = "?";

@@ -23,11 +23,11 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
-        public async Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string AccessToken)
+        public async Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "api", "ValidateAccessToken", new
             {
-                AccessToken
+                accessToken
             });
             var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<ValidateAccessTokenViewModel>(result);
@@ -37,12 +37,12 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async Task<AccessTokenViewModel> AccessTokenAsync(string AppId, string AppSecret)
+        public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
         {
             var url = new AiurUrl(_serviceLocation.API, "API", "AccessToken", new AccessTokenAddressModel
             {
-                AppId = AppId,
-                AppSecret = AppSecret
+                AppId = appId,
+                AppSecret = appSecret
             });
             var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
@@ -52,11 +52,11 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async Task<AllUserGrantedViewModel> AllUserGrantedAsync(string AccessToken)
+        public async Task<AllUserGrantedViewModel> AllUserGrantedAsync(string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "API", "AllUserGranted", new
             {
-                AccessToken
+                accessToken
             });
             var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AllUserGrantedViewModel>(result);
