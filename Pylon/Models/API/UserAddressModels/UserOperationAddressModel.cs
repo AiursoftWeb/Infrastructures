@@ -5,7 +5,12 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class ViewAllEmailsAddressModel : UserOperationAddressModel
+    public class UserOperationAddressModel
     {
+        [Required]
+        public string AccessToken { get; set; }
+        [Required]
+        public string OpenId { get; set; }
+
     }
 }

@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class ChangeProfileAddressModel : WithAccessTokenAddressModel
+    public class ChangeProfileAddressModel : UserOperationAddressModel
     {
-        public string OpenId { get; set; }
         [MaxLength(20)]
         public string NewNickName { get; set; }
         public string NewIconAddress { get; set; }

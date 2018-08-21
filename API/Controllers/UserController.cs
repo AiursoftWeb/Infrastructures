@@ -221,9 +221,9 @@ namespace Aiursoft.API.Controllers
             });
         }
 
+        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        [HttpPost]
         [ForceValidateAccessToken]
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
@@ -302,7 +302,7 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
             var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var user = await _userManager.FindByIdAsync(model.OpenId);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (useremail == null)
             {
@@ -310,7 +310,7 @@ namespace Aiursoft.API.Controllers
             }
             if (useremail.OwnerId != user.Id)
             {
-                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.Id}");
+                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
             }
             if (useremail.Validated)
             {

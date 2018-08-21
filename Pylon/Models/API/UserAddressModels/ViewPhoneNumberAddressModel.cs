@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class ViewAllEmailsAddressModel : UserOperationAddressModel
+    public class ViewPhoneNumberAddressModel : UserOperationAddressModel
     {
     }
 }

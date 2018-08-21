@@ -16,15 +16,20 @@ namespace Aiursoft.API.Attributes
 {
     public class ForceValidateAccessToken : ActionFilterAttribute
     {
+        public ForceValidateAccessToken()
+        {
+
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
             var _dbContext = context.HttpContext.RequestServices.GetService<APIDbContext>();
-            var accessToken = context.HttpContext.Request.Query[nameof(WithAccessTokenAddressModel.AccessToken)].ToString();
+            var accessToken = context.HttpContext.Request.Query[nameof(UserOperationAddressModel.AccessToken)].ToString();
             //If we can not find access token from url, we can search it from the request form.
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                accessToken = context.HttpContext.Request.Form[nameof(WithAccessTokenAddressModel.AccessToken)];
+                accessToken = context.HttpContext.Request.Form[nameof(UserOperationAddressModel.AccessToken)];
             }
             var target = _dbContext
                 .AccessToken

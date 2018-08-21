@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class BindNewEmailAddressModel : WithAccessTokenAddressModel
+    public class BindNewEmailAddressModel : UserOperationAddressModel
     {
-        [Required]
-        public string OpenId { get; set; }
         [Required]
         [MaxLength(30)]
         [EmailAddress]

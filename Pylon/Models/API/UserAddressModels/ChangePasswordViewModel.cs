@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class ChangePasswordAddressModel : WithAccessTokenAddressModel
+    public class ChangePasswordAddressModel : UserOperationAddressModel
     {
-        [Required]
-        public string OpenId { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string OldPassword { get; set; }

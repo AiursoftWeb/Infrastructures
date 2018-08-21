@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class WithAccessTokenAddressModel
+    public class SetPhoneNumberAddressModel : UserOperationAddressModel
     {
-        [Required]
-        public string AccessToken { get; set; }
+        public string Phone { get; set; }
     }
 }

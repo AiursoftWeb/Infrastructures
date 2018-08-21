@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
-    public class DeleteEmailAddressModel : WithAccessTokenAddressModel
+    public class DeleteEmailAddressModel : UserOperationAddressModel
     {
-        public string OpenId { get; set; }
         [Required]
         [MaxLength(30)]
         [EmailAddress]

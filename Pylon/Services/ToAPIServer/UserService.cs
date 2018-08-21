@@ -136,7 +136,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var form = new AiurUrl(string.Empty, new SendConfirmationEmailAddressModel
             {
                 AccessToken = accessToken,
-                Id = userId,
+                OpenId = userId,
                 Email = email
             });
             var result = await _http.Post(url, form, true);
