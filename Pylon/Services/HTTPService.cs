@@ -35,7 +35,7 @@ namespace Aiursoft.Pylon.Services
             {
                 request = WebRequest.CreateHttp(url.ToString());
             }
-            _logger.LogInformation($"Creating HTTP GET request to: {request.RequestUri.ToString()}");
+            _logger?.LogInformation($"Creating HTTP GET request to: {request.RequestUri.ToString()}");
             request.CookieContainer = _cc;
             request.Method = "GET";
             request.ContentType = "text/html;charset=utf-8";
@@ -55,7 +55,7 @@ namespace Aiursoft.Pylon.Services
             {
                 request = WebRequest.CreateHttp(url.ToString());
             }
-            _logger.LogInformation($"Creating HTTP Post request to: {request.RequestUri.ToString()}");
+            _logger?.LogInformation($"Creating HTTP Post request to: {request.RequestUri.ToString()}");
             request.CookieContainer = _cc;
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
