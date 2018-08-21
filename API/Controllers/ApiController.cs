@@ -100,10 +100,10 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<JsonResult> ValidateAccessToken(string AccessToken)
+        public async Task<JsonResult> ValidateAccessToken(string accessToken)
         {
             var target = await _dbContext.AccessToken
-                .SingleOrDefaultAsync(t => t.Value == AccessToken);
+                .SingleOrDefaultAsync(t => t.Value == accessToken);
             if (target == null)
             {
                 return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Unauthorized, Message = "We can not validate your access token!" });
@@ -151,10 +151,10 @@ namespace Aiursoft.API.Controllers
         [APIExpHandler]
         [APIModelStateChecker]
         [ForceValidateAccessToken]
-        public async Task<IActionResult> AllUserGranted(string AccessToken)
+        public async Task<IActionResult> AllUserGranted(string accessToken)
         {
             var target = await _dbContext.AccessToken
-                .SingleOrDefaultAsync(t => t.Value == AccessToken);
+                .SingleOrDefaultAsync(t => t.Value == accessToken);
 
             var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
             var model = new AllUserGrantedViewModel
