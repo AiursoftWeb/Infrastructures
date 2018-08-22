@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Kahla.Server.Data;
-using Kahla.Server.Models;
-using Microsoft.AspNetCore.Identity;
-using Aiursoft.Pylon.Attributes;
-using Kahla.Server.Attributes;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Kahla.Server.Services;
+﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToStargateServer;
-using Aiursoft.Pylon.Models;
+using Kahla.Server.Data;
+using Kahla.Server.Models;
+using Kahla.Server.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Kahla.Server.Controllers
 {
