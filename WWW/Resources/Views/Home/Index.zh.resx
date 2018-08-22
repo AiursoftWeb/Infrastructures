@@ -117,10 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Access Aiursoft OAuth, object storage service or message queue powers your application, and also allows you to develop and grow will us." xml:space="preserve">
+    <value>访问Aiursoft的OAuth系统、对象存储系统或消息队列系统来壮健你的应用，并让你与我们的开发进程一同前进。</value>
+  </data>
+  <data name="Aiursoft EE is a learning platform inspired by the way developers work. From open source to business, you can host and review videos, manage presentations, and build courses alongside other engineers." xml:space="preserve">
+    <value>Aiursoft EE是一个受开发者的工作方式启发的学习平台。无论是开源项目或是商业项目，都可以和开发者一起主持或浏览视频，管理演示或是打造课程。</value>
+  </data>
+  <data name="Aiursoft produces the basic tools and courses for beginners to learn basic knowledge!" xml:space="preserve">
+    <value>Aiursoft会提供基础的工具和课程,以方便所有初学者快速学习基本知识</value>
+  </data>
+  <data name="Build" xml:space="preserve">
+    <value>构建</value>
+  </data>
+  <data name="Focussing on open community" xml:space="preserve">
+    <value>专注于开放性社区</value>
+  </data>
+  <data name="Free platform for all developers" xml:space="preserve">
+    <value>为所有开发者准备的免费平台</value>
+  </data>
   <data name="Free training, tools, and community to help you grow your skills, career, or business." xml:space="preserve">
     <value>工具、训练和社区是提升技能与业务的核心</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>主页</value>
+  </data>
+  <data name="Learn" xml:space="preserve">
+    <value>学习</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="Share your work with community or friends, or even tell them how you built it!" xml:space="preserve">
+    <value>与社区中或你的朋友分享你的杰作，或者分享你构建的过程！</value>
+  </data>
+  <data name="Sign up!" xml:space="preserve">
+    <value>立即注册</value>
+  </data>
+  <data name="Start communicating" xml:space="preserve">
+    <value>启动交流工具</value>
+  </data>
+  <data name="Start Developing" xml:space="preserve">
+    <value>开始开发</value>
+  </data>
+  <data name="Start learning" xml:space="preserve">
+    <value>开始学习</value>
+  </data>
+  <data name="To create a more open world. Aiursoft is focusing on open platform and open communication." xml:space="preserve">
+    <value>Aiursoft的目标是让世界变得更加开放。因此我们专注于开放平台和开放社区。</value>
   </data>
 </root>

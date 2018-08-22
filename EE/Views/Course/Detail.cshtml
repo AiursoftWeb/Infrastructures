@@ -7,7 +7,7 @@
 <div class="container">
     <ol class="breadcrumb mt-4">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">Aiursoft EE</a>
+            <a asp-controller="Apps" asp-action="Index">@Values.ProjectName EE</a>
         </li>
         <li class="breadcrumb-item active">
             <a asp-controller="Apps" asp-action="AllApps">@ViewContext.RouteData.Values["controller"].ToString()</a>

@@ -14,7 +14,7 @@
                         <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
                     </div>
                     <div class="col-12 col-md-3">
-                        <a asp-controller="Auth" asp-action="GoRegister" class="btn btn-block btn-lg btn-primary">Sign up!</a>
+                        <a asp-controller="Auth" asp-action="GoRegister" class="btn btn-block btn-lg btn-primary">@Localizer["Sign up!"]</a>
                     </div>
                 </div>
             </div>
@@ -29,8 +29,8 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-screen-desktop m-auto text-primary"></i>
                     </div>
-                    <h3>Learn</h3>
-                    <p class="lead mb-0">Aiursoft produces the basic tools and courses for beginners to learn basic knowledge!</p>
+                    <h3>@Localizer["Learn"]</h3>
+                    <p class="lead mb-0">@Localizer["Aiursoft produces the basic tools and courses for beginners to learn basic knowledge!"]</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -38,8 +38,8 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-layers m-auto text-primary"></i>
                     </div>
-                    <h3>Build</h3>
-                    <p class="lead mb-0">Get best ideas from the open community or users feedback and continuously make your idea real.</p>
+                    <h3>@Localizer["Build"]</h3>
+                    <p class="lead mb-0">@Localizer["Get best ideas from the open community or users feedback and continuously make your idea real."]</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -47,8 +47,8 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-check m-auto text-primary"></i>
                     </div>
-                    <h3>Share</h3>
-                    <p class="lead mb-0">Share your work with community or friends, or even tell them how you built it!</p>
+                    <h3>@Localizer["Share"]</h3>
+                    <p class="lead mb-0">@Localizer["Share your work with community or friends, or even tell them how you built it!"]</p>
                 </div>
             </div>
         </div>
@@ -59,25 +59,25 @@
         <div class="row no-gutters">
             <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
             <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                <h2>Focussing on open community</h2>
-                <p class="lead mb-0">To create a more open world. Aiursoft is focusing on open platform and open communication.</p>
-                <a class="btn btn-warning mt-3" href="@ServiceLocation.KahlaHome">Start communicating</a>
+                <h2>@Localizer["Focussing on open community"]</h2>
+                <p class="lead mb-0">@Localizer["To create a more open world. Aiursoft is focusing on open platform and open communication."]</p>
+                <a class="btn btn-warning mt-3" href="@ServiceLocation.KahlaHome">@Localizer["Start communicating"]</a>
             </div>
         </div>
         <div class="row no-gutters">
             <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
             <div class="col-lg-6 my-auto showcase-text">
-                <h2>Free platform for all developers</h2>
-                <p class="lead mb-0">Access Aiursoft OAuth, object storage service or message queue powers your application, and also allows you to develop and grow will us.</p>
-                <a class="btn btn-success mt-3" href="@ServiceLocation.Developer">Start Developing</a>
+                <h2>@Localizer["Free platform for all developers"]</h2>
+                <p class="lead mb-0">@Localizer["Access Aiursoft OAuth, object storage service or message queue powers your application, and also allows you to develop and grow will us."]</p>
+                <a class="btn btn-success mt-3" href="@ServiceLocation.Developer">@Localizer["Start Developing"]</a>
             </div>
         </div>
         <div class="row no-gutters">
             <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
             <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                 <h2>Where Engineers Learn</h2>
-                <p class="lead mb-0">Aiursoft EE is a learning platform inspired by the way developers work. From open source to business, you can host and review videos, manage presentations, and build courses alongside other engineers.</p>
-                <a class="btn btn-primary mt-3" href="@ServiceLocation.EE">Start learning</a>
+                <p class="lead mb-0">@Localizer["Aiursoft EE is a learning platform inspired by the way developers work. From open source to business, you can host and review videos, manage presentations, and build courses alongside other engineers."]</p>
+                <a class="btn btn-primary mt-3" href="@ServiceLocation.EE">@Localizer["Start learning"]</a>
             </div>
         </div>
     </div>
