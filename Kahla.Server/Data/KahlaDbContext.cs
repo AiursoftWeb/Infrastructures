@@ -141,7 +141,7 @@ namespace Kahla.Server.Data
             {
                 RequesterId = userId1,
                 TargetId = userId2,
-                AESKey = StringOperation.RandomString(30)
+                AESKey = Guid.NewGuid().ToString("N")
             });
         }
     }

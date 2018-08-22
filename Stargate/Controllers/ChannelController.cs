@@ -104,7 +104,7 @@ namespace Aiursoft.Stargate.Controllers
             var newChannel = new Channel
             {
                 Description = model.Description,
-                ConnectKey = StringOperation.RandomString(20)
+                ConnectKey = Guid.NewGuid().ToString("N")
             };
             appLocal.Channels.Add(newChannel);
             await _dbContext.SaveChangesAsync();

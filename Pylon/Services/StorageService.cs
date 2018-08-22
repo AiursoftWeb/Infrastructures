@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services
             string localFilePath = string.Empty;
             if (options == SaveFileOptions.RandomName)
             {
-                localFilePath = directoryPath + StringOperation.RandomString(10) + GetExtension(file.FileName);
+                localFilePath = directoryPath + Guid.NewGuid().ToString("N") + GetExtension(file.FileName);
             }
             else if (options == SaveFileOptions.SourceName)
             {

@@ -21,9 +21,9 @@ namespace Aiursoft.Pylon.Services
             return sBuilder.ToString();
         }
 
-        public static string GetMD5(this string SourceString)
+        public static string GetMD5(this string sourceString)
         {
-            string hash = GetMd5Hash(MD5.Create(), SourceString);
+            string hash = GetMd5Hash(MD5.Create(), sourceString);
             return hash;
         }
 
@@ -37,15 +37,15 @@ namespace Aiursoft.Pylon.Services
             }
         }
 
-        public static string OTake(this string source, int Count)
+        public static string OTake(this string source, int count)
         {
-            if (source.Length <= Count)
+            if (source.Length <= count)
             {
                 return source;
             }
             else
             {
-                return source.Substring(0, Count - 3) + "...";
+                return source.Substring(0, count - 3) + "...";
             }
         }
 
@@ -63,20 +63,20 @@ namespace Aiursoft.Pylon.Services
             return false;
         }
 
-        public static string ORemoveHTML(this string Content)
+        public static string ORemoveHTML(this string content)
         {
             string s = string.Empty;
-            Content = WebUtility.HtmlDecode(Content);
-            if (!Content.Contains(">"))
+            content = WebUtility.HtmlDecode(content);
+            if (!content.Contains(">"))
             {
-                return Content;
+                return content;
             }
-            while (Content.Contains(">"))
+            while (content.Contains(">"))
             {
-                s = s + Content.Substring(0, Content.IndexOf("<"));
-                Content = Content.Substring(Content.IndexOf(">") + 1);
+                s = s + content.Substring(0, content.IndexOf("<"));
+                content = content.Substring(content.IndexOf(">") + 1);
             }
-            return s + Content;
+            return s + content;
         }
 
         private static Random _staticRan { get; set; } = new Random();
@@ -102,27 +102,27 @@ namespace Aiursoft.Pylon.Services
             return checkCode;
         }
 
-        public static string FormatTimeAgo(TimeSpan ToFormat)
+        public static string FormatTimeAgo(TimeSpan toFormat)
         {
-            if (ToFormat.TotalMinutes < 1)
+            if (toFormat.TotalMinutes < 1)
             {
                 return "Just now";
             }
-            else if (ToFormat.TotalHours < 1)
+            else if (toFormat.TotalHours < 1)
             {
-                return (int)ToFormat.TotalMinutes + " minutes ago";
+                return (int)toFormat.TotalMinutes + " minutes ago";
             }
-            else if (ToFormat.TotalDays < 1)
+            else if (toFormat.TotalDays < 1)
             {
-                return (int)ToFormat.TotalHours + " hours ago";
+                return (int)toFormat.TotalHours + " hours ago";
             }
-            else if (ToFormat.TotalDays < 30)
+            else if (toFormat.TotalDays < 30)
             {
-                return (int)ToFormat.TotalDays + " day ago";
+                return (int)toFormat.TotalDays + " day ago";
             }
             else
             {
-                return (int)ToFormat.TotalDays / 30 + " months ago";
+                return (int)toFormat.TotalDays / 30 + " months ago";
             }
         }
     }

@@ -43,7 +43,7 @@ namespace Aiursoft.OSS.Controllers
             // Generate secret
             var newSecret = new Secret
             {
-                Value = StringOperation.RandomString(15),
+                Value = Guid.NewGuid().ToString("N"),
                 FileId = file.FileKey
             };
             _dbContext.Secrets.Add(newSecret);

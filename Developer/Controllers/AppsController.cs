@@ -101,7 +101,7 @@ namespace Aiursoft.Developer.Controllers
                 iconPath = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
             }
 
-            var _newApp = new App(cuser.Id, model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
+            var _newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
             {
                 CreatorId = cuser.Id,
                 AppIconAddress = iconPath

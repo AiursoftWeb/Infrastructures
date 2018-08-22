@@ -16,12 +16,12 @@ namespace Aiursoft.Stargate.Services
         {
             _messageService = messageService;
         }
-        public async Task SendDebuggingMessages(string AccessToken, int ChannelId)
+        public async Task SendDebuggingMessages(string accessToken, int channelId)
         {
             var random = new Random();
             for (int i = 0; i < 1000; i++)
             {
-                await _messageService.PushMessageAsync(AccessToken, ChannelId, DateTime.Now + StringOperation.RandomString(10));
+                await _messageService.PushMessageAsync(accessToken, channelId, Guid.NewGuid().ToString("N"));
                 await Task.Delay(10);
             }
         }

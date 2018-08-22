@@ -53,7 +53,7 @@ namespace Aiursoft.Developer.Data
             };
             usermanager.CreateAsync(newuser, firstUserPass).Wait();
 
-            var newApp = new App(newuser.Id, "Developer", "Seeded developer app", Category.AppForAiur, Platform.Web, firstAppId, firstAppSecret)
+            var newApp = new App("Developer", "Seeded developer app", Category.AppForAiur, Platform.Web, firstAppId, firstAppSecret)
             {
                 CreatorId = newuser.Id,
                 AppIconAddress = $"{serviceLocation.CDN}/images/appdefaulticon.png"

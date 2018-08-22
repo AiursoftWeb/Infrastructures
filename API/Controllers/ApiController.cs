@@ -135,7 +135,7 @@ namespace Aiursoft.API.Controllers
             var newAC = new AccessToken
             {
                 ApplyAppId = model.AppId,
-                Value = (DateTime.Now.ToString() + HttpContext.GetHashCode().ToString() + model.AppId).GetMD5()
+                Value = Guid.NewGuid().ToString("N")
             };
             _dbContext.AccessToken.Add(newAC);
             await _dbContext.SaveChangesAsync();

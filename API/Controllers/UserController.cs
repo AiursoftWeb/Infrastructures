@@ -327,7 +327,7 @@ namespace Aiursoft.API.Controllers
             //limit the sending frenquency to 3 minutes.
             if (DateTime.Now > useremail.LastSendTime + new TimeSpan(0, 3, 0))
             {
-                var token = StringOperation.RandomString(30);
+                var token = Guid.NewGuid().ToString("N");
                 useremail.ValidateToken = token;
                 useremail.LastSendTime = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
@@ -464,9 +464,9 @@ namespace Aiursoft.API.Controllers
             return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
         }
 
-        public async Task<IActionResult> EnterSMSCode(string Email)
+        public async Task<IActionResult> EnterSMSCode(string email)
         {
-            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == Email.ToLower());
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == email.ToLower());
             if (mail == null)
             {
                 return NotFound();
@@ -479,7 +479,7 @@ namespace Aiursoft.API.Controllers
             var phoneLast = user.PhoneNumber.Substring(user.PhoneNumber.Length - 4);
             var model = new EnterSMSCodeViewModel
             {
-                Email = Email,
+                Email = email,
                 PhoneLast = phoneLast
             };
             return View(model);
