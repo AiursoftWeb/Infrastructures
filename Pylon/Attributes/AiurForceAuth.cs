@@ -17,6 +17,7 @@ namespace Aiursoft.Pylon.Attributes
         private bool? _justTry { get; set; } = false;
         private bool _preferPageSet { get; set; } = false;
         private bool _register { get; set; } = false;
+        private bool _directlyReject { get; set; } = false;
 
         private bool _hasAPreferPage => (true
             && !string.IsNullOrEmpty(_preferController)
@@ -35,9 +36,9 @@ namespace Aiursoft.Pylon.Attributes
             }
         }
 
-        public AiurForceAuth()
+        public AiurForceAuth(bool directlyReject = false)
         {
-
+            _directlyReject = directlyReject;
         }
 
         public AiurForceAuth(string preferController, string preferAction, bool justTry, bool register = false)
@@ -59,7 +60,7 @@ namespace Aiursoft.Pylon.Attributes
             {
                 if (_hasAPreferPage)
                 {
-                    // Just redirected back.
+                    // Just redirected back, leave him here.
                     if (show == Values.DirectShowString.Value && _justTry == true)
                     {
                         return;
@@ -67,6 +68,12 @@ namespace Aiursoft.Pylon.Attributes
                     // Try him.
                     context.Result = _Redirect(context, _preferPage, _justTry, _register);
                 }
+                // Direclty response a 403
+                else if (_directlyReject)
+                {
+                    context.Result = new UnauthorizedResult();
+                }
+                // Don't have a prefer page, force him to sign in.
                 else
                 {
                     context.Result = _Redirect(context, controller.Request.Path.Value, justTry: null, register: _register);

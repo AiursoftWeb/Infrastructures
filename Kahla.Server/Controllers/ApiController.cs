@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToAPIServer;
-using Kahla.Server.Attributes;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 
@@ -102,8 +101,8 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
         [FileChecker]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> UploadFile()
         {
             string iconPath = string.Empty;
@@ -134,7 +133,7 @@ namespace Kahla.Server.Controllers
             });
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> Me()
         {
             var user = await GetKahlaUser();
@@ -163,7 +162,7 @@ namespace Kahla.Server.Controllers
             return this.Protocal(ErrorType.Success, "Successfully set your personal info.");
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> MyFriends([Required]bool? orderByName)
         {
             var user = await GetKahlaUser();
@@ -195,7 +194,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> DeleteFriend([Required]string id)
         {
             var user = await GetKahlaUser();
@@ -211,7 +210,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> CreateRequest([Required]string id)
         {
             var user = await GetKahlaUser();
@@ -245,7 +244,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> CompleteRequest(CompleteRequestAddressModel model)
         {
             var user = await GetKahlaUser();
@@ -271,7 +270,7 @@ namespace Kahla.Server.Controllers
             return this.Protocal(ErrorType.Success, "You have successfully completed this request.");
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> MyRequests()
         {
             var user = await GetKahlaUser();
@@ -289,7 +288,7 @@ namespace Kahla.Server.Controllers
             });
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> SearchFriends(SearchFriendsAddressModel model)
         {
             var users = await _dbContext
@@ -305,7 +304,7 @@ namespace Kahla.Server.Controllers
             });
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> GetMessage([Required]int id, int take = 15)
         {
             var user = await GetKahlaUser();
@@ -345,7 +344,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> SendMessage(SendMessageAddressModel model)
         {
             var user = await GetKahlaUser();
@@ -379,7 +378,7 @@ namespace Kahla.Server.Controllers
             return this.Protocal(ErrorType.Success, "Your message has been sent.");
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> UserDetail([Required]string id)
         {
             var user = await GetKahlaUser();
@@ -411,7 +410,7 @@ namespace Kahla.Server.Controllers
             return Json(model);
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> ConversationDetail([Required]int id)
         {
             var user = await GetKahlaUser();
@@ -445,7 +444,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> CreateGroupConversation(CreateGroupConversationAddressModel model)
         {
             var user = await GetKahlaUser();
@@ -471,7 +470,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> JoinGroup([Required]string groupName)
         {
             var user = await GetKahlaUser();
@@ -498,7 +497,7 @@ namespace Kahla.Server.Controllers
         }
 
         [HttpPost]
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> LeaveGroup(string groupName)
         {
             var user = await GetKahlaUser();
@@ -524,7 +523,7 @@ namespace Kahla.Server.Controllers
             return this.Protocal(ErrorType.Success, $"You have successfully leaved the group: {groupName}!");
         }
 
-        [KahlaRequireCredential]
+        [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> InitPusher()
         {
             var user = await GetKahlaUser();
