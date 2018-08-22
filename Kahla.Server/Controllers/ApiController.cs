@@ -367,13 +367,13 @@ namespace Kahla.Server.Controllers
             if (target.Discriminator == nameof(PrivateConversation))
             {
                 var privateConversation = target as PrivateConversation;
-                await _pusher.NewMessageEvent(privateConversation.RequesterId, target.Id, model.Content, user);
-                await _pusher.NewMessageEvent(privateConversation.TargetId, target.Id, model.Content, user);
+                await _pusher.NewMessageEvent(privateConversation.RequesterId, target.Id, model.Content, user, target.AESKey);
+                await _pusher.NewMessageEvent(privateConversation.TargetId, target.Id, model.Content, user, target.AESKey);
             }
             else if (target.Discriminator == nameof(GroupConversation))
             {
                 var usersJoined = _dbContext.UserGroupRelations.Where(t => t.GroupId == target.Id);
-                await usersJoined.ForEachAsync(async t => await _pusher.NewMessageEvent(t.UserId, target.Id, model.Content, user));
+                await usersJoined.ForEachAsync(async t => await _pusher.NewMessageEvent(t.UserId, target.Id, model.Content, user, target.AESKey));
             }
             //Return success message.
             return this.Protocal(ErrorType.Success, "Your message has been sent.");

@@ -47,7 +47,7 @@ namespace Kahla.Server.Services
             return channel;
         }
 
-        public async Task NewMessageEvent(string recieverId, int conversationId, string Content, KahlaUser sender)
+        public async Task NewMessageEvent(string recieverId, int conversationId, string content, KahlaUser sender, string aesKey)
         {
             var token = await _appsContainer.AccessToken();
             var user = await _dbContext.Users.FindAsync(recieverId);
@@ -57,7 +57,8 @@ namespace Kahla.Server.Services
                 Type = EventType.NewMessage,
                 ConversationId = conversationId,
                 Sender = sender,
-                Content = Content
+                Content = content,
+                AESKey = aesKey
             };
             if (channel != -1)
                 await _pushMessageService.PushMessageAsync(token, channel, _CammalSer(nevent), true);

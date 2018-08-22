@@ -342,6 +342,11 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
         }
 
+        public async Task<IActionResult> AllApps(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IActionResult> EmailConfirm(string userId, string code)
         {
             var user = await _dbContext

@@ -53,12 +53,12 @@ namespace Aiursoft.Account.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(bool? JustHaveUpdated)
+        public async Task<IActionResult> Index(bool? justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var model = new IndexViewModel(user)
             {
-                JustHaveUpdated = JustHaveUpdated ?? false
+                JustHaveUpdated = justHaveUpdated ?? false
             };
             return View(model);
         }
@@ -81,7 +81,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Email(bool JustHaveUpdated)
+        public async Task<IActionResult> Email(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
@@ -90,7 +90,7 @@ namespace Aiursoft.Account.Controllers
                 Emails = emails.Items,
                 PrimaryEmail = user.Email
             };
-            model.JustHaveUpdated = JustHaveUpdated;
+            model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
 
@@ -129,12 +129,12 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
-        public async Task<IActionResult> Avatar(bool JustHaveUpdated)
+        public async Task<IActionResult> Avatar(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var model = new AvatarViewModel(user)
             {
-                JustHaveUpdated = JustHaveUpdated
+                JustHaveUpdated = justHaveUpdated
             };
             return View(model);
         }
@@ -156,12 +156,12 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
 
-        public async Task<IActionResult> Security(bool JustHaveUpdated)
+        public async Task<IActionResult> Security(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var model = new SecurityViewModel(user)
             {
-                JustHaveUpdated = JustHaveUpdated
+                JustHaveUpdated = justHaveUpdated
             };
             return View(model);
         }
@@ -190,7 +190,7 @@ namespace Aiursoft.Account.Controllers
             }
         }
 
-        public async Task<IActionResult> Phone(bool JustHaveUpdated)
+        public async Task<IActionResult> Phone(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessToken());
@@ -198,7 +198,7 @@ namespace Aiursoft.Account.Controllers
             {
                 CurrentPhoneNumber = phone.Value,
                 PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
-                JustHaveUpdated = JustHaveUpdated
+                JustHaveUpdated = justHaveUpdated
             };
             return View(model);
         }
@@ -222,12 +222,12 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(EnterCode), new { model.NewPhoneNumber });
         }
 
-        public async Task<IActionResult> EnterCode(string NewPhoneNumber)
+        public async Task<IActionResult> EnterCode(string newPhoneNumber)
         {
             var user = await GetCurrentUserAsync();
             var model = new EnterCodeViewModel(user)
             {
-                NewPhoneNumber = NewPhoneNumber
+                NewPhoneNumber = newPhoneNumber
             };
             return View(model);
         }
@@ -258,7 +258,7 @@ namespace Aiursoft.Account.Controllers
             {
                 model.ModelStateValid = false;
                 model.Recover(user);
-                ModelState.AddModelError("", "Your token is invalid!");
+                ModelState.AddModelError(string.Empty, "Your token is invalid!");
                 return View(model);
             }
         }

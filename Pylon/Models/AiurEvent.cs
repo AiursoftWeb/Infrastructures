@@ -20,6 +20,7 @@ namespace Aiursoft.Pylon.Models
         public int ConversationId { get; set; }
         public AiurUserBase Sender { get; set; }
         public string Content { get; set; }
+        public string AESKey { get; set; }
     }
     public class NewFriendRequest : AiurEvent
     {
