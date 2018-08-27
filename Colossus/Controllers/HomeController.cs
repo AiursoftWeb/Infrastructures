@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Colossus.Models;
-using Aiursoft.Pylon.Attributes;
-using System.IO;
+﻿using Aiursoft.Colossus.Models;
+using Aiursoft.Colossus.Models.HomeViewModels;
 using Aiursoft.Pylon;
-using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
-using Aiursoft.Pylon.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -21,6 +19,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly StorageService _storageService;
         private readonly SignInManager<ColossusUser> _signInManager;
         private readonly ServiceLocation _serviceLocation;
+        private const long _30M = 30 * 1024 * 1024;
 
         public HomeController(
             IConfiguration configuration,
@@ -37,7 +36,16 @@ namespace Aiursoft.Colossus.Controllers
         [AiurForceAuth("", "", justTry: true)]
         public IActionResult Index()
         {
-            return View();
+            long maxSize = _30M;
+            if(User.Identity.IsAuthenticated)
+            {
+                maxSize = Values.MaxFileSize;
+            }
+            var model = new IndexViewModel
+            {
+                MaxSize = maxSize
+            };
+            return View(model);
         }
 
         [HttpPost]
