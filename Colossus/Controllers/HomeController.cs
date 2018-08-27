@@ -4,6 +4,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +53,11 @@ namespace Aiursoft.Colossus.Controllers
         [FileChecker(MaxSize = 1000 * 1024 * 1024)]
         public async Task<IActionResult> Upload()
         {
+            // Anonymous user but try to upload a large file.
+            if (!User.Identity.IsAuthenticated && HttpContext.Request.Form.Files.First().Length > _30M)
+            {
+                return Unauthorized();
+            }
             if (!ModelState.IsValid)
             {
                 return Redirect("/");
