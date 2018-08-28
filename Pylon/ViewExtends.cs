@@ -35,7 +35,7 @@ namespace Aiursoft.Pylon
                                             <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
                                             <input class='btn btn-primary' type='submit' value='Logout' />
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>";
             return new HtmlContentBuilder()
