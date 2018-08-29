@@ -40,6 +40,7 @@ namespace Aiursoft.Pylon.Models
             {"mov", "video/quicktime"},
             {"mp3", "audio/mpeg"},
             {"md", "text/markdown; charset=UTF-8"},
+            {"webm","video/webm"},
             {"mp4", "video/mp4"},
             {"mpeg", "video/mpeg"},
             {"mpg", "video/mpeg"},
