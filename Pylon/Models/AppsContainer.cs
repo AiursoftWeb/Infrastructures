@@ -28,14 +28,14 @@ namespace Aiursoft.Pylon.Models
             }
             _scopeFactory = scopeFactory;
         }
-        private AppContainer GetApp(string AppId, string AppSecret)
+        private AppContainer GetApp(string appId, string appSecret)
         {
-            var exists = _allApps.Find(t => t.CurrentAppId == AppId);
+            var exists = _allApps.Find(t => t.CurrentAppId == appId);
             if (exists == null)
             {
-                var newContainer = new AppContainer(AppId, AppSecret);
+                var newContainer = new AppContainer(appId, appSecret);
                 _allApps.Add(newContainer);
-                exists = _allApps.Find(t => t.CurrentAppId == AppId);
+                exists = _allApps.Find(t => t.CurrentAppId == appId);
             }
             return exists;
         }
@@ -45,18 +45,18 @@ namespace Aiursoft.Pylon.Models
             return await AccessToken(Extends.CurrentAppId, Extends.CurrentAppSecret);
         }
 
-        public async Task<string> AccessToken(string AppId, string AppSecret)
+        public async Task<string> AccessToken(string appId, string appSecret)
         {
-            var app = GetApp(AppId, AppSecret);
+            var app = GetApp(appId, appSecret);
             return await app.AccessToken(_scopeFactory);
         }
     }
     class AppContainer
     {
-        public AppContainer(string AppId, string AppSecret)
+        public AppContainer(string appId, string appSecret)
         {
-            CurrentAppId = AppId;
-            CurrentAppSecret = AppSecret;
+            CurrentAppId = appId;
+            CurrentAppSecret = appSecret;
         }
         public string CurrentAppId { get; private set; } = string.Empty;
         public string CurrentAppSecret { get; private set; } = string.Empty;

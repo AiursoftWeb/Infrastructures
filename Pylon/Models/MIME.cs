@@ -11,14 +11,14 @@ namespace Aiursoft.Pylon.Models
         {
             string lower = extenstion.ToLower().TrimStart('.');
             //Not to download the file, and we can process the file, let us process it.
-            if (!download && MIMETypesDictionary.ContainsKey(lower))
+            if (!download && _mimeTypesDictionary.ContainsKey(lower))
             {
                 Console.WriteLine(extenstion);
-                return MIMETypesDictionary[lower];
+                return _mimeTypesDictionary[lower];
             }
             return "application/octet-stream";
         }
-        private static readonly Dictionary<string, string> MIMETypesDictionary = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _mimeTypesDictionary = new Dictionary<string, string>
         {
             {"avi", "video/x-msvideo"},
             {"apk","application/vnd.android.package-archive"},

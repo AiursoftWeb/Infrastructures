@@ -17,22 +17,13 @@ namespace Aiursoft.API.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
-        private readonly SignInManager<APIUser> _signInManager;
-        private readonly ILogger _logger;
-        private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(
             UserManager<APIUser> userManager,
-            SignInManager<APIUser> signInManager,
-            ILoggerFactory loggerFactory,
-            APIDbContext _context,
             IStringLocalizer<HomeController> localizer)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<HomeController>();
-            _dbContext = _context;
             _localizer = localizer;
         }
 
