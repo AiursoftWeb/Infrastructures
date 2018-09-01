@@ -43,13 +43,16 @@ namespace Aiursoft.OSS.Controllers
         {
             var download = !string.IsNullOrWhiteSpace(model.sd);
             var targetBucket = await _dbContext.Bucket.SingleOrDefaultAsync(t => t.BucketName == model.BucketName);
+            if (targetBucket == null || !targetBucket.OpenToRead)
+                return NotFound();
             var targetFile = await _dbContext
                 .OSSFile
                 .Where(t => t.BucketId == targetBucket.BucketId)
                 .SingleOrDefaultAsync(t => t.RealFileName == model.FileName + "." + model.FileExtension);
 
-            if (targetBucket == null || targetFile == null || !targetBucket.OpenToRead)
+            if (targetFile == null)
                 return NotFound();
+
             // Update download times
             targetFile.DownloadTimes++;
             await _dbContext.SaveChangesAsync();
