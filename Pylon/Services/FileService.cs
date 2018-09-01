@@ -27,7 +27,7 @@ namespace Aiursoft.Pylon.Services
                     return new StatusCodeResult(304);
                 }
                 controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
-                return controller.PhysicalFile(path, MIME.GetContentType(extension, download));
+                return controller.PhysicalFile(path, MIME.GetContentType(extension, download), true);
             });
         }
     }
