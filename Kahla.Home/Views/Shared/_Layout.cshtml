@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="content-language" content="en-gb">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @this.UseDnsPrefetch()
+    <title>Kahla App | @Values.ProjectName</title>
     @this.UseAiurFavicon()
     <link href="@ServiceLocation.CDN/dist/AiurCore.min.css" rel="stylesheet">
     <link href="@ServiceLocation.CDN/dist/AiurProduct.min.css" rel="stylesheet">
-    <title>Kahla App | @Values.ProjectName</title>
 </head>
 <body>
     @RenderBody()

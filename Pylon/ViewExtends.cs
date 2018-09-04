@@ -108,5 +108,15 @@ namespace Aiursoft.Pylon
             return new HtmlContentBuilder()
                 .SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.CDN}/favicon.ico'>");
         }
+
+        public static IHtmlContent UseDnsPrefetch(this RazorPage page)
+        {
+            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            return new HtmlContentBuilder()
+                .SetHtmlContent($@"
+                                <link rel='dns-prefetch' href='{serviceLocation.API}'>
+                                <link rel='dns-prefetch' href='{serviceLocation.OSS}'>
+                                <link rel='dns-prefetch' href='{serviceLocation.CDN}'>");
+        }
     }
 }
