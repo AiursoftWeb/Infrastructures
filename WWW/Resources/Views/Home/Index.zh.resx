@@ -168,4 +168,7 @@
   <data name="Where Engineers Learn" xml:space="preserve">
     <value>能让开发者学习东西的地方</value>
   </data>
+  <data name="Get best ideas from the open community or users feedback and continuously make your idea real." xml:space="preserve">
+    <value>在开放的社区中充分与用户双向沟通，了解优秀的想法，或让idea得变得更好。</value>
+  </data>
 </root>
