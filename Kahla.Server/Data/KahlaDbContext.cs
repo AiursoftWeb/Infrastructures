@@ -128,7 +128,8 @@ namespace Kahla.Server.Data
             var newGroup = new GroupConversation
             {
                 GroupName = groupName,
-                GroupImage = $"{_serviceLocation.CDN}/images/appdefaulticon.png"
+                GroupImage = $"{_serviceLocation.CDN}/images/appdefaulticon.png",
+                AESKey = Guid.NewGuid().ToString("N")
             };
             this.GroupConversations.Add(newGroup);
             await this.SaveChangesAsync();
