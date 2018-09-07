@@ -13,6 +13,9 @@ namespace Aiursoft.Colossus.Data
         public ColossusDbContext(DbContextOptions<ColossusDbContext> options)
             : base(options)
         {
+            
         }
+
+        public DbSet<UploadRecord> UploadRecords { get; set; }
     }
 }
