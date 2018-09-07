@@ -520,7 +520,7 @@ namespace Kahla.Server.Controllers
                 _dbContext.GroupConversations.Remove(group);
                 await _dbContext.SaveChangesAsync();
             }
-            return this.Protocal(ErrorType.Success, $"You have successfully leaved the group: {groupName}!");
+            return this.Protocal(ErrorType.Success, $"You have successfully left the group: {groupName}!");
         }
 
         [AiurForceAuth(directlyReject: true)]
