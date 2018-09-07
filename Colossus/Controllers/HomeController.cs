@@ -19,6 +19,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly IConfiguration _configuration;
         private readonly StorageService _storageService;
         private readonly SignInManager<ColossusUser> _signInManager;
+        private readonly UserManager<ColossusUser> _userManager;
         private readonly ServiceLocation _serviceLocation;
         private const long _30M = 30 * 1024 * 1024;
 
@@ -26,11 +27,13 @@ namespace Aiursoft.Colossus.Controllers
             IConfiguration configuration,
             StorageService storageService,
             SignInManager<ColossusUser> signInManager,
+            UserManager<ColossusUser> userManager,
             ServiceLocation serviceLocation)
         {
             _configuration = configuration;
             _storageService = storageService;
             _signInManager = signInManager;
+            _userManager = userManager;
             _serviceLocation = serviceLocation;
         }
 
@@ -38,7 +41,7 @@ namespace Aiursoft.Colossus.Controllers
         public IActionResult Index()
         {
             long maxSize = _30M;
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 maxSize = Values.MaxFileSize;
             }
@@ -62,8 +65,14 @@ namespace Aiursoft.Colossus.Controllers
             {
                 return Redirect("/");
             }
+            var user = await GetCurrentUserAsync();
+            var day = 3;
+            if (user != null)
+            {
+                day = 30;
+            }
             var file = Request.Form.Files.First();
-            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
+            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), day);
             return Json(new
             {
                 message = "Uploaded!",
@@ -76,6 +85,15 @@ namespace Aiursoft.Colossus.Controllers
         {
             await _signInManager.SignOutAsync();
             return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+        }
+
+        private async Task<ColossusUser> GetCurrentUserAsync()
+        {
+            if (User.Identity.Name == null)
+            {
+                return null;
+            }
+            return await _userManager.FindByNameAsync(User.Identity.Name);
         }
     }
 }
