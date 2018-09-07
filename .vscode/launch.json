@@ -217,6 +217,37 @@
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
             }
+        },
+        {
+            "name": "Colossus",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildColossus",
+            "program": "${workspaceFolder}/Colossus/bin/Debug/netcoreapp2.1/Aiursoft.Colossus.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Aiursoft.Colossus",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         }
     ]
 }
