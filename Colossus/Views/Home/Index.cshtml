@@ -31,6 +31,10 @@
                     <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>
                 </div>
             </form>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-lg btn-secondary mt-4" asp-controller="Dashboard" asp-action="Index">View files dashboard</a>
+            }
         </div>
     </div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
