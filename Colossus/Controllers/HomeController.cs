@@ -70,12 +70,11 @@ namespace Aiursoft.Colossus.Controllers
                 return Redirect("/");
             }
             var user = await GetCurrentUserAsync();
-            var day = 3;
             var file = Request.Form.Files.First();
-            var model = await _storageService.SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), day);
+            var model = await _storageService
+                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), user == null ? 3 : 30);
             if (user != null)
             {
-                day = 30;
                 var record = new UploadRecord
                 {
                     UploaderId = user.Id,

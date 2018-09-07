@@ -25,8 +25,8 @@
                             <th>File Name</th>
                             <th>Open to upload</th>
                             <th>File size</th>
-                            <th>Alive days</th>
-                            <th>Upload time</th>
+                            <th>Upload Time</th>
+                            <th>Dead Day</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,9 +49,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>@fileRecord.JFileSize</td>
-                                <td>@fileRecord.AliveDays</td>
+                                <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
                                 <td>@fileRecord.UploadTime.ToString("dd/MM/yyyy")</td>
+                                <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("dd/MM/yyyy"))</td>
                             </tr>
                         }
                     </tbody>
