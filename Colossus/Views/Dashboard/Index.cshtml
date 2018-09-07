@@ -22,16 +22,36 @@
                 <table class="table table-striped datatable">
                     <thead>
                         <tr>
-                            <th>Bucket ID</th>
+                            <th>File Name</th>
                             <th>Open to upload</th>
+                            <th>File size</th>
+                            <th>Alive days</th>
+                            <th>Upload time</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var fileRecord in Model.Files)
                         {
                             <tr>
-                                <td>@fileRecord.FileId</td>
-                                <td>@fileRecord.UploadTime</td>
+                                <td>@fileRecord.RealFileName</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <a href="@fileRecord.InternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                More
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" href="@fileRecord.InternetPath" target="_blank">Open</a>
+                                                <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@fileRecord.InternetPath">Copy link</a>
+                                                <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@fileRecord.FileKey" target="_blank">Get One-time link</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@fileRecord.JFileSize</td>
+                                <td>@fileRecord.AliveDays</td>
+                                <td>@fileRecord.UploadTime.ToString("dd/MM/yyyy")</td>
                             </tr>
                         }
                     </tbody>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Models.OSS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
         }
 
-        public IEnumerable<UploadRecord> Files { get; set; }
+        public IEnumerable<OSSFile> Files { get; set; }
     }
 }
