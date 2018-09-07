@@ -507,7 +507,7 @@ namespace Kahla.Server.Controllers
                 return this.Protocal(ErrorType.NotFound, $"We can not find a group with name: {groupName}!");
             }
             var joined = await _dbContext.UserGroupRelations.SingleOrDefaultAsync(t => t.UserId == user.Id && t.GroupId == group.Id);
-            if (joined != null)
+            if (joined == null)
             {
                 return this.Protocal(ErrorType.HasDoneAlready, $"You did not joined the group: {groupName} at all!");
             }
