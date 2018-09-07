@@ -1,1 +1,45 @@
-﻿
+﻿@model Aiursoft.Colossus.Models.DashboardViewModels.IndexViewModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = Model.Title;
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox ico"></i>
+            All files your uploaded in Colossus
+        </div>
+        <div class="card-body">
+            <div class="col-xs-12">
+                <table class="table table-striped datatable">
+                    <thead>
+                        <tr>
+                            <th>Bucket ID</th>
+                            <th>Open to upload</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var fileRecord in Model.Files)
+                        {
+                            <tr>
+                                <td>@fileRecord.FileId</td>
+                                <td>@fileRecord.UploadTime</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col-md-12 margin-top-30">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-success">Upload new file</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

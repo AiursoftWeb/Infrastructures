@@ -116,7 +116,8 @@ namespace Aiursoft.Pylon
                 .SetHtmlContent($@"
                                 <link rel='dns-prefetch' href='{serviceLocation.API}'>
                                 <link rel='dns-prefetch' href='{serviceLocation.OSS}'>
-                                <link rel='dns-prefetch' href='{serviceLocation.CDN}'>");
+                                <link rel='dns-prefetch' href='{serviceLocation.CDN}'>
+                                <link rel='dns-prefetch' href='{serviceLocation.Account}'>");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.AccountViewModel
+﻿@model Aiursoft.Colossus.Models.DashboardViewModels.LayoutViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @this.UseDnsPrefetch()
-    <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Account Management Center"]</title>
+    <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     @this.UseAiurFavicon()
     @this.UseAiurDashboardCSS()
     @RenderSection("css", required: false)
@@ -14,65 +14,17 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer["Aiursoft Account"]</a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">@Localizer["Aiursoft Colossus"]</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Index">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">
-                            @Localizer["Basic Info"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Email">
-                        <i class="fa fa-fw fa-envelope"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Email"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 2 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Security">
-                        <i class="fa fa-fw fa-server"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Security"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 3 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Avatar">
-                        <i class="fa fa-fw fa-inbox"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Avatar"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 4 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Phone">
-                        <i class="fa fa-fw fa-phone"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Phone"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 5 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Applicaions">
-                        <i class="fa fa-fw fa-adn"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Applicaions"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@ServiceLocation.Developer/Apps">
-                        <i class="fa fa-fw fa-code"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Develope"]
+                            @Localizer["File upload history"]
                         </span>
                     </a>
                 </li>
