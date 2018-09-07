@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.OSS.ApiViewModels;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -48,19 +49,24 @@ namespace Aiursoft.Pylon.Services
             return localFilePath;
         }
 
-        public async Task<string> SaveToOSS(IFormFile file, int BucketId, int AliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string AccessToken = null, string name = "", bool deleteLocal = true)
+        public async Task<UploadFileViewModel> SaveToOSSWithModel(IFormFile file, int bucketId, int aliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);
-            if (AccessToken == null)
+            if (accessToken == null)
             {
-                AccessToken = await _appsContainer.AccessToken();
+                accessToken = await _appsContainer.AccessToken();
             }
-            var fileAddress = await _ossApiService.UploadFile(AccessToken, BucketId, localFilePath, AliveDays);
+            var fileAddress = await _ossApiService.UploadFile(accessToken, bucketId, localFilePath, aliveDays);
             if (deleteLocal)
             {
                 File.Delete(localFilePath);
             }
-            return fileAddress.Path;
+            return fileAddress;
+        }
+        public async Task<string> SaveToOSS(IFormFile file, int bucketId, int aliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
+        {
+            var model = await SaveToOSSWithModel(file, bucketId, aliveDays, options, accessToken, name, deleteLocal);
+            return model.Path;
         }
     }
     public enum SaveFileOptions

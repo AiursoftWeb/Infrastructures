@@ -10,9 +10,14 @@ namespace Aiursoft.Colossus.Controllers
     [AiurForceAuth]
     public class DashboardController : Controller
     {
+        public DashboardController()
+        {
+
+        }
+
         public IActionResult Index()
         {
-            throw new NotImplementedException();
+            return View();
         }
     }
 }
