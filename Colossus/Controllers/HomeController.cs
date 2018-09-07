@@ -1,4 +1,5 @@
-﻿using Aiursoft.Colossus.Models;
+﻿using Aiursoft.Colossus.Data;
+using Aiursoft.Colossus.Models;
 using Aiursoft.Colossus.Models.HomeViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
@@ -21,6 +22,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly SignInManager<ColossusUser> _signInManager;
         private readonly UserManager<ColossusUser> _userManager;
         private readonly ServiceLocation _serviceLocation;
+        private readonly ColossusDbContext _dbContext;
         private const long _30M = 30 * 1024 * 1024;
 
         public HomeController(
@@ -28,13 +30,15 @@ namespace Aiursoft.Colossus.Controllers
             StorageService storageService,
             SignInManager<ColossusUser> signInManager,
             UserManager<ColossusUser> userManager,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            ColossusDbContext dbContext)
         {
             _configuration = configuration;
             _storageService = storageService;
             _signInManager = signInManager;
             _userManager = userManager;
             _serviceLocation = serviceLocation;
+            _dbContext = dbContext;
         }
 
         [AiurForceAuth("", "", justTry: true)]
@@ -67,16 +71,23 @@ namespace Aiursoft.Colossus.Controllers
             }
             var user = await GetCurrentUserAsync();
             var day = 3;
+            var file = Request.Form.Files.First();
+            var model = await _storageService.SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), day);
             if (user != null)
             {
                 day = 30;
+                var record = new UploadRecord
+                {
+                    UploaderId = user.Id,
+                    FileId = model.FileKey
+                };
+                _dbContext.UploadRecords.Add(record);
+                await _dbContext.SaveChangesAsync();
             }
-            var file = Request.Form.Files.First();
-            var path = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), day);
             return Json(new
             {
                 message = "Uploaded!",
-                value = path
+                value = model.Path
             });
         }
 
