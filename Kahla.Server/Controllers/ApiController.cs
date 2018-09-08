@@ -514,8 +514,8 @@ namespace Kahla.Server.Controllers
             _dbContext.UserGroupRelations.Remove(joined);
             await _dbContext.SaveChangesAsync();
 
-            var islast = _dbContext.UserGroupRelations.Exists(t => t.GroupId == group.Id);
-            if (islast)
+            var any = _dbContext.UserGroupRelations.Any(t => t.GroupId == group.Id);
+            if (!any)
             {
                 _dbContext.GroupConversations.Remove(group);
                 await _dbContext.SaveChangesAsync();
