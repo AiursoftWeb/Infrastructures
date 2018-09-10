@@ -19,10 +19,11 @@ namespace Aiursoft.Pylon.Services
 
         public Task SendEmail(string target, string subject, string content)
         {
-            var client = new SmtpClient("42.120.226.4")
+            var client = new SmtpClient("smtp.mxhichina.com")
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"])
+                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"]),
+                EnableSsl = true
             };
             return client.SendMailAsync("service@aiursoft.com", target, subject, content);
         }
