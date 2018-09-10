@@ -17,23 +17,14 @@ namespace Aiursoft.Pylon.Services
             _configuration = configuration;
         }
 
-        public async Task SendEmail(string target, string subject, string content)
+        public Task SendEmail(string target, string subject, string content)
         {
             var client = new SmtpClient("smtp.mxhichina.com")
             {
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"])
             };
-            var mailMessage = new MailMessage
-            {
-                From = new MailAddress("service@aiursoft.com"),
-                Body = content,
-                Subject = subject,
-                IsBodyHtml = true,
-                BodyEncoding = Encoding.UTF8
-            };
-            mailMessage.To.Add(target);
-            await Task.Factory.StartNew(() => client.Send(mailMessage));
+            return client.SendMailAsync("service@aiursoft.com", target, subject, content);
         }
     }
 }
