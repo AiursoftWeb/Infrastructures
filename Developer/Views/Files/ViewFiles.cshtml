@@ -41,7 +41,7 @@
                                 <td>@file.RealFileName</td>
                                 <td>@string.Format("{0:N}", Math.Round(d: (decimal)file.JFileSize / 1024, decimals: 2))</td>
                                 <td>@file.DownloadTimes</td>
-                                <td>@((file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0)).ToShortDateString())</td>
+                                <td>@((file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
                                 @if (Model.OpenToRead)
                                 {
                                     <td>

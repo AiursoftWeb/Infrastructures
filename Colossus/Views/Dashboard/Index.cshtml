@@ -4,7 +4,6 @@
     ViewData["Title"] = Model.Title;
 }
 
-
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -50,10 +49,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>@fileRecord.DownloadTimes</td>
                             <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
-                            <td>@fileRecord.UploadTime.ToString("dd/MM/yyyy")</td>
-                            <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("dd/MM/yyyy"))</td>
+                            <td>@fileRecord.DownloadTimes</td>
+                            <td>@fileRecord.UploadTime.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                            <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
                         </tr>
                         }
                     </tbody>
