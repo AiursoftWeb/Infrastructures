@@ -31,6 +31,12 @@
                     <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>
                 </div>
             </form>
+            <label class="w-100 mt-3 mb-0">
+                @Localizer["By uploading, you agree to our "]
+                <a href="@Values.Footer["Terms"]" target="_blank">
+                    @Localizer["Terms"].
+                </a>
+            </label>
             @if (User.Identity.IsAuthenticated)
             {
                 <a class="btn btn-lg btn-secondary mt-4" asp-controller="Dashboard" asp-action="Index">View files dashboard</a>
