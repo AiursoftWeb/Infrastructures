@@ -30,7 +30,7 @@ namespace Aiursoft.WWW.Controllers
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: true)]
         public IActionResult GoRegister()
         {
-            throw new NotImplementedException();
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> AuthResult(AuthResultAddressModel model)
