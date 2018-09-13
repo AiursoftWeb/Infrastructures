@@ -40,6 +40,7 @@ namespace Kahla.Server.Data
             var groupRelations = this.UserGroupRelations
                 .Where(t => t.UserId == userId)
                 .Include(t => t.Group.Messages)
+                .Include(t => t.Group.Users)
                 .SwitchMap(t => t.Group)
                 .ToList();
             var myConversations = new List<Conversation>();

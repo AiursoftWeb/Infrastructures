@@ -416,6 +416,7 @@ namespace Kahla.Server.Controllers
             var user = await GetKahlaUser();
             var conversations = await _dbContext.MyConversations(user.Id);
             var target = conversations.SingleOrDefault(t => t.Id == id);
+#warning Bad Performance.
             target.DisplayName = target.GetDisplayName(user.Id);
             target.DisplayImage = target.GetDisplayImage(user.Id);
             if (target is PrivateConversation)
