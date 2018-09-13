@@ -50,6 +50,7 @@ namespace Kahla.Server.Models
         public KahlaUser User { get; set; }
 
         public int GroupId { get; set; }
+        [JsonIgnore]
         [ForeignKey(nameof(GroupId))]
         public GroupConversation Group { get; set; }
 
