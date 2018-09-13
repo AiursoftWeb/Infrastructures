@@ -68,13 +68,5 @@ namespace Aiursoft.Pylon.Models.Developer
         [Url]
         [Display(Name = "License Url")]
         public virtual string LicenseUrl { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:\\ d' days'\\ h' hours'}")]
-        [NotMapped]
-        public virtual TimeSpan TimeExists => DateTime.UtcNow - this.AppCreateTime;
-        public virtual string ToRegularTime()
-        {
-            return StringOperation.FormatTimeAgo(TimeExists);
-        }
     }
 }
