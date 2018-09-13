@@ -32,7 +32,7 @@ namespace Aiursoft.Stargate.Controllers
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
-            var lastReadTime = DateTime.Now;
+            var lastReadTime = DateTime.UtcNow;
             var channel = await _dbContext.Channels.FindAsync(model.Id);
             if (channel.ConnectKey != model.Key)
             {

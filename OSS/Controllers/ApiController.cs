@@ -249,7 +249,7 @@ namespace Aiursoft.OSS.Controllers
                 FileExtension = Path.GetExtension(file.FileName),
                 BucketId = targetBucket.BucketId,
                 AliveDays = model.AliveDays,
-                UploadTime = DateTime.Now
+                UploadTime = DateTime.UtcNow
             };
             //Ensure there not exists file with the same file name.
             lock (_obj)

@@ -101,30 +101,5 @@ namespace Aiursoft.Pylon.Services
             }
             return checkCode;
         }
-
-        public static string FormatTimeAgo(TimeSpan toFormat)
-        {
-            if (toFormat.TotalMinutes < 1)
-            {
-                return "Just now";
-            }
-            else if (toFormat.TotalHours < 1)
-            {
-                return (int)toFormat.TotalMinutes + " minutes ago";
-            }
-            else if (toFormat.TotalDays < 1)
-            {
-                return (int)toFormat.TotalHours + " hours ago";
-            }
-            else if (toFormat.TotalDays < 30)
-            {
-                return (int)toFormat.TotalDays + " day ago";
-            }
-            else
-            {
-                return (int)toFormat.TotalDays / 30 + " months ago";
-            }
-        }
     }
-
 }

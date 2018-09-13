@@ -23,7 +23,7 @@ namespace Aiursoft.Pylon.Models.OSS
 
         public int BucketId { get; set; }
 
-        public DateTime UploadTime { get; set; } = DateTime.Now;
+        public DateTime UploadTime { get; set; } = DateTime.UtcNow;
 
         public int AliveDays { get; set; } = -1;
 

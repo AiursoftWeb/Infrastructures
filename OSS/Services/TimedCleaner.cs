@@ -59,7 +59,7 @@ namespace Aiursoft.OSS.Services
         private async Task AllClean(OSSDbContext _dbContext)
         {
             var outdatedFiles = (await _dbContext.OSSFile.Include(t => t.BelongingBucket).ToListAsync())
-                .Where(t => t.UploadTime + new TimeSpan(t.AliveDays, 0, 0, 0) < DateTime.Now)
+                .Where(t => t.UploadTime + new TimeSpan(t.AliveDays, 0, 0, 0) < DateTime.UtcNow)
                 .ToList();
             foreach (var file in outdatedFiles)
             {

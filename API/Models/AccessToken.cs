@@ -13,8 +13,8 @@ namespace Aiursoft.API.Models
         public virtual string Value { get; set; }
         public virtual string ApplyAppId { get; set; }
 
-        public virtual DateTime CreateTime { get; set; } = DateTime.Now;
+        public virtual DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public virtual TimeSpan AliveTime { get; set; } = new TimeSpan(0, 20, 0);
-        public virtual bool IsAlive => DateTime.Now  < CreateTime + AliveTime;
+        public virtual bool IsAlive => DateTime.UtcNow < CreateTime + AliveTime;
     }
 }

@@ -36,7 +36,7 @@ namespace Aiursoft.Pylon.Models.Developer
         public virtual string AppIconAddress { get; set; }
         public virtual string AppDescription { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}")]
-        public virtual DateTime AppCreateTime { get; set; } = DateTime.Now;
+        public virtual DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
 
         public virtual Category AppCategory { get; set; }
         public virtual Platform AppPlatform { get; set; }
@@ -68,13 +68,5 @@ namespace Aiursoft.Pylon.Models.Developer
         [Url]
         [Display(Name = "License Url")]
         public virtual string LicenseUrl { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:\\ d' days'\\ h' hours'}")]
-        [NotMapped]
-        public virtual TimeSpan TimeExists => DateTime.Now - this.AppCreateTime;
-        public virtual string ToRegularTime()
-        {
-            return StringOperation.FormatTimeAgo(TimeExists);
-        }
     }
 }
