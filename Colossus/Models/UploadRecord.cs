@@ -14,6 +14,6 @@ namespace Aiursoft.Colossus.Models
         public ColossusUser Uploader { get; set; }
 
         public int FileId { get; set; }
-        public DateTime UploadTime { get; set; } = DateTime.Now;
+        public DateTime UploadTime { get; set; } = DateTime.UtcNow;
     }
 }

@@ -14,7 +14,7 @@ namespace Aiursoft.EE.Models
         public string Description { get; set; } = string.Empty;
         public string WhatYouWillLearn { get; set; } = string.Empty;
         public bool Finished { get; set; } = false;
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public double Price { get; set; } = 0;
         public bool DisplayOwnerInfo { get; set; }
 

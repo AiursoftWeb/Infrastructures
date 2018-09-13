@@ -9,7 +9,7 @@ namespace Aiursoft.EE.Models
     public class Subscription
     {
         public int Id { get; set; }
-        public DateTime SubscribTime { get; set; } = DateTime.Now;
+        public DateTime SubscribTime { get; set; } = DateTime.UtcNow;
         public bool Paid { get; set; } = false;
 
         public string UserId { get; set; }

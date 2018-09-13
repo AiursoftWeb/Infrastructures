@@ -88,7 +88,7 @@ namespace Aiursoft.OSS.Controllers
                 return NotFound();
             }
             secret.Used = true;
-            secret.UseTime = DateTime.Now;
+            secret.UseTime = DateTime.UtcNow;
             secret.UserIpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
             await _dbContext.SaveChangesAsync();
             var bucket = await _dbContext

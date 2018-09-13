@@ -20,7 +20,7 @@ namespace Kahla.Server.Models
         [ForeignKey(nameof(SenderId))]
         public KahlaUser Sender { get; set; }
 
-        public DateTime SendTime { get; set; } = DateTime.Now;
+        public DateTime SendTime { get; set; } = DateTime.UtcNow;
         public string Content { get; set; }
         public bool Read { get; set; } = false;
     }

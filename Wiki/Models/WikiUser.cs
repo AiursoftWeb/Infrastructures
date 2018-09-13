@@ -30,7 +30,7 @@ namespace Aiursoft.Wiki.Models
         public string ArticleTitle { get; set; }
         [JsonIgnore]
         public string ArticleContent { get; set; }
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(Comment.Article))]
         [JsonIgnore]
@@ -47,7 +47,7 @@ namespace Aiursoft.Wiki.Models
         [Key]
         public int CommentId { get; set; }
         public string CommentContent { get; set; }
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
 
         public int ArticleId { get; set; }
         [ForeignKey(nameof(ArticleId))]

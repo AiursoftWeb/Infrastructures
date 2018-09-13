@@ -333,7 +333,7 @@ namespace Kahla.Server.Controllers
             {
                 var relation = await _dbContext.UserGroupRelations
                     .SingleOrDefaultAsync(t => t.UserId == user.Id && t.GroupId == target.Id);
-                relation.ReadTimeStamp = DateTime.Now;
+                relation.ReadTimeStamp = DateTime.UtcNow;
             }
             await _dbContext.SaveChangesAsync();
             return Json(new AiurCollection<Message>(allMessages)

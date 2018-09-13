@@ -22,7 +22,7 @@ namespace Kahla.Server.Models
         [InverseProperty(nameof(Message.Conversation))]
         public IEnumerable<Message> Messages { get; set; }
 
-        public DateTime ConversationCreateTime { get; set; } = DateTime.Now;
+        public DateTime ConversationCreateTime { get; set; } = DateTime.UtcNow;
 
         [NotMapped]
         public string DisplayName { get; set; }
@@ -43,7 +43,7 @@ namespace Kahla.Server.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateTime JoinTime { get; set; } = DateTime.Now;
+        public DateTime JoinTime { get; set; } = DateTime.UtcNow;
 
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]

@@ -325,11 +325,11 @@ namespace Aiursoft.API.Controllers
                 return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
             }
             //limit the sending frenquency to 3 minutes.
-            if (DateTime.Now > useremail.LastSendTime + new TimeSpan(0, 3, 0))
+            if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 3, 0))
             {
                 var token = Guid.NewGuid().ToString("N");
                 useremail.ValidateToken = token;
-                useremail.LastSendTime = DateTime.Now;
+                useremail.LastSendTime = DateTime.UtcNow;
                 await _dbContext.SaveChangesAsync();
                 var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
                 {

@@ -33,7 +33,7 @@ namespace Aiursoft.API.Controllers
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,
-                ServerTime = DateTime.Now,
+                ServerTime = DateTime.UtcNow,
                 Code  = ErrorType.Success,
                 Message = "Server started successfully!",
                 Local = _localizer["en"],

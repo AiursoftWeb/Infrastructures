@@ -18,7 +18,7 @@ namespace Aiursoft.Stargate.Data
         {
             try
             {
-                _memoryContext.Messages.RemoveAll(t => t.CreateTime < DateTime.Now - new TimeSpan(0, 1, 0));
+                _memoryContext.Messages.RemoveAll(t => t.CreateTime < DateTime.UtcNow - new TimeSpan(0, 1, 0));
                 _dbContext.Channels.RemoveRange(_dbContext.Channels.ToList().Where(t => !t.IsAlive()));
                 await _dbContext.SaveChangesAsync();
             }

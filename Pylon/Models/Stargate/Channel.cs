@@ -13,9 +13,9 @@ namespace Aiursoft.Pylon.Models.Stargate
         public int Id { get; set; }
         public string Description { get; set; }
         public string ConnectKey { get; set; }
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public TimeSpan LifeTime { get; set; } = new TimeSpan(days: 0, hours: 23, minutes: 59, seconds: 59);
-        public bool IsAlive() => DateTime.Now < CreateTime + LifeTime;
+        public bool IsAlive() => DateTime.UtcNow < CreateTime + LifeTime;
 
         public string AppId { get; set; }
         [ForeignKey(nameof(AppId))]

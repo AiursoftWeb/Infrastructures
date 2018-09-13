@@ -62,7 +62,7 @@ namespace Aiursoft.Pylon.Models
         public string CurrentAppSecret { get; private set; } = string.Empty;
         public async Task<string> AccessToken(IServiceScopeFactory _scopeFactory)
         {
-            if (DateTime.Now > _accessTokenDeadTime)
+            if (DateTime.UtcNow > _accessTokenDeadTime)
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {

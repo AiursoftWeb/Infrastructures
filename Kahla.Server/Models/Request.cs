@@ -22,7 +22,7 @@ namespace Kahla.Server.Models
         [JsonIgnore]
         public KahlaUser Target { get; set; }
 
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public bool Completed { get; set; } = false;
     }
 }

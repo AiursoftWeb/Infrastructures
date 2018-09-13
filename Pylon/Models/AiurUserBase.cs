@@ -44,7 +44,7 @@ namespace Aiursoft.Pylon.Models
         [JsonProperty]
         public virtual string PreferedLanguage { get; set; } = "UnSet";
         [JsonProperty]
-        public virtual DateTime AccountCreateTime { get; set; } = DateTime.Now;
+        public virtual DateTime AccountCreateTime { get; set; } = DateTime.UtcNow;
 
         [JsonProperty]
         public override bool EmailConfirmed { get; set; }
