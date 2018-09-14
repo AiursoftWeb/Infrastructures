@@ -239,25 +239,27 @@
                     App Grant History
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <thead>
-                            <tr>
-                                <th>User Open Id</th>
-                                <th>User Name</th>
-                                <th>Grant Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var grant in Model.Grants)
-                            {
+                    <div class="table-responsive">
+                        <table class="table table-striped datatable">
+                            <thead>
                                 <tr>
-                                    <td>@grant.UserInfo.Id</td>
-                                    <td>@grant.UserInfo.NickName</td>
-                                    <td>@Html.DisplayFor(t => grant.GrantTime)</td>
+                                    <th>User Open Id</th>
+                                    <th>User Name</th>
+                                    <th>Grant Time</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var grant in Model.Grants)
+                                {
+                                    <tr>
+                                        <td>@grant.UserInfo.Id</td>
+                                        <td>@grant.UserInfo.NickName</td>
+                                        <td>@Html.DisplayFor(t => grant.GrantTime)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="card mb-3">
@@ -266,33 +268,35 @@
                     Object Storage Settings
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped datatable">
-                        <thead>
-                            <tr>
-                                <th>Bucket ID</th>
-                                <th>Bucket Name</th>
-                                <th>Files count</th>
-                                <th style="width: 460px">Operation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var buc in Model.Buckets)
-                            {
+                    <div class="table-responsive">
+                        <table class="table table-striped datatable">
+                            <thead>
                                 <tr>
-                                    <td>@buc.BucketId</td>
-                                    <td>@buc.BucketName</td>
-                                    <td>@buc.FileCount</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-warning">Edit</a>
-                                            <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger">Delete</a>
-                                            <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info">View Files</a>
-                                        </div>
-                                    </td>
+                                    <th>Bucket ID</th>
+                                    <th>Bucket Name</th>
+                                    <th>Files count</th>
+                                    <th style="width: 460px">Operation</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var buc in Model.Buckets)
+                                {
+                                    <tr>
+                                        <td>@buc.BucketId</td>
+                                        <td>@buc.BucketName</td>
+                                        <td>@buc.FileCount</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-warning">Edit</a>
+                                                <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger">Delete</a>
+                                                <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info">View Files</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@Model.AppId" class="btn btn-success">Create New Bucket</a>
                     <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">Back to list</a>
                 </div>
