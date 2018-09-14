@@ -415,7 +415,11 @@ namespace Kahla.Server.Controllers
         {
             var user = await GetKahlaUser();
             var conversations = await _dbContext.MyConversations(user.Id);
-            var target = await _dbContext.Conversations.SingleOrDefaultAsync(t => t.Id == id);
+            var target = conversations.SingleOrDefault(t => t.Id == id);
+            if(target==null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Could not find target conversation in your friends.");
+            }
             target.DisplayName = target.GetDisplayName(user.Id);
             target.DisplayImage = target.GetDisplayImage(user.Id);
             if (target is PrivateConversation)
