@@ -416,7 +416,7 @@ namespace Kahla.Server.Controllers
             var user = await GetKahlaUser();
             var conversations = await _dbContext.MyConversations(user.Id);
             var target = conversations.SingleOrDefault(t => t.Id == id);
-            if(target==null)
+            if (target == null)
             {
                 return this.Protocal(ErrorType.NotFound, "Could not find target conversation in your friends.");
             }
