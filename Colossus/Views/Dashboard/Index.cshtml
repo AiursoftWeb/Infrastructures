@@ -18,45 +18,47 @@
         </div>
         <div class="card-body">
             <div class="col-xs-12">
-                <table class="table-responsive table table-striped datatable">
-                    <thead>
-                        <tr>
-                            <th>File Name</th>
-                            <th>Open to upload</th>
-                            <th>Size(KB)</th>
-                            <th>Download Time</th>
-                            <th>Upload Time</th>
-                            <th>Deadline</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var fileRecord in Model.Files)
-                        {
-                        <tr>
-                            <td>@fileRecord.RealFileName</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <a href="@fileRecord.InternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            More
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="@fileRecord.InternetPath" target="_blank">Open</a>
-                                            <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@fileRecord.InternetPath">Copy link</a>
-                                            <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@fileRecord.FileKey" target="_blank">Get One-time link</a>
+                <div class="table-responsive">
+                    <table class="table table-striped datatable">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Open to upload</th>
+                                <th>Size(KB)</th>
+                                <th>Download Time</th>
+                                <th>Upload Time</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var fileRecord in Model.Files)
+                            {
+                                <tr>
+                                    <td>@fileRecord.RealFileName</td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <a href="@fileRecord.InternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    More
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="@fileRecord.InternetPath" target="_blank">Open</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@fileRecord.InternetPath">Copy link</a>
+                                                    <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@fileRecord.FileKey" target="_blank">Get One-time link</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
-                            <td>@fileRecord.DownloadTimes</td>
-                            <td>@fileRecord.UploadTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                            <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                                    </td>
+                                    <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
+                                    <td>@fileRecord.DownloadTimes</td>
+                                    <td>@fileRecord.UploadTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                    <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col-md-12 margin-top-30">
                     <a asp-controller="Home" asp-action="Index" class="btn btn-success">Upload new file</a>
                 </div>
