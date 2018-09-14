@@ -69,6 +69,18 @@ namespace Kahla.Server.Controllers
             _userService = userService;
         }
 
+        public IActionResult Index()
+        {
+            return Json(new
+            {
+                Code = ErrorType.Success,
+                Message = "Welcome to Aiursoft Kahla API!",
+                ServerTime = DateTime.Now,
+                UTCTime = DateTime.UtcNow,
+                Authenticated = User.Identity.IsAuthenticated
+            });
+        }
+
         public IActionResult Version()
         {
             return Json(new VersionViewModel
