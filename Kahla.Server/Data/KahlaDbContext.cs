@@ -38,6 +38,7 @@ namespace Kahla.Server.Data
                 .Include(t => t.Messages)
                 .ToListAsync();
             var groupRelations = this.UserGroupRelations
+                .AsNoTracking()
                 .Where(t => t.UserId == userId)
                 .Include(t => t.Group.Messages)
                 .Include(t => t.Group.Users)

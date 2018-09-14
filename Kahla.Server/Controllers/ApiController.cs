@@ -415,8 +415,7 @@ namespace Kahla.Server.Controllers
         {
             var user = await GetKahlaUser();
             var conversations = await _dbContext.MyConversations(user.Id);
-            var target = conversations.SingleOrDefault(t => t.Id == id);
-#warning Bad Performance.
+            var target = await _dbContext.Conversations.SingleOrDefaultAsync(t => t.Id == id);
             target.DisplayName = target.GetDisplayName(user.Id);
             target.DisplayImage = target.GetDisplayImage(user.Id);
             if (target is PrivateConversation)
@@ -432,6 +431,13 @@ namespace Kahla.Server.Controllers
             else if (target is GroupConversation)
             {
                 var gtarget = target as GroupConversation;
+                var relations = await _dbContext
+                    .UserGroupRelations
+                    .AsNoTracking()
+                    .Include(t => t.User)
+                    .Where(t => t.GroupId == gtarget.Id)
+                    .ToListAsync();
+                gtarget.Users = relations;
                 return Json(new AiurValue<GroupConversation>(gtarget)
                 {
                     Code = ErrorType.Success,
