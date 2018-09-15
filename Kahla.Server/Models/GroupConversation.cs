@@ -31,7 +31,7 @@ namespace Kahla.Server.Models
             {
                 return new Message
                 {
-                    Content = $"You have successfully joined {this.GroupName}!",
+                    Content = null,//$"You have successfully joined {this.GroupName}!",
                     SendTime = this.ConversationCreateTime
                 };
             }

@@ -75,6 +75,7 @@ namespace Kahla.Server.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Kahla API!",
+                WikiPath = _serviceLocation.Wiki,
                 ServerTime = DateTime.Now,
                 UTCTime = DateTime.UtcNow,
                 Authenticated = User.Identity.IsAuthenticated

@@ -33,7 +33,7 @@ namespace Kahla.Server.Models
             {
                 return new Message
                 {
-                    Content = "You are friends. Start chatting now!",
+                    Content = null,//"You are friends. Start chatting now!",
                     SendTime = this.ConversationCreateTime
                 };
             }
