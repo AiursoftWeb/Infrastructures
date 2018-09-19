@@ -9,6 +9,7 @@ namespace Kahla.Server.Models.ApiAddressModels
     public class SearchFriendsAddressModel
     {
         [MinLength(3)]
+        [Required]
         public string NickName { get; set; }
     }
 }

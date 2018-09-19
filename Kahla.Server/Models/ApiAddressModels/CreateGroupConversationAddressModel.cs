@@ -10,7 +10,8 @@ namespace Kahla.Server.Models.ApiAddressModels
     public class CreateGroupConversationAddressModel
     {
         [Required]
-        [StringLength(maximumLength: 25, MinimumLength = 3)]
+        [MinLength(3)]
+        [MaxLength(25)]
         public string GroupName { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Kahla.Server.Models.ApiAddressModels
     public class SearchGroupAddressModel
     {
         [MinLength(3)]
+        [Required]
         public string GroupName { get; set; }
     }
 }
