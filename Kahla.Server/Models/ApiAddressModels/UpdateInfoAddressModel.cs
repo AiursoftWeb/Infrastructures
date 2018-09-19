@@ -8,6 +8,7 @@ namespace Kahla.Server.Models.ApiAddressModels
 {
     public class UpdateInfoAddressModel
     {
+        [Required]
         [MaxLength(20)]
         public virtual string NickName { get; set; }
         [MaxLength(80)]
