@@ -317,6 +317,22 @@ namespace Kahla.Server.Controllers
             });
         }
 
+        [AiurForceAuth]
+        public async Task<IActionResult> SearchGroup(SearchGroupAddressModel model)
+        {
+            var groups = await _dbContext
+                .GroupConversations
+                .AsNoTracking()
+                .Where(t => t.GroupName.ToLower().Contains(model.GroupName.ToLower()))
+                .ToListAsync();
+
+            return Json(new AiurCollection<GroupConversation>(groups)
+            {
+                Code = ErrorType.Success,
+                Message = "Search result is shown."
+            });
+        }
+
         [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> GetMessage([Required]int id, int take = 15)
         {
