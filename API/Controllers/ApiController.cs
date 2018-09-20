@@ -18,7 +18,6 @@ using Aiursoft.Pylon.Models.API.ApiAddressModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
-using Aiursoft.API.Attributes;
 using Aiursoft.API.Models;
 using Aiursoft.API.Services;
 using Aiursoft.API.Data;
@@ -150,12 +149,12 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [ForceValidateAccessToken]
         public async Task<IActionResult> AllUserGranted(string accessToken)
         {
             var target = await _dbContext.AccessToken
                 .SingleOrDefaultAsync(t => t.Value == accessToken);
-
+            if (target == null || !target.IsAlive)
+                return this.Protocal(ErrorType.Unauthorized, "We can not validate your access token!");
             var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
             var model = new AllUserGrantedViewModel
             {
@@ -171,11 +170,12 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        [ForceValidateAccessToken]
         public async Task<IActionResult> DropGrants(string accessToken)
         {
             var target = await _dbContext.AccessToken
                 .SingleOrDefaultAsync(t => t.Value == accessToken);
+            if (target == null || !target.IsAlive)
+                return this.Protocal(ErrorType.Unauthorized, "We can not validate your access token!");
             _dbContext.LocalAppGrant.Delete(t => t.AppID == target.ApplyAppId);
             await _dbContext.SaveChangesAsync();
             return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");

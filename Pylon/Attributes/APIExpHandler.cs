@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Attributes
 {
-    public class APIExpHandler: ExceptionFilterAttribute
+    public class APIExpHandler : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
         {
@@ -25,6 +25,10 @@ namespace Aiursoft.Pylon.Attributes
                     };
                     context.ExceptionHandled = true;
                     context.Result = new JsonResult(arg);
+                    break;
+                case AiurAPIModelException exp:
+                    context.ExceptionHandled = true;
+                    context.Result = new JsonResult(new AiurProtocal { Code = exp.Code, Message = exp.Message });
                     break;
             }
         }

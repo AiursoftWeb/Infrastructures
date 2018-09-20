@@ -22,11 +22,12 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
-using Aiursoft.API.Attributes;
-using Aiursoft.API.Models.UserViewModels;
 using Microsoft.Extensions.Configuration;
 using static Aiursoft.Pylon.Services.ExtendMethods;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Exceptions;
+using Aiursoft.API.Models.UserViewModels;
 
 namespace Aiursoft.API.Controllers
 {
@@ -41,6 +42,7 @@ namespace Aiursoft.API.Controllers
         private readonly AiurSMSSender _smsSender;
         private readonly DeveloperApiService _developerApiService;
         private readonly ServiceLocation _serviceLocation;
+        private readonly GrantChecker _grantChecker;
 
         public UserController(
             UserManager<APIUser> userManager,
@@ -51,7 +53,8 @@ namespace Aiursoft.API.Controllers
             AiurEmailSender emailSender,
             AiurSMSSender smsSender,
             DeveloperApiService developerApiService,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            GrantChecker granchChecker)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -62,67 +65,34 @@ namespace Aiursoft.API.Controllers
             _smsSender = smsSender;
             _developerApiService = developerApiService;
             _serviceLocation = serviceLocation;
+            _grantChecker = granchChecker;
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ChangeBasicInfo)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to change users' basic info.");
-            }
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (!string.IsNullOrEmpty(model.NewNickName))
-            {
-                targetUser.NickName = model.NewNickName;
-            }
+                user.NickName = model.NewNickName;
             if (!string.IsNullOrEmpty(model.NewIconAddress))
-            {
-                targetUser.HeadImgUrl = model.NewIconAddress;
-            }
+                user.HeadImgUrl = model.NewIconAddress;
             if (!string.Equals(model.NewBio, "Not_Mofified"))
-            {
-                targetUser.Bio = model.NewBio;
-            }
+                user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
-            return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's nickname!" });
+            return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<JsonResult> ChangePassword(ChangePasswordAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ChangePassword)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to change users' password.");
-            }
-            var result = await _userManager.ChangePasswordAsync(targetUser, model.OldPassword, model.NewPassword);
-            await _userManager.UpdateAsync(targetUser);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePassword);
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's password!" });
+                return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully " });
             }
             else
             {
@@ -130,91 +100,41 @@ namespace Aiursoft.API.Controllers
             }
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            if (targetUser == null)
-            {
-                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ViewPhoneNumber)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to view users' phone number.");
-            }
-            return Json(new AiurValue<string>(targetUser.PhoneNumber)
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
+            return Json(new AiurValue<string>(user.PhoneNumber)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's phone number."
             });
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            if (targetUser == null)
-            {
-                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ChangePhoneNumber)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to set users' phone number.");
-            }
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePhoneNumber);
             if (string.IsNullOrWhiteSpace(model.Phone))
             {
-                targetUser.PhoneNumber = string.Empty;
+                user.PhoneNumber = string.Empty;
             }
             else
             {
-                targetUser.PhoneNumber = model.Phone;
+                user.PhoneNumber = model.Phone;
             }
-            await _userManager.UpdateAsync(targetUser);
+            await _userManager.UpdateAsync(user);
             return this.Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
-        [ForceValidateAccessToken]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> ViewAllEmails(ViewAllEmailsAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
-            if (targetUser == null)
-            {
-                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            return Json(new AiurCollection<AiurUserEmail>(targetUser.Emails)
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
+            return Json(new AiurCollection<AiurUserEmail>(user.Emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
@@ -224,27 +144,13 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        [ForceValidateAccessToken]
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var user = await _userManager.FindByIdAsync(model.OpenId);
-            var emailexists = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.NewEmail);
-            if (emailexists != null)
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
+            var emailexists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress == model.NewEmail.ToLower());
+            if (emailexists)
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ConfirmEmail)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to bind new email!");
             }
             var mail = new UserEmail
             {
@@ -260,31 +166,13 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        [ForceValidateAccessToken]
         public async Task<IActionResult> DeleteEmail(DeleteEmailAddressModel model)
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var user = await _userManager.FindByIdAsync(model.OpenId);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.ThatEmail.ToLower());
             if (useremail == null)
             {
                 return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
-            }
-            if (useremail.OwnerId != user.Id)
-            {
-                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ConfirmEmail)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
             }
             _dbContext.UserEmails.Remove(useremail);
             await _dbContext.SaveChangesAsync();
@@ -294,15 +182,9 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        [ForceValidateAccessToken]
         public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
         {
-            var accessToken = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-
-            var app = await _developerApiService.AppInfoAsync(accessToken.ApplyAppId);
-            var user = await _userManager.FindByIdAsync(model.OpenId);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (useremail == null)
             {
@@ -315,14 +197,6 @@ namespace Aiursoft.API.Controllers
             if (useremail.Validated)
             {
                 return this.Protocal(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
-            }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == user.Id))
-            {
-                return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "This user did not grant your app!" });
-            }
-            if (!app.App.ConfirmEmail)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to send confirmation email!");
             }
             //limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 3, 0))

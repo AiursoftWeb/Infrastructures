@@ -51,6 +51,7 @@ namespace Aiursoft.API
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
+            services.AddScoped<GrantChecker>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
         }
