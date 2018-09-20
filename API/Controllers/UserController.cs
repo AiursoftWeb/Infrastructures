@@ -134,7 +134,8 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> ViewAllEmails(ViewAllEmailsAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
-            return Json(new AiurCollection<AiurUserEmail>(user.Emails)
+            var emails = _dbContext.UserEmails.Where(t => t.OwnerId == user.Id);
+            return Json(new AiurCollection<AiurUserEmail>(emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
