@@ -485,6 +485,7 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> CreateGroupConversation(CreateGroupConversationAddressModel model)
         {
             var user = await GetKahlaUser();
+            model.GroupName = model.GroupName.Trim().ToLower();
             var exsists = _dbContext.GroupConversations.Exists(t => t.GroupName == model.GroupName);
             if (exsists)
             {
