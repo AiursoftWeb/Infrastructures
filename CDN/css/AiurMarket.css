@@ -105,22 +105,11 @@ h1, h2, h3, h4, h5, h6 {
 
 header.masthead {
     position: relative;
-    background-color: #343a40;
     background: url(../images/simple-codelines.svg), #2b3137;
-    background-attachment: fixed;
+    background-position: center 10%;
     background-size: cover;
     padding-top: 8rem;
-    padding-bottom: 8rem
-}
-
-header.masthead .overlay {
-    position: absolute;
-    background-color: #212529;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: .3
+    padding-bottom: 8rem； 
 }
 
 header.masthead h1 {
