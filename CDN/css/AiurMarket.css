@@ -106,21 +106,10 @@ h1,h2,h3,h4,h5,h6 {
 header.masthead {
     position: relative;
     background-color: #343a40;
-    background: url(../images/bg-masthead.jpg) no-repeat center center;
-    background-attachment: fixed;
+    background: url(../images/simple-codelines.svg) no-repeat center center;
     background-size: cover;
     padding-top: 8rem;
     padding-bottom: 8rem
-}
-
-header.masthead .overlay {
-    position: absolute;
-    background-color: #212529;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: .3
 }
 
 header.masthead h1 {
@@ -186,26 +175,6 @@ header.masthead h1 {
 .testimonials .testimonial-item img {
     max-width: 12rem;
     box-shadow: 0 5px 5px 0 #adb5bd
-}
-
-.call-to-action {
-    position: relative;
-    background-color: #343a40;
-    background: url(../images/bg-masthead.jpg) no-repeat center center;
-    background-attachment: fixed;
-    background-size: cover;
-    padding-top: 7rem;
-    padding-bottom: 7rem
-}
-
-.call-to-action .overlay {
-    position: absolute;
-    background-color: #212529;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: .3
 }
 
 footer.footer {
