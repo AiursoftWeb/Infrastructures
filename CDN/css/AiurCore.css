@@ -3,7 +3,7 @@ html {
 }
 
 .bg-dark {
-    background-color: #24292e;
+    background-color: #24292e!important;
 }
 
 .jumbotron {
