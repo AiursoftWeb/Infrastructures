@@ -4,6 +4,10 @@ body {
     line-height: 1.56;
 }
 
+.bg-dark {
+    background-color: #24292e!important;
+}
+
 .container .text-muted {
     margin: 20px 0;
 }

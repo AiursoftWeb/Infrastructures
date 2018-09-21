@@ -2,10 +2,6 @@ html {
     font-size: 14px;
 }
 
-.bg-dark {
-    background-color: #24292e!important;
-}
-
 .jumbotron {
     padding: 6rem 1rem;
     background-color: #e9ecef;
