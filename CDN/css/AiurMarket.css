@@ -107,9 +107,8 @@ header.masthead {
     position: relative;
     background: url(../images/simple-codelines.svg), #2b3137;
     background-position: center 10%;
-    background-size: cover;
     padding-top: 8rem;
-    padding-bottom: 8rem； 
+    padding-bottom: 8rem;
 }
 
 header.masthead h1 {
