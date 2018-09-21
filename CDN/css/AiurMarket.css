@@ -1,6 +1,6 @@
 body {
     padding-top: 50px;
-    font-family: Lato,'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.56;
 }
 
@@ -91,25 +91,36 @@ body {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-.navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link .indicator {
+.navbar-collapse .navbar-nav>.nav-item.dropdown>.nav-link .indicator {
     position: absolute;
     top: 5px;
     left: 16px;
     font-size: 10px;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    font-family: Lato,'Helvetica Neue',Helvetica,Arial,sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700
 }
 
 header.masthead {
     position: relative;
     background-color: #343a40;
-    background: url(../images/simple-codelines.svg) no-repeat center center;
+    background: url(../images/simple-codelines.svg), #2b3137;
+    background-attachment: fixed;
     background-size: cover;
     padding-top: 8rem;
     padding-bottom: 8rem
+}
+
+header.masthead .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: .3
 }
 
 header.masthead h1 {
@@ -118,10 +129,9 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
     header.masthead {
-        padding-top:10rem;
+        padding-top: 10rem;
         padding-bottom: 10rem
     }
-
     header.masthead h1 {
         font-size: 3rem
     }
@@ -138,7 +148,7 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
     .showcase .showcase-text {
-        padding:7rem
+        padding: 7rem
     }
 }
 
@@ -175,6 +185,26 @@ header.masthead h1 {
 .testimonials .testimonial-item img {
     max-width: 12rem;
     box-shadow: 0 5px 5px 0 #adb5bd
+}
+
+.call-to-action {
+    position: relative;
+    background-color: #343a40;
+    background: url(../images/bg-masthead.jpg) no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 7rem;
+    padding-bottom: 7rem
+}
+
+.call-to-action .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: .3
 }
 
 footer.footer {
@@ -214,9 +244,9 @@ footer {
     padding-bottom: 3rem;
 }
 
-    footer p {
-        margin-bottom: .25rem;
-    }
+footer p {
+    margin-bottom: .25rem;
+}
 
 .box-shadow {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
