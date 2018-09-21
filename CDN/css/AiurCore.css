@@ -2,6 +2,10 @@ html {
     font-size: 14px;
 }
 
+.bg-dark {
+    background-color: #24292e;
+}
+
 .jumbotron {
     padding: 6rem 1rem;
     background-color: #e9ecef;
@@ -25,14 +29,14 @@ html {
     line-height: 45px;
 }
 
-    .aiur-scroll-to-top:focus, .aiur-scroll-to-top:hover {
-        color: white;
-    }
+.aiur-scroll-to-top:focus, .aiur-scroll-to-top:hover {
+    color: white;
+}
 
-    .aiur-scroll-to-top:hover {
-        background: #343a40;
-    }
+.aiur-scroll-to-top:hover {
+    background: #343a40;
+}
 
-    .aiur-scroll-to-top i {
-        font-weight: 800;
-    }
+.aiur-scroll-to-top i {
+    font-weight: 800;
+}
