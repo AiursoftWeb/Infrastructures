@@ -118,7 +118,7 @@ namespace Aiursoft.Account.Controllers
             var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
             return Json(result);
         }
-        
+
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> DeleteEmail([EmailAddress]string email)
@@ -281,6 +281,11 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var model = new ApplicationsViewModel(user);
+            var applications = await _userService.ViewGrantedAppsAsync(await _appsContainer.AccessToken(), user.Id);
+            foreach (var app in applications.Items)
+            {
+                _logger.LogInformation(app.AppID);
+            }
             return View(model);
         }
 

@@ -143,5 +143,17 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jresult;
         }
+
+        public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "ViewGrantedApps", new ViewGrantedAppsAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId
+            });
+            var result = await _http.Get(url, true);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<Grant>>(result);
+            return jresult;
+        }
     }
 }

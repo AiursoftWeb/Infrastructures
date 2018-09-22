@@ -242,16 +242,16 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [FileChecker]
-        public async Task<IActionResult> ChangeIcon(string AppId)
+        public async Task<IActionResult> ChangeIcon(string appId)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(ViewApp), new { id = AppId, JustHaveUpdated = true });
+                return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
             }
-            var appExists = await _dbContext.Apps.FindAsync(AppId);
+            var appExists = await _dbContext.Apps.FindAsync(appId);
             appExists.AppIconAddress = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(ViewApp), new { id = AppId, JustHaveUpdated = true });
+            return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
         }
     }
 }

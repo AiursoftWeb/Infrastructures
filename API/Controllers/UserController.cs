@@ -217,6 +217,20 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
         }
 
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> ViewGrantedApps(ViewGrantedAppsAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
+            var applications = await _dbContext.LocalAppGrant.Where(t => t.APIUserId == user.Id).ToListAsync();
+            return Json(new AiurCollection<AppGrant>(applications)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get all your granted apps!"
+            });
+        }
+
         public async Task<IActionResult> AllApps(string userId)
         {
             throw new NotImplementedException();
