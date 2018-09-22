@@ -9,20 +9,20 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public AccountViewModel() { }
-        public AccountViewModel(AccountUser user, int ActivePanel, string Title)
+        public AccountViewModel(AccountUser user, int activePanel, string title)
         {
-            this.Recover(user, ActivePanel, Title);
+            this.Recover(user, activePanel, title);
         }
 
         public virtual bool ModelStateValid { get; set; } = true;
         public virtual bool JustHaveUpdated { get; set; } = false;
 
-        public virtual void Recover(AccountUser user, int ActivePanel, string Title)
+        public virtual void Recover(AccountUser user, int activePanel, string title)
         {
             this.UserName = user.NickName;
             this.UserIconAddress = user.HeadImgUrl;
-            this.ActivePanel = ActivePanel;
-            this.Title = Title;
+            this.ActivePanel = activePanel;
+            this.Title = title;
         }
         public virtual string UserName { get; set; }
         public virtual string UserIconAddress { get; set; }

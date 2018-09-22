@@ -279,7 +279,9 @@ namespace Aiursoft.Account.Controllers
 
         public async Task<IActionResult> Applications()
         {
-            throw new InvalidOperationException();
+            var user = await GetCurrentUserAsync();
+            var model = new ApplicationsViewModel(user);
+            return View(model);
         }
 
         private async Task<AccountUser> GetCurrentUserAsync()
