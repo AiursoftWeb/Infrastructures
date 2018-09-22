@@ -41,7 +41,7 @@
                         <label class="ml-3">@app.AppName</label>
                         <p>
                             @app.AppDescription
-                            <button class="btn-sm btn btn-danger float-right mr-1" onclick="DropApp('@app.AppId')">Delete</button>
+                            <button class="btn-sm btn btn-danger float-right mr-1" onclick="DeleteGrant('@app.AppId')">Delete</button>
                         </p>
                         <span class="badge badge-success">@app.AppPlatform</span>
                         <span class="badge badge-warning">@app.AppCategory</span>
@@ -51,3 +51,6 @@
         </div>
     </div>
 </div>
+@section js{
+    <script src="~/js/site.js"></script>
+}

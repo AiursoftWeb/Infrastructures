@@ -155,5 +155,19 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var jresult = JsonConvert.DeserializeObject<AiurCollection<Grant>>(result);
             return jresult;
         }
+
+        public async Task<AiurProtocal> DropGrantedAppsAsync(string accessToken, string userId, string appId)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "DropGrantedApps", new { });
+            var form = new AiurUrl(string.Empty, new DropGrantedAppsAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId,
+                AppIdToDrop = appId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            return jresult;
+        }
     }
 }

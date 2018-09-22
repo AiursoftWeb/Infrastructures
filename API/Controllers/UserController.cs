@@ -230,6 +230,24 @@ namespace Aiursoft.API.Controllers
             });
         }
 
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> DropGrantedApps(DropGrantedAppsAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
+            var appToDelete = await _dbContext
+                .LocalAppGrant
+                .Where(t => t.APIUserId == user.Id)
+                .SingleOrDefaultAsync(t => t.AppID == model.AppIdToDrop);
+            if (appToDelete == null)
+            {
+                return this.Protocal(ErrorType.NotFound, $"Can not find target grant record with app with id: {model.AppIdToDrop}");
+            }
+            _dbContext.LocalAppGrant.Remove(appToDelete);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocal(ErrorType.Success, "Successfully deleted target app grant record!");
+        }
+
         public async Task<IActionResult> EmailConfirm(string userId, string code)
         {
             var user = await _dbContext

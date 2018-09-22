@@ -135,6 +135,16 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> DeleteGrant(string appId)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.DropGrantedAppsAsync(token,user.Id, appId);
+            return Json(result);
+        }
+
         public async Task<IActionResult> Avatar(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
