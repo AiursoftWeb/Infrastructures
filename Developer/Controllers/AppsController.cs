@@ -111,7 +111,7 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(ViewApp), new { id = _newApp.AppId });
         }
 
-        public async Task<IActionResult> ViewApp(string id, bool JustHaveUpdated = false)
+        public async Task<IActionResult> ViewApp(string id, bool justHaveUpdated = false)
         {
             var app = await _dbContext.Apps.FindAsync(id);
             if (app == null)
@@ -120,7 +120,7 @@ namespace Aiursoft.Developer.Controllers
             }
             var cuser = await GetCurrentUserAsync();
             var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _ossApiService, _appsContainer);
-            model.JustHaveUpdated = JustHaveUpdated;
+            model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
 
@@ -160,6 +160,7 @@ namespace Aiursoft.Developer.Controllers
             target.ConfirmEmail = _ChangePermission(target.ConfirmEmail, model.ConfirmEmail, ref permissionChanged);
             target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionChanged);
             target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionChanged);
+            target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangePassword, ref permissionChanged);
             if (permissionChanged)
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);

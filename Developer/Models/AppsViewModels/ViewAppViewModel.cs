@@ -21,26 +21,26 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewAppViewModel() { }
         public static async Task<ViewAppViewModel> SelfCreateAsync(
-            DeveloperUser User,
-            App ThisApp,
+            DeveloperUser user,
+            App thisApp,
             CoreApiService coreApiService,
             OSSApiService ossApiService,
             AppsContainer appsContainer)
         {
-            var model = new ViewAppViewModel(User, ThisApp);
-            await model.Recover(User, ThisApp, coreApiService, ossApiService, appsContainer);
+            var model = new ViewAppViewModel(user, thisApp);
+            await model.Recover(user, thisApp, coreApiService, ossApiService, appsContainer);
             return model;
         }
 
         public async Task Recover(
-            DeveloperUser User,
-            App ThisApp,
+            DeveloperUser user,
+            App thisApp,
             CoreApiService coreApiService,
             OSSApiService ossApiService,
             AppsContainer appsContainer)
         {
-            base.Recover(User, 1);
-            var token = await appsContainer.AccessToken(ThisApp.AppId, ThisApp.AppSecret);
+            base.Recover(user, 1);
+            var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
             var buckets = await ossApiService.ViewMyBucketsAsync(token);
             Buckets = buckets.Buckets;
@@ -49,32 +49,33 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             Grants = grants.Grants;
         }
 
-        private ViewAppViewModel(DeveloperUser User, App ThisApp) : base(User)
+        private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
         {
-            if (ThisApp.CreatorId != User.Id)
+            if (thisApp.CreatorId != user.Id)
             {
                 throw new InvalidOperationException("The app is not the user's app!");
             }
-            AppName = ThisApp.AppName;
-            AppDescription = ThisApp.AppDescription;
-            AppCategory = ThisApp.AppCategory;
-            AppPlatform = ThisApp.AppPlatform;
-            AppId = ThisApp.AppId;
-            AppSecret = ThisApp.AppSecret;
-            EnableOAuth = ThisApp.EnableOAuth;
-            ForceInputPassword = ThisApp.ForceInputPassword;
-            ForceConfirmation = ThisApp.ForceConfirmation;
-            DebugMode = ThisApp.DebugMode;
-            PrivacyStatementUrl = ThisApp.PrivacyStatementUrl;
-            LicenseUrl = ThisApp.LicenseUrl;
-            AppIconAddress = ThisApp.AppIconAddress;
-            AppDomain = ThisApp.AppDomain;
-            ViewOpenId = ThisApp.ViewOpenId;
-            ViewPhoneNumber = ThisApp.ViewPhoneNumber;
-            ChangePhoneNumber = ThisApp.ChangePhoneNumber;
-            ConfirmEmail = ThisApp.ConfirmEmail;
-            ChangeBasicInfo = ThisApp.ChangeBasicInfo;
-            ChangePassword = ThisApp.ChangePassword;
+            AppName = thisApp.AppName;
+            AppDescription = thisApp.AppDescription;
+            AppCategory = thisApp.AppCategory;
+            AppPlatform = thisApp.AppPlatform;
+            AppId = thisApp.AppId;
+            AppSecret = thisApp.AppSecret;
+            EnableOAuth = thisApp.EnableOAuth;
+            ForceInputPassword = thisApp.ForceInputPassword;
+            ForceConfirmation = thisApp.ForceConfirmation;
+            DebugMode = thisApp.DebugMode;
+            PrivacyStatementUrl = thisApp.PrivacyStatementUrl;
+            LicenseUrl = thisApp.LicenseUrl;
+            AppIconAddress = thisApp.AppIconAddress;
+            AppDomain = thisApp.AppDomain;
+            ViewOpenId = thisApp.ViewOpenId;
+            ViewPhoneNumber = thisApp.ViewPhoneNumber;
+            ChangePhoneNumber = thisApp.ChangePhoneNumber;
+            ConfirmEmail = thisApp.ConfirmEmail;
+            ChangeBasicInfo = thisApp.ChangeBasicInfo;
+            ChangePassword = thisApp.ChangePassword;
+            ChangeGrantInfo = thisApp.ChangeGrantInfo;
         }
 
         public virtual bool JustHaveUpdated { get; set; } = false;
@@ -111,6 +112,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ChangeBasicInfo { get; set; }
         [Display(Name = "Change user's password")]
         public bool ChangePassword { get; set; }
+        [Display(Name = "Change user's other applications' grant status")]
+        public bool ChangeGrantInfo { get; set; }
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
         public IEnumerable<Grant> Grants { get; set; }

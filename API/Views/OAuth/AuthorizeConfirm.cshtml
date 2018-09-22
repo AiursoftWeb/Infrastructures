@@ -40,6 +40,10 @@
                 {
                     <li><label asp-for="ChangePassword"></label></li>
                 }
+                @if (Model.ChangeGrantInfo)
+                {
+                    <li><label asp-for="ChangeGrantInfo"></label></li>
+                }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post">
                 <input asp-for="AppId" type="hidden" />
