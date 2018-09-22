@@ -54,6 +54,6 @@ namespace Kahla.Server.Models
         [ForeignKey(nameof(GroupId))]
         public GroupConversation Group { get; set; }
 
-        public DateTime ReadTimeStamp { get; set; }
+        public DateTime ReadTimeStamp { get; set; } = DateTime.UtcNow;
     }
 }
