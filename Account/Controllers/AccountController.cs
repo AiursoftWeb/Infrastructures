@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Services;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
+using System.Collections.Generic;
+using Aiursoft.Pylon.Models.Developer;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -30,6 +33,7 @@ namespace Aiursoft.Account.Controllers
         private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
         private readonly IConfiguration _configuration;
+        private readonly DeveloperApiService _developerApiService;
 
         public AccountController(
             UserManager<AccountUser> userManager,
@@ -40,7 +44,8 @@ namespace Aiursoft.Account.Controllers
             UserService userService,
             StorageService storageService,
             AppsContainer appsContainer,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            DeveloperApiService developerApiSerivce)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -51,6 +56,7 @@ namespace Aiursoft.Account.Controllers
             _storageService = storageService;
             _appsContainer = appsContainer;
             _configuration = configuration;
+            _developerApiService = developerApiSerivce;
         }
 
         public async Task<IActionResult> Index(bool? justHaveUpdated)
@@ -284,7 +290,8 @@ namespace Aiursoft.Account.Controllers
             var applications = await _userService.ViewGrantedAppsAsync(await _appsContainer.AccessToken(), user.Id);
             foreach (var app in applications.Items)
             {
-                _logger.LogInformation(app.AppID);
+                var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
+                model.Apps.Add(appInfo.App);
             }
             return View(model);
         }

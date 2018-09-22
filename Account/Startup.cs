@@ -16,6 +16,7 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
 
 namespace Aiursoft.Account
 {
@@ -43,6 +44,7 @@ namespace Aiursoft.Account
 
             services.AddAiursoftAuth<AccountUser>();
             services.AddScoped<UserService>();
+            services.AddScoped<DeveloperApiService>();
             services.AddTransient<AiurSMSSender>();
         }
 

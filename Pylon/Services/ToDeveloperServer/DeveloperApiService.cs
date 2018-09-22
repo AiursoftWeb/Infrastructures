@@ -22,23 +22,23 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
             _http = http;
         }
 
-        public async Task<AiurProtocal> IsValidAppAsync(string AppId, string AppSecret)
+        public async Task<AiurProtocal> IsValidAppAsync(string appId, string appSecret)
         {
             var url = new AiurUrl(_serviceLocation.Developer, "api", "IsValidApp", new IsValidateAppAddressModel
             {
-                AppId = AppId,
-                AppSecret = AppSecret
+                AppId = appId,
+                AppSecret = appSecret
             });
             var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return JResult;
         }
 
-        public async Task<AppInfoViewModel> AppInfoAsync(string AppId)
+        public async Task<AppInfoViewModel> AppInfoAsync(string appId)
         {
             var url = new AiurUrl(_serviceLocation.Developer, "api", "AppInfo", new AppInfoAddressModel
             {
-                AppId = AppId
+                AppId = appId
             });
             var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
