@@ -141,6 +141,10 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
+            if(_configuration["AccountAppId"] == appId)
+            {
+                return this.Protocal(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+            }
             var result = await _userService.DropGrantedAppsAsync(token,user.Id, appId);
             return Json(result);
         }
