@@ -33,18 +33,29 @@
             <div class="card-header">
                 Applications
             </div>
+            <div class="card-body">
+                <p>
+                    You have granted @Model.Apps.Count() application@(Model.Apps.Count() > 1 ? "s" : string.Empty) access to your account.
+                </p>
+            </div>
             <ul class="list-group list-group-flush">
                 @foreach (var app in Model.Apps)
                 {
                     <li class="list-group-item">
-                        <img class="rounded" src="@app.AppIconAddress?w=100&h=100" style="width:40px; height:40px;" />
-                        <label class="ml-3">@app.AppName</label>
-                        <p>
-                            @app.AppDescription
-                            <button class="btn-sm btn btn-danger float-right mr-1" onclick="DeleteGrant('@app.AppId')">Revoke</button>
-                        </p>
-                        <span class="badge badge-success">@app.AppPlatform</span>
-                        <span class="badge badge-warning">@app.AppCategory</span>
+                        <div class="row">
+                            <div class="col-10 d-flex">
+                                <img class="rounded mr-3" src="@app.AppIconAddress?w=100&h=100" style="width:40px; height:40px;" />
+                                <div class="d-block">
+                                    <h5>@app.AppName</h5>
+                                    <p>
+                                        @app.AppDescription
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn-sm btn btn-outline-secondary float-right mr-1" onclick="DeleteGrant('@app.AppId')">Revoke</button>
+                            </div>
+                        </div>
                     </li>
                 }
             </ul>
