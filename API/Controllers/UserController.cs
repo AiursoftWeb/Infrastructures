@@ -217,7 +217,6 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
         }
 
-        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> ViewGrantedApps(ViewGrantedAppsAddressModel model)
