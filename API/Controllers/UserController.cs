@@ -231,11 +231,6 @@ namespace Aiursoft.API.Controllers
             });
         }
 
-        public async Task<IActionResult> AllApps(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IActionResult> EmailConfirm(string userId, string code)
         {
             var user = await _dbContext
