@@ -30,6 +30,7 @@ namespace Aiursoft.Pylon.Services
                 From = new MailAddress("service@aiursoft.com"),
                 Body = content,
                 Subject = subject,
+                IsBodyHtml = true
             };
             message.To.Add(target);
             return client.SendMailAsync(message);
