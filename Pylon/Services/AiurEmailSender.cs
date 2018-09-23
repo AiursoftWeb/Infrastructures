@@ -22,10 +22,16 @@ namespace Aiursoft.Pylon.Services
             var client = new SmtpClient("smtp.mxhichina.com")
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"]),
-                EnableSsl = true
+                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"])
             };
-            return client.SendMailAsync("service@aiursoft.com", target, subject, content);
+            var message = new MailMessage
+            {
+                From = new MailAddress("service@aiursoft.com"),
+                Body = content,
+                Subject = subject,
+            };
+            message.To.Add(target);
+            return client.SendMailAsync(message);
         }
     }
 }
