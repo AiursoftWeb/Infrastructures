@@ -1,13 +1,13 @@
 var sendValidationEmail = function (mailAddress, id) {
     $('#' + id).attr('disabled', 'disabled');
-    $('#' + id).html('Sending...');
+    $('#' + id).html('Sending. Please wait...');
     $.get('/Account/SendEmail?email=' + mailAddress, function (data) {
         if (data.code === 0) {
             $('#' + id).attr('disabled', 'disabled');
-            $('#' + id).html('Email Sent to ' + mailAddress + '!');
+            $('#' + id).html('Email Sent!');
         } else {
             alert(data.message);
-            $('#' + id).html('Error');
+            $('#' + id).html('Error.');
         }
     });
 };
