@@ -28,6 +28,7 @@ using System.ComponentModel.DataAnnotations;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.API.Models.UserViewModels;
+using System.Net.Mail;
 
 namespace Aiursoft.API.Controllers
 {
@@ -211,8 +212,15 @@ namespace Aiursoft.API.Controllers
                     userId = user.Id,
                     code = token
                 });
-                await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
-                    $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+                try
+                {
+                    await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
+                        $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+                }
+                catch (SmtpException e)
+                {
+                    return this.Protocal(ErrorType.InvalidInput, e.Message);
+                }
             }
             return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
         }
