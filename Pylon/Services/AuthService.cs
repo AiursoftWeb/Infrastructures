@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
             UserManager<T> userManager,
             SignInManager<T> signInManager,
             OAuthService oauthService,
-            AppsContainer appsContainer) 
+            AppsContainer appsContainer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -57,6 +57,14 @@ namespace Aiursoft.Pylon.Services
             }
             await _signInManager.SignInAsync(current, isPersistent);
             return current;
+        }
+
+        public async Task<T> OnlyUpdate(T user)
+        {
+            var userinfo = await _oauthService.OpenIdToUserInfo(AccessToken: await _appsContainer.AccessToken(), openid: user.Id);
+            user.Update(userinfo);
+            await _userManager.UpdateAsync(user);
+            return user;
         }
     }
 }

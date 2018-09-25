@@ -28,12 +28,26 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
+    var convertToImage = function (key, callback) {
+        $.get('https://oss.aiursoft.com/api/viewonefile?filekey=' + key, callback);
+    };
+
     // Convert file key to file url
     $('*[data-file-key]').each(function (index, element) {
         var key = $(element).attr('data-file-key');
-        $.get('https://oss.aiursoft.com/api/viewonefile?filekey=' + key, function (data) {
+        convertToImage(key, function (data) {
             if (data.code === 0) {
                 $(element).attr('src', data.file.internetPath);
+                return;
+            }
+            if (data.code === -4) {
+                $.get('/Auth/Update', function (userdata) {
+                    console.log('Updated user data: ' + userdata.Value.headImgFileKey);
+                    convertToImage(userdata.Value.headImgFileKey, function (latestImage) {
+                        $(element).attr('src', latestImage.file.internetPath);
+                        return;
+                    });
+                });
             }
         });
     });
