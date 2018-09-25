@@ -216,7 +216,10 @@ namespace Aiursoft.OSS.Controllers
                 .OSSFile
                 .Include(t => t.BelongingBucket)
                 .SingleOrDefaultAsync(t => t.FileKey == model.FileKey);
-#warning May be NULL!
+            if (file == null || file.BelongingBucket == null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Could not find a valid file in OSS!");
+            }
             var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             file.JFileSize = new FileInfo(path).Length;
             file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
