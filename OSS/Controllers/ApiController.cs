@@ -322,23 +322,21 @@ namespace Aiursoft.OSS.Controllers
         {
             //Analyse app
             var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
-            var file = await _dbContext.OSSFile.FindAsync(model.FileKey);
-            if (bucket == null || file == null)
+            var file = await _dbContext
+                .OSSFile
+                .Include(t => t.BelongingBucket)
+                .SingleOrDefaultAsync(t => t.FileKey == model.FileKey);
+            if (file == null || file.BelongingBucket == null)
             {
                 return this.Protocal(ErrorType.NotFound, "We did not find that file in that bucket!");
             }
             //Security
-            if (bucket.BelongingAppId != app.AppId)
+            if (file.BelongingBucket.BelongingAppId != app.AppId)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you tried is not that app's bucket.");
             }
-            if (file.BucketId != bucket.BucketId)
-            {
-                return this.Protocal(ErrorType.Unauthorized, "The file and the bucket are both found but it is not in that bucket.");
-            }
             //Delete file in disk
-            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{bucket.BucketName}{_}{file.FileKey}.dat";
+            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             if (System.IO.File.Exists(path))
             {
                 System.IO.File.Delete(path);

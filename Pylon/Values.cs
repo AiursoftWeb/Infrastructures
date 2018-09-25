@@ -13,11 +13,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Pylon
 {
-
     public static class Values
     {
         public static string ProjectName = "Aiursoft";
-        public static int DefaultImageId = 10;
+        public static int DefaultImageId = 739;
         public static string LoadingImage = "https://cdn.aiursoft.com/images/loading.gif";
         public static string CorpPhoneNumber = "(+86) 8368-5000";
         public static string Schema = "https";

@@ -158,13 +158,12 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public async Task<AiurProtocal> DeleteFileAsync(string AccessToken, int FileKey, int BucketId)
+        public async Task<AiurProtocal> DeleteFileAsync(string AccessToken, int FileKey)
         {
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteFile", new { });
             var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
             {
                 AccessToken = AccessToken,
-                BucketId = BucketId,
                 FileKey = FileKey
             });
             var result = await _http.Post(url, form, true);

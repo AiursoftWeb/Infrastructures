@@ -29,6 +29,7 @@ using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.API.Models.UserViewModels;
 using System.Net.Mail;
+using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Aiursoft.API.Controllers
 {
@@ -44,6 +45,7 @@ namespace Aiursoft.API.Controllers
         private readonly DeveloperApiService _developerApiService;
         private readonly ServiceLocation _serviceLocation;
         private readonly GrantChecker _grantChecker;
+        private readonly OSSApiService _ossApiService;
 
         public UserController(
             UserManager<APIUser> userManager,
@@ -55,7 +57,8 @@ namespace Aiursoft.API.Controllers
             AiurSMSSender smsSender,
             DeveloperApiService developerApiService,
             ServiceLocation serviceLocation,
-            GrantChecker granchChecker)
+            GrantChecker granchChecker,
+            OSSApiService ossApiService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -67,6 +70,7 @@ namespace Aiursoft.API.Controllers
             _developerApiService = developerApiService;
             _serviceLocation = serviceLocation;
             _grantChecker = granchChecker;
+            _ossApiService = ossApiService;
         }
 
         [APIExpHandler]
@@ -75,11 +79,21 @@ namespace Aiursoft.API.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (!string.IsNullOrEmpty(model.NewNickName))
+            {
                 user.NickName = model.NewNickName;
+            }
             if (model.NewIconId != -1)
+            {
+                if(user.HeadImgFileKey != Values.DefaultImageId)
+                {
+                    await _ossApiService.DeleteFileAsync(model.AccessToken, user.HeadImgFileKey);
+                }
                 user.HeadImgFileKey = model.NewIconId;
+            }
             if (!string.Equals(model.NewBio, "Not_Mofified"))
+            {
                 user.Bio = model.NewBio;
+            }
             await _dbContext.SaveChangesAsync();
             return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }

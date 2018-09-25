@@ -138,7 +138,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            await _ossApiService.DeleteFileAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret), model.FileId, bucketInfo.BucketId);
+            await _ossApiService.DeleteFileAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret), model.FileId);
             return RedirectToAction(nameof(ViewFiles), new
             {
                 id = bucketInfo.BucketId
