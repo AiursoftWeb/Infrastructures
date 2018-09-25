@@ -216,7 +216,7 @@ namespace Aiursoft.OSS.Controllers
                 .OSSFile
                 .Include(t => t.BelongingBucket)
                 .SingleOrDefaultAsync(t => t.FileKey == model.FileKey);
-
+#warning May be NULL!
             var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             file.JFileSize = new FileInfo(path).Length;
             file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
