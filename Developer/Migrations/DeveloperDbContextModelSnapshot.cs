@@ -94,7 +94,7 @@ namespace Aiursoft.Developer.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("HeadImgUrl");
+                    b.Property<int>("HeadImgFileKey");
 
                     b.Property<bool>("LockoutEnabled");
 
