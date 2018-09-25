@@ -504,6 +504,15 @@ namespace Kahla.Server.Controllers
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"A group with name: {model.GroupName} was already exists!");
             }
+            var todayCreated = await _dbContext
+                .GroupConversations
+                .Where(t => t.OwnerId == user.Id)
+                .Where(t => t.ConversationCreateTime > DateTime.UtcNow - new TimeSpan(1, 0, 0, 0))
+                .CountAsync();
+            if (todayCreated > 4)
+            {
+                return this.Protocal(ErrorType.InvalidInput, "You have created too many groups today. Try it later!");
+            }
             var createdGroup = await _dbContext.CreateGroup(model.GroupName);
             var newRelationship = new UserGroupRelation
             {

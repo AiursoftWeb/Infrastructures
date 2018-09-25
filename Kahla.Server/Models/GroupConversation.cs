@@ -13,6 +13,9 @@ namespace Kahla.Server.Models
         public List<UserGroupRelation> Users { get; set; }
         public string GroupImage { get; set; }
         public string GroupName { get; set; }
+        public string OwnerId { get; set; }
+        [ForeignKey(nameof(OwnerId))]
+        public KahlaUser Owner { get; set; }
         public override string GetDisplayImage(string userId) => GroupImage;
         public override string GetDisplayName(string userId) => GroupName;
         public override int GetUnReadAmount(string userId)

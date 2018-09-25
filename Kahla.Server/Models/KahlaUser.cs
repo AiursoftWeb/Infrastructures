@@ -24,6 +24,10 @@ namespace Kahla.Server.Models
         public IEnumerable<UserGroupRelation> GroupsJoined { get; set; }
 
         [JsonIgnore]
+        [InverseProperty(nameof(GroupConversation.Owner))]
+        public IEnumerable<GroupConversation> GroupsCreated { get; set; }
+
+        [JsonIgnore]
         [InverseProperty(nameof(Message.Sender))]
         public IEnumerable<Message> MessagesSent { get; set; }
 
