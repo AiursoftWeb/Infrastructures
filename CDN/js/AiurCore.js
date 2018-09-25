@@ -27,11 +27,11 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 1000, 'easeInOutExpo');
         event.preventDefault();
     });
-    
+
     // Convert file key to file url
-    $('*[data-file-key]').each((index, element) => {
+    $('*[data-file-key]').each(function (index, element) {
         var key = $(element).attr('data-file-key');
-        $.get('https://oss.aiursoft.com/api/viewonefile?filekey=' + key, (data) => {
+        $.get('https://oss.aiursoft.com/api/viewonefile?filekey=' + key, function (data) {
             $(element).attr('src', data.file.internetPath);
         });
     });
