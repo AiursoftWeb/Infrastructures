@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Models
             Id = model.User.Id;
             NickName = model.User.NickName;
             Sex = model.User.Sex;
-            HeadImgUrl = model.User.HeadImgUrl;
+            HeadImgFileKey = model.User.HeadImgFileKey;
             PreferedLanguage = model.User.PreferedLanguage;
             AccountCreateTime = model.User.AccountCreateTime;
             UserName = model.User.Email;
@@ -39,8 +39,7 @@ namespace Aiursoft.Pylon.Models
         public virtual string NickName { get; set; }
         [JsonProperty]
         public virtual string Sex { get; set; }
-        [JsonProperty]
-        public virtual string HeadImgUrl { get; set; }
+        public virtual int HeadImgFileKey { get; set; }
         [JsonProperty]
         public virtual string PreferedLanguage { get; set; } = "UnSet";
         [JsonProperty]

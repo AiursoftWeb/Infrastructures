@@ -170,7 +170,8 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            cuser.HeadImgUrl = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 365);
+            var uploadedFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 365);
+            cuser.HeadImgFileKey = uploadedFile.FileKey;
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, "Not_Mofified");
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
