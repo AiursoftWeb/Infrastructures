@@ -20,12 +20,12 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public virtual void Recover(AccountUser user, int activePanel, string title)
         {
             this.UserName = user.NickName;
-            this.UserIconAddress = user.HeadImgUrl;
+            this.UserIconFileKey = user.HeadImgFileKey;
             this.ActivePanel = activePanel;
             this.Title = title;
         }
         public virtual string UserName { get; set; }
-        public virtual string UserIconAddress { get; set; }
+        public virtual int UserIconFileKey { get; set; }
         public virtual int ActivePanel { get; set; }
         public virtual string Title { get; set; }
     }

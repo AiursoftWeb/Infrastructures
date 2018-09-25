@@ -9,6 +9,5 @@ namespace Aiursoft.Pylon.Models.OSS.ApiAddressModels
     {
         public string AccessToken { get; set; }
         public int FileKey { get; set; }
-        public int BucketId { get; set; }
     }
 }

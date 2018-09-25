@@ -15,6 +15,6 @@ namespace Kahla.Server.Models.ApiAddressModels
         public virtual string Bio { get; set; }
         [Url]
         [MaxLength(180)]
-        public virtual string HeadImgUrl { get; set; }
+        public virtual int HeadImgKey { get; set; }
     }
 }

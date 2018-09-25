@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Kahla.Server.Models;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon;
 
 namespace Kahla.Server.Data
 {
@@ -129,7 +130,7 @@ namespace Kahla.Server.Data
             var newGroup = new GroupConversation
             {
                 GroupName = groupName,
-                GroupImage = $"{_serviceLocation.CDN}/images/appdefaulticon.png",
+                GroupImageKey = Values.DefaultImageId,
                 AESKey = Guid.NewGuid().ToString("N"),
                 OwnerId = creatorId
             };

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Aiursoft.API
 {
@@ -52,6 +53,7 @@ namespace Aiursoft.API
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();
+            services.AddScoped<OSSApiService>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
         }

@@ -9,7 +9,7 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
     {
         [MaxLength(20)]
         public string NewNickName { get; set; }
-        public string NewIconAddress { get; set; }
+        public int NewIconId { get; set; }
         [MaxLength(80)]
         public string NewBio { get; set; }
     }

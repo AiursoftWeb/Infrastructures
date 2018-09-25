@@ -63,10 +63,10 @@ namespace Aiursoft.Pylon.Services
             }
             return fileAddress;
         }
-        public async Task<string> SaveToOSS(IFormFile file, int bucketId, int aliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
+        public async Task<UploadFileViewModel> SaveToOSS(IFormFile file, int bucketId, int aliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
         {
             var model = await SaveToOSSWithModel(file, bucketId, aliveDays, options, accessToken, name, deleteLocal);
-            return model.Path;
+            return model;
         }
     }
     public enum SaveFileOptions

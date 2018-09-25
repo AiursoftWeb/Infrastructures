@@ -79,7 +79,7 @@ namespace Kahla.Server.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("HeadImgUrl");
+                    b.Property<int>("HeadImgFileKey");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -306,7 +306,7 @@ namespace Kahla.Server.Migrations
                 {
                     b.HasBaseType("Kahla.Server.Models.Conversation");
 
-                    b.Property<string>("GroupImage");
+                    b.Property<int>("GroupImageKey");
 
                     b.Property<string>("GroupName");
 

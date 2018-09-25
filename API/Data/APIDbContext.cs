@@ -46,7 +46,7 @@ namespace Aiursoft.API.Data
                 Email = firstUserName,
                 NickName = "Demo User",
                 PreferedLanguage = "en",
-                HeadImgUrl = $"{serviceLocation.CDN}/images/userdefaulticon.png",
+                HeadImgFileKey = Values.DefaultImageId,
                 PhoneNumber = "13312121212",
                 PhoneNumberConfirmed = true
             };

@@ -98,7 +98,8 @@ namespace Aiursoft.Developer.Controllers
             }
             else
             {
-                iconPath = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
+                var ossFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
+                iconPath = ossFile.Path;
             }
 
             var _newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
@@ -249,7 +250,8 @@ namespace Aiursoft.Developer.Controllers
                 return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
             }
             var appExists = await _dbContext.Apps.FindAsync(appId);
-            appExists.AppIconAddress = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
+            var ossFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 365);
+            appExists.AppIconAddress = ossFile.Path;
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
         }

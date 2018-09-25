@@ -15,7 +15,7 @@ namespace Aiursoft.Wiki.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -95,7 +95,7 @@ namespace Aiursoft.Wiki.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("HeadImgUrl");
+                    b.Property<int>("HeadImgFileKey");
 
                     b.Property<bool>("LockoutEnabled");
 
