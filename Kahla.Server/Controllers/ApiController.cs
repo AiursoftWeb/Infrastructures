@@ -514,7 +514,7 @@ namespace Kahla.Server.Controllers
             {
                 return this.Protocal(ErrorType.InvalidInput, "You have created too many groups today. Try it tomorrow!");
             }
-            var createdGroup = await _dbContext.CreateGroup(model.GroupName);
+            var createdGroup = await _dbContext.CreateGroup(model.GroupName, user.Id);
             var newRelationship = new UserGroupRelation
             {
                 UserId = user.Id,
