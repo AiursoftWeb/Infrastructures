@@ -42,8 +42,8 @@ $(document).ready(function () {
             }
             if (data.code === -4) {
                 $.get('/Auth/Update', function (userdata) {
-                    console.log('Updated user data: ' + userdata.Value.headImgFileKey);
-                    convertToImage(userdata.Value.headImgFileKey, function (latestImage) {
+                    console.log('Updated user data: ' + userdata.value.headImgFileKey);
+                    convertToImage(userdata.value.headImgFileKey, function (latestImage) {
                         $(element).attr('src', latestImage.file.internetPath);
                         return;
                     });
