@@ -81,7 +81,7 @@ namespace Aiursoft.Account.Controllers
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, string.Empty, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, -1, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -141,11 +141,11 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
-            if(_configuration["AccountAppId"] == appId)
+            if (_configuration["AccountAppId"] == appId)
             {
                 return this.Protocal(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
             }
-            var result = await _userService.DropGrantedAppsAsync(token,user.Id, appId);
+            var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
             return Json(result);
         }
 
@@ -172,7 +172,7 @@ namespace Aiursoft.Account.Controllers
             }
             var uploadedFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 365);
             cuser.HeadImgFileKey = uploadedFile.FileKey;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgUrl, "Not_Mofified");
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgFileKey, "Not_Mofified");
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }

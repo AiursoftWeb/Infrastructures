@@ -27,15 +27,15 @@ namespace Kahla.Server.Models
         [NotMapped]
         public string DisplayName { get; set; }
         [NotMapped]
-        public string DisplayImage { get; set; }
+        public int DisplayImage { get; set; }
 
 
         public abstract string GetDisplayName(string userId);
-        public abstract string GetDisplayImage(string userId);
+        public abstract int GetDisplayImage(string userId);
         public abstract int GetUnReadAmount(string userId);
         public abstract Message GetLatestMessage();
     }
-    
+
 
 
 

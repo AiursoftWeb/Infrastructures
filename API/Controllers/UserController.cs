@@ -76,8 +76,8 @@ namespace Aiursoft.API.Controllers
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (!string.IsNullOrEmpty(model.NewNickName))
                 user.NickName = model.NewNickName;
-            if (!string.IsNullOrEmpty(model.NewIconAddress))
-                user.HeadImgUrl = model.NewIconAddress;
+            if (model.NewIconId != -1)
+                user.HeadImgFileKey = model.NewIconId;
             if (!string.Equals(model.NewBio, "Not_Mofified"))
                 user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();

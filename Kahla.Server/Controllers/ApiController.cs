@@ -131,13 +131,14 @@ namespace Kahla.Server.Controllers
         [AiurForceAuth(directlyReject: true)]
         public async Task<IActionResult> UploadFile()
         {
-            string iconPath = string.Empty;
             var file = Request.Form.Files.First();
-            iconPath = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
-            return Json(new AiurValue<string>(iconPath)
+            var uploadedFile = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
+            return Json(new UploadFileViewModel
             {
                 Code = ErrorType.Success,
-                Message = "Successfully uploaded your file!"
+                Message = "Successfully uploaded your file!",
+                FileKey = uploadedFile.FileKey,
+                Path = uploadedFile.Path
             });
         }
 
@@ -174,13 +175,13 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> UpdateInfo(UpdateInfoAddressModel model)
         {
             var cuser = await GetKahlaUser();
-            if (!string.IsNullOrEmpty(model.HeadImgUrl))
+            if (model.HeadImgKey != -1)
             {
-                cuser.HeadImgUrl = model.HeadImgUrl;
+                cuser.HeadImgFileKey = model.HeadImgKey;
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgUrl, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return this.Protocal(ErrorType.Success, "Successfully set your personal info.");
         }
@@ -197,7 +198,7 @@ namespace Kahla.Server.Controllers
                 {
                     ConversationId = conversation.Id,
                     DisplayName = conversation.GetDisplayName(user.Id),
-                    DisplayImage = conversation.GetDisplayImage(user.Id),
+                    DisplayImageKey = conversation.GetDisplayImage(user.Id),
                     LatestMessage = conversation.GetLatestMessage().Content,
                     LatestMessageTime = conversation.GetLatestMessage().SendTime,
                     UnReadAmount = conversation.GetUnReadAmount(user.Id),

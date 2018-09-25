@@ -17,13 +17,13 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public virtual void Recover(DeveloperUser User, int ActivePanel)
         {
             this.NickName = User.NickName;
-            this.UserIconImageAddress = User.HeadImgUrl;
+            this.UserIconFileKey = User.HeadImgFileKey;
             this.ActivePanel = ActivePanel;
             this.AppCount = User.MyApps.Count();
             this.AllApps = User.MyApps;
         }
         public string NickName { get; set; }
-        public string UserIconImageAddress { get; set; }
+        public int UserIconFileKey { get; set; }
         public int ActivePanel { get; set; }
         public int AppCount { get; set; }
         public IEnumerable<App> AllApps { get; set; }

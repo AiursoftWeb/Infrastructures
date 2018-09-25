@@ -49,7 +49,7 @@ namespace Aiursoft.Developer.Data
                 Email = firstUserName,
                 NickName = "Demo User",
                 PreferedLanguage = "en",
-                HeadImgUrl = $"{serviceLocation.CDN}/images/userdefaulticon.png"
+                HeadImgFileKey = Values.DefaultImageId
             };
             usermanager.CreateAsync(newuser, firstUserPass).Wait();
 
@@ -60,7 +60,7 @@ namespace Aiursoft.Developer.Data
             };
             this.Apps.Add(newApp);
             this.SaveChanges();
-            
+
             logger.LogInformation("the developer database was successfully seeded!");
         }
     }
