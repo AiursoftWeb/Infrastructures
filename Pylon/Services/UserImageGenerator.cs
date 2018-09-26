@@ -13,9 +13,12 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly UserManager<T> _userManager;
-        public UserImageGenerator()
+        public UserImageGenerator(
+            ServiceLocation serviceLocation,
+            UserManager<T> userManager)
         {
-
+            _serviceLocation = serviceLocation;
+            _userManager = userManager;
         }
 
         public async Task<IHtmlContent> RenderUserImageAsync(string userName, int width = 20, int height = 20, string @class = "rounded")
