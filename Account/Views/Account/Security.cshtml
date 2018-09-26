@@ -29,13 +29,13 @@
             <div asp-validation-summary="All"></div>
         </div>
     }
-    <div class="col-md-6">
-    <div class="card mb-3">
-        <div class="card-header">
-            Change Password
-        </div>
-        <div class="card-body">
-            <div class="row">
+    <div class="col-md-6 pl-0">
+        <div class="card mb-3">
+            <div class="card-header">
+                Change Password
+            </div>
+            <div class="card-body">
+                <div class="row">
                     <form asp-controller="Account" asp-action="Security" method="post" class="col-md-12">
                         <div class="form-group">
                             <label asp-for="OldPassword"></label>
