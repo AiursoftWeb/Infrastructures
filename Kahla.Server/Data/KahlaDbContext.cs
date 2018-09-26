@@ -130,7 +130,7 @@ namespace Kahla.Server.Data
             var newGroup = new GroupConversation
             {
                 GroupName = groupName,
-                GroupImageKey = Values.DefaultImageId,
+                GroupImageKey = Values.DefaultGroupImageId,
                 AESKey = Guid.NewGuid().ToString("N"),
                 OwnerId = creatorId
             };
