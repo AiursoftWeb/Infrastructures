@@ -23,12 +23,18 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<IHtmlContent> RenderUserImageAsync(string userName, int width = 20, int height = 20, string @class = "rounded")
         {
-            var user = await _userManager.FindByNameAsync(userName);
-            var userImageKey = user?.HeadImgFileKey;
-            var url = _serviceLocation.OSS + "/download/fromkey/" + userImageKey + $"?w={width}&h={height}";
+            var url = await GetUserImageUrl(userName) + $"?w={width}&h={height}";
             var content = new HtmlContentBuilder();
             content.SetHtmlContent($"<img class='{@class}' src='{url}' style='width: {width}px; height: {height}px;' />");
             return content;
+        }
+
+        public async Task<string> GetUserImageUrl(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            var userImageKey = user?.HeadImgFileKey;
+            var url = _serviceLocation.OSS + "/download/fromkey/" + userImageKey;
+            return url;
         }
     }
 }
