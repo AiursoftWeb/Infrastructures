@@ -84,10 +84,10 @@ namespace Aiursoft.API.Controllers
             }
             if (model.NewIconId != -1)
             {
-                if(user.HeadImgFileKey != Values.DefaultImageId)
-                {
-                    await _ossApiService.DeleteFileAsync(model.AccessToken, user.HeadImgFileKey);
-                }
+                //if(user.HeadImgFileKey != Values.DefaultImageId)
+                //{
+                //    await _ossApiService.DeleteFileAsync(model.AccessToken, user.HeadImgFileKey);
+                //}
                 user.HeadImgFileKey = model.NewIconId;
             }
             if (!string.Equals(model.NewBio, "Not_Mofified"))
