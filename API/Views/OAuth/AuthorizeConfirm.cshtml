@@ -7,7 +7,7 @@
         <div class="card-header">Authorize Confirm</div>
         <div class="card-body">
             <div class="text-center">
-                <img class="rounded" style="width:100px;height:100px;" src="@Values.LoadingImage" data-file-key="@Model.UserIconId">
+                @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name, 100, 100)
             </div>
             <div class="text-center mt-4 mb-5">
                 <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>

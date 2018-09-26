@@ -2,10 +2,10 @@
 <div class="col-md-3" style="max-width:250px;">
     <div class="card mt-3 mb-3">
         <a class="card-body" href="@ServiceLocation.Account/Account/Avatar">
-            <img src="@Values.LoadingImage" data-file-key="@Model.UserIconFileKey" style="width:180px;height:183px;" data-toggle="tooltip" data-placement="bottom" title="Click to change avatar." />
+            @await UserImageGenerator.RenderUserImageAsync(Model.UserName, 100, 100)
         </a>
         <div class="card-footer">
-            <h5 class="text-center">@Model.UserName</h5>
+            <h5 class="text-center">@Model.UserNickName</h5>
         </div>
         <div class="card-footer">
             <i class="fa fa-envelope"></i>

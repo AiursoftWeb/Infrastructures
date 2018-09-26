@@ -15,7 +15,8 @@ namespace Aiursoft.EE.Models.ProfileViewModels
         {
             LeftContent = new SharedLeftContent
             {
-                UserName = user.NickName,
+                UserNickName = user.NickName,
+                UserName = user.UserName,
                 Email = user.Email,
                 UserIconFileKey = user.HeadImgFileKey,
                 UserId = user.Id,
@@ -52,6 +53,7 @@ namespace Aiursoft.EE.Models.ProfileViewModels
 
     public class SharedLeftContent
     {
+        public string UserNickName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public int UserIconFileKey { get; set; }

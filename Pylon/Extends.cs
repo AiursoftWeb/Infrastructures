@@ -156,7 +156,7 @@ namespace Aiursoft.Pylon
                     retry.Execute(() =>
                     {
                         // Migrate even in production level.
-                         context.Database.Migrate();
+                        context.Database.Migrate();
                         if (env.IsDevelopment())
                         {
                             try
@@ -190,6 +190,7 @@ namespace Aiursoft.Pylon
             services.AddScoped<StorageService>();
             services.AddScoped<CoreApiService>();
             services.AddScoped<OAuthService>();
+            services.AddScoped<UserImageGenerator<TUser>>();
             services.AddTransient<AuthService<TUser>>();
             return services;
         }

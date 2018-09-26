@@ -27,28 +27,4 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 1000, 'easeInOutExpo');
         event.preventDefault();
     });
-
-    //var convertToImage = function (key, callback) {
-    //    $.get('https://oss.aiursoft.com/api/viewonefile?filekey=' + key, callback);
-    //};
-
-    // Convert file key to file url
-    $('*[data-file-key]').each(function (index, element) {
-        var key = $(element).attr('data-file-key');
-        $(element).attr('src', 'https://oss.aiursoft.com/download/fromkey/' + key);
-        //convertToImage(key, function (data) {
-        //    if (data.code === 0) {
-        //        return;
-        //    }
-        //    if (data.code === -4) {
-        //        $.get('/Auth/Update', function (userdata) {
-        //            console.log('Updated user data: ' + userdata.value.headImgFileKey);
-        //            convertToImage(userdata.value.headImgFileKey, function (latestImage) {
-        //                $(element).attr('src', latestImage.file.internetPath);
-        //                return;
-        //            });
-        //        });
-        //    }
-        //});
-    });
 });

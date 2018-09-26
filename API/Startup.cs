@@ -54,6 +54,7 @@ namespace Aiursoft.API
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();
             services.AddScoped<OSSApiService>();
+            services.AddTransient<UserImageGenerator<APIUser>>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
         }
