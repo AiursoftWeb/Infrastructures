@@ -37,11 +37,30 @@ namespace Aiursoft.OSS.Controllers
             _configuration = configuration;
         }
 
+        private async Task<IActionResult> ReturnFile(string path, int h, int w, string realfileName, bool download)
+        {
+            try
+            {
+                if (StringOperation.IsImage(realfileName) && h > 0 && w > 0)
+                {
+                    return await this.AiurFile(await _imageCompresser.Compress(path, realfileName, w, h), realfileName, download);
+                }
+                else
+                {
+                    return await this.AiurFile(path, realfileName, download);
+                }
+            }
+            catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet]
         [Route(template: "/{BucketName}/{FileName}.{FileExtension}")]
         public async Task<IActionResult> DownloadFile(DownloadFileAddressModel model)
         {
-            var download = !string.IsNullOrWhiteSpace(model.sd);
+            var download = !string.IsNullOrWhiteSpace(model.SD);
             var targetBucket = await _dbContext.Bucket.SingleOrDefaultAsync(t => t.BucketName == model.BucketName);
             if (targetBucket == null || !targetBucket.OpenToRead)
                 return NotFound();
@@ -58,31 +77,17 @@ namespace Aiursoft.OSS.Controllers
             await _dbContext.SaveChangesAsync();
 
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{targetBucket.BucketName}{_}{targetFile.FileKey}.dat";
-            try
-            {
-                if (StringOperation.IsImage(targetFile.RealFileName) && model.h > 0 && model.w > 0)
-                {
-                    return await this.AiurFile(await _imageCompresser.Compress(path, targetFile.RealFileName, model.w, model.h), targetFile.RealFileName);
-                }
-                else
-                {
-                    return await this.AiurFile(path, targetFile.RealFileName, download);
-                }
-            }
-            catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
-            {
-                return NotFound();
-            }
+            return await ReturnFile(path, model.H, model.W, targetFile.RealFileName, download);
         }
 
         [HttpGet]
         public async Task<IActionResult> FromSecret(FromSecretAddressModel model)
         {
-            var download = !string.IsNullOrWhiteSpace(model.sd);
+            var download = !string.IsNullOrWhiteSpace(model.SD);
             var secret = await _dbContext
                 .Secrets
                 .Include(t => t.File)
-                .SingleOrDefaultAsync(t => t.Value == model.sec);
+                .SingleOrDefaultAsync(t => t.Value == model.Sec);
             if (secret == null || secret.Used)
             {
                 return NotFound();
@@ -96,21 +101,25 @@ namespace Aiursoft.OSS.Controllers
                 .SingleOrDefaultAsync(t => t.BucketId == secret.File.BucketId);
 
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{secret.File.FileKey}.dat";
-            try
-            {
-                if (StringOperation.IsImage(secret.File.RealFileName) && model.h > 0 && model.w > 0)
-                {
-                    return await this.AiurFile(await _imageCompresser.Compress(path, secret.File.RealFileName, model.w, model.h), secret.File.RealFileName);
-                }
-                else
-                {
-                    return await this.AiurFile(path, secret.File.RealFileName, download);
-                }
-            }
-            catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
+            return await ReturnFile(path, model.H, model.W, secret.File.RealFileName, download);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FromKey(FromKeyAddressModel model)
+        {
+            var download = !string.IsNullOrWhiteSpace(model.SD);
+            var file = await _dbContext.OSSFile.SingleOrDefaultAsync(t => t.FileKey == model.Id);
+            if (file == null)
             {
                 return NotFound();
             }
+            file.DownloadTimes++;
+            await _dbContext.SaveChangesAsync();
+            var bucket = await _dbContext
+                .Bucket
+                .SingleOrDefaultAsync(t => t.BucketId == file.BucketId);
+            var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{file.FileKey}.dat";
+            return await ReturnFile(path, model.H, model.W, file.RealFileName, download);
         }
     }
 }

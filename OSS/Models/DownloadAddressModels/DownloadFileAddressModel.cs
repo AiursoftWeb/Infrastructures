@@ -8,11 +8,11 @@ namespace Aiursoft.OSS.Models.DownloadAddressModels
 {
     public abstract class GetFileAddressModel
     {
-        public string sd { get; set; } = string.Empty;
+        public string SD { get; set; } = string.Empty;
         [Range(-1, 10000)]
-        public int w { get; set; } = -1;
+        public int W { get; set; } = -1;
         [Range(-1, 10000)]
-        public int h { get; set; } = -1;
+        public int H { get; set; } = -1;
     }
     public class DownloadFileAddressModel : GetFileAddressModel
     {
@@ -24,6 +24,11 @@ namespace Aiursoft.OSS.Models.DownloadAddressModels
     public class FromSecretAddressModel : GetFileAddressModel
     {
         [Required]
-        public string sec { get; set; }
+        public string Sec { get; set; }
+    }
+    public class FromKeyAddressModel : GetFileAddressModel
+    {
+        [Required]
+        public int Id { get; set; }
     }
 }
