@@ -3,6 +3,11 @@
     background-color: #24292e !important;
 }
 
+/* All market pages have a top nav bar. */
+body {
+    padding-top: 56px;
+}
+
 .container .text-muted {
     margin: 20px 0;
 }

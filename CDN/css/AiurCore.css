@@ -2,10 +2,6 @@ html {
     font-size: 14px;
 }
 
-body.fixed-nav {
-    padding-top: 56px
-}
-
 .jumbotron {
     padding: 6rem 1rem;
     background-color: #e9ecef;
