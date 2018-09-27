@@ -1,11 +1,6 @@
-body {
-    padding-top: 50px;
-    font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.56;
-}
-
+/*Override bootstrap bg-dark to make it more modern*/
 .bg-dark {
-    background-color: #24292e!important;
+    background-color: #24292e !important;
 }
 
 .container .text-muted {
@@ -18,18 +13,18 @@ body {
     background-color: #f7f7f7
 }
 
-.bd-footer a {
-    font-weight: 500;
-    color: #495057
-}
+    .bd-footer a {
+        font-weight: 500;
+        color: #495057
+    }
 
-.bd-footer a:focus, .bd-footer a:hover {
-    color: #007bff
-}
+        .bd-footer a:focus, .bd-footer a:hover {
+            color: #007bff
+        }
 
-.bd-footer p {
-    margin-bottom: 0
-}
+    .bd-footer p {
+        margin-bottom: 0
+    }
 
 @media (min-width: 576px) {
     .bd-footer {
@@ -42,13 +37,13 @@ body {
     margin-bottom: 1rem
 }
 
-.bd-footer-links li {
-    display: inline-block
-}
+    .bd-footer-links li {
+        display: inline-block
+    }
 
-.bd-footer-links li+li {
-    margin-left: 1rem
-}
+        .bd-footer-links li + li {
+            margin-left: 1rem
+        }
 
 .profile-courses-content {
     height: 100px;
@@ -95,7 +90,7 @@ body {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-.navbar-collapse .navbar-nav>.nav-item.dropdown>.nav-link .indicator {
+.navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link .indicator {
     position: absolute;
     top: 5px;
     left: 16px;
@@ -115,18 +110,19 @@ header.masthead {
     padding-bottom: 8rem;
 }
 
-header.masthead h1 {
-    font-size: 2rem
-}
+    header.masthead h1 {
+        font-size: 2rem
+    }
 
 @media (min-width: 768px) {
     header.masthead {
         padding-top: 10rem;
         padding-bottom: 10rem
     }
-    header.masthead h1 {
-        font-size: 3rem
-    }
+
+        header.masthead h1 {
+            font-size: 3rem
+        }
 }
 
 .showcase .showcase-text {
@@ -149,35 +145,35 @@ header.masthead h1 {
     padding-bottom: 7rem
 }
 
-.features-icons .features-icons-item {
-    max-width: 20rem
-}
+    .features-icons .features-icons-item {
+        max-width: 20rem
+    }
 
-.features-icons .features-icons-item .features-icons-icon {
-    height: 7rem
-}
+        .features-icons .features-icons-item .features-icons-icon {
+            height: 7rem
+        }
 
-.features-icons .features-icons-item .features-icons-icon i {
-    font-size: 4.5rem
-}
+            .features-icons .features-icons-item .features-icons-icon i {
+                font-size: 4.5rem
+            }
 
-.features-icons .features-icons-item:hover .features-icons-icon i {
-    font-size: 5rem
-}
+        .features-icons .features-icons-item:hover .features-icons-icon i {
+            font-size: 5rem
+        }
 
 .testimonials {
     padding-top: 7rem;
     padding-bottom: 7rem
 }
 
-.testimonials .testimonial-item {
-    max-width: 18rem
-}
+    .testimonials .testimonial-item {
+        max-width: 18rem
+    }
 
-.testimonials .testimonial-item img {
-    max-width: 12rem;
-    box-shadow: 0 5px 5px 0 #adb5bd
-}
+        .testimonials .testimonial-item img {
+            max-width: 12rem;
+            box-shadow: 0 5px 5px 0 #adb5bd
+        }
 
 .call-to-action {
     position: relative;
@@ -189,15 +185,15 @@ header.masthead h1 {
     padding-bottom: 7rem
 }
 
-.call-to-action .overlay {
-    position: absolute;
-    background-color: #212529;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: .3
-}
+    .call-to-action .overlay {
+        position: absolute;
+        background-color: #212529;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: .3
+    }
 
 footer.footer {
     padding-top: 4rem;
@@ -236,9 +232,9 @@ footer {
     padding-bottom: 3rem;
 }
 
-footer p {
-    margin-bottom: .25rem;
-}
+    footer p {
+        margin-bottom: .25rem;
+    }
 
 .box-shadow {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);

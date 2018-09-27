@@ -5,10 +5,12 @@ body {
     background-repeat: repeat-x;
     background-position: center 0, 0 0, 0 0
 }
+
 .app-screenshot {
     max-width: 1072px;
     width: 100%
 }
+
 .btn-outline-white:hover,
 .btn-outline-white:active {
     color: #24292e;
@@ -23,5 +25,4 @@ body {
     background: transparent;
     border-color: rgba(255,255,255,0.5);
     border-radius: .3em
-  }
-  
+}
