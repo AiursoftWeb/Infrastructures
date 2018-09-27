@@ -56,11 +56,8 @@ namespace Aiursoft.OSS
                 app.UseExceptionHandler("/Error/ServerException");
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
-            app.Use(async (httpContext, next) =>
-            {
-                httpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                await next();
-            });
+            app.UseCors(builder =>
+                builder.WithOrigins("*"));
             app.UseStaticFiles();
             app.UseLanguageSwitcher();
             app.UseMvcWithDefaultRoute();
