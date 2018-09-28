@@ -53,17 +53,14 @@
                                 <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
                                 <span asp-validation-for="AppId" class="text-danger"></span>
                             </div>
+                            <div class="form-group mb-1">
+                                <label for="AppSecret">AppSecret</label>
+                            </div>
                             <div class="input-group mb-3">
-                                <label asp-for="AppSecret"></label>
-                                <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly">
+                                <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly" value="aaaaabbbbbcccccccccddddddeeeee">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@Model.AppSecret">Copy</button>
                                 </span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="AppSecret"></label>
-                                <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly">
-                                <span asp-validation-for="AppSecret" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="AppPlatform"></label>
