@@ -16,8 +16,10 @@ namespace Aiursoft.Pylon.Test
         public void ProtocalTest()
         {
             var t = new TestController();
-            var value = Extends.Protocal(t, ErrorType.Success, "Success");
-            Assert.NotNull(value);
+            var json = Extends.Protocal(t, ErrorType.Success, "Success");
+            var response = json.Value as AiurProtocal;
+            Assert.NotNull(response);
+            Assert.Equal("Success", response.Message);
         }
     }
 }
