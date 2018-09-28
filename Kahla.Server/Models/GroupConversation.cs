@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kahla.Server.Models
 {
-    public class GroupConversation : Conversation
+    public class GroupConversation : Conversation, IConversation
     {
         [InverseProperty(nameof(UserGroupRelation.Group))]
         public List<UserGroupRelation> Users { get; set; }

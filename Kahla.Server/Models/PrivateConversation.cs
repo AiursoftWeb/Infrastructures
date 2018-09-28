@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kahla.Server.Models
 {
-    public class PrivateConversation : Conversation
+    public class PrivateConversation : Conversation, IConversation
     {
         public string RequesterId { get; set; }
         [ForeignKey(nameof(RequesterId))]

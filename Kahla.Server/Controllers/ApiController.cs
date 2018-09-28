@@ -31,7 +31,7 @@ namespace Kahla.Server.Controllers
     {
         public override JsonResult Json(object obj)
         {
-            return Json(obj, new JsonSerializerSettings
+            return base.Json(obj, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 ContractResolver = new DefaultContractResolver

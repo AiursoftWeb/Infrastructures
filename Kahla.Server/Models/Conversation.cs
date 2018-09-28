@@ -10,7 +10,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kahla.Server.Models
 {
-    public abstract class Conversation
+    public interface IConversation
+    {
+        string GetDisplayName(string userId);
+        int GetDisplayImage(string userId);
+        int GetUnReadAmount(string userId);
+        Message GetLatestMessage();
+    }
+    public abstract class Conversation : IConversation
     {
         [Key]
         public int Id { get; set; }
