@@ -12,6 +12,8 @@ namespace Kahla.Server.Models.ApiAddressModels
         [Required]
         [MinLength(3)]
         [MaxLength(25)]
+        [NoSpace]
+        [Display(Name ="new group's name")]
         public string GroupName { get; set; }
     }
 }
