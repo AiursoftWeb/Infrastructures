@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Attributes
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can not contains space!");
+                return new ValidationResult($"The {validationContext.DisplayName} can not contain space!");
             }
         }
     }
