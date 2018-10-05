@@ -132,7 +132,7 @@ namespace Kahla.Server.Controllers
         public async Task<IActionResult> UploadFile()
         {
             var file = Request.Form.Files.First();
-            var uploadedFile = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 7, SaveFileOptions.RandomName);
+            var uploadedFile = await _storageService.SaveToOSS(file, Convert.ToInt32(_configuration["KahlaBucketId"]), 365, SaveFileOptions.RandomName);
             return Json(new UploadFileViewModel
             {
                 Code = ErrorType.Success,
