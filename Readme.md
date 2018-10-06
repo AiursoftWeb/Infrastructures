@@ -10,6 +10,6 @@ One project to run all Aiursoft micro-services
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Deployment/Getting%20Started.md).
 
 
-## How to controbute
+## How to contribute
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
