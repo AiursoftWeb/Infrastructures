@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kahla.Server", "Kahla.Serve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.OSS", "OSS\Aiursoft.OSS.csproj", "{09EEE842-031F-4224-903B-640BDFC3F769}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Pylon", "Pylon\Aiursoft.Pylon.csproj", "{39488520-FF2A-4F24-AF93-0BACBFAA5DCB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Stargate", "Stargate\Aiursoft.Stargate.csproj", "{723DAE8E-AAE0-4EB5-98F7-5C620ACD88E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wiki", "Wiki\Aiursoft.Wiki.csproj", "{92E4723E-17B6-41AC-8EC0-59C13A40B495}"
@@ -28,8 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.CDN", "CDN\Aiursoft.CDN.csproj", "{7A9F4EA7-2366-40D4-A80E-640ED8899DE9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WWW", "WWW\Aiursoft.WWW.csproj", "{7A9F4EA7-2366-40D4-A80E-640ED8899DE8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiursoft.Pylon.Test", "Aiursoft.Pylon.Test\Aiursoft.Pylon.Test.csproj", "{8506C1EF-993A-491B-95F7-5F62446C41F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
