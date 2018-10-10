@@ -1,5 +1,9 @@
 echo start restoring...
 
+cd Pylon
+dotnet restore
+cd ..
+
 cd API
 dotnet restore
 cd ..

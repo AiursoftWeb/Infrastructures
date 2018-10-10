@@ -1,5 +1,9 @@
 echo start building...
 
+cd Pylon
+dotnet build
+cd ..
+
 cd API
 dotnet publish --no-restore -c Release
 cd ..
