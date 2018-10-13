@@ -13,10 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Developer", "Devel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.EE", "EE\Aiursoft.EE.csproj", "{8CC0193D-16E7-452A-B328-C1487A1A778D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kahla.Home", "Kahla.Home\Kahla.Home.csproj", "{3F3904AF-E0CD-4607-9EC9-BAE7E84A1ED8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kahla.Server", "Kahla.Server\Kahla.Server.csproj", "{57E625E1-63E7-4F27-823D-82E05573F997}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.OSS", "OSS\Aiursoft.OSS.csproj", "{09EEE842-031F-4224-903B-640BDFC3F769}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Pylon", "Pylon\Aiursoft.Pylon.csproj", "{39488520-FF2A-4F24-AF93-0BACBFAA5DCB}"
@@ -29,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.CDN", "CDN\Aiursof
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WWW", "WWW\Aiursoft.WWW.csproj", "{7A9F4EA7-2366-40D4-A80E-640ED8899DE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiursoft.Pylon.Test", "Aiursoft.Pylon.Test\Aiursoft.Pylon.Test.csproj", "{8506C1EF-993A-491B-95F7-5F62446C41F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Pylon.Test", "Aiursoft.Pylon.Test\Aiursoft.Pylon.Test.csproj", "{8506C1EF-993A-491B-95F7-5F62446C41F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +53,6 @@ Global
 		{8CC0193D-16E7-452A-B328-C1487A1A778D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CC0193D-16E7-452A-B328-C1487A1A778D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CC0193D-16E7-452A-B328-C1487A1A778D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F3904AF-E0CD-4607-9EC9-BAE7E84A1ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F3904AF-E0CD-4607-9EC9-BAE7E84A1ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F3904AF-E0CD-4607-9EC9-BAE7E84A1ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F3904AF-E0CD-4607-9EC9-BAE7E84A1ED8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57E625E1-63E7-4F27-823D-82E05573F997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57E625E1-63E7-4F27-823D-82E05573F997}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57E625E1-63E7-4F27-823D-82E05573F997}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57E625E1-63E7-4F27-823D-82E05573F997}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09EEE842-031F-4224-903B-640BDFC3F769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09EEE842-031F-4224-903B-640BDFC3F769}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09EEE842-031F-4224-903B-640BDFC3F769}.Release|Any CPU.ActiveCfg = Release|Any CPU

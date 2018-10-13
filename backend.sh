@@ -24,14 +24,6 @@ cd Stargate
 dotnet publish --no-restore -c Release
 cd ..
 
-cd Kahla.Server
-dotnet publish --no-restore -c Release
-cd ..
-
-cd Kahla.Home
-dotnet publish --no-restore -c Release
-cd ..
-
 cd Wiki
 dotnet publish --no-restore -c Release
 cd ..

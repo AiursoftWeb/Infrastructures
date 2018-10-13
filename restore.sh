@@ -24,14 +24,6 @@ cd Stargate
 dotnet restore
 cd ..
 
-cd Kahla.Server
-dotnet restore
-cd ..
-
-cd Kahla.Home
-dotnet restore
-cd ..
-
 cd Wiki
 dotnet restore
 cd ..
