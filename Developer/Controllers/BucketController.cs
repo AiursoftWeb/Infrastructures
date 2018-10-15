@@ -50,11 +50,17 @@ namespace Aiursoft.Developer.Controllers
         {
             var cuser = await GetCurrentUserAsync();
             var allBuckets = new List<Bucket>();
+            var taskList = new List<Task>();
             foreach (var app in cuser.MyApps)
             {
-                var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
-                allBuckets.AddRange(appInfo.Buckets);
+                async Task addApp()
+                {
+                    var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
+                    allBuckets.AddRange(appInfo.Buckets);
+                };
+                taskList.Add(addApp());
             }
+            await Task.WhenAll(taskList);
             var model = new IndexViewModel(cuser)
             {
                 AllBuckets = allBuckets
@@ -142,10 +148,10 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        public async Task<IActionResult> DeleteBucket(int Id)//BucketId
+        public async Task<IActionResult> DeleteBucket(int id)//BucketId
         {
             var cuser = await GetCurrentUserAsync();
-            var bucket = await _ossApiService.ViewBucketDetailAsync(Id);
+            var bucket = await _ossApiService.ViewBucketDetailAsync(id);
             var model = new DeleteBucketViewModel(cuser)
             {
                 BucketName = bucket.BucketName,
