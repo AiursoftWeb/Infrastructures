@@ -1,28 +1,22 @@
-using Microsoft.AspNetCore.Builder;
-using System;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Polly;
-using Polly.Retry;
-using System.Threading;
-using System.Data.SqlClient;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Html;
+using Aiursoft.Pylon.Services.ToOSSServer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Polly;
+using System;
+using System.Globalization;
 
 namespace Aiursoft.Pylon
 {
@@ -103,10 +97,10 @@ namespace Aiursoft.Pylon
             });
         }
 
-        public static IActionResult SignoutRootServer(this Controller controller, string apiServerAddress, AiurUrl ToRedirect)
+        public static IActionResult SignoutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
         {
             var request = controller.HttpContext.Request;
-            string serverPosition = $"{request.Scheme}://{request.Host}{ToRedirect}";
+            string serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
             var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignout", new UserSignoutAddressModel
             {
                 ToRedirect = serverPosition
