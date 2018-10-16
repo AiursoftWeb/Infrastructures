@@ -303,11 +303,17 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var model = new ApplicationsViewModel(user);
             var applications = await _userService.ViewGrantedAppsAsync(await _appsContainer.AccessToken(), user.Id);
+            var taskList = new List<Task>();
             foreach (var app in applications.Items)
             {
-                var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
-                model.Apps.Add(appInfo.App);
+                async Task addApp()
+                {
+                    var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
+                    model.Apps.Add(appInfo.App);
+                };
+                taskList.Add(addApp());
             }
+            await Task.WhenAll(taskList);
             return View(model);
         }
 
