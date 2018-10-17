@@ -278,7 +278,7 @@ namespace Aiursoft.API.Controllers
                 model.Recover(capp.AppName, capp.AppIconAddress);
                 return View(model);
             }
-            bool exists = _dbContext.UserEmails.Exists(t => t.EmailAddress == model.Email.ToLower());
+            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
                 ModelState.AddModelError(string.Empty, $"A user with email '{model.Email}' already exists!");
@@ -316,7 +316,7 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> AppRegister(AppRegisterAddressModel model)
         {
-            bool exists = _dbContext.UserEmails.Exists(t => t.EmailAddress == model.Email.ToLower());
+            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");

@@ -50,7 +50,7 @@ namespace Aiursoft.API.Services
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, "Can not find your app with your accesstoken!");
             }
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == token.ApplyAppId && t.APIUserId == targetUser.Id))
+            if (!_dbContext.LocalAppGrant.Any(t => t.AppID == token.ApplyAppId && t.APIUserId == targetUser.Id))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");
             }

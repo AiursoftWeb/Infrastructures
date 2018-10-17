@@ -152,7 +152,7 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> EditBucket([FromForm]EditBucketAddressModel model)
         {
             var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var existing = _dbContext.Bucket.Exists(t => t.BucketName == model.NewBucketName && t.BucketId != model.BucketId);
+            var existing = _dbContext.Bucket.Any(t => t.BucketName == model.NewBucketName && t.BucketId != model.BucketId);
             if (existing)
             {
                 return this.Protocal(ErrorType.NotEnoughResources, "There is one bucket already called that name!");
@@ -257,7 +257,7 @@ namespace Aiursoft.OSS.Controllers
             //Ensure there not exists file with the same file name.
             lock (_obj)
             {
-                var exists = _dbContext.OSSFile.Exists(t => t.RealFileName == newFile.RealFileName && t.BucketId == newFile.BucketId);
+                var exists = _dbContext.OSSFile.Any(t => t.RealFileName == newFile.RealFileName && t.BucketId == newFile.BucketId);
                 if (exists)
                 {
                     return this.Protocal(ErrorType.HasDoneAlready, "There already exists a file with that name.");
