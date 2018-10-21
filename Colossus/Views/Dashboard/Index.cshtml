@@ -3,7 +3,6 @@
     Layout = "_DashboardLayout";
     ViewData["Title"] = Model.Title;
 }
-
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -52,7 +51,7 @@
                                     </td>
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
                                     <td>@fileRecord.DownloadTimes</td>
-                                    <td>@fileRecord.UploadTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                    <td data-utc-time="@fileRecord.UploadTime"></td>
                                     <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
                                 </tr>
                             }
@@ -66,3 +65,40 @@
         </div>
     </div>
 </div>
+@section js{
+    <script>
+        $(document).ready(function () {
+            function timeSince(date) {
+                var seconds = Math.floor((new Date() - date) / 1000);
+                var interval = Math.floor(seconds / 2592000);
+                if (interval > 1) {
+                    return date.toLocaleDateString();;
+                }
+                interval = Math.floor(seconds / 86400);
+                if (interval > 1) {
+                    return interval + " days ago";
+                }
+                interval = Math.floor(seconds / 3600);
+                if (interval > 1) {
+                    return interval + " hours ago";
+                }
+                interval = Math.floor(seconds / 60);
+                if (interval > 1) {
+                    return interval + " minutes ago";
+                }
+                return Math.floor(seconds) + " seconds ago";
+            }
+            $('*[data-utc-time]').each(function (t) {
+                // Prepare
+                var timefield = $(this);
+                var timevalue = timefield.attr('data-utc-time');
+                if (!timevalue.endsWith(' UTC')) {
+                    timevalue = timevalue + ' UTC';
+                }
+                var date = new Date(timevalue);
+                var text = timeSince(date);
+                timefield.html(text);
+            });
+        });
+    </script>
+}
