@@ -3,7 +3,6 @@
     ViewData["Title"] = "All files";
     Layout = "_AppLayout";
 }
-
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -42,30 +41,25 @@
                                     <td>@file.RealFileName</td>
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)file.JFileSize / 1024, decimals: 2))</td>
                                     <td>@file.DownloadTimes</td>
-                                    <td>@((file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
-                                    @if (Model.OpenToRead)
-                                    {
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <a href="@file.InternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        More
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <td data-utc-time="@(file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0))"></td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <a href="@file.InternetPath?sd=true" target="_blank" class="btn btn-secondary">Download</a>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    More
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @if (Model.OpenToRead)
+                                                    {
                                                         <a class="dropdown-item" href="@file.InternetPath" target="_blank">Open</a>
                                                         <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.InternetPath">Copy link</a>
-                                                        <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">Get One-time link</a>
-                                                    </div>
+                                                    }
+                                                    <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">Get One-time link</a>
                                                 </div>
                                             </div>
-                                            @*<div class="btn-group">
-                                                    <a class="btn btn-warning waves-effect waves-light" href="@file.GetInternetPath?sd=true" target="_blank">Download</a>
-                                                    <a class="btn btn-info waves-effect waves-light" href="@file.GetInternetPath" target="_blank">Open</a>
-                                                    <a class="btn btn-success waves-effect waves-light" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.GetInternetPath">Copy link</a>
-                                                </div>*@
-                                        </td>
-                                    }
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                             <a class="btn btn-danger waves-effect waves-light" asp-controller="Files" asp-action="DeleteFile" asp-route-id="@file.FileKey">Delete</a>

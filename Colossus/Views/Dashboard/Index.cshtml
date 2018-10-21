@@ -24,7 +24,7 @@
                                 <th>File Name</th>
                                 <th>Open to upload</th>
                                 <th>Size(KB)</th>
-                                <th>Download Time</th>
+                                <th>Download counts</th>
                                 <th>Upload Time</th>
                                 <th>Deadline</th>
                             </tr>
@@ -52,7 +52,7 @@
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)fileRecord.JFileSize / 1024, decimals: 2))</td>
                                     <td>@fileRecord.DownloadTimes</td>
                                     <td data-utc-time="@fileRecord.UploadTime"></td>
-                                    <td>@((fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0)).ToString("yyyy-MM-dd"))</td>
+                                    <td data-utc-time="@(fileRecord.UploadTime + new TimeSpan(fileRecord.AliveDays, 0, 0, 0))"></td>
                                 </tr>
                             }
                         </tbody>
