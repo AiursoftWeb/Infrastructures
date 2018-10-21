@@ -2,23 +2,23 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.Account.Services
 {
-    public class AiurSMSSender
+    public class AccountSMSSender
     {
         public string SMSAccountIdentification;
         public string SMSAccountPassword;
         public string SMSAccountFrom;
         private readonly ILogger _logger;
-        public AiurSMSSender(
+        public AccountSMSSender(
             IConfiguration configuration,
-            ILogger<AiurSMSSender> logger)
+            ILogger<AccountSMSSender> logger)
         {
             SMSAccountFrom = configuration["SMSAccountFrom"];
             SMSAccountIdentification = configuration["SMSAccountIdentification"];

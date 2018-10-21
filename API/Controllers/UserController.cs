@@ -41,7 +41,7 @@ namespace Aiursoft.API.Controllers
         private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
-        private readonly AiurSMSSender _smsSender;
+        private readonly APISMSSender _smsSender;
         private readonly DeveloperApiService _developerApiService;
         private readonly ServiceLocation _serviceLocation;
         private readonly GrantChecker _grantChecker;
@@ -54,7 +54,7 @@ namespace Aiursoft.API.Controllers
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
             AiurEmailSender emailSender,
-            AiurSMSSender smsSender,
+            APISMSSender smsSender,
             DeveloperApiService developerApiService,
             ServiceLocation serviceLocation,
             GrantChecker granchChecker,

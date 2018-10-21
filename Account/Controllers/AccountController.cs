@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using System.Collections.Generic;
 using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Account.Services;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -25,10 +26,8 @@ namespace Aiursoft.Account.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AccountUser> _userManager;
-        private readonly SignInManager<AccountUser> _signInManager;
-        private readonly ILogger _logger;
         private readonly AccountDbContext _dbContext;
-        private readonly AiurSMSSender _sender;
+        private readonly AccountSMSSender _smsSender;
         private readonly UserService _userService;
         private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
@@ -37,10 +36,8 @@ namespace Aiursoft.Account.Controllers
 
         public AccountController(
             UserManager<AccountUser> userManager,
-            SignInManager<AccountUser> signInManager,
-            ILoggerFactory loggerFactory,
             AccountDbContext context,
-            AiurSMSSender sender,
+            AccountSMSSender smsSender,
             UserService userService,
             StorageService storageService,
             AppsContainer appsContainer,
@@ -48,10 +45,8 @@ namespace Aiursoft.Account.Controllers
             DeveloperApiService developerApiSerivce)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<AccountController>();
             _dbContext = context;
-            _sender = sender;
+            _smsSender = smsSender;
             _userService = userService;
             _storageService = storageService;
             _appsContainer = appsContainer;
@@ -239,7 +234,7 @@ namespace Aiursoft.Account.Controllers
                 model.NewPhoneNumber = "+86" + model.NewPhoneNumber;
             }
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.NewPhoneNumber);
-            await _sender.SendAsync(model.NewPhoneNumber, "Your security code is: " + code);
+            await _smsSender.SendAsync(model.NewPhoneNumber, "Your security code is: " + code);
             return RedirectToAction(nameof(EnterCode), new { model.NewPhoneNumber });
         }
 
