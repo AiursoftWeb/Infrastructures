@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Services
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
             var openId = await _oauthService.CodeToOpenIdAsync(model.code, await _appsContainer.AccessToken());
-            var userinfo = await _oauthService.OpenIdToUserInfo(AccessToken: await _appsContainer.AccessToken(), openid: openId.openid);
+            var userinfo = await _oauthService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: openId.openid);
             var current = await _userManager.FindByIdAsync(userinfo.User.Id);
             if (current == null)
             {
@@ -61,7 +61,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<T> OnlyUpdate(T user)
         {
-            var userinfo = await _oauthService.OpenIdToUserInfo(AccessToken: await _appsContainer.AccessToken(), openid: user.Id);
+            var userinfo = await _oauthService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
             user.Update(userinfo);
             await _userManager.UpdateAsync(user);
             return user;

@@ -22,6 +22,7 @@ using Aiursoft.API.Models;
 using Aiursoft.API.Services;
 using Aiursoft.API.Data;
 using Aiursoft.API.Models.ApiViewModels;
+using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.API.Controllers
 {
@@ -126,10 +127,13 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
-            var AppValidateState = await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
-            if (AppValidateState.Code != ErrorType.Success)
+            try
             {
-                return Json(AppValidateState);
+                await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                return Json(e.Response);
             }
             var newAC = new AccessToken
             {

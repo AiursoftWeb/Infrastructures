@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.Developer.Controllers
 {
@@ -229,7 +230,14 @@ namespace Aiursoft.Developer.Controllers
             {
                 return new UnauthorizedResult();
             }
-            await _ossApiService.DeleteAppAsync(await _appsContainer.AccessToken(target.AppId, target.AppSecret), target.AppId);
+            try
+            {
+                await _ossApiService.DeleteAppAsync(await _appsContainer.AccessToken(target.AppId, target.AppSecret), target.AppId);
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                if (e.Response.Code != ErrorType.HasDoneAlready) throw e;
+            }
             _dbContext.Apps.Remove(target);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(AllApps));

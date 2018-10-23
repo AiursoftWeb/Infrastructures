@@ -35,11 +35,11 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewBio = newBio
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurProtocal> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
@@ -52,11 +52,11 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewPassword = newPassword
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
@@ -67,10 +67,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurProtocal> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
@@ -82,10 +82,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Phone = phoneNumber
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurCollection<AiurUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
@@ -96,10 +96,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurProtocal> BindNewEmailAsync(string openId, string newEmail, string accessToken)
@@ -112,8 +112,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            return jResult;
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurProtocal> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
@@ -126,8 +128,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 ThatEmail = thatEmail
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            return jResult;
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
 
         public async Task<AiurProtocal> SendConfirmationEmailAsync(string accessToken, string userId, string email)
@@ -141,6 +145,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
@@ -153,6 +159,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<AiurCollection<Grant>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
@@ -167,6 +175,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
     }

@@ -33,8 +33,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Password = password
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurValue<int>>(result);
-            return jResult;
+            var jresult = JsonConvert.DeserializeObject<AiurValue<int>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new Exception(jresult.Message);
+            return jresult;
         }
 
         public async Task<AiurProtocal> AppRegisterAsync(string email, string password, string confirmPassword)
@@ -47,31 +49,33 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 ConfirmPassword = confirmPassword
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
-            return jResult;
+            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new Exception(jresult.Message);
+            return jresult;
         }
 
-        public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(int code, string AccessToken)
+        public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(int code, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "OAuth", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
-                AccessToken = AccessToken,
+                AccessToken = accessToken,
                 Code = code,
                 grant_type = "authorization_code"
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
+            var jresult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new Exception(JResult.Message);
-            return JResult;
+            if (jresult.Code != ErrorType.Success)
+                throw new Exception(jresult.Message);
+            return jresult;
         }
 
-        public async Task<UserInfoViewModel> OpenIdToUserInfo(string AccessToken, string openid)
+        public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
         {
             var url = new AiurUrl(_serviceLocation.API, "oauth", "UserInfo", new UserInfoAddressModel
             {
-                access_token = AccessToken,
+                access_token = accessToken,
                 openid = openid,
                 lang = "en-US"
             });
