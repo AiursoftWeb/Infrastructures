@@ -18,17 +18,23 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Old Password")]
+        [MinLength(6)]
+        [MaxLength(32)]
         public string OldPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
+        [MinLength(6)]
+        [MaxLength(32)]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Repeat Password")]
         [Compare(nameof(NewPassword), ErrorMessage = "The new password and confirmation password do not match.")]
+        [MinLength(6)]
+        [MaxLength(32)]
         public string RepeatPassword { get; set; }
     }
 }

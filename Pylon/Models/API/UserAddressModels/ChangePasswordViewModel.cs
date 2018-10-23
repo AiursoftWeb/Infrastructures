@@ -9,9 +9,13 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
     {
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(6)]
+        [MaxLength(32)]
         public string OldPassword { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(6)]
+        [MaxLength(32)]
         public string NewPassword { get; set; }
     }
 }
