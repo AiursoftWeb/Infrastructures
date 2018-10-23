@@ -51,9 +51,9 @@ namespace Aiursoft.API.Models
             return pack;
         }
 
-        public async Task<bool> HasAuthorizedApp(APIDbContext DbContext, string appId)
+        public async Task<bool> HasAuthorizedApp(APIDbContext dbContext, string appId)
         {
-            var appGrant = await DbContext.LocalAppGrant.SingleOrDefaultAsync(t => t.AppID == appId && t.APIUserId == this.Id);
+            var appGrant = await dbContext.LocalAppGrant.SingleOrDefaultAsync(t => t.AppID == appId && t.APIUserId == this.Id);
             return appGrant != null;
         }
     }

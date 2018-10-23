@@ -219,16 +219,11 @@ namespace Aiursoft.API.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
             if (result.Succeeded)
             {
-                OAuthPack pack = null;
-                if (await user.HasAuthorizedApp(_dbContext, model.AppId))
-                {
-                    pack = await user.GeneratePack(_dbContext, model.AppId);
-                }
-                else
+                if (!await user.HasAuthorizedApp(_dbContext, model.AppId))
                 {
                     await user.GrantTargetApp(_dbContext, model.AppId);
-                    pack = await user.GeneratePack(_dbContext, model.AppId);
                 }
+                var pack = await user.GeneratePack(_dbContext, model.AppId);
                 return Json(new AiurValue<int>(pack.Code)
                 {
                     Code = ErrorType.Success,

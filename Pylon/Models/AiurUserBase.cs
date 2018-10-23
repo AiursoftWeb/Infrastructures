@@ -51,7 +51,6 @@ namespace Aiursoft.Pylon.Models
         [JsonProperty]
         public override string Email { get; set; }
         [NotMapped]
-        public override bool PhoneNumberConfirmed { get => !string.IsNullOrEmpty(PhoneNumber); }
-
+        public override bool PhoneNumberConfirmed => !string.IsNullOrEmpty(PhoneNumber);
     }
 }
