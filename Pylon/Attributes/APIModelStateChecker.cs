@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Attributes
 {
+    /// <summary>
+    /// This attribute will not throw any exception but will reject any invalid request directly with AiurCollection with error messages.
+    /// Strongly suggest adding this attribute to all API controllers.
+    /// </summary>
     public class APIModelStateChecker : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)

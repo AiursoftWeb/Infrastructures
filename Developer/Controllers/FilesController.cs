@@ -175,7 +175,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 await _storageService.SaveToOSS(file, model.BucketId, model.AliveDays, SaveFileOptions.SourceName, accessToken);
             }
-            catch (AiurUnexceptedResponse e) when (e.Response.Code == ErrorType.HasDoneAlready)
+            catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.HasDoneAlready)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;

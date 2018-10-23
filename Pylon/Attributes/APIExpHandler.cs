@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Attributes
 {
+    /// <summary>
+    /// Adding this will handle `AiurAPIModelException` and return the result as JSON directly.
+    /// Adding this will handle `AiurUnexceptedResponse` and return the result as JSON directly.
+    /// </summary>
     public class APIExpHandler : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
@@ -18,13 +22,8 @@ namespace Aiursoft.Pylon.Attributes
             switch (context.Exception)
             {
                 case AiurUnexceptedResponse exp:
-                    var arg = new AiurProtocal
-                    {
-                        Code = exp.Response.Code,
-                        Message = exp.Response.Message
-                    };
                     context.ExceptionHandled = true;
-                    context.Result = new JsonResult(arg);
+                    context.Result = new JsonResult(new AiurProtocal { Code = exp.Code, Message = exp.Message });
                     break;
                 case AiurAPIModelException exp:
                     context.ExceptionHandled = true;
