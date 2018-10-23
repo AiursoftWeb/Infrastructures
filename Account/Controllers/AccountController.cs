@@ -19,6 +19,7 @@ using Aiursoft.Pylon.Services.ToDeveloperServer;
 using System.Collections.Generic;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Account.Services;
+using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -192,18 +193,18 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            var result = await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
-            if (result.Code == ErrorType.Success)
+            try
             {
-                return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
+                await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
+                RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
-            else
+            catch (AiurUnexceptedResponse e)
             {
-                ModelState.AddModelError(string.Empty, result.Message);
+                ModelState.AddModelError(string.Empty, e.Message);
                 model.ModelStateValid = false;
                 model.Recover(cuser);
-                return View(model);
             }
+            return View(model);
         }
 
         public async Task<IActionResult> Phone(bool justHaveUpdated)

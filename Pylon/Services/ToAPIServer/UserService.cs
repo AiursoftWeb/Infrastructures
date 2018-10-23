@@ -54,7 +54,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
 
-            if (JResult.Code != ErrorType.Success && JResult.Code != ErrorType.WrongKey)
+            if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
