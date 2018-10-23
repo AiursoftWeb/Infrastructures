@@ -196,7 +196,7 @@ namespace Aiursoft.Account.Controllers
             try
             {
                 await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
-                RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
+                return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
             {
