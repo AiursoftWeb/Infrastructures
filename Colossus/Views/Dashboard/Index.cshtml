@@ -22,7 +22,6 @@
                     <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" data-height="300" />
                     <div>
                         <p>Max file size: @Model.MaxSize MB.</p>
-                        <a class="btn btn-success" asp-controller="Auth" asp-action="GoAuth">Sign in to enjoy 1000MB max file size!</a>
                         <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                         <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">Copy Link</a>
                         <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>

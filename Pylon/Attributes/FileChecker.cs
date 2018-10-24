@@ -14,35 +14,43 @@ namespace Aiursoft.Pylon.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            // Not a post method
-            if (context.HttpContext.Request.Method.ToUpper().Trim() != "POST")
+            try
             {
-                context.ModelState.AddModelError("", "To upload your file, you have to submit the form!");
-                return;
+                // Not a post method
+                if (context.HttpContext.Request.Method.ToUpper().Trim() != "POST")
+                {
+                    context.ModelState.AddModelError("", "To upload your file, you have to submit the form!");
+                    return;
+                }
+                // No file
+                if (context.HttpContext.Request.Form.Files.Count < 1)
+                {
+                    context.ModelState.AddModelError("", "Please provide a file!");
+                    return;
+                }
+                var file = context.HttpContext.Request.Form.Files.First();
+                // File is null
+                if (file == null)
+                {
+                    context.ModelState.AddModelError("", "Please provide a file!");
+                    return;
+                }
+                // Too small
+                if (file.Length < 1)
+                {
+                    context.ModelState.AddModelError("", "Please provide a valid file!");
+                    return;
+                }
+                // Too large
+                if ((MaxSize != -1 && file.Length > MaxSize) || file.Length > Values.MaxFileSize)
+                {
+                    context.ModelState.AddModelError("", "Please provide a file which is smaller than 1GB!");
+                    return;
+                }
             }
-            // No file
-            if (context.HttpContext.Request.Form.Files.Count < 1)
+            catch (Exception e)
             {
-                context.ModelState.AddModelError("", "Please provide a file!");
-                return;
-            }
-            var file = context.HttpContext.Request.Form.Files.First();
-            // File is null
-            if (file == null)
-            {
-                context.ModelState.AddModelError("", "Please provide a file!");
-                return;
-            }
-            // Too small
-            if (file.Length < 1)
-            {
-                context.ModelState.AddModelError("", "Please provide a valid file!");
-                return;
-            }
-            // Too large
-            if ((MaxSize != -1 && file.Length > MaxSize) || file.Length > Values.MaxFileSize)
-            {
-                context.ModelState.AddModelError("", "Please provide a file which is smaller than 1GB!");
+                context.ModelState.AddModelError("", e.Message);
                 return;
             }
         }

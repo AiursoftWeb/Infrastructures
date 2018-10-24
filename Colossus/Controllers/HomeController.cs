@@ -52,16 +52,14 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
+        [APIExpHandler]
         [FileChecker(MaxSize = 30 * 1024 * 1024)]
+        [APIModelStateChecker]
         public async Task<IActionResult> Upload()
         {
             if (HttpContext.Request.Form.Files.First().Length > _30M)
             {
                 return Unauthorized();
-            }
-            if (!ModelState.IsValid)
-            {
-                return Redirect("/");
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
