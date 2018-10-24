@@ -7,9 +7,9 @@
         <h3>Welcome to @Values.ProjectName Colossus</h3>
         <p>Colossus helps you share any file. Upload your file and share the link anywhere!</p>
         <div class="btn-group" role="group">
-            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Logs" role="button">
+            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
                 <i class="fa fa-pencil"></i>
-                View my files
+                Sign in to Colossus
             </a>
         </div>
     </div>
@@ -17,12 +17,16 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-12 mt-5">
-            <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
+            <h2>Try now!</h2>
+            <h3 id="uploadTitle">Upload your file here to share it.</h3>
             <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
                 <input type="file" name="file" class="dropify" data-max-file-size="@(Model.SizeInMB)M" data-height="300" />
                 <div>
                     <p>Max file size: @Model.SizeInMB MB.</p>
-                    <a class="btn btn-success" asp-controller="Auth" asp-action="GoAuth">Sign in to enjoy 1000MB max file size!</a>
+                    <a class="btn btn-success" asp-controller="Dashboard" asp-action="Index">
+                        <i class="fa fa-upload"></i>
+                        Sign in to enjoy 1000MB max file size!
+                    </a>
                     <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                     <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">Copy Link</a>
                     <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>
@@ -83,7 +87,7 @@
                     <li>Download log and 7*24 support</li>
                     <li>Enabled to create one-time link</li>
                 </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+                <a href="@ServiceLocation.Developer" class="btn btn-lg btn-block btn-primary">Get started</a>
             </div>
         </div>
     </div>

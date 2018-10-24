@@ -8,6 +8,9 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Attributes
 {
+    /// <summary>
+    /// Will check if user is submitting a valid file. If not, will change the ModalState.IsValid to false and add a model error.
+    /// </summary>
     public class FileChecker : ActionFilterAttribute
     {
         public long MaxSize { get; set; } = -1;
