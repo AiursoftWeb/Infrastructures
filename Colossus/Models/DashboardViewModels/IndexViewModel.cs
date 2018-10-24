@@ -15,5 +15,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         public IndexViewModel(ColossusUser user, int activePanel, string title) : base(user, activePanel, title)
         {
         }
+
+        public int MaxSize { get; internal set; }
     }
 }

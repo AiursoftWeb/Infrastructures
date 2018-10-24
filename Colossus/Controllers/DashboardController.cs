@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -23,26 +25,56 @@ namespace Aiursoft.Colossus.Controllers
         private readonly OSSApiService _ossApiService;
         private readonly IConfiguration _configuration;
         private readonly AppsContainer _appsContainer;
+        private readonly StorageService _storageService;
 
         public DashboardController(
             UserManager<ColossusUser> userManager,
             ColossusDbContext dbContext,
             OSSApiService ossApiService,
             IConfiguration configuration,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            StorageService storageService)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _ossApiService = ossApiService;
             _configuration = configuration;
             _appsContainer = appsContainer;
+            _storageService = storageService;
         }
 
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var model = new IndexViewModel(user, 0, "Upload new");
+            var model = new IndexViewModel(user, 0, "Upload new")
+            {
+                MaxSize = 30 * 1024 * 1024
+            };
             return View(model);
+        }
+
+        [HttpPost]
+        [APIExpHandler]
+        [FileChecker(MaxSize = 1000 * 1024 * 1024)]
+        [APIModelStateChecker]
+        public async Task<IActionResult> Upload()
+        {
+            var user = await GetCurrentUserAsync();
+            var file = Request.Form.Files.First();
+            var model = await _storageService
+                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
+            var record = new UploadRecord
+            {
+                UploaderId = user.Id,
+                FileId = model.FileKey
+            };
+            _dbContext.UploadRecords.Add(record);
+            await _dbContext.SaveChangesAsync();
+            return Json(new
+            {
+                message = "Uploaded!",
+                value = model.Path
+            });
         }
 
         public async Task<IActionResult> Logs()

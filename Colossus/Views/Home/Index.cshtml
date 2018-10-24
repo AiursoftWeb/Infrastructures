@@ -19,13 +19,10 @@
         <div class="col-md-12 mt-5">
             <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
             <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
-                <input type="file" name="file" class="dropify" data-max-file-size="@Model.SizeInMB()M" data-height="300" />
+                <input type="file" name="file" class="dropify" data-max-file-size="@(Model.SizeInMB)M" data-height="300" />
                 <div>
-                    <p>Max file size: @Model.SizeInMB() MB.</p>
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <a class="btn btn-success" asp-controller="Auth" asp-action="GoAuth">Sign in to enjoy 1000MB max file size!</a>
-                    }
+                    <p>Max file size: @Model.SizeInMB MB.</p>
+                    <a class="btn btn-success" asp-controller="Auth" asp-action="GoAuth">Sign in to enjoy 1000MB max file size!</a>
                     <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                     <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">Copy Link</a>
                     <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>
@@ -37,10 +34,6 @@
                     @Localizer["Terms"].
                 </a>
             </label>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <a class="btn btn-lg btn-secondary mt-4" asp-controller="Dashboard" asp-action="Logs">View files dashboard</a>
-            }
         </div>
     </div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

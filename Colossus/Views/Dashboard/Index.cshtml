@@ -12,13 +12,37 @@
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-inbox ico"></i>
-            All files your uploaded in Colossus
+            <i class="fa fa-upload ico"></i>
+            @ViewData["Title"]
         </div>
         <div class="card-body">
             <div class="col-xs-12">
-                <p>Some content</p>
+                <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
+                <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
+                    <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" data-height="300" />
+                    <div>
+                        <p>Max file size: @Model.MaxSize MB.</p>
+                        <a class="btn btn-success" asp-controller="Auth" asp-action="GoAuth">Sign in to enjoy 1000MB max file size!</a>
+                        <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
+                        <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">Copy Link</a>
+                        <a id="openButton" class="btn btn-primary" href="#" target="_blank">Open in new page</a>
+                    </div>
+                </form>
+                <label class="w-100 mt-3 mb-0">
+                    @Localizer["By uploading, you agree to our "]
+                    <a href="@Values.Footer["Terms"]" target="_blank">
+                        @Localizer["Terms"].
+                    </a>
+                </label>
             </div>
         </div>
     </div>
 </div>
+@section css{
+    <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+@section js{
+    <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
+    <script src="~/js/site.js"></script>
+}

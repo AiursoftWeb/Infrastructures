@@ -23,7 +23,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly UserManager<ColossusUser> _userManager;
         private readonly ServiceLocation _serviceLocation;
         private readonly ColossusDbContext _dbContext;
-        private const long _30M = 30 * 1024 * 1024;
+        private const int _30M = 30 * 1024 * 1024;
 
         public HomeController(
             IConfiguration configuration,
@@ -44,24 +44,18 @@ namespace Aiursoft.Colossus.Controllers
         [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
         public IActionResult Index()
         {
-            long maxSize = _30M;
-            if (User.Identity.IsAuthenticated)
-            {
-                maxSize = Values.MaxFileSize;
-            }
             var model = new IndexViewModel
             {
-                MaxSize = maxSize
+                MaxSize = _30M
             };
             return View(model);
         }
 
         [HttpPost]
-        [FileChecker(MaxSize = 1000 * 1024 * 1024)]
+        [FileChecker(MaxSize = 30 * 1024 * 1024)]
         public async Task<IActionResult> Upload()
         {
-            // Anonymous user but try to upload a large file.
-            if (!User.Identity.IsAuthenticated && HttpContext.Request.Form.Files.First().Length > _30M)
+            if (HttpContext.Request.Form.Files.First().Length > _30M)
             {
                 return Unauthorized();
             }
@@ -69,20 +63,9 @@ namespace Aiursoft.Colossus.Controllers
             {
                 return Redirect("/");
             }
-            var user = await GetCurrentUserAsync();
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), user == null ? 3 : 30);
-            if (user != null)
-            {
-                var record = new UploadRecord
-                {
-                    UploaderId = user.Id,
-                    FileId = model.FileKey
-                };
-                _dbContext.UploadRecords.Add(record);
-                await _dbContext.SaveChangesAsync();
-            }
+                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
             return Json(new
             {
                 message = "Uploaded!",

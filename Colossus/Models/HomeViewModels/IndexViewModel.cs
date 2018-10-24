@@ -7,10 +7,7 @@ namespace Aiursoft.Colossus.Models.HomeViewModels
 {
     public class IndexViewModel
     {
-        public long MaxSize { get; set; }
-        public int SizeInMB()
-        {
-            return Convert.ToInt32(MaxSize / 1024 / 1024);
-        }
+        public int MaxSize { get; set; }
+        public int SizeInMB => MaxSize / 1024 / 1024;
     }
 }
