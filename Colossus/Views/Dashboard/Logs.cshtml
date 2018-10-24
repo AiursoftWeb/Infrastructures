@@ -21,6 +21,7 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
+                                <th>Record Id</th>
                                 <th>File Name</th>
                                 <th>Open to upload</th>
                                 <th>Size(KB)</th>
@@ -33,6 +34,7 @@
                             @foreach (var fileRecord in Model.Files)
                             {
                                 <tr>
+                                    <td>@fileRecord.FileKey</td>
                                     <td>@fileRecord.RealFileName</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
