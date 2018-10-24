@@ -41,7 +41,7 @@ namespace Aiursoft.Colossus.Controllers
             _dbContext = dbContext;
         }
 
-        [AiurForceAuth("", "", justTry: true)]
+        [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
         public IActionResult Index()
         {
             long maxSize = _30M;

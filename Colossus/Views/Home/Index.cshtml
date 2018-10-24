@@ -7,7 +7,7 @@
         <h3>Welcome to @Values.ProjectName Colossus</h3>
         <p>Colossus helps you share any file. Upload your file and share the link anywhere!</p>
         <div class="btn-group" role="group">
-            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
+            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Logs" role="button">
                 <i class="fa fa-pencil"></i>
                 View my files
             </a>
@@ -39,7 +39,7 @@
             </label>
             @if (User.Identity.IsAuthenticated)
             {
-                <a class="btn btn-lg btn-secondary mt-4" asp-controller="Dashboard" asp-action="Index">View files dashboard</a>
+                <a class="btn btn-lg btn-secondary mt-4" asp-controller="Dashboard" asp-action="Logs">View files dashboard</a>
             }
         </div>
     </div>
@@ -75,7 +75,7 @@
                     <li>Download log</li>
                     <li>Enabled to create one-time link</li>
                 </ul>
-                <a asp-controller="Upload" asp-action="AuthedUpload" class="btn btn-lg btn-block btn-secondary">Sign in</a>
+                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-lg btn-block btn-secondary">Sign in</a>
             </div>
         </div>
         <div class="card mb-4 box-shadow">

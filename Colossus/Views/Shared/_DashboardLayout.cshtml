@@ -14,17 +14,25 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">@Localizer["Aiursoft Colossus"]</a>
+        <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer["Aiursoft Colossus"]</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)">
+                <li class="nav-item @(Model.ActivePanel == 0 ? " active":string.Empty)">
                     <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">
                             @Localizer["File upload history"]
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Logs">
+                        <i class="fa fa-fw fa-logs"></i>
+                        <span class="nav-link-text">
+                            @Localizer["File upload logs"]
                         </span>
                     </a>
                 </li>

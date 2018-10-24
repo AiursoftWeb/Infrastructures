@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Models.DashboardViewModels
 {
-    public class IndexViewModel : LayoutViewModel
+    public class LogsViewModel : LayoutViewModel
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
-        public IndexViewModel()
+        public LogsViewModel()
         {
         }
 
-        public IndexViewModel(ColossusUser user, int activePanel, string title) : base(user, activePanel, title)
+        public LogsViewModel(ColossusUser user, int activePanel, string title) : base(user, activePanel, title)
         {
         }
 
