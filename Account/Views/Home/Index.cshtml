@@ -1,46 +1,92 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="jumbotron">
-    <div class="container">
-        <h3>Welcome to @Values.ProjectName Developer Center</h3>
-        <p>Please sign in to access your dashboard.</p>
-        <div class="btn-group" role="group">
-            <a class="btn btn-success btn-lg" asp-controller="Account" asp-action="Index" role="button">
-                <i class="fa fa-pencil"></i>
-                Account Management
-            </a>
-        </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Lorem ipsum dolor sit amet</h2>
-            <p>
-                Lorem ipsum dolor sit amet
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>
-                Lorem ipsum dolor sit amet
-            </h2>
-            <p>
-                Lorem ipsum dolor sit amet
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Lorem</h2>
-            <p>
-                Lorem ipsum dolor sit amet
-            </p>
+<header class="masthead text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h1>Unlock the power of your</h1>
+                <h1 class="mb-5">@Values.ProjectName Account</h1>
+            </div>
+            <div class="col-xl-9 mx-auto">
+                <div class="form-row">
+                    <div class="col-12 col-md-3">
+                        <a asp-controller="Account" asp-action="Index" class="btn btn-block btn-lg btn-primary">@Localizer["Sign in with"] @Values.ProjectName</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</header>
+
+<section class="features-icons bg-light text-center pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-3 mb-3 text-center">
+                <h1>A free @Values.ProjectName account gives you easy access to all things digital</h1>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-book m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["Kahla"]</h3>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-wrench m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["EE"]</h3>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-share-alt m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["Colossus"]</h3>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-book m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["Stargate"]</h3>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-wrench m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["OSS"]</h3>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-share-alt m-auto text-primary"></i>
+                    </div>
+                    <h3>@Localizer["Developer"]</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="showcase">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/security.jpg');"></div>
+            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                <h2>@Localizer["Enhanced Security"]</h2>
+                <p class="lead mb-0">@Localizer["Your important files are always on hand and your account settings sync across your devices. Keep things easy when you sign in with Aiursoft."]</p>
+                <a asp-controller="Account" asp-action="Index" class="btn btn-warning mt-3">@Localizer["Get started"]</a>
+            </div>
+        </div>
+    </div>
+</section>
