@@ -171,4 +171,10 @@
   <data name="Get best ideas from the open community or users feedback and continuously make your idea real." xml:space="preserve">
     <value>在开放的社区中充分与用户双向沟通，了解优秀的想法，或让idea得变得更好。</value>
   </data>
+  <data name="Get users' feedback and get business value form your data or just monitor your app to produce a better experience." xml:space="preserve">
+    <value>获取用户的反馈并从您的数据中获取商业价值，或者监控您的应用以提供更佳的体验。</value>
+  </data>
+  <data name="Grow" xml:space="preserve">
+    <value>成就</value>
+  </data>
 </root>
