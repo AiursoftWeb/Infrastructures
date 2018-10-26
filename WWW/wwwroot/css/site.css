@@ -1,0 +1,19 @@
+﻿.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.17;
+    z-index: 0;
+}
+
+.www-shadow {
+    text-shadow: 1px 1px 4px #000000;
+}
+
+.www-back {
+    background: url('img/back.jpg') azure no-repeat center center;
+    background-size: cover;
+}
