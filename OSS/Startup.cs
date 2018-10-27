@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
 
 namespace Aiursoft.OSS
 {
@@ -31,6 +33,8 @@ namespace Aiursoft.OSS
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
+            services.Configure<GzipCompressionProviderOptions>(options => 
+                options.Level = CompressionLevel.Optimal);
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
@@ -53,6 +57,7 @@ namespace Aiursoft.OSS
             else
             {
                 app.UseEnforceHttps();
+                app.UseResponseCompression();
                 app.UseExceptionHandler("/Error/ServerException");
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
