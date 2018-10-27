@@ -34,11 +34,14 @@ namespace Aiursoft.OSS.Controllers
         public async Task<IActionResult> Generate(GenerateAddressModel model)
         {
             var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == app.AppId);
-            var file = await _dbContext.OSSFile.Include(t => t.BelongingBucket).SingleOrDefaultAsync(t => t.FileKey == model.Id);
-            if (file == null || file.BelongingBucket.BelongingAppId != appLocal.AppId)
+            var file = await _dbContext
+                .OSSFile
+                .Include(t => t.BelongingBucket)
+                .Where(t => t.BelongingBucket.BelongingAppId == app.AppId)
+                .SingleOrDefaultAsync(t => t.FileKey == model.Id);
+            if (file == null)
             {
-                return NotFound();
+                return this.Protocal(ErrorType.NotFound, "Could not get your file in your apps' buckets. The file may be out dated!");
             }
             // Generate secret
             var newSecret = new Secret
