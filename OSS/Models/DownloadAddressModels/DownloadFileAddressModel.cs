@@ -30,5 +30,6 @@ namespace Aiursoft.OSS.Models.DownloadAddressModels
     {
         [Required]
         public int Id { get; set; }
+        public string FileExtension { get; set; }
     }
 }

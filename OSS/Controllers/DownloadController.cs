@@ -105,6 +105,8 @@ namespace Aiursoft.OSS.Controllers
         }
 
         [HttpGet]
+        [Route(template: "/Download/FromKey/{Id}")]
+        [Route(template: "/Download/FromKey/{Id}.{FileExtension=Unset}")]
         public async Task<IActionResult> FromKey(FromKeyAddressModel model)
         {
             var download = !string.IsNullOrWhiteSpace(model.SD);
