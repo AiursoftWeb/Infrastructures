@@ -9,13 +9,19 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The account management center for Aiursoft web apps.</Description>
+    <ApplicationInsightsResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Account</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Account</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Twilio" Version="5.20.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>
