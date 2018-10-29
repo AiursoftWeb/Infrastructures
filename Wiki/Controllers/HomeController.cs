@@ -52,16 +52,16 @@ namespace Aiursoft.Wiki.Controllers
             return Redirect($"/ReadDoc/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
         }
 
-        [Route(template: "/ReadDoc/{CollectionTitle}/{ArticleTitle}.md")]
-        public async Task<IActionResult> _ReadDoc(string CollectionTitle, string ArticleTitle)
+        [Route(template: "/ReadDoc/{collectionTitle}/{articleTitle}.md")]
+        public async Task<IActionResult> _ReadDoc(string collectionTitle, string articleTitle)
         {
             var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
-            var currentCollection = database.SingleOrDefault(t => t.CollectionTitle.ToLower() == CollectionTitle.ToLower());
+            var currentCollection = database.SingleOrDefault(t => t.CollectionTitle.ToLower() == collectionTitle.ToLower());
             if (currentCollection == null)
             {
                 return NotFound();
             }
-            var currentArticle = currentCollection.Articles.SingleOrDefault(t => t.ArticleTitle.ToLower() == ArticleTitle.ToLower());
+            var currentArticle = currentCollection.Articles.SingleOrDefault(t => t.ArticleTitle.ToLower() == articleTitle.ToLower());
             if (currentArticle == null)
             {
                 return NotFound();
@@ -86,10 +86,10 @@ namespace Aiursoft.Wiki.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Seed(string Secret)
+        public async Task<IActionResult> Seed(string secret)
         {
             var secretInConfig = _configuration["ContentUpdateSecret"];
-            if (!string.Equals(Secret, secretInConfig) || string.IsNullOrWhiteSpace(secretInConfig))
+            if (!string.Equals(secret, secretInConfig) || string.IsNullOrWhiteSpace(secretInConfig))
             {
                 return NotFound();
             }
