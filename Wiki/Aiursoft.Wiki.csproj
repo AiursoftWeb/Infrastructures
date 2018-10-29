@@ -9,13 +9,19 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The wiki center for aiursoft.</Description>
+    <ApplicationInsightsResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Wiki</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Wiki</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.15.4" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>
