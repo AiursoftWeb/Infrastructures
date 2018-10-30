@@ -53,7 +53,7 @@
                                                     @if (Model.OpenToRead)
                                                     {
                                                         <a class="dropdown-item" href="@file.InternetPath" target="_blank">Open</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.InternetPath">Copy link</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.InternetPath">Copy link</a>
                                                     }
                                                     <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">Get One-time link</a>
                                                 </div>
