@@ -212,8 +212,7 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
             if (mail == null)
             {
-                ModelState.AddModelError(string.Empty, "Unknown user email.");
-                return ResultGenerator.GetInvalidModelStateErrorResponse(ModelState);
+                return this.Protocal(ErrorType.NotFound, $"The account with email {model.Email} was not found!");
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);

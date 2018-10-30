@@ -35,7 +35,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurValue<int>>(result);
             if (jresult.Code != ErrorType.Success)
-                throw new Exception(jresult.Message);
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
@@ -51,7 +51,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jresult.Code != ErrorType.Success)
-                throw new Exception(jresult.Message);
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
@@ -67,7 +67,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             var jresult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
             if (jresult.Code != ErrorType.Success)
-                throw new Exception(jresult.Message);
+                throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
@@ -80,10 +80,10 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 lang = "en-US"
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-            if (JResult.Code != ErrorType.Success)
-                throw new Exception(JResult.Message);
-            return JResult;
+            var jresult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
         }
     }
 }
