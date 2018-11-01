@@ -115,11 +115,16 @@ namespace Aiursoft.OSS.Controllers
             {
                 return NotFound();
             }
-            file.DownloadTimes++;
-            await _dbContext.SaveChangesAsync();
+
             var bucket = await _dbContext
                 .Bucket
                 .SingleOrDefaultAsync(t => t.BucketId == file.BucketId);
+            if (!bucket.OpenToRead)
+            {
+                return NotFound();
+            }
+            file.DownloadTimes++;
+            await _dbContext.SaveChangesAsync();
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{file.FileKey}.dat";
             return await ReturnFile(path, model.H, model.W, file.RealFileName, download);
         }
