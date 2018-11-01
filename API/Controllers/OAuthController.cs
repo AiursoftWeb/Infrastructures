@@ -363,6 +363,10 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.WrongKey, "Not a valid access token!");
             }
+            else if (!AccessToken.IsAlive)
+            {
+                return Json(new AiurProtocal { Message = "Access Token is timeout!", Code = ErrorType.Timeout });
+            }
             var targetPack = await _dbContext
                 .OAuthPack
                 .Where(t => t.IsUsed == false)
