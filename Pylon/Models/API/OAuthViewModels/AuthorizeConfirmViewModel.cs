@@ -51,7 +51,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         public string GetRedirectRoot()
         {
             var url = new Uri(ToRedirect);
-            return $@"{url.Scheme}://{url.Host}/";
+            return $@"{url.Scheme}://{url.Host}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}";
         }
     }
 }
