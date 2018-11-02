@@ -34,9 +34,12 @@ namespace Aiursoft.Account
         {
             services.AddDbContext<AccountDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
             services.AddIdentity<AccountUser, IdentityRole>()
                 .AddEntityFrameworkStores<AccountDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureNexusCookies();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 

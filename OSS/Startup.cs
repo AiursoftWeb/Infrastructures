@@ -33,6 +33,9 @@ namespace Aiursoft.OSS
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
+
+            services.ConfigureNexusCookies();
+
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 

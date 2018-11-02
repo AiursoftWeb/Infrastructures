@@ -92,6 +92,16 @@ namespace Aiursoft.Pylon
             });
         }
 
+        public static IServiceCollection ConfigureNexusCookies(this IServiceCollection services)
+        {
+            return services.ConfigureApplicationCookie(t =>
+            {
+                t.Cookie.SameSite = SameSiteMode.Strict;
+                t.Cookie.HttpOnly = true;
+                t.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
+        }
+
         public static IActionResult SignoutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
         {
             var request = controller.HttpContext.Request;

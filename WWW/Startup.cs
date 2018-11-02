@@ -28,6 +28,8 @@ namespace Aiursoft.WWW
             services.AddDbContext<WWWDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
+            services.ConfigureNexusCookies();
+
             services.AddIdentity<WWWUser, IdentityRole>()
                 .AddEntityFrameworkStores<WWWDbContext>()
                 .AddDefaultTokenProviders();

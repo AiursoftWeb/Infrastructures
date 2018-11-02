@@ -34,6 +34,9 @@ namespace Aiursoft.Wiki
         {
             services.AddDbContext<WikiDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.ConfigureNexusCookies();
+
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();

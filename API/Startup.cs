@@ -41,6 +41,8 @@ namespace Aiursoft.API
                 .AddEntityFrameworkStores<APIDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureNexusCookies();
+
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
