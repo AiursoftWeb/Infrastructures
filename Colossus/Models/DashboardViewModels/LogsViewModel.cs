@@ -18,5 +18,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         }
 
         public IEnumerable<OSSFile> Files { get; set; }
+        public IEnumerable<UploadRecord> Records { get; set; }
     }
 }

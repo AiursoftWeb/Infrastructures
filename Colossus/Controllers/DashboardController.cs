@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
+using System.IO;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -66,7 +67,8 @@ namespace Aiursoft.Colossus.Controllers
             var record = new UploadRecord
             {
                 UploaderId = user.Id,
-                FileId = model.FileKey
+                FileId = model.FileKey,
+                SourceFileName = file.FileName.Replace(" ", "")
             };
             _dbContext.UploadRecords.Add(record);
             await _dbContext.SaveChangesAsync();
@@ -90,7 +92,8 @@ namespace Aiursoft.Colossus.Controllers
             var myfilesOnOSS = colossusFiles.AllFiles.Where(t => myFiles.Any(k => k.FileId == t.FileKey));
             var model = new LogsViewModel(user, 1, "File upload logs")
             {
-                Files = myfilesOnOSS
+                Files = myfilesOnOSS,
+                Records = myFiles
             };
             return View(model);
         }
