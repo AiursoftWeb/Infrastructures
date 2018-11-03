@@ -9,6 +9,7 @@ namespace Aiursoft.OSS.Models.DownloadAddressModels
     public abstract class GetFileAddressModel
     {
         public string SD { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         [Range(-1, 10000)]
         public int W { get; set; } = -1;
         [Range(-1, 10000)]
@@ -19,7 +20,6 @@ namespace Aiursoft.OSS.Models.DownloadAddressModels
         public string BucketName { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
-
     }
     public class FromSecretAddressModel : GetFileAddressModel
     {

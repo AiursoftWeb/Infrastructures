@@ -13,7 +13,16 @@ namespace Aiursoft.Pylon.Services
 {
     public static class FileService
     {
-        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename, bool download = false)
+        /// <summary>
+        /// This triggers the current action to download a real file storaged in disk.
+        /// </summary>
+        /// <param name="controller">You must pass current request controller.</param>
+        /// <param name="path">The physical path of the file you wanna download.</param>
+        /// <param name="filename">Real file name. Will be used to generate correct MIME type.</param>
+        /// <param name="download">If set, will let the browser directly download the file.</param>
+        /// <param name="suggestedFileName">If `download` was set and this was not empty, will override the file name argument to be the file name after downloading.</param>
+        /// <returns></returns>
+        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename, bool download, string suggestedFileName)
         {
             return await Task.Run<IActionResult>(() =>
             {
@@ -29,7 +38,11 @@ namespace Aiursoft.Pylon.Services
                 controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
                 if (download)
                 {
-                    return controller.PhysicalFile(path, MIME.GetContentType(extension), filename, true);
+                    if (string.IsNullOrEmpty(suggestedFileName))
+                    {
+                        suggestedFileName = filename;
+                    }
+                    return controller.PhysicalFile(path, MIME.GetContentType(extension), suggestedFileName, true);
                 }
                 else
                 {

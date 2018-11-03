@@ -37,17 +37,17 @@ namespace Aiursoft.OSS.Controllers
             _configuration = configuration;
         }
 
-        private async Task<IActionResult> ReturnFile(string path, int h, int w, string realfileName, bool download)
+        private async Task<IActionResult> ReturnFile(string path, int h, int w, string realfileName, bool download, string suggestefFileName)
         {
             try
             {
                 if (StringOperation.IsImage(realfileName) && h > 0 && w > 0)
                 {
-                    return await this.AiurFile(await _imageCompresser.Compress(path, realfileName, w, h), realfileName, download);
+                    return await this.AiurFile(await _imageCompresser.Compress(path, realfileName, w, h), realfileName, download, suggestefFileName);
                 }
                 else
                 {
-                    return await this.AiurFile(path, realfileName, download);
+                    return await this.AiurFile(path, realfileName, download, suggestefFileName);
                 }
             }
             catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
@@ -77,7 +77,7 @@ namespace Aiursoft.OSS.Controllers
             await _dbContext.SaveChangesAsync();
 
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{targetBucket.BucketName}{_}{targetFile.FileKey}.dat";
-            return await ReturnFile(path, model.H, model.W, targetFile.RealFileName, download);
+            return await ReturnFile(path, model.H, model.W, targetFile.RealFileName, download, model.Name);
         }
 
         [HttpGet]
@@ -101,7 +101,7 @@ namespace Aiursoft.OSS.Controllers
                 .SingleOrDefaultAsync(t => t.BucketId == secret.File.BucketId);
 
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{secret.File.FileKey}.dat";
-            return await ReturnFile(path, model.H, model.W, secret.File.RealFileName, download);
+            return await ReturnFile(path, model.H, model.W, secret.File.RealFileName, download, model.Name);
         }
 
         [HttpGet]
@@ -126,7 +126,7 @@ namespace Aiursoft.OSS.Controllers
             file.DownloadTimes++;
             await _dbContext.SaveChangesAsync();
             var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{file.FileKey}.dat";
-            return await ReturnFile(path, model.H, model.W, file.RealFileName, download);
+            return await ReturnFile(path, model.H, model.W, file.RealFileName, download, model.Name);
         }
     }
 }
