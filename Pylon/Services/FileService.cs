@@ -42,11 +42,11 @@ namespace Aiursoft.Pylon.Services
                     {
                         suggestedFileName = filename;
                     }
-                    return controller.PhysicalFile(path, MIME.GetContentType(extension), suggestedFileName, true);
+                    return controller.PhysicalFile(path, "application/octet-stream", suggestedFileName, true);
                 }
                 else
                 {
-                    return controller.PhysicalFile(path, "application/octet-stream", true);
+                    return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
                 }
             });
         }

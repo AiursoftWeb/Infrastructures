@@ -110,22 +110,21 @@ namespace Aiursoft.OSS.Controllers
         public async Task<IActionResult> FromKey(FromKeyAddressModel model)
         {
             var download = !string.IsNullOrWhiteSpace(model.SD);
-            var file = await _dbContext.OSSFile.SingleOrDefaultAsync(t => t.FileKey == model.Id);
+            var file = await _dbContext
+                .OSSFile
+                .Include(t => t.BelongingBucket)
+                .SingleOrDefaultAsync(t => t.FileKey == model.Id);
             if (file == null)
             {
                 return NotFound();
             }
-
-            var bucket = await _dbContext
-                .Bucket
-                .SingleOrDefaultAsync(t => t.BucketId == file.BucketId);
-            if (!bucket.OpenToRead)
+            else if (!file.BelongingBucket.OpenToRead)
             {
                 return NotFound();
             }
             file.DownloadTimes++;
             await _dbContext.SaveChangesAsync();
-            var path = _configuration["StoragePath"] + $"{_}Storage{_}{bucket.BucketName}{_}{file.FileKey}.dat";
+            var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             return await ReturnFile(path, model.H, model.W, file.RealFileName, download, model.Name);
         }
     }
