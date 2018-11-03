@@ -7,11 +7,11 @@ namespace Aiursoft.Pylon.Models
 {
     public class MIME
     {
-        public static string GetContentType(string extenstion, bool download)
+        public static string GetContentType(string extenstion)
         {
             string lower = extenstion.ToLower().TrimStart('.');
             //Not to download the file, and we can process the file, let us process it.
-            if (!download && _mimeTypesDictionary.ContainsKey(lower))
+            if (_mimeTypesDictionary.ContainsKey(lower))
             {
                 Console.WriteLine(extenstion);
                 return _mimeTypesDictionary[lower];
