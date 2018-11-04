@@ -22,7 +22,7 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)">
                     <a class="nav-link" asp-controller="Account" asp-action="Index">
-                        <i class="fa fa-fw fa-dashboard"></i>
+                        <i class="fa fa-fw fa-pencil-square"></i>
                         <span class="nav-link-text">
                             @Localizer["Basic Info"]
                         </span>
@@ -38,7 +38,7 @@
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 2 ? " active":string.Empty)">
                     <a class="nav-link" asp-controller="Account" asp-action="Security">
-                        <i class="fa fa-fw fa-server"></i>
+                        <i class="fa fa-lock"></i>
                         <span class="nav-link-text">
                             @Localizer["Security"]
                         </span>
@@ -46,7 +46,7 @@
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 3 ? " active":string.Empty)">
                     <a class="nav-link" asp-controller="Account" asp-action="Avatar">
-                        <i class="fa fa-fw fa-inbox"></i>
+                        <i class="fa fa-fw fa-user-circle-o"></i>
                         <span class="nav-link-text">
                             @Localizer["Avatar"]
                         </span>

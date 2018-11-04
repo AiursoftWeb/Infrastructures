@@ -4,7 +4,10 @@
 }
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Authorize Confirm</div>
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            Authorize Confirm
+        </div>
         <div class="card-body">
             <div class="text-center">
                 @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name, 100, 100)
