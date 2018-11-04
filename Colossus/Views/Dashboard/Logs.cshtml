@@ -33,7 +33,7 @@
                         <tbody>
                             @foreach (var ossFile in Model.Files)
                             {
-                                var record = Model.Records.SingleOrDefault(t => t.Id == ossFile.FileKey);
+                                var record = Model.Records.SingleOrDefault(t => t.FileId == ossFile.FileKey);
                                 <tr>
                                     <td>@ossFile.FileKey</td>
                                     <td>@record.SourceFileName</td>
