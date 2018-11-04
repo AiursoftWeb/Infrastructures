@@ -67,22 +67,9 @@ namespace Aiursoft.API.Controllers
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            if (!string.IsNullOrEmpty(model.NewNickName))
-            {
-                user.NickName = model.NewNickName;
-            }
-            if (model.NewIconId != -1)
-            {
-                //if(user.HeadImgFileKey != Values.DefaultImageId)
-                //{
-                //    await _ossApiService.DeleteFileAsync(model.AccessToken, user.HeadImgFileKey);
-                //}
-                user.HeadImgFileKey = model.NewIconId;
-            }
-            if (!string.Equals(model.NewBio, "Not_Mofified"))
-            {
-                user.Bio = model.NewBio;
-            }
+            user.NickName = model.NewNickName;
+            user.HeadImgFileKey = model.NewIconId;
+            user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
             return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
