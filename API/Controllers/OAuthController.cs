@@ -235,7 +235,7 @@ namespace Aiursoft.API.Controllers
             }
             else if (result.IsLockedOut)
             {
-                return this.Protocal(ErrorType.InvalidInput, $"The account with email {model.Email} was locked! Please try again several minutes later!");
+                return this.Protocal(ErrorType.Unauthorized, $"The account with email {model.Email} was locked! Please try again several minutes later!");
             }
             else
             {
