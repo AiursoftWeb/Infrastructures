@@ -310,6 +310,7 @@ namespace Aiursoft.Account.Controllers
                 taskList.Add(addApp());
             }
             await Task.WhenAll(taskList);
+            model.Apps = model.Apps.OrderBy(t => t.AppCreateTime).ToList();
             return View(model);
         }
 
