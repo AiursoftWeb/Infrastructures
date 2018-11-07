@@ -45,9 +45,8 @@
                                                     More
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" href="@ossFile.InternetPath" target="_blank">Open</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath">Copy link</a>
-                                                    <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@ossFile.FileKey" target="_blank">Get One-time link</a>
+                                                    <a class="dropdown-item" href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank">Open</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?name=@record.SourceFileName">Copy link</a>
                                                 </div>
                                             </div>
                                         </div>

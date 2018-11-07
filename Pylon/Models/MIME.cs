@@ -7,13 +7,17 @@ namespace Aiursoft.Pylon.Models
 {
     public class MIME
     {
+        public static bool HasKey(string extension)
+        {
+            string lower = extension.ToLower().TrimStart('.');
+            return _mimeTypesDictionary.ContainsKey(lower);
+        }
         public static string GetContentType(string extenstion)
         {
-            string lower = extenstion.ToLower().TrimStart('.');
             //Not to download the file, and we can process the file, let us process it.
-            if (_mimeTypesDictionary.ContainsKey(lower))
+            if (HasKey(extenstion))
             {
-                Console.WriteLine(extenstion);
+                string lower = extenstion.ToLower().TrimStart('.');
                 return _mimeTypesDictionary[lower];
             }
             return "application/octet-stream";
