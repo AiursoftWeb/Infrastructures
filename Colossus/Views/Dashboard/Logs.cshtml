@@ -57,8 +57,8 @@
                                     </td>
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)ossFile.JFileSize / 1024, decimals: 2))</td>
                                     <td>@ossFile.DownloadTimes</td>
-                                    <td data-utc-time="@ossFile.UploadTime"></td>
-                                    <td data-utc-time="@(ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0))"></td>
+                                    <td data-utc-time="@ossFile.UploadTime" data-order="@ossFile.UploadTime.Ticks"></td>
+                                    <td data-utc-time="@(ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0))" data-order="@((ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0)).Ticks)"></td>
                                 </tr>
                             }
                         </tbody>

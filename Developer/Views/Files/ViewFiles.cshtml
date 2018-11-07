@@ -42,8 +42,8 @@
                                     <td>@file.RealFileName</td>
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)file.JFileSize / 1024, decimals: 2))</td>
                                     <td>@file.DownloadTimes</td>
-                                    <td data-utc-time="@file.UploadTime"></td>
-                                    <td data-utc-time="@(file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0))"></td>
+                                    <td data-utc-time="@file.UploadTime" data-order="@file.UploadTime.Ticks"></td>
+                                    <td data-utc-time="@(file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0))" data-order="@((file.UploadTime + new TimeSpan(file.AliveDays, 0, 0, 0)).Ticks)"></td>
                                     <td>
                                         @if (Model.OpenToRead)
                                         {
