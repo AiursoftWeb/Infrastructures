@@ -110,7 +110,7 @@ namespace Aiursoft.OSS.Services
                     {
                         var fileid = Convert.ToInt32(Path.GetFileNameWithoutExtension(item.Name));
                         // If file is not exist in the database
-                        if (await _dbContext.OSSFile.Where(t => t.BucketId == bucket.BucketId).AnyAsync(t => t.FileKey == fileid))
+                        if (!await _dbContext.OSSFile.Where(t => t.BucketId == bucket.BucketId).AnyAsync(t => t.FileKey == fileid))
                         {
                             _logger.LogWarning($"Deleted the file in disk: {item.FullName} because it was not found in database.");
                             File.Delete(item.FullName);
