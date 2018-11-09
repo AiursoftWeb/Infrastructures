@@ -104,7 +104,7 @@ namespace Aiursoft.OSS.Services
                 {
                     Directory.CreateDirectory(bucketPath);
                 }
-                foreach (var item in new DirectoryInfo("bucketPath").GetFiles())
+                foreach (var item in new DirectoryInfo(bucketPath).GetFiles())
                 {
                     try
                     {
