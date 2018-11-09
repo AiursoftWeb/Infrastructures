@@ -16,7 +16,7 @@ namespace Aiursoft.OSS.Services
 {
     public class TimedCleaner : IHostedService, IDisposable
     {
-        private IConfiguration Configuration { get; }
+        private IConfiguration _configuration { get; }
         private readonly ILogger _logger;
         private Timer _timer;
         private readonly char _ = Path.DirectorySeparatorChar;
@@ -27,7 +27,7 @@ namespace Aiursoft.OSS.Services
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory)
         {
-            Configuration = configuration;
+            _configuration = configuration;
             _logger = logger;
             _scopeFactory = scopeFactory;
         }
@@ -61,17 +61,68 @@ namespace Aiursoft.OSS.Services
             var outdatedFiles = (await _dbContext.OSSFile.Include(t => t.BelongingBucket).ToListAsync())
                 .Where(t => t.UploadTime + new TimeSpan(t.AliveDays, 0, 0, 0) < DateTime.UtcNow)
                 .ToList();
+
             foreach (var file in outdatedFiles)
             {
-                var path = $@"{Configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                var path = $@"{_configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 if (File.Exists(path))
                 {
                     File.Delete(path);
                 }
                 _dbContext.OSSFile.Remove(file);
             }
+
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("Successfully cleaned all trash.");
+
+            await DeleteInvalidRecords(_dbContext);
+            await DeleteInvalidFiles(_dbContext);
+        }
+
+        public async Task DeleteInvalidRecords(OSSDbContext _dbContext)
+        {
+            // Delete records that not in storage.
+            foreach (var file in _dbContext.OSSFile)
+            {
+                var path = $@"{_configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                if (!File.Exists(path))
+                {
+                    _dbContext.Remove(file);
+                    _logger.LogWarning($"Deleted the file record in database: {file.BelongingBucket.BucketName}.{file.FileKey} because it was not found in storage.");
+                }
+            }
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteInvalidFiles(OSSDbContext _dbContext)
+        {
+            // Delete files that not in record
+            foreach (var bucket in _dbContext.Bucket)
+            {
+                var bucketPath = $@"{_configuration["StoragePath"]}{_}Storage{_}{bucket.BucketName}{_}";
+                if (!Directory.Exists(bucketPath))
+                {
+                    Directory.CreateDirectory(bucketPath);
+                }
+                foreach (var item in new DirectoryInfo("bucketPath").GetFiles())
+                {
+                    try
+                    {
+                        var fileid = Convert.ToInt32(Path.GetFileNameWithoutExtension(item.Name));
+                        // If file is not exist in the database
+                        if (await _dbContext.OSSFile.Where(t => t.BucketId == bucket.BucketId).AnyAsync(t => t.FileKey == fileid))
+                        {
+                            _logger.LogWarning($"Deleted the file in disk: {item.FullName} because it was not found in database.");
+                            File.Delete(item.FullName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogWarning($"An error occured while analysing the file {item.FullName} because {e.Message}. We will delete it directly!");
+                        File.Delete(item.FullName);
+                    }
+                }
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
