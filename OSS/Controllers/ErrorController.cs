@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,10 @@ namespace Aiursoft.OSS.Controllers
         {
             return View();
         }
+
         public IActionResult ServerException()
         {
-            return View();
+            return this.Protocal(ErrorType.UnknownError, "Kahla server was crashed! Please tell us!");
         }
     }
 }
