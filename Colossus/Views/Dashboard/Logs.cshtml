@@ -45,17 +45,20 @@
                                                     More
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" href="@ossFile.InternetPath" target="_blank">Open</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath">Copy link</a>
-                                                    <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@ossFile.FileKey" target="_blank">Get One-time link</a>
+                                                    @if(MIME.HasKey(ossFile.FileExtension))
+                                                    {
+                                                        <a class="dropdown-item" href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank">Open</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?name=@record.SourceFileName">Copy open link</a>
+                                                    }
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?sd=true&name=@record.SourceFileName">Copy download link</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>@string.Format("{0:N}", Math.Round(d: (decimal)ossFile.JFileSize / 1024, decimals: 2))</td>
                                     <td>@ossFile.DownloadTimes</td>
-                                    <td data-utc-time="@ossFile.UploadTime"></td>
-                                    <td data-utc-time="@(ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0))"></td>
+                                    <td data-utc-time="@ossFile.UploadTime" data-order="@ossFile.UploadTime.Ticks"></td>
+                                    <td data-utc-time="@(ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0))" data-order="@((ossFile.UploadTime + new TimeSpan(ossFile.AliveDays, 0, 0, 0)).Ticks)"></td>
                                 </tr>
                             }
                         </tbody>

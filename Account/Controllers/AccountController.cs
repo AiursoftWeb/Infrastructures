@@ -77,7 +77,7 @@ namespace Aiursoft.Account.Controllers
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, -1, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -168,7 +168,7 @@ namespace Aiursoft.Account.Controllers
             }
             var uploadedFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 365);
             cuser.HeadImgFileKey = uploadedFile.FileKey;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), string.Empty, cuser.HeadImgFileKey, "Not_Mofified");
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
@@ -310,6 +310,7 @@ namespace Aiursoft.Account.Controllers
                 taskList.Add(addApp());
             }
             await Task.WhenAll(taskList);
+            model.Apps = model.Apps.OrderBy(t => t.AppCreateTime).ToList();
             return View(model);
         }
 

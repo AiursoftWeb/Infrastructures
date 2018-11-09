@@ -5,7 +5,10 @@
 
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">@Localizer["Login to"] @Model.AppName</div>
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            @Localizer["Login to"] @Model.AppName
+        </div>
         <div class="card-body">
             <div class="text-center">
                 <img class="rounded" src="@(Model.AppImageUrl)?w=100&h=100">

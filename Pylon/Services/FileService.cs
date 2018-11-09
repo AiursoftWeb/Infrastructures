@@ -36,7 +36,9 @@ namespace Aiursoft.Pylon.Services
                     return new StatusCodeResult(304);
                 }
                 controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
-                if (download)
+
+                // Download mode, or not supported MIME.
+                if (download || !MIME.HasKey(extension))
                 {
                     if (string.IsNullOrEmpty(suggestedFileName))
                     {
@@ -44,6 +46,7 @@ namespace Aiursoft.Pylon.Services
                     }
                     return controller.PhysicalFile(path, "application/octet-stream", suggestedFileName, true);
                 }
+                // Open mode, and supported MIME
                 else
                 {
                     return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
