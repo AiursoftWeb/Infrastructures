@@ -82,7 +82,7 @@ namespace Aiursoft.OSS.Services
         public async Task DeleteInvalidRecords(OSSDbContext _dbContext)
         {
             // Delete records that not in storage.
-            foreach (var file in _dbContext.OSSFile)
+            foreach (var file in await _dbContext.OSSFile.ToListAsync())
             {
                 var path = $@"{_configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 if (!File.Exists(path))
@@ -96,8 +96,9 @@ namespace Aiursoft.OSS.Services
 
         public async Task DeleteInvalidFiles(OSSDbContext _dbContext)
         {
+            var allFiles = await _dbContext.OSSFile.ToListAsync();
             // Delete files that not in record
-            foreach (var bucket in _dbContext.Bucket)
+            foreach (var bucket in await _dbContext.Bucket.ToListAsync())
             {
                 var bucketPath = $@"{_configuration["StoragePath"]}{_}Storage{_}{bucket.BucketName}{_}";
                 if (!Directory.Exists(bucketPath))
@@ -110,7 +111,7 @@ namespace Aiursoft.OSS.Services
                     {
                         var fileid = Convert.ToInt32(Path.GetFileNameWithoutExtension(item.Name));
                         // If file is not exist in the database
-                        if (!await _dbContext.OSSFile.Where(t => t.BucketId == bucket.BucketId).AnyAsync(t => t.FileKey == fileid))
+                        if (!allFiles.Where(t => t.BucketId == bucket.BucketId).Any(t => t.FileKey == fileid))
                         {
                             _logger.LogWarning($"Deleted the file in disk: {item.FullName} because it was not found in database.");
                             File.Delete(item.FullName);
