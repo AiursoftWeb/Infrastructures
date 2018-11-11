@@ -14,6 +14,6 @@
 }
 
 header.www-back {
-    background: url('/img/back.jpg') azure no-repeat center center;
+    background: url('/img/back.svg') azure no-repeat center center;
     background-size: cover;
 }
