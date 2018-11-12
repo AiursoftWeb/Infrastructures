@@ -17,6 +17,10 @@ namespace Aiursoft.Pylon.Services
 
         public static byte[] Base64ToBytes(this string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return new byte[0];
+            }
             return Convert.FromBase64String(input);
         }
 
