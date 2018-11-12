@@ -23,29 +23,32 @@ namespace Aiursoft.Stargate.Controllers
         private StargateMemory _memoryContext;
         private readonly Counter _counter;
         private readonly CoreApiService _coreApiService;
+        private readonly ACTokenManager _tokenManager;
 
         public MessageController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
             Counter counter,
-            CoreApiService coreApiService)
+            CoreApiService coreApiService,
+            ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
             _counter = counter;
             _coreApiService = coreApiService;
+            _tokenManager = tokenManager;
         }
 
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
         {
             //Ensure app is created
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == app.AppId);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp
                 {
-                    Id = app.AppId,
+                    Id = appid,
                     Channels = new List<Channel>()
                 };
                 _dbContext.Apps.Add(appLocal);
@@ -61,7 +64,7 @@ namespace Aiursoft.Stargate.Controllers
                     Message = "We can not find your channel!"
                 });
             }
-            if (channel.AppId != app.AppId)
+            if (channel.AppId != appid)
             {
                 return Json(new AiurProtocal
                 {

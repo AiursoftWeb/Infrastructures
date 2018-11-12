@@ -22,22 +22,26 @@ namespace Aiursoft.OSS.Controllers
     {
         private readonly OSSDbContext _dbContext;
         private readonly CoreApiService _coreApiService;
+        private readonly ACTokenManager _tokenManager;
+
         public SecretController(
             OSSDbContext dbContext,
-            CoreApiService coreApiService)
+            CoreApiService coreApiService,
+            ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
             _coreApiService = coreApiService;
+            _tokenManager = tokenManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Generate(GenerateAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var file = await _dbContext
                 .OSSFile
                 .Include(t => t.BelongingBucket)
-                .Where(t => t.BelongingBucket.BelongingAppId == app.AppId)
+                .Where(t => t.BelongingBucket.BelongingAppId == appid)
                 .SingleOrDefaultAsync(t => t.FileKey == model.Id);
             if (file == null)
             {

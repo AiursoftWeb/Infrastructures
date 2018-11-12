@@ -46,6 +46,8 @@ namespace Aiursoft.API
 
             services.ConfigureNexusCookies();
 
+            services.AddTokenManager();
+
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -55,7 +57,6 @@ namespace Aiursoft.API
 
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<AiurKeyPair>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();
@@ -63,8 +64,6 @@ namespace Aiursoft.API
             services.AddTransient<UserImageGenerator<APIUser>>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
-            services.AddTransient<RSAService>();
-            services.AddTransient<ACTokenManager>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)

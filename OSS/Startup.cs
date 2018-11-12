@@ -39,6 +39,8 @@ namespace Aiursoft.OSS
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
+            services.AddTokenManager();
+
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddScoped<HTTPService>();

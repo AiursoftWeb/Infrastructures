@@ -193,5 +193,13 @@ namespace Aiursoft.Pylon
             services.AddTransient<AuthService<TUser>>();
             return services;
         }
+
+        public static IServiceCollection AddTokenManager(this IServiceCollection services)
+        {
+            services.AddSingleton<AiurKeyPair>();
+            services.AddTransient<RSAService>();
+            services.AddTransient<ACTokenManager>();
+            return services;
+        }
     }
 }

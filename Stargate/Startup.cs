@@ -33,6 +33,8 @@ namespace Aiursoft.Stargate
 
             services.ConfigureNexusCookies();
 
+            services.AddTokenManager();
+
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();

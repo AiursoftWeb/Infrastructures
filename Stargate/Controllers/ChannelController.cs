@@ -24,23 +24,27 @@ namespace Aiursoft.Stargate.Controllers
     {
         private readonly StargateDbContext _dbContext;
         private readonly CoreApiService _coreApiService;
+        private readonly ACTokenManager _tokenManager;
+
         public ChannelController(
             StargateDbContext dbContext,
-            CoreApiService coreApiService)
+            CoreApiService coreApiService,
+        ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
             _coreApiService = coreApiService;
+            _tokenManager = tokenManager;
         }
 
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == app.AppId);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp
                 {
-                    Id = app.AppId,
+                    Id = appid,
                     Channels = new List<Channel>()
                 };
                 _dbContext.Apps.Add(appLocal);
@@ -48,7 +52,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             var channels = await _dbContext
                 .Channels
-                .Where(t => t.AppId == app.AppId)
+                .Where(t => t.AppId == appid)
                 .ToListAsync();
             var viewModel = new ViewMyChannelsViewModel
             {
@@ -89,13 +93,13 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> CreateChannel([FromForm]CreateChannelAddressModel model)
         {
             //Update app info
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.Include(t => t.Channels).SingleOrDefaultAsync(t => t.Id == app.AppId);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.Include(t => t.Channels).SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp
                 {
-                    Id = app.AppId,
+                    Id = appid,
                     Channels = new List<Channel>()
                 };
                 _dbContext.Apps.Add(appLocal);
@@ -122,9 +126,9 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteChannel([FromForm]DeleteChannelAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var channel = await _dbContext.Channels.FindAsync(model);
-            if (channel.AppId != app.AppId)
+            if (channel.AppId != appid)
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
             }
@@ -141,12 +145,12 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteApp([FromForm]DeleteAppAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            if (app.AppId != model.AppId)
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            if (appid != model.AppId)
             {
                 return Json(new AiurProtocal { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
             }
-            var target = await _dbContext.Apps.FindAsync(app.AppId);
+            var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
             {
                 _dbContext.Channels.Delete(t => t.AppId == target.Id);

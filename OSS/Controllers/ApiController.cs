@@ -34,31 +34,34 @@ namespace Aiursoft.OSS.Controllers
         private readonly IConfiguration _configuration;
         private readonly ServiceLocation _serviceLocation;
         private readonly CoreApiService _coreApiService;
+        private readonly ACTokenManager _tokenManager;
         private readonly object _obj = new object();
+
         public ApiController(
             OSSDbContext dbContext,
             ImageCompresser imageCompresser,
             IConfiguration configuration,
             ServiceLocation serviceLocation,
-            CoreApiService coreApiService)
+            CoreApiService coreApiService,
+            ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
             _imageCompresser = imageCompresser;
             _configuration = configuration;
             _serviceLocation = serviceLocation;
             _coreApiService = coreApiService;
+            _tokenManager = tokenManager;
         }
 
         [HttpPost]
         public async Task<JsonResult> DeleteApp(DeleteAppAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            if (app.AppId != model.AppId)
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            if (appid != model.AppId)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app you try to delete is not the accesstoken you granted!");
             }
-
-            var target = await _dbContext.Apps.FindAsync(app.AppId);
+            var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
             {
                 _dbContext.OSSFile.RemoveRange(_dbContext.OSSFile.Include(t => t.BelongingBucket).Where(t => t.BelongingBucket.BelongingAppId == target.AppId));
@@ -72,13 +75,13 @@ namespace Aiursoft.OSS.Controllers
 
         public async Task<JsonResult> ViewMyBuckets(ViewMyBucketsAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == app.AppId);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
                 appLocal = new OSSApp
                 {
-                    AppId = app.AppId,
+                    AppId = appid,
                     MyBuckets = new List<Bucket>()
                 };
                 _dbContext.Apps.Add(appLocal);
@@ -88,7 +91,7 @@ namespace Aiursoft.OSS.Controllers
             var buckets = await _dbContext
                 .Bucket
                 .Include(t => t.Files)
-                .Where(t => t.BelongingAppId == app.AppId)
+                .Where(t => t.BelongingAppId == appid)
                 .ToListAsync();
             buckets.ForEach(t => t.FileCount = t.Files.Count());
             var viewModel = new ViewMyBucketsViewModel
@@ -105,13 +108,13 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> CreateBucket([FromForm]CreateBucketAddressModel model)
         {
             //Update app info
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
-            var appLocal = await _dbContext.Apps.Include(t => t.MyBuckets).SingleOrDefaultAsync(t => t.AppId == app.AppId);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.Include(t => t.MyBuckets).SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
                 appLocal = new OSSApp
                 {
-                    AppId = app.AppId,
+                    AppId = appid,
                     MyBuckets = new List<Bucket>()
                 };
                 _dbContext.Apps.Add(appLocal);
@@ -151,7 +154,7 @@ namespace Aiursoft.OSS.Controllers
         [HttpPost]
         public async Task<JsonResult> EditBucket([FromForm]EditBucketAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var existing = _dbContext.Bucket.Any(t => t.BucketName == model.NewBucketName && t.BucketId != model.BucketId);
             if (existing)
             {
@@ -162,7 +165,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 return this.Protocal(ErrorType.NotFound, "Not found target bucket!");
             }
-            else if (target.BelongingAppId != app.AppId)
+            else if (target.BelongingAppId != appid)
             {
                 return this.Protocal(ErrorType.Unauthorized, "This is not your bucket!");
             }
@@ -198,9 +201,9 @@ namespace Aiursoft.OSS.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteBucket([FromForm]DeleteBucketAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
-            if (bucket.BelongingAppId != app.AppId)
+            if (bucket.BelongingAppId != appid)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you try to delete is not your app's bucket!");
             }
@@ -237,10 +240,10 @@ namespace Aiursoft.OSS.Controllers
         [FileChecker]
         public async Task<JsonResult> UploadFile(UploadFileAddressModel model)
         {
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             //try find the target bucket
             var targetBucket = await _dbContext.Bucket.FindAsync(model.BucketId);
-            if (targetBucket == null || targetBucket.BelongingAppId != app.AppId)
+            if (targetBucket == null || targetBucket.BelongingAppId != appid)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you try to upload is not your app's bucket!");
             }
@@ -292,10 +295,10 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> ViewAllFiles(CommonAddressModel model)
         {
             //Analyse app
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var bucket = await _dbContext.Bucket.FindAsync(model.BucketId);
             //Security
-            if (bucket.BelongingAppId != app.AppId)
+            if (bucket.BelongingAppId != appid)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you tried to view is not that app's bucket.");
             }
@@ -321,7 +324,7 @@ namespace Aiursoft.OSS.Controllers
         public async Task<JsonResult> DeleteFile(DeleteFileAddressModel model)
         {
             //Analyse app
-            var app = await _coreApiService.ValidateAccessTokenAsync(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var file = await _dbContext
                 .OSSFile
                 .Include(t => t.BelongingBucket)
@@ -331,7 +334,7 @@ namespace Aiursoft.OSS.Controllers
                 return this.Protocal(ErrorType.NotFound, "We did not find that file in that bucket!");
             }
             //Security
-            if (file.BelongingBucket.BelongingAppId != app.AppId)
+            if (file.BelongingBucket.BelongingAppId != appid)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you tried is not that app's bucket.");
             }
