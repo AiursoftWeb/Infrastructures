@@ -20,6 +20,8 @@ using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
+using System.Security.Cryptography;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.API
 {
@@ -43,6 +45,8 @@ namespace Aiursoft.API
 
             services.ConfigureNexusCookies();
 
+            services.Configure<AiurKeyPair>(Configuration.GetSection(nameof(AiurKeyPair)));
+
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -59,6 +63,7 @@ namespace Aiursoft.API
             services.AddTransient<UserImageGenerator<APIUser>>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
+            services.AddTransient<RSAService>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)

@@ -10,6 +10,36 @@ namespace Aiursoft.Pylon.Services
 {
     public static class StringOperation
     {
+        public static string BytesToBase64(this byte[] input)
+        {
+            return Convert.ToBase64String(input);
+        }
+
+        public static byte[] Base64ToBytes(this string input)
+        {
+            return Convert.FromBase64String(input);
+        }
+
+        public static byte[] StringToBytes(this string input)
+        {
+            return new UTF8Encoding().GetBytes(input);
+        }
+
+        public static string BytesToString(this byte[] input)
+        {
+            return new UTF8Encoding().GetString(input, 0, input.Length);
+        }
+
+        public static string StringToBase64(this string input)
+        {
+            return BytesToBase64(StringToBytes(input));
+        }
+
+        public static string Base64ToString(this string input)
+        {
+            return BytesToString(Base64ToBytes(input));
+        }
+
         private static string GetMd5Hash(MD5 md5Hash, string input)
         {
             var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));

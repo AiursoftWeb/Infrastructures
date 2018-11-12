@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Aiursoft.Pylon;
+using System.Security.Cryptography;
 
 namespace Aiursoft.API
 {
@@ -9,6 +10,10 @@ namespace Aiursoft.API
     {
         public static void Main(string[] args)
         {
+            var rsa = new RSACryptoServiceProvider();
+            var key = rsa.ExportParameters(true);
+            var text = Newtonsoft.Json.JsonConvert.SerializeObject(key);
+
             BuildWebHost(args)
                 .MigrateDbContext<APIDbContext>((db, services) => db.Seed(services))
                 .Run();
