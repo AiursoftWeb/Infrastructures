@@ -44,19 +44,26 @@ namespace Aiursoft.Pylon.Services
 
         public string ValidateAccessToken(string value)
         {
-            var tokenparts = value.Split('.');
-            var tokenBase64 = tokenparts[0];
-            var tokenSign = tokenparts[1];
-            var token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
-            if (DateTime.UtcNow > token.Expires)
+            try
             {
-                throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
+                var tokenparts = value.Split('.');
+                var tokenBase64 = tokenparts[0];
+                var tokenSign = tokenparts[1];
+                var token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
+                if (DateTime.UtcNow > token.Expires)
+                {
+                    throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
+                }
+                if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+                {
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Token could not be authorized!");
+                }
+                return token.AppId;
             }
-            if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+            catch
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Token could not be authorized!");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was not valid and can not be verified!");
             }
-            return token.AppId;
         }
     }
 }
