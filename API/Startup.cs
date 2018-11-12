@@ -22,6 +22,7 @@ using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using System.Security.Cryptography;
 using Aiursoft.Pylon.Models;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.API
 {
@@ -45,8 +46,6 @@ namespace Aiursoft.API
 
             services.ConfigureNexusCookies();
 
-            services.Configure<AiurKeyPair>(Configuration.GetSection(nameof(AiurKeyPair)));
-
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -56,6 +55,7 @@ namespace Aiursoft.API
 
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<ServiceLocation>();
+            services.AddSingleton<AiurKeyPair>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();

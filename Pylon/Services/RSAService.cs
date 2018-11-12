@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Models;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -9,7 +10,7 @@ namespace Aiursoft.Pylon.Services
     public class RSAService
     {
         private readonly RSAParameters _privateKey;
-        private readonly RSAParameters _publicKey;
+        public readonly RSAParameters _publicKey;
         public RSAService(AiurKeyPair keypair)
         {
             _privateKey = keypair.PrivateKey;

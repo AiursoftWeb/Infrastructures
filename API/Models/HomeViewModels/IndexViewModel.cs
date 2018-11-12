@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Aiursoft.API.Models.HomeViewModels
@@ -12,5 +13,6 @@ namespace Aiursoft.API.Models.HomeViewModels
         public bool Signedin { get; internal set; }
         public string Local { get; internal set; }
         public APIUser User { get; set; }
+        public RSAParameters PublicKey { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using Aiursoft.API.Models.HomeViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.Extensions.Localization;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.API.Controllers
 {
@@ -18,13 +19,16 @@ namespace Aiursoft.API.Controllers
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly RSAService _rsaService;
 
         public HomeController(
             UserManager<APIUser> userManager,
-            IStringLocalizer<HomeController> localizer)
+            IStringLocalizer<HomeController> localizer,
+            RSAService rsaService)
         {
             _userManager = userManager;
             _localizer = localizer;
+            _rsaService = rsaService;
         }
 
         public async Task<IActionResult> Index()
@@ -37,7 +41,8 @@ namespace Aiursoft.API.Controllers
                 Code  = ErrorType.Success,
                 Message = "Server started successfully!",
                 Local = _localizer["en"],
-                User = cuser
+                User = cuser,
+                PublicKey = _rsaService._publicKey
             });
         }
 
