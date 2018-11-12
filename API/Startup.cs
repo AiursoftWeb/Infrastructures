@@ -64,6 +64,7 @@ namespace Aiursoft.API
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
             services.AddTransient<RSAService>();
+            services.AddTransient<ACTokenManager>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
