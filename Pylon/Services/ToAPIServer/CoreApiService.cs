@@ -23,6 +23,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
+        [Obsolete(message: "Token was signed!", error: true)]
         public async Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "api", "ValidateAccessToken", new

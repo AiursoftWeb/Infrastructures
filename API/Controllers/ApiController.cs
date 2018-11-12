@@ -34,6 +34,7 @@ namespace Aiursoft.API.Controllers
         private readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly DeveloperApiService _developerApiService;
+        private readonly ACTokenManager _tokenManager;
 
         public ApiController(
             UserManager<APIUser> userManager,
@@ -41,7 +42,8 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
-            DeveloperApiService developerApiService)
+            DeveloperApiService developerApiService,
+            ACTokenManager tokenManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -49,6 +51,7 @@ namespace Aiursoft.API.Controllers
             _dbContext = _context;
             _localizer = localizer;
             _developerApiService = developerApiService;
+            _tokenManager = tokenManager;
         }
 
         private void _ApplyCultureCookie(string culture)
@@ -106,31 +109,6 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<JsonResult> ValidateAccessToken(string accessToken)
-        {
-            var target = await _dbContext.AccessToken
-                .SingleOrDefaultAsync(t => t.Value == accessToken);
-            if (target == null)
-            {
-                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Unauthorized, Message = "We can not validate your access token!" });
-            }
-            else if (!target.IsAlive)
-            {
-                return Json(new ValidateAccessTokenViewModel { Code = ErrorType.Timeout, Message = "Your access token is already Timeout!" });
-            }
-            else
-            {
-                return Json(new ValidateAccessTokenViewModel
-                {
-                    AppId = target.ApplyAppId,
-                    Code = ErrorType.Success,
-                    Message = "Successfully validated access token."
-                });
-            }
-        }
-
-        [APIExpHandler]
-        [APIModelStateChecker]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
             try
@@ -141,19 +119,13 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(e.Response);
             }
-            var newAC = new AccessToken
-            {
-                ApplyAppId = model.AppId,
-                Value = Guid.NewGuid().ToString("N")
-            };
-            _dbContext.AccessToken.Add(newAC);
-            await _dbContext.SaveChangesAsync();
+            var token = _tokenManager.GenerateAccessToken(model.AppId);
             return Json(new AccessTokenViewModel
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get access token.",
-                AccessToken = newAC.Value,
-                DeadTime = newAC.CreateTime + newAC.AliveTime
+                AccessToken = token.Item1,
+                DeadTime = token.Item2
             });
         }
 
@@ -161,14 +133,11 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> AllUserGranted(string accessToken)
         {
-            var target = await _dbContext.AccessToken
-                .SingleOrDefaultAsync(t => t.Value == accessToken);
-            if (target == null || !target.IsAlive)
-                return this.Protocal(ErrorType.Unauthorized, "We can not validate your access token!");
-            var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
+            var appid = _tokenManager.ValidateAccessToken(accessToken);
+            var grants = await _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == appid).Take(200).ToListAsync();
             var model = new AllUserGrantedViewModel
             {
-                AppId = target.ApplyAppId,
+                AppId = appid,
                 Grants = new List<Grant>(),
                 Code = ErrorType.Success,
                 Message = "Successfully get all your users"
@@ -182,11 +151,8 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> DropGrants(string accessToken)
         {
-            var target = await _dbContext.AccessToken
-                .SingleOrDefaultAsync(t => t.Value == accessToken);
-            if (target == null || !target.IsAlive)
-                return this.Protocal(ErrorType.Unauthorized, "We can not validate your access token!");
-            _dbContext.LocalAppGrant.Delete(t => t.AppID == target.ApplyAppId);
+            var appid = _tokenManager.ValidateAccessToken(accessToken);
+            _dbContext.LocalAppGrant.Delete(t => t.AppID == appid);
             await _dbContext.SaveChangesAsync();
             return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");
         }

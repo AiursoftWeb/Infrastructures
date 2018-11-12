@@ -22,35 +22,28 @@ namespace Aiursoft.API.Services
     {
         private readonly APIDbContext _dbContext;
         private readonly DeveloperApiService _developerApiService;
+        private readonly ACTokenManager _tokenManager;
 
         public GrantChecker(
-            APIDbContext _context,
-            DeveloperApiService developerApiService)
+            APIDbContext context,
+            DeveloperApiService developerApiService,
+            ACTokenManager tokenManager)
         {
-            _dbContext = _context;
+            _dbContext = context;
             _developerApiService = developerApiService;
+            _tokenManager = tokenManager;
         }
 
         public async Task<APIUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
         {
-            var token = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == accessToken);
-            if (token == null)
-            {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "We can not validate your access token!");
-            }
-            if (!token.IsAlive)
-            {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Your access token is already Timeout!");
-            }
+            var appid = _tokenManager.ValidateAccessToken(accessToken);
             var targetUser = await _dbContext.Users.FindAsync(userId);
-            var app = await _developerApiService.AppInfoAsync(token.ApplyAppId);
+            var app = await _developerApiService.AppInfoAsync(appid);
             if (app.Code != ErrorType.Success)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, "Can not find your app with your accesstoken!");
             }
-            if (!_dbContext.LocalAppGrant.Any(t => t.AppID == token.ApplyAppId && t.APIUserId == targetUser.Id))
+            if (!_dbContext.LocalAppGrant.Any(t => t.AppID == appid && t.APIUserId == targetUser.Id))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");
             }

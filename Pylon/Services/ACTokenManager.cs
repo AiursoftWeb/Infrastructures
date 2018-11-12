@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
             _rsa = rsa;
         }
 
-        public string GenerateAccessToken(string appId)
+        public (string, DateTime) GenerateAccessToken(string appId)
         {
             var token = new ACToken
             {
@@ -39,7 +39,7 @@ namespace Aiursoft.Pylon.Services
             });
             var tokenBase64 = tokenJson.StringToBase64();
             var tokenSign = _rsa.SignData(tokenJson);
-            return $"{tokenBase64}.{tokenSign}";
+            return ($"{tokenBase64}.{tokenSign}", token.Expires);
         }
 
         public string ValidateAccessToken(string value)

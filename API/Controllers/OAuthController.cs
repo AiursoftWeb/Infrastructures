@@ -46,6 +46,7 @@ namespace Aiursoft.API.Controllers
         private readonly IStringLocalizer<OAuthController> _localizer;
         private readonly ServiceLocation _serviceLocation;
         private readonly DeveloperApiService _apiService;
+        private readonly ACTokenManager _tokenManager;
 
         public OAuthController(
             UserManager<APIUser> userManager,
@@ -54,7 +55,8 @@ namespace Aiursoft.API.Controllers
             APIDbContext _context,
             IStringLocalizer<OAuthController> localizer,
             ServiceLocation serviceLocation,
-            DeveloperApiService developerApiService)
+            DeveloperApiService developerApiService,
+            ACTokenManager tokenManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -63,6 +65,7 @@ namespace Aiursoft.API.Controllers
             _localizer = localizer;
             _serviceLocation = serviceLocation;
             _apiService = developerApiService;
+            _tokenManager = tokenManager;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -358,15 +361,7 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
         {
-            var AccessToken = await _dbContext.AccessToken.SingleOrDefaultAsync(t => t.Value == model.AccessToken);
-            if (AccessToken == null)
-            {
-                return this.Protocal(ErrorType.WrongKey, "Not a valid access token!");
-            }
-            else if (!AccessToken.IsAlive)
-            {
-                return Json(new AiurProtocal { Message = "Access Token is timeout!", Code = ErrorType.Timeout });
-            }
+            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
             var targetPack = await _dbContext
                 .OAuthPack
                 .Where(t => t.IsUsed == false)
@@ -376,7 +371,7 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.WrongKey, "Invalid Code.");
             }
-            if (targetPack.ApplyAppId != AccessToken.ApplyAppId)
+            if (targetPack.ApplyAppId != appId)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
             }
@@ -405,19 +400,17 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
-            var target = await _dbContext
-                .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == model.access_token);
-
-            if (target == null)
-            {
-                return Json(new AiurProtocal { Message = "Invalid Access Token!", Code = ErrorType.WrongKey });
-            }
-            else if (!target.IsAlive)
-            {
-                return Json(new AiurProtocal { Message = "Access Token is timeout!", Code = ErrorType.Timeout });
-            }
             var user = await _userManager.FindByIdAsync(model.openid);
+            if (user == null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
+            }
+
+            var appId = _tokenManager.ValidateAccessToken(model.access_token);
+            if (!await user.HasAuthorizedApp(_dbContext, appId))
+            {
+                return this.Protocal(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.openid);
+            }
             var viewModel = new UserInfoViewModel
             {
                 Code = 0,

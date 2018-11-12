@@ -53,7 +53,6 @@ namespace Aiursoft.API.Services
         {
             try
             {
-                await ClearTimeOutAccessToken(_dbContext);
                 await ClearTimeOutOAuthPack(_dbContext);
                 _logger.LogInformation("Clean finished!");
             }
@@ -61,12 +60,6 @@ namespace Aiursoft.API.Services
             {
                 _logger.LogCritical(e.Message);
             }
-        }
-
-        public Task ClearTimeOutAccessToken(APIDbContext _dbContext)
-        {
-            _dbContext.AccessToken.Delete(t => !t.IsAlive);
-            return _dbContext.SaveChangesAsync();
         }
 
         public Task ClearTimeOutOAuthPack(APIDbContext _dbContext)
