@@ -39,10 +39,6 @@ namespace Aiursoft.API.Services
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             var targetUser = await _dbContext.Users.FindAsync(userId);
             var app = await _developerApiService.AppInfoAsync(appid);
-            if (app.Code != ErrorType.Success)
-            {
-                throw new AiurAPIModelException(ErrorType.NotFound, "Can not find your app with your accesstoken!");
-            }
             if (!_dbContext.LocalAppGrant.Any(t => t.AppID == appid && t.APIUserId == targetUser.Id))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");

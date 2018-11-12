@@ -52,8 +52,7 @@ namespace Aiursoft.Developer.Controllers
                 return Json(new AiurProtocal { Message = "Correct app info.", Code = ErrorType.Success });
             }
         }
-        
-        //http://developer.aiursoft.obisoft.com.cn/api/AppInfo?AppId=29bf5250a6d93d47b6164ac2821d5009
+
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<JsonResult> AppInfo(AppInfoAddressModel model)
@@ -64,7 +63,7 @@ namespace Aiursoft.Developer.Controllers
 
             if (target == null)
             {
-                return Json(new AiurProtocal { Message = "Not found.", Code = ErrorType.NotFound });
+                return Json(new AiurProtocal { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
             }
             return Json(new AppInfoViewModel
             {

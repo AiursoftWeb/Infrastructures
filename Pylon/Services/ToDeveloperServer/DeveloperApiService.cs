@@ -44,9 +44,8 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
             });
             var result = await _http.Get(url);
             var JResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
-#warning Response may not be success
-            //if (JResult.code != ErrorType.Success)
-            //    throw new AiurUnexceptedResponse(JResult);
+            if (JResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(JResult);
             return JResult;
         }
     }

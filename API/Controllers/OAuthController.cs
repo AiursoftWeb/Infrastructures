@@ -72,8 +72,12 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            var app = (await _apiService.AppInfoAsync(model.appid)).App;
-            if (app == null)
+            App app;
+            try
+            {
+                app = (await _apiService.AppInfoAsync(model.appid)).App;
+            }
+            catch (AiurUnexceptedResponse)
             {
                 return NotFound();
             }
@@ -107,8 +111,12 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            if (app == null)
+            App app;
+            try
+            {
+                app = (await _apiService.AppInfoAsync(model.AppId)).App;
+            }
+            catch (AiurUnexceptedResponse)
             {
                 return NotFound();
             }
@@ -152,8 +160,12 @@ namespace Aiursoft.API.Controllers
         [Authorize]
         public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmAddressModel model)
         {
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            if (app == null)
+            App app;
+            try
+            {
+                app = (await _apiService.AppInfoAsync(model.AppId)).App;
+            }
+            catch (AiurUnexceptedResponse)
             {
                 return NotFound();
             }
@@ -205,10 +217,6 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
         {
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            if (app == null)
-            {
-                return NotFound();
-            }
             var mail = await _dbContext
                 .UserEmails
                 .Include(t => t.Owner)
@@ -249,8 +257,11 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
-            var app = (await _apiService.AppInfoAsync(model.appid)).App;
-            if (app == null)
+            try
+            {
+                var app = (await _apiService.AppInfoAsync(model.appid)).App;
+            }
+            catch (AiurUnexceptedResponse)
             {
                 return NotFound();
             }
@@ -265,21 +276,25 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var capp = (await _apiService.AppInfoAsync(model.AppId)).App;
-            if (capp == null)
+            App app;
+            try
+            {
+                app = (await _apiService.AppInfoAsync(model.AppId)).App;
+            }
+            catch (AiurUnexceptedResponse)
             {
                 return NotFound();
             }
             if (!ModelState.IsValid)
             {
-                model.Recover(capp.AppName, capp.AppIconAddress);
+                model.Recover(app.AppName, app.AppIconAddress);
                 return View(model);
             }
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
-                ModelState.AddModelError(string.Empty, $"A user with email '{model.Email}' already exists!");
-                model.Recover(capp.AppName, capp.AppIconAddress);
+                ModelState.AddModelError(string.Empty, $"An user with email '{model.Email}' already exists!");
+                model.Recover(app.AppName, app.AppIconAddress);
                 return View(model);
             }
             var user = new APIUser
@@ -304,7 +319,7 @@ namespace Aiursoft.API.Controllers
                 return await FinishAuth(model);
             }
             AddErrors(result);
-            model.Recover(capp.AppName, capp.AppIconAddress);
+            model.Recover(app.AppName, app.AppIconAddress);
             return View(model);
         }
 
@@ -376,10 +391,6 @@ namespace Aiursoft.API.Controllers
                 return this.Protocal(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
             }
             var capp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
-            if (capp == null)
-            {
-                return this.Protocal(ErrorType.NotFound, "App not found.");
-            }
             if (!capp.ViewOpenId)
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
