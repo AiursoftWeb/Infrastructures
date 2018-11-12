@@ -257,9 +257,10 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
+            App app;
             try
             {
-                var app = (await _apiService.AppInfoAsync(model.appid)).App;
+                app = (await _apiService.AppInfoAsync(model.appid)).App;
             }
             catch (AiurUnexceptedResponse)
             {
