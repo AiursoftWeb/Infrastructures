@@ -41,35 +41,16 @@ namespace Aiursoft.Stargate.Controllers
 
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
         {
-            //Ensure app is created
+            //Ensure app
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
-            if (appLocal == null)
-            {
-                appLocal = new StargateApp
-                {
-                    Id = appid,
-                    Channels = new List<Channel>()
-                };
-                _dbContext.Apps.Add(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
             //Ensure channel
-            var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId);
+            var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
             if (channel == null)
             {
                 return Json(new AiurProtocal
                 {
                     Code = ErrorType.NotFound,
                     Message = "We can not find your channel!"
-                });
-            }
-            if (channel.AppId != appid)
-            {
-                return Json(new AiurProtocal
-                {
-                    Code = ErrorType.Unauthorized,
-                    Message = "The channel you wanna create message is not your app's channel!"
                 });
             }
             //Create Message
