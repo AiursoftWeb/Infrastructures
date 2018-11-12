@@ -29,8 +29,9 @@ namespace Aiursoft.WWW.Controllers
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: false)]
         public IActionResult GoAuth()
         {
-            throw new NotImplementedException();
+            return RedirectToAction("Index", "Home");
         }
+
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: true)]
         public IActionResult GoRegister()
         {
@@ -42,19 +43,6 @@ namespace Aiursoft.WWW.Controllers
             var user = await _authService.AuthApp(model);
             this.SetClientLang(user.PreferedLanguage);
             return Redirect(model.state);
-        }
-
-        [AiurForceAuth(directlyReject: true)]
-        [APIExpHandler]
-        public async Task<IActionResult> Update()
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var updated = await _authService.OnlyUpdate(user);
-            return Json(new AiurValue<WWWUser>(updated)
-            {
-                Code = ErrorType.Success,
-                Message = "Server database synced with API!"
-            });
         }
     }
 }

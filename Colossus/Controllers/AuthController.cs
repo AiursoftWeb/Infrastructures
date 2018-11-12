@@ -25,13 +25,13 @@ namespace Aiursoft.Colossus.Controllers
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: false)]
         public IActionResult GoAuth()
         {
-            throw new NotImplementedException();
+            return RedirectToAction("Index", "Home");
         }
 
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: true)]
         public IActionResult GoRegister()
         {
-            throw new NotImplementedException();
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> AuthResult(AuthResultAddressModel model)
