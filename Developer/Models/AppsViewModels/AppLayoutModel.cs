@@ -10,18 +10,20 @@ namespace Aiursoft.Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public AppLayoutModel() { }
-        public AppLayoutModel(DeveloperUser User, int ActivePanel)
+        public AppLayoutModel(DeveloperUser user, int activePanel)
         {
-            this.Recover(User, ActivePanel);
+            this.Recover(user, activePanel);
         }
-        public virtual void Recover(DeveloperUser User, int ActivePanel)
+        public virtual void Recover(DeveloperUser user, int activePanel)
         {
-            this.NickName = User.NickName;
-            this.UserIconFileKey = User.HeadImgFileKey;
-            this.ActivePanel = ActivePanel;
-            this.AppCount = User.MyApps.Count();
-            this.AllApps = User.MyApps;
+            this.NickName = user.NickName;
+            this.UserIconFileKey = user.HeadImgFileKey;
+            this.ActivePanel = activePanel;
+            this.AppCount = user.MyApps.Count();
+            this.AllApps = user.MyApps;
+            this.EmailConfirmed = user.EmailConfirmed;
         }
+        public bool EmailConfirmed { get; set; }
         public string NickName { get; set; }
         public int UserIconFileKey { get; set; }
         public int ActivePanel { get; set; }

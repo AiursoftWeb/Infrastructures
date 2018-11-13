@@ -131,7 +131,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @await  UserImageGenerator.RenderUserImageAsync(User.Identity.Name)
+                        @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
                         <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
@@ -158,6 +158,17 @@
         </div>
     </nav>
     <div class="content-wrapper">
+        @if (!Model.EmailConfirmed)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <strong>Your account email was not confirmed!</strong>
+                    <div>Please <a href="@(new AiurUrl(ServiceLocation.Account, "Account" ,"Email", new { }))">confirm your email</a> as soon as possible! Or you may lose access to your account in a few days!</div>
+                    <div>Without confirming your email, you won't receive any important notifications and cannot reset your password!</div>
+                </div>
+            </div>
+        }
         @RenderBody()
         <footer class="sticky-footer">
             <div class="ml-3">
@@ -168,7 +179,7 @@
                             Path = Context.Request.Path
                         }))">Language(语言)</a>
                 </small>
-                @foreach(var foot in Values.Footer)
+                @foreach (var foot in Values.Footer)
                 {
                     <small class="mr-2 ml-2">
                         <a href="@foot.Value">@foot.Key</a>
