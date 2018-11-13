@@ -12,7 +12,7 @@ namespace Aiursoft.Developer.Models.BucketViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public IndexViewModel() { }
-        public IndexViewModel(DeveloperUser User) : base(User, 2) { }
-        public IEnumerable<Bucket> AllBuckets { get; set; }
+        public IndexViewModel(DeveloperUser user) : base(user, 2) { }
+        public IEnumerable<IGrouping<string, Bucket>> AllBuckets { get; set; }
     }
 }
