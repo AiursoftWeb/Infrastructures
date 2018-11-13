@@ -42,7 +42,7 @@ namespace Aiursoft.API.Models
         {
             var pack = new OAuthPack
             {
-                Code = Guid.NewGuid().GetHashCode(),
+                Code = Math.Abs(Guid.NewGuid().GetHashCode()),
                 UserId = Id,
                 ApplyAppId = appId
             };
