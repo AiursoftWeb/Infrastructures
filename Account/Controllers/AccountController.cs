@@ -34,6 +34,7 @@ namespace Aiursoft.Account.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly IConfiguration _configuration;
         private readonly DeveloperApiService _developerApiService;
+        private readonly AuthService<AccountUser> _authService;
 
         public AccountController(
             UserManager<AccountUser> userManager,
@@ -43,7 +44,8 @@ namespace Aiursoft.Account.Controllers
             StorageService storageService,
             AppsContainer appsContainer,
             IConfiguration configuration,
-            DeveloperApiService developerApiSerivce)
+            DeveloperApiService developerApiSerivce,
+            AuthService<AccountUser> authService)
         {
             _userManager = userManager;
             _dbContext = context;
@@ -53,6 +55,7 @@ namespace Aiursoft.Account.Controllers
             _appsContainer = appsContainer;
             _configuration = configuration;
             _developerApiService = developerApiSerivce;
+            _authService = authService;
         }
 
         public async Task<IActionResult> Index(bool? justHaveUpdated)
@@ -86,6 +89,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Email(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
+            user = await _authService.OnlyUpdate(user);
             var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
             var model = new EmailViewModel(user)
             {
