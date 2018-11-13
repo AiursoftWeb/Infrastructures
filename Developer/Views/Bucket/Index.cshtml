@@ -18,7 +18,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-inbox ico"></i>
-                All Buckets Of @appObject.AppName
+                All buckets of @appObject.AppName
             </div>
             <div class="card-body">
                 <div class="col-xs-12">
@@ -27,7 +27,7 @@
                             <thead>
                                 <tr>
                                     <th>Bucket ID</th>
-                                    <th>Bucket Name</th>
+                                    <th>Bucket name</th>
                                     <th>Files count</th>
                                     <th>Open to read</th>
                                     <th>Open to upload</th>
@@ -66,10 +66,15 @@
                         </table>
                     </div>
                     <div class="col-md-12 margin-top-30">
-                        <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@app.Key" class="btn btn-success">Create New Bucket</a>
+                        <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@app.Key" class="btn btn-success">Create a new bucket in @appObject.AppName</a>
                     </div>
                 </div>
             </div>
         </div>
     }
+    <div class="col-12 mt-3 mb-3">
+        <div class="text-center">
+            <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">Create a new app</a>
+        </div>
+    </div>
 </div>

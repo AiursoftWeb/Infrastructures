@@ -63,7 +63,7 @@ namespace Aiursoft.Developer.Controllers
             await Task.WhenAll(taskList);
             var model = new IndexViewModel(cuser)
             {
-                AllBuckets = allBuckets.GroupBy(t => t.BelongingAppId)
+                AllBuckets = allBuckets.GroupBy(t => t.BelongingAppId).OrderBy(t => t.Key)
             };
             return View(model);
         }

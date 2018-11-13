@@ -37,6 +37,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 margin-top-30">
+                                <a class="btn btn-success" asp-controller="Bucket" asp-action="Index" asp-route-id="@Model.AppId">Back to all buckets</a>
                                 <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to App</a>
                                 <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">View Files</a>
                                 <button class="btn btn-danger btn" data-disable-with="Deleting..." type="submit">Confirm to delete</button>
