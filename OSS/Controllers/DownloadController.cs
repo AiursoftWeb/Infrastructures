@@ -41,7 +41,7 @@ namespace Aiursoft.OSS.Controllers
         {
             try
             {
-                if (StringOperation.IsImage(realfileName) && h > 0 && w > 0)
+                if (StringOperation.IsStaticImage(realfileName) && h > 0 && w > 0)
                 {
                     return await this.AiurFile(await _imageCompresser.Compress(path, realfileName, w, h), realfileName, download, suggestefFileName);
                 }

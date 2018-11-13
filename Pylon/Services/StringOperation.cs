@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -83,11 +84,10 @@ namespace Aiursoft.Pylon.Services
             }
         }
 
-        public static bool IsImage(this string filename)
+        public static bool IsInFollowingExtension(this string filename, params string[] extensions)
         {
-            var AvaliableExtensions = new string[] { "jpg", "png", "bmp" };
             var ext = System.IO.Path.GetExtension(filename);
-            foreach (var extension in AvaliableExtensions)
+            foreach (var extension in extensions)
             {
                 if (ext.Trim('.').ToLower() == extension)
                 {
@@ -95,6 +95,21 @@ namespace Aiursoft.Pylon.Services
                 }
             }
             return false;
+        }
+
+        public static bool IsImageMedia(this string filename)
+        {
+            return filename.IsInFollowingExtension("jpg", "png", "bmp", "jpeg", "gif", "svg", "ico");
+        }
+
+        public static bool IsStaticImage(this string filename)
+        {
+            return filename.IsInFollowingExtension("jpg", "png", "bmp", "jpeg");
+        }
+
+        public static bool IsVideo(this string filename)
+        {
+            return filename.IsInFollowingExtension("mp4", "webm", "ogg");
         }
 
         public static string ORemoveHTML(this string content)
