@@ -29,7 +29,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 Id = id,
                 AccessToken = accessToken
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

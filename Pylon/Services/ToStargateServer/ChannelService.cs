@@ -46,7 +46,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
                 Id = Id,
                 Key = Key
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             return jResult;
         }

@@ -29,7 +29,7 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
                 AppId = appId,
                 AppSecret = appSecret
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
@@ -42,7 +42,7 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
             {
                 AppId = appId
             });
-            var result = await _http.Get(url);
+            var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);

@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
             _cc = new CookieContainer();
         }
 
-        public async Task<string> Get(AiurUrl url, bool internalRequest = false)
+        public async Task<string> Get(AiurUrl url, bool internalRequest)
         {
             HttpWebRequest request = null;
             if (internalRequest)
@@ -42,7 +42,7 @@ namespace Aiursoft.Pylon.Services
             return await HTTPMethods.ReadFromResponseAsync(request);
         }
 
-        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest = false)
+        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest)
         {
             HttpWebRequest request = null;
             if (internalRequest)

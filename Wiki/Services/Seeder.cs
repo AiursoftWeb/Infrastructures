@@ -37,7 +37,7 @@ namespace Aiursoft.Wiki.Services
                 _dbContext.Article.Delete(t => true);
                 _dbContext.Collections.Delete(t => true);
                 await _dbContext.SaveChangesAsync();
-                var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"));
+                var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"), false);
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
                 foreach (var collection in sourceObject)
                 {
@@ -52,7 +52,7 @@ namespace Aiursoft.Wiki.Services
                         var newarticle = new Article
                         {
                             ArticleTitle = article.ArticleTitle,
-                            ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md")),
+                            ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
                             CollectionId = newCollection.CollectionId
                         };
                         _dbContext.Article.Add(newarticle);
