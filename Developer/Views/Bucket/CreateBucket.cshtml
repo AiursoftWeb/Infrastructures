@@ -78,10 +78,7 @@
                             {
                                 <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to app</a>
                             }
-                            else
-                            {
-                                <a class="btn btn-info btn" asp-controller="Bucket" asp-action="Index">All Buckets</a>
-                            }
+                            <a class="btn btn-info secondary" asp-controller="Bucket" asp-action="Index">Back to all Buckets</a>
                         </div>
                     </form>
             </div>
