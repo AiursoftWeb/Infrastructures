@@ -14,7 +14,7 @@
         {
             string icon = "";
             string color = "";
-            switch (app.AppId.GetHashCode() % 4)
+            switch (Math.Abs(app.AppId.GetHashCode()) % 4)
             {
                 case 0:
                     icon = "server";
@@ -31,7 +31,7 @@
                 default:
                     break;
             }
-            switch (app.AppSecret.GetHashCode() % 5)
+            switch (Math.Abs(app.AppSecret.GetHashCode()) % 5)
             {
                 case 0:
                     color = "danger";
@@ -45,8 +45,10 @@
                 case 3:
                     color = "success";
                     break;
-                default:
+                case 4:
                     color = "secondary";
+                    break;
+                default:
                     break;
             }
             <div class="col-xl-3 col-sm-4 col-xs-12 mb-3">
