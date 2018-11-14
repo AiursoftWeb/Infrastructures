@@ -12,11 +12,48 @@
     <div class="row">
         @foreach (var app in Model.AllApps)
         {
+            string icon = "";
+            string color = "";
+            switch (app.AppId.GetHashCode() % 4)
+            {
+                case 0:
+                    icon = "server";
+                    break;
+                case 1:
+                    icon = "adn";
+                    break;
+                case 2:
+                    icon = "code";
+                    break;
+                case 3:
+                    icon = "random";
+                    break;
+                default:
+                    break;
+            }
+            switch (app.AppSecret.GetHashCode() % 5)
+            {
+                case 0:
+                    color = "danger";
+                    break;
+                case 1:
+                    color = "primary";
+                    break;
+                case 2:
+                    color = "warning";
+                    break;
+                case 3:
+                    color = "success";
+                    break;
+                default:
+                    color = "secondary";
+                    break;
+            }
             <div class="col-xl-3 col-sm-4 col-xs-12 mb-3">
-                <div class="card text-white bg-secondary o-hidden h-100">
+                <div class="card text-white bg-@color o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa fa-fw fa-list"></i>
+                            <i class="fa fa-fw fa-@icon"></i>
                         </div>
                         <div class="mr-5">@Html.DisplayFor(t => app.AppName)</div>
                         <div class="mr-5 small">@Html.DisplayFor(t => app.AppDescription)</div>
