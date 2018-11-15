@@ -19,7 +19,7 @@
             <div class="col-xs-12">
                 <h2 id="uploadTitle">Upload your file here to share it with others!</h2>
                 <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
-                    <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" data-height="300" />
+                    <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" />
                     <div>
                         <p>Max file size: @Model.MaxSize MB.</p>
                         <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
@@ -39,6 +39,12 @@
 </div>
 @section css{
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+    <style>
+        .dropify-wrapper {
+            height: calc(100vh - 550px);
+            min-height: 280px;
+        }
+    </style>
 }
 @section js{
     <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
