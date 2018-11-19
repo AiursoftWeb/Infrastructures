@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
@@ -149,6 +150,24 @@ namespace Aiursoft.Pylon.Services
                 checkCode += ((char)number).ToString();
             }
             return checkCode;
+        }
+
+        public static string TrimController(this string controllerName)
+        {
+            return controllerName
+                .Replace("Controller", "")
+                .Replace("Api", "API");
+        }
+
+        public static string SplitStringUpperCase(this string source)
+        {
+            string[] split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
+            var b = new StringBuilder();
+            foreach (var word in split)
+            {
+                b.Append(word + " ");
+            }
+            return b.ToString();
         }
     }
 }
