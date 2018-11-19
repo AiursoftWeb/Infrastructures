@@ -16,6 +16,7 @@ namespace Aiursoft.Wiki.Services
     public class Seeder
     {
         public bool Seeding { get; set; } = false;
+        public string _authorized = "<span class=\"badge badge-pill badge-danger\">Authorize Required</span>";
         public string _post = "<span class=\"badge badge-pill badge-warning text-white\">HTTP POST</span>";
         public string _get = "<span class=\"badge badge-pill badge-success\">HTTP GET</span>";
         private readonly WikiDbContext _dbContext;
@@ -77,20 +78,13 @@ namespace Aiursoft.Wiki.Services
                             content += $"\r\n";
                             foreach (var docAction in docController)
                             {
-                                content += $"<h3 id='{docAction.ActionName}'>{docAction.ActionName}</h3>\r\n\r\n";
+                                content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)}{(docAction.AuthRequired ? _authorized : string.Empty)}\r\n{docAction.ActionName}</h3>\r\n\r\n";
                                 content += $"Request path:\r\n\r\n";
                                 content += $"\t{collection.DocAPIAddress.ToLower().Replace("/doc", "")}/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
-                                content += $"Request method:\r\n\r\n";
-                                content += $"{(docAction.IsPost ? _post : _get)}\r\n\r\n";
                                 if (docAction.IsPost)
                                 {
                                     content += $"Request content type:\r\n\r\n";
-                                    content += $"application/x-www-form-urlencoded\r\n\r\n";
-                                }
-                                if (docAction.AuthRequired)
-                                {
-                                    content += $"Preconditions:\r\n\r\n";
-                                    content += $"<span class=\"badge badge-pill badge-danger\">Authorized</span>\r\n\r\n";
+                                    content += $"\tapplication/x-www-form-urlencoded\r\n\r\n";
                                 }
                             }
                             var newarticle = new Article
