@@ -163,9 +163,18 @@ namespace Aiursoft.Pylon.Services
         {
             string[] split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
             var b = new StringBuilder();
+            bool first = true;
             foreach (var word in split)
             {
-                b.Append(word + " ");
+                if (first)
+                {
+                    b.Append(word + " ");
+                    first = false;
+                }
+                else
+                {
+                    b.Append(word.ToLower() + " ");
+                }
             }
             return b.ToString();
         }
