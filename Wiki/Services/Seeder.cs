@@ -113,7 +113,7 @@ namespace Aiursoft.Wiki.Services
                                     foreach (var arg in docAction.Arguments)
                                     {
 
-                                        content += $"|{arg.Name}|{(arg.Required ? "- <b class='text-danger'>Required</b>" : "Not required")}| <b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b> |\r\n";
+                                        content += $"|{arg.Name}|{(arg.Required ? "<b class='text-danger'>Required</b>" : "Not required")}|<b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b>|\r\n";
                                     }
                                     content += $"\r\n";
                                 }
