@@ -78,7 +78,7 @@ namespace Aiursoft.Wiki.Services
                             content += $"\r\n";
                             foreach (var docAction in docController)
                             {
-                                content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)}{(docAction.AuthRequired ? _authorized : string.Empty)}\r\n{docAction.ActionName}</h3>\r\n\r\n";
+                                content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)}\r\n{(docAction.AuthRequired ? _authorized : string.Empty)}\r\n{docAction.ActionName}</h3>\r\n\r\n";
                                 content += $"Request path:\r\n\r\n";
                                 content += $"\t{collection.DocAPIAddress.ToLower().Replace("/doc", "")}/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
                                 if (docAction.IsPost)
