@@ -103,17 +103,20 @@ namespace Aiursoft.Wiki.Services
                                 if (docAction.IsPost)
                                 {
                                     content += $"Request content type:\r\n\r\n";
-                                    content += $"\tapplication/x-www-form-urlencoded\r\n\r\n";
+                                    content += docAction.RequiresFile ? "\tmultipart/form-data\r\n\r\n" : "\tapplication/x-www-form-urlencoded\r\n\r\n";
                                 }
                                 if (docAction.Arguments.Count > 0)
                                 {
                                     content += $"Request {(docAction.IsPost ? "form" : "arguments")}:\r\n\r\n";
                                     content += $"| Name | Required | Type |\r\n";
-                                    content += $"|----------|:-------------:|------:|\r\n";
+                                    content += $"|----------|:-------------:|:------:|\r\n";
                                     foreach (var arg in docAction.Arguments)
                                     {
-
                                         content += $"|{arg.Name}|{(arg.Required ? "<b class='text-danger'>Required</b>" : "Not required")}|<b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b>|\r\n";
+                                    }
+                                    if (docAction.RequiresFile)
+                                    {
+                                        content += $"|File|<b class='text-danger'>Required</b>|<b class='text-danger'>File</b>|\r\n";
                                     }
                                     content += $"\r\n";
                                 }

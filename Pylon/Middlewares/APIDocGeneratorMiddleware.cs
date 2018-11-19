@@ -52,7 +52,8 @@ namespace Aiursoft.Pylon.Middlewares
                         ActionName = method.Name,
                         IsPost = method.CustomAttributes.Any(t => t.AttributeType == typeof(HttpPostAttribute)),
                         Arguments = args,
-                        AuthRequired = JudgeAuthorized(method, controller)
+                        AuthRequired = JudgeAuthorized(method, controller),
+                        RequiresFile = JudgeRequiredFile(method, controller)
                     };
                     actionsMatches.Add(api);
                 }
@@ -152,6 +153,13 @@ namespace Aiursoft.Pylon.Middlewares
                 action.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth)) ||
                 controller.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth));
         }
+
+        private bool JudgeRequiredFile(MethodInfo action, Type controller)
+        {
+            return
+                action.CustomAttributes.Any(t => t.AttributeType == typeof(FileChecker)) ||
+                controller.CustomAttributes.Any(t => t.AttributeType == typeof(FileChecker));
+        }
     }
 
     public class API
@@ -161,6 +169,7 @@ namespace Aiursoft.Pylon.Middlewares
         public bool AuthRequired { get; set; }
         public bool IsPost { get; set; }
         public List<Argument> Arguments { get; set; }
+        public bool RequiresFile { get; set; }
     }
 
     public class Argument
