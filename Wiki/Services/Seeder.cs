@@ -79,9 +79,14 @@ namespace Aiursoft.Wiki.Services
                             {
                                 content += $"<h3 id='{docAction.ActionName}'>{docAction.ActionName}</h3>\r\n\r\n";
                                 content += $"Request path:\r\n\r\n";
-                                content += $"\t/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
+                                content += $"\t{collection.DocAPIAddress.ToLower().Replace("/doc", "")}/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
                                 content += $"Request method:\r\n\r\n";
                                 content += $"{(docAction.IsPost ? _post : _get)}\r\n\r\n";
+                                if (docAction.IsPost)
+                                {
+                                    content += $"Request content type:\r\n\r\n";
+                                    content += $"application/x-www-form-urlencoded\r\n\r\n";
+                                }
                                 if (docAction.AuthRequired)
                                 {
                                     content += $"Preconditions:\r\n\r\n";
