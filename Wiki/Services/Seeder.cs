@@ -34,6 +34,24 @@ namespace Aiursoft.Wiki.Services
             _http = http;
         }
 
+        private string ArgTypeConverter(ArgumentType type)
+        {
+            switch (type)
+            {
+                case ArgumentType.boolean:
+                    return "Boolean";
+                case ArgumentType.text:
+                    return "Text";
+                case ArgumentType.number:
+                    return "Number";
+                case ArgumentType.datetime:
+                    return "DateTime";
+                case ArgumentType.unknown:
+                    return "A magic type!";
+            }
+            throw new InvalidOperationException(type.ToString());
+        }
+
         public async Task Seed()
         {
             try
@@ -86,6 +104,15 @@ namespace Aiursoft.Wiki.Services
                                 {
                                     content += $"Request content type:\r\n\r\n";
                                     content += $"\tapplication/x-www-form-urlencoded\r\n\r\n";
+                                }
+                                if (docAction.Arguments.Count > 0)
+                                {
+                                    content += $"Request parameters:\r\n\r\n";
+                                    foreach (var arg in docAction.Arguments)
+                                    {
+                                        content += $"\t{arg.Name} - {(arg.Required ? "Required" : string.Empty)} - Type: {(ArgTypeConverter(arg.Type))}\r\n";
+                                    }
+                                    content += $"\r\n";
                                 }
                             }
                             var newarticle = new Article
