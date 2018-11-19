@@ -16,8 +16,8 @@ namespace Aiursoft.Wiki.Services
     public class Seeder
     {
         public bool Seeding { get; set; } = false;
-        public string _post = "HTTP POST";
-        public string _get = "HTTP GET";
+        public string _post = "<span class=\"badge badge-pill badge-warning text-white\">HTTP POST</span>";
+        public string _get = "<span class=\"badge badge-pill badge-success\">HTTP GET</span>";
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
