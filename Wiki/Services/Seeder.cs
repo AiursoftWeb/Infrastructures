@@ -16,6 +16,8 @@ namespace Aiursoft.Wiki.Services
     public class Seeder
     {
         public bool Seeding { get; set; } = false;
+        public string _post = "HTTP POST";
+        public string _get = "HTTP GET";
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
@@ -66,10 +68,20 @@ namespace Aiursoft.Wiki.Services
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
                         foreach (var docController in docGrouped)
                         {
-                            var content = $"# {docController.Key}\r\n\r\n\r\n";
+                            var content = $"# {docController.Key.Replace("Controller", "")}\r\n\r\n";
+                            content += $"## Catalog\r\n\r\n";
                             foreach (var docAction in docController)
                             {
-                                content += $"## {docAction.ActionName}\r\n\r\n";
+                                content += $"* [{docAction.ActionName}](#{docAction.ActionName})\r\n";
+                            }
+                            content += $"\r\n";
+                            foreach (var docAction in docController)
+                            {
+                                content += $"### {docAction.ActionName}\r\n\r\n";
+                                content += $"Request path:\r\n\r\n";
+                                content += $"\t/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
+                                content += $"Request method:\r\n\r\n";
+                                content += $"\t{(docAction.IsPost ? _post : _get)}\r\n\r\n";
                             }
                             var newarticle = new Article
                             {
