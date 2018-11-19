@@ -77,11 +77,16 @@ namespace Aiursoft.Wiki.Services
                             content += $"\r\n";
                             foreach (var docAction in docController)
                             {
-                                content += $"### {docAction.ActionName}\r\n\r\n";
+                                content += $"<h3 id='{docAction.ActionName}'>{docAction.ActionName}</h3>\r\n\r\n";
                                 content += $"Request path:\r\n\r\n";
                                 content += $"\t/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
                                 content += $"Request method:\r\n\r\n";
                                 content += $"\t{(docAction.IsPost ? _post : _get)}\r\n\r\n";
+                                if (docAction.AuthRequired)
+                                {
+                                    content += $"Preconditions:\r\n\r\n";
+                                    content += $"\tAuthorized \r\n\r\n";
+                                }
                             }
                             var newarticle = new Article
                             {
