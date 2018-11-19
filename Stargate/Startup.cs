@@ -67,6 +67,7 @@ namespace Aiursoft.Stargate
             app.UseMvcWithDefaultRoute();
             app.UseLanguageSwitcher();
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Test");
+            app.UseDocGenerator();
         }
     }
 }

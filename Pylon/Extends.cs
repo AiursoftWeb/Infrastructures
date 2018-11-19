@@ -83,6 +83,11 @@ namespace Aiursoft.Pylon
             return app.UseMiddleware<SwitchLanguageMiddleware>();
         }
 
+        public static IApplicationBuilder UseDocGenerator(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<APIDocGeneratorMiddleware>();
+        }
+
         public static IServiceCollection ConfigureLargeFileUploadable(this IServiceCollection services)
         {
             return services.Configure<FormOptions>(x =>

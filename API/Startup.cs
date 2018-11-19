@@ -84,6 +84,7 @@ namespace Aiursoft.API
             app.UseAuthentication();
             app.UseLanguageSwitcher();
             app.UseMvcWithDefaultRoute();
+            app.UseDocGenerator();
         }
     }
 }
