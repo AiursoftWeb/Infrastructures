@@ -108,11 +108,12 @@ namespace Aiursoft.Wiki.Services
                                 if (docAction.Arguments.Count > 0)
                                 {
                                     content += $"Request {(docAction.IsPost ? "form" : "arguments")}:\r\n\r\n";
+                                    content += $"| Name | Required | Type |\r\n";
+                                    content += $"|----------|:-------------:|------:|\r\n";
                                     foreach (var arg in docAction.Arguments)
                                     {
-                                        content += $"| Name | Required | Type |";
-                                        content += $"|----------|:-------------:|------:|";
-                                        content += $"|{arg.Name}|{(arg.Required ? "- <b class='text-danger'>Required</b>" : "Not required")}| <b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b> |";
+
+                                        content += $"|{arg.Name}|{(arg.Required ? "- <b class='text-danger'>Required</b>" : "Not required")}| <b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b> |\r\n";
                                     }
                                     content += $"\r\n";
                                 }
