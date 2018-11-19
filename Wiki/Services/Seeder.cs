@@ -81,11 +81,11 @@ namespace Aiursoft.Wiki.Services
                                 content += $"Request path:\r\n\r\n";
                                 content += $"\t/{docAction.ControllerName.Replace("Controller", "")}/{docAction.ActionName}\r\n\r\n";
                                 content += $"Request method:\r\n\r\n";
-                                content += $"\t{(docAction.IsPost ? _post : _get)}\r\n\r\n";
+                                content += $"{(docAction.IsPost ? _post : _get)}\r\n\r\n";
                                 if (docAction.AuthRequired)
                                 {
                                     content += $"Preconditions:\r\n\r\n";
-                                    content += $"\tAuthorized \r\n\r\n";
+                                    content += $"<span class=\"badge badge-pill badge-danger\">Authorized</span>\r\n\r\n";
                                 }
                             }
                             var newarticle = new Article
