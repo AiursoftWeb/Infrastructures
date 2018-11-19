@@ -23,6 +23,7 @@ using Aiursoft.API.Services;
 using Aiursoft.API.Data;
 using Aiursoft.API.Models.ApiViewModels;
 using Aiursoft.Pylon.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.API.Controllers
 {
@@ -131,7 +132,7 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<IActionResult> AllUserGranted(string accessToken)
+        public async Task<IActionResult> AllUserGranted([Required]string accessToken)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             var grants = await _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == appid).Take(200).ToListAsync();
@@ -149,7 +150,7 @@ namespace Aiursoft.API.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<IActionResult> DropGrants(string accessToken)
+        public async Task<IActionResult> DropGrants([Required]string accessToken)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             _dbContext.LocalAppGrant.Delete(t => t.AppID == appid);
