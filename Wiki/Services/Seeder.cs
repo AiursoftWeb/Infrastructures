@@ -66,10 +66,10 @@ namespace Aiursoft.Wiki.Services
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
                         foreach (var docController in docGrouped)
                         {
-                            var content = "# " + docController.Key;
+                            var content = $"# {docController.Key}\r\n\r\n\r\n";
                             foreach (var docAction in docController)
                             {
-                                content += ("## " + docAction.ActionName);
+                                content += $"## {docAction.ActionName}\r\n\r\n";
                             }
                             var newarticle = new Article
                             {
