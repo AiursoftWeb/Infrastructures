@@ -44,6 +44,7 @@ namespace Aiursoft.Wiki
 
             services.AddAiursoftAuth<WikiUser>();
             services.AddTransient<Seeder>();
+            services.AddTransient<MarkDownGenerator>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
