@@ -41,7 +41,7 @@ namespace Aiursoft.Pylon.Middlewares
                 }
                 foreach (var method in controller.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
                 {
-                    if (!IsAction(method))
+                    if (!IsAction(method) || !IsAPIAction(method, controller))
                     {
                         continue;
                     }
@@ -109,6 +109,15 @@ namespace Aiursoft.Pylon.Middlewares
                 !method.IsStatic &&
                 !method.IsConstructor &&
                 !method.IsDefined(typeof(NonActionAttribute));
+        }
+
+        private bool IsAPIAction(MethodInfo action, Type controller)
+        {
+            return
+                action.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
+                controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
+                action.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker)) ||
+                controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker));
         }
 
         private ArgumentType ConvertTypeToArgumentType(Type t)
