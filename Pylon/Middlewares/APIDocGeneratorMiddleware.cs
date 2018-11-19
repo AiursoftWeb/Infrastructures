@@ -96,6 +96,7 @@ namespace Aiursoft.Pylon.Middlewares
             return
                 type.Name.EndsWith("Controller") &&
                 type.Name != "Controller" &&
+                type.Name != "HomeController" &&
                 type.IsSubclassOf(typeof(Controller)) &&
                 type.IsPublic;
         }
