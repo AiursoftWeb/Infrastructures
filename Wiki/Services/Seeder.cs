@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Pylon.Middlewares;
 
 namespace Aiursoft.Wiki.Services
 {
@@ -28,7 +29,7 @@ namespace Aiursoft.Wiki.Services
             _configuration = configuration;
             _http = http;
         }
-        
+
         public async Task Seed()
         {
             try
@@ -57,6 +58,28 @@ namespace Aiursoft.Wiki.Services
                         };
                         _dbContext.Article.Add(newarticle);
                         await _dbContext.SaveChangesAsync();
+                    }
+                    if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
+                    {
+                        var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
+                        var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                        var docGrouped = docModel.GroupBy(t => t.ControllerName);
+                        foreach (var docController in docGrouped)
+                        {
+                            var content = "# " + docController.Key;
+                            foreach (var docAction in docController)
+                            {
+                                content += ("## " + docAction.ActionName);
+                            }
+                            var newarticle = new Article
+                            {
+                                ArticleTitle = docController.Key.Replace("Controller", ""),
+                                ArticleContent = content,
+                                CollectionId = newCollection.CollectionId
+                            };
+                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.SaveChangesAsync();
+                        }
                     }
                 }
             }

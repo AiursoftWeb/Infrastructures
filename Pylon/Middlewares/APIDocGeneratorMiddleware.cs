@@ -142,30 +142,30 @@ namespace Aiursoft.Pylon.Middlewares
                 action.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth)) ||
                 controller.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth));
         }
+    }
 
-        public class API
-        {
-            public string ControllerName { get; set; }
-            public string ActionName { get; set; }
-            public bool AuthRequired { get; set; }
-            public bool IsPost { get; set; }
-            public List<Argument> Arguments { get; set; }
-        }
+    public class API
+    {
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
+        public bool AuthRequired { get; set; }
+        public bool IsPost { get; set; }
+        public List<Argument> Arguments { get; set; }
+    }
 
-        public class Argument
-        {
-            public string Name { get; set; }
-            public bool Required { get; set; }
-            public ArgumentType Type { get; set; }
-        }
+    public class Argument
+    {
+        public string Name { get; set; }
+        public bool Required { get; set; }
+        public ArgumentType Type { get; set; }
+    }
 
-        public enum ArgumentType
-        {
-            text = 0,
-            number = 1,
-            boolean = 2,
-            datetime = 3,
-            unknown = 4
-        }
+    public enum ArgumentType
+    {
+        text = 0,
+        number = 1,
+        boolean = 2,
+        datetime = 3,
+        unknown = 4
     }
 }
