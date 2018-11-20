@@ -75,25 +75,27 @@ namespace Aiursoft.Wiki.Services
                         await _dbContext.SaveChangesAsync();
                     }
 
-                    // Generate markdown from doc generator
                     if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
-                        var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
-                        var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
-                        var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                        var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
-                        foreach (var docController in docGrouped)
+                        continue;
+                    }
+
+                    // Generate markdown from doc generator
+                    var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
+                    var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                    var docGrouped = docModel.GroupBy(t => t.ControllerName);
+                    var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
+                    foreach (var docController in docGrouped)
+                    {
+                        var markdown = _markdown.GenerateMarkDownForAPI(docController, apiRoot);
+                        var newarticle = new Article
                         {
-                            var markdown = _markdown.GenerateMarkDownForAPI(docController, apiRoot);
-                            var newarticle = new Article
-                            {
-                                ArticleTitle = docController.Key.TrimController(),
-                                ArticleContent = markdown,
-                                CollectionId = newCollection.CollectionId
-                            };
-                            _dbContext.Article.Add(newarticle);
-                            await _dbContext.SaveChangesAsync();
-                        }
+                            ArticleTitle = docController.Key.TrimController(),
+                            ArticleContent = markdown,
+                            CollectionId = newCollection.CollectionId
+                        };
+                        _dbContext.Article.Add(newarticle);
+                        await _dbContext.SaveChangesAsync();
                     }
                 }
             }
