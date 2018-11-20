@@ -22,7 +22,6 @@ namespace Aiursoft.Wiki.Models
         public string CollectionTitle { get; set; }
         [InverseProperty(nameof(Article.Collection))]
         public List<Article> Articles { get; set; }
-        [NotMapped]
         public string DocAPIAddress { get; set; }
     }
     public class Article
