@@ -56,7 +56,8 @@ namespace Aiursoft.Wiki.Services
                     // Insert collection
                     var newCollection = new Collection
                     {
-                        CollectionTitle = collection.CollectionTitle
+                        CollectionTitle = collection.CollectionTitle,
+                        DocAPIAddress = collection.DocAPIAddress
                     };
                     _dbContext.Collections.Add(newCollection);
                     await _dbContext.SaveChangesAsync();
