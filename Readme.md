@@ -1,6 +1,6 @@
 # Aiursoft Web App
  
- [![Build Status](https://travis-ci.org/AiursoftWeb/WebApp.svg?branch=master)](https://travis-ci.org/AiursoftWeb/WebApp)
+ [![Build status](https://aiursoft.visualstudio.com/Nexus/_apis/build/status/Nexus%20CI)](https://aiursoft.visualstudio.com/Nexus/_build/latest?definitionId=7)
  [![Issues](https://img.shields.io/github/issues/AiursoftWeb/WebApp.svg)](https://github.com/AiursoftWeb/WebApp/issues)
 
 One project to run all Aiursoft micro-services
