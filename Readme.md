@@ -13,3 +13,5 @@ The document is [here](https://wiki.aiursoft.com/ReadDoc/Deployment/Getting%20St
 ## How to contribute
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
+
+Try azure pipeline.
