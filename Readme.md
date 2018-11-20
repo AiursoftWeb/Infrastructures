@@ -1,4 +1,4 @@
-# Aiursoft Web App
+# Aiursoft Nexus
 
  [![Build status](https://aiursoft.visualstudio.com/Nexus/_apis/build/status/Nexus%20CI)](https://aiursoft.visualstudio.com/Nexus/_build/latest?definitionId=7)
  [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
