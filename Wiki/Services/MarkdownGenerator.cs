@@ -11,7 +11,7 @@ namespace Aiursoft.Wiki.Services
     {
         private string _post = "<span class=\"badge badge-pill badge-warning text-white\">POST</span>";
         private string _get = "<span class=\"badge badge-pill badge-success\">GET</span>";
-        private string _authorized = "<span class=\"badge badge-pill badge-danger\">Authorize</span>";
+        private string _authorized = "<span class=\"badge badge-pill badge-danger\"><i class=\"fa fa-shield\"></i> Authorize</span>";
         private string _unauthorized = "<span class=\"badge badge-pill badge-secondary\">Anonymous</span>";
 
         private string ArgTypeConverter(ArgumentType type)
