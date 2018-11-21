@@ -1,14 +1,13 @@
-# Aiursoft Web App
- 
- [![Build Status](https://travis-ci.org/AiursoftWeb/WebApp.svg?branch=master)](https://travis-ci.org/AiursoftWeb/WebApp)
- [![Issues](https://img.shields.io/github/issues/AiursoftWeb/WebApp.svg)](https://github.com/AiursoftWeb/WebApp/issues)
+# Aiursoft Nexus
 
-One project to run all Aiursoft micro-services
+ [![Build status](https://aiursoft.visualstudio.com/Nexus/_apis/build/status/Nexus%20CI)](https://aiursoft.visualstudio.com/Nexus/_build/latest?definitionId=7)
+ [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
+
+Aiursoft basic micro-services platform.
 
 ## How to run
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Deployment/Getting%20Started.md).
-
 
 ## How to contribute
 
