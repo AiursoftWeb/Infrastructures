@@ -77,7 +77,7 @@ namespace Aiursoft.Wiki.Services
                 content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
                 if (docAction.IsPost == false)
                 {
-                    content += $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</button>";
+                    content += $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</a>";
                 }
                 content += "\r\n\r\n";
                 if (docAction.IsPost == false)
