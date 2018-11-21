@@ -75,7 +75,7 @@ namespace Aiursoft.Wiki.Services
                         await _dbContext.SaveChangesAsync();
                     }
 
-                    if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
+                    if (string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
                         continue;
                     }
