@@ -45,7 +45,7 @@ namespace Aiursoft.Wiki.Services
             {
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 content += $"Request path:\r\n\r\n";
-                content += $"\t{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}\r\n\r\n";
+                content += $"<kbd>{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}</kbd>\r\n\r\n";
                 if (docAction.IsPost)
                 {
                     content += $"Request content type:\r\n\r\n";
@@ -58,7 +58,7 @@ namespace Aiursoft.Wiki.Services
                     content += $"|----------|:-------------:|:------:|\r\n";
                     foreach (var arg in docAction.Arguments)
                     {
-                        content += $"|{arg.Name}|{(arg.Required ? "<b class='text-danger'>Required</b>" : "Not required")}|<b class='text-danger'>{(ArgTypeConverter(arg.Type))}</b>|\r\n";
+                        content += $"|{arg.Name}|{(arg.Required ? "<b class='text-danger'>Required</b>" : "Not required")}|<b class='text-primary'>{(ArgTypeConverter(arg.Type))}</b>|\r\n";
                     }
                     if (docAction.RequiresFile)
                     {
