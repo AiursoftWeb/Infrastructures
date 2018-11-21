@@ -44,12 +44,13 @@ namespace Aiursoft.Wiki.Services
             {
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 content += $"Request path:\r\n\r\n";
-                content += $"<kbd>{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}</kbd>\r\n\r\n";
+                content += $"<kbd>{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}</kbd>";
                 content += $"<button class=\"btn btn-sm btn-secondary\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}\">Copy</button>";
                 if (docAction.IsPost == false)
                 {
                     content += $"<button class=\"btn btn-sm btn-primary\" target=\"_blank\" href=\"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}\">Try API</button>";
                 }
+                content += "\r\n\r\n";
                 if (docAction.IsPost)
                 {
                     content += $"Request content type:\r\n\r\n";
