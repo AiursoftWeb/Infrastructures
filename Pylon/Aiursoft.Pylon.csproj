@@ -12,7 +12,7 @@
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
     <PackageIconUrl>https://oss.aiursoft.com/MyPersonalFiles/512x512.png</PackageIconUrl>
     <PackageProjectUrl>https://gitzab.com/AiursoftWeb/Pylon</PackageProjectUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicense>https://opensource.org/licenses/MIT</PackageLicense>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://gitzab.com/AiursoftWeb/Pylon.git</RepositoryUrl>
   </PropertyGroup>
