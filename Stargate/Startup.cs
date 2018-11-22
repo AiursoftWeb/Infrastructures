@@ -31,8 +31,6 @@ namespace Aiursoft.Stargate
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddMvc();
 
-            services.ConfigureNexusCookies();
-
             services.AddTokenManager();
 
             services.AddSingleton<ServiceLocation>();

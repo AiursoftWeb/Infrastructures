@@ -44,8 +44,6 @@ namespace Aiursoft.API
                 .AddEntityFrameworkStores<APIDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureNexusCookies();
-
             services.AddTokenManager();
 
             services

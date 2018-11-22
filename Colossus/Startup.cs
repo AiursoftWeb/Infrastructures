@@ -40,8 +40,6 @@ namespace Aiursoft.Colossus
                 .AddEntityFrameworkStores<ColossusDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureNexusCookies();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()

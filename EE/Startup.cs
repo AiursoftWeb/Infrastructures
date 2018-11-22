@@ -37,8 +37,6 @@ namespace Aiursoft.EE
                 .AddEntityFrameworkStores<EEDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureNexusCookies();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);

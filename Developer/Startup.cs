@@ -43,8 +43,6 @@ namespace Aiursoft.Developer
                 .AddEntityFrameworkStores<DeveloperDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureNexusCookies();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
