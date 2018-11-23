@@ -29,6 +29,7 @@ namespace Aiursoft.Pylon.Middlewares
             if (context.Request.Path.ToString().ToLower() != "/doc")
             {
                 await _next.Invoke(context);
+                return;
             }
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = 200;
