@@ -91,9 +91,9 @@ namespace Aiursoft.Wiki.Services
                     content += docAction.RequiresFile ? "\tmultipart/form-data\r\n\r\n" : "\tapplication/x-www-form-urlencoded\r\n\r\n";
 
                     content += $"Form content example:\r\n\r\n";
-                    content += $"\t{GenerateParams(docAction.Arguments)}\r\n\r\n";
+                    content += $"\t{GenerateParams(docAction.Arguments)} \r\n\r\n";
                 }
-                if (docAction.Arguments.Count > 0)
+                if (docAction.Arguments.Count > 0 || docAction.RequiresFile)
                 {
                     content += $"Request {(docAction.IsPost ? "form" : "arguments")}:\r\n\r\n";
                     content += $"| Name | Required | Type |\r\n";
