@@ -69,6 +69,7 @@ namespace Aiursoft.Wiki.Services
             content += $"\r\n";
             foreach (var docAction in docController)
             {
+                content += $"---------";
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 content += $"Request path:\r\n\r\n";
                 var path = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}";
@@ -91,7 +92,9 @@ namespace Aiursoft.Wiki.Services
                     content += docAction.RequiresFile ? "\tmultipart/form-data\r\n\r\n" : "\tapplication/x-www-form-urlencoded\r\n\r\n";
 
                     content += $"Form content example:\r\n\r\n";
-                    content += $"\t{GenerateParams(docAction.Arguments)} \r\n\r\n";
+                    content += $"```\r\n";
+                    content += $"\t{GenerateParams(docAction.Arguments)} \r\n";
+                    content += $"```\r\n\r\n";
                 }
                 if (docAction.Arguments.Count > 0 || docAction.RequiresFile)
                 {
