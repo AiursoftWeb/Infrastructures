@@ -73,7 +73,7 @@ namespace Aiursoft.Wiki.Services
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 content += $"Request path:\r\n\r\n";
                 var path = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}";
-                var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}";
+                var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
                 content += $"<kbd>{path}</kbd>";
                 content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
                 if (docAction.IsPost == false)
@@ -93,7 +93,7 @@ namespace Aiursoft.Wiki.Services
 
                     content += $"Form content example:\r\n\r\n";
                     content += $"```\r\n";
-                    content += $"\t{GenerateParams(docAction.Arguments)} \r\n";
+                    content += $"{GenerateParams(docAction.Arguments)} \r\n";
                     content += $"```\r\n\r\n";
                 }
                 if (docAction.Arguments.Count > 0 || docAction.RequiresFile)
