@@ -69,7 +69,7 @@ namespace Aiursoft.Wiki.Services
             content += $"\r\n";
             foreach (var docAction in docController)
             {
-                content += $"---------";
+                content += $"---------\r\n\r\n";
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 content += $"Request path:\r\n\r\n";
                 var path = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}";
