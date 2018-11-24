@@ -61,9 +61,7 @@ namespace Aiursoft.Stargate
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseWebSockets();
-            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
-            app.UseLanguageSwitcher();
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Test");
             app.UseDocGenerator();
         }
