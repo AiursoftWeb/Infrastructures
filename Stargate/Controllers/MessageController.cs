@@ -64,7 +64,7 @@ namespace Aiursoft.Stargate.Controllers
             return Json(new AiurProtocal
             {
                 Code = ErrorType.Success,
-                Message = $"You have successfully created a message at channel:{channel.Id}!"
+                Message = $"You have successfully pushed a new message to channel: {channel.Id}!"
             });
         }
     }
