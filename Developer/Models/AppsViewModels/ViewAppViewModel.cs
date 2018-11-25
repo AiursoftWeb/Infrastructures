@@ -1,18 +1,13 @@
-﻿using Aiursoft.Pylon;
-using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Models.API;
+using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.OSS;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToOSSServer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Services.ToOSSServer;
-using Aiursoft.Pylon.Models.API;
-using Aiursoft.Developer.Data;
-using Microsoft.EntityFrameworkCore;
-using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.Developer.Models.AppsViewModels
 {

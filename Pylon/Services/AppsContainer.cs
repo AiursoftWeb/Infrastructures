@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 
-namespace Aiursoft.Pylon.Models
+namespace Aiursoft.Pylon.Services
 {
     /// <summary>
     /// For storaging other apps with appid and appsecret for current app.
