@@ -1,26 +1,26 @@
-﻿@model Aiursoft.Developer.Models.BucketViewModels.DeleteBucketViewModel
+@model Aiursoft.Developer.Models.BucketViewModels.DeleteBucketViewModel
 @{
     ViewData["Title"] = "Delete" + Model.BucketName;
 }
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Bucket" asp-action="Index">Buckets</a>
+            <a asp-controller="Bucket" asp-action="Index">@Localizer["Buckets"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
     <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <strong>Caution!</strong> You are about to delete "@Model.BucketName"! If you are confirmed to continue, you will lose all @Model.FilesCount files in the bucket! This process is not recoverable!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+        <strong>@Localizer["Caution!"]</strong> You are about to delete "@Model.BucketName"! If you are confirmed to continue, you will lose all @Model.FilesCount files in the bucket! This process is not recoverable!
     </div>
 
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-trash ico"></i>
-            New Bucket Info
+            @Localizer["New Bucket Info"]
         </div>
         <div class="card-body">
             <div class="col-xs-12">
@@ -28,7 +28,7 @@
                     <input type="hidden" asp-for="AppId" />
                     <input type="hidden" asp-for="BucketId" />
                     <div class="box-content bordered danger">
-                        <h4 class="box-title">Delete Bucket</h4>
+                        <h4 class="box-title">@Localizer["Delete Bucket"]</h4>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -37,10 +37,10 @@
                                 </div>
                             </div>
                             <div class="col-md-12 margin-top-30">
-                                <a class="btn btn-success" asp-controller="Bucket" asp-action="Index" asp-route-id="@Model.AppId">Back to all buckets</a>
-                                <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to App</a>
-                                <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">View Files</a>
-                                <button class="btn btn-danger btn" data-disable-with="Deleting..." type="submit">Confirm to delete</button>
+                                <a class="btn btn-success" asp-controller="Bucket" asp-action="Index" asp-route-id="@Model.AppId">@Localizer["Back to all buckets"]</a>
+                                <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to App"]</a>
+                                <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">@Localizer["View Files"]</a>
+                                <button class="btn btn-danger btn" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
                             </div>
                         </div>
                     </div>

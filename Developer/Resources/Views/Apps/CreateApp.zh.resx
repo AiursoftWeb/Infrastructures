@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+<data name="All Apps" xml:space="preserve"><value>所有应用程序</value></data>
+<data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
+<data name="Create new app" xml:space="preserve"><value>创建新应用</value></data>
+<data name="Your app name will be shown when calling API." xml:space="preserve"><value>调用 api 时, 将显示你的应用名称。</value></data>
+<data name="Cross Platform" xml:space="preserve"><value>跨平台</value></data>
+<data name="Android" xml:space="preserve"><value>Android</value></data>
+<data name="iOS" xml:space="preserve"><value>Ios</value></data>
+<data name="Windows Desktop" xml:space="preserve"><value>视窗台式机</value></data>
+<data name="Windows UWP" xml:space="preserve"><value>窗口 uwp</value></data>
+<data name="Linux" xml:space="preserve"><value>Linux</value></data>
+<data name="Mac OS" xml:space="preserve"><value>mac os</value></data>
+<data name="Web / HTML / PWA" xml:space="preserve"><value>web/html/pwa</value></data>
+<data name="Development" xml:space="preserve"><value>发展</value></data>
+<data name="App for pages" xml:space="preserve"><value>网页的应用程序</value></data>
+<data name="Books" xml:space="preserve"><value>书</value></data>
+<data name="Business" xml:space="preserve"><value>业务</value></data>
+<data name="Communication" xml:space="preserve"><value>通信</value></data>
+<data name="Education" xml:space="preserve"><value>教育</value></data>
+<data name="Entertainment" xml:space="preserve"><value>娱乐</value></data>
+<data name="Fashion" xml:space="preserve"><value>时尚</value></data>
+<data name="Finance" xml:space="preserve"><value>金融</value></data>
+<data name="Food &amp; Drink" xml:space="preserve"><value>食品和饮料</value></data>
+<data name="Game" xml:space="preserve"><value>游戏</value></data>
+<data name="Upload your app icon" xml:space="preserve"><value>上传你的应用图标</value></data>
+<data name="Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg." xml:space="preserve"><value>只有 jpg, bmp, png 图像, 2m 最大值, 2000px 最大高度和 3000 px 最大 weithg。</value></data>
+<data name="Create" xml:space="preserve"><value>创建</value></data>
+<data name="Clear" xml:space="preserve"><value>清楚</value></data>
+<data name="Back to list" xml:space="preserve"><value>返回到列表</value></data>
+
+</root>

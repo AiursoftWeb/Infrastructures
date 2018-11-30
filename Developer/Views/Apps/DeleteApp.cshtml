@@ -1,17 +1,17 @@
-﻿@model Aiursoft.Developer.Models.AppsViewModels.DeleteAppViewModel
+@model Aiursoft.Developer.Models.AppsViewModels.DeleteAppViewModel
 @{
     ViewData["Title"] = "Delete" + Model.AppName;
 }
 <div class="container-fluid">
     <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <strong>Caution!</strong> You are about to delete "@Model.AppName"! If you are confirmed to continue, you will lose all<strong> users granted, buckets created, files uploaded</strong> and this app won't be able to use again! This process is not recoverable!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+        <strong>@Localizer["Caution!"]</strong> You are about to delete "@Model.AppName"! If you are confirmed to continue, you will lose all<strong> @Localizer["users granted, buckets created, files uploaded"]</strong> @Localizer["and this app won't be able to use again! This process is not recoverable!"]
     </div>
 
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-trash ico"></i>
-            Delete App
+            @Localizer["Delete App"]
         </div>
         <div class="card-body">
             <div class="col-xs-12">
@@ -29,8 +29,8 @@
                             </div>
 
                             <div class="col-md-12 margin-top-30">
-                                <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to App</a>
-                                <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">Confirm to delete</button>
+                                <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to App"]</a>
+                                <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
                             </div>
                     </div>
                 </form>

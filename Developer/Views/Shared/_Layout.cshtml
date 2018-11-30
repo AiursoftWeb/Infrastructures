@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Developer.Models.AppsViewModels.AppLayoutModel
+@model Aiursoft.Developer.Models.AppsViewModels.AppLayoutModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,14 +22,14 @@
                 <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" asp-controller="Apps" asp-action="Index">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">@Localizer["Dashboard"]</span>
                     </a>
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)" data-toggle="tooltip" data-placement="right" title="All Apps">
                     <a class="nav-link" asp-controller="Apps" asp-action="AllApps">
                         <i class="fa fa-fw fa-server"></i>
                         <span class="nav-link-text">
-                            All Apps
+                            @Localizer["All Apps"]
                             <span class="badge badge-info">@Model.AppCount</span>
                         </span>
                     </a>
@@ -37,31 +37,31 @@
                 <li class="nav-item @(Model.ActivePanel == 2 ? " active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Buckets">
                     <a class="nav-link" asp-controller="Bucket" asp-action="Index">
                         <i class="fa fa-fw fa-inbox"></i>
-                        <span class="nav-link-text">Buckets</span>
+                        <span class="nav-link-text">@Localizer["Buckets"]</span>
                     </a>
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 3 ? " active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Files">
                     <a class="nav-link" asp-controller="Files" asp-action="Index">
                         <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Files</span>
+                        <span class="nav-link-text">@Localizer["Files"]</span>
                     </a>
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 4 ? " active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Stargate">
                     <a class="nav-link" asp-controller="Files" asp-action="Index">
                         <i class="fa fa-fw fa-random"></i>
-                        <span class="nav-link-text">Stargate</span>
+                        <span class="nav-link-text">@Localizer["Stargate"]</span>
                     </a>
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 5 ? " active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Content Management">
                     <a class="nav-link" asp-controller="Files" asp-action="Index">
                         <i class="fa fa-fw fa-quora"></i>
-                        <span class="nav-link-text">Content Management</span>
+                        <span class="nav-link-text">@Localizer["Content Management"]</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Wiki">
                     <a class="nav-link" href="@ServiceLocation.Wiki">
                         <i class="fa fa-fw fa-book"></i>
-                        <span class="nav-link-text">Read Doc</span>
+                        <span class="nav-link-text">@Localizer["Read Doc"]</span>
                     </a>
                 </li>
             </ul>
@@ -77,56 +77,56 @@
                     <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-envelope"></i>
                         <span class="d-lg-none">
-                            Messages
-                            <span class="badge badge-pill badge-primary">12 New</span>
+                            @Localizer["Messages"]
+                            <span class="badge badge-pill badge-primary">@Localizer["12 New"]</span>
                         </span>
                         <span class="indicator text-primary d-none d-lg-block">
                             <i class="fa fa-fw fa-circle"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">New Messages:</h6>
+                        <h6 class="dropdown-header">@Localizer["New Messages:"]</h6>
                         <div class="dropdown-divider"></div>
                         @for (int i = 0; i < 7; i++)
                         {
                             <a class="dropdown-item" href="#">
-                                <strong>David Miller</strong>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don t overflow over to the sides!</div>
+                                <strong>@Localizer["David Miller"]</strong>
+                                <span class="small float-right text-muted">@Localizer["11:21 AM"]</span>
+                                <div class="dropdown-message small">@Localizer["Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don t overflow over to the sides!"]</div>
                             </a>
                             <div class="dropdown-divider"></div>
                         }
-                        <a class="dropdown-item small" href="#">View all messages</a>
+                        <a class="dropdown-item small" href="#">@Localizer["View all messages"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-bell"></i>
                         <span class="d-lg-none">
-                            Alerts
-                            <span class="badge badge-pill badge-warning">6 New</span>
+                            @Localizer["Alerts"]
+                            <span class="badge badge-pill badge-warning">@Localizer["6 New"]</span>
                         </span>
                         <span class="indicator text-warning d-none d-lg-block">
                             <i class="fa fa-fw fa-circle"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">New Alerts:</h6>
+                        <h6 class="dropdown-header">@Localizer["New Alerts:"]</h6>
                         <div class="dropdown-divider"></div>
                         @for (int i = 0; i < 7; i++)
                         {
                             <a class="dropdown-item" href="#">
                                 <span class="text-success">
                                     <strong>
-                                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
+                                        <i class="fa fa-long-arrow-up fa-fw"></i>@Localizer["Status Update"]
                                     </strong>
                                 </span>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                <span class="small float-right text-muted">@Localizer["11:21 AM"]</span>
+                                <div class="dropdown-message small">@Localizer["This is an automated server response message. All systems are online."]</div>
                             </a>
                             <div class="dropdown-divider"></div>
                         }
-                        <a class="dropdown-item small" href="#">View all alerts</a>
+                        <a class="dropdown-item small" href="#">@Localizer["View all alerts"]</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -134,7 +134,7 @@
                         @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -151,7 +151,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i>Logout
+                        <i class="fa fa-fw fa-sign-out"></i>@Localizer["Logout"]
                     </a>
                 </li>
             </ul>
@@ -162,10 +162,10 @@
         {
             <div class="container-fluid">
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Your account email was not confirmed!</strong>
-                    <div>Please <a href="@(new AiurUrl(ServiceLocation.Account, "Account" ,"Email", new { }))">confirm your email</a> as soon as possible! Or you may lose access to your account in a few days!</div>
-                    <div>Without confirming your email, you won't receive any important notifications and cannot reset your password!</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+                    <strong>@Localizer["Your account email was not confirmed!"]</strong>
+                    <div>@Localizer["Please"] <a href="@(new AiurUrl(ServiceLocation.Account, "Account" ,"Email", new { }))">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]</div>
+                    <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>
                 </div>
             </div>
         }
@@ -177,7 +177,7 @@
                         {
                             Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                             Path = Context.Request.Path
-                        }))">Language(语言)</a>
+                        }))">@Localizer["Language(语言)"]</a>
                 </small>
                 @foreach (var foot in Values.Footer)
                 {

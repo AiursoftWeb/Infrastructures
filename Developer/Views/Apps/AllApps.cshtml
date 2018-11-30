@@ -1,11 +1,11 @@
-﻿@model Aiursoft.Developer.Models.AppsViewModels.AllAppsViewModel
+@model Aiursoft.Developer.Models.AppsViewModels.AllAppsViewModel
 @{
     ViewData["Title"] = "All Apps";
 }
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
@@ -40,7 +40,7 @@
                         <div class="mr-5 small">@Html.DisplayFor(t => app.AppDescription)</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@app.AppId">
-                        <span class="float-left">Edit Settings</span>
+                        <span class="float-left">@Localizer["Edit Settings"]</span>
                         <span class="float-right">
                             <i class="fa fa-angle-right"></i>
                         </span>
@@ -50,7 +50,7 @@
         }
         <div class="col-12 mt-3 mb-3">
             <div class="text-center">
-                <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">Create App</a>
+                <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">@Localizer["Create App"]</a>
             </div>
         </div>
     </div>

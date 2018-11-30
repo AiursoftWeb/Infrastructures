@@ -1,14 +1,14 @@
-﻿@model Aiursoft.Developer.Models.BucketViewModels.IndexViewModel
+@model Aiursoft.Developer.Models.BucketViewModels.IndexViewModel
 @{
     ViewData["Title"] = "All Buckets";
 }
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Bucket" asp-action="Index">Buckets</a>
+            <a asp-controller="Bucket" asp-action="Index">@Localizer["Buckets"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
@@ -26,12 +26,12 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Bucket ID</th>
-                                    <th>Bucket name</th>
-                                    <th>Files count</th>
-                                    <th>Open to read</th>
-                                    <th>Open to upload</th>
-                                    <th style="width: 460px">Operation</th>
+                                    <th>@Localizer["Bucket ID"]</th>
+                                    <th>@Localizer["Bucket name"]</th>
+                                    <th>@Localizer["Files count"]</th>
+                                    <th>@Localizer["Open to read"]</th>
+                                    <th>@Localizer["Open to upload"]</th>
+                                    <th style="width: 460px">@Localizer["Operation"]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,9 +55,9 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-secondary waves-effect waves-light">Edit</a>
-                                                <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger waves-effect waves-light">Delete</a>
-                                                <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info waves-effect waves-light">View Files</a>
+                                                <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-secondary waves-effect waves-light">@Localizer["Edit"]</a>
+                                                <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger waves-effect waves-light">@Localizer["Delete"]</a>
+                                                <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info waves-effect waves-light">@Localizer["View Files"]</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -74,7 +74,7 @@
     }
     <div class="col-12 mt-3 mb-3">
         <div class="text-center">
-            <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">Create a new app</a>
+            <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">@Localizer["Create a new app"]</a>
         </div>
     </div>
 </div>

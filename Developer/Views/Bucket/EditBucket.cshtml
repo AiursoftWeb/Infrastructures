@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Developer.Models.BucketViewModels.EditBucketViewModel
+@model Aiursoft.Developer.Models.BucketViewModels.EditBucketViewModel
 @{
     ViewData["Title"] = "Edit Bucket" + Model.NewBucketName;
 }
@@ -6,18 +6,18 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">Dashboard</a>
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Bucket" asp-action="Index">Buckets</a>
+            <a asp-controller="Bucket" asp-action="Index">@Localizer["Buckets"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -25,7 +25,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-pencil"></i>
-            New Bucket Info
+            @Localizer["New Bucket Info"]
         </div>
         <div class="card-body">
             <div class="col-xs-12">
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <p>Allow anyone even without access token to access all your files in that bucket.</p>
+                                <p>@Localizer["Allow anyone even without access token to access all your files in that bucket."]</p>
                             </div>
                         </div>
                         <hr />
@@ -60,16 +60,16 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <p>Allow anyone even without access token to upload files to that bucket.</p>
+                                <p>@Localizer["Allow anyone even without access token to upload files to that bucket."]</p>
                             </div>
                         </div>
                         <hr />
                     </div>
 
                     <div class="col-xs-12 margin-top-30">
-                        <button class="btn btn-primary" data-disable-with="Updating..." type="submit">Update</button>
-                        <a class="btn btn-warning" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">View Files</a>
-                        <a class="btn btn-info" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to app</a>
+                        <button class="btn btn-primary" data-disable-with="Updating..." type="submit">@Localizer["Update"]</button>
+                        <a class="btn btn-warning" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">@Localizer["View Files"]</a>
+                        <a class="btn btn-info" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
                     </div>
                 </form>
             </div>
