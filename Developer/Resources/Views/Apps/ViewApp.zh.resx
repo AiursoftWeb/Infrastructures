@@ -87,7 +87,6 @@
 <data name="Food &amp; Drink" xml:space="preserve"><value>食品和饮料</value></data>
 <data name="Game" xml:space="preserve"><value>游戏</value></data>
 <data name="Save" xml:space="preserve"><value>救</value></data>
-<data name="Back to List" xml:space="preserve"><value>返回列表</value></data>
 <data name="Delete App" xml:space="preserve"><value>删除应用程序</value></data>
 <data name="Permission Settings" xml:space="preserve"><value>权限设置</value></data>
 <data name="If you add a permission, all users already granted this app will be dropped!" xml:space="preserve"><value>如果您添加权限, 所有已授予此应用的用户都将被删除!</value></data>
