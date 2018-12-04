@@ -64,7 +64,7 @@
 <data name="Bucket name" xml:space="preserve"><value>存储池名称</value></data>
 <data name="Files count" xml:space="preserve"><value>文件计数</value></data>
 <data name="Open to read" xml:space="preserve"><value>开放阅读</value></data>
-<data name="Open to upload" xml:space="preserve"><value>打开以上传</value></data>
+<data name="Open to upload" xml:space="preserve"><value>开放上传</value></data>
 <data name="Operation" xml:space="preserve"><value>操作</value></data>
 <data name="Edit" xml:space="preserve"><value>编辑</value></data>
 <data name="Delete" xml:space="preserve"><value>删除</value></data>

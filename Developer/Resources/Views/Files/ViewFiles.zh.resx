@@ -62,19 +62,19 @@
 <data name="Files" xml:space="preserve"><value>文件</value></data>
 <data name="ID" xml:space="preserve"><value>Id</value></data>
 <data name="Name" xml:space="preserve"><value>名字</value></data>
-<data name="Size(Kb)" xml:space="preserve"><value>尺寸 (kb)</value></data>
+<data name="Size(Kb)" xml:space="preserve"><value>大小(kb)</value></data>
 <data name="Downloads" xml:space="preserve"><value>下载</value></data>
 <data name="Upload Time" xml:space="preserve"><value>上传时间</value></data>
 <data name="Deadline" xml:space="preserve"><value>最后 期限</value></data>
 <data name="Download" xml:space="preserve"><value>下载</value></data>
 <data name="Danger Zone" xml:space="preserve"><value>危险区</value></data>
-<data name="More" xml:space="preserve"><value>更</value></data>
+<data name="More" xml:space="preserve"><value>更多</value></data>
 <data name="Open" xml:space="preserve"><value>打开</value></data>
-<data name="Copy open link" xml:space="preserve"><value>复制打开的链接</value></data>
+<data name="Copy open link" xml:space="preserve"><value>复制打开链接</value></data>
 <data name="Copy download link" xml:space="preserve"><value>复制下载链接</value></data>
 <data name="Get One-time link" xml:space="preserve"><value>获取一次性链接</value></data>
 <data name="Delete" xml:space="preserve"><value>删除</value></data>
-<data name="Rename" xml:space="preserve"><value>重 命名</value></data>
+<data name="Rename" xml:space="preserve"><value>重命名</value></data>
 <data name="Upload new file" xml:space="preserve"><value>上传新文件</value></data>
 <data name="Back to App" xml:space="preserve"><value>返回到应用程序</value></data>
 <data name="Back to All buckets" xml:space="preserve"><value>返回到所有存储池</value></data>

@@ -85,7 +85,7 @@
 <data name="Upload your app icon" xml:space="preserve"><value>上传你的应用图标</value></data>
 <data name="Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg." xml:space="preserve"><value>只有 jpg, bmp, png 图像, 2m 最大值, 2000px 最大高度和 3000 px 最大 weithg。</value></data>
 <data name="Create" xml:space="preserve"><value>创建</value></data>
-<data name="Clear" xml:space="preserve"><value>清楚</value></data>
+<data name="Clear" xml:space="preserve"><value>重置</value></data>
 <data name="Back to list" xml:space="preserve"><value>返回到列表</value></data>
 
 </root>
