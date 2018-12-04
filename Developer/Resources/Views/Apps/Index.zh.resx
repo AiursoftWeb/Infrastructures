@@ -58,7 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="Create a new app in the 'apps' tab to experience all features!" xml:space="preserve"><value>在 "应用" 选项卡中创建一个新应用, 以体验所有功能!</value></data>
 
 </root>

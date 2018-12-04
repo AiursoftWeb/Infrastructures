@@ -58,14 +58,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
-<data name="Files" xml:space="preserve"><value>文件</value></data>
-<data name="×" xml:space="preserve"><value>X</value></data>
-<data name="Caution!" xml:space="preserve"><value>谨慎！</value></data>
-<data name="Once you clicked 'Open' button, the link will be deactivated and can not be used again!" xml:space="preserve"><value>一旦您点击 "打开" 按钮, 该链接将被停用, 不能再次使用!</value></data>
-<data name="One Time Link" xml:space="preserve"><value>一次链接</value></data>
-<data name="Copy link" xml:space="preserve"><value>复制链接</value></data>
-<data name="Open Link" xml:space="preserve"><value>打开链接</value></data>
-<data name="Back to files" xml:space="preserve"><value>返回到文件</value></data>
+  <data name="This method is only for framework" xml:space="preserve"><value>此方法仅适用于框架</value></data>
+<data name="The app is not the user's app!" xml:space="preserve"><value>该应用程序不是用户的应用程序!</value></data>
+<data name="Privacy Statement Url" xml:space="preserve"><value>隐私声明</value></data>
+<data name="License Url" xml:space="preserve"><value>许可证网址</value></data>
+<data name="Enable OAuth" xml:space="preserve"><value>启用 oauth</value></data>
+<data name="Force Input Password" xml:space="preserve"><value>强制输入密码</value></data>
+<data name="Force Confirmation" xml:space="preserve"><value>强制确认</value></data>
+<data name="Debug Mode" xml:space="preserve"><value>调试模式</value></data>
+<data name="App Domain" xml:space="preserve"><value>应用域</value></data>
+<data name="View user's basic identity info" xml:space="preserve"><value>查看用户的基本身份信息</value></data>
+<data name="View user's phone number" xml:space="preserve"><value>查看用户的电话号码</value></data>
+<data name="Change user's phone number" xml:space="preserve"><value>更改用户的电话号码</value></data>
+<data name="Change user's Email confirmation status" xml:space="preserve"><value>更改用户的电子邮件确认状态</value></data>
+<data name="Change user's basic info like nickname and bio" xml:space="preserve"><value>更改用户的基本信息, 如昵称和生物</value></data>
+<data name="Change user's password" xml:space="preserve"><value>更改用户的密码</value></data>
+<data name="Change user's other applications' grant status" xml:space="preserve"><value>更改用户的其他应用程序的授权状态</value></data>
 
 </root>

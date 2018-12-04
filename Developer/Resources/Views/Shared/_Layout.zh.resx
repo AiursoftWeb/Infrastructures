@@ -58,11 +58,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="All Apps" xml:space="preserve"><value>所有应用程序</value></data>
-<data name="Buckets" xml:space="preserve"><value>桶</value></data>
+<data name="Buckets" xml:space="preserve"><value>存储池</value></data>
 <data name="Files" xml:space="preserve"><value>文件</value></data>
-<data name="Stargate" xml:space="preserve"><value>星际 之 门</value></data>
+<data name="Stargate" xml:space="preserve"><value>星门</value></data>
 <data name="Content Management" xml:space="preserve"><value>内容管理</value></data>
 <data name="Read Doc" xml:space="preserve"><value>阅读文档</value></data>
 <data name="Messages" xml:space="preserve"><value>消息</value></data>

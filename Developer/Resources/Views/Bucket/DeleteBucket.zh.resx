@@ -58,13 +58,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
-<data name="Buckets" xml:space="preserve"><value>桶</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
+<data name="Buckets" xml:space="preserve"><value>存储池</value></data>
 <data name="×" xml:space="preserve"><value>X</value></data>
 <data name="Caution!" xml:space="preserve"><value>谨慎！</value></data>
-<data name="New Bucket Info" xml:space="preserve"><value>新的桶信息</value></data>
-<data name="Delete Bucket" xml:space="preserve"><value>删除存储桶</value></data>
-<data name="Back to all buckets" xml:space="preserve"><value>返回到所有桶</value></data>
+<data name="New Bucket Info" xml:space="preserve"><value>新的存储池信息</value></data>
+<data name="Delete Bucket" xml:space="preserve"><value>删除存储池</value></data>
+<data name="Back to all buckets" xml:space="preserve"><value>返回到所有存储池</value></data>
 <data name="Back to App" xml:space="preserve"><value>返回到应用程序</value></data>
 <data name="View Files" xml:space="preserve"><value>查看文件</value></data>
 <data name="Confirm to delete" xml:space="preserve"><value>确认删除</value></data>

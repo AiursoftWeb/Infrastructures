@@ -58,21 +58,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Aiursoft" xml:space="preserve"><value>艾乌索特</value></data>
 <data name="Home" xml:space="preserve"><value>家</value></data>
 <data name="Learn" xml:space="preserve"><value>学习</value></data>
 <data name="Downloads" xml:space="preserve"><value>下载</value></data>
-<data name="Samples" xml:space="preserve"><value>样品</value></data>
+<data name="Samples" xml:space="preserve"><value>示例</value></data>
 <data name="Docs" xml:space="preserve"><value>文档</value></data>
 <data name="OAuth" xml:space="preserve"><value>Oauth</value></data>
 <data name="OSS" xml:space="preserve"><value>我们</value></data>
 <data name="Message Queue" xml:space="preserve"><value>消息队列</value></data>
 <data name="Support" xml:space="preserve"><value>支持</value></data>
-<data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+<data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="Settings" xml:space="preserve"><value>设置</value></data>
 <data name="Sign out" xml:space="preserve"><value>注销</value></data>
 <data name="Sign in" xml:space="preserve"><value>登录</value></data>
-<data name="Sign up" xml:space="preserve"><value>登记</value></data>
+<data name="Sign up" xml:space="preserve"><value>注册</value></data>
 <data name="Language" xml:space="preserve"><value>语言</value></data>
 
 </root>

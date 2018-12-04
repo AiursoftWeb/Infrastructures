@@ -58,7 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="Files" xml:space="preserve"><value>文件</value></data>
 <data name="ID" xml:space="preserve"><value>Id</value></data>
 <data name="Name" xml:space="preserve"><value>名字</value></data>
@@ -77,6 +77,6 @@
 <data name="Rename" xml:space="preserve"><value>重 命名</value></data>
 <data name="Upload new file" xml:space="preserve"><value>上传新文件</value></data>
 <data name="Back to App" xml:space="preserve"><value>返回到应用程序</value></data>
-<data name="Back to All buckets" xml:space="preserve"><value>返回到所有桶</value></data>
+<data name="Back to All buckets" xml:space="preserve"><value>返回到所有存储池</value></data>
 
 </root>

@@ -58,7 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="All Apps" xml:space="preserve"><value>所有应用程序</value></data>
 <data name="×" xml:space="preserve"><value>X</value></data>
 <data name="Well done!" xml:space="preserve"><value>干的好！</value></data>
@@ -93,7 +93,7 @@
 <data name="If you add a permission, all users already granted this app will be dropped!" xml:space="preserve"><value>如果您添加权限, 所有已授予此应用的用户都将被删除!</value></data>
 <data name="OAuth Settings" xml:space="preserve"><value>oauth 设置</value></data>
 <data name="Force Input Password" xml:space="preserve"><value>强制输入密码</value></data>
-<data name="Force Confirmation" xml:space="preserve"><value>部队确认</value></data>
+<data name="Force Confirmation" xml:space="preserve"><value>强制确认</value></data>
 <data name="Force the user to confirm to grant your app even when he is already granted your app." xml:space="preserve"><value>强制用户确认授予你的应用, 即使他已被授予你的应用也是如此。</value></data>
 <data name="Debug Mode" xml:space="preserve"><value>调试模式</value></data>
 <data name="Debug mode allows any domain accessible to authenticate your app." xml:space="preserve"><value>调试模式允许任何可访问的域对你的应用进行身份验证。</value></data>
@@ -108,13 +108,13 @@
 <data name="User Name" xml:space="preserve"><value>用户名称</value></data>
 <data name="Grant Time" xml:space="preserve"><value>授予时间</value></data>
 <data name="Object Storage Settings" xml:space="preserve"><value>对象存储设置</value></data>
-<data name="Bucket ID" xml:space="preserve"><value>铲斗 id</value></data>
-<data name="Bucket Name" xml:space="preserve"><value>桶名称</value></data>
+<data name="Bucket ID" xml:space="preserve"><value>存储池 id</value></data>
+<data name="Bucket Name" xml:space="preserve"><value>存储池名称</value></data>
 <data name="Files count" xml:space="preserve"><value>文件计数</value></data>
 <data name="Operation" xml:space="preserve"><value>操作</value></data>
 <data name="Edit" xml:space="preserve"><value>编辑</value></data>
 <data name="Delete" xml:space="preserve"><value>删除</value></data>
 <data name="View Files" xml:space="preserve"><value>查看文件</value></data>
-<data name="Create New Bucket" xml:space="preserve"><value>创建新的存储桶</value></data>
+<data name="Create New Bucket" xml:space="preserve"><value>创建新的存储池</value></data>
 
 </root>

@@ -58,13 +58,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
-<data name="Buckets" xml:space="preserve"><value>桶</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
+<data name="Buckets" xml:space="preserve"><value>存储池</value></data>
 <data name="×" xml:space="preserve"><value>X</value></data>
 <data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
-<data name="New Bucket Info" xml:space="preserve"><value>新的桶信息</value></data>
-<data name="Allow anyone even without access token to access all your files in that bucket." xml:space="preserve"><value>允许任何人甚至没有访问令牌访问该存储桶中的所有文件。</value></data>
-<data name="Allow anyone even without access token to upload files to that bucket." xml:space="preserve"><value>允许任何人甚至没有访问令牌将文件上载到该存储桶。</value></data>
+<data name="New Bucket Info" xml:space="preserve"><value>新的存储池信息</value></data>
+<data name="Allow anyone even without access token to access all your files in that bucket." xml:space="preserve"><value>允许任何人甚至没有访问令牌访问该存储池中的所有文件。</value></data>
+<data name="Allow anyone even without access token to upload files to that bucket." xml:space="preserve"><value>允许任何人甚至没有访问令牌将文件上载到该存储池。</value></data>
 <data name="Update" xml:space="preserve"><value>更新</value></data>
 <data name="View Files" xml:space="preserve"><value>查看文件</value></data>
 <data name="Back to app" xml:space="preserve"><value>返回到应用程序</value></data>

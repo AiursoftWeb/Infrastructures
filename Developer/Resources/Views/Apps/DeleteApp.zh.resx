@@ -60,7 +60,7 @@
   </resheader>
   <data name="×" xml:space="preserve"><value>X</value></data>
 <data name="Caution!" xml:space="preserve"><value>谨慎！</value></data>
-<data name="users granted, buckets created, files uploaded" xml:space="preserve"><value>用户已授予, 创建的存储桶, 上传的文件</value></data>
+<data name="users granted, buckets created, files uploaded" xml:space="preserve"><value>授予的用户、创建的存储池和上传的文件</value></data>
 <data name="and this app won't be able to use again! This process is not recoverable!" xml:space="preserve"><value>这个应用程序将无法再次使用!此过程是不可恢复的!</value></data>
 <data name="Delete App" xml:space="preserve"><value>删除应用程序</value></data>
 <data name="Back to App" xml:space="preserve"><value>返回到应用程序</value></data>

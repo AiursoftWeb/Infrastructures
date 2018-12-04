@@ -58,7 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="Edit Settings" xml:space="preserve"><value>编辑设置</value></data>
 <data name="Create App" xml:space="preserve"><value>创建应用程序</value></data>
 

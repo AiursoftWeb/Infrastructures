@@ -58,10 +58,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
-<data name="Buckets" xml:space="preserve"><value>桶</value></data>
-<data name="Bucket ID" xml:space="preserve"><value>铲斗 id</value></data>
-<data name="Bucket name" xml:space="preserve"><value>存储桶名称</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
+<data name="Buckets" xml:space="preserve"><value>存储池</value></data>
+<data name="Bucket ID" xml:space="preserve"><value>存储池 id</value></data>
+<data name="Bucket name" xml:space="preserve"><value>存储池名称</value></data>
 <data name="Files count" xml:space="preserve"><value>文件计数</value></data>
 <data name="Open to read" xml:space="preserve"><value>开放阅读</value></data>
 <data name="Open to upload" xml:space="preserve"><value>打开以上传</value></data>

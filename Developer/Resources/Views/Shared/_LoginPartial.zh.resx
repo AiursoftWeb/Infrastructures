@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings" xml:space="preserve"><value>设置</value></data>
-<data name="Dashboard" xml:space="preserve"><value>仪表 板</value></data>
+<data name="Dashboard" xml:space="preserve"><value>仪表板</value></data>
 <data name="Account Settings" xml:space="preserve"><value>帐户设置</value></data>
 <data name="Account" xml:space="preserve"><value>帐户</value></data>
 <data name="Log out" xml:space="preserve"><value>注销</value></data>
