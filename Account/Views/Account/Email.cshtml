@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.EmailViewModel
+@model Aiursoft.Account.Models.AccountViewModels.EmailViewModel
 @{
     ViewData["Title"] = "Email";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,15 +15,15 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Well done!</strong> You have successfully updated your profile.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -31,7 +31,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-envelope"></i>
-                Email Settings
+                @Localizer["Email Settings"]
             </div>
             <ul class="list-group list-group-flush">
                 @foreach (var mail in Model.Emails)
@@ -40,15 +40,15 @@
                         @mail.EmailAddress
                         @if (mail.EmailAddress == Model.PrimaryEmail.ToLower())
                         {
-                            <span class="badge badge-success">Primary</span>
-                            <span class="badge badge-info">Visiable</span>
+                            <span class="badge badge-success">@Localizer["Primary"]</span>
+                            <span class="badge badge-info">@Localizer["Visiable"]</span>
                         }
                         @if (!mail.Validated)
                         {
-                            <span class="badge badge-danger">Not validated!</span>
-                            <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">Send Validation Email</button>
+                            <span class="badge badge-danger">@Localizer["Not validated!"]</span>
+                            <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">@Localizer["Send Validation Email"]</button>
                         }
-                        <button class="btn-sm btn btn-danger float-right mr-1" onclick="DeleteEmail('@mail.EmailAddress')">Delete</button>
+                        <button class="btn-sm btn btn-danger float-right mr-1" onclick="DeleteEmail('@mail.EmailAddress')">@Localizer["Delete"]</button>
                     </li>
                 }
             </ul>
@@ -57,19 +57,19 @@
     <div class="col-md-8 pl-0">
         <div class="card mb-3">
             <div class="card-header">
-                Add Email
+                @Localizer["Add Email"]
             </div>
             <div class="card-body">
                 <div class="row">
                     <form asp-controller="Account" asp-action="Email" method="post" class="col-md-12">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="NewEmail">Add Email Address</label>
+                            <label asp-for="NewEmail">@Localizer["Add Email Address"]</label>
                             <div class="input-group mb-3">
                                 <input asp-for="NewEmail" type="text" class="form-control">
                             </div>
                         </div>
-                        <button type="submit" data-disable-with="Adding..." class="btn btn-success">Add new email</button>
+                        <button type="submit" data-disable-with="Adding..." class="btn btn-success">@Localizer["Add new email"]</button>
                     </form>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-﻿@model AccountViewModel
+@model AccountViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +14,16 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="@ServiceLocation.WWW">Aiursoft</a>
+            <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer["Aiursoft"]</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Index">Manage Account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Connected Devices</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                    <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Index">@Localizer["Manage Account"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["Connected Devices"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["FAQ"]</a></li>
                 </ul>
                 <div class="form-inline">
                     <ul class="navbar-nav mr-auto">
@@ -31,7 +31,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Account" asp-action="Index">
-                                    Account Settings
+                                    @Localizer["Account Settings"]
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
@@ -39,8 +39,8 @@
                                     @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name)
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown02">
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Index">Profile</a>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Sign out</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Index">@Localizer["Profile"]</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">@Localizer["Sign out"]</a>
                                 </div>
                             </li>
                         }
@@ -48,12 +48,12 @@
                         {
                             <li class="nav-item active">
                                 <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
-                                    Sign in
+                                    @Localizer["Sign in"]
                                 </a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
-                                    Sign up
+                                    @Localizer["Sign up"]
                                 </a>
                             </li>
                         }
@@ -70,7 +70,7 @@
                 {
                     <li><a href="@foot.Value">@foot.Key</a></li>
                 }
-                <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
+                <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">@Localizer["Language"]</a></li>
             </ul>
             <p>
                 &copy; @DateTime.Now.Year - @Values.ProjectName

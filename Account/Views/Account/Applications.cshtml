@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.ApplicationsViewModel
+@model Aiursoft.Account.Models.AccountViewModels.ApplicationsViewModel
 @{
     ViewData["Title"] = "Applications";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,15 +15,15 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Well done!</strong> You have successfully updated your profile.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -31,7 +31,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-adn"></i>
-                Applications
+                @Localizer["Applications"]
             </div>
             <div class="card-body">
                 <p>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="col-2">
-                                <button class="btn-sm btn btn-outline-secondary float-right mr-1" onclick="DeleteGrant('@app.AppId')">Revoke</button>
+                                <button class="btn-sm btn btn-outline-secondary float-right mr-1" onclick="DeleteGrant('@app.AppId')">@Localizer["Revoke"]</button>
                             </div>
                         </div>
                     </li>

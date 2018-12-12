@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.EnterCodeViewModel
+@model Aiursoft.Account.Models.AccountViewModels.EnterCodeViewModel
 @{
     ViewData["Title"] = "Enter Code";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,8 +15,8 @@
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -24,19 +24,19 @@
         <div class="card mb-3 pl-0">
             <div class="card-header">
                 <i class="fa fa-fw fa-lock"></i>
-                Enter Code
+                @Localizer["Enter Code"]
             </div>
             <div class="card-body">
                 <div class="row">
                     <form asp-controller="Account" asp-action="EnterCode" method="post" class="col-md-12">
                         <input asp-for="NewPhoneNumber" type="hidden" class="form-control">
-                        <p>We have just sent the verification code to your phone. Please check your phone and enter it here.</p>
+                        <p>@Localizer["We have just sent the verification code to your phone. Please check your phone and enter it here."]</p>
                         <div class="form-group">
                             <label asp-for="Code"></label>
                             <input asp-for="Code" type="text" class="form-control">
                             <span asp-validation-for="Code" class="text-danger"></span>
                         </div>
-                        <button data-disable-with="Submitting..." type="submit" class="btn btn-success">Confirm</button>
+                        <button data-disable-with="Submitting..." type="submit" class="btn btn-success">@Localizer["Confirm"]</button>
                     </form>
                 </div>
             </div>

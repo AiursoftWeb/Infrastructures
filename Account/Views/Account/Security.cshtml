@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.SecurityViewModel
+@model Aiursoft.Account.Models.AccountViewModels.SecurityViewModel
 @{
     ViewData["Title"] = "Security";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,15 +15,15 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Well done!</strong> You have successfully updated your profile.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -31,7 +31,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-lock"></i>
-                Change Password
+                @Localizer["Change Password"]
             </div>
             <div class="card-body">
                 <div class="row">
@@ -51,8 +51,8 @@
                             <input asp-for="RepeatPassword" type="password" class="form-control">
                             <span asp-validation-for="RepeatPassword" class="text-danger"></span>
                         </div>
-                        <button type="submit" data-disable-with="Changing..." class="btn btn-danger">Change Password</button>
-                        <button type="reset" class="btn btn-primary">Clear</button>
+                        <button type="submit" data-disable-with="Changing..." class="btn btn-danger">@Localizer["Change Password"]</button>
+                        <button type="reset" class="btn btn-primary">@Localizer["Clear"]</button>
                     </form>
                 </div>
             </div>

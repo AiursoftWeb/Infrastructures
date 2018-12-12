@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.AvatarViewModel
+@model Aiursoft.Account.Models.AccountViewModels.AvatarViewModel
 @{
     ViewData["Title"] = "Avatar";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,15 +15,15 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Well done!</strong> You have successfully updated your profile.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -31,16 +31,16 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-user-circle-o"></i>
-                Change Avatar
+                @Localizer["Change Avatar"]
             </div>
             <div class="card-body">
                 <div class="row">
                     <form asp-controller="Account" asp-action="Avatar" method="post" class="col-md-10" enctype="multipart/form-data">
-                        <h4 class="box-title">Upload Your profile picture</h4>
+                        <h4 class="box-title">@Localizer["Upload Your profile picture"]</h4>
                         <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@await UserImageGenerator.GetUserImageUrl(User.Identity.Name)" />
-                        <p class="help margin-top-10">Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg.</p>
+                        <p class="help margin-top-10">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg."]</p>
                         <div class="col-xs-12 mt-3">
-                            <button type="submit" data-disable-with="Uploading" class="btn btn-primary">Upload</button>
+                            <button type="submit" data-disable-with="Uploading" class="btn btn-primary">@Localizer["Upload"]</button>
                         </div>
                     </form>
                 </div>

@@ -58,16 +58,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Aiursoft" xml:space="preserve"><value>Aiursoft</value></data>
-<data name="Home" xml:space="preserve"><value>家</value></data>
-<data name="Manage Account" xml:space="preserve"><value>管理账户</value></data>
-<data name="Connected Devices" xml:space="preserve"><value>连接的设备</value></data>
-<data name="FAQ" xml:space="preserve"><value>常见问题</value></data>
-<data name="Account Settings" xml:space="preserve"><value>帐户设置</value></data>
-<data name="Profile" xml:space="preserve"><value>配置 文件</value></data>
-<data name="Sign out" xml:space="preserve"><value>注销</value></data>
-<data name="Sign in" xml:space="preserve"><value>登录</value></data>
-<data name="Sign up" xml:space="preserve"><value>注册</value></data>
-<data name="Language" xml:space="preserve"><value>语言</value></data>
+  <data name="Management Center" xml:space="preserve"><value>管理中心</value></data>
+<data name="×" xml:space="preserve"><value>x</value></data>
+<data name="Well done!" xml:space="preserve"><value>干的好！</value></data>
+<data name="You have successfully updated your profile." xml:space="preserve"><value>您已成功更新您的个人资料。</value></data>
+<data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
+<data name="Email Settings" xml:space="preserve"><value>电子邮件设置</value></data>
+<data name="Primary" xml:space="preserve"><value>主要</value></data>
+<data name="Visiable" xml:space="preserve"><value>公开</value></data>
+<data name="Not validated!" xml:space="preserve"><value>未验证!</value></data>
+<data name="Send Validation Email" xml:space="preserve"><value>发送验证电子邮件</value></data>
+<data name="Delete" xml:space="preserve"><value>删除</value></data>
+<data name="Add Email" xml:space="preserve"><value>添加电子邮件</value></data>
+<data name="Add Email Address" xml:space="preserve"><value>添加电子邮件地址</value></data>
+<data name="Add new email" xml:space="preserve"><value>添加新电子邮件</value></data>
 
 </root>

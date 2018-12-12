@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.PhoneViewModel
+@model Aiursoft.Account.Models.AccountViewModels.PhoneViewModel
 @{
     ViewData["Title"] = "Phone";
 }
@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Account" asp-action="Index">Management Center</a>
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
         </li>
         <li class="breadcrumb-item active">
             @ViewData["Title"]
@@ -15,15 +15,15 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Well done!</strong> You have successfully updated your phone number.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your phone number."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <strong>Invalid Input!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -31,7 +31,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-phone"></i>
-                Bind Phone
+                @Localizer["Bind Phone"]
             </div>
             <div class="card-body">
                 <div class="row">
@@ -46,7 +46,7 @@
                         }
                         else
                         {
-                            <p class="text-danger">You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below.</p>
+                            <p class="text-danger">@Localizer["You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below."]</p>
                         }
                     </form>
                 </div>
@@ -56,7 +56,7 @@
     <div class="col-md-6 pl-0">
         <div class="card mb-3">
             <div class="card-header">
-                Change Phone number
+                @Localizer["Change Phone number"]
             </div>
             <div class="card-body">
                 <div class="row">
@@ -66,17 +66,17 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <select class="custom-select">
-                                        <option selected>+86</option>
-                                        <option value="1">+1</option>
-                                        <option value="2">+2</option>
-                                        <option value="3">+3</option>
+                                        <option selected>@Localizer["+86"]</option>
+                                        <option value="1">@Localizer["+1"]</option>
+                                        <option value="2">@Localizer["+2"]</option>
+                                        <option value="3">@Localizer["+3"]</option>
                                     </select>
                                 </div>
                                 <input asp-for="NewPhoneNumber" type="text" class="form-control">
                             </div>
                             <span asp-validation-for="NewPhoneNumber" class="text-danger"></span>
                         </div>
-                        <button type="submit" data-disable-with="Sending..." class="btn btn-success">Send verification passcode</button>
+                        <button type="submit" data-disable-with="Sending..." class="btn btn-success">@Localizer["Send verification passcode"]</button>
                     </form>
                 </div>
             </div>

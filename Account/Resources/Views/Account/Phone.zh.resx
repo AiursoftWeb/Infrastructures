@@ -58,16 +58,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Aiursoft" xml:space="preserve"><value>Aiursoft</value></data>
-<data name="Home" xml:space="preserve"><value>家</value></data>
-<data name="Manage Account" xml:space="preserve"><value>管理账户</value></data>
-<data name="Connected Devices" xml:space="preserve"><value>连接的设备</value></data>
-<data name="FAQ" xml:space="preserve"><value>常见问题</value></data>
-<data name="Account Settings" xml:space="preserve"><value>帐户设置</value></data>
-<data name="Profile" xml:space="preserve"><value>配置 文件</value></data>
-<data name="Sign out" xml:space="preserve"><value>注销</value></data>
-<data name="Sign in" xml:space="preserve"><value>登录</value></data>
-<data name="Sign up" xml:space="preserve"><value>注册</value></data>
-<data name="Language" xml:space="preserve"><value>语言</value></data>
+  <data name="Management Center" xml:space="preserve"><value>管理中心</value></data>
+<data name="×" xml:space="preserve"><value>x</value></data>
+<data name="Well done!" xml:space="preserve"><value>干的好！</value></data>
+<data name="You have successfully updated your phone number." xml:space="preserve"><value>您已成功更新您的手机号码。</value></data>
+<data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
+<data name="Bind Phone" xml:space="preserve"><value>绑定手机</value></data>
+<data name="You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below." xml:space="preserve"><value>你没有绑你的手机。目前, 您无法通过短信访问您的帐户!请在下面输入您的手机号码。</value></data>
+<data name="Change Phone number" xml:space="preserve"><value>更改手机号码</value></data>
+<data name="+86" xml:space="preserve"><value>+ 86</value></data>
+<data name="+1" xml:space="preserve"><value>+ 1</value></data>
+<data name="+2" xml:space="preserve"><value>+ 2</value></data>
+<data name="+3" xml:space="preserve"><value>+ 3</value></data>
+<data name="Send verification passcode" xml:space="preserve"><value>发送验证码</value></data>
 
 </root>
