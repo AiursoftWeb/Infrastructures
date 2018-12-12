@@ -72,5 +72,9 @@
 <data name="This is an automated server response message. All systems are online." xml:space="preserve"><value>这是一条自动服务器响应消息。所有系统都是联机的。</value></data>
 <data name="View all alerts" xml:space="preserve"><value>查看所有警报</value></data>
 <data name="Language(语言)" xml:space="preserve"><value>Language(语言)</value></data>
+<data name="Logout" xml:space="preserve"><value>注销</value></data>
+<data name="Upload new" xml:space="preserve"><value>上传</value></data>
+<data name="File upload logs" xml:space="preserve"><value>文件上传日志</value></data>
+<data name="Settings" xml:space="preserve"><value>设置</value></data>
 
 </root>

@@ -62,30 +62,30 @@
 <data name="Sign in to Colossus" xml:space="preserve"><value>登录巨像</value></data>
 <data name="Try now!" xml:space="preserve"><value>现在就试试吧!</value></data>
 <data name="Upload your file here to share it." xml:space="preserve"><value>在此处上传您的文件以共享它。</value></data>
-<data name="Sign in to enjoy 1000MB max file size!" xml:space="preserve"><value>登录以享受1000mb 最大文件大小!</value></data>
+<data name="Sign in to enjoy 1000MB max file size!" xml:space="preserve"><value>登录以享受1000MB最大文件大小!</value></data>
 <data name="Copy Link" xml:space="preserve"><value>复制链接</value></data>
 <data name="Open in new page" xml:space="preserve"><value>在新页面中打开</value></data>
 <data name="Pricing" xml:space="preserve"><value>定价</value></data>
 <data name="Quickly upload anything to share it with anyone. Create a one-time link to share a secret file and view log to statistic file download times." xml:space="preserve"><value>快速上传任何内容, 与任何人共享。创建一次性链接以共享机密文件并查看日志以统计文件下载时间。</value></data>
-<data name="Everyone" xml:space="preserve"><value>每个人 都</value></data>
+<data name="Everyone" xml:space="preserve"><value>任何人</value></data>
 <data name="$0" xml:space="preserve"><value>$0</value></data>
-<data name="30Mb file size limit" xml:space="preserve"><value>30mb 文件大小限制</value></data>
+<data name="30Mb file size limit" xml:space="preserve"><value>30MB 文件大小限制</value></data>
 <data name="3 Days time limit" xml:space="preserve"><value>3天时间限制</value></data>
 <data name="No download log" xml:space="preserve"><value>无下载日志</value></data>
 <data name="No one-time link" xml:space="preserve"><value>无一次性链接</value></data>
 <data name="Random file name" xml:space="preserve"><value>随机文件名</value></data>
 <data name="Upload now" xml:space="preserve"><value>立即上传</value></data>
 <data name="Basic" xml:space="preserve"><value>基本</value></data>
-<data name="1GB file size limit" xml:space="preserve"><value>1gb 文件大小限制</value></data>
+<data name="1GB file size limit" xml:space="preserve"><value>1GB 文件大小限制</value></data>
 <data name="Up to 30 days limit" xml:space="preserve"><value>最多30天的限制</value></data>
 <data name="Sign in" xml:space="preserve"><value>登录</value></data>
 <data name="Developer" xml:space="preserve"><value>开发 人员</value></data>
-<data name="$0.1" xml:space="preserve"><value>$0.1, 000</value></data>
-<data name="/ mo / GB" xml:space="preserve"><value>/mo/gb</value></data>
-<data name="8GB file size limit" xml:space="preserve"><value>8gb 文件大小限制</value></data>
+<data name="$0.1" xml:space="preserve"><value>$0.1</value></data>
+<data name="/ mo / GB" xml:space="preserve"><value>/ mo / GB</value></data>
+<data name="8GB file size limit" xml:space="preserve"><value>8GB 文件大小限制</value></data>
 <data name="No time limit and programmable" xml:space="preserve"><value>无时间限制, 可编程</value></data>
 <data name="Download log and 7*24 support" xml:space="preserve"><value>下载日志和 7 * 24 支持</value></data>
-<data name="Enabled to create one-time link" xml:space="preserve"><value>已启用以创建一次性链接</value></data>
+<data name="Enabled to create one-time link" xml:space="preserve"><value>允许创建一次性链接</value></data>
 <data name="Customizable file name" xml:space="preserve"><value>可自定义的文件名</value></data>
 <data name="Get started" xml:space="preserve"><value>开始使用</value></data>
 

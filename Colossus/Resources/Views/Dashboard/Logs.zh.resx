@@ -62,7 +62,7 @@
 <data name="All files your uploaded in Colossus" xml:space="preserve"><value>您在巨像中上传的所有文件</value></data>
 <data name="Record Id" xml:space="preserve"><value>记录Id</value></data>
 <data name="File Name" xml:space="preserve"><value>文件名</value></data>
-<data name="Open to upload" xml:space="preserve"><value>开放上传</value></data>
+<data name="Operations" xml:space="preserve"><value>操作</value></data>
 <data name="Size(KB)" xml:space="preserve"><value>大小 (kb)</value></data>
 <data name="Download counts" xml:space="preserve"><value>下载次数</value></data>
 <data name="Upload Time" xml:space="preserve"><value>上传时间</value></data>
