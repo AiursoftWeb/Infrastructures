@@ -64,6 +64,6 @@
 <data name="You have successfully updated your profile." xml:space="preserve"><value>您已成功更新您的个人资料。</value></data>
 <data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
 <data name="Change Password" xml:space="preserve"><value>更改密码</value></data>
-<data name="Clear" xml:space="preserve"><value>清楚</value></data>
+<data name="Clear" xml:space="preserve"><value>重置</value></data>
 
 </root>
