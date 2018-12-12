@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Colossus.Models.DashboardViewModels.LogsViewModel
+@model Aiursoft.Colossus.Models.DashboardViewModels.LogsViewModel
 @{
     Layout = "_DashboardLayout";
     ViewData["Title"] = Model.Title;
@@ -6,14 +6,14 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-inbox ico"></i>
-            All files your uploaded in Colossus
+            @Localizer["All files your uploaded in Colossus"]
         </div>
         <div class="card-body">
             <div class="col-xs-12">
@@ -21,13 +21,13 @@
                     <table class="table table-striped datatable">
                         <thead>
                             <tr>
-                                <th>Record Id</th>
-                                <th>File Name</th>
-                                <th>Open to upload</th>
-                                <th>Size(KB)</th>
-                                <th>Download counts</th>
-                                <th>Upload Time</th>
-                                <th>Deadline</th>
+                                <th>@Localizer["Record Id"]</th>
+                                <th>@Localizer["File Name"]</th>
+                                <th>@Localizer["Open to upload"]</th>
+                                <th>@Localizer["Size(KB)"]</th>
+                                <th>@Localizer["Download counts"]</th>
+                                <th>@Localizer["Upload Time"]</th>
+                                <th>@Localizer["Deadline"]</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,18 +39,18 @@
                                     <td>@record.SourceFileName</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <a href="@ossFile.InternetPath?sd=true&name=@record.SourceFileName" target="_blank" class="btn btn-secondary">Download</a>
+                                            <a href="@ossFile.InternetPath?sd=true&name=@record.SourceFileName" target="_blank" class="btn btn-secondary">@Localizer["Download"]</a>
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    More
+                                                    @Localizer["More"]
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     @if(MIME.HasKey(ossFile.FileExtension))
                                                     {
-                                                        <a class="dropdown-item" href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank">Open</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?name=@record.SourceFileName">Copy open link</a>
+                                                        <a class="dropdown-item" href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank">@Localizer["Open"]</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?name=@record.SourceFileName">@Localizer["Copy open link"]</a>
                                                     }
-                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?sd=true&name=@record.SourceFileName">Copy download link</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?sd=true&name=@record.SourceFileName">@Localizer["Copy download link"]</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                     </table>
                 </div>
                 <div class="col-md-12 margin-top-30">
-                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-success">Upload new file</a>
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-success">@Localizer["Upload new file"]</a>
                 </div>
             </div>
         </div>
