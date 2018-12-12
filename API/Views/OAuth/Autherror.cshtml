@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewData["Title"] = "Auth Error";
 }
@@ -6,12 +6,12 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">@ViewData["Title"]</div>
         <div class="card-body">
-            <h1 class="text-danger">403 - Auth error</h1>
-            <h3>This app can not use our authentication system!</h3>
-            <p>Sorry about it. Please try again and try to contact the app producer.</p>
+            <h1 class="text-danger">@Localizer["403 - Auth error"]</h1>
+            <h3>@Localizer["This app can not use our authentication system!"]</h3>
+            <p>@Localizer["Sorry about it. Please try again and try to contact the app producer."]</p>
         </div>
         <a class="card-footer clearfix small z-1" href="@ServiceLocation.WWW">
-            <span class="float-left">Back to Aiursoft.com</span>
+            <span class="float-left">@Localizer["Back to Aiursoft.com"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>
             </span>

@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Pylon.Models.API.OAuthViewModels.AuthorizeConfirmViewModel
+@model Aiursoft.Pylon.Models.API.OAuthViewModels.AuthorizeConfirmViewModel
 @{
     ViewData["Title"] = "Authorize Confirm";
 }
@@ -6,7 +6,7 @@
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">
             <i class="fa fa-shield"></i>
-            Authorize Confirm
+            @Localizer["Authorize Confirm"]
         </div>
         <div class="card-body">
             <div class="text-center">
@@ -14,8 +14,8 @@
             </div>
             <div class="text-center mt-4 mb-5">
                 <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
-                <p>Do you want to use your identity to sign in </p>
-                <p><strong>@Html.DisplayFor(t => t.AppName)</strong>?</p>
+                <p>@Localizer["Do you want to use your identity to sign in"] </p>
+                <p><strong>@Html.DisplayFor(t => t.AppName)</strong>@Localizer["?"]</p>
             </div>
             <p>@Html.DisplayFor(t => t.AppName) has following permissions:</p>
             <ul>
@@ -62,20 +62,20 @@
                        asp-route-scope="@Model.Scope"
                        asp-route-response_type="@Model.ResponseType"
                        asp-route-forceConfirm="true">
-                        Click here
-                    </a>to switch to another account.
+                        @Localizer["Click here"]
+                    </a>@Localizer["to switch to another account."]
                 </p>
                 <div class="row">
                     <div class="col-md-4 mt-3">
-                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">Allow</button>
+                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Allow"]</button>
                     </div>
                     <div class="col-md-4 mt-3">
-                        <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">Deny</a>
+                        <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">@Localizer["Deny"]</a>
                     </div>
                 </div>
                 <div>
-                    <a href="@Model.TermsUrl" target="_blank">View License</a> |
-                    <a href="@Model.PStatementUrl" target="_blank">View Privacy Statement</a>
+                    <a href="@Model.TermsUrl" target="_blank">@Localizer["View License"]</a> |
+                    <a href="@Model.PStatementUrl" target="_blank">@Localizer["View Privacy Statement"]</a>
                 </div>
             </form>
         </div>

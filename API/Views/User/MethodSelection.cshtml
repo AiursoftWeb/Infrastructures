@@ -1,4 +1,4 @@
-﻿@model Aiursoft.API.Models.UserViewModels.MethodSelectionViewModel
+@model Aiursoft.API.Models.UserViewModels.MethodSelectionViewModel
 @{
     ViewData["Title"] = Localizer["Forgot password"];
 }
@@ -13,17 +13,17 @@
             @if(!Model.SMSResetAvaliable || Model.AvaliableEmails.Count() < 1)
             {
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Caution!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+                    <strong>@Localizer["Caution!"]</strong>
                     <div>
                         <ul>
                             @if(!Model.SMSResetAvaliable)
                             {
-                                <li>You did not bind a phone and can not reset your password via sms.</li>
+                                <li>@Localizer["You did not bind a phone and can not reset your password via sms."]</li>
                             }
                             @if(Model.AvaliableEmails.Count() < 1)
                             {
-                                <li>You did not bind a email and can not reset your password via email.</li>
+                                <li>@Localizer["You did not bind a email and can not reset your password via email."]</li>
                             }
                         </ul>
                     </div>
