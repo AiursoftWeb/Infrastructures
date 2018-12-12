@@ -69,5 +69,13 @@
 <data name="Sign in" xml:space="preserve"><value>登录</value></data>
 <data name="Sign up" xml:space="preserve"><value>注册</value></data>
 <data name="Language" xml:space="preserve"><value>语言</value></data>
-
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="Developers Settings" xml:space="preserve">
+    <value>开发者设置</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>主站</value>
+  </data>
 </root>
