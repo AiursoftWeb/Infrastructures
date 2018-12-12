@@ -65,25 +65,25 @@
 <data name="Your app name will be shown when calling API." xml:space="preserve"><value>调用 api 时, 将显示你的应用名称。</value></data>
 <data name="Cross Platform" xml:space="preserve"><value>跨平台</value></data>
 <data name="Android" xml:space="preserve"><value>Android</value></data>
-<data name="iOS" xml:space="preserve"><value>Ios</value></data>
-<data name="Windows Desktop" xml:space="preserve"><value>视窗台式机</value></data>
-<data name="Windows UWP" xml:space="preserve"><value>窗口 uwp</value></data>
+<data name="iOS" xml:space="preserve"><value>iOS</value></data>
+<data name="Windows Desktop" xml:space="preserve"><value>Windows 桌面</value></data>
+<data name="Windows UWP" xml:space="preserve"><value>Windows UWP</value></data>
 <data name="Linux" xml:space="preserve"><value>Linux</value></data>
-<data name="Mac OS" xml:space="preserve"><value>mac os</value></data>
-<data name="Web / HTML / PWA" xml:space="preserve"><value>web/html/pwa</value></data>
-<data name="Development" xml:space="preserve"><value>发展</value></data>
+<data name="Mac OS" xml:space="preserve"><value>Mac OS</value></data>
+<data name="Web / HTML / PWA" xml:space="preserve"><value>Web / HTML / PWA</value></data>
+<data name="Development" xml:space="preserve"><value>开发工具</value></data>
 <data name="App for pages" xml:space="preserve"><value>网页的应用程序</value></data>
-<data name="Books" xml:space="preserve"><value>书</value></data>
-<data name="Business" xml:space="preserve"><value>业务</value></data>
+<data name="Books" xml:space="preserve"><value>图书</value></data>
+<data name="Business" xml:space="preserve"><value>商务</value></data>
 <data name="Communication" xml:space="preserve"><value>通信</value></data>
 <data name="Education" xml:space="preserve"><value>教育</value></data>
 <data name="Entertainment" xml:space="preserve"><value>娱乐</value></data>
 <data name="Fashion" xml:space="preserve"><value>时尚</value></data>
 <data name="Finance" xml:space="preserve"><value>金融</value></data>
-<data name="Food &amp; Drink" xml:space="preserve"><value>食品和饮料</value></data>
+<data name="Food &amp; Drink" xml:space="preserve"><value>饮食</value></data>
 <data name="Game" xml:space="preserve"><value>游戏</value></data>
 <data name="Upload your app icon" xml:space="preserve"><value>上传你的应用图标</value></data>
-<data name="Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg." xml:space="preserve"><value>只有 jpg, bmp, png 图像, 2m 最大值, 2000px 最大高度和 3000 px 最大 weithg。</value></data>
+<data name="Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight." xml:space="preserve"><value>只有 jpg, bmp, png 图像, 2m 最大值, 2000px 最大高度和 3000 px 最大宽度</value></data>
 <data name="Create" xml:space="preserve"><value>创建</value></data>
 <data name="Clear" xml:space="preserve"><value>重置</value></data>
 <data name="Back to list" xml:space="preserve"><value>返回到列表</value></data>
