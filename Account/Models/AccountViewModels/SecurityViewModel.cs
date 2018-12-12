@@ -13,7 +13,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public SecurityViewModel(AccountUser user) : base(user, 2, "Security") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 2, "Avatar");
+            base.Recover(user, 2, "Security");
         }
         [Required]
         [DataType(DataType.Password)]

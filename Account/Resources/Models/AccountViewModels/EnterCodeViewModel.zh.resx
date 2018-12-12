@@ -58,14 +58,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Management Center" xml:space="preserve"><value>管理中心</value></data>
-<data name="×" xml:space="preserve"><value>x</value></data>
-<data name="Well done!" xml:space="preserve"><value>干的好！</value></data>
-<data name="You have successfully updated your profile." xml:space="preserve"><value>您已成功更新您的个人资料。</value></data>
-<data name="Invalid Input!" xml:space="preserve"><value>无效的输入!</value></data>
-<data name="Change Avatar" xml:space="preserve"><value>更改头像</value></data>
-<data name="Upload Your profile picture" xml:space="preserve"><value>上传您的个人资料图片</value></data>
-<data name="Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight." xml:space="preserve"><value>只允许 jpg, bmp, png 图像, 最大2MB, 最大高度2000px, 最大宽度3000px</value></data>
-<data name="Upload" xml:space="preserve"><value>上传</value></data>
+  <data name="This method is only for framework!" xml:space="preserve"><value>此方法仅适用于框架!</value></data>
+<data name="Enter Code" xml:space="preserve"><value>输入验证码</value></data>
+<data name="Code" xml:space="preserve"><value>验证码</value></data>
 
 </root>

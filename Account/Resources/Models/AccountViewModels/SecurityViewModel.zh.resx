@@ -58,32 +58,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Basic Info" xml:space="preserve"><value>基本信息</value></data>
-<data name="Email" xml:space="preserve"><value>电子邮件</value></data>
+  <data name="This method is only for framework!" xml:space="preserve"><value>此方法仅适用于框架!</value></data>
 <data name="Security" xml:space="preserve"><value>安全</value></data>
 <data name="Avatar" xml:space="preserve"><value>头像</value></data>
-<data name="Phone" xml:space="preserve"><value>手机号码</value></data>
-<data name="Applicaions" xml:space="preserve"><value>应用</value></data>
-<data name="Develope" xml:space="preserve"><value>开发</value></data>
-  <data name="Messages" xml:space="preserve"><value>消息</value></data>
-<data name="12 New" xml:space="preserve"><value>12新</value></data>
-<data name="New Messages:" xml:space="preserve"><value>新消息:</value></data>
-<data name="David Miller" xml:space="preserve"><value>大卫·米勒</value></data>
-<data name="11:21 AM" xml:space="preserve"><value>上午11点</value></data>
-<data name="Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!" xml:space="preserve"><value>嘿, 在那里!这个新版本的 sb 管理员是相当真棒!当这些信息到达盒子的末尾时, 它们就会被剪掉, 这样它们就不会溢出到两边!</value></data>
-<data name="View all messages" xml:space="preserve"><value>查看所有邮件</value></data>
-<data name="Alerts" xml:space="preserve"><value>警报</value></data>
-<data name="6 New" xml:space="preserve"><value>6新</value></data>
-<data name="New Alerts:" xml:space="preserve"><value>新警报:</value></data>
-<data name="Status Update" xml:space="preserve"><value>状态更新</value></data>
-<data name="This is an automated server response message. All systems are online." xml:space="preserve"><value>这是一条自动服务器响应消息。所有系统都是联机的。</value></data>
-<data name="View all alerts" xml:space="preserve"><value>查看所有警报</value></data>
-<data name="×" xml:space="preserve"><value>x</value></data>
-<data name="Your account email was not confirmed!" xml:space="preserve"><value>您的帐户电子邮件未被确认!</value></data>
-<data name="Please" xml:space="preserve"><value>请</value></data>
-<data name="confirm your email" xml:space="preserve"><value>确认您的电子邮件</value></data>
-<data name="as soon as possible! Or you may lose access to your account in a few days!" xml:space="preserve"><value>尽快！否则您可能会在几天内失去对您的帐户的访问权限!</value></data>
-<data name="Without confirming your email, you won't receive any important notifications and cannot reset your password!" xml:space="preserve"><value>在不确认电子邮件的情况下, 您将不会收到任何重要通知, 并且无法重置密码!</value></data>
-<data name="Language(语言)" xml:space="preserve"><value>Language(语言)</value></data>
+<data name="Old Password" xml:space="preserve"><value>旧密码</value></data>
+<data name="New Password" xml:space="preserve"><value>新密码</value></data>
+<data name="Repeat Password" xml:space="preserve"><value>重复密码</value></data>
+<data name="The new password and confirmation password do not match." xml:space="preserve"><value>新密码和确认密码不匹配。</value></data>
 
 </root>

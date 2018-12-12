@@ -22,9 +22,10 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         [Required]
         [MaxLength(20)]
-        [Display(Name = "Nick name")]
+        [Display(Name = "Nickname")]
         public virtual string NickName { get; set; }
         [MaxLength(80)]
+        [Display(Name = "Bio")]
         public virtual string Bio { get; set; }
     }
 }
