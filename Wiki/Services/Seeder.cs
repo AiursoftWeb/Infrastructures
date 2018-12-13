@@ -65,14 +65,29 @@ namespace Aiursoft.Wiki.Services
                     // Get markdown from GitHub
                     foreach (var article in collection.Articles ?? new List<Article>())
                     {
-                        var newarticle = new Article
+                        if(!string.IsNullOrEmpty(article.ArticleAddress))
                         {
-                            ArticleTitle = article.ArticleTitle,
-                            ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
-                            CollectionId = newCollection.CollectionId
-                        };
-                        _dbContext.Article.Add(newarticle);
-                        await _dbContext.SaveChangesAsync();
+                            var newarticle = new Article
+                            {
+                                ArticleTitle = article.ArticleTitle,
+                                ArticleAddress = article.ArticleAddress,
+                                ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress), false),
+                                CollectionId = newCollection.CollectionId
+                            };
+                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            var newarticle = new Article
+                            {
+                                ArticleTitle = article.ArticleTitle,
+                                ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
+                                CollectionId = newCollection.CollectionId
+                            };
+                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.SaveChangesAsync();
+                        }
                     }
 
                     if (string.IsNullOrWhiteSpace(collection.DocAPIAddress))
