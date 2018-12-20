@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -22,15 +22,22 @@
                     <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">@Localizer["Learn"]</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">@Localizer["Downloads"]</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["Samples"]</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="dropdown00" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Localizer["Samples"]
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown00">
+                            <a class="dropdown-item" asp-controller="Samples" asp-action="JqueryUploadProgress">jquery-upload-progress</a>
+                        </div>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="@ServiceLocation.Wiki" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             @Localizer["Docs"]
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="#">@Localizer["OAuth"]</a>
-                            <a class="dropdown-item" href="#">@Localizer["OSS"]</a>
-                            <a class="dropdown-item" href="#">@Localizer["Message Queue"]</a>
+                            <a class="dropdown-item" href="@ServiceLocation.Wiki/ReadDoc/Authentication/OAuth.md" target="_blank">@Localizer["OAuth"]</a>
+                            <a class="dropdown-item" href="@ServiceLocation.Wiki/ReadDoc/Object%20Storage/What%20is%20OSS.md" target="_blank">@Localizer["OSS"]</a>
+                            <a class="dropdown-item" href="@ServiceLocation.Wiki/ReadDoc/Stargate/What%20is%20Stargate.md" target="_blank">@Localizer["Message Queue"]</a>
                         </div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#">@Localizer["Support"]</a></li>
