@@ -17,7 +17,7 @@
 </div>
 
 <div class="container">
-    <h2>jquery-upload-progress</h2>
+    <h2 class="mt-3">jquery-upload-progress form example</h2>
     <p>This is an example for using jquery-upload progress to submit a form with multiple files input.</p>
 
     <form class="col-md-6 col-xs-12" asp-controller="Samples" asp-action="Submit" method="post">
@@ -36,16 +36,13 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="IconAddress"></label>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#avatarModal">
+            <label asp-for="IconAddress" class="w-100"></label>
+            <input asp-for="IconAddress" id="@nameof(Model.IconAddress)" type="hidden">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#avatarModal">
                 Upload New Avatar
             </button>
         </div>
-
-
     </form>
-
-
 
     <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -57,7 +54,8 @@
                     </button>
                 </div>
                 <form class="modal-body" asp-controller="Samples" asp-action="Uploader">
-
+                    <input type="file" name="file" class="dropify" data-max-file-size="30M" data-height="300" />
+                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
@@ -65,6 +63,57 @@
             </div>
         </div>
     </div>
+
+</div>
+@section js{
     <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
-</div>
+    <script>
+        $(document).ready(function () {
+            var uploadButton = $('#uploadButton');
+            var settings = {
+                onInit: function (elements) {
+                    uploadButton.hide();
+                },
+
+                onGetFile: function (elements) {
+                    uploadButton.show();
+                    uploadButton.val('Upload');
+                },
+
+                onStartSubmitting: function (elements) {
+                    if ('Notification' in window) {
+                        Notification.requestPermission((result) => { });
+                    }
+                    window.onbeforeunload = function () {
+                        return "Your file is still uploading. Are you sure to quit?";
+                    };
+                    uploadButton.val('Uploading...');
+                    uploadButton.prop('disabled', true);
+                },
+
+                onProcessing: function (elements) {
+
+                },
+
+                onFinish: function (elements, data) {
+                    uploadButton.val('Upload');
+                    uploadButton.prop('disabled', false);
+                    $('#IconAddress').val(data.value);
+                    elements.message.html(data.value);
+                    var notification = new Notification('Upload Finished!', {
+                        icon: 'https://cdn.aiursoft.com/favicon.ico',
+                        body: "Your file was successfully uploaded!"
+                    });
+                    notification.onclick = function (event) {
+                        event.preventDefault();
+                        window.focus();
+                    };
+                    window.onbeforeunload = function () { };
+                }
+            };
+            $('.dropify').setProgressedUploader(settings);
+            $('.dropify').dropify();
+        });
+    </script>
+}
