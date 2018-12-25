@@ -42,7 +42,7 @@
 
         <div class="form-group">
             <label asp-for="IconAddress" class="w-100"></label>
-            <input asp-for="IconAddress" type="text" readonly="readonly" id="@nameof(Model.IconAddress)" >
+            <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)" >
             <img src="@ServiceLocation.CDN/images/appdefaulticon.png" class="img-responsive" id="avatar">
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#avatarModal">
                 Upload New Avatar
@@ -61,7 +61,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="modal-body" asp-controller="Samples" asp-action="Uploader">
+                <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
                     <input type="file" name="file" class="dropify" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.CDN/images/appdefaulticon.png" data-max-file-size="30M" />
                     <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                 </form>
