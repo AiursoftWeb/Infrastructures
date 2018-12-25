@@ -33,7 +33,7 @@ namespace Aiursoft.Developer.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> Uploader()
         {
-            if (HttpContext.Request.Form.Files.First().Length > 0 * 1024 * 1024)
+            if (HttpContext.Request.Form.Files.First().Length > 30 * 1024 * 1024)
             {
                 return Unauthorized();
             }

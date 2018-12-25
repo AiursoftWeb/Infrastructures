@@ -39,15 +39,18 @@
             <span asp-validation-for="Email" class="text-danger"></span>
             <small class="form-text text-muted">@Localizer["Your email will be shown when calling API."]</small>
         </div>
-
-        <div class="form-group">
+        <div class="input-group mb-3">
             <label asp-for="IconAddress" class="w-100"></label>
-            <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)" >
-            <img src="@ServiceLocation.CDN/images/appdefaulticon.png" class="img-responsive" id="avatar">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#avatarModal">
-                Upload New Avatar
-            </button>
+            <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
+            <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#avatarModal">
+                    Upload New Avatar
+                </button>
+            </span>
+            <span asp-validation-for="IconAddress" class="text-danger"></span>
         </div>
+
+        <img class="img-fluid mt-3 d-none" id="avatar">
 
         <input type="submit" class="btn btn-primary" value="Submit" />
     </form>
@@ -109,6 +112,7 @@
                     uploadButton.prop('disabled', false);
                     $('#IconAddress').val(data.value);
                     $('#avatar').attr('src', data.value);
+                    $('#avatar').removeClass('d-none');
                     elements.message.html(data.value);
                     var notification = new Notification('Upload Finished!', {
                         icon: 'https://cdn.aiursoft.com/favicon.ico',
