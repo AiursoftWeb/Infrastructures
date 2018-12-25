@@ -49,6 +49,10 @@
                 </button>
             </span>
         </div>
+        <div class="form-group">
+            <span asp-validation-for="IconAddress" class="text-danger"></span>
+        </div>
+        <img class="img-fluid mb-3 d-none" id="avatar">
 
         <div class="input-group mb-3">
             <label asp-for="HomeworkAddress" class="w-100"></label>
@@ -59,12 +63,10 @@
                 </button>
             </span>
         </div>
-
         <div class="form-group">
-            <span asp-validation-for="IconAddress" class="text-danger"></span>
+            <span asp-validation-for="HomeworkAddress" class="text-danger"></span>
         </div>
 
-        <img class="img-fluid mb-3 d-none" id="avatar">
         <input type="submit" class="btn btn-primary mb-5" value="Submit" />
     </form>
 
