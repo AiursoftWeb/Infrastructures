@@ -31,7 +31,7 @@ namespace Aiursoft.Developer.Controllers
         [APIExpHandler]
         [FileChecker(MaxSize = 30 * 1024 * 1024)]
         [APIModelStateChecker]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Uploader()
         {
             if (HttpContext.Request.Form.Files.First().Length > 0 * 1024 * 1024)
             {
