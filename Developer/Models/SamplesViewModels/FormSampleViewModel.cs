@@ -14,5 +14,9 @@ namespace Aiursoft.Developer.Models.SamplesViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Your Avatar")]
+        public string IconAddress { get; set; }
     }
 }
