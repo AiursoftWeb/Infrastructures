@@ -25,7 +25,7 @@
     <h2 class="mt-3">jquery-upload-progress form example</h2>
     <p>This is an example for using jquery-upload progress to submit a form with multiple files input.</p>
 
-    <form class="col-md-6 col-xs-12" asp-controller="Samples" asp-action="Submit" method="post">
+    <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="Submit" method="post">
         <div class="form-group">
             <label asp-for="Name"></label>
             <input asp-for="Name" type="text" class="form-control" placeholder="Enter your app name...">
@@ -39,6 +39,7 @@
             <span asp-validation-for="Email" class="text-danger"></span>
             <small class="form-text text-muted">@Localizer["Your email will be shown when calling API."]</small>
         </div>
+
         <div class="input-group mb-3">
             <label asp-for="IconAddress" class="w-100"></label>
             <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
@@ -47,12 +48,14 @@
                     Upload New Avatar
                 </button>
             </span>
+        </div>
+
+        <div class="form-group">
             <span asp-validation-for="IconAddress" class="text-danger"></span>
         </div>
 
-        <img class="img-fluid mt-3 d-none" id="avatar">
-
-        <input type="submit" class="btn btn-primary" value="Submit" />
+        <img class="img-fluid mb-3 d-none" id="avatar">
+        <input type="submit" class="btn btn-primary mb-5" value="Submit" />
     </form>
 
     <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,7 +68,7 @@
                     </button>
                 </div>
                 <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
-                    <input type="file" name="file" class="dropify" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.CDN/images/appdefaulticon.png" data-max-file-size="30M" />
+                    <input type="file" name="file" class="dropify" data-allowed-file-extensions="png jpg bmp" data-max-file-size="30M" />
                     <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                 </form>
                 <div class="modal-footer">
@@ -81,17 +84,7 @@
     <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
     <script>
         $(document).ready(function () {
-            var uploadButton = $('#uploadButton');
             var settings = {
-                onInit: function (elements) {
-                    uploadButton.hide();
-                },
-
-                onGetFile: function (elements) {
-                    uploadButton.show();
-                    uploadButton.val('Upload');
-                },
-
                 onStartSubmitting: function (elements) {
                     if ('Notification' in window) {
                         Notification.requestPermission((result) => { });
@@ -99,29 +92,12 @@
                     window.onbeforeunload = function () {
                         return "Your file is still uploading. Are you sure to quit?";
                     };
-                    uploadButton.val('Uploading...');
-                    uploadButton.prop('disabled', true);
-                },
-
-                onProcessing: function (elements) {
-
                 },
 
                 onFinish: function (elements, data) {
-                    uploadButton.val('Upload');
-                    uploadButton.prop('disabled', false);
                     $('#IconAddress').val(data.value);
                     $('#avatar').attr('src', data.value);
                     $('#avatar').removeClass('d-none');
-                    elements.message.html(data.value);
-                    var notification = new Notification('Upload Finished!', {
-                        icon: 'https://cdn.aiursoft.com/favicon.ico',
-                        body: "Your file was successfully uploaded!"
-                    });
-                    notification.onclick = function (event) {
-                        event.preventDefault();
-                        window.focus();
-                    };
                     window.onbeforeunload = function () { };
                 }
             };
