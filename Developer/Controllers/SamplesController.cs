@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.Developer.Models.SamplesViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace Aiursoft.Developer.Controllers
 {
     public class SamplesController : Controller
     {
-        public IActionResult JqueryUploadProgress()
+        public IActionResult FormSample()
         {
-            return View();
+            var model = new FormSampleViewModel();
+            return View(model);
         }
     }
 }
