@@ -3,6 +3,11 @@
     ViewData["Title"] = "jquery upload progress";
     Layout = "../Home/_Layout";
 }
+
+@section css{
+    <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+
 <div class="jumbotron">
     <div class="container">
         <h3>jquery-upload-progress</h3>
@@ -38,10 +43,13 @@
         <div class="form-group">
             <label asp-for="IconAddress" class="w-100"></label>
             <input asp-for="IconAddress" id="@nameof(Model.IconAddress)" type="hidden">
+            <img src="" class="img-responsive" id="avatar">
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#avatarModal">
                 Upload New Avatar
             </button>
         </div>
+
+        <input type="submit" class="btn btn-primary" value="Submit" />
     </form>
 
     <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -100,6 +108,7 @@
                     uploadButton.val('Upload');
                     uploadButton.prop('disabled', false);
                     $('#IconAddress').val(data.value);
+                    $('#avatar').attr('src', data.value);
                     elements.message.html(data.value);
                     var notification = new Notification('Upload Finished!', {
                         icon: 'https://cdn.aiursoft.com/favicon.ico',

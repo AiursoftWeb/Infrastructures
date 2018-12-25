@@ -8,6 +8,7 @@
     <title>@ViewData["Title"] - @Values.ProjectName Developer Center</title>
     @this.UseAiurFavicon()
     @this.UseAiurMarketCSS()
+    @RenderSection("css", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
