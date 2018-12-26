@@ -1,0 +1,51 @@
+﻿@model Aiursoft.Developer.Models.SamplesViewModels.DisableWithFormViewModel
+@{
+    ViewData["Title"] = "jquery disable with";
+    Layout = "../Home/_Layout";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>jquery-disable-with</h3>
+        <p>Add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="//github.com/Anduin2017/jquery-disable-with" target="_blank" role="button">
+                <i class="fa fa-github"></i>
+                View it on github
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="mt-3">jquery-disable-with form example</h2>
+    <p>jquery-disable-with is an add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.</p>
+
+    <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="DisableWithFormSubmit" method="post">
+        <div class="card mb-5">
+            <div class="card-header">
+                <i class="fa fa-bar-chart"></i>
+                Try this form here
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your Email...">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password...">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <input type="submit" class="btn btn-primary mb-5" data-disable-with="Ohhh, we are working on it..." value="Click now to try the plugin!" />
+
+                <small class="form-text text-muted">
+                    When you are submitting the form, the sign in button will be disabled, and the text will be changed to 'Signing in...' so that the user won't press it again until the server response.
+                </small>
+            </div>
+        </div>
+    </form>
+</div>

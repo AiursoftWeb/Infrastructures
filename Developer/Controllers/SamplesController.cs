@@ -21,6 +21,20 @@ namespace Aiursoft.Developer.Controllers
             _storageService = storageService;
             _configuration = configuration;
         }
+
+        public IActionResult DisableWithForm()
+        {
+            var model = new DisableWithFormViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableWithFormSubmit()
+        {
+            await Task.Delay(4000);
+            return RedirectToAction(nameof(DisableWithForm));
+        }
+
         public IActionResult FormSample()
         {
             var model = new FormSampleViewModel();
