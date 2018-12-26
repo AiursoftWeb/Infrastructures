@@ -120,6 +120,12 @@ namespace Aiursoft.Pylon
                                 <link rel='dns-prefetch' href='{serviceLocation.Account}'>");
         }
 
+        public static IHtmlContent UseSEO(this RazorPage page)
+        {
+            return new HtmlContentBuilder()
+                .SetHtmlContent("<meta name=\"description\" content=\"Create a more open world.Aiursoft is focusing on open platform and open communication.\" />");
+        }
+
         public static IHtmlContent UseDisableZoom(this RazorPage page)
         {
             return new HtmlContentBuilder().SetHtmlContent("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\">");

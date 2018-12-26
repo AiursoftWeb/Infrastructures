@@ -1,9 +1,10 @@
-@model AccountViewModel
+﻿@model AccountViewModel
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @this.UseSEO()
     @this.UseDisableZoom()
     @this.UseDnsPrefetch()
     <title>@ViewData["Title"] - @Values.ProjectName @Localizer["Account"]</title>
