@@ -8,7 +8,7 @@
         <h3>WebSocket Tester</h3>
         <p>Test your WebSocket connection.</p>
         <div class="btn-group" role="group">
-            <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Nexus" target="_blank" role="button">
+            <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Nexus/blob/master/Developer/Views/Tools/WebSocket.cshtml" target="_blank" role="button">
                 <i class="fa fa-github"></i>
                 View it on github
             </a>
@@ -17,14 +17,14 @@
 </div>
 
 <div class="container">
-    <div class="col-lg-6 col-md-8 col-xs-12">
-        <div class="card mb-5">
+    <div class="col-lg-12 col-md-12">
+        <div class="card mb-5 mt-4">
             <div class="card-header">
                 <i class="fa fa-network"></i>
                 Test your connection
             </div>
             <div class="card-body">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h4>Use your WebSocket server address to connect.</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -54,7 +54,6 @@
                 $("#spanStatus").text("Connected to " + target);
             };
             webSocket.onmessage = function (evt) {
-                window.scrollTo(0, document.body.scrollHeight);
                 $("#message").append('<p>' + evt.data + '</p>');
             };
             webSocket.onerror = function (evt) {
