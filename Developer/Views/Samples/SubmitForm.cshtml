@@ -20,7 +20,11 @@
 
 <div class="container">
     <h2 class="mt-3">jquery-upload-progress form example</h2>
-    <p class="text-success">You have successfully submitted the form.</p>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["×"]</span></button>
+        <strong>@Localizer["You have successfully submitted the form."]</strong>
+        <div>@Localizer["You have successfully submitted your homework. Now you can play computer games! Have fun!"]</div>
+    </div>
 
     <div class="col-lg-8 col-md-12">
         <div class="card mb-5">
@@ -44,15 +48,14 @@
                     <label asp-for="IconAddress" class="w-100"></label>
                     <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
                 </div>
-                <img class="img-fluid mb-3 d-none" src="@Model.IconAddress" id="avatar">
+                <img class="img-fluid mb-3" src="@Model.IconAddress" id="avatar">
 
                 <div class="input-group mb-3">
                     <label asp-for="HomeworkAddress" class="w-100"></label>
                     <input asp-for="HomeworkAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.HomeworkAddress)">
                 </div>
                 <a class="btn btn-success" href="@Model.HomeworkAddress">Download your homework</a>
-
-                <a asp-controller="Samples" asp-action="FormSample" class="btn btn-secondary mb-5">Go back</a>
+                <a asp-controller="Samples" asp-action="FormSample" class="btn btn-secondary">Go back</a>
             </div>
         </div>
     </div>
