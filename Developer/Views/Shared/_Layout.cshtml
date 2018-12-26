@@ -1,4 +1,4 @@
-@model Aiursoft.Developer.Models.AppsViewModels.AppLayoutModel
+﻿@model Aiursoft.Developer.Models.AppsViewModels.AppLayoutModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +19,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="fa fa-fw fa-bank"></i>
+                        <span class="nav-link-text">@Localizer["Developer Center"]</span>
+                    </a>
+                </li>
                 <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" asp-controller="Apps" asp-action="Index">
                         <i class="fa fa-fw fa-dashboard"></i>

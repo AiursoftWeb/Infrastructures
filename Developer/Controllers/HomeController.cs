@@ -27,7 +27,7 @@ namespace Aiursoft.Developer.Controllers
             _serviceLocation = serviceLocation;
         }
 
-        [AiurForceAuth("Apps", "Index", justTry: true)]
+        [AiurForceAuth("", "", justTry: true)]
         public IActionResult Index()
         {
             return View();
