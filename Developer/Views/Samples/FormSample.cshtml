@@ -26,48 +26,56 @@
     <p>This is an example for using jquery-upload progress to submit a form with multiple files input.</p>
 
     <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="Submit" method="post">
-        <div class="form-group">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" type="text" class="form-control" placeholder="Enter your app name...">
-            <span asp-validation-for="Name" class="text-danger"></span>
-            <small class="form-text text-muted">@Localizer["Your name will be shown when calling API."]</small>
-        </div>
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-bar-chart"></i>
+                Submit your homework here
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Enter your app name...">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <small class="form-text text-muted">@Localizer["Your name will be shown when giving points."]</small>
+                </div>
 
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email...">
-            <span asp-validation-for="Email" class="text-danger"></span>
-            <small class="form-text text-muted">@Localizer["Your email will be shown when calling API."]</small>
-        </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email...">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <small class="form-text text-muted">@Localizer["Your email will be used to contact you."]</small>
+                </div>
 
-        <div class="input-group mb-3">
-            <label asp-for="IconAddress" class="w-100"></label>
-            <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
-            <span class="input-group-append">
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#avatarModal">
-                    Upload New Avatar
-                </button>
-            </span>
-        </div>
-        <div class="form-group">
-            <span asp-validation-for="IconAddress" class="text-danger"></span>
-        </div>
-        <img class="img-fluid mb-3 d-none" id="avatar">
+                <div class="input-group mb-3">
+                    <label asp-for="IconAddress" class="w-100"></label>
+                    <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
+                    <span class="input-group-append">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#avatarModal">
+                            Upload New Avatar
+                        </button>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <span asp-validation-for="IconAddress" class="text-danger"></span>
+                </div>
+                <img class="img-fluid mb-3 d-none" id="avatar">
 
-        <div class="input-group mb-3">
-            <label asp-for="HomeworkAddress" class="w-100"></label>
-            <input asp-for="HomeworkAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.HomeworkAddress)">
-            <span class="input-group-append">
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#homeworkModal">
-                    Upload your Homework
-                </button>
-            </span>
-        </div>
-        <div class="form-group">
-            <span asp-validation-for="HomeworkAddress" class="text-danger"></span>
-        </div>
+                <div class="input-group mb-3">
+                    <label asp-for="HomeworkAddress" class="w-100"></label>
+                    <input asp-for="HomeworkAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.HomeworkAddress)">
+                    <span class="input-group-append">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#homeworkModal">
+                            Upload your Homework
+                        </button>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <span asp-validation-for="HomeworkAddress" class="text-danger"></span>
+                </div>
 
-        <input type="submit" class="btn btn-primary mb-5" value="Submit" />
+                <input type="submit" class="btn btn-primary mb-5" value="Submit" />
+            </div>
+        </div>
     </form>
 
     <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
