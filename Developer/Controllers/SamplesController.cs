@@ -46,5 +46,11 @@ namespace Aiursoft.Developer.Controllers
                 value = model.Path
             });
         }
+
+        [HttpPost]
+        public IActionResult Submit(FormSampleViewModel model)
+        {
+            return View(nameof(FormSample), model);
+        }
     }
 }
