@@ -10,12 +10,12 @@ namespace Aiursoft.Developer.Models.SamplesViewModels
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Aiursoft Account")]
+        [Display(Name = "Any Email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Any Password")]
         public string Password { get; set; }
     }
 }

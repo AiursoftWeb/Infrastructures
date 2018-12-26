@@ -26,11 +26,17 @@
                     <li class="nav-item"><a class="nav-link" href="#">@Localizer["Downloads"]</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdown00" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @Localizer["Samples"]
+                            @Localizer["Libraries"]
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown00">
+                            <p class="nav-text-muted">Front-end</p>
                             <a class="dropdown-item" asp-controller="Samples" asp-action="DisableWithForm">jquery-disable-with</a>
                             <a class="dropdown-item" asp-controller="Samples" asp-action="FormSample">jquery-upload-progress</a>
+                            <a class="dropdown-item" href="#">jquery-utc-time</a>
+                            <div class="dropdown-divider"></div>
+                            <p class="nav-text-muted">Back-end</p>
+                            <a class="dropdown-item" href="https://github.com/Anduin2017/HSharp" target="_blank">HSharp</a>
+                            <a class="dropdown-item" href="@ServiceLocation.Wiki">Pylon</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
