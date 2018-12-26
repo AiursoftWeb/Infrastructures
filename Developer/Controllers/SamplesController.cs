@@ -48,9 +48,9 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(FormSampleViewModel model)
+        public IActionResult SubmitForm(FormSampleViewModel model)
         {
-            return View(nameof(FormSample), model);
+            return View(model);
         }
     }
 }
