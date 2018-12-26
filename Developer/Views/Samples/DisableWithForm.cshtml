@@ -3,7 +3,12 @@
     ViewData["Title"] = "jquery disable with";
     Layout = "../Home/_Layout";
 }
-
+@section css{
+    @this.UseAiurDashboardCSS()
+}
+@section js{
+    @this.UseAiurDashboardJs();
+}
 <div class="jumbotron">
     <div class="container">
         <h3>jquery-disable-with</h3>
@@ -20,32 +25,58 @@
 <div class="container">
     <h2 class="mt-3">jquery-disable-with form example</h2>
     <p>jquery-disable-with is an add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.</p>
+    <div class="row">
+        <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="DisableWithFormSubmit" method="post">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    Try this form here
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter your Email...">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
 
-    <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="DisableWithFormSubmit" method="post">
-        <div class="card mb-5">
-            <div class="card-header">
-                <i class="fa fa-bar-chart"></i>
-                Try this form here
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password...">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" data-disable-with="Ohhh, we are working on it..." value="Click now to try the plugin!" />
+
+                    <small class="form-text text-muted">
+                        When you are submitting the form, the sign in button will be disabled, and the text will be changed to 'Signing in...' so that the user won't press it again until the server response.
+                    </small>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your Email...">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+        </form>
+        <div class="col-lg-6 col-md-8 col-xs-12">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <i class="fa fa-pencil"></i>
+                    Source code
                 </div>
+                <div class="card-body">
+                    <div class="markdown-body">
+                        <pre class="rich-diff-level-zero">&lt;<span class="pl-ent rich-diff-level-one">form</span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>card-body<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">action</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>//slowaction<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">method</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent rich-diff-level-one">div</span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>form-group<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent rich-diff-level-one">label</span> <span class="pl-e rich-diff-level-one">for</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;Any Email&lt;/<span class="pl-ent rich-diff-level-one">label</span>&gt;
+        &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>form-control<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">name</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;
+    &lt;/<span class="pl-ent rich-diff-level-one">div</span>&gt;
 
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password...">
-                    <span asp-validation-for="Password" class="text-danger"></span>
+    &lt;<span class="pl-ent rich-diff-level-one">div</span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>form-group<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent rich-diff-level-one">label</span> <span class="pl-e rich-diff-level-one">for</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Password<span class="pl-pds">"</span></span>&gt;Any Password&lt;/<span class="pl-ent rich-diff-level-one">label</span>&gt;
+        &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>form-control<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">name</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Password<span class="pl-pds">"</span></span>&gt;
+    &lt;/<span class="pl-ent rich-diff-level-one">div</span>&gt;
+
+    &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>btn btn-primary<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">data-disable-with</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Ohhh, we are working on it...<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">value</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Click now to try the plugin!<span class="pl-pds">"</span></span> /&gt;
+&lt;/<span class="pl-ent rich-diff-level-one">div</span>&gt;</pre>
+                    </div>
                 </div>
-
-                <input type="submit" class="btn btn-primary" data-disable-with="Ohhh, we are working on it..." value="Click now to try the plugin!" />
-
-                <small class="form-text text-muted">
-                    When you are submitting the form, the sign in button will be disabled, and the text will be changed to 'Signing in...' so that the user won't press it again until the server response.
-                </small>
             </div>
         </div>
-    </form>
+    </div>
 </div>
