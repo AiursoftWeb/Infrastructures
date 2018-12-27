@@ -17,5 +17,7 @@ namespace Aiursoft.Developer.Models.SamplesViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Any Password")]
         public string Password { get; set; }
+
+        public string DocumentHTML { get; set; }
     }
 }

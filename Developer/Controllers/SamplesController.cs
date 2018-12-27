@@ -1,6 +1,8 @@
 ﻿using Aiursoft.Developer.Models.SamplesViewModels;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
+using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,17 +16,28 @@ namespace Aiursoft.Developer.Controllers
     {
         private readonly StorageService _storageService;
         private readonly IConfiguration _configuration;
+        private readonly HTTPService _http;
         public SamplesController(
             StorageService storageService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            HTTPService http)
         {
             _storageService = storageService;
             _configuration = configuration;
+            _http = http;
         }
 
-        public IActionResult DisableWithForm()
+        public async Task<IActionResult> DisableWithForm()
         {
-            var model = new DisableWithFormViewModel();
+            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-disable-with/master/README.md"), false);
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .Build();
+            var html = Markdown.ToHtml(markdown, pipeline);
+            var model = new DisableWithFormViewModel
+            {
+                DocumentHTML = html
+            };
             return View(model);
         }
 

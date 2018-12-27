@@ -27,7 +27,7 @@
     <p>jquery-disable-with is an add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.</p>
     <div class="row">
         <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="DisableWithFormSubmit" method="post">
-            <div class="card mb-5">
+            <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-bar-chart"></i>
                     Try this form here
@@ -45,7 +45,7 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
-                    <input type="submit" class="btn btn-primary" data-disable-with="Ohhh, we are working on it..." value="Click now to try the plugin!" />
+                    <input type="submit" class="btn btn-success" data-disable-with="Ohhh, we are working on it..." value="Click now to try the plugin!" />
 
                     <small class="form-text text-muted">
                         When you are submitting the form, the sign in button will be disabled, and the text will be changed to 'Signing in...' so that the user won't press it again until the server response.
@@ -54,7 +54,7 @@
             </div>
         </form>
         <div class="col-lg-6 col-md-8 col-xs-12">
-            <div class="card mb-5">
+            <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-pencil"></i>
                     Source code
@@ -72,9 +72,28 @@
         &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>form-control<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">name</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Password<span class="pl-pds">"</span></span>&gt;
     &lt;/<span class="pl-ent rich-diff-level-one">div</span>&gt;
 
-    &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">class</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>btn btn-primary<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">data-disable-with</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Ohhh, we are working on it...<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">value</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Click now to try the plugin!<span class="pl-pds">"</span></span> /&gt;
+    &lt;<span class="pl-ent rich-diff-level-one">input</span> <span class="pl-e rich-diff-level-one">type</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">data-disable-with</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Ohhh, we are working on it...<span class="pl-pds">"</span></span> <span class="pl-e rich-diff-level-one">value</span>=<span class="pl-s rich-diff-level-one"><span class="pl-pds">"</span>Click now to try the plugin!<span class="pl-pds">"</span></span> /&gt;
 &lt;/<span class="pl-ent rich-diff-level-one">div</span>&gt;</pre>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-2">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    Document
+                </div>
+                <div class="card-body">
+                    <article class="markdown-body">
+                        @Html.Raw(Model.DocumentHTML)
+                    </article>
+                    <a class="btn btn-primary btn-md mt-3" href="//github.com/Anduin2017/jquery-disable-with" target="_blank" role="button">
+                        <i class="fa fa-github"></i>
+                        View it on github
+                    </a>
                 </div>
             </div>
         </div>
