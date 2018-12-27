@@ -48,9 +48,17 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(DisableWithForm));
         }
 
-        public IActionResult FormSample()
+        public async Task<IActionResult> FormSample()
         {
-            var model = new FormSampleViewModel();
+            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-upload-progress/master/README.md"), false);
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .Build();
+            var html = Markdown.ToHtml(markdown, pipeline);
+            var model = new FormSampleViewModel
+            {
+                DocumentHTML = html
+            };
             return View(model);
         }
 
