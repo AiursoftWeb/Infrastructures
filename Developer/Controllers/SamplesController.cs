@@ -50,7 +50,7 @@ namespace Aiursoft.Developer.Controllers
 
         public async Task<IActionResult> FormSample()
         {
-            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-upload-progress/master/README.md"), false);
+            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-progress-upload/master/README.md"), false);
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .Build();
