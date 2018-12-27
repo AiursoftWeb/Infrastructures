@@ -70,20 +70,36 @@ namespace Aiursoft.Pylon
             return content;
         }
 
-        public static IHtmlContent UseAiurDashboardCSS(this RazorPage page)
+        public static IHtmlContent UseAiurDashboardCSS(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            return new HtmlContentBuilder()
-                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
-                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
+            if (includeCore)
+            {
+                return new HtmlContentBuilder()
+                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
+                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
+            }
+            else
+            {
+                return new HtmlContentBuilder()
+                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
+            }
         }
 
-        public static IHtmlContent UseAiurDashboardJs(this RazorPage page)
+        public static IHtmlContent UseAiurDashboardJs(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            return new HtmlContentBuilder()
-                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
-                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+            if(includeCore)
+            {
+                return new HtmlContentBuilder()
+                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
+                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+            }
+            else
+            {
+                return new HtmlContentBuilder()
+                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+            }
         }
 
         public static IHtmlContent UseAiurMarketCSS(this RazorPage page)
