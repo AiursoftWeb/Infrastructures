@@ -24,60 +24,82 @@
 <div class="container">
     <h2 class="mt-3">jquery-upload-progress form example</h2>
     <p>This is an example for using jquery-upload progress to submit a form with multiple files input.</p>
+    <div class="row">
+        <form class="col-lg-6 col-xs-12" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    Simple example form
+                </div>
+                <div class="card-body">
+                    <input type="file" name="file" class="dropify example-file" data-max-file-size="30M" />
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="text" readonly="readonly" id="example-file-address">
+                        <span class="input-group-append">
+                            <a id="copyButton" class="btn btn-secondary text-white" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
+                            <a id="openButton" class="btn btn-primary" href="#" target="_blank">@Localizer["Open in new page"]</a>
+                        </span>
+                    </div>
 
-    <form class="col-lg-6 col-md-8 col-xs-12" asp-controller="Samples" asp-action="SubmitForm" method="post">
-        <div class="card mb-5">
-            <div class="card-header">
-                <i class="fa fa-bar-chart"></i>
-                Submit your homework here
+                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton0" />
+                </div>
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label asp-for="Name"></label>
-                    <input asp-for="Name" type="text" class="form-control" placeholder="Enter your app name...">
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                    <small class="form-text text-muted">@Localizer["Your name will be shown when giving points."]</small>
-                </div>
 
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email...">
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <small class="form-text text-muted">@Localizer["Your email will be used to contact you."]</small>
-                </div>
+        </form>
 
-                <div class="input-group mb-3">
-                    <label asp-for="IconAddress" class="w-100"></label>
-                    <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
-                    <span class="input-group-append">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#avatarModal">
-                            Upload New Avatar
-                        </button>
-                    </span>
+        <form class="col-lg-6 col-xs-12" asp-controller="Samples" asp-action="SubmitForm" method="post">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    Submit your homework here
                 </div>
-                <div class="form-group">
-                    <span asp-validation-for="IconAddress" class="text-danger"></span>
-                </div>
-                <img class="img-fluid mb-3 d-none" id="avatar">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter your app name...">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <small class="form-text text-muted">@Localizer["Your name will be shown when giving points."]</small>
+                    </div>
 
-                <div class="input-group mb-3">
-                    <label asp-for="HomeworkAddress" class="w-100"></label>
-                    <input asp-for="HomeworkAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.HomeworkAddress)">
-                    <span class="input-group-append">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#homeworkModal">
-                            Upload your Homework
-                        </button>
-                    </span>
-                </div>
-                <div class="form-group">
-                    <span asp-validation-for="HomeworkAddress" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email...">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <small class="form-text text-muted">@Localizer["Your email will be used to contact you."]</small>
+                    </div>
 
-                <input type="submit" class="btn btn-primary mb-5" data-disable-with="Submitting..." value="Submit" />
+                    <div class="input-group mb-3">
+                        <label asp-for="IconAddress" class="w-100"></label>
+                        <input asp-for="IconAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.IconAddress)">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#avatarModal">
+                                Upload New Avatar
+                            </button>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span asp-validation-for="IconAddress" class="text-danger"></span>
+                    </div>
+                    <img class="img-fluid mb-3 d-none" id="avatar">
+
+                    <div class="input-group mb-3">
+                        <label asp-for="HomeworkAddress" class="w-100"></label>
+                        <input asp-for="HomeworkAddress" class="form-control" type="text" readonly="readonly" id="@nameof(Model.HomeworkAddress)">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#homeworkModal">
+                                Upload your Homework
+                            </button>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span asp-validation-for="HomeworkAddress" class="text-danger"></span>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary mb-5" data-disable-with="Submitting..." value="Submit" />
+                </div>
             </div>
-        </div>
-    </form>
-
+        </form>
+    </div>
     <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -124,6 +146,57 @@
     <script src="@ServiceLocation.CDN/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
     <script>
         $(document).ready(function () {
+
+            var uploadButton = $('#uploadButton0');
+            var copyButton = $('#copyButton');
+            var openButton = $('#openButton');
+            var settings0 = {
+                onInit: function (elements) {
+                    uploadButton.hide();
+                    copyButton.hide();
+                    openButton.hide();
+                },
+
+                onGetFile: function (elements) {
+                    copyButton.hide();
+                    openButton.hide();
+                    uploadButton.show();
+                    uploadButton.val('Upload');
+                },
+
+                onStartSubmitting: function (elements) {
+                    if ('Notification' in window) {
+                        Notification.requestPermission((result) => { });
+                    }
+                    window.onbeforeunload = function () {
+                        return "Your file is still uploading. Are you sure to quit?";
+                    };
+                    uploadButton.val('Uploading...');
+                    uploadButton.prop('disabled', true);
+                },
+
+                onFinish: function (elements, data) {
+                    uploadButton.val('Upload');
+                    uploadButton.prop('disabled', false);
+                    copyButton.show();
+                    openButton.show();
+                    copyButton.attr('data-clipboard-text', data.value);
+                    openButton.attr('href', data.value);
+                    $('#example-file-address').val(data.value);
+                    var notification = new Notification('Upload Finished!', {
+                        icon: 'https://cdn.aiursoft.com/favicon.ico',
+                        body: "Your file was successfully uploaded!"
+                    });
+                    notification.onclick = function (event) {
+                        event.preventDefault();
+                        window.focus();
+                    };
+                    window.onbeforeunload = function () { };
+                }
+            };
+
+            $('.example-file').setProgressedUploader(settings0);
+
             var settings = {
                 onFinish: function (elements, data) {
                     $('#IconAddress').val(data.value);
