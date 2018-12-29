@@ -6,6 +6,12 @@
 
 @section css{
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+    <style>
+        .dropify-wrapper {
+            height: calc(100vh - 700px);
+            min-height: 280px;
+        }
+    </style>
     @this.UseAiurDashboardCSS(false)
 }
 
