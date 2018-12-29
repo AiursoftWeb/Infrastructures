@@ -22,7 +22,5 @@ namespace Aiursoft.Developer.Models.SamplesViewModels
         [Required]
         [Display(Name = "Your Homework")]
         public string HomeworkAddress { get; set; }
-
-        public string DocumentHTML { get; set; }
     }
 }

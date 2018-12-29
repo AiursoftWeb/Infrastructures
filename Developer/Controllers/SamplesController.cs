@@ -27,17 +27,9 @@ namespace Aiursoft.Developer.Controllers
             _http = http;
         }
 
-        public async Task<IActionResult> DisableWithForm()
+        public ActionResult DisableWithForm()
         {
-            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-disable-with/master/README.md"), false);
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .Build();
-            var html = Markdown.ToHtml(markdown, pipeline);
-            var model = new DisableWithFormViewModel
-            {
-                DocumentHTML = html
-            };
+            var model = new DisableWithFormViewModel();
             return View(model);
         }
 
@@ -48,17 +40,9 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(DisableWithForm));
         }
 
-        public async Task<IActionResult> FormSample()
+        public IActionResult FormSample()
         {
-            var markdown = await _http.Get(new AiurUrl("https://raw.githubusercontent.com/Anduin2017/jquery-progress-upload/master/README.md"), false);
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .Build();
-            var html = Markdown.ToHtml(markdown, pipeline);
-            var model = new FormSampleViewModel
-            {
-                DocumentHTML = html
-            };
+            var model = new FormSampleViewModel();
             return View(model);
         }
 
@@ -86,6 +70,12 @@ namespace Aiursoft.Developer.Controllers
         public IActionResult SubmitForm(FormSampleViewModel model)
         {
             return View(model);
+        }
+
+
+        public IActionResult UTCTime()
+        {
+            return View();
         }
     }
 }
