@@ -89,7 +89,7 @@ namespace Aiursoft.Pylon
         public static IHtmlContent UseAiurDashboardJs(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            if(includeCore)
+            if (includeCore)
             {
                 return new HtmlContentBuilder()
                     .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
@@ -128,12 +128,18 @@ namespace Aiursoft.Pylon
         public static IHtmlContent UseDnsPrefetch(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            return new HtmlContentBuilder()
-                .SetHtmlContent($@"
-                                <link rel='dns-prefetch' href='{serviceLocation.API}'>
-                                <link rel='dns-prefetch' href='{serviceLocation.OSS}'>
-                                <link rel='dns-prefetch' href='{serviceLocation.CDN}'>
-                                <link rel='dns-prefetch' href='{serviceLocation.Account}'>");
+            var builder = new HtmlContentBuilder();
+            string[] domains = new string[] {
+                serviceLocation.API,
+                serviceLocation.OSS,
+                serviceLocation.CDN,
+                serviceLocation.Account
+            };
+            foreach (var domain in domains)
+            {
+                builder.AppendHtmlLine($@"<link rel='dns-prefetch' href='{domain}'>");
+            }
+            return builder;
         }
 
         public static IHtmlContent UseSEO(this RazorPage page)
