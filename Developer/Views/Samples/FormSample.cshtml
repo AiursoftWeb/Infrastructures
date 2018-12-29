@@ -150,21 +150,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-5">
-                <div class="card-header">
-                    <i class="fa fa-book"></i>
-                    Document
-                </div>
-                <div class="card-body">
-                    <article class="markdown-body">
-                        @Html.Raw(Model.DocumentHTML)
-                    </article>
-                    <a class="btn btn-primary btn-md mt-3" href="//github.com/Anduin2017/jquery-progress-upload" target="_blank" role="button">
-                        <i class="fa fa-github"></i>
-                        View it on github
-                    </a>
-                </div>
-            </div>
+            @await Component.InvokeAsync(typeof(GitHubRenderer), new GitHubRendererArgs
+            {
+                Org = "Anduin2017",
+                Repo = "jquery-progress-upload"
+            })
         </div>
     </div>
 </div>
