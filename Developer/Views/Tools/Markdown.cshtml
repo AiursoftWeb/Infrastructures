@@ -4,7 +4,23 @@
     ViewData["Title"] = "Markdown Compiler Online";
     Layout = "../Home/_Layout";
 }
-
+@section css{
+    <style>
+        textarea {
+            resize: none;
+            overflow: hidden;
+            min-height: 312px;
+        }
+    </style>
+}
+@section js{
+    <script>
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight)+"px";
+        }
+    </script>
+}
 <div class="jumbotron">
     <div class="container">
         <h3>@ViewData["Title"]</h3>
@@ -18,12 +34,12 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="card mb-5 mt-4">
                 <div class="card-header">
-                    <i class="fa fa-network"></i>
+                    <i class="fa fa-code"></i>
                     Enter your markdown
                 </div>
                 <div class="card-body">
@@ -33,10 +49,13 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="SourceMarkdown"></label>
-                            <textarea asp-for="SourceMarkdown" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
+                            <textarea asp-for="SourceMarkdown" onclick="auto_grow(this)" onkeydown="auto_grow(this)" onkeyup="auto_grow(this)" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">Compile</button>
+                            <button class="btn btn-success" type="submit">
+                                <i class="fa fa-code"></i>
+                                Compile
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -46,7 +65,7 @@
         <div class="col-lg-6 col-md-6">
             <div class="card mb-5 mt-4 w-100">
                 <div class="card-header">
-                    <i class="fa fa-network"></i>
+                    <i class="fa fa-header"></i>
                     Rendered HTML
                 </div>
                 <div class="card-body">
@@ -54,7 +73,13 @@
                     <hr />
                     <div class="form-group">
                         <label asp-for="RenderedHTML"></label>
-                        <textarea asp-for="RenderedHTML" readonly="readonly" class="form-control" rows="15"></textarea>
+                        <textarea asp-for="RenderedHTML" readonly="readonly" onclick="auto_grow(this)" id="renderedHTML" class="form-control" rows="15"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" data-clipboard-target="#renderedHTML" type="submit" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text>
+                            <i class="fa fa-copy"></i>
+                            Copy
+                        </button>
                     </div>
                 </div>
             </div>
@@ -62,7 +87,6 @@
     </div>
     @if (!string.IsNullOrEmpty(Model.RenderedHTML))
     {
-    <div class="col-12">
         <div class="card mb-5">
             <div class="card-header">
                 <i class="fa fa-book"></i>
@@ -74,6 +98,5 @@
                 </article>
             </div>
         </div>
-    </div>
     }
 </div>
