@@ -1,0 +1,79 @@
+﻿@model Aiursoft.Developer.Models.ToolsViewModels.MarkdownViewModel
+
+@{
+    ViewData["Title"] = "Markdown Compiler Online";
+    Layout = "../Home/_Layout";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>@ViewData["Title"]</h3>
+        <p>Compile your markdown to HTML online.</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Nexus/blob/master/Developer/Views/Tools/Markdown.cshtml" target="_blank" role="button">
+                <i class="fa fa-github"></i>
+                View it on github
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card mb-5 mt-4">
+                <div class="card-header">
+                    <i class="fa fa-network"></i>
+                    Enter your markdown
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Tools" asp-action="Markdown" method="post">
+                        <h4>Enter the markdown you wanna compile to HTML.</h4>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="SourceMarkdown"></label>
+                            <textarea asp-for="SourceMarkdown" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">Compile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+            <div class="card mb-5 mt-4 w-100">
+                <div class="card-header">
+                    <i class="fa fa-network"></i>
+                    Rendered HTML
+                </div>
+                <div class="card-body">
+                    <h4>Here is your HTML.</h4>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="RenderedHTML"></label>
+                        <textarea asp-for="RenderedHTML" readonly="readonly" class="form-control" rows="15"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.RenderedHTML))
+    {
+    <div class="col-12">
+        <div class="card mb-5">
+            <div class="card-header">
+                <i class="fa fa-book"></i>
+                Preview
+            </div>
+            <div class="card-body">
+                <article class="markdown-body">
+                    @Html.Raw(Model.RenderedHTML)
+                </article>
+            </div>
+        </div>
+    </div>
+    }
+</div>

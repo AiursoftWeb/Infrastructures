@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Developer.Models.ToolsViewModels;
 using Aiursoft.Pylon.Services;
+using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,22 @@ namespace Aiursoft.Developer.Controllers
             {
                 model.ResultString = StringOperation.StringToBase64(model.SourceString);
             }
+            return View(model);
+        }
+
+        public IActionResult Markdown()
+        {
+            var model = new MarkdownViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Markdown(MarkdownViewModel model)
+        {
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .Build();
+            model.RenderedHTML = Markdig.Markdown.ToHtml(model.SourceMarkdown, pipeline);
             return View(model);
         }
     }
