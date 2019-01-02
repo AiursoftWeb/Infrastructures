@@ -25,13 +25,20 @@ namespace Aiursoft.Developer.Controllers
         [HttpPost]
         public IActionResult Base64(Base64ViewModel model)
         {
-            if(model.Decrypt)
+            try
             {
-                model.ResultString = StringOperation.Base64ToString(model.SourceString);
+                if (model.Decrypt)
+                {
+                    model.ResultString = StringOperation.Base64ToString(model.SourceString);
+                }
+                else
+                {
+                    model.ResultString = StringOperation.StringToBase64(model.SourceString);
+                }
             }
-            else
+            catch (Exception e)
             {
-                model.ResultString = StringOperation.StringToBase64(model.SourceString);
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
             }
             return View(model);
         }
