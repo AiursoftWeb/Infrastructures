@@ -140,20 +140,21 @@
                             Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                             Path = Context.Request.Path
                         }))">@Localizer["Language(语言)"]</a>
-                </small>
-                @foreach (var foot in Values.Footer)
-                {
-                    <small class="mr-2 ml-2">
-                        <a href="@foot.Value">@foot.Key</a>
                     </small>
-                }
-                <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
-            </div>
-        </footer>
-        @this.UseScrollToTop()
-        @this.UseAiurLogoutter()
-        @this.UseAiurDashboardJs()
-        @RenderSection("js", required: false)
-    </div>
-</body>
+                    @foreach (var foot in Values.Footer)
+                    {
+                        <small class="mr-2 ml-2">
+                            <a href="@foot.Value">@foot.Key</a>
+                        </small>
+                    }
+                    <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
+                </div>
+            </footer>
+            @this.UseScrollToTop()
+            @this.UseAiurLogoutter()
+            @this.UseAiurDashboardJs()
+            @RenderSection("js", required: false)
+            @Html.Raw(JavaScriptSnippet.FullScript)
+        </div>
+    </body>
 </html>

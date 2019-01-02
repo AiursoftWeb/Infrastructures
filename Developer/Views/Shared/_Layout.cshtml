@@ -184,7 +184,9 @@
                         {
                             Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                             Path = Context.Request.Path
-                        }))">@Localizer["Language(语言)"]</a>
+                        }))">
+                        @Localizer["Language(语言)"]
+                    </a>
                 </small>
                 @foreach (var foot in Values.Footer)
                 {
@@ -199,6 +201,7 @@
         @this.UseAiurLogoutter()
         @this.UseAiurDashboardJs()
         @RenderSection("js", required: false)
+        @Html.Raw(JavaScriptSnippet.FullScript)
     </div>
 </body>
 </html>

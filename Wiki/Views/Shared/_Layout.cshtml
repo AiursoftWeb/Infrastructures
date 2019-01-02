@@ -107,6 +107,7 @@
         @this.UseAiurLogoutter()
         @this.UseAiurDashboardJs()
         @RenderSection("Scripts", required: false)
+        @Html.Raw(JavaScriptSnippet.FullScript)
     </div>
 </body>
 </html>

@@ -18,7 +18,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
@@ -124,5 +123,6 @@
     @this.UseAiurLogoutter()
     @this.UseAiurMarketJs()
     @RenderSection("js", required: false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </body>
 </html>
