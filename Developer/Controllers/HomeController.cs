@@ -33,11 +33,6 @@ namespace Aiursoft.Developer.Controllers
             return View();
         }
 
-        public IActionResult Docs()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {

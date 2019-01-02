@@ -144,8 +144,13 @@ namespace Aiursoft.Pylon
 
         public static IHtmlContent UseSEO(this RazorPage page)
         {
+            var description = page.ViewBag.Des as string;
+            if(string.IsNullOrWhiteSpace(description))
+            {
+                description = "Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.";
+            }
             return new HtmlContentBuilder()
-                .SetHtmlContent("<meta name=\"description\" content=\"Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.\" />");
+                .SetHtmlContent($"<meta name=\"description\" content=\"{description}\" />");
         }
 
         public static IHtmlContent UseDisableZoom(this RazorPage page)

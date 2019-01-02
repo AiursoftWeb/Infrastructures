@@ -1,12 +1,13 @@
 ﻿@{
     ViewData["Title"] = "WebSocket Tester";
+    ViewData["Des"] = "Test your WebSocket server and connection online.";
     Layout = "../Home/_Layout";
 }
 
 <div class="jumbotron">
     <div class="container">
         <h3>WebSocket Tester</h3>
-        <p>Test your WebSocket connection.</p>
+        <p>@ViewData["Des"]</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Nexus/blob/master/Developer/Views/Tools/WebSocket.cshtml" target="_blank" role="button">
                 <i class="fa fa-github"></i>
@@ -65,4 +66,5 @@
         var trigger = function () {
             connect($('#id').val(), $('#key').val());
         }
-    </script>}
+    </script>
+}

@@ -1,13 +1,14 @@
 ﻿@model Aiursoft.Developer.Models.ToolsViewModels.Base64ViewModel
 @{
     ViewData["Title"] = "Base64 Converter";
+    ViewData["Des"] = "Encrypt or decrypt your base64 string online.";
     Layout = "../Home/_Layout";
 }
 
 <div class="jumbotron">
     <div class="container">
-        <h3>Base64 Converter</h3>
-        <p>Encrypt or decrypt your base64 string.</p>
+        <h3>@ViewBag.Title</h3>
+        <p>@ViewBag.Des</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Nexus/blob/master/Developer/Views/Tools/Base64.cshtml" target="_blank" role="button">
                 <i class="fa fa-github"></i>

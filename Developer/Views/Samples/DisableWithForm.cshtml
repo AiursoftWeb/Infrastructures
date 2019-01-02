@@ -1,6 +1,7 @@
 ﻿@model Aiursoft.Developer.Models.SamplesViewModels.DisableWithFormViewModel
 @{
     ViewData["Title"] = "jQuery Disable With";
+    ViewData["Des"] = "Add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.";
     Layout = "../Home/_Layout";
 }
 @section css{
@@ -12,7 +13,7 @@
 <div class="jumbotron">
     <div class="container">
         <h3>jquery-disable-with</h3>
-        <p>Add-on to jQuery to enable auto-disable options when submitting a form in data-disable-with attributes.</p>
+        <p>@ViewBag.Des</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" href="//github.com/Anduin2017/jquery-disable-with" target="_blank" role="button">
                 <i class="fa fa-github"></i>

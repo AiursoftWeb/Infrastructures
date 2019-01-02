@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "jquery UTC Time";
+    ViewData["Des"] = "jquery-disable-with is a jQuery plugin which converts UTC time to local time easily.";
     Layout = "../Home/_Layout";
 }
 @section css{
@@ -11,7 +12,7 @@
 <div class="jumbotron">
     <div class="container">
         <h3>jquery-utc-time</h3>
-        <p>jquery-disable-with is a jQuery plugin which converts UTC time to local time easily.</p>
+        <p>@ViewBag.Des</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" href="//github.com/Anduin2017/jquery-utc-time" target="_blank" role="button">
                 <i class="fa fa-github"></i>
@@ -23,7 +24,7 @@
 
 <div class="container">
     <h2 class="mt-3">jquery-utc-time example</h2>
-    <p>jquery-disable-with is a jQuery plugin which converts UTC time to local time easily.</p>
+    <p>@ViewBag.Des</p>
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="card h-100">

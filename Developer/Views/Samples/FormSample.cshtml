@@ -1,6 +1,7 @@
 ﻿@model Aiursoft.Developer.Models.SamplesViewModels.FormSampleViewModel
 @{
     ViewData["Title"] = "jQuery Progress Upload";
+    ViewData["Des"] = "A library to show progress and open button for file uploader.";
     Layout = "../Home/_Layout";
 }
 
@@ -18,7 +19,7 @@
 <div class="jumbotron">
     <div class="container">
         <h3>jquery-progress-upload</h3>
-        <p>A library to show progress and open button for file uploader.</p>
+        <p>@ViewBag.Des</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" href="//github.com/Anduin2017/jquery-progress-upload" target="_blank" role="button">
                 <i class="fa fa-github"></i>
