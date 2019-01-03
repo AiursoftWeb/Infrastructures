@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -56,6 +57,33 @@ namespace Aiursoft.Developer.Controllers
                 .UseAdvancedExtensions()
                 .Build();
             model.RenderedHTML = Markdig.Markdown.ToHtml(model.SourceMarkdown, pipeline);
+            return View(model);
+        }
+
+        public IActionResult UrlEncode()
+        {
+            var model = new UrlEncodeViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UrlEncode(UrlEncodeViewModel model)
+        {
+            try
+            {
+                if (model.Decrypt)
+                {
+                    model.ResultString = WebUtility.UrlDecode(model.SourceString);
+                }
+                else
+                {
+                    model.ResultString = WebUtility.UrlEncode(model.SourceString);
+                }
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
             return View(model);
         }
     }

@@ -72,7 +72,6 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-
         public IActionResult UTCTime()
         {
             return View();
