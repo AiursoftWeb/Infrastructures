@@ -30,7 +30,7 @@ namespace Aiursoft.Pylon.Middlewares
                     {
                         Expires = DateTimeOffset.UtcNow.AddYears(1),
                         Secure = true,
-                        SameSite = SameSiteMode.Strict,
+                        SameSite = SameSiteMode.None,
                         HttpOnly = true,
                     });
                 context.Response.Redirect(returnUrl);
