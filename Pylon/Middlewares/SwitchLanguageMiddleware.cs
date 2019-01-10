@@ -29,9 +29,7 @@ namespace Aiursoft.Pylon.Middlewares
                     new CookieOptions
                     {
                         Expires = DateTimeOffset.UtcNow.AddYears(1),
-                        Secure = true,
                         SameSite = SameSiteMode.None,
-                        HttpOnly = true,
                     });
                 context.Response.Redirect(returnUrl);
             }
