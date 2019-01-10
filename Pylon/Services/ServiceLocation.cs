@@ -20,9 +20,6 @@ namespace Aiursoft.Pylon.Services
         public readonly string Stargate;
         public readonly string StargateListenAddress;
         public readonly string Wiki;
-        public readonly string KahlaHome;
-        public readonly string KahlaServer;
-        public readonly string KahlaApp;
         public readonly string WWW;
 
         public ServiceLocation(IConfiguration configuration)
@@ -39,9 +36,6 @@ namespace Aiursoft.Pylon.Services
                 .Replace("https://", "wss://")
                 .Replace("http://", "ws://");
             Wiki = configuration["Dependencies:WikiPath"];
-            KahlaHome = configuration["Dependencies:KahlaHomePath"];
-            KahlaServer = configuration["Dependencies:KahlaServerPath"];
-            KahlaApp = configuration["Dependencies:KahlaApp"];
             WWW = configuration["Dependencies:WWW"];
         }
     }
