@@ -16,7 +16,7 @@
             @ViewData["Title"]
         </div>
         <div class="card-body">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <h2 id="uploadTitle">@Localizer["Upload your file here to share it with others!"]</h2>
                 <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
                     <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" />

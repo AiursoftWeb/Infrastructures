@@ -26,7 +26,7 @@
             Upload File To @Model.BucketName
         </div>
         <div class="card-body">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <form class="box-content" asp-controller="Files" asp-action="UploadFile" method="post" enctype="multipart/form-data">
                     <input type="hidden" asp-for="AppId" />
                     <input type="hidden" asp-for="BucketId" />

@@ -28,11 +28,11 @@
             @Localizer["New Bucket Info"]
         </div>
         <div class="card-body">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <form asp-controller="Bucket" asp-action="EditBucket" method="post" class="row">
                     <input type="hidden" asp-for="AppId" />
                     <input type="hidden" asp-for="BucketId" />
-                    <div class="col-md-4 col-xs-12">
+                    <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label asp-for="NewBucketName"></label>
                             <input asp-for="NewBucketName" type="text" class="form-control" placeholder="Enter your new bucket name...">
@@ -66,7 +66,7 @@
                         <hr />
                     </div>
 
-                    <div class="col-xs-12 margin-top-30">
+                    <div class="col-12 margin-top-30">
                         <button class="btn btn-primary" data-disable-with="Updating..." type="submit">@Localizer["Update"]</button>
                         <a class="btn btn-warning" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">@Localizer["View Files"]</a>
                         <a class="btn btn-info" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>

@@ -39,7 +39,7 @@
                         <h4 class="box-title">@Localizer["Upload Your profile picture"]</h4>
                         <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@await UserImageGenerator.GetUserImageUrl(User.Identity.Name)" />
                         <p class="help margin-top-10">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
-                        <div class="col-xs-12 mt-3">
+                        <div class="col-12 mt-3">
                             <button type="submit" data-disable-with="Uploading" class="btn btn-primary">@Localizer["Upload"]</button>
                         </div>
                     </form>
