@@ -2,7 +2,7 @@
 <div class="col-md-3" style="max-width:250px;">
     <div class="card mt-3 mb-3">
         <a class="card-body" href="@ServiceLocation.Account/Account/Avatar">
-            @await UserImageGenerator.RenderUserImageAsync(Model.UserName, 100, 100)
+            <img class="rounded" src="@ServiceLocation.OSS/download/fromkey/@(Model.UserIconFileKey).png" style="width: 100px; height:100px;" />
         </a>
         <div class="card-footer">
             <h5 class="text-center">@Model.UserNickName</h5>

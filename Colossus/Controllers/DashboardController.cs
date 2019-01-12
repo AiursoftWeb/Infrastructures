@@ -104,7 +104,7 @@ namespace Aiursoft.Colossus.Controllers
             {
                 return null;
             }
-            return await _userManager.FindByNameAsync(User.Identity.Name);
+            return await _userManager.GetUserAsync(User);
         }
     }
 }

@@ -70,7 +70,7 @@
                             </li>
                             <li class="nav-item dropdown mr-5">
                                 <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name)
+                                    @await UserImageGenerator.RenderUserImageAsync(User)
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown02">
                                     <p class="nav-text-muted">Signed in as @((await UserManager.FindByNameAsync(User.Identity.Name)).NickName)</p>

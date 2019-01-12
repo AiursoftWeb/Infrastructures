@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <div class="text-center">
-                @await UserImageGenerator.RenderUserImageAsync(User.Identity.Name, 100, 100)
+                @await UserImageGenerator.RenderUserImageAsync(User, 100, 100)
             </div>
             <div class="text-center mt-4 mb-5">
                 <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
