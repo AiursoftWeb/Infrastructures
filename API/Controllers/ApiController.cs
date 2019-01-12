@@ -160,8 +160,7 @@ namespace Aiursoft.API.Controllers
 
         private async Task<APIUser> GetCurrentUserAsync()
         {
-            return await _dbContext.Users
-                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
+            return await _userManager.GetUserAsync(User);
         }
     }
 }

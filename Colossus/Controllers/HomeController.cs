@@ -80,10 +80,6 @@ namespace Aiursoft.Colossus.Controllers
 
         private async Task<ColossusUser> GetCurrentUserAsync()
         {
-            if (User.Identity.Name == null)
-            {
-                return null;
-            }
             return await _userManager.GetUserAsync(User);
         }
     }

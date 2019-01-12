@@ -98,11 +98,7 @@ namespace Aiursoft.EE.Controllers
 
         private async Task<EEUser> GetCurrentUserAsync()
         {
-            if (User.Identity.Name == null)
-            {
-                return null;
-            }
-            return await _userManager.FindByNameAsync(User.Identity.Name);
+            return await _userManager.GetUserAsync(User);
         }
     }
 }
