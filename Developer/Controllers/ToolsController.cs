@@ -44,6 +44,30 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        public IActionResult Rot13()
+        {
+            var model = new Rot13ViewModel();
+            return View(model);
+        }
+
+        public IActionResult Rot13(Rot13ViewModel model)
+        {
+            try
+            {
+                model.ResultString = ROT13Enc(model.SourceString);
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
+
+        private string ROT13Enc(string input)
+        {
+            return !string.IsNullOrEmpty(input) ? new string(input.ToCharArray().Select(s => { return (char)((s >= 97 && s <= 122) ? ((s + 13 > 122) ? s - 13 : s + 13) : (s >= 65 && s <= 90 ? (s + 13 > 90 ? s - 13 : s + 13) : s)); }).ToArray()) : input;
+        }
+
         public IActionResult Markdown()
         {
             var model = new MarkdownViewModel();
