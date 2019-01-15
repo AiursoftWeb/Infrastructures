@@ -50,6 +50,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult Rot13(Rot13ViewModel model)
         {
             try
