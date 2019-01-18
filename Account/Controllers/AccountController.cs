@@ -111,7 +111,17 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             var token = await _appsContainer.AccessToken();
-            var result = await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
+            try
+            {
+                var result = await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                model.ModelStateValid = false;
+                ModelState.AddModelError(string.Empty, e.Message);
+                model.Recover(user);
+                return View(model);
+            }
             return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
         }
 
