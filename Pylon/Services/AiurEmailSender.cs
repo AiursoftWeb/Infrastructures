@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -17,23 +19,17 @@ namespace Aiursoft.Pylon.Services
             _configuration = configuration;
         }
 
-        public Task SendEmail(string target, string subject, string content)
+        public async Task SendEmail(string target, string targetsubject, string content)
         {
-            var client = new SmtpClient("smtp.mxhichina.com", 587)
-            {
-                UseDefaultCredentials = false,
-                EnableSsl = true,
-                Credentials = new NetworkCredential("service@aiursoft.com", _configuration["Emailpassword"])
-            };
-            var message = new MailMessage
-            {
-                From = new MailAddress("service@aiursoft.com"),
-                Body = content,
-                Subject = subject,
-                IsBodyHtml = true
-            };
-            message.To.Add(target);
-            return client.SendMailAsync(message);
+            var key = _configuration["SendGridAPIKey"];
+            var apiKey = key;
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("service@aiursoft.com", "Aiursoft User Service");
+            var subject = targetsubject;
+            var to = new EmailAddress(target);
+            var htmlContent = content;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, string.Empty, htmlContent);
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
