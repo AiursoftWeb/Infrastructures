@@ -191,7 +191,7 @@ namespace Aiursoft.API.Controllers
                 return this.Protocal(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
             }
             //limit the sending frenquency to 3 minutes.
-            if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 3, 0))
+            if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
             {
                 var token = Guid.NewGuid().ToString("N");
                 useremail.ValidateToken = token;
@@ -211,8 +211,9 @@ namespace Aiursoft.API.Controllers
                 {
                     return this.Protocal(ErrorType.InvalidInput, e.Message);
                 }
+                return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
             }
-            return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
+            return this.Protocal(ErrorType.RequireAttention, "We have just sent you an Email in an minute.");
         }
 
         [APIExpHandler]

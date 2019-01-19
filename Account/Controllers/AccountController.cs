@@ -120,6 +120,9 @@ namespace Aiursoft.Account.Controllers
                 model.ModelStateValid = false;
                 ModelState.AddModelError(string.Empty, e.Message);
                 model.Recover(user);
+                var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
+                model.Emails = emails.Items;
+                model.PrimaryEmail = user.Email;
                 return View(model);
             }
             return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
