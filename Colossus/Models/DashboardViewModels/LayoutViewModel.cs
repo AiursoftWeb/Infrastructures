@@ -21,12 +21,14 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
             this.UserName = user.NickName;
             this.UserIconFileKey = user.HeadImgFileKey;
+            this.EmailConfirmed = user.EmailConfirmed;
             this.ActivePanel = activePanel;
             this.Title = title;
         }
-        public virtual string UserName { get; set; }
-        public virtual int UserIconFileKey { get; set; }
-        public virtual int ActivePanel { get; set; }
-        public virtual string Title { get; set; }
+        public string UserName { get; set; }
+        public int UserIconFileKey { get; set; }
+        public int ActivePanel { get; set; }
+        public string Title { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 }

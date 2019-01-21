@@ -131,6 +131,17 @@
         </div>
     </nav>
     <div class="content-wrapper">
+        @if (!Model.EmailConfirmed)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <strong>@Localizer["Your account email was not confirmed!"]</strong>
+                    <div>@Localizer["Please"] <a href="@(new AiurUrl(ServiceLocation.Account, "Account" ,"Email", new { }))">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]</div>
+                    <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>
+                </div>
+            </div>
+        }
         @RenderBody()
         <footer class="sticky-footer">
             <div class="ml-3">
