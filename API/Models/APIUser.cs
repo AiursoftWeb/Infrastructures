@@ -24,6 +24,13 @@ namespace Aiursoft.API.Models
         public List<UserEmail> Emails { get; set; }
         public virtual string SMSPasswordResetToken { get; set; }
 
+        [JsonProperty]
+        [NotMapped]
+        public override bool EmailConfirmed => Emails.Any(t => t.Validated);
+        [JsonProperty]
+        [NotMapped]
+        public override string Email => Emails.OrderByDescending(t => t.Validated).First().EmailAddress;
+
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
         {
             if (!await HasAuthorizedApp(dbContext, appId))

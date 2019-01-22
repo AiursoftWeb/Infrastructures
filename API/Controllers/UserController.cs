@@ -139,7 +139,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
-            var emailexists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress == model.NewEmail.ToLower());
+            var emailexists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
             if (emailexists)
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
@@ -147,7 +147,7 @@ namespace Aiursoft.API.Controllers
             var mail = new UserEmail
             {
                 OwnerId = user.Id,
-                EmailAddress = model.NewEmail,
+                EmailAddress = model.NewEmail.ToLower(),
                 Validated = false
             };
             _dbContext.UserEmails.Add(mail);
@@ -161,10 +161,16 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> DeleteEmail(DeleteEmailAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
-            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.ThatEmail.ToLower());
+
+            var userEmails = _dbContext.UserEmails.Where(t => t.OwnerId == user.Id);
+            var useremail = await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
             if (useremail == null)
             {
                 return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+            }
+            if (await userEmails.CountAsync() == 0)
+            {
+                return this.Protocal(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
             }
             _dbContext.UserEmails.Remove(useremail);
             await _dbContext.SaveChangesAsync();
