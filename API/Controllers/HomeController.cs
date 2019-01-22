@@ -20,25 +20,29 @@ namespace Aiursoft.API.Controllers
         private readonly UserManager<APIUser> _userManager;
         private readonly IStringLocalizer<HomeController> _localizer;
         private readonly RSAService _rsaService;
+        private readonly APIDbContext _dbContext;
 
         public HomeController(
             UserManager<APIUser> userManager,
             IStringLocalizer<HomeController> localizer,
-            RSAService rsaService)
+            RSAService rsaService,
+            APIDbContext dbContext)
         {
             _userManager = userManager;
             _localizer = localizer;
             _rsaService = rsaService;
+            _dbContext = dbContext;
         }
 
         public async Task<IActionResult> Index()
         {
             var cuser = await GetCurrentUserAsync();
+            await _dbContext.Entry(cuser).Collection(t => t.Emails).LoadAsync();
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,
                 ServerTime = DateTime.UtcNow,
-                Code  = ErrorType.Success,
+                Code = ErrorType.Success,
                 Message = "Server started successfully!",
                 Local = _localizer["en"],
                 User = cuser,
