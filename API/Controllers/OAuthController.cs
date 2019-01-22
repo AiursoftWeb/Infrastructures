@@ -441,13 +441,12 @@ namespace Aiursoft.API.Controllers
             }
         }
 
-        private async Task<APIUser> GetUserFromEmail(string email)
+        private Task<APIUser> GetUserFromEmail(string email)
         {
-            var mail = await _dbContext
-                .UserEmails
-                .Include(t => t.Owner)
-                .SingleOrDefaultAsync(t => t.EmailAddress == email);
-            return mail.Owner;
+            return _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Emails.Any(p => p.EmailAddress == email));
         }
 
         private async Task<APIUser> GetCurrentUserAsync()
@@ -458,7 +457,6 @@ namespace Aiursoft.API.Controllers
         private async Task<IActionResult> FinishAuth(IAuthorizeViewModel model, bool forceGrant = false)
         {
             var user = await GetUserFromEmail(model.Email);
-            await _userManager.UpdateAsync(user);
             if (await user.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
             {
                 var pack = await user.GeneratePack(_dbContext, model.AppId);
