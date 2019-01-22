@@ -21,6 +21,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models.Developer;
+using System.Security.Claims;
 
 namespace Aiursoft.API.Controllers
 {
@@ -451,7 +452,7 @@ namespace Aiursoft.API.Controllers
 
         private async Task<APIUser> GetCurrentUserAsync()
         {
-            return await _userManager.GetUserAsync(User);
+            return await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         private async Task<IActionResult> FinishAuth(IAuthorizeViewModel model, bool forceGrant = false)
