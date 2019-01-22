@@ -451,7 +451,9 @@ namespace Aiursoft.API.Controllers
 
         private async Task<APIUser> GetCurrentUserAsync()
         {
-            return await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = await _userManager.GetUserAsync(User);
+            await _dbContext.Entry(user).Collection(t => t.Emails).LoadAsync();
+            return user;
         }
 
         private async Task<IActionResult> FinishAuth(IAuthorizeViewModel model, bool forceGrant = false)
