@@ -276,7 +276,6 @@ namespace Aiursoft.API.Controllers
                 _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
             }
             mailObject.Validated = true;
-            user.EmailConfirmed = true;
             await _dbContext.SaveChangesAsync();
             return View();
         }
