@@ -37,7 +37,10 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Index()
         {
             var cuser = await GetCurrentUserAsync();
-            await _dbContext.Entry(cuser).Collection(t => t.Emails).LoadAsync();
+            if(cuser != null)
+            {
+                await _dbContext.Entry(cuser).Collection(t => t.Emails).LoadAsync();
+            }
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,

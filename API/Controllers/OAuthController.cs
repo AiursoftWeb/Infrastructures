@@ -452,7 +452,10 @@ namespace Aiursoft.API.Controllers
         private async Task<APIUser> GetCurrentUserAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            await _dbContext.Entry(user).Collection(t => t.Emails).LoadAsync();
+            if (user != null)
+            {
+                await _dbContext.Entry(user).Collection(t => t.Emails).LoadAsync();
+            }
             return user;
         }
 
