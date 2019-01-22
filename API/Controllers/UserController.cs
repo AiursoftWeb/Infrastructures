@@ -332,7 +332,10 @@ namespace Aiursoft.API.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
             {
@@ -358,7 +361,10 @@ namespace Aiursoft.API.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             if (user.PhoneNumberConfirmed == false)
             {
                 return NotFound();
@@ -377,7 +383,10 @@ namespace Aiursoft.API.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             if (user == null || user.PhoneNumberConfirmed == false)
             {
                 return NotFound();
@@ -404,7 +413,10 @@ namespace Aiursoft.API.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             if (user.SMSPasswordResetToken.ToLower().Trim() == model.Code.ToLower().Trim())
             {
                 user.SMSPasswordResetToken = string.Empty;
@@ -448,7 +460,10 @@ namespace Aiursoft.API.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.FindByIdAsync(mail.OwnerId);
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, $"Can not find target user with email '{model.Email}'.");
