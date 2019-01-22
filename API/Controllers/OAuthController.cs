@@ -449,14 +449,12 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.Emails.Any(p => p.EmailAddress == email));
         }
 
-        private async Task<APIUser> GetCurrentUserAsync()
+        private Task<APIUser> GetCurrentUserAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null)
-            {
-                await _dbContext.Entry(user).Collection(t => t.Emails).LoadAsync();
-            }
-            return user;
+            return _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
 
         private async Task<IActionResult> FinishAuth(IAuthorizeViewModel model, bool forceGrant = false)

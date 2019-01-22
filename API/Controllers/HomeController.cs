@@ -12,6 +12,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.Extensions.Localization;
 using Aiursoft.Pylon.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.API.Controllers
 {
@@ -37,10 +38,6 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Index()
         {
             var cuser = await GetCurrentUserAsync();
-            if(cuser != null)
-            {
-                await _dbContext.Entry(cuser).Collection(t => t.Emails).LoadAsync();
-            }
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,
@@ -53,9 +50,12 @@ namespace Aiursoft.API.Controllers
             });
         }
 
-        private async Task<APIUser> GetCurrentUserAsync()
+        private Task<APIUser> GetCurrentUserAsync()
         {
-            return await _userManager.GetUserAsync(HttpContext.User);
+            return _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
     }
 }

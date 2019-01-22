@@ -158,9 +158,12 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");
         }
 
-        private async Task<APIUser> GetCurrentUserAsync()
+        private Task<APIUser> GetCurrentUserAsync()
         {
-            return await _userManager.GetUserAsync(User);
+            return _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
     }
 }
