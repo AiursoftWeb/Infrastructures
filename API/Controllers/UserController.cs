@@ -168,7 +168,7 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
             }
-            if (await userEmails.CountAsync() == 0)
+            if (await userEmails.CountAsync() == 1)
             {
                 return this.Protocal(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
             }
