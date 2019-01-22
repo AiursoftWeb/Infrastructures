@@ -413,7 +413,7 @@ namespace Aiursoft.API.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.openid);
+            var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.openid);
             if (user == null)
             {
                 return this.Protocal(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
