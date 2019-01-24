@@ -26,7 +26,7 @@ namespace Aiursoft.Developer.Models.FilesViewModels
 
         public virtual bool ModelStateValid { get; set; } = true;
         [Required]
-        [Range(1, 365)]
+        [Range(1, 18250)]
         [Display(Name = "Alive Days")]
         public virtual int AliveDays { get; set; }
     }

@@ -109,46 +109,6 @@
         </form>
     </div>
 
-    <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Avatar uploader</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
-                    <input type="file" name="file" class="dropify avatar-file" data-allowed-file-extensions="png jpg bmp jpeg gif ico" data-max-file-size="30M" />
-                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="homeworkModal" tabindex="-1" role="dialog" aria-labelledby="homeworkModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Homework uploader</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
-                    <input type="file" name="file" class="dropify homework-file" data-allowed-file-extensions="doc docx pdf html md" data-max-file-size="30M" />
-                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton2" />
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-12">
             @await Component.InvokeAsync(typeof(GitHubRenderer), new GitHubRendererArgs
@@ -159,6 +119,47 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Avatar uploader</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
+                <input type="file" name="file" class="dropify avatar-file" data-allowed-file-extensions="png jpg bmp jpeg gif ico" data-max-file-size="30M" />
+                <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="homeworkModal" tabindex="-1" role="dialog" aria-labelledby="homeworkModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Homework uploader</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body" enctype="multipart/form-data" asp-controller="Samples" asp-action="Uploader" method="post">
+                <input type="file" name="file" class="dropify homework-file" data-allowed-file-extensions="doc docx pdf html md" data-max-file-size="30M" />
+                <input type="submit" class="btn btn-success" value="Upload" id="uploadButton2" />
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section js{
     @this.UseAiurDashboardJs(false);
     <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
