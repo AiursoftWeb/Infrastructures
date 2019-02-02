@@ -95,8 +95,8 @@ namespace Aiursoft.API.Controllers
                 _logger.LogInformation($"A request with appId {model.appid} is access wrong domian.");
                 return View("AuthError");
             }
-            // Signed in but have to input info.
-            else if (user != null && app.ForceInputPassword == false && model.forceConfirm != true)
+            // Signed in. App is not in force input password mode. User did not specify force input.
+            else if (user != null && app.ForceInputPassword == false && model.forceConfirm == false)
             {
                 return await FinishAuth(model.Convert(user.Email), app.ForceConfirmation);
             }
@@ -381,12 +381,16 @@ namespace Aiursoft.API.Controllers
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
             var targetPack = await _dbContext
                 .OAuthPack
-                .Where(t => t.IsUsed == false)
+                //.Where(t => t.IsUsed == false)
                 .SingleOrDefaultAsync(t => t.Code == model.Code);
 
             if (targetPack == null)
             {
-                return this.Protocal(ErrorType.WrongKey, "Invalid Code.");
+                return this.Protocal(ErrorType.WrongKey, "The code doesn't exists in our database.");
+            }
+            if (targetPack.IsUsed)
+            {
+                return this.Protocal(ErrorType.HasDoneAlready, "Code is used already!");
             }
             if (targetPack.ApplyAppId != appId)
             {
