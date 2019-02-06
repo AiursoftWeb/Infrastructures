@@ -162,7 +162,7 @@ namespace Aiursoft.Developer.Controllers
             target.ConfirmEmail = _ChangePermission(target.ConfirmEmail, model.ConfirmEmail, ref permissionChanged);
             target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionChanged);
             target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionChanged);
-            target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangePassword, ref permissionChanged);
+            target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangeGrantInfo, ref permissionChanged);
             if (permissionChanged)
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
