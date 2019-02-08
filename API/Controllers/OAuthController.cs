@@ -96,7 +96,7 @@ namespace Aiursoft.API.Controllers
                 return View("AuthError");
             }
             // Signed in. App is not in force input password mode. User did not specify force input.
-            else if (user != null && app.ForceInputPassword == false && model.forceConfirm == false)
+            else if (user != null && app.ForceInputPassword != true && model.forceConfirm != true)
             {
                 return await FinishAuth(model.Convert(user.Email), app.ForceConfirmation);
             }
