@@ -7,7 +7,7 @@ Aiursoft basic micro-services platform.
 
 ## What is it
 
-Nexus is not a framework nor a library. It was just a project, runs in the application level.
+Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design.
 
 Nexus has three levels:
 
