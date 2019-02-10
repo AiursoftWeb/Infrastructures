@@ -388,7 +388,8 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.WrongKey, "The code doesn't exists in our database.");
             }
-            if (targetPack.IsUsed)
+            // Use time is more than 10 seconds from now.
+            if (targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
             {
                 return this.Protocal(ErrorType.HasDoneAlready, "Code is used already!");
             }
@@ -401,7 +402,7 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocal(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
             }
-            targetPack.IsUsed = true;
+            targetPack.UseTime = DateTime.UtcNow;
             await _dbContext.SaveChangesAsync();
             var viewModel = new CodeToOpenIdViewModel
             {

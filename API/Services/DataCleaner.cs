@@ -64,7 +64,7 @@ namespace Aiursoft.API.Services
 
         public Task ClearTimeOutOAuthPack(APIDbContext _dbContext)
         {
-            _dbContext.OAuthPack.Delete(t => t.IsUsed == true);
+            _dbContext.OAuthPack.Delete(t => t.UseTime + new TimeSpan(1, 0, 0, 0) < DateTime.UtcNow);
             _dbContext.OAuthPack.Delete(t => !t.IsAlive);
             return _dbContext.SaveChangesAsync();
         }

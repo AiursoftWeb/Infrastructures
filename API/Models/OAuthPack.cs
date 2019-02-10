@@ -18,8 +18,8 @@ namespace Aiursoft.API.Models
         public virtual APIUser User { get; set; }
         public virtual string UserId { get; set; }
 
-        public virtual bool IsUsed { get; set; }
         public virtual DateTime CreateTime { get; set; } = DateTime.UtcNow;
+        public virtual DateTime UseTime { get; set; } = DateTime.MinValue;
         public virtual TimeSpan AliveTime { get; set; } = new TimeSpan(0, 20, 0);
         public virtual bool IsAlive => DateTime.UtcNow - CreateTime < AliveTime;
     }
