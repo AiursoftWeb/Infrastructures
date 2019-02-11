@@ -389,7 +389,7 @@ namespace Aiursoft.API.Controllers
                 return this.Protocal(ErrorType.WrongKey, "The code doesn't exists in our database.");
             }
             // Use time is more than 10 seconds from now.
-            if (targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
+            if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
             {
                 return this.Protocal(ErrorType.HasDoneAlready, "Code is used already!");
             }
