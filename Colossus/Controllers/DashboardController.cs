@@ -63,7 +63,7 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
+                .SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 30);
             var record = new UploadRecord
             {
                 UploaderId = user.Id,

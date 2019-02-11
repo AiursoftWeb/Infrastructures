@@ -58,7 +58,7 @@ namespace Aiursoft.Developer.Controllers
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["SampleBucket"]), 3);
+                .SaveToOSS(file, Convert.ToInt32(_configuration["SampleBucket"]), 3);
             return Json(new
             {
                 message = "Uploaded!",

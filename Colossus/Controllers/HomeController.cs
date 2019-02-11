@@ -63,7 +63,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSSWithModel(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
+                .SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
             return Json(new
             {
                 message = "Uploaded!",
