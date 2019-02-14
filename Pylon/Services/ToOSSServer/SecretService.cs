@@ -28,7 +28,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             {
                 Id = id,
                 AccessToken = accessToken,
-                MaxUseTime = maxUseTimes
+                MaxUseTimes = maxUseTimes
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);

@@ -52,7 +52,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 Value = Guid.NewGuid().ToString("N"),
                 FileId = file.FileKey,
-                MaxUseTime = model.MaxUseTime
+                MaxUseTime = model.MaxUseTimes
             };
             _dbContext.Secrets.Add(newSecret);
             await _dbContext.SaveChangesAsync();

@@ -11,8 +11,8 @@ namespace Aiursoft.Pylon.Models.OSS.SecretAddressModels
         public int Id { get; set; }
         [Required]
         public string AccessToken { get; set; }
-        [Required]
+
         [Range(1, 1000000)]
-        public int MaxUseTime { get; set; } = 1;
+        public int MaxUseTimes { get; set; } = 1;
     }
 }
