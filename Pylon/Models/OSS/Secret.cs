@@ -14,7 +14,8 @@ namespace Aiursoft.Pylon.Models.OSS
         [ForeignKey(nameof(FileId))]
         public OSSFile File { get; set; }
 
-        public bool Used { get; set; } = false;
+        public int UsedTimes { get; set; } = 0;
+        public int MaxUseTime { get; set; }
         public DateTime UseTime { get; set; } = DateTime.MinValue;
         public string UserIpAddress { get; set; } = string.Empty;
     }

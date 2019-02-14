@@ -22,12 +22,13 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             _http = http;
         }
 
-        public async Task<AiurValue<string>> GenerateAsync(int id, string accessToken)
+        public async Task<AiurValue<string>> GenerateAsync(int id, string accessToken, int maxUseTimes)
         {
             var url = new AiurUrl(_serviceLoation.OSS, "Secret", "Generate", new GenerateAddressModel
             {
                 Id = id,
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                MaxUseTime = maxUseTimes
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);

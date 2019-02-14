@@ -88,11 +88,11 @@ namespace Aiursoft.OSS.Controllers
                 .Secrets
                 .Include(t => t.File)
                 .SingleOrDefaultAsync(t => t.Value == model.Sec);
-            if (secret == null || secret.Used)
+            if (secret == null || secret.UsedTimes >= secret.MaxUseTime)
             {
                 return NotFound();
             }
-            secret.Used = true;
+            secret.UsedTimes++;
             secret.UseTime = DateTime.UtcNow;
             secret.UserIpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
             await _dbContext.SaveChangesAsync();

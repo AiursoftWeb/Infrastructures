@@ -51,7 +51,8 @@ namespace Aiursoft.OSS.Controllers
             var newSecret = new Secret
             {
                 Value = Guid.NewGuid().ToString("N"),
-                FileId = file.FileKey
+                FileId = file.FileKey,
+                MaxUseTime = model.MaxUseTime
             };
             _dbContext.Secrets.Add(newSecret);
             await _dbContext.SaveChangesAsync();

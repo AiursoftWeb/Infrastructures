@@ -92,7 +92,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var secret = await _secretService.GenerateAsync(id, await _appsContainer.AccessToken(app.AppId, app.AppSecret));
+            var secret = await _secretService.GenerateAsync(id, await _appsContainer.AccessToken(app.AppId, app.AppSecret), 1);
             var model = new GenerateLinkViewModel(cuser)
             {
                 Address = secret.Value,
