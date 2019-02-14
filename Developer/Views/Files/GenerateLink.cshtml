@@ -13,10 +13,7 @@
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-        <strong>@Localizer["Caution!"]</strong> @Localizer["Once you clicked 'Open' button, the link will be deactivated and can not be used again!"]
-    </div>
+
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-trash ico"></i>
@@ -27,6 +24,7 @@
                 <div class="box-content bordered danger">
                     <form class="row" asp-controller="Files" asp-action="ViewLink" method="post">
                         <input type="hidden" asp-for="FileId" />
+                        <label>Generate Access link for file: @Model.FileName</label>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="AccessTimes"></label>
