@@ -52,7 +52,7 @@ namespace Aiursoft.Developer.Controllers
                 async Task addApp()
                 {
                     var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
-                    allBuckets.AddRange(appInfo?.Buckets ?? new List<Bucket>());
+                    allBuckets.AddRange(appInfo.Buckets);
                 };
                 taskList.Add(addApp());
             }
