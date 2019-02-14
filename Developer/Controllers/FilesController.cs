@@ -90,7 +90,8 @@ namespace Aiursoft.Developer.Controllers
             var model = new GenerateViewModel(cuser)
             {
                 FileId = fileinfo.File.FileKey,
-                FileName = fileinfo.File.RealFileName
+                FileName = fileinfo.File.RealFileName,
+                BucketId = bucketInfo.BucketId
             };
             return View(model);
         }
@@ -106,10 +107,6 @@ namespace Aiursoft.Developer.Controllers
             }
             var bucketInfo = await _ossApiService.ViewBucketDetailAsync(fileinfo.File.BucketId);
             var app = await _dbContext.Apps.FindAsync(bucketInfo.BelongingAppId);
-            if (bucketInfo.BelongingAppId != app.AppId)
-            {
-                return Unauthorized();
-            }
             var secret = await _secretService.GenerateAsync(input.FileId, await _appsContainer.AccessToken(app.AppId, app.AppSecret), input.AccessTimes);
             var model = new ViewLinkViewModel(cuser)
             {

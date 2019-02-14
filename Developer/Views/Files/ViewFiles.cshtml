@@ -72,14 +72,14 @@
                                                             <a class="dropdown-item" href="@file.InternetPath" target="_blank">@Localizer["Download"]</a>
                                                         }
                                                         <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@file.InternetPath?sd=true">@Localizer["Copy download link"]</a>
-                                                        <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">@Localizer["Get limited access time link"]</a>
+                                                        <a class="dropdown-item" asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank">@Localizer["Get access link"]</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         }
                                         else
                                         {
-                                            <a asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank" class="btn btn-secondary">@Localizer["Get One-time link"]</a>
+                                            <a asp-controller="Files" asp-action="GenerateLink" asp-route-id="@file.FileKey" target="_blank" class="btn btn-secondary">@Localizer["Get access link"]</a>
                                         }
                                     </td>
                                     <td>
