@@ -78,10 +78,28 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> GenerateLink(int id)
+        public async Task<IActionResult> GenerateLink(int id) //file Id
         {
             var cuser = await GetCurrentUserAsync();
             var fileinfo = await _ossApiService.ViewOneFileAsync(id);
+            if (fileinfo.File == null)
+            {
+                return NotFound();
+            }
+            var bucketInfo = await _ossApiService.ViewBucketDetailAsync(fileinfo.File.BucketId);
+            var model = new GenerateViewModel(cuser)
+            {
+                FileId = fileinfo.File.FileKey,
+                FileName = fileinfo.File.RealFileName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewLink(GenerateViewModel input) // file Id
+        {
+            var cuser = await GetCurrentUserAsync();
+            var fileinfo = await _ossApiService.ViewOneFileAsync(input.FileId);
             if (fileinfo.File == null)
             {
                 return NotFound();
@@ -92,8 +110,8 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var secret = await _secretService.GenerateAsync(id, await _appsContainer.AccessToken(app.AppId, app.AppSecret), 1);
-            var model = new GenerateLinkViewModel(cuser)
+            var secret = await _secretService.GenerateAsync(input.FileId, await _appsContainer.AccessToken(app.AppId, app.AppSecret), input.AccessTimes);
+            var model = new ViewLinkViewModel(cuser)
             {
                 Address = secret.Value,
                 BucketId = bucketInfo.BucketId

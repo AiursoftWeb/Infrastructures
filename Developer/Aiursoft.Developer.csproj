@@ -22,6 +22,11 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Files\GenerateLink.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
 
 
 </Project>

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Models.FilesViewModels
 {
-    public class GenerateLinkViewModel : AppLayoutModel
+    public class ViewLinkViewModel : AppLayoutModel
     {
         [Obsolete(message: "This method is only for framework", error: true)]
-        public GenerateLinkViewModel() { }
-        public GenerateLinkViewModel(DeveloperUser User) : base(User, 3) { }
+        public ViewLinkViewModel() { }
+        public ViewLinkViewModel(DeveloperUser user) : base(user, 3) { }
         public string Address { get; set; }
         public int BucketId { get; set; }
     }

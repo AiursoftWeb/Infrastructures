@@ -1,6 +1,6 @@
-@model Aiursoft.Developer.Models.FilesViewModels.GenerateViewModel
+@model Aiursoft.Developer.Models.FilesViewModels.ViewLinkViewModel
 @{
-    ViewData["Title"] = "Generate Access Link";
+    ViewData["Title"] = "One Time Link";
 }
 
 <div class="container-fluid">
@@ -20,24 +20,24 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-trash ico"></i>
-            @Localizer["Access Link"]
+            @Localizer["One Time Link"]
         </div>
         <div class="card-body">
             <div class="col-12">
                 <div class="box-content bordered danger">
-                    <form class="row" asp-controller="Files" asp-action="ViewLink" method="post">
-                        <input type="hidden" asp-for="FileId" />
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="AccessTimes"></label>
-                                <input asp-for="AccessTimes" type="number" class="form-control">
+                                <label asp-for="Address"></label>
+                                <input value="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address" readonly="readonly" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12 margin-top-30">
-                            <input type="submit" class="btn btn-danger" value="@Localizer["Generate"]" target="_blank" />
+                            <a class="btn btn-success waves-effect waves-light" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address">@Localizer["Copy link"]</a>
+                            <a class="btn btn-danger" href="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address" target="_blank">@Localizer["Open Link"]</a>
                             <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">@Localizer["Back to files"]</a>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
