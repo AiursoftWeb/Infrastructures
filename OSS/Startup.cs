@@ -28,12 +28,6 @@ namespace Aiursoft.OSS
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureLargeFileUploadable();
-            services.Configure<FormOptions>(x =>
-            {
-                x.ValueLengthLimit = int.MaxValue;
-                x.MultipartBodyLengthLimit = int.MaxValue;
-            });
-
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
