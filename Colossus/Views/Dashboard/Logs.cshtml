@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="col-12">
                 <div class="table-responsive">
-                    <table class="table table-striped datatable">
+                    <table class="table table-striped my-datatable">
                         <thead>
                             <tr>
                                 <th>@Localizer["Record Id"]</th>
@@ -71,3 +71,14 @@
         </div>
     </div>
 </div>
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            $('.my-datatable').dataTable({
+                "order": [[5, "desc"]]
+                "pageLength": 30
+            });
+        });
+    </script>
+}
