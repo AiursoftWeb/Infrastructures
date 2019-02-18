@@ -57,7 +57,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ViewFiles(int id)//Bucket Id
+        public async Task<IActionResult> ViewFiles(int id)// Bucket Id
         {
             var cuser = await GetCurrentUserAsync();
             var bucketInfo = await _ossApiService.ViewBucketDetailAsync(id);
@@ -78,7 +78,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> GenerateLink(int id) //file Id
+        public async Task<IActionResult> GenerateLink(int id) // file Id
         {
             var cuser = await GetCurrentUserAsync();
             var fileinfo = await _ossApiService.ViewOneFileAsync(id);
@@ -159,7 +159,8 @@ namespace Aiursoft.Developer.Controllers
                 id = bucketInfo.BucketId
             });
         }
-        public async Task<IActionResult> UploadFile(int id)//BucketId
+
+        public async Task<IActionResult> UploadFile(int id)// Bucket Id
         {
             var cuser = await GetCurrentUserAsync();
             var bucket = await _ossApiService.ViewBucketDetailAsync(id);

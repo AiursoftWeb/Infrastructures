@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.OSS;
 using Aiursoft.Pylon.Models.OSS.ApiAddressModels;
 using Aiursoft.Pylon.Models.OSS.ApiViewModels;
 using Newtonsoft.Json;
@@ -127,6 +128,27 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);
             return JResult;
+        }
+
+        public async Task<AiurCollection<OSSFile>> ViewMultiFilesAsync(List<int> ids)
+        {
+            // Get ids arg.
+            var idsArg = string.Empty;
+            foreach (var id in ids)
+            {
+                idsArg += id + ",";
+            }
+            idsArg.Trim(',');
+            // Send Request
+            var path = new AiurUrl(_serviceLocation.OSS, "api", "ViewMultiFiles", new ViewMultiFilesAddressModel
+            {
+                Ids = ids.ToString()
+            });
+            var result = await _http.Get(path, true);
+            var jResult = JsonConvert.DeserializeObject<AiurCollection<OSSFile>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
 
         public async Task<UploadFileViewModel> UploadFile(string accessToken, int bucketId, string filePath, int aliveDays)
