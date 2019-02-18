@@ -238,25 +238,32 @@ namespace Aiursoft.OSS.Controllers
 
         public async Task<JsonResult> ViewMultiFiles(ViewMultiFilesAddressModel model)
         {
-            var ids = model.Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            var list = new List<OSSFile>();
-            foreach(var id in ids)
+            try
             {
-                var fileKey = Convert.ToInt32(id);
-                var file = await _dbContext
-                    .OSSFile
-                    .Include(t => t.BelongingBucket)
-                    .SingleOrDefaultAsync(t => t.FileKey == fileKey);
-                var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
-                file.JFileSize = new FileInfo(path).Length;
-                file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
-                list.Add(file);
+                var ids = model.Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                var list = new List<OSSFile>();
+                foreach (var id in ids)
+                {
+                    var fileKey = Convert.ToInt32(id);
+                    var file = await _dbContext
+                        .OSSFile
+                        .Include(t => t.BelongingBucket)
+                        .SingleOrDefaultAsync(t => t.FileKey == fileKey);
+                    var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                    file.JFileSize = new FileInfo(path).Length;
+                    file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
+                    list.Add(file);
+                }
+                return Json(new AiurCollection<OSSFile>(list)
+                {
+                    Code = ErrorType.Success,
+                    Message = "Successfully get all files you queried."
+                });
             }
-            return Json(new AiurCollection<OSSFile>(list)
+            catch (Exception e)
             {
-                Code = ErrorType.Success,
-                Message = "Successfully get all files you queried."
-            });
+                return this.Protocal(ErrorType.InvalidInput, e.Message);
+            }
         }
 
         [HttpPost]
