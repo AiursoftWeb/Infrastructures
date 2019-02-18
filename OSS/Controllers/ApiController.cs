@@ -242,6 +242,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 var ids = model.Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 var list = new List<OSSFile>();
+                string message = "";
                 foreach (var id in ids)
                 {
                     var fileKey = Convert.ToInt32(id);
@@ -251,7 +252,7 @@ namespace Aiursoft.OSS.Controllers
                         .SingleOrDefaultAsync(t => t.FileKey == fileKey);
                     if (file == null || file.BelongingBucket == null)
                     {
-                        return this.Protocal(ErrorType.NotFound, $"Could not find a valid file with id: {id} in OSS!");
+                        message += " By the way, We could not find a file with ID:" + id;
                     }
                     var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                     file.JFileSize = new FileInfo(path).Length;
@@ -261,7 +262,7 @@ namespace Aiursoft.OSS.Controllers
                 return Json(new AiurCollection<OSSFile>(list)
                 {
                     Code = ErrorType.Success,
-                    Message = "Successfully get all files you queried."
+                    Message = "Successfully get all files you queried." + message
                 });
             }
             catch (Exception e)
