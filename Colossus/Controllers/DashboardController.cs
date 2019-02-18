@@ -88,6 +88,14 @@ namespace Aiursoft.Colossus.Controllers
                 .OrderByDescending(t => t.UploadTime)
                 .ToListAsync();
             var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.Id).ToArray());
+
+            // find all out-dated records.
+            var outdatedRecords = myFiles.Where(t => myfilesOnOSS.Items.Any(p => p.FileKey == t.FileId) == false);
+            if(outdatedRecords.Count() > 0)
+            {
+                _dbContext.UploadRecords.RemoveRange(outdatedRecords);
+                await _dbContext.SaveChangesAsync();
+            }
             var model = new LogsViewModel(user, 1, "File upload logs")
             {
                 Files = myfilesOnOSS.Items,
