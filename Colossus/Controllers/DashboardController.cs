@@ -87,7 +87,6 @@ namespace Aiursoft.Colossus.Controllers
                 .Where(t => t.UploaderId == user.Id)
                 .OrderByDescending(t => t.UploadTime)
                 .ToListAsync();
-            var accessToken = await _appsContainer.AccessToken();
             var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.Id).ToArray());
             var model = new LogsViewModel(user, 1, "File upload logs")
             {
