@@ -142,7 +142,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             // Send Request
             var path = new AiurUrl(_serviceLocation.OSS, "api", "ViewMultiFiles", new ViewMultiFilesAddressModel
             {
-                Ids = ids.ToString()
+                Ids = idsArg
             });
             var result = await _http.Get(path, true);
             var jResult = JsonConvert.DeserializeObject<AiurCollection<OSSFile>>(result);
