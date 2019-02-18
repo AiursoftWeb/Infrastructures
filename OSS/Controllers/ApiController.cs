@@ -238,37 +238,33 @@ namespace Aiursoft.OSS.Controllers
 
         public async Task<JsonResult> ViewMultiFiles(ViewMultiFilesAddressModel model)
         {
+            int[] ids;
             try
             {
-                var ids = model.Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                var list = new List<OSSFile>();
-                string message = "";
-                foreach (var id in ids)
-                {
-                    var fileKey = Convert.ToInt32(id);
-                    var file = await _dbContext
-                        .OSSFile
-                        .Include(t => t.BelongingBucket)
-                        .SingleOrDefaultAsync(t => t.FileKey == fileKey);
-                    if (file == null || file.BelongingBucket == null)
-                    {
-                        message += " By the way, We could not find a file with ID:" + id;
-                    }
-                    var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
-                    file.JFileSize = new FileInfo(path).Length;
-                    file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
-                    list.Add(file);
-                }
-                return Json(new AiurCollection<OSSFile>(list)
-                {
-                    Code = ErrorType.Success,
-                    Message = "Successfully get all files you queried." + message
-                });
+                ids = model.Ids.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(n => Convert.ToInt32(n)).ToArray();
             }
             catch (Exception e)
             {
                 return this.Protocal(ErrorType.InvalidInput, e.Message);
             }
+            //Get all files.
+            var allFiles = await _dbContext
+                    .OSSFile
+                    .Include(t => t.BelongingBucket)
+                    .Where(t => ids.Contains(t.FileKey))
+                    .ToListAsync();
+            foreach (var file in allFiles)
+            {
+                var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                file.JFileSize = new FileInfo(path).Length;
+                file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
+            }
+            return Json(new AiurCollection<OSSFile>(allFiles)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get all files you queried."
+            });
+
         }
 
         [HttpPost]
@@ -338,7 +334,7 @@ namespace Aiursoft.OSS.Controllers
                 return this.Protocal(ErrorType.Unauthorized, "The bucket you tried to view is not that app's bucket.");
             }
             //Get all files.
-            var allFiles = _dbContext.OSSFile.Include(t => t.BelongingBucket).Where(t => t.BucketId == bucket.BucketId).Take(200);
+            var allFiles = _dbContext.OSSFile.Include(t => t.BelongingBucket).Where(t => t.BucketId == bucket.BucketId);
             foreach (var file in allFiles)
             {
                 var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
