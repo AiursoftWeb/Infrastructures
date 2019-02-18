@@ -139,6 +139,10 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 idsArg += id + ",";
             }
             idsArg = idsArg.Trim(',');
+            if (string.IsNullOrEmpty(idsArg))
+            {
+                idsArg = ",";
+            }
             // Send Request
             var path = new AiurUrl(_serviceLocation.OSS, "api", "ViewMultiFiles", new ViewMultiFilesAddressModel
             {

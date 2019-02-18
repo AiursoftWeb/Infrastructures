@@ -249,10 +249,10 @@ namespace Aiursoft.OSS.Controllers
             }
             //Get all files.
             var allFiles = await _dbContext
-                    .OSSFile
-                    .Include(t => t.BelongingBucket)
-                    .Where(t => ids.Contains(t.FileKey))
-                    .ToListAsync();
+                .OSSFile
+                .Include(t => t.BelongingBucket)
+                .Where(t => ids.Contains(t.FileKey))
+                .ToListAsync();
             foreach (var file in allFiles)
             {
                 var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";

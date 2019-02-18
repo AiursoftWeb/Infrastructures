@@ -91,7 +91,7 @@ namespace Aiursoft.Colossus.Controllers
 
             // find all out-dated records.
             var outdatedRecords = myFiles.Where(t => myfilesOnOSS.Items.Any(p => p.FileKey == t.FileId) == false);
-            if(outdatedRecords.Count() > 0)
+            if (outdatedRecords.Count() > 0)
             {
                 _dbContext.UploadRecords.RemoveRange(outdatedRecords);
                 await _dbContext.SaveChangesAsync();
