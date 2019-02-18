@@ -130,7 +130,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return JResult;
         }
 
-        public async Task<AiurCollection<OSSFile>> ViewMultiFilesAsync(List<int> ids)
+        public async Task<AiurCollection<OSSFile>> ViewMultiFilesAsync(int[] ids)
         {
             // Get ids arg.
             var idsArg = string.Empty;

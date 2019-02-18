@@ -88,11 +88,10 @@ namespace Aiursoft.Colossus.Controllers
                 .OrderByDescending(t => t.UploadTime)
                 .ToListAsync();
             var accessToken = await _appsContainer.AccessToken();
-            var colossusFiles = await _ossApiService.ViewAllFilesAsync(accessToken, Convert.ToInt32(_configuration["ColossusPublicBucketId"]));
-            var myfilesOnOSS = colossusFiles.AllFiles.Where(t => myFiles.Any(k => k.FileId == t.FileKey));
+            var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.Id).ToArray());
             var model = new LogsViewModel(user, 1, "File upload logs")
             {
-                Files = myfilesOnOSS,
+                Files = myfilesOnOSS.Items,
                 Records = myFiles
             };
             return View(model);
