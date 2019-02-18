@@ -87,7 +87,7 @@ namespace Aiursoft.Colossus.Controllers
                 .Where(t => t.UploaderId == user.Id)
                 .OrderByDescending(t => t.UploadTime)
                 .ToListAsync();
-            var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.Id).ToArray());
+            var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.FileId).ToArray());
 
             // find all out-dated records.
             var outdatedRecords = myFiles.Where(t => myfilesOnOSS.Items.Any(p => p.FileKey == t.FileId) == false);

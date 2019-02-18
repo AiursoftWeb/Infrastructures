@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Models.OSS.ApiAddressModels
 {
     public class ViewMultiFilesAddressModel
     {
-        // 1,2,3,4,5
+        [Required]
         public string Ids { get; set; }
     }
 }
