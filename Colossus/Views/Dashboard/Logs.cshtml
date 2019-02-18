@@ -39,17 +39,27 @@
                                     <td>@record.SourceFileName</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <a href="@ossFile.InternetPath?sd=true&name=@record.SourceFileName" target="_blank" class="btn btn-secondary">@Localizer["Download"]</a>
+                                            <a href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank" class="btn btn-secondary">
+                                                @if (MIME.HasKey(ossFile.FileExtension))
+                                                {
+                                                    @Localizer["Open"]
+                                                }
+                                                else
+                                                {
+                                                    @Localizer["Download"]
+                                                }
+                                            </a>
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     @Localizer["More"]
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    @if(MIME.HasKey(ossFile.FileExtension))
+                                                    @if (MIME.HasKey(ossFile.FileExtension))
                                                     {
                                                         <a class="dropdown-item" href="@ossFile.InternetPath?name=@record.SourceFileName" target="_blank">@Localizer["Open"]</a>
                                                         <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?name=@record.SourceFileName">@Localizer["Copy open link"]</a>
                                                     }
+                                                    <a class="dropdown-item" href="@ossFile.InternetPath?sd=true" target="_blank">@Localizer["Download"]</a>
                                                     <a class="dropdown-item" href="javascript:void(0);" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ossFile.InternetPath?sd=true&name=@record.SourceFileName">@Localizer["Copy download link"]</a>
                                                 </div>
                                             </div>
