@@ -1,28 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Aiursoft.API.Data;
 using Aiursoft.API.Models;
 using Aiursoft.API.Services;
 using Microsoft.AspNetCore.Identity;
-using System;
 using Microsoft.AspNetCore.Mvc.Razor;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
-using System.Security.Cryptography;
-using Aiursoft.Pylon.Models;
-using Microsoft.Extensions.Options;
 
 namespace Aiursoft.API
 {

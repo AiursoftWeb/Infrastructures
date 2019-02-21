@@ -8,12 +8,9 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -25,41 +22,29 @@ namespace Aiursoft.API.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
-        private readonly SignInManager<APIUser> _signInManager;
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
-        private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
         private readonly APISMSSender _smsSender;
-        private readonly DeveloperApiService _developerApiService;
         private readonly ServiceLocation _serviceLocation;
         private readonly GrantChecker _grantChecker;
-        private readonly OSSApiService _ossApiService;
 
         public UserController(
             UserManager<APIUser> userManager,
-            SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
-            APIDbContext _context,
-            IStringLocalizer<ApiController> localizer,
+            APIDbContext context,
             AiurEmailSender emailSender,
             APISMSSender smsSender,
-            DeveloperApiService developerApiService,
             ServiceLocation serviceLocation,
-            GrantChecker granchChecker,
-            OSSApiService ossApiService)
+            GrantChecker grantChecker)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
-            _dbContext = _context;
-            _localizer = localizer;
+            _dbContext = context;
             _emailSender = emailSender;
             _smsSender = smsSender;
-            _developerApiService = developerApiService;
             _serviceLocation = serviceLocation;
-            _grantChecker = granchChecker;
-            _ossApiService = ossApiService;
+            _grantChecker = grantChecker;
         }
 
         [APIExpHandler]
@@ -354,7 +339,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaEmailViewModel model)
+        public async Task<IActionResult> ForgotPasswordViaSms(ForgotPasswordViaEmailViewModel model)
         {
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (mail == null)
@@ -373,10 +358,10 @@ namespace Aiursoft.API.Controllers
             user.SMSPasswordResetToken = code;
             await _userManager.UpdateAsync(user);
             await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
-            return RedirectToAction(nameof(EnterSMSCode), new { model.Email });
+            return RedirectToAction(nameof(EnterSmsCode), new { model.Email });
         }
 
-        public async Task<IActionResult> EnterSMSCode(string email)
+        public async Task<IActionResult> EnterSmsCode(string email)
         {
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == email.ToLower());
             if (mail == null)
@@ -401,7 +386,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EnterSMSCode(EnterSMSCodeViewModel model)
+        public async Task<IActionResult> EnterSmsCode(EnterSMSCodeViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -444,7 +429,7 @@ namespace Aiursoft.API.Controllers
             {
                 Code = code
             };
-            return View();
+            return View(model);
         }
 
         [HttpPost]

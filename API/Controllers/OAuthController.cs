@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Aiursoft.API.Services;
 using Aiursoft.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -12,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Models;
 using System.Linq;
-using Microsoft.Extensions.Localization;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Models.API.OAuthViewModels;
@@ -21,7 +19,6 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models.Developer;
-using System.Security.Claims;
 
 namespace Aiursoft.API.Controllers
 {
@@ -44,8 +41,6 @@ namespace Aiursoft.API.Controllers
         private readonly SignInManager<APIUser> _signInManager;
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
-        private readonly IStringLocalizer<OAuthController> _localizer;
-        private readonly ServiceLocation _serviceLocation;
         private readonly DeveloperApiService _apiService;
         private readonly ACTokenManager _tokenManager;
 
@@ -53,18 +48,14 @@ namespace Aiursoft.API.Controllers
             UserManager<APIUser> userManager,
             SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
-            APIDbContext _context,
-            IStringLocalizer<OAuthController> localizer,
-            ServiceLocation serviceLocation,
+            APIDbContext context,
             DeveloperApiService developerApiService,
             ACTokenManager tokenManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<OAuthController>();
-            _dbContext = _context;
-            _localizer = localizer;
-            _serviceLocation = serviceLocation;
+            _dbContext = context;
             _apiService = developerApiService;
             _tokenManager = tokenManager;
         }

@@ -9,7 +9,6 @@ using System.Globalization;
 using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
@@ -19,7 +18,6 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.API.Models;
-using Aiursoft.API.Services;
 using Aiursoft.API.Data;
 using Aiursoft.API.Models.ApiViewModels;
 using Aiursoft.Pylon.Exceptions;
@@ -30,27 +28,20 @@ namespace Aiursoft.API.Controllers
     public class ApiController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
-        private readonly SignInManager<APIUser> _signInManager;
-        private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
-        private readonly IStringLocalizer<ApiController> _localizer;
         private readonly DeveloperApiService _developerApiService;
         private readonly ACTokenManager _tokenManager;
 
         public ApiController(
             UserManager<APIUser> userManager,
-            SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
-            APIDbContext _context,
-            IStringLocalizer<ApiController> localizer,
+            APIDbContext context,
             DeveloperApiService developerApiService,
             ACTokenManager tokenManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<ApiController>();
-            _dbContext = _context;
-            _localizer = localizer;
+            loggerFactory.CreateLogger<ApiController>();
+            _dbContext = context;
             _developerApiService = developerApiService;
             _tokenManager = tokenManager;
         }

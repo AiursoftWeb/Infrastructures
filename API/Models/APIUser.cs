@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using Aiursoft.API.Data;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Aiursoft.Pylon.Models.API;
-using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.API.Models
 {
@@ -29,18 +27,18 @@ namespace Aiursoft.API.Models
         public override bool EmailConfirmed => Emails?.Any(t => t.Validated) ?? false;
         [JsonProperty]
         [NotMapped]
-        public override string Email => Emails?.OrderByDescending(t => t.Validated)?.First()?.EmailAddress ?? string.Empty;
+        public override string Email => Emails?.OrderByDescending(t => t.Validated).First()?.EmailAddress ?? string.Empty;
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
         {
             if (!await HasAuthorizedApp(dbContext, appId))
             {
-                var AppGrant = new AppGrant
+                var appGrant = new AppGrant
                 {
                     AppID = appId,
-                    APIUserId = Id,
+                    APIUserId = Id
                 };
-                dbContext.LocalAppGrant.Add(AppGrant);
+                dbContext.LocalAppGrant.Add(appGrant);
                 await dbContext.SaveChangesAsync();
             }
         }
@@ -60,7 +58,7 @@ namespace Aiursoft.API.Models
 
         public async Task<bool> HasAuthorizedApp(APIDbContext dbContext, string appId)
         {
-            return await dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.APIUserId == this.Id);
+            return await dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.APIUserId == Id);
         }
     }
 
