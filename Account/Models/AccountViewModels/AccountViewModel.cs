@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
-    public abstract class AccountViewModel
+    public class AccountViewModel
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public AccountViewModel() { }
         public AccountViewModel(AccountUser user, int activePanel, string title)
         {
-            this.Recover(user, activePanel, title);
+            // ReSharper disable once VirtualMemberCallInConstructor
+            Recover(user, activePanel, title);
         }
 
         public virtual bool ModelStateValid { get; set; } = true;
@@ -19,11 +17,11 @@ namespace Aiursoft.Account.Models.AccountViewModels
 
         public virtual void Recover(AccountUser user, int activePanel, string title)
         {
-            this.EmailConfirmed = user.EmailConfirmed;
-            this.UserName = user.NickName;
-            this.UserIconFileKey = user.HeadImgFileKey;
-            this.ActivePanel = activePanel;
-            this.Title = title;
+            EmailConfirmed = user.EmailConfirmed;
+            UserName = user.NickName;
+            UserIconFileKey = user.HeadImgFileKey;
+            ActivePanel = activePanel;
+            Title = title;
         }
         public virtual bool EmailConfirmed { get; set; }
         public virtual string UserName { get; set; }

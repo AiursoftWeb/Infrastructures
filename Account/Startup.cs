@@ -7,15 +7,8 @@ using Aiursoft.Account.Models;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
-using System;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
-using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Account.Services;
 
@@ -47,7 +40,7 @@ namespace Aiursoft.Account
             services.AddAiursoftAuth<AccountUser>();
             services.AddScoped<UserService>();
             services.AddScoped<DeveloperApiService>();
-            services.AddTransient<AccountSMSSender>();
+            services.AddTransient<AccountSmsSender>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountDbContext dbContext)

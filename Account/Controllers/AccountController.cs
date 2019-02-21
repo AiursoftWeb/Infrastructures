@@ -5,19 +5,15 @@ using System.Threading.Tasks;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Account.Models;
-using Aiursoft.Account.Data;
-using Microsoft.EntityFrameworkCore;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Services;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using System.Collections.Generic;
-using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Account.Services;
 using Aiursoft.Pylon.Exceptions;
 
@@ -27,8 +23,7 @@ namespace Aiursoft.Account.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AccountUser> _userManager;
-        private readonly AccountDbContext _dbContext;
-        private readonly AccountSMSSender _smsSender;
+        private readonly AccountSmsSender _smsSender;
         private readonly UserService _userService;
         private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
@@ -38,8 +33,7 @@ namespace Aiursoft.Account.Controllers
 
         public AccountController(
             UserManager<AccountUser> userManager,
-            AccountDbContext context,
-            AccountSMSSender smsSender,
+            AccountSmsSender smsSender,
             UserService userService,
             StorageService storageService,
             AppsContainer appsContainer,
@@ -48,7 +42,6 @@ namespace Aiursoft.Account.Controllers
             AuthService<AccountUser> authService)
         {
             _userManager = userManager;
-            _dbContext = context;
             _smsSender = smsSender;
             _userService = userService;
             _storageService = storageService;
@@ -113,7 +106,7 @@ namespace Aiursoft.Account.Controllers
             var token = await _appsContainer.AccessToken();
             try
             {
-                var result = await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
+                await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
             }
             catch (AiurUnexceptedResponse e)
             {
@@ -319,12 +312,13 @@ namespace Aiursoft.Account.Controllers
             var taskList = new List<Task>();
             foreach (var app in applications.Items)
             {
-                async Task addApp()
+                async Task AddApp()
                 {
                     var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
                     model.Apps.Add(appInfo.App);
-                };
-                taskList.Add(addApp());
+                }
+
+                taskList.Add(AddApp());
             }
             await Task.WhenAll(taskList);
             model.Apps = model.Apps.OrderBy(t => t.AppCreateTime).ToList();

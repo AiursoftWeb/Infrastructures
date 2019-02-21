@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
@@ -17,8 +14,8 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public void Recover(AccountUser user)
         {
             base.Recover(user, 0, "Profile");
-            this.NickName = user.NickName;
-            this.Bio = user.Bio;
+            NickName = user.NickName;
+            Bio = user.Bio;
         }
         [Required]
         [MaxLength(20)]

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
@@ -15,9 +12,9 @@ namespace Aiursoft.Account.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly SignInManager<AccountUser> _signInManager;
-        public readonly ILogger _logger;
-        public readonly ServiceLocation _serviceLocation;
+        private readonly SignInManager<AccountUser> _signInManager;
+        private readonly ILogger _logger;
+        private readonly ServiceLocation _serviceLocation;
 
         public HomeController(
             SignInManager<AccountUser> signInManager,
@@ -35,17 +32,12 @@ namespace Aiursoft.Account.Controllers
             return View();
         }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
         }
     }
 }
