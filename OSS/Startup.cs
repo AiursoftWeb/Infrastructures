@@ -37,7 +37,7 @@ namespace Aiursoft.OSS
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
-            services.AddTransient<ImageCompresser>();
+            services.AddTransient<ImageCompressor>();
 
             services.AddMvc();
         }

@@ -9,13 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Aiursoft.Pylon;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.OSS.Controllers
 {
@@ -25,15 +19,15 @@ namespace Aiursoft.OSS.Controllers
     {
         private readonly char _ = Path.DirectorySeparatorChar;
         private readonly OSSDbContext _dbContext;
-        private readonly ImageCompresser _imageCompresser;
+        private readonly ImageCompressor _imageCompressor;
         private readonly IConfiguration _configuration;
         public DownloadController(
             OSSDbContext dbContext,
-            ImageCompresser imageCompresser,
+            ImageCompressor imageCompressor,
             IConfiguration configuration)
         {
             _dbContext = dbContext;
-            _imageCompresser = imageCompresser;
+            _imageCompressor = imageCompressor;
             _configuration = configuration;
         }
 
@@ -41,9 +35,9 @@ namespace Aiursoft.OSS.Controllers
         {
             try
             {
-                if (StringOperation.IsStaticImage(realfileName) && h > 0 && w > 0)
+                if (realfileName.IsStaticImage() && h > 0 && w > 0)
                 {
-                    return await this.AiurFile(await _imageCompresser.Compress(path, realfileName, w, h), realfileName, download, suggestefFileName);
+                    return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName, download, suggestefFileName);
                 }
                 else
                 {

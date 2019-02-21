@@ -9,11 +9,11 @@ using SixLabors.ImageSharp.Processing.Transforms;
 
 namespace Aiursoft.OSS.Services
 {
-    public class ImageCompresser
+    public class ImageCompressor
     {
         private readonly IConfiguration _configuration;
 
-        public ImageCompresser(
+        public ImageCompressor(
             IConfiguration configuration)
         {
             _configuration = configuration;

@@ -5,22 +5,15 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.OSS.Data;
-using Aiursoft.OSS.Models;
 using Aiursoft.Pylon.Models;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models.OSS.ApiViewModels;
 using Aiursoft.Pylon.Models.OSS;
-using Aiursoft.Pylon.Models.API.ApiViewModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models.OSS.ApiAddressModels;
 using Aiursoft.Pylon;
-using Aiursoft.OSS.Services;
 using Microsoft.Extensions.Configuration;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 
 namespace Aiursoft.OSS.Controllers
 {
@@ -30,26 +23,20 @@ namespace Aiursoft.OSS.Controllers
     {
         private readonly char _ = Path.DirectorySeparatorChar;
         private readonly OSSDbContext _dbContext;
-        private readonly ImageCompresser _imageCompresser;
         private readonly IConfiguration _configuration;
         private readonly ServiceLocation _serviceLocation;
-        private readonly CoreApiService _coreApiService;
         private readonly ACTokenManager _tokenManager;
         private readonly object _obj = new object();
 
         public ApiController(
             OSSDbContext dbContext,
-            ImageCompresser imageCompresser,
             IConfiguration configuration,
             ServiceLocation serviceLocation,
-            CoreApiService coreApiService,
             ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
-            _imageCompresser = imageCompresser;
             _configuration = configuration;
             _serviceLocation = serviceLocation;
-            _coreApiService = coreApiService;
             _tokenManager = tokenManager;
         }
 
@@ -59,7 +46,7 @@ namespace Aiursoft.OSS.Controllers
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)
             {
-                return this.Protocal(ErrorType.Unauthorized, "The app you try to delete is not the accesstoken you granted!");
+                return this.Protocal(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
             }
             var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
@@ -136,10 +123,10 @@ namespace Aiursoft.OSS.Controllers
             appLocal.MyBuckets.Add(newBucket);
             await _dbContext.SaveChangesAsync();
             //Create an empty folder
-            string DirectoryPath = _configuration["StoragePath"] + $@"{_}Storage{_}{newBucket.BucketName}{_}";
-            if (Directory.Exists(DirectoryPath) == false)
+            string directoryPath = _configuration["StoragePath"] + $@"{_}Storage{_}{newBucket.BucketName}{_}";
+            if (Directory.Exists(directoryPath) == false)
             {
-                Directory.CreateDirectory(DirectoryPath);
+                Directory.CreateDirectory(directoryPath);
             }
             //return model
             var viewModel = new CreateBucketViewModel
@@ -301,12 +288,12 @@ namespace Aiursoft.OSS.Controllers
                 _dbContext.SaveChanges();
             }
             //Try saving file.
-            string DirectoryPath = _configuration["StoragePath"] + $"{_}Storage{_}{targetBucket.BucketName}{_}";
-            if (Directory.Exists(DirectoryPath) == false)
+            string directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}{targetBucket.BucketName}{_}";
+            if (Directory.Exists(directoryPath) == false)
             {
-                Directory.CreateDirectory(DirectoryPath);
+                Directory.CreateDirectory(directoryPath);
             }
-            using (var fileStream = new FileStream(DirectoryPath + newFile.FileKey + ".dat", FileMode.Create))
+            using (var fileStream = new FileStream(directoryPath + newFile.FileKey + ".dat", FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
