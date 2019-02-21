@@ -23,7 +23,7 @@ namespace Aiursoft.OSS
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureLargeFileUploadable();
+            services.ConfigureLargeFileUpload();
             services.AddDbContext<OSSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 

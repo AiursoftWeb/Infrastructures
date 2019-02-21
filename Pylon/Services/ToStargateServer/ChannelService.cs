@@ -39,7 +39,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             return jResult;
         }
 
-        public async Task<AiurProtocal> ValidateChannelAsync(int Id, string Key)
+        public async Task<AiurProtocol> ValidateChannelAsync(int Id, string Key)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ValidateChannel", new ChannelAddressModel
             {
@@ -47,7 +47,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
                 Key = Key
             });
             var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             return jResult;
         }
     }

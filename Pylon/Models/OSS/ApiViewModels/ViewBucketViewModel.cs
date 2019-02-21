@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models.OSS.ApiViewModels
 {
-    public class ViewBucketViewModel : AiurProtocal
+    public class ViewBucketViewModel : AiurProtocol
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewBucketViewModel() { }

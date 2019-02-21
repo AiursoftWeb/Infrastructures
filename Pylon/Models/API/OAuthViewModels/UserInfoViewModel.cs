@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 {
-    public class UserInfoViewModel : AiurProtocal
+    public class UserInfoViewModel : AiurProtocol
     {
         public virtual AiurUserBase User { get; set; }
     }

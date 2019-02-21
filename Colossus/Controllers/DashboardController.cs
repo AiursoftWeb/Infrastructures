@@ -6,15 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.Extensions.Configuration;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
-using System.IO;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -25,7 +21,6 @@ namespace Aiursoft.Colossus.Controllers
         private readonly ColossusDbContext _dbContext;
         private readonly OSSApiService _ossApiService;
         private readonly IConfiguration _configuration;
-        private readonly AppsContainer _appsContainer;
         private readonly StorageService _storageService;
 
         public DashboardController(
@@ -33,14 +28,12 @@ namespace Aiursoft.Colossus.Controllers
             ColossusDbContext dbContext,
             OSSApiService ossApiService,
             IConfiguration configuration,
-            AppsContainer appsContainer,
             StorageService storageService)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _ossApiService = ossApiService;
             _configuration = configuration;
-            _appsContainer = appsContainer;
             _storageService = storageService;
         }
 
@@ -90,8 +83,8 @@ namespace Aiursoft.Colossus.Controllers
             var myfilesOnOSS = await _ossApiService.ViewMultiFilesAsync(myFiles.Select(t => t.FileId).ToArray());
 
             // find all out-dated records.
-            var outdatedRecords = myFiles.Where(t => myfilesOnOSS.Items.Any(p => p.FileKey == t.FileId) == false);
-            if (outdatedRecords.Count() > 0)
+            var outdatedRecords = myFiles.Where(t => myfilesOnOSS.Items.Any(p => p.FileKey == t.FileId) == false).ToList();
+            if (outdatedRecords.Any())
             {
                 _dbContext.UploadRecords.RemoveRange(outdatedRecords);
                 await _dbContext.SaveChangesAsync();

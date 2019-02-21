@@ -93,7 +93,7 @@ namespace Aiursoft.EE.Controllers
             }
             _dbContext.Sections.Remove(section);
             await _dbContext.SaveChangesAsync();
-            return this.Protocal(ErrorType.Success, $"Successfully deleted the section '{section.SectionName}'!");
+            return this.Protocol(ErrorType.Success, $"Successfully deleted the section '{section.SectionName}'!");
         }
 
         private async Task<EEUser> GetCurrentUserAsync()

@@ -1,14 +1,4 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Pylon
@@ -19,11 +9,11 @@ namespace Aiursoft.Pylon
         public static int DefaultImageId = 739;
         public static string CorpPhoneNumber = "(+86) 8368-5000";
         public static string Schema = "https";
-        public static string WSSchema = "wss";
+        public static string WsSchema = "wss";
         public static long MaxFileSize = 1000 * 1024 * 1024;
-        public static string GitHubOrganizationAddress { get; private set; } = "https://gitzab.com/AiursoftWeb/";
-        public static string FacebookAddress { get; private set; } = "https://facebook.com/";
-        public static string TwitterAddress { get; private set; } = "https://twitter.com/";
+        public static string GitHubOrganizationAddress { get; } = "https://gitzab.com/AiursoftWeb/";
+        public static string FacebookAddress { get; } = "https://facebook.com/";
+        public static string TwitterAddress { get; } = "https://twitter.com/";
         public static KeyValuePair<string, string> DirectShowString => new KeyValuePair<string, string>("show", "direct");
         public static PasswordOptions PasswordOptions => new PasswordOptions
         {
@@ -37,7 +27,7 @@ namespace Aiursoft.Pylon
         public static readonly Dictionary<string, string> Footer = new Dictionary<string, string>
         {
             {"Home", "https://www.aiursoft.com"},
-            {"Develope", "https://developer.aiursoft.com"},
+            {"Develop", "https://developer.aiursoft.com"},
             {"Company", "#"},
             {"Privacy", "https://www.aiursoft.com/docs/terms"},
             {"Terms", "https://www.aiursoft.com/docs/terms"},

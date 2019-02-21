@@ -1,10 +1,6 @@
-﻿using Aiursoft.Pylon.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Aiursoft.Pylon.Attributes
 {
@@ -48,13 +44,11 @@ namespace Aiursoft.Pylon.Attributes
                 if ((MaxSize != -1 && file.Length > MaxSize) || file.Length > Values.MaxFileSize)
                 {
                     context.ModelState.AddModelError("", "Please provide a file which is smaller than 1GB!");
-                    return;
                 }
             }
             catch (Exception e)
             {
                 context.ModelState.AddModelError("", e.Message);
-                return;
             }
         }
     }

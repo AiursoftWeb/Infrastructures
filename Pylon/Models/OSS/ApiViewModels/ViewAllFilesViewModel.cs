@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models.OSS.ApiViewModels
 {
-    public class ViewAllFilesViewModel : AiurProtocal
+    public class ViewAllFilesViewModel : AiurProtocol
     {
         public virtual int BucketId { get; set; }
         public IEnumerable<OSSFile> AllFiles { get; set; }

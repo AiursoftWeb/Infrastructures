@@ -8,7 +8,7 @@
     @this.UseDnsPrefetch()
     <title>@ViewData["Title"] - @Values.ProjectName Colossus</title>
     @this.UseAiurFavicon()
-    @this.UseAiurMarketCSS()
+    @this.UseAiurMarketCss()
     @RenderSection("css", required: false)
 </head>
 <body>
@@ -29,7 +29,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                <a class="nav-link" href="#">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </li>

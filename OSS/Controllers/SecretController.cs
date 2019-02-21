@@ -39,7 +39,7 @@ namespace Aiursoft.OSS.Controllers
                 .SingleOrDefaultAsync(t => t.FileKey == model.Id);
             if (file == null)
             {
-                return this.Protocal(ErrorType.NotFound, "Could not get your file in your apps' buckets. The file may be out dated!");
+                return this.Protocol(ErrorType.NotFound, "Could not get your file in your apps' buckets. The file may be out dated!");
             }
             // Generate secret
             var newSecret = new Secret

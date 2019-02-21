@@ -1,11 +1,9 @@
-﻿using Aiursoft.Colossus.Data;
-using Aiursoft.Colossus.Models;
+﻿using Aiursoft.Colossus.Models;
 using Aiursoft.Colossus.Models.HomeViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -22,23 +20,20 @@ namespace Aiursoft.Colossus.Controllers
         private readonly SignInManager<ColossusUser> _signInManager;
         private readonly UserManager<ColossusUser> _userManager;
         private readonly ServiceLocation _serviceLocation;
-        private readonly ColossusDbContext _dbContext;
-        private const int _30M = 30 * 1024 * 1024;
+        public const int DefaultSize  = 30 * 1024 * 1024;
 
         public HomeController(
             IConfiguration configuration,
             StorageService storageService,
             SignInManager<ColossusUser> signInManager,
             UserManager<ColossusUser> userManager,
-            ServiceLocation serviceLocation,
-            ColossusDbContext dbContext)
+            ServiceLocation serviceLocation)
         {
             _configuration = configuration;
             _storageService = storageService;
             _signInManager = signInManager;
             _userManager = userManager;
             _serviceLocation = serviceLocation;
-            _dbContext = dbContext;
         }
 
         [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
@@ -46,18 +41,18 @@ namespace Aiursoft.Colossus.Controllers
         {
             var model = new IndexViewModel
             {
-                MaxSize = _30M
+                MaxSize = DefaultSize
             };
             return View(model);
         }
 
         [HttpPost]
         [APIExpHandler]
-        [FileChecker(MaxSize = 30 * 1024 * 1024)]
+        [FileChecker(MaxSize = DefaultSize)]
         [APIModelStateChecker]
         public async Task<IActionResult> Upload()
         {
-            if (HttpContext.Request.Form.Files.First().Length > _30M)
+            if (HttpContext.Request.Form.Files.First().Length > DefaultSize)
             {
                 return Unauthorized();
             }
@@ -75,7 +70,7 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
         }
 
         private async Task<ColossusUser> GetCurrentUserAsync()

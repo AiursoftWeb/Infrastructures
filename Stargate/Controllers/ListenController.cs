@@ -36,11 +36,11 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.FindAsync(model.Id);
             if (channel == null)
             {
-                return this.Protocal(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
+                return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
             }
             if (channel.ConnectKey != model.Key)
             {
-                return Json(new AiurProtocal
+                return Json(new AiurProtocol
                 {
                     Code = ErrorType.Unauthorized,
                     Message = "Wrong connection key!"

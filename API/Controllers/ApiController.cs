@@ -83,7 +83,7 @@ namespace Aiursoft.API.Controllers
             }
             catch (CultureNotFoundException)
             {
-                return Json(new AiurProtocal { Message = "Not a language.", Code = ErrorType.InvalidInput });
+                return Json(new AiurProtocol { Message = "Not a language.", Code = ErrorType.InvalidInput });
             }
             var user = await GetCurrentUserAsync();
             if (user != null)
@@ -146,7 +146,7 @@ namespace Aiursoft.API.Controllers
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             _dbContext.LocalAppGrant.Delete(t => t.AppID == appid);
             await _dbContext.SaveChangesAsync();
-            return this.Protocal(ErrorType.Success, "Successfully droped all users granted!");
+            return this.Protocol(ErrorType.Success, "Successfully droped all users granted!");
         }
 
         private Task<APIUser> GetCurrentUserAsync()

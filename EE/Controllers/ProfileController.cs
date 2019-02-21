@@ -131,7 +131,7 @@ namespace Aiursoft.EE.Controllers
             var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
             if (user == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+                return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
             }
             var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
             if (follow == null)
@@ -142,9 +142,9 @@ namespace Aiursoft.EE.Controllers
                     ReceiverId = user.Id
                 });
                 await _dbContext.SaveChangesAsync();
-                return this.Protocal(ErrorType.Success, "You have successfully followed the target user!");
+                return this.Protocol(ErrorType.Success, "You have successfully followed the target user!");
             }
-            return this.Protocal(ErrorType.HasDoneAlready, "You have already followed the target user!");
+            return this.Protocol(ErrorType.HasDoneAlready, "You have already followed the target user!");
         }
 
         [HttpPost]
@@ -157,16 +157,16 @@ namespace Aiursoft.EE.Controllers
             var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
             if (user == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+                return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
             }
             var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
             if (follow != null)
             {
                 _dbContext.Follows.Remove(follow);
                 await _dbContext.SaveChangesAsync();
-                return this.Protocal(ErrorType.Success, "You have successfully unfollowed the target user!");
+                return this.Protocol(ErrorType.Success, "You have successfully unfollowed the target user!");
             }
-            return this.Protocal(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
+            return this.Protocol(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
         }
         
         [AiurForceAuth]

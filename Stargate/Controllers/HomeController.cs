@@ -39,7 +39,7 @@ namespace Aiursoft.Stargate.Controllers
 
         public IActionResult Index()
         {
-            return Json(new AiurProtocal
+            return Json(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
@@ -74,7 +74,7 @@ namespace Aiursoft.Stargate.Controllers
 
         public IActionResult Error()
         {
-            return this.Protocal(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");
+            return this.Protocol(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");
         }
     }
 }

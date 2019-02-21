@@ -215,7 +215,7 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
             if (mail == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"The account with email {model.Email} was not found!");
+                return this.Protocol(ErrorType.NotFound, $"The account with email {model.Email} was not found!");
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
@@ -238,11 +238,11 @@ namespace Aiursoft.API.Controllers
             }
             else if (result.IsLockedOut)
             {
-                return this.Protocal(ErrorType.Unauthorized, $"The account with email {model.Email} was locked! Please try again several minutes later!");
+                return this.Protocol(ErrorType.Unauthorized, $"The account with email {model.Email} was locked! Please try again several minutes later!");
             }
             else
             {
-                return this.Protocal(ErrorType.Unauthorized, "Wrong password!");
+                return this.Protocol(ErrorType.Unauthorized, "Wrong password!");
             }
         }
 
@@ -324,7 +324,7 @@ namespace Aiursoft.API.Controllers
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
-                return this.Protocal(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");
+                return this.Protocol(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");
             }
             var user = new APIUser
             {
@@ -344,9 +344,9 @@ namespace Aiursoft.API.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
-                return this.Protocal(ErrorType.Success, "Successfully created your account.");
+                return this.Protocol(ErrorType.Success, "Successfully created your account.");
             }
-            return this.Protocal(ErrorType.NotEnoughResources, result.Errors.First().Description);
+            return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
         }
 
         [Authorize]
@@ -356,7 +356,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
-            return Json(new AiurProtocal { Message = "Successfully signed out!", Code = ErrorType.Success });
+            return Json(new AiurProtocol { Message = "Successfully signed out!", Code = ErrorType.Success });
         }
 
         public async Task<IActionResult> UserSignout(UserSignoutAddressModel model)
@@ -377,21 +377,21 @@ namespace Aiursoft.API.Controllers
 
             if (targetPack == null)
             {
-                return this.Protocal(ErrorType.WrongKey, "The code doesn't exists in our database.");
+                return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
             }
             // Use time is more than 10 seconds from now.
             if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
             {
-                return this.Protocal(ErrorType.HasDoneAlready, "Code is used already!");
+                return this.Protocol(ErrorType.HasDoneAlready, "Code is used already!");
             }
             if (targetPack.ApplyAppId != appId)
             {
-                return this.Protocal(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
+                return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
             }
             var capp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
             if (!capp.ViewOpenId)
             {
-                return this.Protocal(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
+                return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
             }
             targetPack.UseTime = DateTime.UtcNow;
             await _dbContext.SaveChangesAsync();
@@ -412,13 +412,13 @@ namespace Aiursoft.API.Controllers
             var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.openid);
             if (user == null)
             {
-                return this.Protocal(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
+                return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
             }
 
             var appId = _tokenManager.ValidateAccessToken(model.access_token);
             if (!await user.HasAuthorizedApp(_dbContext, appId))
             {
-                return this.Protocal(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.openid);
+                return this.Protocol(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.openid);
             }
             var viewModel = new UserInfoViewModel
             {

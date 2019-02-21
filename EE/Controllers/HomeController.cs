@@ -41,36 +41,17 @@ namespace Aiursoft.EE.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public async Task<IActionResult> Search(string word)
         {
             var results = await _dbContext.Courses.Where(t=>t.Name.Contains(word)).ToListAsync();
-            return View();
-        }
-
-        public IActionResult Error()
-        {
             return View();
         }
     }

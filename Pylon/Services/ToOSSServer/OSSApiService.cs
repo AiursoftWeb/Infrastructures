@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             _http = http;
         }
 
-        public async Task<AiurProtocal> DeleteAppAsync(string accessToken, string appId)
+        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
         {
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteApp", new { });
             var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 AppId = appId
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
@@ -70,7 +70,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public async Task<AiurProtocal> EditBucketAsync(string accessToken, int bucketId, string newBucketName, bool openToRead, bool openToUpload)
+        public async Task<AiurProtocol> EditBucketAsync(string accessToken, int bucketId, string newBucketName, bool openToRead, bool openToUpload)
         {
             var url = new AiurUrl(_serviceLocation.OSS, "api", "EditBucket", new { });
             var form = new AiurUrl(string.Empty, new EditBucketAddressModel
@@ -82,7 +82,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 OpenToUpload = openToUpload
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
@@ -101,7 +101,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public async Task<AiurProtocal> DeleteBucketAsync(string accessToken, int bucketId)
+        public async Task<AiurProtocol> DeleteBucketAsync(string accessToken, int bucketId)
         {
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteBucket", new { });
             var form = new AiurUrl(string.Empty, new DeleteBucketAddressModel
@@ -110,7 +110,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 BucketId = bucketId
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
@@ -184,7 +184,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
             return jResult;
         }
 
-        public async Task<AiurProtocal> DeleteFileAsync(string accessToken, int fileKey)
+        public async Task<AiurProtocol> DeleteFileAsync(string accessToken, int fileKey)
         {
             var url = new AiurUrl(_serviceLocation.OSS, "api", "DeleteFile", new { });
             var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
@@ -193,7 +193,7 @@ namespace Aiursoft.Pylon.Services.ToOSSServer
                 FileKey = fileKey
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;

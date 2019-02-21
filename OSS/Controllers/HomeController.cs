@@ -18,7 +18,7 @@ namespace Aiursoft.OSS.Controllers
 
         public IActionResult Index()
         {
-            return Json(new AiurProtocal
+            return Json(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = $"Welcome to Aiursoft OSS system. Please View our document at: '{_serviceLocation.Wiki}'."

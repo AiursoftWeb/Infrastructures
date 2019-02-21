@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
-        public async Task<AiurProtocal> ChangeProfileAsync(string openId, string accessToken, string newNickName, int fileKey, string newBio)
+        public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, int fileKey, string newBio)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ChangeProfile", new ChangeProfileAddressModel
             {
@@ -35,14 +35,14 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewBio = newBio
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
-        public async Task<AiurProtocal> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
+        public async Task<AiurProtocol> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ChangePassword", new ChangePasswordAddressModel
             {
@@ -52,7 +52,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 NewPassword = newPassword
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
@@ -73,7 +73,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<AiurProtocal> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
+        public async Task<AiurProtocol> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
             {
@@ -82,7 +82,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Phone = phoneNumber
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
@@ -102,7 +102,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<AiurProtocal> BindNewEmailAsync(string openId, string newEmail, string accessToken)
+        public async Task<AiurProtocol> BindNewEmailAsync(string openId, string newEmail, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "BindNewEmail", new { });
             var form = new AiurUrl(string.Empty, new BindNewEmailAddressModel
@@ -112,13 +112,13 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
-        public async Task<AiurProtocal> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
+        public async Task<AiurProtocol> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "DeleteEmail", new { });
             var form = new AiurUrl(string.Empty, new DeleteEmailAddressModel
@@ -128,13 +128,13 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 ThatEmail = thatEmail
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
-        public async Task<AiurProtocal> SendConfirmationEmailAsync(string accessToken, string userId, string email)
+        public async Task<AiurProtocol> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new { });
             var form = new AiurUrl(string.Empty, new SendConfirmationEmailAddressModel
@@ -144,7 +144,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 Email = email
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
@@ -164,7 +164,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<AiurProtocal> DropGrantedAppsAsync(string accessToken, string userId, string appId)
+        public async Task<AiurProtocol> DropGrantedAppsAsync(string accessToken, string userId, string appId)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "DropGrantedApps", new { });
             var form = new AiurUrl(string.Empty, new DropGrantedAppsAddressModel
@@ -174,7 +174,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AppIdToDrop = appId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

@@ -25,14 +25,14 @@ namespace Aiursoft.Pylon
         public static string CurrentAppId { get; private set; } = string.Empty;
         public static string CurrentAppSecret { get; private set; } = string.Empty;
 
-        public static CultureInfo[] GetSupportedLanguages()
+        private static CultureInfo[] GetSupportedLanguages()
         {
-            var SupportedCultures = new CultureInfo[]
+            var supportedCultures = new[]
             {
                 new CultureInfo("en"),
                 new CultureInfo("zh")
             };
-            return SupportedCultures;
+            return supportedCultures;
         }
 
         public static IApplicationBuilder UseAiursoftSupportedCultures(this IApplicationBuilder app, string defaultLanguage = "en")
@@ -48,14 +48,13 @@ namespace Aiursoft.Pylon
 
         public static IApplicationBuilder UseAiursoftAuthenticationFromConfiguration(this IApplicationBuilder app, IConfiguration configuration, string appName)
         {
-            var AppId = configuration[$"{appName}AppId"];
-            var AppSecret = configuration[$"{appName}AppSecret"];
-            Console.WriteLine($"Got AppId={AppId}, AppSecret={AppSecret.Substring(0, 5)}xxstrongappsecretxxxxxxxxxx");
-            if (string.IsNullOrWhiteSpace(AppId) || string.IsNullOrWhiteSpace(AppSecret))
+            var appId = configuration[$"{appName}AppId"];
+            var appSecret = configuration[$"{appName}AppSecret"];
+            if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(appSecret))
             {
                 throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
             }
-            return app.UseAiursoftAuthentication(AppId, AppSecret);
+            return app.UseAiursoftAuthentication(appId, appSecret);
         }
 
         public static IApplicationBuilder UseAiursoftAuthentication(this IApplicationBuilder app, string appId, string appSecret)
@@ -88,7 +87,7 @@ namespace Aiursoft.Pylon
             return app.UseMiddleware<APIDocGeneratorMiddleware>();
         }
 
-        public static IServiceCollection ConfigureLargeFileUploadable(this IServiceCollection services)
+        public static IServiceCollection ConfigureLargeFileUpload(this IServiceCollection services)
         {
             return services.Configure<FormOptions>(x =>
             {
@@ -97,7 +96,7 @@ namespace Aiursoft.Pylon
             });
         }
 
-        public static IActionResult SignoutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
+        public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
         {
             var request = controller.HttpContext.Request;
             string serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
@@ -108,9 +107,9 @@ namespace Aiursoft.Pylon
             return controller.Redirect(toRedirect.ToString());
         }
 
-        public static JsonResult Protocal(this Controller controller, ErrorType errorType, string errorMessage)
+        public static JsonResult Protocol(this Controller controller, ErrorType errorType, string errorMessage)
         {
-            return controller.Json(new AiurProtocal
+            return controller.Json(new AiurProtocol
             {
                 Code = errorType,
                 Message = errorMessage
@@ -140,7 +139,7 @@ namespace Aiursoft.Pylon
                 {
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
                     logger.LogInformation($"Connection string is {connectionString}");
-                    var retry = Policy.Handle<Exception>().WaitAndRetry(new TimeSpan[]
+                    var retry = Policy.Handle<Exception>().WaitAndRetry(new[]
                     {
                         TimeSpan.FromSeconds(5),
                         TimeSpan.FromSeconds(10),

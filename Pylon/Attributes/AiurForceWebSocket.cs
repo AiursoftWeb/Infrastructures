@@ -1,10 +1,6 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aiursoft.Pylon.Attributes
 {
@@ -13,15 +9,13 @@ namespace Aiursoft.Pylon.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            if (!context.HttpContext.WebSockets.IsWebSocketRequest)
+            if (context.HttpContext.WebSockets.IsWebSocketRequest) return;
+            var arg = new AiurProtocol
             {
-                var arg = new AiurProtocal
-                {
-                    Code = ErrorType.InvalidInput,
-                    Message = "Wrong protocal!"
-                };
-                context.Result = new JsonResult(arg);
-            }
+                Code = ErrorType.InvalidInput,
+                Message = "Wrong protocal!"
+            };
+            context.Result = new JsonResult(arg);
         }
     }
 }

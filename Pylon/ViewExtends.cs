@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -42,11 +41,6 @@ namespace Aiursoft.Pylon
                 .SetHtmlContent(template);
         }
 
-        public static IHtmlContent UseAiurFooter()
-        {
-            throw new NotImplementedException();
-        }
-
         public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
         {
             var content = new HtmlContentBuilder();
@@ -70,7 +64,7 @@ namespace Aiursoft.Pylon
             return content;
         }
 
-        public static IHtmlContent UseAiurDashboardCSS(this RazorPage page, bool includeCore = true)
+        public static IHtmlContent UseAiurDashboardCss(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             if (includeCore)
@@ -102,7 +96,7 @@ namespace Aiursoft.Pylon
             }
         }
 
-        public static IHtmlContent UseAiurMarketCSS(this RazorPage page)
+        public static IHtmlContent UseAiurMarketCss(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             return new HtmlContentBuilder()
@@ -129,7 +123,7 @@ namespace Aiursoft.Pylon
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             var builder = new HtmlContentBuilder();
-            string[] domains = new string[] {
+            string[] domains = {
                 serviceLocation.API,
                 serviceLocation.OSS,
                 serviceLocation.CDN,

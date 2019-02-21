@@ -56,7 +56,7 @@ namespace Aiursoft.API.Controllers
             user.HeadImgFileKey = model.NewIconId;
             user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
-            return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
+            return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
 
         [APIExpHandler]
@@ -68,11 +68,11 @@ namespace Aiursoft.API.Controllers
             await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Json(new AiurProtocal { Code = ErrorType.Success, Message = "Successfully " });
+                return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully " });
             }
             else
             {
-                return Json(new AiurProtocal { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
+                return Json(new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
             }
         }
 
@@ -102,7 +102,7 @@ namespace Aiursoft.API.Controllers
                 user.PhoneNumber = model.Phone;
             }
             await _userManager.UpdateAsync(user);
-            return this.Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
+            return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
         [APIExpHandler]
@@ -127,7 +127,7 @@ namespace Aiursoft.API.Controllers
             var emailexists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
             if (emailexists)
             {
-                return this.Protocal(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
+                return this.Protocol(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
             }
             var mail = new UserEmail
             {
@@ -137,7 +137,7 @@ namespace Aiursoft.API.Controllers
             };
             _dbContext.UserEmails.Add(mail);
             await _dbContext.SaveChangesAsync();
-            return this.Protocal(ErrorType.Success, "Successfully set");
+            return this.Protocol(ErrorType.Success, "Successfully set");
         }
 
         [HttpPost]
@@ -151,15 +151,15 @@ namespace Aiursoft.API.Controllers
             var useremail = await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
             if (useremail == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+                return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
             }
             if (await userEmails.CountAsync() == 1)
             {
-                return this.Protocal(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
+                return this.Protocol(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
             }
             _dbContext.UserEmails.Remove(useremail);
             await _dbContext.SaveChangesAsync();
-            return this.Protocal(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
+            return this.Protocol(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
         }
 
         [HttpPost]
@@ -171,15 +171,15 @@ namespace Aiursoft.API.Controllers
             var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (useremail == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+                return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
             }
             if (useremail.OwnerId != user.Id)
             {
-                return this.Protocal(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
+                return this.Protocol(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
             }
             if (useremail.Validated)
             {
-                return this.Protocal(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
+                return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
             }
             //limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
@@ -200,11 +200,11 @@ namespace Aiursoft.API.Controllers
                 }
                 catch (SmtpException e)
                 {
-                    return this.Protocal(ErrorType.InvalidInput, e.Message);
+                    return this.Protocol(ErrorType.InvalidInput, e.Message);
                 }
-                return this.Protocal(ErrorType.Success, "Successfully sent the validation email.");
+                return this.Protocol(ErrorType.Success, "Successfully sent the validation email.");
             }
-            return this.Protocal(ErrorType.RequireAttention, "We have just sent you an Email in an minute.");
+            return this.Protocol(ErrorType.RequireAttention, "We have just sent you an Email in an minute.");
         }
 
         [APIExpHandler]
@@ -231,11 +231,11 @@ namespace Aiursoft.API.Controllers
                 .SingleOrDefaultAsync(t => t.AppID == model.AppIdToDrop);
             if (appToDelete == null)
             {
-                return this.Protocal(ErrorType.NotFound, $"Can not find target grant record with app with id: {model.AppIdToDrop}");
+                return this.Protocol(ErrorType.NotFound, $"Can not find target grant record with app with id: {model.AppIdToDrop}");
             }
             _dbContext.LocalAppGrant.Remove(appToDelete);
             await _dbContext.SaveChangesAsync();
-            return this.Protocal(ErrorType.Success, "Successfully deleted target app grant record!");
+            return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
         }
 
         public async Task<IActionResult> EmailConfirm(string userId, string code)

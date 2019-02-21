@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.API.Models.HomeViewModels
 {
-    public class IndexViewModel : AiurProtocal
+    public class IndexViewModel : AiurProtocol
     {
         public DateTime ServerTime { get; internal set; }
         public bool Signedin { get; internal set; }

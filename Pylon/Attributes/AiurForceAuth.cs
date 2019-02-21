@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Exceptions;
+﻿using System;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,83 +12,82 @@ namespace Aiursoft.Pylon.Attributes
     /// </summary>
     public class AiurForceAuth : ActionFilterAttribute
     {
-        private string _preferController { get; set; } = null;
-        private string _preferAction { get; set; } = null;
-        private bool? _justTry { get; set; } = false;
-        private bool _preferPageSet { get; set; } = false;
-        private bool _register { get; set; } = false;
-        private bool _directlyReject { get; set; } = false;
+        private string PreferController { get; }
+        private string PreferAction { get; }
+        private bool? JustTry { get; } = false;
+        private bool PreferPageSet { get; }
+        private bool Register { get; }
+        private bool DirectlyReject { get; }
 
-        private bool _hasAPreferPage => (true
-            && !string.IsNullOrEmpty(_preferController)
-            && !string.IsNullOrEmpty(_preferAction))
-            || _preferPageSet;
+        private bool HasAPreferPage => (!string.IsNullOrEmpty(PreferController)
+            && !string.IsNullOrEmpty(PreferAction))
+            || PreferPageSet;
 
-        private string _preferPage
+        private string PreferPage
         {
             get
             {
-                if (string.IsNullOrEmpty(_preferController) && string.IsNullOrEmpty(_preferAction))
+                if (string.IsNullOrEmpty(PreferController) && string.IsNullOrEmpty(PreferAction))
                 {
                     return "/";
                 }
-                return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
+                return new AiurUrl(string.Empty, PreferController, PreferAction, new { }).ToString();
             }
         }
 
         public AiurForceAuth(bool directlyReject = false)
         {
-            _directlyReject = directlyReject;
+            DirectlyReject = directlyReject;
         }
 
         public AiurForceAuth(string preferController, string preferAction, bool justTry, bool register = false)
         {
-            _preferController = preferController;
-            _preferAction = preferAction;
-            _justTry = justTry ? true as bool? : null;
-            _preferPageSet = true;
-            _register = register;
+            PreferController = preferController;
+            PreferAction = preferAction;
+            JustTry = justTry ? true : (bool?) null;
+            PreferPageSet = true;
+            Register = register;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            var controller = context.Controller as Controller;
+            if (!(context.Controller is Controller controller))
+            {
+                // If goes here, it seems we are not using it on a controller.
+                throw new InvalidOperationException();
+            }
             var show = context.HttpContext.Request.Query[Values.DirectShowString.Key];
             //Not signed in
             if (!controller.User.Identity.IsAuthenticated)
             {
-                if (_hasAPreferPage)
+                if (HasAPreferPage)
                 {
                     // Just redirected back, leave him here.
-                    if (show == Values.DirectShowString.Value && _justTry == true)
+                    if (show == Values.DirectShowString.Value && JustTry == true)
                     {
                         return;
                     }
                     // Try him.
-                    context.Result = _Redirect(context, _preferPage, _justTry, _register);
+                    context.Result = _Redirect(context, PreferPage, JustTry, Register);
                 }
-                // Direclty response a 403
-                else if (_directlyReject)
+                // Directly response a 403
+                else if (DirectlyReject)
                 {
                     context.Result = new UnauthorizedResult();
                 }
                 // Don't have a prefer page, force him to sign in.
                 else
                 {
-                    context.Result = _Redirect(context, controller.Request.Path.Value, justTry: null, register: _register);
+                    context.Result = _Redirect(context, controller.Request.Path.Value, justTry: null, register: Register);
                 }
             }
-            //Signed in, let him go to prefered page directly.
-            else if (_hasAPreferPage && !controller.Request.Path.Value.ToLower().StartsWith(_preferPage.ToLower()))
+            //Signed in, let him go to preferred page directly.
+            else if (HasAPreferPage && !controller.Request.Path.Value.ToLower().StartsWith(PreferPage.ToLower()))
             {
-                context.HttpContext.Response.Redirect(_preferPage);
+                context.HttpContext.Response.Redirect(PreferPage);
             }
-            //Signed in and no prefered page, Display current page.
-            else
-            {
-                return;
-            }
+            //Signed in and no preferred page, Display current page.
         }
 
         private RedirectResult _Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)

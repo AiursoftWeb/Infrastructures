@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aiursoft.Pylon.Attributes
 {
+    // ReSharper disable once UnusedMember.Global
     public class AiurNoCache : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)

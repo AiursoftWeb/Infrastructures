@@ -1,8 +1,5 @@
 ﻿using Aiursoft.Pylon.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Exceptions
 {
@@ -12,9 +9,9 @@ namespace Aiursoft.Pylon.Exceptions
     /// </summary>
     public class AiurUnexceptedResponse : Exception
     {
-        public AiurProtocal Response { get; set; }
+        public AiurProtocol Response { get; set; }
         public ErrorType Code => Response.Code;
-        public AiurUnexceptedResponse(AiurProtocal response) : base(response.Message)
+        public AiurUnexceptedResponse(AiurProtocol response) : base(response.Message)
         {
             Response = response;
         }

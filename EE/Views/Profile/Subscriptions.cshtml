@@ -17,7 +17,7 @@
                         </a>
                         <p>@sub.Course.Description.ORemoveHTML()</p>
                     </div>
-                    @if (Model.LeftContent.IsMe)
+                    if (Model.LeftContent.IsMe)
                     {
                         <div class="col-sm-2">
                             <a id="subscribe" href="javascript:unsubscribe(@sub.CourseId)" class="btn btn-danger mt-3">UnSubscribe</a>

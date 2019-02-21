@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.OSS.ApiViewModels
 {
-    public class ViewOneFileViewModel : AiurProtocal
+    public class ViewOneFileViewModel : AiurProtocol
     {
         public OSSFile File { get; set; }
     }

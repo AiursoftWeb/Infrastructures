@@ -23,11 +23,11 @@ namespace Aiursoft.Pylon.Attributes
             {
                 case AiurUnexceptedResponse exp:
                     context.ExceptionHandled = true;
-                    context.Result = new JsonResult(new AiurProtocal { Code = exp.Code, Message = exp.Message });
+                    context.Result = new JsonResult(new AiurProtocol { Code = exp.Code, Message = exp.Message });
                     break;
                 case AiurAPIModelException exp:
                     context.ExceptionHandled = true;
-                    context.Result = new JsonResult(new AiurProtocal { Code = exp.Code, Message = exp.Message });
+                    context.Result = new JsonResult(new AiurProtocol { Code = exp.Code, Message = exp.Message });
                     break;
             }
         }

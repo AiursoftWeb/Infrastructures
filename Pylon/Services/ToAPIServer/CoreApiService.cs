@@ -67,7 +67,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return JResult;
         }
 
-        public async Task<AiurProtocal> DropGrantsAsync(string accessToken)
+        public async Task<AiurProtocol> DropGrantsAsync(string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.API, "API", "DropGrants", new { });
             var form = new AiurUrl(string.Empty, new
@@ -75,7 +75,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;

@@ -47,7 +47,7 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
             if (channel == null)
             {
-                return Json(new AiurProtocal
+                return Json(new AiurProtocol
                 {
                     Code = ErrorType.NotFound,
                     Message = "We can not find your channel!"
@@ -61,7 +61,7 @@ namespace Aiursoft.Stargate.Controllers
                 Content = model.MessageContent
             };
             _memoryContext.Messages.Add(message);
-            return Json(new AiurProtocal
+            return Json(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = $"You have successfully pushed a new message to channel: {channel.Id}!"

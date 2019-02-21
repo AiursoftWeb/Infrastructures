@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<AiurProtocal> PushMessageAsync(string accessToken, int channelId, string messageContent, bool noexception = false)
+        public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, string messageContent, bool noexception = false)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Message", "PushMessage", new { });
             var form = new AiurUrl(string.Empty, new PushMessageAddressModel
@@ -31,7 +31,7 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
                 MessageContent = messageContent
             });
             var result = await _httpService.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (!noexception && jResult.Code != ErrorType.Success)
             {
                 throw new AiurUnexceptedResponse(jResult);

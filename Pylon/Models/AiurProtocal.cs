@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Aiursoft.Pylon.Models
 {
-    public enum ErrorType : int
+    public enum ErrorType
     {
         Success = 0,
         WrongKey = -1,
@@ -19,25 +16,25 @@ namespace Aiursoft.Pylon.Models
         InvalidInput = -10,
         Timeout = -11
     }
-    public class AiurProtocal
+    public class AiurProtocol
     {
         public virtual ErrorType Code { get; set; }
         public virtual string Message { get; set; }
     }
-    public class AiurValue<T> : AiurProtocal
+    public class AiurValue<T> : AiurProtocol
     {
         public AiurValue(T value)
         {
-            this.Value = value;
+            Value = value;
         }
-        public virtual T Value { get; set; }
+        public T Value { get; set; }
     }
-    public class AiurCollection<T> : AiurProtocal
+    public class AiurCollection<T> : AiurProtocol
     {
         public AiurCollection(IEnumerable<T> items)
         {
-            this.Items = items;
+            Items = items;
         }
-        public virtual IEnumerable<T> Items { get; set; }
+        public IEnumerable<T> Items { get; set; }
     }
 }

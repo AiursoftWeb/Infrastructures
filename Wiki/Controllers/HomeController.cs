@@ -95,10 +95,10 @@ namespace Aiursoft.Wiki.Controllers
             }
             if (_seeder.Seeding)
             {
-                return this.Protocal(ErrorType.Pending, $"Seeding...");
+                return this.Protocol(ErrorType.Pending, $"Seeding...");
             }
             await _seeder.Seed();
-            return Json(new AiurProtocal
+            return Json(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = "Seeded"
@@ -109,7 +109,7 @@ namespace Aiursoft.Wiki.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return this.SignoutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.API, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public IActionResult Error()

@@ -7,10 +7,10 @@
 <div class="container">
     <ol class="breadcrumb mt-4">
         <li class="breadcrumb-item">
-            <a asp-controller="Apps" asp-action="Index">@Values.ProjectName EE</a>
+            <a asp-controller="Home" asp-action="Index">@Values.ProjectName EE</a>
         </li>
         <li class="breadcrumb-item active">
-            <a asp-controller="Apps" asp-action="AllApps">@ViewContext.RouteData.Values["controller"].ToString()</a>
+            <label>@ViewContext.RouteData.Values["controller"].ToString()</label>
         </li>
         <li class="breadcrumb-item active">@ViewContext.RouteData.Values["action"].ToString()</li>
     </ol>

@@ -39,7 +39,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<AiurProtocal> AppRegisterAsync(string email, string password, string confirmPassword)
+        public async Task<AiurProtocol> AppRegisterAsync(string email, string password, string confirmPassword)
         {
             var url = new AiurUrl(_serviceLocation.API, "OAuth", "AppRegister", new { });
             var form = new AiurUrl(string.Empty, new AppRegisterAddressModel
@@ -49,7 +49,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 ConfirmPassword = confirmPassword
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocal>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
