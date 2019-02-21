@@ -1,11 +1,8 @@
 ﻿using Aiursoft.OSS.Data;
-using Aiursoft.OSS.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services;
@@ -21,16 +18,13 @@ namespace Aiursoft.OSS.Controllers
     public class SecretController : Controller
     {
         private readonly OSSDbContext _dbContext;
-        private readonly CoreApiService _coreApiService;
         private readonly ACTokenManager _tokenManager;
 
         public SecretController(
             OSSDbContext dbContext,
-            CoreApiService coreApiService,
             ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
-            _coreApiService = coreApiService;
             _tokenManager = tokenManager;
         }
 

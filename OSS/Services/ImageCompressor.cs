@@ -1,9 +1,7 @@
-using System;
 using SixLabors.ImageSharp;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Transforms;
 
@@ -21,14 +19,14 @@ namespace Aiursoft.OSS.Services
 
         public async Task<string> Compress(string path, string realname, int width, int height)
         {
-            var CompressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
-            if (Directory.Exists(CompressedFolder) == false)
+            var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
+            if (Directory.Exists(compressedFolder) == false)
             {
-                Directory.CreateDirectory(CompressedFolder);
+                Directory.CreateDirectory(compressedFolder);
             }
-            var CompressedImagePath = $"{CompressedFolder}oss_compressed_w{width}h{height}{realname}";
-            await GetReducedImage(path, CompressedImagePath, width, height);
-            return CompressedImagePath;
+            var compressedImagePath = $"{compressedFolder}oss_compressed_w{width}h{height}{realname}";
+            await GetReducedImage(path, compressedImagePath, width, height);
+            return compressedImagePath;
         }
         public async Task GetReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
@@ -40,13 +38,13 @@ namespace Aiursoft.OSS.Services
                     return;
                 }
             }
-            await Task.Run(new Action(() =>
+            await Task.Run(() =>
             {
                 var image = Image.Load(sourceImage);
                 image.Mutate(x => x
                     .Resize(width, height));
                 image.Save(saveTarget);
-            }));
+            });
         }
     }
 }

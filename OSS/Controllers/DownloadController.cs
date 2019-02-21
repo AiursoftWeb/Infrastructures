@@ -54,7 +54,7 @@ namespace Aiursoft.OSS.Controllers
         [Route(template: "/{BucketName}/{FileName}.{FileExtension}")]
         public async Task<IActionResult> DownloadFile(DownloadFileAddressModel model)
         {
-            var download = !string.IsNullOrWhiteSpace(model.SD);
+            var download = !string.IsNullOrWhiteSpace(model.Sd);
             var targetBucket = await _dbContext.Bucket.SingleOrDefaultAsync(t => t.BucketName == model.BucketName);
             if (targetBucket == null || !targetBucket.OpenToRead)
                 return NotFound();
@@ -77,7 +77,7 @@ namespace Aiursoft.OSS.Controllers
         [HttpGet]
         public async Task<IActionResult> FromSecret(FromSecretAddressModel model)
         {
-            var download = !string.IsNullOrWhiteSpace(model.SD);
+            var download = !string.IsNullOrWhiteSpace(model.Sd);
             var secret = await _dbContext
                 .Secrets
                 .Include(t => t.File)
@@ -103,7 +103,7 @@ namespace Aiursoft.OSS.Controllers
         [Route(template: "/Download/FromKey/{Id}.{FileExtension=Unset}")]
         public async Task<IActionResult> FromKey(FromKeyAddressModel model)
         {
-            var download = !string.IsNullOrWhiteSpace(model.SD);
+            var download = !string.IsNullOrWhiteSpace(model.Sd);
             var file = await _dbContext
                 .OSSFile
                 .Include(t => t.BelongingBucket)

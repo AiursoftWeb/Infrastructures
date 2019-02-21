@@ -1,12 +1,10 @@
 ﻿using Aiursoft.OSS.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -16,7 +14,7 @@ namespace Aiursoft.OSS.Services
 {
     public class TimedCleaner : IHostedService, IDisposable
     {
-        private IConfiguration _configuration { get; }
+        public IConfiguration Configuration { get; }
         private readonly ILogger _logger;
         private Timer _timer;
         private readonly char _ = Path.DirectorySeparatorChar;
@@ -27,7 +25,7 @@ namespace Aiursoft.OSS.Services
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory)
         {
-            _configuration = configuration;
+            Configuration = configuration;
             _logger = logger;
             _scopeFactory = scopeFactory;
         }
@@ -56,51 +54,51 @@ namespace Aiursoft.OSS.Services
             }
         }
 
-        private async Task AllClean(OSSDbContext _dbContext)
+        private async Task AllClean(OSSDbContext dbContext)
         {
-            var outdatedFiles = (await _dbContext.OSSFile.Include(t => t.BelongingBucket).ToListAsync())
+            var outdatedFiles = (await dbContext.OSSFile.Include(t => t.BelongingBucket).ToListAsync())
                 .Where(t => t.UploadTime + new TimeSpan(t.AliveDays, 0, 0, 0) < DateTime.UtcNow)
                 .ToList();
 
             foreach (var file in outdatedFiles)
             {
-                var path = $@"{_configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                var path = $@"{Configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 if (File.Exists(path))
                 {
                     File.Delete(path);
                 }
-                _dbContext.OSSFile.Remove(file);
+                dbContext.OSSFile.Remove(file);
             }
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Successfully cleaned all trash.");
 
-            await DeleteInvalidRecords(_dbContext);
-            await DeleteInvalidFiles(_dbContext);
+            await DeleteInvalidRecords(dbContext);
+            await DeleteInvalidFiles(dbContext);
         }
 
-        public async Task DeleteInvalidRecords(OSSDbContext _dbContext)
+        public async Task DeleteInvalidRecords(OSSDbContext dbContext)
         {
             // Delete records that not in storage.
-            foreach (var file in await _dbContext.OSSFile.ToListAsync())
+            foreach (var file in await dbContext.OSSFile.ToListAsync())
             {
-                var path = $@"{_configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
+                var path = $@"{Configuration["StoragePath"]}{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 if (!File.Exists(path))
                 {
-                    _dbContext.Remove(file);
+                    dbContext.Remove(file);
                     _logger.LogWarning($"Deleted the file record in database: {file.BelongingBucket.BucketName}.{file.FileKey} because it was not found in storage.");
                 }
             }
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteInvalidFiles(OSSDbContext _dbContext)
+        public async Task DeleteInvalidFiles(OSSDbContext dbContext)
         {
-            var allFiles = await _dbContext.OSSFile.ToListAsync();
+            var allFiles = await dbContext.OSSFile.ToListAsync();
             // Delete files that not in record
-            foreach (var bucket in await _dbContext.Bucket.ToListAsync())
+            foreach (var bucket in await dbContext.Bucket.ToListAsync())
             {
-                var bucketPath = $@"{_configuration["StoragePath"]}{_}Storage{_}{bucket.BucketName}{_}";
+                var bucketPath = $@"{Configuration["StoragePath"]}{_}Storage{_}{bucket.BucketName}{_}";
                 if (!Directory.Exists(bucketPath))
                 {
                     Directory.CreateDirectory(bucketPath);

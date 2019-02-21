@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,12 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Aiursoft.OSS.Data;
 using Aiursoft.OSS.Services;
 using Aiursoft.Pylon;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
 
 namespace Aiursoft.OSS
 {

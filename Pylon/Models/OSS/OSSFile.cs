@@ -1,11 +1,8 @@
-﻿using Aiursoft.Pylon.Models.OSS.ApiViewModels;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models.OSS
 {
