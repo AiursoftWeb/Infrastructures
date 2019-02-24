@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Aiursoft.Colossus</AssemblyName>
     <PackageId>Aiursoft.Colossus</PackageId>
     <Company>Aiursoft</Company>

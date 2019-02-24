@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Aiursoft.Wiki</AssemblyName>
     <PackageId>Aiursoft.Wiki</PackageId>
     <Company>Aiursoft</Company>

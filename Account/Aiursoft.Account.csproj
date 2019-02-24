@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Aiursoft.Account</AssemblyName>
     <PackageId>Aiursoft.Account</PackageId>
     <Company>Aiursoft</Company>
@@ -14,11 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Twilio" Version="5.25.1" />
+    <PackageReference Include="Twilio" Version="5.26.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
