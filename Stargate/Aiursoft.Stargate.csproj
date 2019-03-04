@@ -17,6 +17,9 @@
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
