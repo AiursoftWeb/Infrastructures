@@ -59,7 +59,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Aiursoft" xml:space="preserve"><value>Aiursoft</value></data>
-<data name="Home" xml:space="preserve"><value>家</value></data>
 <data name="Manage Account" xml:space="preserve"><value>管理账户</value></data>
 <data name="Connected Devices" xml:space="preserve"><value>连接的设备</value></data>
 <data name="FAQ" xml:space="preserve"><value>常见问题</value></data>
@@ -76,6 +75,6 @@
     <value>开发者设置</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>主站</value>
+    <value>主页</value>
   </data>
 </root>
