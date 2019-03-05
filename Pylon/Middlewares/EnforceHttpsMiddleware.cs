@@ -34,14 +34,14 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 context.Response.Headers.Add("Strict-Transport-Security", "max-age=15552001; includeSubDomains; preload");
             }
-            if (context.Request.Headers.ContainsKey("x-forwarded-for") && context.Request.Headers["x-forwarded-for"] == "localhost")
+            if (context.Request.Headers.ContainsKey("x-request-origin") && context.Request.Headers["x-request-origin"] == Values.ProjectName)
             {
                 _logger.LogInformation("Internal Request Handled.");
                 await _next.Invoke(context);
             }
             else if (!context.Request.IsHttps)
             {
-                _logger.LogWarning("Insecure HTTP request handed! Redirecting the user...");
+                _logger.LogWarning("Insecure HTTP request handled! Redirecting the user...");
                 await HandleNonHttpsRequest(context);
             }
             else
