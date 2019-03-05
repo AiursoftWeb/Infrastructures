@@ -7,7 +7,9 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
     public class SetPhoneNumberAddressModel : UserOperationAddressModel
     {
-        [Required]
+        /// <summary>
+        /// Not required to set it null!
+        /// </summary>
         public string Phone { get; set; }
     }
 }
