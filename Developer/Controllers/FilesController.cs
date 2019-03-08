@@ -97,6 +97,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewLink(GenerateViewModel input) // file Id
         {
             var cuser = await GetCurrentUserAsync();
@@ -137,6 +138,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFile(DeleteFileViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -175,6 +177,7 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [FileChecker]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UploadFile(UploadFileViewModel model)
         {
             var cuser = await GetCurrentUserAsync();

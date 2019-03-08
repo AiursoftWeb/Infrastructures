@@ -62,6 +62,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -94,6 +95,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Email(EmailViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -167,6 +169,7 @@ namespace Aiursoft.Account.Controllers
 
         [HttpPost]
         [FileChecker]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Avatar(AvatarViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -194,6 +197,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Security(SecurityViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -231,6 +235,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Phone(PhoneViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -260,6 +265,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnterCode(EnterCodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -291,6 +297,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnBind()
         {
             var user = await GetCurrentUserAsync();

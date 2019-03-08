@@ -45,6 +45,7 @@ namespace Aiursoft.EE.Controllers
 
         [HttpPost]
         [AiurForceAuth]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
             var user = await GetCurrentUserAsync();

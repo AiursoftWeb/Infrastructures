@@ -83,6 +83,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateApp(CreateAppViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -127,6 +128,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewApp(ViewAppViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -213,6 +215,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteApp(DeleteAppViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -251,6 +254,7 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [FileChecker]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeIcon(string appId)
         {
             if (!ModelState.IsValid)

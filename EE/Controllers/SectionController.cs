@@ -53,6 +53,7 @@ namespace Aiursoft.EE.Controllers
 
         [AiurForceAuth]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)//Course Id
         {
             var course = await _dbContext

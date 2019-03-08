@@ -75,6 +75,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBucket([FromForm]CreateBucketViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -116,6 +117,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditBucket(EditBucketViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
@@ -159,6 +161,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteBucket([FromForm]DeleteBucketViewModel model)
         {
             if (ModelState.IsValid)

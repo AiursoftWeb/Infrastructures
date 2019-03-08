@@ -272,6 +272,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPasswordFor(ForgotPasswordForViewModel model)
         {
             if (ModelState.IsValid)
@@ -310,6 +311,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
         {
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
@@ -339,6 +341,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPasswordViaSms(ForgotPasswordViaEmailViewModel model)
         {
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
@@ -386,6 +389,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnterSmsCode(EnterSMSCodeViewModel model)
         {
             if (!ModelState.IsValid)
@@ -433,6 +437,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)

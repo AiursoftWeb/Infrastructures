@@ -24,6 +24,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Base64(Base64ViewModel model)
         {
             try
@@ -51,6 +52,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Rot13(Rot13ViewModel model)
         {
             try
@@ -76,6 +78,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Markdown(MarkdownViewModel model)
         {
             var pipeline = new MarkdownPipelineBuilder()
@@ -92,6 +95,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UrlEncode(UrlEncodeViewModel model)
         {
             try

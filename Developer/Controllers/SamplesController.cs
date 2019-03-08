@@ -34,6 +34,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableWithFormSubmit()
         {
             await Task.Delay(4000);
@@ -67,6 +68,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SubmitForm(FormSampleViewModel model)
         {
             return View(model);

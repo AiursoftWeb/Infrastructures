@@ -101,6 +101,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
             App app;
@@ -191,6 +192,7 @@ namespace Aiursoft.API.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmViewModel model)
         {
             if (!ModelState.IsValid)
@@ -267,6 +269,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             App app;
