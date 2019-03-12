@@ -12,7 +12,7 @@ namespace Aiursoft.Pylon.Services
             _serviceLocation = serviceLocation;
         }
 
-        private AiurUrl _GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
+        private AiurUrl GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
         {
             var action = register ? "register" : "authorize";
             var url = new AiurUrl(_serviceLocation.API, "oauth", action, new AuthorizeAddressModel
@@ -29,7 +29,8 @@ namespace Aiursoft.Pylon.Services
 
         public string UrlWithAuth(string serverRoot, string path, bool? justTry, bool register)
         {
-            return _GenerateAuthUrl(new AiurUrl(serverRoot, "Auth", "AuthResult", new { }), path, justTry, register).ToString();
+            var localServer = new AiurUrl(serverRoot, "Auth", "AuthResult", new { });
+            return GenerateAuthUrl(localServer, path, justTry, register).ToString();
         }
     }
 }

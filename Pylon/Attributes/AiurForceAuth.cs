@@ -69,7 +69,7 @@ namespace Aiursoft.Pylon.Attributes
                         return;
                     }
                     // Try him.
-                    context.Result = _Redirect(context, PreferPage, JustTry, Register);
+                    context.Result = Redirect(context, PreferPage, JustTry, Register);
                 }
                 // Directly response a 403
                 else if (DirectlyReject)
@@ -79,7 +79,7 @@ namespace Aiursoft.Pylon.Attributes
                 // Don't have a prefer page, force him to sign in.
                 else
                 {
-                    context.Result = _Redirect(context, controller.Request.Path.Value, justTry: null, register: Register);
+                    context.Result = Redirect(context, controller.Request.Path.Value, justTry: null, register: Register);
                 }
             }
             //Signed in, let him go to preferred page directly.
@@ -88,13 +88,16 @@ namespace Aiursoft.Pylon.Attributes
                 context.HttpContext.Response.Redirect(PreferPage);
             }
             //Signed in and no preferred page, Display current page.
+            else
+            {
+                return;
+            }
         }
 
-        private RedirectResult _Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
+        private RedirectResult Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
         {
-            var r = context.HttpContext.Request;
             var urlConverter = context.HttpContext.RequestServices.GetService<UrlConverter>();
-            string serverPosition = $"{r.Scheme}://{r.Host}";
+            string serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
             string url = urlConverter.UrlWithAuth(serverPosition, page, justTry, register);
             return new RedirectResult(url);
         }
