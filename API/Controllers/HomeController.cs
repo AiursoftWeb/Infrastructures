@@ -14,16 +14,13 @@ namespace Aiursoft.API.Controllers
     public class HomeController : Controller
     {
         private readonly IStringLocalizer<HomeController> _localizer;
-        private readonly RSAService _rsaService;
         private readonly APIDbContext _dbContext;
 
         public HomeController(
             IStringLocalizer<HomeController> localizer,
-            RSAService rsaService,
             APIDbContext dbContext)
         {
             _localizer = localizer;
-            _rsaService = rsaService;
             _dbContext = dbContext;
         }
 
@@ -37,8 +34,7 @@ namespace Aiursoft.API.Controllers
                 Code = ErrorType.Success,
                 Message = "Server started successfully!",
                 Local = _localizer["en"],
-                User = cuser,
-                PublicKey = _rsaService._publicKey
+                User = cuser
             });
         }
 

@@ -13,6 +13,5 @@ namespace Aiursoft.API.Models.HomeViewModels
         public bool Signedin { get; internal set; }
         public string Local { get; internal set; }
         public APIUser User { get; set; }
-        public RSAParameters PublicKey { get; set; }
     }
 }

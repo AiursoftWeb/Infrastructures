@@ -5,25 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Archon.Models;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Archon.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ServiceLocation _serviceLocation;
+
+        public HomeController(ServiceLocation serviceLocation)
+        {
+            _serviceLocation = serviceLocation;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return this.Protocol(ErrorType.Success, "Welcome to Archon server! View our wiki at: " + _serviceLocation.Wiki);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return this.Protocol(ErrorType.UnknownError, "Archon server was crashed! Please tell us!");
         }
     }
 }

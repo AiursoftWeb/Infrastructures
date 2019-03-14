@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Pylon.Models.API.ApiViewModels;
-using Aiursoft.Pylon.Models.API.ApiAddressModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
@@ -97,28 +96,6 @@ namespace Aiursoft.API.Controllers
                 ReturnUrl = model.Path
             }).ToString();
             return Redirect(toGo);
-        }
-
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
-        {
-            try
-            {
-                await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
-            }
-            catch (AiurUnexceptedResponse e)
-            {
-                return Json(e.Response);
-            }
-            var token = _tokenManager.GenerateAccessToken(model.AppId);
-            return Json(new AccessTokenViewModel
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully get access token.",
-                AccessToken = token.Item1,
-                DeadTime = token.Item2
-            });
         }
 
         [APIExpHandler]

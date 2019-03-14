@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-
+using Aiursoft.Pylon.Services.ToArchonServer;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -51,6 +51,7 @@ namespace Aiursoft.Pylon.Services
             return await app.AccessToken(_scopeFactory);
         }
     }
+
     class AppContainer
     {
         public AppContainer(string appId, string appSecret)
@@ -66,8 +67,8 @@ namespace Aiursoft.Pylon.Services
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var coreApiService = scope.ServiceProvider.GetRequiredService<CoreApiService>();
-                    var ServerResult = await coreApiService.AccessTokenAsync(CurrentAppId, CurrentAppSecret);
+                    var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
+                    var ServerResult = await archonApiService.AccessTokenAsync(CurrentAppId, CurrentAppSecret);
                     _latestAccessToken = ServerResult.AccessToken;
                     _accessTokenDeadTime = ServerResult.DeadTime;
                 }

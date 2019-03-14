@@ -12,6 +12,7 @@ namespace Aiursoft.Pylon.Services
     {
         public readonly string Account;
         public readonly string API;
+        public readonly string Archon;
         public readonly string CDN;
         public readonly string Colossus;
         public readonly string Developer;
@@ -26,6 +27,7 @@ namespace Aiursoft.Pylon.Services
         {
             Account = configuration["Dependencies:AccountPath"];
             API = configuration["Dependencies:APIPath"];
+            Archon = configuration["Dependencies:ArchonPath"];
             CDN = configuration["Dependencies:CDNPath"];
             Colossus = configuration["Dependencies:ColossusPath"];
             Developer = configuration["Dependencies:DeveloperPath"];
