@@ -26,8 +26,8 @@ namespace Aiursoft.Archon
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTokenManager();
             services.AddMvc();
+            services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();

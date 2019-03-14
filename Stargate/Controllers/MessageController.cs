@@ -22,20 +22,17 @@ namespace Aiursoft.Stargate.Controllers
         private readonly StargateDbContext _dbContext;
         private StargateMemory _memoryContext;
         private readonly Counter _counter;
-        private readonly CoreApiService _coreApiService;
         private readonly ACTokenManager _tokenManager;
 
         public MessageController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
             Counter counter,
-            CoreApiService coreApiService,
             ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
             _counter = counter;
-            _coreApiService = coreApiService;
             _tokenManager = tokenManager;
         }
 

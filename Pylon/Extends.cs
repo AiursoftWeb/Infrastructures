@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToArchonServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -177,6 +178,7 @@ namespace Aiursoft.Pylon
         {
             services.AddSingleton<AppsContainer>();
             services.AddSingleton<ServiceLocation>();
+            services.AddScoped<ArchonApiService>();
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<OSSApiService>();

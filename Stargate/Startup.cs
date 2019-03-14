@@ -13,6 +13,7 @@ using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Models;
 using System.Net.WebSockets;
+using Aiursoft.Pylon.Services.ToArchonServer;
 
 namespace Aiursoft.Stargate
 {
@@ -37,10 +38,10 @@ namespace Aiursoft.Stargate
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();
             services.AddSingleton<AppsContainer>();
+            services.AddSingleton<ArchonApiService>();
             services.AddSingleton<StargateMemory>();
             services.AddSingleton<TimeoutCleaner>();
             services.AddScoped<HTTPService>();
-            services.AddScoped<CoreApiService>();
             services.AddScoped<ChannelService>();
             services.AddScoped<PushMessageService>();
 
