@@ -8,6 +8,10 @@ cd API
 dotnet restore
 cd ..
 
+cd Archon
+dotnet restore
+cd ..
+
 cd Developer
 dotnet restore
 cd ..

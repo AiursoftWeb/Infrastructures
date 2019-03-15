@@ -8,7 +8,7 @@ cd API
 dotnet publish --no-restore -c Release
 cd ..
 
-cd Developer
+cd Archon
 dotnet publish --no-restore -c Release
 cd ..
 
