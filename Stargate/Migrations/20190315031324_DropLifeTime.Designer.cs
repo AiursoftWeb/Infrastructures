@@ -4,14 +4,16 @@ using Aiursoft.Stargate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Stargate.Migrations
 {
     [DbContext(typeof(StargateDbContext))]
-    partial class StargateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190315031324_DropLifeTime")]
+    partial class DropLifeTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +34,6 @@ namespace Aiursoft.Stargate.Migrations
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<string>("Description");
-
-                    b.Property<double>("LifeTime");
 
                     b.HasKey("Id");
 
