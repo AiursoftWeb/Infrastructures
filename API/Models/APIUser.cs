@@ -29,7 +29,7 @@ namespace Aiursoft.API.Models
         [NotMapped]
         public override string Email => Emails?
             .OrderByDescending(t => t.Validated)
-            .ThenBy(t => t.Priority)
+            .ThenByDescending(t => t.Priority)
             .First()?
             .EmailAddress ?? string.Empty;
 
