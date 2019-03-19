@@ -149,7 +149,7 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
-            var result = await _userService.SetPrimaryEmailAsync(user.Id, email, token);
+            var result = await _userService.SetPrimaryEmailAsync(token, user.Id, email);
             return Json(result);
         }
 

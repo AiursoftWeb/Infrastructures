@@ -13,7 +13,7 @@ var sendValidationEmail = function (mailAddress, id) {
 };
 
 var SetPrimaryEmail = function (mailAddress) {
-    $.get('/Account/SetPrimaryEmail?email=' + mailAddress, function (data) {
+    $.get('/Account/SetPrimaryEmail?email=' + encodeURIComponent(mailAddress), function (data) {
         if (data.code === 0) {
             window.location.reload();
         } else {
@@ -23,7 +23,7 @@ var SetPrimaryEmail = function (mailAddress) {
 };
 
 var DeleteEmail = function (mailAddress) {
-    $.get('/Account/DeleteEmail?email=' + mailAddress, function (data) {
+    $.get('/Account/DeleteEmail?email=' + encodeURIComponent(mailAddress), function (data) {
         if (data.code === 0) {
             window.location.reload();
         } else {
