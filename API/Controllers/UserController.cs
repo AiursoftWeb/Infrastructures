@@ -213,20 +213,24 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> SetPrimaryEmail(SetPrimaryEmailAddressModel model)//User Id
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
-            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
-            if (useremail == null)
+            var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (userEmail == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
             }
-            if (useremail.OwnerId != user.Id)
+            if (userEmail.OwnerId != user.Id)
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
             }
-            if (!useremail.Validated)
+            if (!userEmail.Validated)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was not validated!");
+                return this.Protocol(ErrorType.Pending, $"The email :{model.Email} was not validated!");
             }
-            useremail.Priority = user.Emails.Max(t => t.Priority) + 1;
+            if (userEmail.Priority == user.Emails.Max(t => t.Priority))
+            {
+                return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was already primary email!");
+            }
+            userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
         }

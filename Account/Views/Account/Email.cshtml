@@ -47,7 +47,7 @@
                             <span class="badge badge-danger">@Localizer["Not validated!"]</span>
                             <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">@Localizer["Send Validation Email"]</button>
                         }
-                        else
+                        @if(mail.Validated && mail.EmailAddress != Model.PrimaryEmail.ToLower())
                         {
                             <button class="btn-sm btn btn-primary float-right mr-1" onclick="SetPrimaryEmail('@mail.EmailAddress')">@Localizer["Set Primary"]</button>
                         }
