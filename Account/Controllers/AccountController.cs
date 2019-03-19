@@ -123,6 +123,7 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
         }
 
+        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> SendEmail([EmailAddress]string email)
@@ -133,6 +134,7 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
+        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> DeleteEmail([EmailAddress]string email)
@@ -143,6 +145,7 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
+        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> SetPrimaryEmail([EmailAddress]string email)
@@ -153,6 +156,7 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
+        [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<IActionResult> DeleteGrant(string appId)
@@ -324,21 +328,24 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Applications()
         {
             var user = await GetCurrentUserAsync();
-            var model = new ApplicationsViewModel(user);
-            var applications = await _userService.ViewGrantedAppsAsync(await _appsContainer.AccessToken(), user.Id);
+            var token = await _appsContainer.AccessToken();
+            var model = new ApplicationsViewModel(user)
+            {
+                Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
+            };
             var taskList = new List<Task>();
-            foreach (var app in applications.Items)
+            foreach (var app in model.Grants)
             {
                 async Task AddApp()
                 {
                     var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
                     model.Apps.Add(appInfo.App);
                 }
-
                 taskList.Add(AddApp());
             }
             await Task.WhenAll(taskList);
-            model.Apps = model.Apps.OrderBy(t => t.AppCreateTime).ToList();
+            model.Apps = model.Apps.OrderBy(app => 
+                model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime).ToList();
             return View(model);
         }
 

@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Applications";
 }
-
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -49,6 +48,9 @@
                                     <h5>@app.AppName</h5>
                                     <p>
                                         @app.AppDescription
+                                        <br>
+                                        Grant time:
+                                        <lable class="text-muted" data-utc-time="@Model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime"></lable>
                                     </p>
                                 </div>
                             </div>

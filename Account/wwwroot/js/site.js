@@ -1,7 +1,7 @@
 var sendValidationEmail = function (mailAddress, id) {
     $('#' + id).attr('disabled', 'disabled');
     $('#' + id).html('Sending. Please wait...');
-    $.get('/Account/SendEmail?email=' + mailAddress, function (data) {
+    $.post('/Account/SendEmail', { email: mailAddress }, function (data) {
         if (data.code === 0) {
             $('#' + id).attr('disabled', 'disabled');
             $('#' + id).html('Email Sent!');
@@ -13,7 +13,7 @@ var sendValidationEmail = function (mailAddress, id) {
 };
 
 var SetPrimaryEmail = function (mailAddress) {
-    $.get('/Account/SetPrimaryEmail?email=' + encodeURIComponent(mailAddress), function (data) {
+    $.post('/Account/SetPrimaryEmail', { email: mailAddress }, function (data) {
         if (data.code === 0) {
             window.location.reload();
         } else {
@@ -23,7 +23,7 @@ var SetPrimaryEmail = function (mailAddress) {
 };
 
 var DeleteEmail = function (mailAddress) {
-    $.get('/Account/DeleteEmail?email=' + encodeURIComponent(mailAddress), function (data) {
+    $.post('/Account/DeleteEmail', { email: mailAddress }, function (data) {
         if (data.code === 0) {
             window.location.reload();
         } else {
@@ -33,7 +33,7 @@ var DeleteEmail = function (mailAddress) {
 };
 
 var DeleteGrant = function (appId) {
-    $.get('/Account/DeleteGrant?appId=' + appId, function (data) {
+    $.post('/Account/DeleteGrant', { appId: appId }, function (data) {
         if (data.code === 0) {
             window.location.reload();
         } else {
