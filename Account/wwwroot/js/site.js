@@ -12,6 +12,16 @@ var sendValidationEmail = function (mailAddress, id) {
     });
 };
 
+var SetPrimaryEmail = function (mailAddress) {
+    $.get('/Account/SetPrimaryEmail?email=' + mailAddress, function (data) {
+        if (data.code === 0) {
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
+};
+
 var DeleteEmail = function (mailAddress) {
     $.get('/Account/DeleteEmail?email=' + mailAddress, function (data) {
         if (data.code === 0) {

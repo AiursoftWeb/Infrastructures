@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Email";
 }
-
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -48,6 +47,10 @@
                             <span class="badge badge-danger">@Localizer["Not validated!"]</span>
                             <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">@Localizer["Send Validation Email"]</button>
                         }
+                        else
+                        {
+                            <button class="btn-sm btn  float-right mr-1" onclick="SetPrimaryEmail('@mail.EmailAddress')">@Localizer["Set Primary"]</button>
+                        }
                         <button class="btn-sm btn btn-danger float-right mr-1" onclick="DeleteEmail('@mail.EmailAddress')">@Localizer["Delete"]</button>
                     </li>
                 }
@@ -77,5 +80,5 @@
     </div>
 </div>
 @section js{
-<script src="~/js/site.js"></script>
+    <script src="~/js/site.js"></script>
 }

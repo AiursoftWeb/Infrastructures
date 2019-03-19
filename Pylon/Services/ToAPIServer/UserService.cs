@@ -150,6 +150,22 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
+        public async Task<AiurProtocol> SetPrimaryEmailAsync(string accessToken, string userId, string email)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "SetPrimaryEmail", new { });
+            var form = new AiurUrl(string.Empty, new SetPrimaryEmailAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId,
+                Email = email
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
         public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ViewGrantedApps", new ViewGrantedAppsAddressModel

@@ -27,7 +27,11 @@ namespace Aiursoft.API.Models
         public override bool EmailConfirmed => Emails?.Any(t => t.Validated) ?? false;
         [JsonProperty]
         [NotMapped]
-        public override string Email => Emails?.OrderByDescending(t => t.Validated).First()?.EmailAddress ?? string.Empty;
+        public override string Email => Emails?
+            .OrderByDescending(t => t.Validated)
+            .ThenBy(t => t.Priority)
+            .First()?
+            .EmailAddress ?? string.Empty;
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
         {
@@ -73,5 +77,7 @@ namespace Aiursoft.API.Models
         public string ValidateToken { get; set; }
         [JsonIgnore]
         public DateTime LastSendTime { get; set; } = DateTime.MinValue;
+        [JsonIgnore]
+        public int Priority { get; set; }
     }
 }

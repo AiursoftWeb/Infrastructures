@@ -145,6 +145,16 @@ namespace Aiursoft.Account.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
+        public async Task<IActionResult> SetPrimaryEmail([EmailAddress]string email)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.SetPrimaryEmailAsync(user.Id, email, token);
+            return Json(result);
+        }
+
+        [APIExpHandler]
+        [APIModelStateChecker]
         public async Task<IActionResult> DeleteGrant(string appId)
         {
             var user = await GetCurrentUserAsync();
