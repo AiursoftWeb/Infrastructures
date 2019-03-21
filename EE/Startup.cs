@@ -54,6 +54,7 @@ namespace Aiursoft.EE
             }
             else
             {
+                app.UseHandleRobots();
                 app.UseEnforceHttps();
                 app.UseExceptionHandler("/Error/ServerException");
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");

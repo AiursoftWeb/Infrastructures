@@ -78,6 +78,11 @@ namespace Aiursoft.Pylon
             return app.UseMiddleware<EnforceHttpsMiddleware>();
         }
 
+        public static IApplicationBuilder UseHandleRobots(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<HandleRobotsMiddleware>();
+        }
+
         public static IApplicationBuilder UseLanguageSwitcher(this IApplicationBuilder app)
         {
             return app.UseMiddleware<SwitchLanguageMiddleware>();

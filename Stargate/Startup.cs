@@ -58,6 +58,7 @@ namespace Aiursoft.Stargate
             }
             else
             {
+                app.UseHandleRobots();
                 app.UseEnforceHttps();
                 app.UseExceptionHandler("/Home/Error");
             }
