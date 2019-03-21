@@ -1,10 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -25,20 +19,27 @@ namespace Aiursoft.Pylon.Services
 
         public ServiceLocation(IConfiguration configuration)
         {
-            Account = configuration["Dependencies:AccountPath"];
-            API = configuration["Dependencies:APIPath"];
-            Archon = configuration["Dependencies:ArchonPath"];
-            CDN = configuration["Dependencies:CDNPath"];
-            Colossus = configuration["Dependencies:ColossusPath"];
-            Developer = configuration["Dependencies:DeveloperPath"];
-            EE = configuration["Dependencies:EEPath"];
-            OSS = configuration["Dependencies:OSSPath"];
-            Stargate = configuration["Dependencies:StargatePath"];
+            var section = configuration.GetSection("Dependencies");
+            Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
+            API = TrySet(section["APIPath"], "https://api.aiursoft.com");
+            Archon = TrySet(section["ArchonPath"], "https://archon.aiursoft.com");
+            CDN = TrySet(section["CDNPath"], "https://cdn.aiursoft.com");
+            Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
+            Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
+            EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
+            OSS = TrySet(section["OSSPath"], "https://oss.aiursoft.com");
+            Stargate = TrySet(section["StargatePath"], "https://stargate.aiursoft.com");
+            Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
+            WWW = TrySet(section["WWW"], "https://www.aiursoft.com");
+
             StargateListenAddress = Stargate
                 .Replace("https://", "wss://")
                 .Replace("http://", "ws://");
-            Wiki = configuration["Dependencies:WikiPath"];
-            WWW = configuration["Dependencies:WWW"];
+        }
+
+        private string TrySet(string setting, string defaultValue)
+        {
+            return string.IsNullOrEmpty(setting) ? defaultValue : setting;
         }
     }
 }
