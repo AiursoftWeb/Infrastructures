@@ -45,6 +45,8 @@ namespace Aiursoft.Developer
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+            services.AddMemoryCache();
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();

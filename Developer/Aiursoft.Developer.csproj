@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.16.0" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
@@ -25,11 +23,5 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Update="Views\Files\GenerateLink.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
-
 
 </Project>

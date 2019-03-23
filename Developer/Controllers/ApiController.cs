@@ -12,38 +12,51 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 
 namespace Aiursoft.Developer.Controllers
 {
     public class ApiController : Controller
     {
-        public readonly UserManager<DeveloperUser> _userManager;
-        public readonly SignInManager<DeveloperUser> _signInManager;
-        public readonly ILogger _logger;
-        public DeveloperDbContext _dbContext;
+        private readonly UserManager<DeveloperUser> _userManager;
+        private readonly SignInManager<DeveloperUser> _signInManager;
+        private readonly ILogger _logger;
+        private readonly DeveloperDbContext _dbContext;
+        private readonly IMemoryCache _cache;
 
         public ApiController(
         UserManager<DeveloperUser> userManager,
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
-        DeveloperDbContext _context)
+        DeveloperDbContext _context,
+        IMemoryCache cache)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = _context;
+            _cache = cache;
         }
 
         [APIExpHandler]
         [APIModelStateChecker]
         public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
         {
-            var _target = await _dbContext.Apps.FindAsync(model.AppId);
-            if (_target == null)
+            if (!_cache.TryGetValue(model.AppId, out App target))
+            {
+                target = await _dbContext.Apps.FindAsync(model.AppId);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(20));
+
+                _cache.Set(model.AppId, target, cacheEntryOptions);
+            }
+            if (target == null)
             {
                 return Json(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
             }
-            else if (_target.AppSecret != model.AppSecret)
+            else if (target.AppSecret != model.AppSecret)
             {
                 return Json(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
             }
