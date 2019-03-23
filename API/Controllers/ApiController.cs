@@ -103,7 +103,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> AllUserGranted([Required]string accessToken)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
-            var grants = await _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == appid).Take(200).ToListAsync();
+            var grants = await _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == appid).Take(400).ToListAsync();
             var model = new AllUserGrantedViewModel
             {
                 AppId = appid,
