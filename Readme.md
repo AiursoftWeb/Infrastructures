@@ -1,6 +1,6 @@
 # Aiursoft Nexus
 
- [![Build status](https://aiursoft.visualstudio.com/Nexus/_apis/build/status/Nexus%20CI)](https://aiursoft.visualstudio.com/Nexus/_build/latest?definitionId=7)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
  [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
 
 Aiursoft basic micro-services platform.
