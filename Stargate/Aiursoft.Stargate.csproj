@@ -9,8 +9,6 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The core message queue for aiursoft web apps.</Description>
-    <ApplicationInsightsResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Stargate</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/6eedf4ae-3d30-41a0-91cf-0d1ff1ed8ccb/resourcegroups/Nexus/providers/microsoft.insights/components/Aiursoft.Stargate</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
