@@ -127,6 +127,8 @@ namespace Aiursoft.Pylon.Middlewares
             return
                 t == typeof(int) ? ArgumentType.number :
                 t == typeof(int?) ? ArgumentType.number :
+                t == typeof(long) ? ArgumentType.number :
+                t == typeof(long?) ? ArgumentType.number :
                 t == typeof(string) ? ArgumentType.text :
                 t == typeof(DateTime) ? ArgumentType.datetime :
                 t == typeof(DateTime?) ? ArgumentType.datetime :
