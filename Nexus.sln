@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Account", "Account\Aiursoft.Account.csproj", "{9A623027-D46C-4D27-B794-030305C8314F}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WWW", "WWW\Aiursoft.WWW.csproj", "{7A9F4EA7-2366-40D4-A80E-640ED8899DE8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Archon", "Archon\Aiursoft.Archon.csproj", "{C8EB2F39-DE64-4D14-A878-337D3DB188A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe", "Probe\Aiursoft.Probe.csproj", "{33D29374-4551-43E5-AD37-E06650237429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{C8EB2F39-DE64-4D14-A878-337D3DB188A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8EB2F39-DE64-4D14-A878-337D3DB188A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8EB2F39-DE64-4D14-A878-337D3DB188A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D29374-4551-43E5-AD37-E06650237429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D29374-4551-43E5-AD37-E06650237429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D29374-4551-43E5-AD37-E06650237429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D29374-4551-43E5-AD37-E06650237429}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
