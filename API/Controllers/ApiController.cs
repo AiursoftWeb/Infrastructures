@@ -33,13 +33,11 @@ namespace Aiursoft.API.Controllers
 
         public ApiController(
             UserManager<APIUser> userManager,
-            ILoggerFactory loggerFactory,
             APIDbContext context,
             DeveloperApiService developerApiService,
             ACTokenManager tokenManager)
         {
             _userManager = userManager;
-            loggerFactory.CreateLogger<ApiController>();
             _dbContext = context;
             _developerApiService = developerApiService;
             _tokenManager = tokenManager;
