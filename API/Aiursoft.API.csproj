@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Twilio" Version="5.27.2" />
+    <PackageReference Include="Twilio" Version="5.28.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />

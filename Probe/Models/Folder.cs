@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Models
 {
-    public class Folder
+    public partial class Folder
     {
         public int Id { get; set; }
 
@@ -19,5 +19,10 @@ namespace Aiursoft.Probe.Models
 
         [InverseProperty(nameof(File.Context))]
         public IEnumerable<File> Files { get; set; }
+    }
+
+    public partial class Folder
+    {
+        public string FolderName { get; set; }
     }
 }
