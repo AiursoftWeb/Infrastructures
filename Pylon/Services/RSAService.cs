@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services
         {
             var originalData = message.StringToBytes();
 
-            var rsa = new RSACryptoServiceProvider();
+            var rsa = RSA.Create();
             rsa.ImportParameters(_privateKey);
 
             var signedBytes = rsa.SignData(originalData, CryptoConfig.MapNameToOID("SHA256"));
@@ -34,7 +34,7 @@ namespace Aiursoft.Pylon.Services
             var bytesToVerify = originalMessage.StringToBytes();
             var signedBytes = signedBase64.Base64ToBytes();
 
-            var rsa = new RSACryptoServiceProvider();
+            var rsa = RSA.Create();
             rsa.ImportParameters(_publicKey);
 
             return rsa.VerifyData(bytesToVerify, CryptoConfig.MapNameToOID("SHA256"), signedBytes);
