@@ -24,7 +24,7 @@ namespace Aiursoft.API.Controllers
         private readonly UserManager<APIUser> _userManager;
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
-        private readonly AiurEmailSender _emailSender;
+        private readonly ConfirmationEmailSender _emailSender;
         private readonly APISMSSender _smsSender;
         private readonly ServiceLocation _serviceLocation;
         private readonly GrantChecker _grantChecker;
@@ -33,7 +33,7 @@ namespace Aiursoft.API.Controllers
             UserManager<APIUser> userManager,
             ILoggerFactory loggerFactory,
             APIDbContext context,
-            AiurEmailSender emailSender,
+            ConfirmationEmailSender emailSender,
             APISMSSender smsSender,
             ServiceLocation serviceLocation,
             GrantChecker grantChecker)
@@ -181,22 +181,16 @@ namespace Aiursoft.API.Controllers
             {
                 return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
             }
-            //limit the sending frenquency to 3 minutes.
+            // limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
             {
                 var token = Guid.NewGuid().ToString("N");
                 useremail.ValidateToken = token;
                 useremail.LastSendTime = DateTime.UtcNow;
                 await _dbContext.SaveChangesAsync();
-                var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(EmailConfirm), new
-                {
-                    userId = user.Id,
-                    code = token
-                });
                 try
                 {
-                    await _emailSender.SendEmail(useremail.EmailAddress, $"{Values.ProjectName} Account Email Confirmation",
-                        $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
+                    await _emailSender.SendConfirmation(user.Id, useremail.EmailAddress, token);
                 }
                 catch (SmtpException e)
                 {
@@ -352,13 +346,7 @@ namespace Aiursoft.API.Controllers
                 .Include(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(ResetPassword), new
-            {
-                Code = code,
-                UserId = user.Id
-            });
-            await _emailSender.SendEmail(model.Email, "Reset Password",
-                $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
+            await _emailSender.SendResetPassword(code, user.Id, mail.EmailAddress);
             return RedirectToAction(nameof(ForgotPasswordSent));
         }
 
