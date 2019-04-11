@@ -23,9 +23,9 @@ namespace Aiursoft.Pylon.Services
 
             var rsa = RSA.Create();
             rsa.ImportParameters(_privateKey);
-
-            var signedBytes = rsa.SignData(originalData, CryptoConfig.MapNameToOID("SHA256"));
-
+            
+            var signedBytes = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            
             return signedBytes.BytesToBase64();
         }
 
@@ -36,8 +36,7 @@ namespace Aiursoft.Pylon.Services
 
             var rsa = RSA.Create();
             rsa.ImportParameters(_publicKey);
-
-            return rsa.VerifyData(bytesToVerify, CryptoConfig.MapNameToOID("SHA256"), signedBytes);
+            return rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         }
     }
 }
