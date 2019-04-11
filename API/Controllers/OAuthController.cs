@@ -19,6 +19,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Services.ToAPIServer;
 
 namespace Aiursoft.API.Controllers
 {
@@ -43,6 +44,8 @@ namespace Aiursoft.API.Controllers
         private readonly APIDbContext _dbContext;
         private readonly DeveloperApiService _apiService;
         private readonly ACTokenManager _tokenManager;
+        private readonly UserService _userService;
+        private readonly AppsContainer _appsContainer;
 
         public OAuthController(
             UserManager<APIUser> userManager,
@@ -50,7 +53,9 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext context,
             DeveloperApiService developerApiService,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            UserService userService,
+            AppsContainer appsContainer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,6 +63,8 @@ namespace Aiursoft.API.Controllers
             _dbContext = context;
             _apiService = developerApiService;
             _tokenManager = tokenManager;
+            _userService = userService;
+            _appsContainer = appsContainer;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -311,6 +318,7 @@ namespace Aiursoft.API.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+                await _userService.SendConfirmationEmailAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret), user.Id, primaryMail.EmailAddress);
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 return await FinishAuth(model);
             }
@@ -347,6 +355,7 @@ namespace Aiursoft.API.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+
                 return this.Protocol(ErrorType.Success, "Successfully created your account.");
             }
             return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
