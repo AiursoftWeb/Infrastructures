@@ -43,6 +43,8 @@ namespace Aiursoft.API.Controllers
         private readonly APIDbContext _dbContext;
         private readonly DeveloperApiService _apiService;
         private readonly ACTokenManager _tokenManager;
+        private readonly AppsContainer _appsContainer;
+        private readonly userService _userService;
 
         public OAuthController(
             UserManager<APIUser> userManager,
@@ -50,7 +52,9 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext context,
             DeveloperApiService developerApiService,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            AppsContainer appsContainer,
+            UserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,6 +62,8 @@ namespace Aiursoft.API.Controllers
             _dbContext = context;
             _apiService = developerApiService;
             _tokenManager = tokenManager;
+            _appsContainer = appsContainer;
+            _userService = userService;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -311,6 +317,10 @@ namespace Aiursoft.API.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+                
+                var token = await _appsContainer.AccessToken();
+                await _userService.SendConfirmationEmailAsync(token, user.Id, email);
+                
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 return await FinishAuth(model);
             }
@@ -347,6 +357,10 @@ namespace Aiursoft.API.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+                
+                var token = await _appsContainer.AccessToken();
+                await _userService.SendConfirmationEmailAsync(token, user.Id, email);
+                
                 return this.Protocol(ErrorType.Success, "Successfully created your account.");
             }
             return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
