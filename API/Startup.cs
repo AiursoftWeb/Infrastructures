@@ -52,6 +52,7 @@ namespace Aiursoft.API
             services.AddTransient<UserImageGenerator<APIUser>>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
+            services.AddTransient<ConfirmationEmailSender>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
