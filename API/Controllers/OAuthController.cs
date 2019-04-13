@@ -356,10 +356,18 @@ namespace Aiursoft.API.Controllers
                 var primaryMail = new UserEmail
                 {
                     EmailAddress = model.Email.ToLower(),
-                    OwnerId = user.Id
+                    OwnerId = user.Id,
+                    ValidateToken = Guid.NewGuid().ToString("N")
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+                // Send him an confirmation email here:
+                try
+                {
+                    await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
+                }
+                // Ignore smtp exception.
+                catch (SmtpException) { }
                 return this.Protocol(ErrorType.Success, "Successfully created your account.");
             }
             return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
