@@ -346,7 +346,13 @@ namespace Aiursoft.API.Controllers
                 .Include(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _emailSender.SendResetPassword(code, user.Id, mail.EmailAddress);
+            // limit the sending frenquency to 3 minutes.
+            if (DateTime.UtcNow > mail.LastSendTime + new TimeSpan(0, 1, 0))
+            {
+                mail.LastSendTime = DateTime.UtcNow;
+                await _dbContext.SaveChangesAsync();
+                await _emailSender.SendResetPassword(code, user.Id, mail.EmailAddress);
+            }
             return RedirectToAction(nameof(ForgotPasswordSent));
         }
 
