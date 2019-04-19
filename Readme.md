@@ -3,13 +3,13 @@
 [![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
  [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
 
-Aiursoft basic micro-services platform.
+Aiursoft micro-services platform. Powered by ASP.NET Core.
 
-## What is it
+## What is Nexus
 
-Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design.
+Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
 
-Nexus has three levels:
+Nexus architect has three layers:
 
 * Basic Services
 * Infrastructures
@@ -31,20 +31,6 @@ In addition to the user interface that OAuth itself needs to provide login, this
 
 Any high-level service is built on the micro-service platform. But the requirements they solve are actually based on the decisions of the companies that use the microservices platform. In other words, regardless of the company's decision-making to build search engines, forums, company homepages, feedback centers, recruitment centers, etc., the platform should be able to support. But the entire process of this part should follow the process followed by a separate software system.
 
-## View running services in production
-
-If you wanna try the platform, all independent services are deployed under the following link. Click any of it allows you to try a service.
-
-* [Account](https://account.aiursoft.com)
-* [API](https://api.aiursoft.com)
-* [Colossus](https://colossus.aiursoft.com)
-* [Developer](https://developer.aiursoft.com)
-* [EE](https://ee.aiursoft.com)
-* [OSS](https://oss.aiursoft.com)
-* [Stargate](https://stargate.aiursoft.com)
-* [Wiki](https://wiki.aiursoft.com)
-* [WWW](https://www.aiursoft.com)
-
 ## How to run
 
 Running the entire micro-service platform is very very complicated and requires a lot of computing resources. Before you try to run the platform, we strongly suggest running only one specific service. Running one service is very easy and simple.
@@ -54,3 +40,18 @@ For running the platform, The document is [here](https://wiki.aiursoft.com/ReadD
 ## How to contribute
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
+
+## View running services in production
+
+If you wanna try the platform, all independent services are deployed under the following link. Click any of it allows you to try viewing a service.
+
+* [Account](https://account.aiursoft.com)
+* [API](https://api.aiursoft.com)
+* [Archon](https://archon.aiursoft.com)
+* [Colossus](https://colossus.aiursoft.com)
+* [Developer](https://developer.aiursoft.com)
+* [EE](https://ee.aiursoft.com)
+* [OSS](https://oss.aiursoft.com)
+* [Stargate](https://stargate.aiursoft.com)
+* [Wiki](https://wiki.aiursoft.com)
+* [WWW](https://www.aiursoft.com)
