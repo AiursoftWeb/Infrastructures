@@ -22,22 +22,22 @@
                 <input asp-for="ResponseType" type="hidden" />
                 <div class="form-group">
                     <label asp-for="Email"></label>
-                    <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]">
+                    <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]" tabindex="1">
                 </div>
                 <div class="form-group">
                     <label asp-for="Password" class="w-100">
                         @Localizer["Password"]
-                        <a class="d-block float-right" asp-controller="User" asp-action="ForgotpasswordFor" target="_blank">
+                        <a class="d-block float-right" asp-controller="User" asp-action="ForgotpasswordFor" target="_blank" tabindex="5">
                             @Localizer["Forgot Password?"]
                         </a>
                     </label>
 
-                    <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
+                    <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                 </div>
-                <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit">@Localizer["Sign in"]</button>
+                <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
             </form>
         </div>
-        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType" tabindex="4">
             <span class="float-left">@Localizer["Sign up"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>
