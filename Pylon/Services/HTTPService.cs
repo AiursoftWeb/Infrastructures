@@ -68,17 +68,11 @@ namespace Aiursoft.Pylon.Services
             var request = new HttpClient();
             var form = new MultipartFormDataContent();
             HttpResponseMessage response = null;
-            using (var memory = new MemoryStream())
+            using (var fileStream = new FileStream(filepath, mode: FileMode.Open))
             {
-                using (var fileStream = new FileStream(filepath, mode: FileMode.Open))
-                {
-                    await fileStream.CopyToAsync(memory);
-                    fileStream.Close();
-                }
-                memory.Position = 0;
-                form.Add(new StreamContent(memory), "file", new FileInfo(filepath).FullName);
+                form.Add(new StreamContent(fileStream), "file", new FileInfo(filepath).FullName);
                 response = await request.PostAsync(url.ToString(), form);
-                memory.Close();
+                fileStream.Close();
             }
             return await response.Content.ReadAsStringAsync();
         }
