@@ -16,6 +16,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
         }
 
-        public int MaxSize { get; internal set; }
+        public int MaxSize { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Aiursoft.Pylon
         public static string CorpPhoneNumber = "(+86) 8368-5000";
         public static string Schema = "https";
         public static string WsSchema = "wss";
-        public static long MaxFileSize = 1000 * 1024 * 1024;
+        public static long MaxFileSize = 8 * 1024 * 1024;
         public static string GitHubOrganizationAddress { get; } = "https://gitzab.com/AiursoftWeb/";
         public static string FacebookAddress { get; } = "https://facebook.com/";
         public static string TwitterAddress { get; } = "https://twitter.com/";

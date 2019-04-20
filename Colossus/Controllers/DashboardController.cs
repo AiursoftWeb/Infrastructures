@@ -42,14 +42,14 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             var model = new IndexViewModel(user, 0, "Upload new")
             {
-                MaxSize = 1000
+                MaxSize = 4 * 1024
             };
             return View(model);
         }
 
         [HttpPost]
         [APIExpHandler]
-        [FileChecker(MaxSize = 1000 * 1024 * 1024)]
+        [FileChecker]
         [APIModelStateChecker]
         public async Task<IActionResult> Upload()
         {

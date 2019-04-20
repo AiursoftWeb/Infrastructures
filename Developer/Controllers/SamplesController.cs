@@ -49,7 +49,7 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [APIExpHandler]
-        [FileChecker(MaxSize = 30 * 1024 * 1024)]
+        [FileChecker]
         [APIModelStateChecker]
         public async Task<IActionResult> Uploader()
         {
