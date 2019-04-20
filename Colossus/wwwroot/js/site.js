@@ -34,6 +34,10 @@ $(document).ready(function () {
         onFinish: function (elements, data) {
             uploadButton.val('Upload');
             uploadButton.prop('disabled', false);
+            if (data.code !== 0) {
+                alert(data.message);
+                return;
+            }
             copyButton.show();
             openButton.show();
             copyButton.attr('data-clipboard-text', data.value);
