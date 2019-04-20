@@ -42,7 +42,7 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             var model = new IndexViewModel(user, 0, "Upload new")
             {
-                MaxSize = 4 * 1024
+                MaxSize = int.MaxValue
             };
             return View(model);
         }

@@ -21,7 +21,7 @@
                 <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
                     <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" />
                     <div>
-                        <p>Max file size: @Model.MaxSize MB.</p>
+                        <p>Max file size: @(Model.MaxSize / 1024 / 1024) MB.</p>
                         <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                         <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
                         <a id="openButton" class="btn btn-primary" href="javascript:void(0);" target="_blank">@Localizer["Open in new page"]</a>
@@ -40,6 +40,7 @@
 @section css{
     <link href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
     <style>
+
         .dropify-wrapper {
             height: calc(100vh - 550px);
             min-height: 280px;

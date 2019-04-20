@@ -9,6 +9,10 @@ namespace Aiursoft.Pylon.Attributes
     /// </summary>
     public class FileChecker : ActionFilterAttribute
     {
+        public FileChecker()
+        {
+            MaxSize = int.MaxValue;
+        }
         /// <summary>
         /// Of b. For example: 30 x 1024 x 1024 = 30MB.
         /// </summary>
@@ -44,7 +48,7 @@ namespace Aiursoft.Pylon.Attributes
                     return;
                 }
                 // Too large
-                if ((MaxSize != -1 && file.Length > MaxSize) || file.Length > Values.MaxFileSize)
+                if (file.Length > MaxSize)
                 {
                     context.ModelState.AddModelError("", "Please provide a file which is smaller than 1GB!");
                 }
