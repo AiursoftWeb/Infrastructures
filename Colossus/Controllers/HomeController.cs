@@ -59,10 +59,10 @@ namespace Aiursoft.Colossus.Controllers
             var file = Request.Form.Files.First();
             var model = await _storageService
                 .SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
-            return Json(new
+            return Json(new AiurValue<string>(model.Path)
             {
-                message = "Uploaded!",
-                value = model.Path
+                Code = ErrorType.Success,
+                Message = "Uploaded!"
             });
         }
 

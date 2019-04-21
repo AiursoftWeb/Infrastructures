@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Colossus.Controllers
 {
@@ -65,10 +66,10 @@ namespace Aiursoft.Colossus.Controllers
             };
             _dbContext.UploadRecords.Add(record);
             await _dbContext.SaveChangesAsync();
-            return Json(new
+            return Json(new AiurValue<string>(model.Path)
             {
-                message = "Uploaded!",
-                value = model.Path
+                Code = ErrorType.Success,
+                Message = "Uploaded!"
             });
         }
 
