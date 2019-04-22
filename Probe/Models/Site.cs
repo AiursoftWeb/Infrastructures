@@ -10,7 +10,7 @@ namespace Aiursoft.Probe.Models
     {
         public int Id { get; set; }
 
-        public int AppId { get; set; }
+        public string AppId { get; set; }
         [ForeignKey(nameof(AppId))]
         public ProbeApp Context { get; set; }
 

@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models.SitesViewModels;
 using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Developer.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {
