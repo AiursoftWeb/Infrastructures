@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.Extensions.Configuration;
 using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Services.ToProbeServer;
 
 namespace Aiursoft.Developer.Controllers
 {
@@ -33,6 +34,7 @@ namespace Aiursoft.Developer.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly CoreApiService _coreApiService;
         private readonly IConfiguration _configuration;
+        private readonly SitesService _siteService;
 
         public AppsController(
             UserManager<DeveloperUser> userManager,
@@ -44,7 +46,8 @@ namespace Aiursoft.Developer.Controllers
             OSSApiService ossApiService,
             AppsContainer appsContainer,
             CoreApiService coreApiService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            SitesService siteService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,6 +59,7 @@ namespace Aiursoft.Developer.Controllers
             _appsContainer = appsContainer;
             _coreApiService = coreApiService;
             _configuration = configuration;
+            _siteService = siteService;
         }
 
         public async Task<IActionResult> Index()
@@ -235,7 +239,9 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                await _ossApiService.DeleteAppAsync(await _appsContainer.AccessToken(target.AppId, target.AppSecret), target.AppId);
+                var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
+                await _siteService.DeleteAppAsync(token, target.AppId);
+                await _ossApiService.DeleteAppAsync(token, target.AppId);
             }
             catch (AiurUnexceptedResponse e)
             {

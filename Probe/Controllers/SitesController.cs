@@ -14,7 +14,7 @@ namespace Aiursoft.Probe.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class SiteController : Controller
+    public class SitesController : Controller
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
