@@ -5,6 +5,7 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToArchonServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -187,6 +188,7 @@ namespace Aiursoft.Pylon
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<OSSApiService>();
+            services.AddScoped<SitesService>();
             services.AddScoped<StorageService>();
             services.AddScoped<CoreApiService>();
             services.AddScoped<OAuthService>();
