@@ -65,7 +65,10 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<string> PostFile(AiurUrl url, string filepath)
         {
-            var request = new HttpClient();
+            var request = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(3600)
+            };
             var form = new MultipartFormDataContent();
             string responseString = null;
             using (var fileStream = new FileStream(filepath, mode: FileMode.Open))
