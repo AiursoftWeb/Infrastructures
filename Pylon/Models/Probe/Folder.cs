@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Aiursoft.Probe.Models
+namespace Aiursoft.Pylon.Models.Probe
 {
-    public partial class Folder
+    public class Folder
     {
         public int Id { get; set; }
 
@@ -19,10 +18,7 @@ namespace Aiursoft.Probe.Models
 
         [InverseProperty(nameof(File.Context))]
         public IEnumerable<File> Files { get; set; }
-    }
 
-    public partial class Folder
-    {
         public string FolderName { get; set; }
     }
 }

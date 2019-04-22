@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Aiursoft.Pylon.Models.Probe.SiteAddressModels
+namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
 {
     public class DeleteAppAddressModel
     {

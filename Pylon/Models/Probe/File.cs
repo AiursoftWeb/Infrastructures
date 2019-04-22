@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Aiursoft.Probe.Models
+namespace Aiursoft.Pylon.Models.Probe
 {
-    public partial class File
+    public class File
     {
         public int Id { get; set; }
 
         public int ContextId { get; set; }
         [ForeignKey(nameof(ContextId))]
         public Folder Context { get; set; }
-    }
 
-    public partial class File
-    {
         public int FileName { get; set; }
         public DateTime UploadTime { get; set; }
     }

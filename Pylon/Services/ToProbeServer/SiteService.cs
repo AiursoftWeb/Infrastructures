@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Probe.SiteAddressModels;
+using Aiursoft.Pylon.Models.Probe.SitesAddressModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

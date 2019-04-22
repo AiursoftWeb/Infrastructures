@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Aiursoft.Probe.Models
+namespace Aiursoft.Pylon.Models.Probe
 {
     public class ProbeApp
     {

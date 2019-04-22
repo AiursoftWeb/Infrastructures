@@ -68,8 +68,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 appLocal = new OSSApp
                 {
-                    AppId = appid,
-                    MyBuckets = new List<Bucket>()
+                    AppId = appid
                 };
                 _dbContext.Apps.Add(appLocal);
                 await _dbContext.SaveChangesAsync();
