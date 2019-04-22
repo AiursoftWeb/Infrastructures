@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aiursoft.Probe.Migrations
 {
     [DbContext(typeof(ProbeDbContext))]
-    [Migration("20190408151802_CreateBasicRelation")]
-    partial class CreateBasicRelation
+    [Migration("20190422105922_ReInit")]
+    partial class ReInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,13 +21,17 @@ namespace Aiursoft.Probe.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.File", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ContextId");
+
+                    b.Property<int>("FileName");
+
+                    b.Property<DateTime>("UploadTime");
 
                     b.HasKey("Id");
 
@@ -36,13 +40,15 @@ namespace Aiursoft.Probe.Migrations
                     b.ToTable("Files");
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.Folder", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.Folder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ContextId");
+
+                    b.Property<string>("FolderName");
 
                     b.HasKey("Id");
 
@@ -51,24 +57,23 @@ namespace Aiursoft.Probe.Migrations
                     b.ToTable("Folders");
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.ProbeApp", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.ProbeApp", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("AppId")
+                        .ValueGeneratedOnAdd();
 
-                    b.HasKey("Id");
+                    b.HasKey("AppId");
 
                     b.ToTable("Apps");
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.Site", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.Site", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AppId");
+                    b.Property<string>("AppId");
 
                     b.Property<int>("FolderId");
 
@@ -81,29 +86,28 @@ namespace Aiursoft.Probe.Migrations
                     b.ToTable("Sites");
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.File", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.File", b =>
                 {
-                    b.HasOne("Aiursoft.Probe.Models.Folder", "Context")
+                    b.HasOne("Aiursoft.Pylon.Models.Probe.Folder", "Context")
                         .WithMany("Files")
                         .HasForeignKey("ContextId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.Folder", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.Folder", b =>
                 {
-                    b.HasOne("Aiursoft.Probe.Models.Folder", "Context")
+                    b.HasOne("Aiursoft.Pylon.Models.Probe.Folder", "Context")
                         .WithMany("SubFolders")
                         .HasForeignKey("ContextId");
                 });
 
-            modelBuilder.Entity("Aiursoft.Probe.Models.Site", b =>
+            modelBuilder.Entity("Aiursoft.Pylon.Models.Probe.Site", b =>
                 {
-                    b.HasOne("Aiursoft.Probe.Models.ProbeApp", "Context")
+                    b.HasOne("Aiursoft.Pylon.Models.Probe.ProbeApp", "Context")
                         .WithMany("Sites")
-                        .HasForeignKey("AppId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AppId");
 
-                    b.HasOne("Aiursoft.Probe.Models.Folder", "Root")
+                    b.HasOne("Aiursoft.Pylon.Models.Probe.Folder", "Root")
                         .WithMany()
                         .HasForeignKey("FolderId")
                         .OnDelete(DeleteBehavior.Cascade);
