@@ -84,7 +84,6 @@ namespace Aiursoft.Probe.Controllers
 
             var sites = await _dbContext
                 .Sites
-                .Include(t => t.Root)
                 .Where(t => t.AppId == appid)
                 .ToListAsync();
             var viewModel = new ViewMySitesViewModel
@@ -95,6 +94,26 @@ namespace Aiursoft.Probe.Controllers
                 Message = "Successfully get your buckets!"
             };
             return Json(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSite(DeleteSiteAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var site = await _dbContext
+                .Sites
+                .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
+            if (site == null)
+            {
+                return this.Protocol(ErrorType.NotFound, $"Could not find a site named: {model.SiteName}");
+            }
+            if (site.AppId != appid)
+            {
+                return this.Protocol(ErrorType.Unauthorized, $"The site you tried to delete is not your app's site.");
+            }
+            _dbContext.Sites.Remove(site);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "Successfully deleted your site!");
         }
 
         [HttpPost]
