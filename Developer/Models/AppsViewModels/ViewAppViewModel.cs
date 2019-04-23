@@ -1,9 +1,12 @@
-﻿using Aiursoft.Pylon.Models.API;
+﻿using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.OSS;
+using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToOSSServer;
+using Aiursoft.Pylon.Services.ToProbeServer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,10 +23,11 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             App thisApp,
             CoreApiService coreApiService,
             OSSApiService ossApiService,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            SitesService sitesService)
         {
             var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, ossApiService, appsContainer);
+            await model.Recover(user, thisApp, coreApiService, ossApiService, appsContainer, sitesService);
             return model;
         }
 
@@ -32,7 +36,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             App thisApp,
             CoreApiService coreApiService,
             OSSApiService ossApiService,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            SitesService sitesService)
         {
             base.Recover(user, 1);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
@@ -42,6 +47,9 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
             var grants = await coreApiService.AllUserGrantedAsync(token);
             Grants = grants.Grants;
+
+            var sites = await sitesService.ViewMySitesAsync(token);
+            Sites = sites.Sites;
         }
 
         private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
@@ -111,6 +119,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ChangeGrantInfo { get; set; }
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
+        public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }
         public IEnumerable<ViewAblePermission> ViewAblePermission { get; set; }
     }

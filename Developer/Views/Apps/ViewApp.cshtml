@@ -307,7 +307,42 @@
                         </table>
                     </div>
                     <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Bucket"]</a>
-                    <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to list"]</a>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i>
+                    @Localizer["Site Storage Settings"]
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Site ID"]</th>
+                                    <th>@Localizer["Site Name"]</th>
+                                    <th style="width: 460px">@Localizer["Operation"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var site in Model.Sites)
+                                {
+                                    <tr>
+                                        <td>@site.Id</td>
+                                        <td>Placeholder</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-controller="Sites" asp-action="EditSite" asp-route-id="@site.Id" class="btn btn-warning">@Localizer["Edit"]</a>
+                                                <a asp-controller="Sites" asp-action="DeleteSite" asp-route-id="@site.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+                                                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-id="@site.Id" class="btn btn-info">@Localizer["View Files"]</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <a asp-controller="Sites" asp-action="CreateBucket" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Site"]</a>
                 </div>
             </div>
         </div>

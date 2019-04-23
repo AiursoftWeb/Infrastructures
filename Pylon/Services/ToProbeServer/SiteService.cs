@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Probe.SitesAddressModels;
+using Aiursoft.Pylon.Models.Probe.SitesViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,19 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
+        public async Task<ViewMySitesViewModel> ViewMySitesAsync(string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "ViewMySites", new ViewMySitesAddressModel
+            {
+                AccessToken = accessToken
+            });
+            var result = await _http.Get(url, true);
+            var jResult = JsonConvert.DeserializeObject<ViewMySitesViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;

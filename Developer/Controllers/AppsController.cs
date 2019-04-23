@@ -40,7 +40,7 @@ namespace Aiursoft.Developer.Controllers
             UserManager<DeveloperUser> userManager,
             SignInManager<DeveloperUser> signInManager,
             ILoggerFactory loggerFactory,
-            DeveloperDbContext _context,
+            DeveloperDbContext dbContext,
             ServiceLocation serviceLocation,
             StorageService storageService,
             OSSApiService ossApiService,
@@ -52,7 +52,7 @@ namespace Aiursoft.Developer.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AppsController>();
-            _dbContext = _context;
+            _dbContext = dbContext;
             _serviceLocation = serviceLocation;
             _storageService = storageService;
             _ossApiService = ossApiService;
@@ -151,7 +151,6 @@ namespace Aiursoft.Developer.Controllers
             {
                 return new UnauthorizedResult();
             }
-            bool permissionChanged = false;
             target.AppName = model.AppName;
             target.AppDescription = model.AppDescription;
             target.EnableOAuth = model.EnableOAuth;
@@ -162,14 +161,15 @@ namespace Aiursoft.Developer.Controllers
             target.LicenseUrl = model.LicenseUrl;
             target.AppDomain = model.AppDomain;
             //Permissions
-            target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionChanged);
-            target.ViewPhoneNumber = _ChangePermission(target.ViewPhoneNumber, model.ViewPhoneNumber, ref permissionChanged);
-            target.ChangePhoneNumber = _ChangePermission(target.ChangePhoneNumber, model.ChangePhoneNumber, ref permissionChanged);
-            target.ConfirmEmail = _ChangePermission(target.ConfirmEmail, model.ConfirmEmail, ref permissionChanged);
-            target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionChanged);
-            target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionChanged);
-            target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangeGrantInfo, ref permissionChanged);
-            if (permissionChanged)
+            bool permissionAdded = false;
+            target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionAdded);
+            target.ViewPhoneNumber = _ChangePermission(target.ViewPhoneNumber, model.ViewPhoneNumber, ref permissionAdded);
+            target.ChangePhoneNumber = _ChangePermission(target.ChangePhoneNumber, model.ChangePhoneNumber, ref permissionAdded);
+            target.ConfirmEmail = _ChangePermission(target.ConfirmEmail, model.ConfirmEmail, ref permissionAdded);
+            target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionAdded);
+            target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionAdded);
+            target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangeGrantInfo, ref permissionAdded);
+            if (permissionAdded)
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
                 await _coreApiService.DropGrantsAsync(token);
