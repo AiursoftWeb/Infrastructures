@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services
             Stargate = TrySet(section["StargatePath"], "https://stargate.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWW"], "https://www.aiursoft.com");
-            WWW = TrySet(section["Probe"], "https://probe.aiursoft.com");
+            Probe = TrySet(section["Probe"], "https://probe.aiursoft.com");
 
             StargateListenAddress = Stargate
                 .Replace("https://", "wss://")
