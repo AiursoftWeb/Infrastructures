@@ -11,6 +11,5 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
         public string AccessToken { get; set; }
         [Required]
         public string OpenId { get; set; }
-
     }
 }

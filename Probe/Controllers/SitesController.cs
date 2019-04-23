@@ -31,26 +31,44 @@ namespace Aiursoft.Probe.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> DeleteApp(DeleteAppAddressModel model)
+        public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            if (appid != model.AppId)
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
+            if (appLocal == null)
             {
-                return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
-            }
-            var target = await _dbContext.Apps.FindAsync(appid);
-            if (target != null)
-            {
-                _dbContext.Folders.Delete(t => target.Sites.Select(p => p.FolderId).Contains(t.Id));
-                _dbContext.Sites.Delete(t => t.AppId == appid);
-                _dbContext.Apps.Remove(target);
+                appLocal = new ProbeApp
+                {
+                    AppId = appid
+                };
+                _dbContext.Apps.Add(appLocal);
                 await _dbContext.SaveChangesAsync();
-                return this.Protocol(ErrorType.Success, "Successfully deleted that app and all sites.");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "That app do not exists in our database.");
+
+            var conflict = await _dbContext.Sites
+                .AnyAsync(t => t.SiteName.ToLower().Trim() == model.NewSiteName.ToLower().Trim());
+            if (conflict)
+            {
+                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site named: {model.NewSiteName}. Please try another new name.");
+            }
+            var newRootFolder = new Folder
+            {
+                FolderName = "blob"
+            };
+            _dbContext.Folders.Add(newRootFolder);
+            await _dbContext.SaveChangesAsync();
+            var site = new Site
+            {
+                AppId = appid,
+                SiteName = model.NewSiteName,
+                FolderId = newRootFolder.Id
+            };
+            _dbContext.Sites.Add(site);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, $"Successfully created your new site: {site.SiteName}.");
         }
 
-        public async Task<JsonResult> ViewMySites(ViewMySitesAddressModel model)
+        public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
@@ -77,6 +95,26 @@ namespace Aiursoft.Probe.Controllers
                 Message = "Successfully get your buckets!"
             };
             return Json(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            if (appid != model.AppId)
+            {
+                return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
+            }
+            var target = await _dbContext.Apps.FindAsync(appid);
+            if (target != null)
+            {
+                _dbContext.Folders.Delete(t => target.Sites.Select(p => p.FolderId).Contains(t.Id));
+                _dbContext.Sites.Delete(t => t.AppId == appid);
+                _dbContext.Apps.Remove(target);
+                await _dbContext.SaveChangesAsync();
+                return this.Protocol(ErrorType.Success, "Successfully deleted that app and all sites.");
+            }
+            return this.Protocol(ErrorType.HasDoneAlready, "That app do not exists in our database.");
         }
     }
 }

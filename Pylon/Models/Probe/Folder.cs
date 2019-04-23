@@ -19,6 +19,6 @@ namespace Aiursoft.Pylon.Models.Probe
         [InverseProperty(nameof(File.Context))]
         public IEnumerable<File> Files { get; set; }
 
-        public string FolderName { get; set; }
+        public string FolderName { get; set; } = "blob";
     }
 }

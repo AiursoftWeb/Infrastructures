@@ -19,5 +19,7 @@ namespace Aiursoft.Pylon.Models.Probe
         [ForeignKey(nameof(FolderId))]
         [JsonIgnore]
         public Folder Root { get; set; }
+
+        public string SiteName { get; set; }
     }
 }
