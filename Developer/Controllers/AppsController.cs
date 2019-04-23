@@ -126,7 +126,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _ossApiService, _appsContainer);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _ossApiService, _appsContainer, _siteService);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -139,7 +139,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _ossApiService, _appsContainer);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _ossApiService, _appsContainer, _siteService);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(model.AppId);
