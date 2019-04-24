@@ -8,6 +8,8 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Polly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,24 +35,32 @@ namespace Aiursoft.Developer.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var retry = Policy.Handle<NullReferenceException>().WaitAndRetry(new[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(2)
+            });
+            IndexViewModel model = null;
             var user = await GetCurrentUserAsync();
-            var allBuckets = new List<Bucket>();
-            var taskList = new List<Task>();
-            foreach (var app in user.MyApps)
+            await retry.Execute(async () =>
             {
-                async Task AddApp()
+                var allBuckets = new List<Bucket>();
+                var taskList = new List<Task>();
+                foreach (var app in user.MyApps)
                 {
-                    var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
-                    allBuckets.AddRange(appInfo.Buckets);
+                    async Task AddApp()
+                    {
+                        var appInfo = await _ossApiService.ViewMyBucketsAsync(await _appsContainer.AccessToken(app.AppId, app.AppSecret));
+                        allBuckets.AddRange(appInfo.Buckets);
+                    }
+                    taskList.Add(AddApp());
                 }
-
-                taskList.Add(AddApp());
-            }
-            await Task.WhenAll(taskList);
-            var model = new IndexViewModel(user)
-            {
-                AllBuckets = allBuckets.GroupBy(t => t.BelongingAppId).OrderBy(t => t.Key)
-            };
+                await Task.WhenAll(taskList);
+                model = new IndexViewModel(user)
+                {
+                    AllBuckets = allBuckets.GroupBy(t => t.BelongingAppId).OrderBy(t => t.Key)
+                };
+            });
             return View(model);
         }
 
