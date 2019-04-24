@@ -15,10 +15,10 @@ namespace Aiursoft.Probe.Controllers
         {
 
         }
-
-        //public async Task<IActionResult> ViewContent(string siteName, string folderName)
-        //{
-
-        //}
+        [Route("Folders/ViewContent/{siteName}/{**folderNames}")]
+        public async Task<IActionResult> ViewContent(string siteName, params string[] folderNames)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
