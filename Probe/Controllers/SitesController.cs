@@ -60,7 +60,7 @@ namespace Aiursoft.Probe.Controllers
             var site = new Site
             {
                 AppId = appid,
-                SiteName = model.NewSiteName,
+                SiteName = model.NewSiteName.ToLower(),
                 FolderId = newRootFolder.Id
             };
             _dbContext.Sites.Add(site);
