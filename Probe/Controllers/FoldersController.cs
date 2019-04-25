@@ -2,6 +2,7 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,6 @@ namespace Aiursoft.Probe.Controllers
             string[] folders = model.FolderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             var site = await _dbContext
                 .Sites
-                .Where(t => t.AppId == appid)
                 .Include(t => t.Root)
                 .Include(t => t.Root.SubFolders)
                 .Include(t => t.Root.Files)
@@ -44,6 +44,10 @@ namespace Aiursoft.Probe.Controllers
             if (site == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Not found target site!");
+            }
+            if (site.AppId != appid)
+            {
+                return this.Protocol(ErrorType.Unauthorized, "The target folder is not your app's folder!");
             }
             var currentFolder = site.Root;
             foreach (var folder in folders)
@@ -61,6 +65,59 @@ namespace Aiursoft.Probe.Controllers
                 currentFolder = folderObject;
             }
             return Json(currentFolder);
+        }
+
+        [HttpPost]
+        [Route("CreateNewFolder/{SiteName}/{**FolderNames}")]
+        public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            string[] folders = model.FolderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+            var site = await _dbContext
+                .Sites
+                .Include(t => t.Root)
+                .Include(t => t.Root.SubFolders)
+                .Include(t => t.Root.Files)
+                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
+            if (site == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Not found target site!");
+            }
+            if (site.AppId != appid)
+            {
+                return this.Protocol(ErrorType.Unauthorized, "The target site is not your app's site!");
+            }
+            var currentFolder = site.Root;
+            foreach (var folder in folders)
+            {
+                var folderObject = await _dbContext
+                    .Folders
+                    .Include(t => t.SubFolders)
+                    .Include(t => t.Files)
+                    .Where(t => t.ContextId == currentFolder.Id)
+                    .SingleOrDefaultAsync(t => t.FolderName == folder);
+                if (folderObject == null)
+                {
+                    return this.Protocol(ErrorType.NotFound, $"Not found folder {folder} under folder {currentFolder.FolderName}!");
+                }
+                currentFolder = folderObject;
+            }
+            var conflict = await _dbContext
+                .Folders
+                .Where(t => t.ContextId == currentFolder.Id)
+                .AnyAsync(t => t.FolderName == model.NewFolderName.ToLower());
+            if (conflict)
+            {
+                return this.Protocol(ErrorType.NotEnoughResources, $"Folder name: '{model.NewFolderName}' conflict!");
+            }
+            var newFolder = new Folder
+            {
+                ContextId = currentFolder.Id,
+                FolderName = model.NewFolderName.ToLower(),
+            };
+            _dbContext.Folders.Add(newFolder);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "Successfully created your new folder!");
         }
     }
 }
