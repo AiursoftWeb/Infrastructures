@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Aiursoft.Pylon.Models.Probe
 
         public int? ContextId { get; set; }
         [ForeignKey(nameof(ContextId))]
+        [JsonIgnore]
         public Folder Context { get; set; }
 
         [InverseProperty(nameof(Context))]
