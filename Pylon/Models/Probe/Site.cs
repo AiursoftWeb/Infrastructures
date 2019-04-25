@@ -8,6 +8,7 @@ namespace Aiursoft.Pylon.Models.Probe
 {
     public class Site
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         public string AppId { get; set; }
@@ -15,6 +16,7 @@ namespace Aiursoft.Pylon.Models.Probe
         [JsonIgnore]
         public ProbeApp Context { get; set; }
 
+        [JsonIgnore]
         public int FolderId { get; set; }
         [ForeignKey(nameof(FolderId))]
         [JsonIgnore]

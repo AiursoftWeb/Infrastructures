@@ -8,6 +8,7 @@ namespace Aiursoft.Pylon.Models.Probe
 {
     public class File
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         public int ContextId { get; set; }

@@ -2,6 +2,8 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
+using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,24 +15,32 @@ namespace Aiursoft.Probe.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
+    [Route("Folders")]
     public class FoldersController : Controller
     {
         private readonly ProbeDbContext _dbContext;
-        public FoldersController(ProbeDbContext dbContext)
+        private readonly ACTokenManager _tokenManager;
+
+        public FoldersController(
+            ProbeDbContext dbContext,
+            ACTokenManager tokenManager)
         {
             _dbContext = dbContext;
+            _tokenManager = tokenManager;
         }
 
-        [Route("Folders/ViewContent/{siteName}/{**folderNames}")]
-        public async Task<IActionResult> ViewContent(string siteName, string folderNames)
+        [Route("ViewContent/{SiteName}/{**FolderNames}")]
+        public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
-            string[] folders = folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            string[] folders = model.FolderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             var site = await _dbContext
                 .Sites
+                .Where(t => t.AppId == appid)
                 .Include(t => t.Root)
                 .Include(t => t.Root.SubFolders)
                 .Include(t => t.Root.Files)
-                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
+                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
             if (site == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Not found target site!");
