@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
@@ -21,20 +22,22 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
+        private readonly FolderLocator _folderLocator;
 
         public FoldersController(
             ProbeDbContext dbContext,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            FolderLocator folderLocator)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
+            _folderLocator = folderLocator;
         }
 
         [Route("ViewContent/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            string[] folders = model.FolderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)
@@ -49,22 +52,8 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, "The target folder is not your app's folder!");
             }
-            var currentFolder = site.Root;
-            foreach (var folder in folders)
-            {
-                var folderObject = await _dbContext
-                    .Folders
-                    .Include(t => t.SubFolders)
-                    .Include(t => t.Files)
-                    .Where(t => t.ContextId == currentFolder.Id)
-                    .SingleOrDefaultAsync(t => t.FolderName == folder);
-                if (folderObject == null)
-                {
-                    return this.Protocol(ErrorType.NotFound, $"Not found folder {folder} under folder {currentFolder.FolderName}!");
-                }
-                currentFolder = folderObject;
-            }
-            return Json(currentFolder);
+            var folder = await _folderLocator.LocateAsync(model.FolderNames, site.Root);
+            return Json(folder);
         }
 
         [HttpPost]
@@ -72,7 +61,6 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            string[] folders = model.FolderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)
@@ -87,24 +75,10 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, "The target site is not your app's site!");
             }
-            var currentFolder = site.Root;
-            foreach (var folder in folders)
-            {
-                var folderObject = await _dbContext
-                    .Folders
-                    .Include(t => t.SubFolders)
-                    .Include(t => t.Files)
-                    .Where(t => t.ContextId == currentFolder.Id)
-                    .SingleOrDefaultAsync(t => t.FolderName == folder);
-                if (folderObject == null)
-                {
-                    return this.Protocol(ErrorType.NotFound, $"Not found folder {folder} under folder {currentFolder.FolderName}!");
-                }
-                currentFolder = folderObject;
-            }
+            var folder = await _folderLocator.LocateAsync(model.FolderNames, site.Root);
             var conflict = await _dbContext
                 .Folders
-                .Where(t => t.ContextId == currentFolder.Id)
+                .Where(t => t.ContextId == folder.Id)
                 .AnyAsync(t => t.FolderName == model.NewFolderName.ToLower());
             if (conflict)
             {
@@ -112,7 +86,7 @@ namespace Aiursoft.Probe.Controllers
             }
             var newFolder = new Folder
             {
-                ContextId = currentFolder.Id,
+                ContextId = folder.Id,
                 FolderName = model.NewFolderName.ToLower(),
             };
             _dbContext.Folders.Add(newFolder);
