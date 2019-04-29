@@ -25,6 +25,8 @@ namespace Aiursoft.Wiki.Services
                     return "Number";
                 case ArgumentType.datetime:
                     return "DateTime";
+                case ArgumentType.collection:
+                    return "Text Collection";
                 case ArgumentType.unknown:
                     return "A magic type!";
             }
@@ -42,6 +44,7 @@ namespace Aiursoft.Wiki.Services
                 case ArgumentType.number:
                     return "0";
                 case ArgumentType.text:
+                case ArgumentType.collection:
                     return $"your{arg.Name}";
                 default:
                     return $"your{arg.Name}";
@@ -53,7 +56,15 @@ namespace Aiursoft.Wiki.Services
             var path = "";
             foreach (var arg in args)
             {
-                path += $"{arg.Name}={GetExampleValue(arg)}&";
+                if(arg.Type != ArgumentType.collection)
+                {
+                    path += $"{arg.Name}={GetExampleValue(arg)}&";
+                }
+                else
+                {
+                    path += $"{arg.Name}[0]={GetExampleValue(arg)}&{arg.Name}[1]={GetExampleValue(arg)}&{arg.Name}[2]={GetExampleValue(arg)}&";
+
+                }
             }
             return path.Trim('&');
         }
@@ -82,7 +93,7 @@ namespace Aiursoft.Wiki.Services
                 }
                 content += "\r\n\r\n";
                 if (docAction.IsPost == false)
-                { 
+                {
                     content += $"Request example:\r\n\r\n";
                     content += $"\t{pathWithArgs}\r\n\r\n";
                 }

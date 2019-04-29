@@ -134,6 +134,8 @@ namespace Aiursoft.Pylon.Middlewares
                 t == typeof(DateTime?) ? ArgumentType.datetime :
                 t == typeof(bool) ? ArgumentType.boolean :
                 t == typeof(bool?) ? ArgumentType.boolean :
+                t == typeof(string[]) ? ArgumentType.collection :
+                t == typeof(List<string>) ? ArgumentType.collection :
                 ArgumentType.unknown;
         }
 
@@ -188,6 +190,7 @@ namespace Aiursoft.Pylon.Middlewares
         number = 1,
         boolean = 2,
         datetime = 3,
-        unknown = 4
+        collection = 4,
+        unknown = 5
     }
 }
