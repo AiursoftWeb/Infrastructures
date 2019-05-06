@@ -43,6 +43,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         [Route("UploadFile/{SiteName}/{**FolderNames}")]
         [FileChecker]
+        [APIModelStateChecker]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -64,7 +65,7 @@ namespace Aiursoft.Probe.Controllers
             var file = Request.Form.Files.First();
             var newFile = new Pylon.Models.Probe.File
             {
-                FileName = Path.GetFileName(file.FileName),
+                FileName = Path.GetFileName(file.FileName).ToLower(),
                 ContextId = folder.Id
             };
             //Ensure there not exists file with the same file name.

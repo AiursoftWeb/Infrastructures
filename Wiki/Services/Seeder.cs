@@ -65,7 +65,7 @@ namespace Aiursoft.Wiki.Services
                     // Get markdown from GitHub
                     foreach (var article in collection.Articles ?? new List<Article>())
                     {
-                        if(!string.IsNullOrEmpty(article.ArticleAddress))
+                        if (!string.IsNullOrEmpty(article.ArticleAddress))
                         {
                             var newarticle = new Article
                             {
