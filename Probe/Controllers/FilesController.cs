@@ -23,19 +23,16 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly char _ = Path.DirectorySeparatorChar;
         private readonly ProbeDbContext _dbContext;
-        private readonly ACTokenManager _tokenManager;
         private readonly FolderLocator _folderLocator;
         private readonly IConfiguration _configuration;
         private readonly static object _obj = new object();
 
         public FilesController(
             ProbeDbContext dbContext,
-            ACTokenManager tokenManager,
             FolderLocator folderLocator,
             IConfiguration configuration)
         {
             _dbContext = dbContext;
-            _tokenManager = tokenManager;
             _folderLocator = folderLocator;
             _configuration = configuration;
         }
@@ -46,22 +43,7 @@ namespace Aiursoft.Probe.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var site = await _dbContext
-                .Sites
-                .Include(t => t.Root)
-                .Include(t => t.Root.SubFolders)
-                .Include(t => t.Root.Files)
-                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
-            if (site == null)
-            {
-                return this.Protocol(ErrorType.NotFound, "Not found target site!");
-            }
-            if (site.AppId != appid)
-            {
-                return this.Protocol(ErrorType.Unauthorized, "The target folder is not your app's folder!");
-            }
-            var folder = await _folderLocator.LocateAsync(model.FolderNames, site.Root);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, model.FolderNames);
             var file = Request.Form.Files.First();
             var newFile = new Pylon.Models.Probe.File
             {

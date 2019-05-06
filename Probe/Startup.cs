@@ -42,6 +42,7 @@ namespace Aiursoft.Probe
             services.AddScoped<CoreApiService>();
             services.AddTransient<ImageCompressor>();
             services.AddTransient<FolderLocator>();
+            services.AddTransient<FolderCleaner>();
             services.AddMvc();
         }
 

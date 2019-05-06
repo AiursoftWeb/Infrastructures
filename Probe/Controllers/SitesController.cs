@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
@@ -21,13 +22,16 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
+        private readonly FolderCleaner _folderCleaner;
 
         public SitesController(
             ProbeDbContext dbContext,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            FolderCleaner folderCleaner)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
+            _folderCleaner = folderCleaner;
         }
 
         [HttpPost]
@@ -49,7 +53,7 @@ namespace Aiursoft.Probe.Controllers
                 .AnyAsync(t => t.SiteName.ToLower().Trim() == model.NewSiteName.ToLower().Trim());
             if (conflict)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site named: {model.NewSiteName}. Please try another new name.");
+                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
             }
             var newRootFolder = new Folder
             {
@@ -65,7 +69,7 @@ namespace Aiursoft.Probe.Controllers
             };
             _dbContext.Sites.Add(site);
             await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, $"Successfully created your new site: {site.SiteName}.");
+            return this.Protocol(ErrorType.Success, $"Successfully created your new site: '{site.SiteName}'.");
         }
 
         public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
@@ -102,15 +106,17 @@ namespace Aiursoft.Probe.Controllers
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
                 .Sites
+                .Include(t => t.Root)
                 .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
             if (site == null)
             {
-                return this.Protocol(ErrorType.NotFound, $"Could not find a site named: {model.SiteName}");
+                return this.Protocol(ErrorType.NotFound, $"Could not find a site with name: '{model.SiteName}'");
             }
             if (site.AppId != appid)
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The site you tried to delete is not your app's site.");
             }
+            await _folderCleaner.DeleteFolderAsync(site.Root);
             _dbContext.Sites.Remove(site);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your site!");
