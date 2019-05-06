@@ -16,7 +16,7 @@ namespace Aiursoft.Pylon.Models.Probe
         [ForeignKey(nameof(ContextId))]
         public Folder Context { get; set; }
 
-        public int FileName { get; set; }
-        public DateTime UploadTime { get; set; }
+        public string FileName { get; set; }
+        public DateTime UploadTime { get; set; } = DateTime.UtcNow;
     }
 }

@@ -26,7 +26,7 @@ namespace Aiursoft.OSS.Controllers
         private readonly IConfiguration _configuration;
         private readonly ServiceLocation _serviceLocation;
         private readonly ACTokenManager _tokenManager;
-        private readonly object _obj = new object();
+        private readonly static object _obj = new object();
 
         public ApiController(
             OSSDbContext dbContext,
