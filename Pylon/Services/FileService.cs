@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
         /// <param name="download">If set, will let the browser directly download the file.</param>
         /// <param name="suggestedFileName">If `download` was set and this was not empty, will override the file name argument to be the file name after downloading.</param>
         /// <returns></returns>
-        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename, bool download, string suggestedFileName)
+        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename, string suggestedFileName)
         {
             return await Task.Run<IActionResult>(() =>
             {
@@ -36,21 +36,25 @@ namespace Aiursoft.Pylon.Services
                     return new StatusCodeResult(304);
                 }
                 controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
+                return controller.PhysicalFile(path, "application/octet-stream", suggestedFileName, true);
+            });
+        }
 
-                // Download mode, or not supported MIME.
-                if (download || !MIME.HasKey(extension))
+        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename)
+        {
+            return await Task.Run<IActionResult>(() =>
+            {
+                var fileInfo = new FileInfo(path);
+                var extension = filename.Substring(filename.LastIndexOf('.') + 1);
+                long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
+                var _etag = Convert.ToString(etagHash, 16);
+                controller.Response.Headers.Add("ETag", '\"' + _etag + '\"');
+                if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == _etag)
                 {
-                    if (string.IsNullOrEmpty(suggestedFileName))
-                    {
-                        suggestedFileName = filename;
-                    }
-                    return controller.PhysicalFile(path, "application/octet-stream", suggestedFileName, true);
+                    return new StatusCodeResult(304);
                 }
-                // Open mode, and supported MIME
-                else
-                {
-                    return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
-                }
+                controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
+                return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
             });
         }
     }

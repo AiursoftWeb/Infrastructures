@@ -37,11 +37,25 @@ namespace Aiursoft.OSS.Controllers
             {
                 if (realfileName.IsStaticImage() && h > 0 && w > 0)
                 {
-                    return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName, download, suggestefFileName);
+                    if (download)
+                    {
+                        return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName, suggestefFileName);
+                    }
+                    else
+                    {
+                        return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName);
+                    }
                 }
                 else
                 {
-                    return await this.AiurFile(path, realfileName, download, suggestefFileName);
+                    if (download)
+                    {
+                        return await this.AiurFile(path, realfileName, suggestefFileName);
+                    }
+                    else
+                    {
+                        return await this.AiurFile(path, realfileName);
+                    }
                 }
             }
             catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
