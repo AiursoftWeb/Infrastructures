@@ -61,11 +61,11 @@ namespace Aiursoft.Pylon.Services
         }
         public string CurrentAppId { get; private set; } = string.Empty;
         public string CurrentAppSecret { get; private set; } = string.Empty;
-        public async Task<string> AccessToken(IServiceScopeFactory _scopeFactory)
+        public async Task<string> AccessToken(IServiceScopeFactory scopeFactory)
         {
             if (DateTime.UtcNow > _accessTokenDeadTime)
             {
-                using (var scope = _scopeFactory.CreateScope())
+                using (var scope = scopeFactory.CreateScope())
                 {
                     var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
                     var ServerResult = await archonApiService.AccessTokenAsync(CurrentAppId, CurrentAppSecret);

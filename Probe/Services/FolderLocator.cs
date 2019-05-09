@@ -24,7 +24,12 @@ namespace Aiursoft.Probe.Services
             _tokenManager = tokenManager;
         }
 
-        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string folderNames)
+        public string[] SplitStrings(string folderNames)
+        {
+            return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+        }
+
+        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
@@ -45,11 +50,10 @@ namespace Aiursoft.Probe.Services
             return folder;
         }
 
-        public async Task<Folder> LocateAsync(string folderNames, Folder root)
+        public async Task<Folder> LocateAsync(string[] folderNames, Folder root)
         {
-            string[] folders = folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             var currentFolder = root;
-            foreach (var folder in folders)
+            foreach (var folder in folderNames)
             {
                 var folderObject = await _dbContext
                     .Folders

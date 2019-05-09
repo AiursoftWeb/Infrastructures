@@ -39,7 +39,8 @@ namespace Aiursoft.Probe.Controllers
         [Route("ViewContent/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, model.FolderNames);
+            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             return Json(new AiurValue<Folder>(folder)
             {
                 Code = ErrorType.Success,
@@ -51,7 +52,8 @@ namespace Aiursoft.Probe.Controllers
         [Route("CreateNewFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, model.FolderNames);
+            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             var conflict = await _dbContext
                 .Folders
                 .Where(t => t.ContextId == folder.Id)
@@ -74,7 +76,8 @@ namespace Aiursoft.Probe.Controllers
         [Route("DeleteFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model)
         {
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, model.FolderNames);
+            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             if (folder.ContextId == null)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");

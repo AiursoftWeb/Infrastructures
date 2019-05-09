@@ -31,8 +31,7 @@ namespace Aiursoft.Probe.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost]
-        [Route("InSites/{SiteName}/{**FolderNames}/{FileName}")]
+        [Route("InSites/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> InSites(InSitesAddressModel model)
         {
             var site = await _dbContext
@@ -45,8 +44,12 @@ namespace Aiursoft.Probe.Controllers
             {
                 return NotFound();
             }
-            var folder = await _folderLocator.LocateAsync(model.FolderNames, site.Root);
-            var file = folder.Files.SingleOrDefault(t => t.FileName == model.FileName);
+            string[] foldersWithFileName = _folderLocator.SplitStrings(model.FolderNames);
+            string fileName = foldersWithFileName.Last();
+            string[] folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
+
+            var folder = await _folderLocator.LocateAsync(folders, site.Root);
+            var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
             if (file == null)
             {
                 return NotFound();

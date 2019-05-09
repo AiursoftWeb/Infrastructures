@@ -47,9 +47,9 @@ namespace Aiursoft.Pylon.Services
                 var fileInfo = new FileInfo(path);
                 var extension = filename.Substring(filename.LastIndexOf('.') + 1);
                 long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
-                var _etag = Convert.ToString(etagHash, 16);
-                controller.Response.Headers.Add("ETag", '\"' + _etag + '\"');
-                if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == _etag)
+                var etag = Convert.ToString(etagHash, 16);
+                controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
+                if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
                 {
                     return new StatusCodeResult(304);
                 }

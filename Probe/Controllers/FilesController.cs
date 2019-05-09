@@ -43,7 +43,8 @@ namespace Aiursoft.Probe.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, model.FolderNames);
+            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             var file = Request.Form.Files.First();
             var newFile = new Pylon.Models.Probe.File
             {

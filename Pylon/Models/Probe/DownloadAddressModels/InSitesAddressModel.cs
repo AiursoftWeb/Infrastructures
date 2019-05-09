@@ -8,6 +8,5 @@ namespace Aiursoft.Pylon.Models.Probe.DownloadAddressModels
     {
         public string FolderNames { get; set; }
         public string SiteName { get; set; }
-        public string FileName { get; set; }
     }
 }
