@@ -22,13 +22,13 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+        public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "DeleteApp", new { });
-            var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
+            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "CreateNewSite", new { });
+            var form = new AiurUrl(string.Empty, new CreateNewSiteAddressModel
             {
                 AccessToken = accessToken,
-                AppId = appId
+                NewSiteName = newSiteName
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
@@ -45,6 +45,36 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewMySitesViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
+        public async Task<AiurProtocol> DeleteSiteAsync(string accessToken, string siteName)
+        {
+            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "DeleteSite", new { });
+            var form = new AiurUrl(string.Empty, new DeleteSiteAddressModel
+            {
+                AccessToken = accessToken,
+                SiteName = siteName
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
+        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+        {
+            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "DeleteApp", new { });
+            var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
+            {
+                AccessToken = accessToken,
+                AppId = appId
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;

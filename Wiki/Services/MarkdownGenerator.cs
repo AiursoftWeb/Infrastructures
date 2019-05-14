@@ -63,7 +63,6 @@ namespace Aiursoft.Wiki.Services
                 else
                 {
                     path += $"{arg.Name}[0]={GetExampleValue(arg)}&{arg.Name}[1]={GetExampleValue(arg)}&{arg.Name}[2]={GetExampleValue(arg)}&";
-
                 }
             }
             return path.Trim('&');
