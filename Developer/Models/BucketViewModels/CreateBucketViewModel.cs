@@ -15,16 +15,17 @@ namespace Aiursoft.Developer.Models.BucketViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public CreateBucketViewModel() { }
-        public CreateBucketViewModel(DeveloperUser User) : base(User, 2)
+        public CreateBucketViewModel(DeveloperUser user) : base(user, 2)
         {
+
         }
-        public CreateBucketViewModel(Controller c, DeveloperUser User) : base(User, 2)
+        public CreateBucketViewModel(Controller c, DeveloperUser user) : base(user, 2)
         {
             c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
         }
-        public void Recover(Controller c, DeveloperUser User)
+        public void Recover(Controller c, DeveloperUser user)
         {
-            this.Recover(User, 2);
+            this.Recover(user, 2);
             c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
         }
         [Required]

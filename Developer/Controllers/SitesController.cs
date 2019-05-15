@@ -3,6 +3,7 @@ using Aiursoft.Developer.Models.SitesViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -19,6 +20,16 @@ namespace Aiursoft.Developer.Controllers
         {
             var user = await GetCurrentUserAsync();
             var model = new IndexViewModel(user);
+            return View(model);
+        }
+
+        public async Task<IActionResult> CreateSite()
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new CreateSiteViewModel(this, user)
+            {
+
+            };
             return View(model);
         }
 

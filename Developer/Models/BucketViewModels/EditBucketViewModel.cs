@@ -13,13 +13,14 @@ namespace Aiursoft.Developer.Models.BucketViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public EditBucketViewModel() { }
-        public EditBucketViewModel(DeveloperUser User, ViewBucketViewModel thisBucket) : base(User)
+        public EditBucketViewModel(DeveloperUser user, ViewBucketViewModel thisBucket) : base(user)
         {
             this.NewBucketName = thisBucket.BucketName;
             this.BucketId = thisBucket.BucketId;
             this.OpenToRead = thisBucket.OpenToRead;
             this.OpenToUpload = thisBucket.OpenToUpload;
         }
+
         [Required]
         public int BucketId { get; set; }
     }
