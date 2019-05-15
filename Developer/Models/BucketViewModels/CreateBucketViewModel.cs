@@ -25,7 +25,7 @@ namespace Aiursoft.Developer.Models.BucketViewModels
         }
         public void Recover(Controller c, DeveloperUser user)
         {
-            this.Recover(user, 2);
+            this.RootRecover(user, 2);
             c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
         }
         [Required]

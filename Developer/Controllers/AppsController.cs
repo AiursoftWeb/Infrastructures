@@ -94,7 +94,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.Recover(cuser, 1);
+                model.RootRecover(cuser, 1);
                 return View(model);
             }
             string iconPath = string.Empty;
@@ -225,7 +225,7 @@ namespace Aiursoft.Developer.Controllers
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.Recover(cuser, 1);
+                model.RootRecover(cuser, 1);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(model.AppId);

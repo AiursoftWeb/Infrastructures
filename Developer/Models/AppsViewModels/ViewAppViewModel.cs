@@ -39,7 +39,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             AppsContainer appsContainer,
             SitesService sitesService)
         {
-            base.Recover(user, 1);
+            base.RootRecover(user, 1);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
             var buckets = await ossApiService.ViewMyBucketsAsync(token);

@@ -12,9 +12,9 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public AppLayoutModel() { }
         public AppLayoutModel(DeveloperUser user, int activePanel)
         {
-            this.Recover(user, activePanel);
+            this.RootRecover(user, activePanel);
         }
-        public virtual void Recover(DeveloperUser user, int activePanel)
+        public virtual void RootRecover(DeveloperUser user, int activePanel)
         {
             this.NickName = user.NickName;
             this.UserIconFileKey = user.HeadImgFileKey;

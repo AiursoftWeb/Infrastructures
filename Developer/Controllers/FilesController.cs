@@ -144,7 +144,7 @@ namespace Aiursoft.Developer.Controllers
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.Recover(cuser, 3);
+                model.RootRecover(cuser, 3);
                 return View(model);
             }
             var fileinfo = await _ossApiService.ViewOneFileAsync(model.FileId);
@@ -183,7 +183,7 @@ namespace Aiursoft.Developer.Controllers
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.Recover(cuser, 3);
+                model.RootRecover(cuser, 3);
                 model.ModelStateValid = false;
                 return View(model);
             }

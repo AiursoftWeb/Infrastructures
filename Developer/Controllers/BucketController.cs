@@ -125,7 +125,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.Recover(user, 1);
+                model.RootRecover(user, 1);
                 return View(model);
             }
             try
@@ -142,7 +142,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
-                model.Recover(user, 1);
+                model.RootRecover(user, 1);
                 return View(model);
             }
         }

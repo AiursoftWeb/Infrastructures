@@ -21,8 +21,8 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         public void Recover(DeveloperUser user)
         {
+            RootRecover(user, 5);
             AppIds = new SelectList(AllApps, nameof(App.AppId), nameof(App.AppName));
-            Recover(user, 5);
         }
 
         public bool ModelStateValid { get; set; } = true;
