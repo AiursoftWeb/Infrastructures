@@ -10,6 +10,7 @@ namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
         [Required]
         public string AccessToken { get; set; }
         [Required]
+        [MaxLength(50)]
         public string NewSiteName { get; set; }
     }
 }

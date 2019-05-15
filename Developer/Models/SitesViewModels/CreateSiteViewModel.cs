@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,15 +14,25 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public CreateSiteViewModel() { }
-        public CreateSiteViewModel(Controller c, DeveloperUser user) : base(user, 5)
+        public CreateSiteViewModel(DeveloperUser user) : base(user, 5)
         {
-            c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
+            AppIds = new SelectList(AllApps, nameof(App.AppId), nameof(App.AppName));
         }
 
-        public void Recover(Controller c, DeveloperUser user)
+        public void Recover(DeveloperUser user)
         {
+            AppIds = new SelectList(AllApps, nameof(App.AppId), nameof(App.AppName));
             Recover(user, 5);
-            c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
         }
+
+        public bool ModelStateValid { get; set; } = true;
+
+        public SelectList AppIds { get; set; }
+
+        public string AppId { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string SiteName { get; set; }
     }
 }

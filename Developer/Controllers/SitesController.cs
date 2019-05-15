@@ -2,6 +2,7 @@
 using Aiursoft.Developer.Models.SitesViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -23,12 +24,12 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> CreateSite()
+        public async Task<IActionResult> CreateSite(string id)// app id
         {
             var user = await GetCurrentUserAsync();
-            var model = new CreateSiteViewModel(this, user)
+            var model = new CreateSiteViewModel(user)
             {
-
+                AppId = id
             };
             return View(model);
         }
