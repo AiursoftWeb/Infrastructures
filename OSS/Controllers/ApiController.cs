@@ -211,7 +211,7 @@ namespace Aiursoft.OSS.Controllers
             }
             var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
             file.JFileSize = new FileInfo(path).Length;
-            file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
+            file.InternetPath = new AiurUrl(_serviceLocation.OSSEndpoint, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
 
             var viewModel = new ViewOneFileViewModel
             {
@@ -243,7 +243,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 file.JFileSize = new FileInfo(path).Length;
-                file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
+                file.InternetPath = new AiurUrl(_serviceLocation.OSSEndpoint, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
             }
             return Json(new AiurCollection<OSSFile>(allFiles)
             {
@@ -298,7 +298,7 @@ namespace Aiursoft.OSS.Controllers
                 fileStream.Close();
             }
             // Get Internet path
-            newFile.InternetPath = new AiurUrl(_serviceLocation.OSS, newFile.BelongingBucket.BucketName, newFile.RealFileName, new { }).ToString();
+            newFile.InternetPath = new AiurUrl(_serviceLocation.OSSEndpoint, newFile.BelongingBucket.BucketName, newFile.RealFileName, new { }).ToString();
             //Return json
             return Json(new UploadFileViewModel
             {
@@ -325,7 +325,7 @@ namespace Aiursoft.OSS.Controllers
             {
                 var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.BelongingBucket.BucketName}{_}{file.FileKey}.dat";
                 file.JFileSize = new FileInfo(path).Length;
-                file.InternetPath = new AiurUrl(_serviceLocation.OSS, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
+                file.InternetPath = new AiurUrl(_serviceLocation.OSSEndpoint, file.BelongingBucket.BucketName, file.RealFileName, new { }).ToString();
             }
             var viewModel = new ViewAllFilesViewModel
             {

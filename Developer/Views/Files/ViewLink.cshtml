@@ -29,12 +29,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Address"></label>
-                                <input value="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address" readonly="readonly" type="text" class="form-control">
+                                <input value="@(ServiceLocation.OSSEndpoint)/download/fromsecret?sec=@Model.Address" readonly="readonly" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12 margin-top-30">
-                            <a class="btn btn-success waves-effect waves-light" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address">@Localizer["Copy link"]</a>
-                            <a class="btn btn-danger" href="@(ServiceLocation.OSS)/download/fromsecret?sec=@Model.Address" target="_blank">@Localizer["Open Link"]</a>
+                            <a class="btn btn-success waves-effect waves-light" href="#" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@(ServiceLocation.OSSEndpoint)/download/fromsecret?sec=@Model.Address">@Localizer["Copy link"]</a>
+                            <a class="btn btn-danger" href="@(ServiceLocation.OSSEndpoint)/download/fromsecret?sec=@Model.Address" target="_blank">@Localizer["Open Link"]</a>
                             <a class="btn btn-info" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">@Localizer["Back to files"]</a>
                         </div>
                     </div>

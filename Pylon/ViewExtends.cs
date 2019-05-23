@@ -125,7 +125,7 @@ namespace Aiursoft.Pylon
             var builder = new HtmlContentBuilder();
             string[] domains = {
                 serviceLocation.API,
-                serviceLocation.OSS,
+                serviceLocation.OSSEndpoint,
                 serviceLocation.CDN,
                 serviceLocation.Account
             };

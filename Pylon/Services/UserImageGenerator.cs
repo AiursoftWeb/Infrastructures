@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Services
         {
             var user = await _userManager.GetUserAsync(userClaims);
             var userImageKey = user?.HeadImgFileKey;
-            var url =$"{_serviceLocation.OSS}/download/fromkey/{userImageKey}.png";
+            var url =$"{_serviceLocation.OSSEndpoint}/download/fromkey/{userImageKey}.png";
             return url;
         }
     }

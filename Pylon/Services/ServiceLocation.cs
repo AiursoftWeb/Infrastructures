@@ -12,6 +12,7 @@ namespace Aiursoft.Pylon.Services
         public readonly string Developer;
         public readonly string EE;
         public readonly string OSS;
+        public readonly string OSSEndpoint;
         public readonly string Stargate;
         public readonly string StargateListenAddress;
         public readonly string Wiki;
@@ -29,6 +30,7 @@ namespace Aiursoft.Pylon.Services
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
             OSS = TrySet(section["OSSPath"], "https://oss.aiursoft.com");
+            OSSEndpoint = TrySet(section["OSSEndpoint"], "https://OSSEndpoint.azureedge.net");
             Stargate = TrySet(section["StargatePath"], "https://stargate.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWW"], "https://www.aiursoft.com");
