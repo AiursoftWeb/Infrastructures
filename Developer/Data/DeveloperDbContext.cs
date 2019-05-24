@@ -56,7 +56,7 @@ namespace Aiursoft.Developer.Data
             var newApp = new App("Developer", "Seeded developer app", Category.AppForAiur, Platform.Web, firstAppId, firstAppSecret)
             {
                 CreatorId = newuser.Id,
-                AppIconAddress = $"{serviceLocation.CDN}/images/appdefaulticon.png"
+                AppIconAddress = $"{serviceLocation.UI}/images/appdefaulticon.png"
             };
             this.Apps.Add(newApp);
             this.SaveChanges();

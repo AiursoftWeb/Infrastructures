@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Services
         public readonly string Account;
         public readonly string API;
         public readonly string Archon;
-        public readonly string CDN;
+        public readonly string UI;
         public readonly string Colossus;
         public readonly string Developer;
         public readonly string EE;
@@ -25,7 +25,7 @@ namespace Aiursoft.Pylon.Services
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
             API = TrySet(section["APIPath"], "https://api.aiursoft.com");
             Archon = TrySet(section["ArchonPath"], "https://archon.aiursoft.com");
-            CDN = TrySet(section["CDNPath"], "https://aiuruiendpoint.azureedge.net");
+            UI = TrySet(section["UIPath"], "https://aiuruiendpoint.azureedge.net");
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");

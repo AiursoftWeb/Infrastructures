@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label>Upload your course icon</label>
-                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.CDN/images/thumbnail.svg" />
+                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.UI/images/thumbnail.svg" />
                         <p class="small text-muted">Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weithg.</p>
                     </div>
                     <div class="form-group">
@@ -76,16 +76,16 @@
     </div>
 </div>
 @section Styles {
-    <link rel='stylesheet' href='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular.css'>
-    <link rel='stylesheet' href="@ServiceLocation.CDN/node_modules/dropify/dist/css/dropify.min.css">
+    <link rel='stylesheet' href='@ServiceLocation.UI/node_modules/textangular/dist/textAngular.css'>
+    <link rel='stylesheet' href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css">
 }
 
 @section Scripts {
-    <script src="@ServiceLocation.CDN/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script src='@ServiceLocation.CDN/node_modules/angular/angular.min.js'></script>
-    <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular-rangy.min.js'></script>
-    <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular-sanitize.min.js'></script>
-    <script src='@ServiceLocation.CDN/node_modules/textangular/dist/textAngular.min.js'></script>
+    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src='@ServiceLocation.UI/node_modules/angular/angular.min.js'></script>
+    <script src='@ServiceLocation.UI/node_modules/textangular/dist/textAngular-rangy.min.js'></script>
+    <script src='@ServiceLocation.UI/node_modules/textangular/dist/textAngular-sanitize.min.js'></script>
+    <script src='@ServiceLocation.UI/node_modules/textangular/dist/textAngular.min.js'></script>
     <script>
         angular.module('ee', ['textAngular']);
         $(document).ready(function () {

@@ -57,7 +57,7 @@ namespace Aiursoft.EE.Controllers
             var course = new Course
             {
                 Description = _scriptsFilter.Filt(model.Description),
-                CourseImage = $"{_serviceLocation.CDN}/images/thumbnail.svg",
+                CourseImage = $"{_serviceLocation.UI}/images/thumbnail.svg",
                 DisplayOwnerInfo = model.DisplayOwnerInfo,
                 WhatYouWillLearn = model.WhatYouWillLearn,
                 Name = model.Name,

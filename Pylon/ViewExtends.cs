@@ -70,13 +70,13 @@ namespace Aiursoft.Pylon
             if (includeCore)
             {
                 return new HtmlContentBuilder()
-                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
-                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
+                    .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurCore.min.css")
+                    .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurDashboard.min.css");
             }
             else
             {
                 return new HtmlContentBuilder()
-                    .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurDashboard.min.css");
+                    .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurDashboard.min.css");
             }
         }
 
@@ -86,13 +86,13 @@ namespace Aiursoft.Pylon
             if (includeCore)
             {
                 return new HtmlContentBuilder()
-                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
-                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+                    .AppendJavaScript($"{serviceLocation.UI}/dist/AiurCore.min.js")
+                    .AppendJavaScript($"{serviceLocation.UI}/dist/AiurDashboard.min.js");
             }
             else
             {
                 return new HtmlContentBuilder()
-                    .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurDashboard.min.js");
+                    .AppendJavaScript($"{serviceLocation.UI}/dist/AiurDashboard.min.js");
             }
         }
 
@@ -100,23 +100,23 @@ namespace Aiursoft.Pylon
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             return new HtmlContentBuilder()
-                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurCore.min.css")
-                .AppendStyleSheet($"{serviceLocation.CDN}/dist/AiurMarket.min.css");
+                .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurCore.min.css")
+                .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurMarket.min.css");
         }
 
         public static IHtmlContent UseAiurMarketJs(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             return new HtmlContentBuilder()
-                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurCore.min.js")
-                .AppendJavaScript($"{serviceLocation.CDN}/dist/AiurMarket.min.js");
+                .AppendJavaScript($"{serviceLocation.UI}/dist/AiurCore.min.js")
+                .AppendJavaScript($"{serviceLocation.UI}/dist/AiurMarket.min.js");
         }
 
         public static IHtmlContent UseAiurFavicon(this RazorPage page)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             return new HtmlContentBuilder()
-                .SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.CDN}/favicon.ico'>");
+                .SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.UI}/favicon.ico'>");
         }
 
         public static IHtmlContent UseDnsPrefetch(this RazorPage page)
@@ -126,7 +126,7 @@ namespace Aiursoft.Pylon
             string[] domains = {
                 serviceLocation.API,
                 serviceLocation.OSSEndpoint,
-                serviceLocation.CDN,
+                serviceLocation.UI,
                 serviceLocation.Account
             };
             foreach (var domain in domains)

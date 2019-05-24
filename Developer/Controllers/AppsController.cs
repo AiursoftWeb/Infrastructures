@@ -100,7 +100,7 @@ namespace Aiursoft.Developer.Controllers
             string iconPath = string.Empty;
             if (Request.Form.Files.Count == 0 || Request.Form.Files.First().Length < 1)
             {
-                iconPath = $"{_serviceLocation.CDN}/images/appdefaulticon.png";
+                iconPath = $"{_serviceLocation.UI}/images/appdefaulticon.png";
             }
             else
             {
