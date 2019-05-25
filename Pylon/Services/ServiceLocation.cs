@@ -25,7 +25,7 @@ namespace Aiursoft.Pylon.Services
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
             API = TrySet(section["APIPath"], "https://api.aiursoft.com");
             Archon = TrySet(section["ArchonPath"], "https://archon.aiursoft.com");
-            UI = TrySet(section["UIPath"], "https://aiuruiendpoint.azureedge.net");
+            UI = TrySet(section["UIPath"], "https://ui.cdn.aiursoft.com");
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
