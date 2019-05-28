@@ -26,13 +26,13 @@ namespace Aiursoft.API.Models.OAuthViewModels
             this.AppImageUrl = AppImageUrl;
         }
         public string AppImageUrl { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         [Display(Name = "Aiursoft Account")]
         public string Email { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

@@ -120,8 +120,14 @@
   <data name="Aiursoft Account" xml:space="preserve">
     <value>Aiursoft账户</value>
   </data>
+  <data name="Email is required." xml:space="preserve">
+    <value>Email是必填项。</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
+  </data>
+  <data name="Password is required." xml:space="preserve">
+    <value>密码是必填项。</value>
   </data>
   <data name="Remember Me" xml:space="preserve">
     <value>保持登录</value>
