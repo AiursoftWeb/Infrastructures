@@ -46,6 +46,17 @@ namespace Aiursoft.OSS.Controllers
                         return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName);
                     }
                 }
+                else if (realfileName.IsStaticImage())
+                {
+                    if (download)
+                    {
+                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName, suggestefFileName);
+                    }
+                    else
+                    {
+                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName);
+                    }
+                }
                 else
                 {
                     if (download)

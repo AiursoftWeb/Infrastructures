@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Transforms;
+using System;
 
 namespace Aiursoft.OSS.Services
 {
@@ -15,6 +16,44 @@ namespace Aiursoft.OSS.Services
             IConfiguration configuration)
         {
             _configuration = configuration;
+        }
+
+        public async Task<string> ClearExif(string path, string realname)
+        {
+            try
+            {
+                var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
+                if (Directory.Exists(compressedFolder) == false)
+                {
+                    Directory.CreateDirectory(compressedFolder);
+                }
+                var clearededImagePath = $"{compressedFolder}oss_cleared_{realname}";
+                await GetClearedImage(path, clearededImagePath);
+                return clearededImagePath;
+            }
+            catch (ImageFormatException)
+            {
+                return path;
+            }
+        }
+
+        private async Task GetClearedImage(string sourceImage, string saveTarget)
+        {
+            var sourceFileInfo = new FileInfo(sourceImage);
+            if (File.Exists(saveTarget))
+            {
+                if (new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
+                {
+                    return;
+                }
+            }
+            await Task.Run(() =>
+            {
+                var image = Image.Load(sourceImage);
+                image.Mutate(x => x.AutoOrient());
+                image.MetaData.ExifProfile = null;
+                image.Save(saveTarget);
+            });
         }
 
         public async Task<string> Compress(string path, string realname, int width, int height)
