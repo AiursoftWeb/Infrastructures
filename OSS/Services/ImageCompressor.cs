@@ -49,6 +49,8 @@ namespace Aiursoft.OSS.Services
             await Task.Run(() =>
             {
                 var image = Image.Load(sourceImage);
+                image.Mutate(x => x.AutoOrient());
+                image.MetaData.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(width, height));
                 image.Save(saveTarget);
