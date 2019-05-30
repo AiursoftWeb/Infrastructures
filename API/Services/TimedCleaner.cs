@@ -49,11 +49,11 @@ namespace Aiursoft.API.Services
             }
         }
 
-        public async Task AllClean(APIDbContext _dbContext)
+        public async Task AllClean(APIDbContext dbContext)
         {
             try
             {
-                await ClearTimeOutOAuthPack(_dbContext);
+                await ClearTimeOutOAuthPack(dbContext);
                 _logger.LogInformation("Clean finished!");
             }
             catch (Exception e)
@@ -62,11 +62,11 @@ namespace Aiursoft.API.Services
             }
         }
 
-        public Task ClearTimeOutOAuthPack(APIDbContext _dbContext)
+        public Task ClearTimeOutOAuthPack(APIDbContext dbContext)
         {
-            _dbContext.OAuthPack.Delete(t => t.UseTime + new TimeSpan(1, 0, 0, 0) < DateTime.UtcNow);
-            _dbContext.OAuthPack.Delete(t => !t.IsAlive);
-            return _dbContext.SaveChangesAsync();
+            dbContext.OAuthPack.Delete(t => t.UseTime + new TimeSpan(1, 0, 0, 0) < DateTime.UtcNow);
+            dbContext.OAuthPack.Delete(t => !t.IsAlive);
+            return dbContext.SaveChangesAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
