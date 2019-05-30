@@ -2,3 +2,20 @@
 @{
     ViewData["Title"] = "All Sites";
 }
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="col-12 mt-3 mb-3">
+        <div class="text-center">
+            <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-lg btn-success">@Localizer["Create a new app"]</a>
+        </div>
+    </div>
+</div>
