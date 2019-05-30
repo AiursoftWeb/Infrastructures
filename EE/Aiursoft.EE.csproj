@@ -9,6 +9,8 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>A School</Description>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
 

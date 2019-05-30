@@ -9,6 +9,8 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The core message queue for aiursoft web apps.</Description>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <ItemGroup>

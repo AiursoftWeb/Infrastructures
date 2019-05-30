@@ -9,6 +9,8 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The WWW site for aiursoft.</Description>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <ItemGroup>
