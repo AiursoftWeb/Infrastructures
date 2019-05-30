@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models.SitesViewModels;
 using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToProbeServer;
@@ -17,15 +18,18 @@ namespace Aiursoft.Developer.Controllers
         public DeveloperDbContext _dbContext;
         private readonly AppsContainer _appsContainer;
         private readonly SitesService _sitesService;
+        private readonly FoldersService _foldersService;
 
         public SitesController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
-            SitesService sitesService)
+            SitesService sitesService,
+            FoldersService foldersService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _sitesService = sitesService;
+            _foldersService = foldersService;
         }
 
         public async Task<IActionResult> Index()
@@ -73,6 +77,33 @@ namespace Aiursoft.Developer.Controllers
                 model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
+            }
+        }
+
+        [Route("ViewFiles/{appId}/{siteName}/{**folder}")]
+        public async Task<IActionResult> ViewFiles(string appId, string siteName, string folder) // siteName
+        {
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var data = await _foldersService.ViewContentAsync(token, siteName, folder);
+                return Json(data);
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                if (e.Code == ErrorType.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw e;
+                }
             }
         }
 
