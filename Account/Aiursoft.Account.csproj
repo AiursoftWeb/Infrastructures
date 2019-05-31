@@ -14,15 +14,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Twilio" Version="5.28.0" />
+    <PackageReference Include="Twilio" Version="5.29.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+  
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
