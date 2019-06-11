@@ -130,7 +130,10 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
             }
-            var target = await _dbContext.Apps.FindAsync(appid);
+            var target = await _dbContext
+                .Apps
+                .Include(t => t.Sites)
+                .SingleOrDefaultAsync(t => t.AppId == appid);
             if (target != null)
             {
                 _dbContext.Folders.Delete(t => target.Sites.Select(p => p.FolderId).Contains(t.Id));
