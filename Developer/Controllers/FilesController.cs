@@ -34,7 +34,7 @@ namespace Aiursoft.Developer.Controllers
             UserManager<DeveloperUser> userManager,
             SignInManager<DeveloperUser> signInManager,
             ILoggerFactory loggerFactory,
-            DeveloperDbContext _context,
+            DeveloperDbContext dbContext,
             OSSApiService ossApiService,
             StorageService storageService,
             AppsContainer appsContainer,
@@ -43,7 +43,7 @@ namespace Aiursoft.Developer.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<FilesController>();
-            _dbContext = _context;
+            _dbContext = dbContext;
             _ossApiService = ossApiService;
             _storageService = storageService;
             _appsContainer = appsContainer;

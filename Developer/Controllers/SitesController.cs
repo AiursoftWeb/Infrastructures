@@ -83,6 +83,7 @@ namespace Aiursoft.Developer.Controllers
         [Route("ViewFiles/{appId}/{siteName}/{**folder}")]
         public async Task<IActionResult> ViewFiles(string appId, string siteName, string folder) // siteName
         {
+            var user = await GetCurrentUserAsync();
             var app = await _dbContext.Apps.FindAsync(appId);
             if (app == null)
             {
@@ -92,7 +93,13 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 var data = await _foldersService.ViewContentAsync(token, siteName, folder);
-                return Json(data);
+                var model = new ViewFilesViewModel(user)
+                {
+                    Folder = data.Value,
+                    SiteName = siteName,
+                    SitePath = folder?.Split("/")
+                };
+                return View(model);
             }
             catch (AiurUnexceptedResponse e)
             {
