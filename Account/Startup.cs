@@ -43,7 +43,7 @@ namespace Aiursoft.Account
             services.AddTransient<AccountSmsSender>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
