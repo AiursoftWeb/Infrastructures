@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
 {
-    public class ViewFilesViewModel : AppLayoutModel
+    public class NewFolderViewModel : AppLayoutModel
     {
         [Obsolete(message: "This method is only for framework", error: true)]
-        public ViewFilesViewModel() { }
-        public ViewFilesViewModel(DeveloperUser user) : base(user, 5) { }
+        public NewFolderViewModel() { }
+        public NewFolderViewModel(DeveloperUser user) : base(user, 5) { }
+        public void Recover(DeveloperUser user)
+        {
+            RootRecover(user, 5);
+        }
 
-        public Folder Folder { get; set; }
+        public bool ModelStateValid { get; set; } = true;
+        public string NewFolderName { get; set; }
         public string AppId { get; set; }
         public string SiteName { get; set; }
         public string Path { get; set; }

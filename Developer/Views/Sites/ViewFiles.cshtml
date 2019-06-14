@@ -15,7 +15,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-database ico"></i>
-            Files of @Model.SiteName
+            Files of @Model.SiteName / @Html.Raw(Model.Path?.Replace("/", " / "))
         </div>
         <div class="card-body">
             <div class="col-12">
@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>@Localizer["Name"]</th>
+                                <td>Operations</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,19 +32,25 @@
                             {
                                 <tr>
                                     <td>@folder.FolderName</td>
+                                    <td>
+
+                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@((Model.Path + "/").TrimStart('/') + folder.FolderName)" class="btn btn-secondary">Open</a>
+                                    </td>
                                 </tr>
                             }
                             @foreach (var file in Model.Folder.Files)
                             {
                                 <tr>
                                     <td>@file.FileName</td>
+                                    <td></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
                 <div class="mt-3">
-                    <a asp-controller="Bucket" asp-action="Index" class="btn btn-secondary">Button</a>
+                    <a asp-controller="Sites" asp-action="NewFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-secondary">New folder</a>
+                    <a href="#" class="btn btn-success">New file</a>
                 </div>
             </div>
         </div>

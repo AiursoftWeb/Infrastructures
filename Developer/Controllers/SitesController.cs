@@ -3,6 +3,7 @@ using Aiursoft.Developer.Models.SitesViewModels;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Mvc;
@@ -80,8 +81,8 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        [Route("ViewFiles/{appId}/{siteName}/{**folder}")]
-        public async Task<IActionResult> ViewFiles(string appId, string siteName, string folder) // siteName
+        [Route("ViewFiles/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> ViewFiles(string appId, string siteName, string path) // siteName
         {
             var user = await GetCurrentUserAsync();
             var app = await _dbContext.Apps.FindAsync(appId);
@@ -92,14 +93,63 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                var data = await _foldersService.ViewContentAsync(token, siteName, folder);
+                var data = await _foldersService.ViewContentAsync(token, siteName, path);
                 var model = new ViewFilesViewModel(user)
                 {
                     Folder = data.Value,
+                    AppId = appId,
                     SiteName = siteName,
-                    SitePath = folder?.Split("/")
+                    Path = path
                 };
                 return View(model);
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                if (e.Code == ErrorType.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+        }
+
+        [Route("NewFolder/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> NewFolder(string appId, string siteName, string path)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new NewFolderViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName,
+                Path = path
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("NewFolder/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> NewFolder(NewFolderViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var data = await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName);
+                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
             }
             catch (AiurUnexceptedResponse e)
             {

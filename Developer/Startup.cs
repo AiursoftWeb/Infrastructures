@@ -22,6 +22,7 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.ToAPIServer;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Developer
 {
@@ -49,7 +50,8 @@ namespace Aiursoft.Developer
 
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2); ;
             services.AddAiursoftAuth<DeveloperUser>();
             services.AddScoped<SecretService>();
         }

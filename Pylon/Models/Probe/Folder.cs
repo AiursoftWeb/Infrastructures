@@ -10,8 +10,10 @@ namespace Aiursoft.Pylon.Models.Probe
     {
         [JsonIgnore]
         public int Id { get; set; }
+
         [JsonIgnore]
         public int? ContextId { get; set; }
+
         [ForeignKey(nameof(ContextId))]
         [JsonIgnore]
         public Folder Context { get; set; }
