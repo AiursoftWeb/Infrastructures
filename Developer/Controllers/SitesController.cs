@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [Route("Sites")]
     public class SitesController : Controller
     {
         public DeveloperDbContext _dbContext;
