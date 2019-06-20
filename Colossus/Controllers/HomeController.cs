@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;

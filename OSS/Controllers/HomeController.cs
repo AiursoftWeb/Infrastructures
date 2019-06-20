@@ -5,6 +5,7 @@ using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.OSS.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class HomeController : Controller

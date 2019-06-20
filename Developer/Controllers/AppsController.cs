@@ -22,6 +22,7 @@ using Aiursoft.Pylon.Services.ToProbeServer;
 namespace Aiursoft.Developer.Controllers
 {
     [AiurForceAuth]
+    [LimitPerMin]
     public class AppsController : Controller
     {
         private readonly UserManager<DeveloperUser> _userManager;

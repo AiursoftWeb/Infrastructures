@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Developer.Models.ToolsViewModels;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [LimitPerMin]
     public class ToolsController : Controller
     {
         public IActionResult WebSocket()

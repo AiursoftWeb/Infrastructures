@@ -17,6 +17,8 @@ using System;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [APIExpHandler]
+    [APIModelStateChecker]
     public class ApiController : Controller
     {
         private readonly UserManager<DeveloperUser> _userManager;
@@ -29,18 +31,16 @@ namespace Aiursoft.Developer.Controllers
         UserManager<DeveloperUser> userManager,
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
-        DeveloperDbContext _context,
+        DeveloperDbContext context,
         IMemoryCache cache)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
-            _dbContext = _context;
+            _dbContext = context;
             _cache = cache;
         }
 
-        [APIExpHandler]
-        [APIModelStateChecker]
         public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
         {
             if (!_cache.TryGetValue(model.AppId, out App target))
@@ -66,8 +66,6 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        [APIExpHandler]
-        [APIModelStateChecker]
         public async Task<JsonResult> AppInfo(AppInfoAddressModel model)
         {
             var target = await _dbContext

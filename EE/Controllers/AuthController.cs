@@ -12,6 +12,7 @@ using Aiursoft.Pylon;
 
 namespace Aiursoft.EE.Controllers
 {
+    [LimitPerMin]
     public class AuthController : Controller
     {
         private readonly AuthService<EEUser> _authService;

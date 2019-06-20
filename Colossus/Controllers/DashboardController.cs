@@ -15,6 +15,7 @@ using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Colossus.Controllers
 {
+    [LimitPerMin]
     [AiurForceAuth]
     public class DashboardController : Controller
     {

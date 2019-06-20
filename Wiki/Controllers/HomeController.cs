@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Wiki.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly SignInManager<WikiUser> _signInManager;
@@ -32,14 +33,14 @@ namespace Aiursoft.Wiki.Controllers
         public HomeController(
             SignInManager<WikiUser> signInManager,
             ILoggerFactory loggerFactory,
-            WikiDbContext _context,
+            WikiDbContext context,
             Seeder seeder,
             ServiceLocation serviceLocation,
             IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
-            _dbContext = _context;
+            _dbContext = context;
             _seeder = seeder;
             _serviceLocation = serviceLocation;
             _configuration = configuration;
@@ -53,7 +54,7 @@ namespace Aiursoft.Wiki.Controllers
         }
 
         [Route(template: "/ReadDoc/{collectionTitle}/{articleTitle}.md")]
-        public async Task<IActionResult> _ReadDoc(string collectionTitle, string articleTitle)
+        public async Task<IActionResult> ReadDoc(string collectionTitle, string articleTitle)
         {
             var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
             var currentCollection = database.SingleOrDefault(t => t.CollectionTitle.ToLower() == collectionTitle.ToLower());

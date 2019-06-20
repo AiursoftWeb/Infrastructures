@@ -24,6 +24,7 @@ using System.Net.Mail;
 
 namespace Aiursoft.API.Controllers
 {
+    [LimitPerMin]
     public class OAuthController : Controller
     {
         //Ensure App

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Controllers
 {
+    [LimitPerMin]
     public class AuthController : Controller
     {
         private readonly AuthService<ColossusUser> _authService;

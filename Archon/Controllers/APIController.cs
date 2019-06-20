@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Archon.Controllers
 {
+    [LimitPerMin]
     public class APIController : Controller
     {
         private readonly ACTokenManager _tokenManager;

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Attributes;
 
 namespace Aiursoft.Probe.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         public IActionResult Index()

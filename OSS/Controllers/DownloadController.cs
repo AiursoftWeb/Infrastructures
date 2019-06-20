@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.OSS.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class DownloadController : Controller

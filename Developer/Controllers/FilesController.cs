@@ -19,6 +19,7 @@ using Aiursoft.Pylon.Exceptions;
 namespace Aiursoft.Developer.Controllers
 {
     [AiurForceAuth]
+    [LimitPerMin]
     public class FilesController : Controller
     {
         private readonly UserManager<DeveloperUser> _userManager;

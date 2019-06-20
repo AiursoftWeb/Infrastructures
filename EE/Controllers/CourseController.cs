@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.EE.Controllers
 {
+    [LimitPerMin]
     public class CourseController : Controller
     {
         private readonly UserManager<EEUser> _userManager;

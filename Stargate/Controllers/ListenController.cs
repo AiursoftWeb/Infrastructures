@@ -12,6 +12,7 @@ using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
 
 namespace Aiursoft.Stargate.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class ListenController : Controller

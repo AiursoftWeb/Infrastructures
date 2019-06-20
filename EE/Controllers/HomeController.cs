@@ -16,6 +16,7 @@ using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.EE.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         public readonly SignInManager<EEUser> _signInManager;

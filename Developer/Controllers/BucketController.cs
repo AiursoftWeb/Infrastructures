@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Developer.Controllers
 {
     [AiurForceAuth]
+    [LimitPerMin]
     public class BucketController : Controller
     {
         private readonly DeveloperDbContext _dbContext;

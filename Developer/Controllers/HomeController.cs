@@ -11,6 +11,7 @@ using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly SignInManager<DeveloperUser> _signInManager;

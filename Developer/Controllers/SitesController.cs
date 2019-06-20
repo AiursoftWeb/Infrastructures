@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models.SitesViewModels;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
@@ -14,7 +15,9 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [AiurForceAuth]
     [Route("Sites")]
+    [LimitPerMin]
     public class SitesController : Controller
     {
         public DeveloperDbContext _dbContext;

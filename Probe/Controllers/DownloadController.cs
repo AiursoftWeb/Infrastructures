@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models.Probe.DownloadAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Probe.Controllers
 {
     [Route("Download")]
+    [LimitPerMin]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;

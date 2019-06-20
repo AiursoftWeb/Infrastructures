@@ -2,9 +2,11 @@
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Attributes;
 
 namespace Aiursoft.Archon.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly ServiceLocation _serviceLocation;

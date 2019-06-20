@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [LimitPerMin]
     public class SamplesController : Controller
     {
         private readonly StorageService _storageService;

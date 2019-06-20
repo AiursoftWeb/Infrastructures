@@ -13,6 +13,7 @@ using Aiursoft.Pylon.Models.Developer;
 
 namespace Aiursoft.Developer.Controllers
 {
+    [LimitPerMin]
     public class AuthController : Controller
     {
         private readonly AuthService<DeveloperUser> _authService;

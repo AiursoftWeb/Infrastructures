@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         public readonly SignInManager<WWWUser> _signInManager;

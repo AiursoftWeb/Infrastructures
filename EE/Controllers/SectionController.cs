@@ -12,6 +12,7 @@ using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.EE.Controllers
 {
+    [LimitPerMin]
     public class SectionController : Controller
     {
         private readonly EEDbContext _dbContext;
