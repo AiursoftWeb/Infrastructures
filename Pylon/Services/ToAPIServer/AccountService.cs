@@ -36,11 +36,12 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<AiurProtocol> AppRegisterAsync(string email, string password, string confirmPassword)
+        public async Task<AiurProtocol> AppRegisterAsync(string accessToken, string email, string password, string confirmPassword)
         {
             var url = new AiurUrl(_serviceLocation.API, "Account", "AppRegister", new { });
             var form = new AiurUrl(string.Empty, new AppRegisterAddressModel
             {
+                AccessToken = accessToken,
                 Email = email,
                 Password = password,
                 ConfirmPassword = confirmPassword
@@ -52,13 +53,12 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             return jresult;
         }
 
-        public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(int code, string accessToken)
+        public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
         {
             var url = new AiurUrl(_serviceLocation.API, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
                 AccessToken = accessToken,
-                Code = code,
-                grant_type = "authorization_code"
+                Code = code
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
@@ -72,9 +72,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
         {
             var url = new AiurUrl(_serviceLocation.API, "Account", "UserInfo", new UserInfoAddressModel
             {
-                access_token = accessToken,
-                openid = openid,
-                lang = "en-US"
+                AccessToken = accessToken,
+                OpenId = openid
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);

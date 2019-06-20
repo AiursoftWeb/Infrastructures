@@ -32,8 +32,8 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
-            var openId = await _accountService.CodeToOpenIdAsync(model.code, await _appsContainer.AccessToken());
-            var userinfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: openId.openid);
+            var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.AccessToken(), model.Code);
+            var userinfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessToken(), openId.OpenId);
             var current = await _userManager.FindByIdAsync(userinfo.User.Id);
             if (current == null)
             {

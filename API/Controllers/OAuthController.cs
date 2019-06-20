@@ -340,8 +340,8 @@ namespace Aiursoft.API.Controllers
                 var pack = await user.GeneratePack(_dbContext, model.AppId);
                 var url = new AiurUrl(model.GetRegexRedirectUrl(), new AuthResultAddressModel
                 {
-                    code = pack.Code,
-                    state = model.State
+                    Code = pack.Code,
+                    State = model.State
                 });
                 return Redirect(url);
             }

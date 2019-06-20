@@ -44,11 +44,11 @@ namespace Aiursoft.API.Controllers
             _userManager = userManager;
             _emailSender = emailSender;
         }
+
         [HttpPost]
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var app = (await _apiService.AppInfoAsync(appId)).App;
             var mail = await _dbContext
                 .UserEmails
                 .Include(t => t.Owner)
@@ -61,11 +61,11 @@ namespace Aiursoft.API.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
             if (result.Succeeded)
             {
-                if (!await user.HasAuthorizedApp(_dbContext, app.AppId))
+                if (!await user.HasAuthorizedApp(_dbContext, appId))
                 {
-                    await user.GrantTargetApp(_dbContext, app.AppId);
+                    await user.GrantTargetApp(_dbContext, appId);
                 }
-                var pack = await user.GeneratePack(_dbContext, app.AppId);
+                var pack = await user.GeneratePack(_dbContext, appId);
                 return Json(new AiurValue<int>(pack.Code)
                 {
                     Code = ErrorType.Success,
@@ -136,7 +136,6 @@ namespace Aiursoft.API.Controllers
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
             var targetPack = await _dbContext
                 .OAuthPack
-                //.Where(t => t.IsUsed == false)
                 .SingleOrDefaultAsync(t => t.Code == model.Code);
 
             if (targetPack == null)
@@ -144,7 +143,7 @@ namespace Aiursoft.API.Controllers
                 return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
             }
             // Use time is more than 10 seconds from now.
-            if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
+            if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + TimeSpan.FromSeconds(10) < DateTime.UtcNow)
             {
                 return this.Protocol(ErrorType.HasDoneAlready, "Code is used already!");
             }
@@ -161,8 +160,8 @@ namespace Aiursoft.API.Controllers
             await _dbContext.SaveChangesAsync();
             var viewModel = new CodeToOpenIdViewModel
             {
-                openid = targetPack.UserId,
-                scope = "scope",
+                OpenId = targetPack.UserId,
+                Scope = "scope",
                 Message = "Successfully get user openid",
                 Code = ErrorType.Success
             };
@@ -171,16 +170,15 @@ namespace Aiursoft.API.Controllers
 
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
-            var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.openid);
+            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
             if (user == null)
             {
-                return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
+                return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);
             }
-
-            var appId = _tokenManager.ValidateAccessToken(model.access_token);
             if (!await user.HasAuthorizedApp(_dbContext, appId))
             {
-                return this.Protocol(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.openid);
+                return this.Protocol(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
             }
             var viewModel = new UserInfoViewModel
             {

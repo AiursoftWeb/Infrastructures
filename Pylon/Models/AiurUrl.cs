@@ -13,7 +13,7 @@ namespace Aiursoft.Pylon.Models
         public Dictionary<string, string> Params { get; set; } = new Dictionary<string, string>();
         public AiurUrl(string address)
         {
-            this.Address = address;
+            Address = address;
         }
         public AiurUrl(string address, object param) : this(address)
         {
@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Models
             string Params = "?";
             foreach (var param in this.Params)
             {
-                Params += param.Key + "=" + WebUtility.UrlEncode(param.Value) + "&";
+                Params += param.Key.ToLower() + "=" + WebUtility.UrlEncode(param.Value) + "&";
             }
             return this.Address + Params.TrimEnd('?', '&');
         }

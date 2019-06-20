@@ -12,7 +12,5 @@ namespace Aiursoft.Pylon.Models.API.AccountAddressModels
         public virtual string AccessToken { get; set; }
         [Required]
         public virtual int Code { get; set; }
-        [Required]
-        public virtual string grant_type { get; set; }
     }
 }

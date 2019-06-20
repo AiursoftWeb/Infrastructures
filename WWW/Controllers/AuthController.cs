@@ -42,7 +42,7 @@ namespace Aiursoft.WWW.Controllers
         {
             var user = await _authService.AuthApp(model);
             this.SetClientLang(user.PreferedLanguage);
-            return Redirect(model.state);
+            return Redirect(model.State);
         }
     }
 }

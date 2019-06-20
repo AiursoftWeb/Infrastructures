@@ -9,9 +9,8 @@ namespace Aiursoft.Pylon.Models.API.AccountAddressModels
     public class UserInfoAddressModel
     {
         [Required]
-        public virtual string access_token { get; set; }
+        public virtual string AccessToken { get; set; }
         [Required]
-        public virtual string openid { get; set; }
-        public virtual string lang { get; set; }
+        public virtual string OpenId { get; set; }
     }
 }

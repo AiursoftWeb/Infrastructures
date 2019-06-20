@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Models.API.AccountViewModels
 {
     public class CodeToOpenIdViewModel : AiurProtocol
     {
-        public string openid { get; set; }
-        public string scope { get; set; }
+        public string OpenId { get; set; }
+        public string Scope { get; set; }
     }
 }
