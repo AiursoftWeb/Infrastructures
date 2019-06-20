@@ -23,11 +23,11 @@ namespace Aiursoft.EE.Controllers
         public ProfileController(
             UserManager<EEUser> userManager,
             SignInManager<EEUser> signInManager,
-            EEDbContext _context)
+            EEDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _dbContext = _context;
+            _dbContext = context;
         }
 
         public async Task<IActionResult> Overview(string id)
