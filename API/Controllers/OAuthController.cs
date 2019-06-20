@@ -68,7 +68,6 @@ namespace Aiursoft.API.Controllers
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         [HttpGet]
-        [LimitPerMin]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
             App app;
@@ -109,7 +108,6 @@ namespace Aiursoft.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [LimitPerMin(20)]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
             App app;
