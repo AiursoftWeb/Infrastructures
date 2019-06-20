@@ -10,6 +10,7 @@ using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.Account.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly SignInManager<AccountUser> _signInManager;

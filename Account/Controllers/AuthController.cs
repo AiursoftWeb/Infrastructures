@@ -8,6 +8,7 @@ using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.Account.Controllers
 {
+    [LimitPerMin]
     public class AuthController : Controller
     {
         private readonly AuthService<AccountUser> _authService;

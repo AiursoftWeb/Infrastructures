@@ -67,6 +67,7 @@ namespace Aiursoft.API.Controllers
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         [HttpGet]
+        [LimitPerMin]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
             App app;
@@ -107,6 +108,7 @@ namespace Aiursoft.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [LimitPerMin(20)]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
             App app;
@@ -210,49 +212,6 @@ namespace Aiursoft.API.Controllers
             return await FinishAuth(model);
         }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
-        {
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            var mail = await _dbContext
-                .UserEmails
-                .Include(t => t.Owner)
-                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
-            if (mail == null)
-            {
-                return this.Protocol(ErrorType.NotFound, $"The account with email {model.Email} was not found!");
-            }
-            var user = mail.Owner;
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
-            if (result.Succeeded)
-            {
-                if (!await user.HasAuthorizedApp(_dbContext, app.AppId))
-                {
-                    await user.GrantTargetApp(_dbContext, app.AppId);
-                }
-                var pack = await user.GeneratePack(_dbContext, app.AppId);
-                return Json(new AiurValue<int>(pack.Code)
-                {
-                    Code = ErrorType.Success,
-                    Message = "Auth success."
-                });
-            }
-            else if (result.RequiresTwoFactor)
-            {
-                throw new NotImplementedException();
-            }
-            else if (result.IsLockedOut)
-            {
-                return this.Protocol(ErrorType.Unauthorized, $"The account with email {model.Email} was locked! Please try again several minutes later!");
-            }
-            else
-            {
-                return this.Protocol(ErrorType.Unauthorized, "Wrong password!");
-            }
-        }
-
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
@@ -332,47 +291,6 @@ namespace Aiursoft.API.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> AppRegister(AppRegisterAddressModel model)
-        {
-            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
-            if (exists)
-            {
-                return this.Protocol(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");
-            }
-            var user = new APIUser
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                NickName = model.Email.Split('@')[0],
-                PreferedLanguage = "en",
-                HeadImgFileKey = Values.DefaultImageId
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                var primaryMail = new UserEmail
-                {
-                    EmailAddress = model.Email.ToLower(),
-                    OwnerId = user.Id,
-                    ValidateToken = Guid.NewGuid().ToString("N")
-                };
-                _dbContext.UserEmails.Add(primaryMail);
-                await _dbContext.SaveChangesAsync();
-                // Send him an confirmation email here:
-                try
-                {
-                    await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
-                }
-                // Ignore smtp exception.
-                catch (SmtpException) { }
-                return this.Protocol(ErrorType.Success, "Successfully created your account.");
-            }
-            return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
-        }
-
         [Authorize]
         [HttpPost]
         [APIExpHandler]
@@ -389,70 +307,7 @@ namespace Aiursoft.API.Controllers
             return Redirect(model.ToRedirect);
         }
 
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
-        {
-            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var targetPack = await _dbContext
-                .OAuthPack
-                //.Where(t => t.IsUsed == false)
-                .SingleOrDefaultAsync(t => t.Code == model.Code);
-
-            if (targetPack == null)
-            {
-                return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
-            }
-            // Use time is more than 10 seconds from now.
-            if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + new TimeSpan(0, 0, 0, 10) < DateTime.UtcNow)
-            {
-                return this.Protocol(ErrorType.HasDoneAlready, "Code is used already!");
-            }
-            if (targetPack.ApplyAppId != appId)
-            {
-                return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
-            }
-            var capp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
-            if (!capp.ViewOpenId)
-            {
-                return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
-            }
-            targetPack.UseTime = DateTime.UtcNow;
-            await _dbContext.SaveChangesAsync();
-            var viewModel = new CodeToOpenIdViewModel
-            {
-                openid = targetPack.UserId,
-                scope = "scope",
-                Message = "Successfully get user openid",
-                Code = ErrorType.Success
-            };
-            return Json(viewModel);
-        }
-
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
-        {
-            var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.openid);
-            if (user == null)
-            {
-                return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.openid);
-            }
-
-            var appId = _tokenManager.ValidateAccessToken(model.access_token);
-            if (!await user.HasAuthorizedApp(_dbContext, appId))
-            {
-                return this.Protocol(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.openid);
-            }
-            var viewModel = new UserInfoViewModel
-            {
-                Code = 0,
-                Message = "Successfully get target user info.",
-                User = user
-            };
-            return Json(viewModel);
-        }
-
+      
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

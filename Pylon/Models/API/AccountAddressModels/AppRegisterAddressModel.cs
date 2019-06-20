@@ -4,10 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
+namespace Aiursoft.Pylon.Models.API.AccountAddressModels
 {
     public class AppRegisterAddressModel
     {
+        [Required]
+        public string AccessToken { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

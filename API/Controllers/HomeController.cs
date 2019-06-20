@@ -8,9 +8,11 @@ using Aiursoft.API.Models.HomeViewModels;
 using Microsoft.Extensions.Localization;
 using Aiursoft.Pylon.Services;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.Pylon.Attributes;
 
 namespace Aiursoft.API.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly IStringLocalizer<HomeController> _localizer;

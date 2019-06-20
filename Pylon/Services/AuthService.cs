@@ -16,24 +16,24 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly UserManager<T> _userManager;
         private readonly SignInManager<T> _signInManager;
-        private readonly OAuthService _oauthService;
+        private readonly AccountService _accountService;
         private readonly AppsContainer _appsContainer;
         public AuthService(
             UserManager<T> userManager,
             SignInManager<T> signInManager,
-            OAuthService oauthService,
+            AccountService accountService,
             AppsContainer appsContainer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _oauthService = oauthService;
+            _accountService = accountService;
             _appsContainer = appsContainer;
         }
 
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
-            var openId = await _oauthService.CodeToOpenIdAsync(model.code, await _appsContainer.AccessToken());
-            var userinfo = await _oauthService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: openId.openid);
+            var openId = await _accountService.CodeToOpenIdAsync(model.code, await _appsContainer.AccessToken());
+            var userinfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: openId.openid);
             var current = await _userManager.FindByIdAsync(userinfo.User.Id);
             if (current == null)
             {
@@ -61,7 +61,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<T> OnlyUpdate(T user)
         {
-            var userinfo = await _oauthService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
+            var userinfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
             user.Update(userinfo);
             await _userManager.UpdateAsync(user);
             return user;

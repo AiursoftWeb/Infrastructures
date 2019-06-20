@@ -19,6 +19,7 @@ using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.Account.Controllers
 {
+    [LimitPerMin]
     [AiurForceAuth]
     public class AccountController : Controller
     {

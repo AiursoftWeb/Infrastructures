@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
+namespace Aiursoft.Pylon.Models.API.AccountAddressModels
 {
     public class PasswordAuthAddressModel
     {
         [Required]
-        public string AppId { get; set; }
+        public string AccessToken { get; set; }
         [EmailAddress]
         [Required]
         public string Email { get; set; }

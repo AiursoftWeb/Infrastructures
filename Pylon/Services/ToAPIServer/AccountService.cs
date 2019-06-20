@@ -1,21 +1,18 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API.OAuthAddressModels;
-using Aiursoft.Pylon.Models.API.OAuthViewModels;
+using Aiursoft.Pylon.Models.API.AccountAddressModels;
+using Aiursoft.Pylon.Models.API.AccountViewModels;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToAPIServer
 {
-    public class OAuthService
+    public class AccountService
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;
 
-        public OAuthService(
+        public AccountService(
             ServiceLocation serviceLocation,
             HTTPService http)
         {
@@ -23,12 +20,12 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
-        public async Task<AiurValue<int>> PasswordAuthAsync(string appid, string email, string password)
+        public async Task<AiurValue<int>> PasswordAuthAsync(string accessToken, string email, string password)
         {
-            var url = new AiurUrl(_serviceLocation.API, "OAuth", "PasswordAuth", new { });
+            var url = new AiurUrl(_serviceLocation.API, "Account", "PasswordAuth", new { });
             var form = new AiurUrl(string.Empty, new PasswordAuthAddressModel
             {
-                AppId = appid,
+                AccessToken = accessToken,
                 Email = email,
                 Password = password
             });
@@ -41,7 +38,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> AppRegisterAsync(string email, string password, string confirmPassword)
         {
-            var url = new AiurUrl(_serviceLocation.API, "OAuth", "AppRegister", new { });
+            var url = new AiurUrl(_serviceLocation.API, "Account", "AppRegister", new { });
             var form = new AiurUrl(string.Empty, new AppRegisterAddressModel
             {
                 Email = email,
@@ -57,7 +54,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(int code, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "OAuth", "CodeToOpenId", new CodeToOpenIdAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
                 AccessToken = accessToken,
                 Code = code,
@@ -73,7 +70,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
         {
-            var url = new AiurUrl(_serviceLocation.API, "oauth", "UserInfo", new UserInfoAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "Account", "UserInfo", new UserInfoAddressModel
             {
                 access_token = accessToken,
                 openid = openid,
