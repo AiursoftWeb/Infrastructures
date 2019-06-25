@@ -34,20 +34,18 @@
             <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName">
                 @Model.SiteName
             </a>
-            /
             @{
                 string currentPath = "";
             }
-            @foreach (var path in Model.Path.Split('/'))
+            @foreach (var path in Model.Path?.Split('/') ?? new string[0])
             {
-                currentPath = currentPath + path;
-                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
-                    @path
-                </a>
-                currentPath = currentPath + "/";
                 <label>
                     /
                 </label>
+                currentPath = "/" + currentPath + path;
+                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                    @path
+                </a>
             }
         </div>
         <div class="card-body">
