@@ -31,7 +31,7 @@
         <div class="card-header">
             <i class="fa fa-database ico"></i>
             Files of
-            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@string.Empty">
                 @Model.SiteName
             </a>
             @{
