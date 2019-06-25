@@ -157,14 +157,10 @@ namespace Aiursoft.Developer.Controllers
             }
             catch (AiurUnexceptedResponse e)
             {
-                if (e.Code == ErrorType.NotFound)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw e;
-                }
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
             }
         }
 

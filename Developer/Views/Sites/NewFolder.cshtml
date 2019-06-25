@@ -40,6 +40,7 @@
 
                     <div class="col-md-12 margin-top-30">
                         <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
+                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-secondary btn">@Localizer["Back"]</a>
                     </div>
                 </form>
             </div>
