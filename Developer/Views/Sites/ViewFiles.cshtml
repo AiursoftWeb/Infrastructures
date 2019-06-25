@@ -30,7 +30,25 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-database ico"></i>
-            Files of @Model.SiteName / @Html.Raw(Model.Path?.Replace("/", " / "))
+            Files of
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName">
+                @Model.SiteName
+            </a>
+            /
+            @{
+                string currentPath = "";
+            }
+            @foreach (var path in Model.Path.Split('/'))
+            {
+                currentPath = currentPath + path;
+                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                    @path
+                </a>
+                currentPath = currentPath + "/";
+                <label>
+                    /
+                </label>
+            }
         </div>
         <div class="card-body">
             <div class="col-12">
@@ -59,8 +77,7 @@
                                             @folder.FolderName
                                         </a>
                                     </td>
-                                    <td>
-                                    </td>
+                                    <td></td>
                                 </tr>
                             }
                             @foreach (var file in Model.Folder.Files)
