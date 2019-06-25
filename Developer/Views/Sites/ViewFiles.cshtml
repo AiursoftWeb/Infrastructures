@@ -42,10 +42,11 @@
                 <label>
                     /
                 </label>
-                currentPath = "/" + currentPath + path;
+                currentPath = currentPath + path;
                 <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
                     @path
                 </a>
+                currentPath = currentPath + "/";
             }
         </div>
         <div class="card-body">
