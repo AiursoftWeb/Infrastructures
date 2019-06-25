@@ -37,6 +37,7 @@ namespace Aiursoft.Developer.Controllers
             _foldersService = foldersService;
         }
 
+        [Route(nameof(Index))]
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
@@ -44,6 +45,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route(nameof(CreateSite))]
         public async Task<IActionResult> CreateSite(string id)// app id
         {
             var user = await GetCurrentUserAsync();
@@ -55,6 +57,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [Route(nameof(CreateSite))]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSite(CreateSiteViewModel model)
         {
