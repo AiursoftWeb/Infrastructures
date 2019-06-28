@@ -2,9 +2,6 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.API.Services
@@ -25,7 +22,7 @@ namespace Aiursoft.API.Services
         {
             var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(UserController.EmailConfirm), new
             {
-                userId = userId,
+                userId,
                 code = token
             });
             await _emailSender.SendEmail(emailAddress, $"{Values.ProjectName} Account Email Confirmation",

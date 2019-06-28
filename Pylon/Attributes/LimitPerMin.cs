@@ -14,7 +14,7 @@ namespace Aiursoft.Pylon.Attributes
 
         private readonly int _limit;
 
-        public LimitPerMin(int limit = 60)
+        public LimitPerMin(int limit = 30)
         {
             _limit = limit;
         }
