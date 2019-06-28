@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.API.Models.UserViewModels
+namespace Aiursoft.API.Models.PasswordViewModels
 {
     public class ForgotPasswordViaEmailViewModel
     {

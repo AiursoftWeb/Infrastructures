@@ -188,6 +188,5 @@ namespace Aiursoft.API.Controllers
             };
             return Json(viewModel);
         }
-
     }
 }

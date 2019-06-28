@@ -1,4 +1,4 @@
-@model Aiursoft.API.Models.UserViewModels.EnterSMSCodeViewModel
+@model Aiursoft.API.Models.PasswordViewModels.EnterSMSCodeViewModel
 @{
     ViewData["Title"] = Localizer["Enter code"];
 }
@@ -18,7 +18,7 @@
                     <div asp-validation-summary="All"></div>
                 </div>
             }
-            <form asp-controller="User" asp-action="EnterSmsCode" method="post">
+            <form asp-controller="Password" asp-action="EnterSmsCode" method="post">
                 <input type="hidden" asp-for="Email" />
                 <div class="form-group">
                     <input type="text" asp-for="Code" class="form-control" placeholder="@Localizer["Enter your Code"]">

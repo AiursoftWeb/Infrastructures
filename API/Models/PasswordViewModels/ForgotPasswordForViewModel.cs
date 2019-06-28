@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.API.Models.UserViewModels
+namespace Aiursoft.API.Models.PasswordViewModels
 {
-    public class EnterSMSCodeViewModel
+    public class ForgotPasswordForViewModel
     {
         public bool ModelStateValid { get; set; } = true;
-        public string PhoneLast { get; set; }
         [Required]
-        public string Code { get; set; }
-        [Required]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }

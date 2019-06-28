@@ -20,7 +20,7 @@ namespace Aiursoft.API.Services
 
         public async Task SendConfirmation(string userId, string emailAddress, string token)
         {
-            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(UserController.EmailConfirm), new
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "Password", nameof(PasswordController.EmailConfirm), new
             {
                 userId,
                 code = token
@@ -31,7 +31,7 @@ namespace Aiursoft.API.Services
 
         public Task SendResetPassword(string code, string userId, string targetEmail)
         {
-            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(UserController.ResetPassword), new
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(PasswordController.ResetPassword), new
             {
                 Code = code,
                 UserId = userId
