@@ -31,7 +31,7 @@ namespace Aiursoft.API.Services
 
         public Task SendResetPassword(string code, string userId, string targetEmail)
         {
-            var callbackUrl = new AiurUrl(_serviceLocation.API, "User", nameof(PasswordController.ResetPassword), new
+            var callbackUrl = new AiurUrl(_serviceLocation.API, "Password", nameof(PasswordController.ResetPassword), new
             {
                 Code = code,
                 UserId = userId
