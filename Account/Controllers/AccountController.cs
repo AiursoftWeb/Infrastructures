@@ -265,7 +265,7 @@ namespace Aiursoft.Account.Controllers
                 model.NewPhoneNumber = "+86" + model.NewPhoneNumber;
             }
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.NewPhoneNumber);
-            await _smsSender.SendAsync(model.NewPhoneNumber, "Your security code is: " + code);
+            await _smsSender.SendAsync(model.NewPhoneNumber, $"[Aiursoft] Your Aiursoft verification code is: {code}.");
             return RedirectToAction(nameof(EnterCode), new { model.NewPhoneNumber });
         }
 
