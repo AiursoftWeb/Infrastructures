@@ -82,7 +82,12 @@
                             @foreach (var file in Model.Folder.Files)
                             {
                                 <tr>
-                                    <td>@file.FileName</td>
+                                    <td>
+                                        <i class="fa fa-file-o text-primary"></i>
+                                        <a href="#">
+                                            @file.FileName
+                                        </a>
+                                    </td>
                                     <td></td>
                                 </tr>
                             }
@@ -98,7 +103,7 @@
                         <i class="fa fa-sort-amount-asc"></i>
                         Sort
                     </a>
-                    <a href="#" class="btn btn-success">New file</a>
+                    <a asp-controller="Sites" asp-action="NewFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-success">New file</a>
                 </div>
             </div>
         </div>

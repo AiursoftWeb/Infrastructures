@@ -1,0 +1,56 @@
+﻿@model Aiursoft.Developer.Models.SitesViewModels.NewFileViewModel
+@{
+    ViewData["Title"] = "Upload new file";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-upload"></i>
+            Upload File To @Model.SiteName / @Model.Path
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form class="box-content" asp-controller="Sites" asp-action="NewFile" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="AppId" />
+                    <input type="hidden" asp-for="SiteName" />
+                    <input type="hidden" asp-for="Path" />
+                    <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
+                    <p class="help margin-top-10">@Localizer["Only 1000Mb max."]</p>
+                    <div class="margin-top-30">
+                        <button type="submit" data-disable-with="Uploading..." class="btn btn-primary">@Localizer["Upload"]</button>
+                        <a class="btn btn-info" asp-controller="Sites" asp-action="ViewFiles" asp-route-appid="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@Model.Path">@Localizer["Back to folder"]</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section css {
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+@section js {
+    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="@ServiceLocation.UI/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropify').dropify();
+        });
+    </script>
+}

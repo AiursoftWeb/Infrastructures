@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -24,17 +25,20 @@ namespace Aiursoft.Developer.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly SitesService _sitesService;
         private readonly FoldersService _foldersService;
+        private readonly StorageService _storageService;
 
         public SitesController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
             SitesService sitesService,
-            FoldersService foldersService)
+            FoldersService foldersService,
+            StorageService storageService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _sitesService = sitesService;
             _foldersService = foldersService;
+            _storageService = storageService;
         }
 
         [Route(nameof(Index))]
@@ -73,6 +77,10 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
@@ -96,6 +104,10 @@ namespace Aiursoft.Developer.Controllers
             if (app == null)
             {
                 return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
             }
             try
             {
@@ -152,6 +164,10 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
@@ -165,6 +181,36 @@ namespace Aiursoft.Developer.Controllers
                 model.Recover(user);
                 return View(model);
             }
+        }
+
+        [Route("NewFile/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> NewFile(string appId, string siteName, string path)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new NewFileViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName,
+                Path = path
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [FileChecker]
+        [Route("NewFile/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> NewFile(NewFileViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var file = Request.Form.Files.First();
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            string accessToken = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            await _storageService.SaveToProbe(file, model.SiteName, model.Path, SaveFileOptions.SourceName, accessToken);
+            return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
         }
 
         private async Task<DeveloperUser> GetCurrentUserAsync()

@@ -190,6 +190,7 @@ namespace Aiursoft.Pylon
             services.AddScoped<OSSApiService>();
             services.AddScoped<SitesService>();
             services.AddScoped<FoldersService>();
+            services.AddScoped<FilesService>();
             services.AddScoped<StorageService>();
             services.AddScoped<CoreApiService>();
             services.AddScoped<AccountService>();

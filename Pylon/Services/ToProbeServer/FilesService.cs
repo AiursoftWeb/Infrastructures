@@ -23,7 +23,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<AiurProtocol> UploadFileAsync(string accessToken, string siteName, string folderNames, string localFilePath)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, $"Files/UploadFile/{siteName}/{folderNames}", new UploadFileAddressModel
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Files/UploadFile/{siteName}/{folderNames}", new UploadFileAddressModel
             {
                 AccessToken = accessToken
             });

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.OSS.ApiViewModels;
+using Aiursoft.Pylon.Services.ToProbeServer;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -16,12 +17,16 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly OSSApiService _ossApiService;
         private readonly AppsContainer _appsContainer;
+        private readonly FilesService _filesService;
+
         public StorageService(
             OSSApiService ossApiService,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            FilesService filesService)
         {
             _ossApiService = ossApiService;
             _appsContainer = appsContainer;
+            _filesService = filesService;
         }
         private async Task<string> _SaveLocally(IFormFile file, SaveFileOptions options = SaveFileOptions.RandomName, string name = "")
         {
@@ -62,6 +67,21 @@ namespace Aiursoft.Pylon.Services
                 File.Delete(localFilePath);
             }
             return fileAddress;
+        }
+
+        public async Task<AiurProtocol> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
+        {
+            string localFilePath = await _SaveLocally(file, options, name);
+            if (accessToken == null)
+            {
+                accessToken = await _appsContainer.AccessToken();
+            }
+            var result = await _filesService.UploadFileAsync(accessToken, siteName, path, localFilePath);
+            if (deleteLocal)
+            {
+                File.Delete(localFilePath);
+            }
+            return result;
         }
     }
     public enum SaveFileOptions
