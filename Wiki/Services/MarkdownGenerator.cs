@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace Aiursoft.Wiki.Services
             var path = "";
             foreach (var arg in args)
             {
-                if(arg.Type != ArgumentType.collection)
+                if (arg.Type != ArgumentType.collection)
                 {
                     path += $"{arg.Name}={GetExampleValue(arg)}&";
                 }
@@ -121,6 +122,17 @@ namespace Aiursoft.Wiki.Services
                     }
                     content += $"\r\n";
                 }
+                content += $"Possible Response:";
+                foreach (var possibleResponse in docAction.PossibleResponses)
+                {
+                    var dybject = JsonConvert.DeserializeObject(possibleResponse);
+                    var finalresult = JsonConvert.SerializeObject(dybject, Formatting.Indented);
+                    content += $"\r\n";
+                    content += $"```json\r\n";
+                    content += finalresult;
+                    content += $"```\r\n";
+                }
+                content += $"\r\n";
             }
             return content;
         }
