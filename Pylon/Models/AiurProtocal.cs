@@ -31,10 +31,10 @@ namespace Aiursoft.Pylon.Models
     }
     public class AiurCollection<T> : AiurProtocol
     {
-        public AiurCollection(IEnumerable<T> items)
+        public AiurCollection(List<T> items)
         {
             Items = items;
         }
-        public IEnumerable<T> Items { get; set; }
+        public List<T> Items { get; set; }
     }
 }

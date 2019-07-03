@@ -98,7 +98,6 @@ namespace Aiursoft.API.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [APIProduces(typeof(AllUserGrantedViewModel))]
         public async Task<IActionResult> AllUserGranted([Required]string accessToken)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);

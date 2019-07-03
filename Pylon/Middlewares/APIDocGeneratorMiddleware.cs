@@ -69,12 +69,19 @@ namespace Aiursoft.Pylon.Middlewares
 
         private string[] PossibleResponses(MethodInfo action)
         {
-            var possibleList = action.GetCustomAttributes(typeof(APIProduces))
-                .Select(t => (t as APIProduces).PossibleType)
-                .Select(t => InstanceMaker.Make(t))
-                .Select(t => JsonConvert.SerializeObject(t)).ToList();
-            possibleList.Add(JsonConvert.SerializeObject(InstanceMaker.Make(typeof(AiurProtocol))));
-            return possibleList.ToArray();
+            try
+            {
+                var possibleList = action.GetCustomAttributes(typeof(APIProduces))
+                    .Select(t => (t as APIProduces).PossibleType)
+                    .Select(t => InstanceMaker.Make(t))
+                    .Select(t => JsonConvert.SerializeObject(t)).ToList();
+                possibleList.Add(JsonConvert.SerializeObject(InstanceMaker.Make(typeof(AiurProtocol))));
+                return possibleList.ToArray();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         private List<Argument> GenerateArguments(MethodInfo method)

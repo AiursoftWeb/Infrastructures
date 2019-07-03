@@ -48,11 +48,23 @@ namespace Aiursoft.Pylon.Services
             {
                 return "an example string.";
             }
-            else if (type == typeof(int))
+            else if (type == typeof(int) || type == typeof(int?))
             {
                 return 0;
             }
-            else if (type == typeof(bool))
+            else if (type == typeof(DateTime) || type == typeof(DateTime?))
+            {
+                return DateTime.UtcNow;
+            }
+            else if (type == typeof(DateTimeOffset) || type == typeof(DateTimeOffset?))
+            {
+                return DateTimeOffset.UtcNow;
+            }
+            else if (type == typeof(TimeSpan) || type == typeof(TimeSpan?))
+            {
+                return TimeSpan.FromMinutes(37);
+            }
+            else if (type == typeof(bool) || type == typeof(bool?))
             {
                 return true;
             }
@@ -76,7 +88,10 @@ namespace Aiursoft.Pylon.Services
                 var instance = GenerateWithConstructor(type);
                 foreach (var property in instance.GetType().GetProperties())
                 {
-                    property.SetValue(instance, Make(property.PropertyType));
+                    if (property.SetMethod != null)
+                    {
+                        property.SetValue(instance, Make(property.PropertyType));
+                    }
                 }
                 return instance;
             }
