@@ -31,6 +31,7 @@ namespace Aiursoft.Stargate.Controllers
             _tokenManager = tokenManager;
         }
 
+        [APIProduces(typeof(ViewMyChannelsViewModel))]
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -85,6 +86,7 @@ namespace Aiursoft.Stargate.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(CreateChannelViewModel))]
         public async Task<IActionResult> CreateChannel([FromForm]CreateChannelAddressModel model)
         {
             //Update app info

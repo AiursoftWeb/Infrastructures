@@ -25,6 +25,7 @@ namespace Aiursoft.Archon.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
+        [APIProduces(typeof(AccessTokenViewModel))]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
             try

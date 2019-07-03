@@ -75,7 +75,16 @@ namespace Aiursoft.Pylon.Middlewares
                     .Select(t => (t as APIProduces).PossibleType)
                     .Select(t => InstanceMaker.Make(t))
                     .Select(t => JsonConvert.SerializeObject(t)).ToList();
-                possibleList.Add(JsonConvert.SerializeObject(InstanceMaker.Make(typeof(AiurProtocol))));
+                possibleList.Add(JsonConvert.SerializeObject(new AiurProtocol
+                {
+                    Code = ErrorType.WrongKey,
+                    Message = "Some error."
+                }));
+                possibleList.Add(JsonConvert.SerializeObject(new AiurCollection<string>(new List<string> { "Some item is invalid!" })
+                {
+                    Code = ErrorType.InvalidInput,
+                    Message = "Your input contains several errors!"
+                }));
                 return possibleList.ToArray();
             }
             catch (Exception e)

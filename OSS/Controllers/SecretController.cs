@@ -29,6 +29,7 @@ namespace Aiursoft.OSS.Controllers
         }
 
         [HttpGet]
+        [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> Generate(GenerateAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);

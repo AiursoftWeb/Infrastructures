@@ -60,6 +60,7 @@ namespace Aiursoft.OSS.Controllers
             return this.Protocol(ErrorType.HasDoneAlready, "That app do not exists in our database.");
         }
 
+        [APIProduces(typeof(ViewMyBucketsViewModel))]
         public async Task<JsonResult> ViewMyBuckets(ViewMyBucketsAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -91,6 +92,7 @@ namespace Aiursoft.OSS.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(CreateBucketViewModel))]
         public async Task<JsonResult> CreateBucket([FromForm]CreateBucketAddressModel model)
         {
             //Update app info
@@ -168,6 +170,7 @@ namespace Aiursoft.OSS.Controllers
             return this.Protocol(ErrorType.Success, "Successfully edited your bucket!");
         }
 
+        [APIProduces(typeof(ViewBucketViewModel))]
         public async Task<JsonResult> ViewBucketDetail(ViewBucketDetailAddressModel model)
         {
             var targetBucket = await _dbContext.Bucket.FindAsync(model.BucketId);
@@ -199,6 +202,7 @@ namespace Aiursoft.OSS.Controllers
             return this.Protocol(ErrorType.Success, "Successfully deleted your bucket!");
         }
 
+        [APIProduces(typeof(ViewOneFileViewModel))]
         public async Task<JsonResult> ViewOneFile(ViewOneFileAddressModel model)
         {
             var file = await _dbContext
@@ -222,6 +226,7 @@ namespace Aiursoft.OSS.Controllers
             return Json(viewModel);
         }
 
+        [APIProduces(typeof(AiurCollection<OSSFile>))]
         public async Task<JsonResult> ViewMultiFiles(ViewMultiFilesAddressModel model)
         {
             int[] ids;
@@ -255,6 +260,7 @@ namespace Aiursoft.OSS.Controllers
 
         [HttpPost]
         [FileChecker]
+        [APIProduces(typeof(UploadFileViewModel))]
         public async Task<JsonResult> UploadFile(UploadFileAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -309,6 +315,7 @@ namespace Aiursoft.OSS.Controllers
             });
         }
 
+        [APIProduces(typeof(ViewAllFilesViewModel))]
         public async Task<JsonResult> ViewAllFiles(CommonAddressModel model)
         {
             //Analyse app

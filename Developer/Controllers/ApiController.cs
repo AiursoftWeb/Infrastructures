@@ -66,6 +66,7 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
+        [APIProduces(typeof(AppInfoViewModel))]
         public async Task<JsonResult> AppInfo(AppInfoAddressModel model)
         {
             var target = await _dbContext
