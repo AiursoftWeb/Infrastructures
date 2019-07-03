@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class InstranceMaker
+    public static class InstranceMaker
     {
-        private IList GetArrayWithInstanceInherts(Type itemType)
+        private static IList GetArrayWithInstanceInherts(Type itemType)
         {
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(itemType);
@@ -25,12 +25,12 @@ namespace Aiursoft.Pylon.Services
             return instance;
         }
 
-        public T Make<T>() where T : class, new()
+        public static T Make<T>() where T : class, new()
         {
             return Make(typeof(T)) as T;
         }
 
-        public object Make(Type type)
+        public static object Make(Type type)
         {
             if (type == typeof(string))
             {

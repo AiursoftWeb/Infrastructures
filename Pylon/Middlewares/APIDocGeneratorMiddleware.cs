@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.Pylon.Middlewares
 {
@@ -47,6 +48,7 @@ namespace Aiursoft.Pylon.Middlewares
                         continue;
                     }
                     var args = GenerateArguments(method);
+                    var possibleResponses = PossibleResponses(method);
                     var api = new API
                     {
                         ControllerName = controller.Name,
@@ -54,13 +56,24 @@ namespace Aiursoft.Pylon.Middlewares
                         IsPost = method.CustomAttributes.Any(t => t.AttributeType == typeof(HttpPostAttribute)),
                         Arguments = args,
                         AuthRequired = JudgeAuthorized(method, controller),
-                        RequiresFile = JudgeRequiredFile(method, controller)
+                        RequiresFile = JudgeRequiredFile(method, controller),
+                        PossibleResponses = possibleResponses
                     };
                     actionsMatches.Add(api);
                 }
             }
             await context.Response.WriteAsync(JsonConvert.SerializeObject(actionsMatches));
             return;
+        }
+
+        private string[] PossibleResponses(MethodInfo action)
+        {
+            return action
+                .GetCustomAttributes(typeof(APIProduces))
+                .Select(t => (t as APIProduces).PossibleType)
+                .Select(t => InstranceMaker.Make(t))
+                .Select(t => JsonConvert.SerializeObject(t))
+                .ToArray();
         }
 
         private List<Argument> GenerateArguments(MethodInfo method)
@@ -175,6 +188,7 @@ namespace Aiursoft.Pylon.Middlewares
         public bool IsPost { get; set; }
         public List<Argument> Arguments { get; set; }
         public bool RequiresFile { get; set; }
+        public string[] PossibleResponses { get; set; }
     }
 
     public class Argument
