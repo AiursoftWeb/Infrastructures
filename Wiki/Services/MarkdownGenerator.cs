@@ -130,7 +130,7 @@ namespace Aiursoft.Wiki.Services
                     content += $"\r\n";
                     content += $"```json\r\n";
                     content += finalresult;
-                    content += $"```\r\n";
+                    content += $"\r\n```\r\n";
                 }
                 content += $"\r\n";
             }
