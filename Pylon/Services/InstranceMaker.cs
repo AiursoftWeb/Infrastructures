@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +89,11 @@ namespace Aiursoft.Pylon.Services
                 var instance = GenerateWithConstructor(type);
                 foreach (var property in instance.GetType().GetProperties())
                 {
-                    if (property.SetMethod != null)
+                    if (property.CustomAttributes.Any(t => t.AttributeType == typeof(JsonIgnoreAttribute)))
+                    {
+                        property.SetValue(instance, null);
+                    }
+                    else if (property.SetMethod != null)
                     {
                         property.SetValue(instance, Make(property.PropertyType));
                     }
