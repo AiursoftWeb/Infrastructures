@@ -46,6 +46,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<int>))]
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -131,6 +132,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
         }
 
+        [APIProduces(typeof(CodeToOpenIdViewModel))]
         public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
