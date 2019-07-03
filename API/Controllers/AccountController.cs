@@ -131,6 +131,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
         }
 
+        [APIProduces(typeof(CodeToOpenIdViewModel))]
         public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -168,6 +169,7 @@ namespace Aiursoft.API.Controllers
             return Json(viewModel);
         }
 
+        [APIProduces(typeof(UserInfoViewModel))]
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);

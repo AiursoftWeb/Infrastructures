@@ -64,6 +64,7 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
@@ -89,6 +90,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
+        [APIProduces(typeof(AiurCollection<AiurUserEmail>))]
         public async Task<IActionResult> ViewAllEmails(ViewAllEmailsAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
@@ -203,6 +205,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
         }
 
+        [APIProduces(typeof(AiurCollection<AppGrant>))]
         public async Task<IActionResult> ViewGrantedApps(ViewGrantedAppsAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);

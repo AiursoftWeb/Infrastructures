@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Pylon.Middlewares
 {
@@ -68,12 +69,12 @@ namespace Aiursoft.Pylon.Middlewares
 
         private string[] PossibleResponses(MethodInfo action)
         {
-            return action
-                .GetCustomAttributes(typeof(APIProduces))
+            var possibleList = action.GetCustomAttributes(typeof(APIProduces))
                 .Select(t => (t as APIProduces).PossibleType)
                 .Select(t => InstranceMaker.Make(t))
-                .Select(t => JsonConvert.SerializeObject(t))
-                .ToArray();
+                .Select(t => JsonConvert.SerializeObject(t)).ToList();
+            possibleList.Add(JsonConvert.SerializeObject(InstranceMaker.Make(typeof(AiurProtocol))));
+            return possibleList.ToArray();
         }
 
         private List<Argument> GenerateArguments(MethodInfo method)
