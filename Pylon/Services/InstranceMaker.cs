@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Services
 {
-    public static class InstranceMaker
+    public static class InstanceMaker
     {
         public static IList GetArrayWithInstanceInherts(Type itemType)
         {

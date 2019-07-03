@@ -71,9 +71,9 @@ namespace Aiursoft.Pylon.Middlewares
         {
             var possibleList = action.GetCustomAttributes(typeof(APIProduces))
                 .Select(t => (t as APIProduces).PossibleType)
-                .Select(t => InstranceMaker.Make(t))
+                .Select(t => InstanceMaker.Make(t))
                 .Select(t => JsonConvert.SerializeObject(t)).ToList();
-            possibleList.Add(JsonConvert.SerializeObject(InstranceMaker.Make(typeof(AiurProtocol))));
+            possibleList.Add(JsonConvert.SerializeObject(InstanceMaker.Make(typeof(AiurProtocol))));
             return possibleList.ToArray();
         }
 
