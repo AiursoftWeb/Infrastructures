@@ -122,9 +122,9 @@ namespace Aiursoft.Wiki.Services
                     }
                     content += $"\r\n";
                 }
-                content += $"Possible Response:";
                 foreach (var possibleResponse in docAction.PossibleResponses)
                 {
+                    content += $"Possible Response:\r\n";
                     var dybject = JsonConvert.DeserializeObject(possibleResponse);
                     var finalresult = JsonConvert.SerializeObject(dybject, Formatting.Indented);
                     content += $"\r\n";
