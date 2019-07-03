@@ -9,7 +9,7 @@ namespace Aiursoft.Pylon.Services
 {
     public static class InstranceMaker
     {
-        private static IList GetArrayWithInstanceInherts(Type itemType)
+        public static IList GetArrayWithInstanceInherts(Type itemType)
         {
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(itemType);
@@ -25,9 +25,21 @@ namespace Aiursoft.Pylon.Services
             return instance;
         }
 
-        public static T Make<T>() where T : class, new()
+        public static object GenerateWithConstructor(Type type)
         {
-            return Make(typeof(T)) as T;
+            if (type.GetConstructors().Count() < 1)
+            {
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName); ;
+            }
+            var constructor = type.GetConstructors()[0];
+            var args = constructor.GetParameters();
+            object[] parameters = new object[args.Length];
+            for (int i = 0; i < args.Length; i++)
+            {
+                var requirement = args[i].ParameterType;
+                parameters[i] = Make(requirement);
+            }
+            return Assembly.GetAssembly(type).CreateInstance(type.FullName, true, BindingFlags.Default, null, parameters, null, null);
         }
 
         public static object Make(Type type)
@@ -61,7 +73,7 @@ namespace Aiursoft.Pylon.Services
             }
             else
             {
-                var instance = Assembly.GetAssembly(type).CreateInstance(type.FullName);
+                var instance = GenerateWithConstructor(type);
                 foreach (var property in instance.GetType().GetProperties())
                 {
                     property.SetValue(instance, Make(property.PropertyType));
