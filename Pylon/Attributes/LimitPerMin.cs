@@ -36,10 +36,18 @@ namespace Aiursoft.Pylon.Attributes
             }
         }
 
+        public static Dictionary<string, int> Copy()
+        {
+            lock (_obj)
+            {
+                return new Dictionary<string, int>(MemoryDictionary);
+            }
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            var tempDictionary = new Dictionary<string, int>(MemoryDictionary);
+            var tempDictionary = Copy();
             if (DateTime.UtcNow - LastClearTime > TimeSpan.FromMinutes(1))
             {
                 ClearMemory();
