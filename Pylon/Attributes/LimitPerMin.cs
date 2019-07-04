@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Attributes
         {
             lock (_obj)
             {
-                MemoryDictionary.TryAdd(key, value);
+                MemoryDictionary[key] = value;
             }
         }
 
@@ -47,12 +47,12 @@ namespace Aiursoft.Pylon.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            var tempDictionary = Copy();
             if (DateTime.UtcNow - LastClearTime > TimeSpan.FromMinutes(1))
             {
                 ClearMemory();
                 LastClearTime = DateTime.UtcNow;
             }
+            var tempDictionary = Copy();
             var path = context.HttpContext.Request.Path.ToString().ToLower();
             var ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
             if (tempDictionary.ContainsKey(ip + path))
@@ -66,6 +66,7 @@ namespace Aiursoft.Pylon.Attributes
             }
             else
             {
+                tempDictionary[ip + path] = 1;
                 WriteMemory(ip + path, 1);
             }
             context.HttpContext.Response.Headers.Add("x-rate-limit-limit", "1m");
