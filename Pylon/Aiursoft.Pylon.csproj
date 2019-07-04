@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-  <Version>0.13.1</Version>
+  <Version>0.13.2</Version>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Title>Aiursoft.Pylon</Title>
     <AssemblyName>Aiursoft.Pylon</AssemblyName>
