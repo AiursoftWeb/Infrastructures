@@ -30,7 +30,7 @@ namespace Aiursoft.Pylon.Services
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
             OSS = TrySet(section["OSSPath"], "https://oss.aiursoft.com");
-            OSSEndpoint = TrySet(section["OSSEndpoint"], "https://oss.cdn.aiursoft.com");
+            OSSEndpoint = TrySet(section["OSSEndpoint"], "https://oss.aiursoft.com");
             Stargate = TrySet(section["StargatePath"], "https://stargate.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWW"], "https://www.aiursoft.com");
