@@ -13,26 +13,44 @@ namespace Aiursoft.Pylon.Attributes
         public static DateTime LastClearTime = DateTime.UtcNow;
 
         private readonly int _limit;
+        private static object _obj = new object();
 
         public LimitPerMin(int limit = 30)
         {
             _limit = limit;
         }
 
+        public static void WriteMemory(string key, int value)
+        {
+            lock (_obj)
+            {
+                MemoryDictionary.TryAdd(key, value);
+            }
+        }
+
+        public static void ClearMemory()
+        {
+            lock (_obj)
+            {
+                MemoryDictionary.Clear();
+            }
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
+            var tempDictionary = new Dictionary<string, int>(MemoryDictionary);
             if (DateTime.UtcNow - LastClearTime > TimeSpan.FromMinutes(1))
             {
-                MemoryDictionary = new Dictionary<string, int>();
+                ClearMemory();
                 LastClearTime = DateTime.UtcNow;
             }
             var path = context.HttpContext.Request.Path.ToString().ToLower();
             var ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
-            if (MemoryDictionary.ContainsKey(ip + path))
+            if (tempDictionary.ContainsKey(ip + path))
             {
-                MemoryDictionary[ip + path]++;
-                if (MemoryDictionary[ip + path] > _limit)
+                WriteMemory(ip + path, tempDictionary[ip + path] + 1);
+                if (tempDictionary[ip + path] > _limit)
                 {
                     context.HttpContext.Response.Headers.Add("retry-after", (60 - (int)(DateTime.UtcNow - LastClearTime).TotalSeconds).ToString());
                     context.Result = new StatusCodeResult((int)HttpStatusCode.TooManyRequests);
@@ -40,10 +58,10 @@ namespace Aiursoft.Pylon.Attributes
             }
             else
             {
-                MemoryDictionary[ip + path] = 1;
+                WriteMemory(ip + path, 1);
             }
             context.HttpContext.Response.Headers.Add("x-rate-limit-limit", "1m");
-            context.HttpContext.Response.Headers.Add("x-rate-limit-remaining", (_limit - MemoryDictionary[ip + path]).ToString());
+            context.HttpContext.Response.Headers.Add("x-rate-limit-remaining", (_limit - tempDictionary[ip + path]).ToString());
         }
     }
 }
