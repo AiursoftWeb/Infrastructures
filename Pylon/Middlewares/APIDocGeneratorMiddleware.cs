@@ -89,7 +89,7 @@ namespace Aiursoft.Pylon.Middlewares
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
