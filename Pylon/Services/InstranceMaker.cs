@@ -28,23 +28,44 @@ namespace Aiursoft.Pylon.Services
 
         public static object GenerateWithConstructor(Type type)
         {
-            if (type.GetConstructors().Count() < 1)
+            // Has default constructor.
+            if (type.GetConstructors().Count() == 1 &&
+                type.GetConstructors()[0].GetParameters().Count() == 0 &&
+                !type.IsAbstract)
             {
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName); ;
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName);
             }
-            var constructor = type.GetConstructors()[0];
-            var args = constructor.GetParameters();
-            object[] parameters = new object[args.Length];
-            for (int i = 0; i < args.Length; i++)
+            else if (type.GetConstructors().Count() > 0 && !type.IsAbstract)
             {
-                var requirement = args[i].ParameterType;
-                parameters[i] = Make(requirement);
+                // Has a constructor, and constructor has some arguments.
+                var constructor = type.GetConstructors()[0];
+                var args = constructor.GetParameters();
+                object[] parameters = new object[args.Length];
+                for (int i = 0; i < args.Length; i++)
+                {
+                    var requirement = args[i].ParameterType;
+                    parameters[i] = Make(requirement);
+                }
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName, true, BindingFlags.Default, null, parameters, null, null);
             }
-            return Assembly.GetAssembly(type).CreateInstance(type.FullName, true, BindingFlags.Default, null, parameters, null, null);
+            else if (type.IsAbstract)
+            {
+                return null;
+            }
+            else if (type.GetConstructors().All(t => t.IsPrivate))
+
+            {
+                return null;
+            }
+            else
+            {
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName);
+            }
         }
 
         public static object Make(Type type)
         {
+            Console.WriteLine(type.FullName);
             if (type == typeof(string))
             {
                 return "an example string.";
@@ -87,15 +108,18 @@ namespace Aiursoft.Pylon.Services
             else
             {
                 var instance = GenerateWithConstructor(type);
-                foreach (var property in instance.GetType().GetProperties())
+                if (instance != null)
                 {
-                    if (property.CustomAttributes.Any(t => t.AttributeType == typeof(JsonIgnoreAttribute)))
+                    foreach (var property in instance.GetType().GetProperties())
                     {
-                        property.SetValue(instance, null);
-                    }
-                    else if (property.SetMethod != null)
-                    {
-                        property.SetValue(instance, Make(property.PropertyType));
+                        if (property.CustomAttributes.Any(t => t.AttributeType == typeof(JsonIgnoreAttribute)))
+                        {
+                            property.SetValue(instance, null);
+                        }
+                        else if (property.SetMethod != null)
+                        {
+                            property.SetValue(instance, Make(property.PropertyType));
+                        }
                     }
                 }
                 return instance;
