@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
 
 namespace Aiursoft.Probe.Controllers
 {
@@ -25,16 +26,22 @@ namespace Aiursoft.Probe.Controllers
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
         private readonly IConfiguration _configuration;
+        private readonly FolderCleaner _folderCleaner;
+        private readonly FolderRefactor _folderRefactor;
         private readonly static object _obj = new object();
 
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            IConfiguration configuration)
+            FolderCleaner folderCleaner,
+            IConfiguration configuration,
+            FolderRefactor folderRefactor)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
+            _folderRefactor = folderRefactor;
+            _folderCleaner = folderCleaner;
         }
 
         [HttpPost]
@@ -64,7 +71,7 @@ namespace Aiursoft.Probe.Controllers
                 _dbContext.SaveChanges();
             }
             //Try saving file.
-            string directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
+            var directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
             if (Directory.Exists(directoryPath) == false)
             {
                 Directory.CreateDirectory(directoryPath);
@@ -75,6 +82,30 @@ namespace Aiursoft.Probe.Controllers
                 fileStream.Close();
             }
             return this.Protocol(ErrorType.Success, "Successfully uploaded your file.");
+        }
+
+
+        [HttpPost]
+        [APIModelStateChecker]
+        [Route("DeleteFile/{SiteName}/{**FolderNames}")]
+        public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
+        {
+            var file = await _folderLocator.LocateSiteAndFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames));
+            if (file == null) {
+                return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+            }
+            _folderCleaner.DeleteFile(file);
+            return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
+        }
+
+        [HttpPost]
+        [APIModelStateChecker]
+        [Route("DeleteFile/{SiteName}/{**FolderNames}")]
+        public async Task<IActionResult> MoveFile(MoveFolderAddressModel model)
+        {
+            await _folderRefactor.MoveFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames),
+                _folderLocator.SplitStrings(model.NewFolderNames));
+            return this.Protocol(ErrorType.Success, "Successfully moved your file.");
         }
     }
 }

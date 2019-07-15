@@ -46,9 +46,9 @@ namespace Aiursoft.Probe.Controllers
             {
                 return NotFound();
             }
-            string[] foldersWithFileName = _folderLocator.SplitStrings(model.FolderNames);
-            string fileName = foldersWithFileName.Last();
-            string[] folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
+            var foldersWithFileName = _folderLocator.SplitStrings(model.FolderNames);
+            var fileName = foldersWithFileName.Last();
+            var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
 
             var folder = await _folderLocator.LocateAsync(folders, site.Root);
             var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
@@ -56,7 +56,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return NotFound();
             }
-            string path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
+            var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
             return await this.AiurFile(path, file.FileName);
         }
     }

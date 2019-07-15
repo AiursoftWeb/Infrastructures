@@ -2,11 +2,10 @@
 using Aiursoft.Pylon.Models.Probe;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using File = Aiursoft.Pylon.Models.Probe.File;
 
 namespace Aiursoft.Probe.Services
 {
@@ -40,14 +39,20 @@ namespace Aiursoft.Probe.Services
                 .ToListAsync();
             foreach (var file in localFiles)
             {
-                _dbContext.Files.Remove(file);
-                var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.Id}.dat";
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
+                DeleteFile(file);
             }
+
             _dbContext.Folders.Remove(folder);
+        }
+
+        public void DeleteFile(File file)
+        {
+            _dbContext.Files.Remove(file);
+            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{file.Id}.dat";
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
         }
     }
 }
