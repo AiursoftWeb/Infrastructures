@@ -95,6 +95,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
             _folderCleaner.DeleteFile(file);
+            await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
         }
 
@@ -105,6 +106,7 @@ namespace Aiursoft.Probe.Controllers
         {
             await _folderRefactor.MoveFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames),
                 _folderLocator.SplitStrings(model.NewFolderNames));
+            await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully moved your file.");
         }
     }
