@@ -10,9 +10,9 @@ namespace Aiursoft.Pylon.Models
     {
         public static SelectList BuildSelectList()
         {
-            return new SelectList(Numbers.Select(t => new KeyValuePair<string, int>($"+{t.Value} {t.Key}", t.Value)),
-                nameof(KeyValuePair<string, int>.Value),
-                nameof(KeyValuePair<string, int>.Key),
+            return new SelectList(Numbers.Select(t => new KeyValuePair<string, string>($"+{t.Value} {t.Key}", "+" + t.Value)),
+                nameof(KeyValuePair<string, string>.Value),
+                nameof(KeyValuePair<string, string>.Key),
                 Numbers.First().Value);
         }
 
