@@ -84,14 +84,14 @@ namespace Aiursoft.Probe.Controllers
             return this.Protocol(ErrorType.Success, "Successfully uploaded your file.");
         }
 
-
         [HttpPost]
         [APIModelStateChecker]
         [Route("DeleteFile/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
         {
             var file = await _folderLocator.LocateSiteAndFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames));
-            if (file == null) {
+            if (file == null)
+            {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
             _folderCleaner.DeleteFile(file);
