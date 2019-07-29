@@ -45,7 +45,7 @@ namespace Aiursoft.Pylon.Services
             return await Task.Run<IActionResult>(() =>
             {
                 var fileInfo = new FileInfo(path);
-                var extension = filename.Substring(filename.LastIndexOf('.') + 1);
+                var extension = filename.LastIndexOf('.') > 0 ? filename.Substring(filename.LastIndexOf('.') + 1) : string.Empty;
                 long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
                 var etag = Convert.ToString(etagHash, 16);
                 controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
