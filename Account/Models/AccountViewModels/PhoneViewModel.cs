@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Account.Models.AccountViewModels
@@ -15,6 +16,12 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [Display(Name = "Current Phone Number")]
         public string CurrentPhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
+
+        public SelectList AvailableZoneNumbers { get; set; }
+
+        [Required]
+        [Display(Name = "Zone number")]
+        public string ZoneNumber { get; set; }
 
         [Required]
         [Phone]

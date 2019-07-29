@@ -16,6 +16,7 @@ using Aiursoft.Pylon.Services.ToDeveloperServer;
 using System.Collections.Generic;
 using Aiursoft.Account.Services;
 using Aiursoft.Pylon.Exceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Aiursoft.Account.Controllers
 {
@@ -244,7 +245,10 @@ namespace Aiursoft.Account.Controllers
             {
                 CurrentPhoneNumber = phone.Value,
                 PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
-                JustHaveUpdated = justHaveUpdated
+                JustHaveUpdated = justHaveUpdated,
+                AvailableZoneNumbers = new SelectList(ZoneNumbers.Numbers, 
+                    nameof(KeyValuePair<string, string>.Value), 
+                    nameof(KeyValuePair<string, string>.Key))
             };
             return View(model);
         }
@@ -260,12 +264,9 @@ namespace Aiursoft.Account.Controllers
                 model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
-            if (model.NewPhoneNumber.Length == 11)
-            {
-                model.NewPhoneNumber = "+86" + model.NewPhoneNumber;
-            }
-            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.NewPhoneNumber);
-            await _smsSender.SendAsync(model.NewPhoneNumber, $"[Aiursoft] Your Aiursoft verification code is: {code}.");
+            var phone = model.ZoneNumber + model.NewPhoneNumber;
+            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
+            await _smsSender.SendAsync(phone, $"[Aiursoft] Your Aiursoft verification code is: {code}.");
             return RedirectToAction(nameof(EnterCode), new { model.NewPhoneNumber });
         }
 
@@ -345,7 +346,7 @@ namespace Aiursoft.Account.Controllers
                 taskList.Add(AddApp());
             }
             await Task.WhenAll(taskList);
-            model.Apps = model.Apps.OrderBy(app => 
+            model.Apps = model.Apps.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime).ToList();
             return View(model);
         }
