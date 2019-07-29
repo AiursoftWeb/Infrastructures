@@ -246,10 +246,7 @@ namespace Aiursoft.Account.Controllers
                 CurrentPhoneNumber = phone.Value,
                 PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
                 JustHaveUpdated = justHaveUpdated,
-                AvailableZoneNumbers = new SelectList(ZoneNumbers.Numbers, 
-                    nameof(KeyValuePair<string, string>.Value), 
-                    nameof(KeyValuePair<string, string>.Key),
-                    ZoneNumbers.Numbers.First().Value)
+                AvailableZoneNumbers = ZoneNumbers.BuildSelectList()
             };
             return View(model);
         }
@@ -268,7 +265,7 @@ namespace Aiursoft.Account.Controllers
             var phone = model.ZoneNumber + model.NewPhoneNumber;
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
             await _smsSender.SendAsync(phone, $"[Aiursoft] Your Aiursoft verification code is: {code}.");
-            return RedirectToAction(nameof(EnterCode), new { model.NewPhoneNumber });
+            return RedirectToAction(nameof(EnterCode), new { newPhoneNumber = phone });
         }
 
         public async Task<IActionResult> EnterCode(string newPhoneNumber)

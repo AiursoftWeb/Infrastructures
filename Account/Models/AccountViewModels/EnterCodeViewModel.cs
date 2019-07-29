@@ -7,7 +7,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public EnterCodeViewModel() { }
-        public EnterCodeViewModel(AccountUser user) : base(user, 3, "Enter Code") { }
+        public EnterCodeViewModel(AccountUser user) : base(user, 4, "Enter Code") { }
         public void Recover(AccountUser user)
         {
             base.Recover(user, 3, "Enter Code");
