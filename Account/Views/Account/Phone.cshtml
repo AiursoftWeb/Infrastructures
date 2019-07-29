@@ -66,10 +66,6 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <select asp-for="ZoneNumber" asp-items="@Model.AvailableZoneNumbers" class="custom-select">
-                                        <option selected>@Localizer["+86"]</option>
-                                        <option value="1">@Localizer["+1"]</option>
-                                        <option value="2">@Localizer["+2"]</option>
-                                        <option value="3">@Localizer["+3"]</option>
                                     </select>
                                 </div>
                                 <input asp-for="NewPhoneNumber" type="text" class="form-control">

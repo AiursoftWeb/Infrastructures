@@ -248,7 +248,8 @@ namespace Aiursoft.Account.Controllers
                 JustHaveUpdated = justHaveUpdated,
                 AvailableZoneNumbers = new SelectList(ZoneNumbers.Numbers, 
                     nameof(KeyValuePair<string, string>.Value), 
-                    nameof(KeyValuePair<string, string>.Key))
+                    nameof(KeyValuePair<string, string>.Key),
+                    ZoneNumbers.Numbers.First().Value)
             };
             return View(model);
         }
