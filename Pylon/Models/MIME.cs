@@ -33,6 +33,7 @@ namespace Aiursoft.Pylon.Models
             {"ico", "image/x-icon"},
             {"jpeg", "image/jpeg"},
             {"jpg", "image/jpeg"},
+            {"json", "application/json"},
             {"js", "application/x-javascript"},
             {"map","text/plain"},
             {"m4a", "audio/mp4a-latm"},
