@@ -18,16 +18,20 @@ namespace Aiursoft.Pylon.Services
         private readonly OSSApiService _ossApiService;
         private readonly AppsContainer _appsContainer;
         private readonly FilesService _filesService;
+        private readonly ServiceLocation _serviceLocation;
 
         public StorageService(
             OSSApiService ossApiService,
             AppsContainer appsContainer,
-            FilesService filesService)
+            FilesService filesService,
+            ServiceLocation serviceLocation)
         {
             _ossApiService = ossApiService;
             _appsContainer = appsContainer;
             _filesService = filesService;
+            _serviceLocation = serviceLocation;
         }
+
         private async Task<string> _SaveLocally(IFormFile file, SaveFileOptions options = SaveFileOptions.RandomName, string name = "")
         {
             string directoryPath = GetCurrentDirectory() + DirectorySeparatorChar + $@"Storage" + DirectorySeparatorChar;
@@ -83,7 +87,13 @@ namespace Aiursoft.Pylon.Services
             }
             return result;
         }
+
+        public string GetProbeDownloadAddress(string siteName, string path, string fileName)
+        {
+            return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{path}/{fileName}";
+        }
     }
+
     public enum SaveFileOptions
     {
         RandomName,
