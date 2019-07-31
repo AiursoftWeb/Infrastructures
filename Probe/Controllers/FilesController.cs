@@ -81,7 +81,13 @@ namespace Aiursoft.Probe.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
-            return this.Protocol(ErrorType.Success, "Successfully uploaded your file.");
+            var filePath = $"{model.FolderNames}/{newFile.FileName}".TrimStart('/');
+            var path = $"/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{filePath}";
+            return Json(new AiurValue<string>(path)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully uploaded your file."
+            });
         }
 
         [HttpPost]

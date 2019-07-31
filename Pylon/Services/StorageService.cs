@@ -73,6 +73,17 @@ namespace Aiursoft.Pylon.Services
             return fileAddress;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="siteName"></param>
+        /// <param name="path">For example: '' 'aaa' 'aaa/bbb'</param>
+        /// <param name="options"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="name"></param>
+        /// <param name="deleteLocal"></param>
+        /// <returns></returns>
         public async Task<AiurProtocol> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);

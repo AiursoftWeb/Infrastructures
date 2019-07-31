@@ -76,7 +76,7 @@ namespace Aiursoft.Account.Controllers
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.IconFilePathName, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -196,8 +196,10 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             var uploadedFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 1500);
+            var uploadedProbeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["UserIconSiteName"], string.Empty);
             cuser.HeadImgFileKey = uploadedFile.FileKey;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.Bio);
+            cuser.IconFilePathName = null;
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey,  ,cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }

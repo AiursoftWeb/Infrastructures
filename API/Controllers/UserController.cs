@@ -45,6 +45,7 @@ namespace Aiursoft.API.Controllers
             user.NickName = model.NewNickName;
             user.HeadImgFileKey = model.NewIconId;
             user.Bio = model.NewBio;
+            user.IconFilePathName = model.NewIconFilePathName;
             await _dbContext.SaveChangesAsync();
             return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }

@@ -38,7 +38,10 @@ namespace Aiursoft.Pylon.Models
         [JsonProperty]
         public virtual string Sex { get; set; }
         [JsonProperty]
+        [Obsolete]
         public virtual int HeadImgFileKey { get; set; }
+        [JsonProperty]
+        public string IconFilePathName { get; set; }
         [JsonProperty]
         public virtual string PreferedLanguage { get; set; } = "UnSet";
         [JsonProperty]
