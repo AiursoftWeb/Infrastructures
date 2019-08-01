@@ -14,7 +14,6 @@ namespace Aiursoft.Pylon
         public static string GitHubOrganizationAddress { get; } = "https://gitzab.com/AiursoftWeb/";
         public static string FacebookAddress { get; } = "https://facebook.com/";
         public static string TwitterAddress { get; } = "https://twitter.com/";
-        public static string UserIconSiteName { get; } = "usericon";
         public static KeyValuePair<string, string> DirectShowString => new KeyValuePair<string, string>("show", "direct");
         public static PasswordOptions PasswordOptions => new PasswordOptions
         {

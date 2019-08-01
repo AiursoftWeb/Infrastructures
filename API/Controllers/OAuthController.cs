@@ -263,7 +263,7 @@ namespace Aiursoft.API.Controllers
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = model.PreferedLanguage,
                 HeadImgFileKey = Values.DefaultImageId,
-                IconFilePathName = Values.DefaultImageName
+                IconFilePath = Values.DefaultImageName
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Models
             NickName = model.User.NickName;
             Sex = model.User.Sex;
             HeadImgFileKey = model.User.HeadImgFileKey;
-            IconFilePathName = model.User.IconFilePathName;
+            IconFilePath = model.User.IconFilePath;
             PreferedLanguage = model.User.PreferedLanguage;
             AccountCreateTime = model.User.AccountCreateTime;
             UserName = model.User.Email;
@@ -41,8 +41,11 @@ namespace Aiursoft.Pylon.Models
         [JsonProperty]
         [Obsolete]
         public virtual int HeadImgFileKey { get; set; }
+        /// <summary>
+        /// SiteName/Path/FileName.extision
+        /// </summary>
         [JsonProperty]
-        public string IconFilePathName { get; set; }
+        public string IconFilePath { get; set; }
         [JsonProperty]
         public virtual string PreferedLanguage { get; set; } = "UnSet";
         [JsonProperty]

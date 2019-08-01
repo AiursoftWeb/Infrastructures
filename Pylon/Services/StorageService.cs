@@ -105,6 +105,11 @@ namespace Aiursoft.Pylon.Services
             var filePath = $"{path}/{fileName}".TrimStart('/');
             return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{filePath}";
         }
+
+        public string GetProbeDownloadAddress(string fullpath)
+        {
+            return $"{_serviceLocation.Probe}/Download/InSites/{fullpath}";
+        }
     }
 
     public enum SaveFileOptions
