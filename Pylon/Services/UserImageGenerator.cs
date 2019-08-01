@@ -1,10 +1,7 @@
 ﻿using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
@@ -13,16 +10,13 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly UserManager<T> _userManager;
-        private readonly StorageService _storageService;
 
         public UserImageGenerator(
             ServiceLocation serviceLocation,
-            UserManager<T> userManager,
-            StorageService storageService)
+            UserManager<T> userManager)
         {
             _serviceLocation = serviceLocation;
             _userManager = userManager;
-            _storageService = storageService;
         }
 
         public async Task<IHtmlContent> RenderUserImageAsync(ClaimsPrincipal user, int width = 20, int height = 20, string @class = "rounded")
@@ -36,7 +30,7 @@ namespace Aiursoft.Pylon.Services
         public async Task<string> GetUserImageUrl(ClaimsPrincipal userClaims)
         {
             var user = await _userManager.GetUserAsync(userClaims);
-            return _storageService.GetProbeDownloadAddress(user.IconFilePath);
+            return StorageService.GetProbeDownloadAddress(_serviceLocation, user.IconFilePath);
         }
     }
 }

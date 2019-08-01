@@ -8,20 +8,30 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Middlewares
 {
-    public class HandleRobotsMiddleware
+    public class SwitchLanguageMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public HandleRobotsMiddleware(RequestDelegate next)
+        public SwitchLanguageMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            if (string.Equals(context.Request.Path, "/robots.txt", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(context.Request.Path, "/api/setsonlang", StringComparison.OrdinalIgnoreCase))
             {
-                context.Response.StatusCode = StatusCodes.Status204NoContent;
+                var culture = context.Request.Query["culture"];
+                var returnUrl = context.Request.Query["returnUrl"];
+                context.Response.Cookies.Append(
+                    CookieRequestCultureProvider.DefaultCookieName,
+                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                    new CookieOptions
+                    {
+                        Expires = DateTimeOffset.UtcNow.AddYears(1),
+                        SameSite = SameSiteMode.None,
+                    });
+                context.Response.Redirect(returnUrl);
             }
             else
             {

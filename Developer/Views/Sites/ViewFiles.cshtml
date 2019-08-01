@@ -1,5 +1,4 @@
 ﻿@model Aiursoft.Developer.Models.SitesViewModels.ViewFilesViewModel
-@inject StorageService storageService
 @{
     ViewData["Title"] = "View files";
 }
@@ -85,7 +84,7 @@
                                 <tr>
                                     <td>
                                         <i class="fa fa-file-o text-primary"></i>
-                                        <a href="@storageService.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                        <a href="@StorageService.GetProbeDownloadAddress(ServiceLocation ,Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
                                         </a>
                                     </td>
