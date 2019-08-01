@@ -3,17 +3,15 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Models.Probe.FilesAddressModels;
+using Aiursoft.Pylon.Models.Probe.FilesViewModels;
+using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
 
 namespace Aiursoft.Probe.Controllers
 {
@@ -28,6 +26,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly IConfiguration _configuration;
         private readonly FolderCleaner _folderCleaner;
         private readonly FolderRefactor _folderRefactor;
+        private readonly ServiceLocation _serviceLocation;
         private readonly static object _obj = new object();
 
         public FilesController(
@@ -35,12 +34,14 @@ namespace Aiursoft.Probe.Controllers
             FolderLocator folderLocator,
             FolderCleaner folderCleaner,
             IConfiguration configuration,
-            FolderRefactor folderRefactor)
+            FolderRefactor folderRefactor,
+            ServiceLocation serviceLocation)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
             _folderRefactor = folderRefactor;
+            _serviceLocation = serviceLocation;
             _folderCleaner = folderCleaner;
         }
 
@@ -81,7 +82,17 @@ namespace Aiursoft.Probe.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
-            return this.Protocol(ErrorType.Success, "Successfully uploaded your file.");
+            var filePath = $"{model.FolderNames}/{newFile.FileName}".TrimStart('/');
+            var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{filePath}";
+            return Json(new UploadFileViewModel
+            {
+                InternetPath = path,
+                SiteName = model.SiteName,
+                FilePath = model.FolderNames,
+                FileName = newFile.FileName,
+                Code = ErrorType.Success,
+                Message = "Successfully uploaded your file."
+            });
         }
 
         [HttpPost]

@@ -32,6 +32,7 @@ namespace Aiursoft.Pylon.Services
             _serviceLocation = serviceLocation;
         }
 
+        [Obsolete]
         private async Task<string> _SaveLocally(IFormFile file, SaveFileOptions options = SaveFileOptions.RandomName, string name = "")
         {
             string directoryPath = GetCurrentDirectory() + DirectorySeparatorChar + $@"Storage" + DirectorySeparatorChar;
@@ -58,6 +59,7 @@ namespace Aiursoft.Pylon.Services
             return localFilePath;
         }
 
+        [Obsolete]
         public async Task<UploadFileViewModel> SaveToOSS(IFormFile file, int bucketId, int aliveDays, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);
@@ -73,31 +75,34 @@ namespace Aiursoft.Pylon.Services
             return fileAddress;
         }
 
-        public async Task<AiurProtocol> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
+        public async Task<Models.Probe.FilesViewModels.UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null)
         {
-            string localFilePath = await _SaveLocally(file, options, name);
+            string fileName = options == SaveFileOptions.RandomName ?
+                Guid.NewGuid().ToString("N") + GetExtension(file.FileName) :
+                file.FileName;
             if (accessToken == null)
             {
                 accessToken = await _appsContainer.AccessToken();
             }
-            var result = await _filesService.UploadFileAsync(accessToken, siteName, path, localFilePath);
-            if (deleteLocal)
-            {
-                File.Delete(localFilePath);
-            }
+            var result = await _filesService.UploadFileAsync(accessToken, siteName, path, file.OpenReadStream(), fileName);
             return result;
         }
 
         public string GetProbeDownloadAddress(string siteName, string path, string fileName)
         {
-            return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{path}/{fileName}";
+            var filePath = $"{path}/{fileName}".TrimStart('/');
+            return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{filePath}";
+        }
+
+        public string GetProbeDownloadAddress(string fullpath)
+        {
+            return $"{_serviceLocation.Probe}/Download/InSites/{fullpath}";
         }
     }
 
     public enum SaveFileOptions
     {
         RandomName,
-        SourceName,
-        TargetName
+        SourceName
     }
 }
