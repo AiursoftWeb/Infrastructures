@@ -5,6 +5,7 @@ using Aiursoft.Pylon.Models.Probe.FilesViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,13 +23,13 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, string localFilePath)
+        public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, Stream fileStream, string fileName)
         {
             var url = new AiurUrl(_serviceLocation.Probe, $"/Files/UploadFile/{siteName}/{folderNames}", new UploadFileAddressModel
             {
                 AccessToken = accessToken
             });
-            var result = await _http.PostFile(url, localFilePath);
+            var result = await _http.PostFile(url, fileStream, fileName);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);

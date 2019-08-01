@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,25 @@ namespace Aiursoft.Pylon.Services
                     fileStream.Close();
                 }
             }
+            return responseString;
+        }
+
+        public async Task<string> PostFile(AiurUrl url, Stream fileStream, string fullName)
+        {
+            var request = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(3600)
+            };
+            var form = new MultipartFormDataContent();
+            string responseString = null;
+            using (var bufferedStream = new BufferedStream(fileStream))
+            {
+                form.Add(new StreamContent(bufferedStream), "file", fullName);
+                var response = await request.PostAsync(url.ToString(), form);
+                responseString = await response.Content.ReadAsStringAsync();
+                fileStream.Close();
+            }
+            fileStream.Dispose();
             return responseString;
         }
     }
