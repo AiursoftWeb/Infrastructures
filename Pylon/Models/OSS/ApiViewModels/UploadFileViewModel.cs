@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models.OSS.ApiViewModels
 {
+    [Obsolete]
     public class UploadFileViewModel : AiurProtocol
     {
         public int FileKey { get; set; }

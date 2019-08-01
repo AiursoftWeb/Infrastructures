@@ -21,6 +21,7 @@ namespace Aiursoft.Pylon.Models
             NickName = model.User.NickName;
             Sex = model.User.Sex;
             HeadImgFileKey = model.User.HeadImgFileKey;
+            IconFilePathName = model.User.IconFilePathName;
             PreferedLanguage = model.User.PreferedLanguage;
             AccountCreateTime = model.User.AccountCreateTime;
             UserName = model.User.Email;

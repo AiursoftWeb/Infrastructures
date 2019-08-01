@@ -195,9 +195,7 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            var uploadedFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["UserIconBucketId"]), 1500);
             var uploadedProbeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), Values.UserIconSiteName, string.Empty);
-            cuser.HeadImgFileKey = uploadedFile.FileKey;
             cuser.IconFilePathName = uploadedProbeFile.FileName;
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.IconFilePathName, cuser.Bio);
             await _userManager.UpdateAsync(cuser);

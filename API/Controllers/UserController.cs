@@ -44,8 +44,8 @@ namespace Aiursoft.API.Controllers
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             user.NickName = model.NewNickName;
             user.HeadImgFileKey = model.NewIconId;
-            user.Bio = model.NewBio;
             user.IconFilePathName = model.NewIconFilePathName;
+            user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
             return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
