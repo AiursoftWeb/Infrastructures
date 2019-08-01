@@ -64,6 +64,7 @@ namespace Aiursoft.Pylon.Services
             return await HTTPMethods.ReadFromResponseAsync(request);
         }
 
+        [Obsolete]
         public async Task<string> PostFile(AiurUrl url, string filepath)
         {
             var request = new HttpClient
@@ -85,7 +86,7 @@ namespace Aiursoft.Pylon.Services
             return responseString;
         }
 
-        public async Task<string> PostFile(AiurUrl url, Stream fileStream, string fullName)
+        public async Task<string> PostFile(AiurUrl url, Stream fileStream, string fileName)
         {
             var request = new HttpClient
             {
@@ -95,7 +96,7 @@ namespace Aiursoft.Pylon.Services
             string responseString = null;
             using (var bufferedStream = new BufferedStream(fileStream))
             {
-                form.Add(new StreamContent(bufferedStream), "file", fullName);
+                form.Add(new StreamContent(bufferedStream), "file", fileName);
                 var response = await request.PostAsync(url.ToString(), form);
                 responseString = await response.Content.ReadAsStringAsync();
                 fileStream.Close();
