@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
+using Aiursoft.Pylon.Models.Probe.FilesViewModels;
 
 namespace Aiursoft.Probe.Controllers
 {
@@ -28,6 +29,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly IConfiguration _configuration;
         private readonly FolderCleaner _folderCleaner;
         private readonly FolderRefactor _folderRefactor;
+        private readonly ServiceLocation _serviceLocation;
         private readonly static object _obj = new object();
 
         public FilesController(
@@ -35,12 +37,14 @@ namespace Aiursoft.Probe.Controllers
             FolderLocator folderLocator,
             FolderCleaner folderCleaner,
             IConfiguration configuration,
-            FolderRefactor folderRefactor)
+            FolderRefactor folderRefactor,
+            ServiceLocation serviceLocation)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
             _folderRefactor = folderRefactor;
+            _serviceLocation = serviceLocation;
             _folderCleaner = folderCleaner;
         }
 
@@ -82,9 +86,13 @@ namespace Aiursoft.Probe.Controllers
                 fileStream.Close();
             }
             var filePath = $"{model.FolderNames}/{newFile.FileName}".TrimStart('/');
-            var path = $"/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{filePath}";
-            return Json(new AiurValue<string>(path)
+            var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{filePath}";
+            return Json(new UploadFileViewModel
             {
+                InternetPath = path,
+                SiteName = model.SiteName,
+                FilePath = model.FolderNames,
+                FileName = newFile.FileName,
                 Code = ErrorType.Success,
                 Message = "Successfully uploaded your file."
             });

@@ -84,7 +84,7 @@ namespace Aiursoft.Pylon.Services
         /// <param name="name"></param>
         /// <param name="deleteLocal"></param>
         /// <returns></returns>
-        public async Task<AiurProtocol> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
+        public async Task<Models.Probe.FilesViewModels.UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null, string name = "", bool deleteLocal = true)
         {
             string localFilePath = await _SaveLocally(file, options, name);
             if (accessToken == null)
@@ -101,7 +101,8 @@ namespace Aiursoft.Pylon.Services
 
         public string GetProbeDownloadAddress(string siteName, string path, string fileName)
         {
-            return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{path}/{fileName}";
+            var filePath = $"{path}/{fileName}".TrimStart('/');
+            return $"{_serviceLocation.Probe}/Download/InSites/{siteName}/{filePath}";
         }
     }
 
