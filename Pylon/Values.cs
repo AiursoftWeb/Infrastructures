@@ -6,8 +6,7 @@ namespace Aiursoft.Pylon
     public static class Values
     {
         public static string ProjectName = "Aiursoft";
-        public static int DefaultImageId = 739;
-        public static string DefaultImageName = "usericon/default.png";
+        public static string DefaultImagePath = "usericon/default.png";
         public static string CorpPhoneNumber = "(+86) 8368-5000";
         public static string Schema = "https";
         public static string WsSchema = "wss";

@@ -49,8 +49,8 @@ namespace Aiursoft.Developer.Data
                 Email = firstUserName,
                 NickName = "Demo User",
                 PreferedLanguage = "en",
-                HeadImgFileKey = Values.DefaultImageId,
-                IconFilePath = Values.DefaultImageName
+                HeadImgFileKey = 0,
+                IconFilePath = Values.DefaultImagePath
             };
             usermanager.CreateAsync(newuser, firstUserPass).Wait();
 

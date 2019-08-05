@@ -88,7 +88,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 InternetPath = path,
                 SiteName = model.SiteName,
-                FilePath = model.FolderNames,
+                FilePath = filePath,
                 Code = ErrorType.Success,
                 Message = "Successfully uploaded your file."
             });
