@@ -74,6 +74,7 @@ namespace Aiursoft.Probe.Services
                     .Include(t => t.Context)
                     .Where(t => t.ContextId == currentFolder.Id)
                     .SingleOrDefaultAsync(t => t.FolderName == folder.ToLower());
+
                 currentFolder = folderObject
                     ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
             }

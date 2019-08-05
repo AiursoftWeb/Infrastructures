@@ -60,16 +60,20 @@ namespace Aiursoft.Probe.Controllers
                 ContextId = folder.Id
             };
             //Ensure there not exists file with the same file name.
-            lock (_obj)
+            while (true)
             {
                 var exists = folder.Files.Any(t => t.FileName == newFile.FileName);
                 if (exists)
                 {
-                    return this.Protocol(ErrorType.HasDoneAlready, "There already exists a file with that name.");
+                    newFile.FileName = "_" + newFile.FileName;
                 }
-                //Save to database
-                _dbContext.Files.Add(newFile);
-                _dbContext.SaveChanges();
+                else
+                {
+                    //Save to database
+                    _dbContext.Files.Add(newFile);
+                    _dbContext.SaveChanges();
+                    break;
+                }
             }
             //Try saving file.
             var directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
