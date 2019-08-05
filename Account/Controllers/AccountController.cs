@@ -196,7 +196,7 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             var uploadedProbeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["UserIconSiteName"], string.Empty);
-            cuser.IconFilePath = $"{uploadedProbeFile.SiteName}/{uploadedProbeFile.FileName}";
+            cuser.IconFilePath = $"{uploadedProbeFile.SiteName}/{uploadedProbeFile.FilePath}";
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.HeadImgFileKey, cuser.IconFilePath, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });

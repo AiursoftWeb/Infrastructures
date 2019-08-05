@@ -8,7 +8,6 @@ namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
     {
         public string SiteName { get; set; }
         public string FilePath { get; set; }
-        public string FileName { get; set; }
         public string InternetPath { get; set; }
     }
 }
