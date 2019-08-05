@@ -99,10 +99,6 @@
                         <i class="fa fa-folder-open"></i>
                         New folder
                     </a>
-                    <a href="javascript:sortData()" id="sortButton" class="btn btn-success">
-                        <i class="fa fa-sort-amount-asc"></i>
-                        Sort
-                    </a>
                     <a asp-controller="Sites" asp-action="NewFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-success">New file</a>
                 </div>
             </div>
@@ -119,5 +115,6 @@
             });
             $('#sortButton').addClass('d-none');
         }
+        sortData();
     </script>
 }
