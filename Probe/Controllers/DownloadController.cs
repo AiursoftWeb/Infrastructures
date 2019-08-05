@@ -1,4 +1,5 @@
-﻿using Aiursoft.Probe.Data;
+﻿using Aiursoft.Probe.Attributes;
+using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models.Probe.DownloadAddressModels;
@@ -16,8 +17,7 @@ namespace Aiursoft.Probe.Controllers
 {
     [LimitPerMin]
     [Route("Download")]
-    [APIExpHandler]
-    [APIModelStateChecker]
+    [ProbeExceptionHandler]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
