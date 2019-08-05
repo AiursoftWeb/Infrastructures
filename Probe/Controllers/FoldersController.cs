@@ -63,7 +63,7 @@ namespace Aiursoft.Probe.Controllers
                 .AnyAsync(t => t.FolderName == model.NewFolderName.ToLower());
             if (conflict)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"Folder name: '{model.NewFolderName}' conflict!");
+                return this.Protocol(ErrorType.HasDoneAlready, $"Folder name: '{model.NewFolderName}' conflict!");
             }
             var newFolder = new Folder
             {
