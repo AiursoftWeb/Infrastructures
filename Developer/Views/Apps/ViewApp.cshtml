@@ -319,7 +319,6 @@
                         <table class="table table-striped datatable">
                             <thead>
                                 <tr>
-                                    <th>@Localizer["Site ID"]</th>
                                     <th>@Localizer["Site Name"]</th>
                                     <th style="width: 460px">@Localizer["Operation"]</th>
                                 </tr>
@@ -328,7 +327,6 @@
                                 @foreach (var site in Model.Sites)
                                 {
                                     <tr>
-                                        <td>@site.Id</td>
                                         <td>@site.SiteName</td>
                                         <td>
                                             <div class="btn-group">
