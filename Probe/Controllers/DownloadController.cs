@@ -2,6 +2,8 @@
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Probe.DownloadAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,6 @@ namespace Aiursoft.Probe.Controllers
 {
     [LimitPerMin]
     [Route("Download")]
-    [ProbeExceptionHandler]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
@@ -52,14 +53,21 @@ namespace Aiursoft.Probe.Controllers
             var fileName = foldersWithFileName.Last();
             var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
 
-            var folder = await _folderLocator.LocateAsync(folders, site.Root);
-            var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
-            if (file == null)
+            try
+            {
+                var folder = await _folderLocator.LocateAsync(folders, site.Root);
+                var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
+                if (file == null)
+                {
+                    return NotFound();
+                }
+                var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
+                return await this.AiurFile(path, file.FileName);
+            }
+            catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
             {
                 return NotFound();
             }
-            var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
-            return await this.AiurFile(path, file.FileName);
         }
     }
 }
