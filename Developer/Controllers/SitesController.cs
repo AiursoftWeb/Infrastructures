@@ -122,16 +122,9 @@ namespace Aiursoft.Developer.Controllers
                 };
                 return View(model);
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexceptedResponse e) when(e.Code == ErrorType.NotFound)
             {
-                if (e.Code == ErrorType.NotFound)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw e;
-                }
+                return NotFound();
             }
         }
 

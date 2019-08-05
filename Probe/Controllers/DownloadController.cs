@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
 {
-    [Route("Download")]
     [LimitPerMin]
+    [Route("Download")]
+    [APIExpHandler]
+    [APIModelStateChecker]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
