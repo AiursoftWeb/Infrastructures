@@ -59,8 +59,8 @@ namespace Aiursoft.Colossus.Controllers
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSS(file, Convert.ToInt32(_configuration["ColossusPublicBucketId"]), 3);
-            return Json(new AiurValue<string>(model.Path)
+                .SaveToProbe(file, _configuration["ColossusPublicSiteName"], $"{DateTime.UtcNow.Date}", SaveFileOptions.SourceName);
+            return Json(new AiurValue<string>(model.InternetPath)
             {
                 Code = ErrorType.Success,
                 Message = "Uploaded!"

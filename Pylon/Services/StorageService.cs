@@ -75,11 +75,11 @@ namespace Aiursoft.Pylon.Services
             return fileAddress;
         }
 
-        public async Task<Models.Probe.FilesViewModels.UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options = SaveFileOptions.RandomName, string accessToken = null)
+        public async Task<Models.Probe.FilesViewModels.UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options, string accessToken = null)
         {
             string fileName = options == SaveFileOptions.RandomName ?
                 Guid.NewGuid().ToString("N") + GetExtension(file.FileName) :
-                file.FileName;
+                file.FileName.Replace(" ", "_");
             if (accessToken == null)
             {
                 accessToken = await _appsContainer.AccessToken();
