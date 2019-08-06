@@ -86,7 +86,7 @@ namespace Aiursoft.Probe.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
-            var filePath = $"{model.FolderNames}/{newFile.FileName}".TrimStart('/');
+            var filePath = $"{string.Join('/', model.FolderNames)}/{newFile.FileName}".TrimStart('/');
             var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{filePath}";
             return Json(new UploadFileViewModel
             {
