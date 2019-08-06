@@ -59,7 +59,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToProbe(file, _configuration["ColossusPublicSiteName"], $"{DateTime.UtcNow.Date}", SaveFileOptions.SourceName);
+                .SaveToProbe(file, _configuration["ColossusPublicSiteName"], $"{DateTime.UtcNow.Date.ToString("yyyy-MM-dd")}", SaveFileOptions.SourceName);
             return Json(new AiurValue<string>(model.InternetPath)
             {
                 Code = ErrorType.Success,
