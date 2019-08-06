@@ -25,10 +25,22 @@ namespace Aiursoft.Probe.Services
             _tokenManager = tokenManager;
         }
 
-        public string[] SplitStrings(string folderNames) => 
+        public string[] SplitStrings(string folderNames) =>
             folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
 
-        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames = null)
+        public (string[] folders, string fileName) SplitToPath(string folderNames)
+        {
+            if (folderNames.Length == 0)
+            {
+                throw new AiurAPIModelException(ErrorType.NotFound, "The root folder isn't a file!");
+            }
+            var foldersWithFileName = SplitStrings(folderNames);
+            var fileName = foldersWithFileName.Last();
+            var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
+            return (folders, fileName);
+        }
+
+        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames = null, bool recursiveCreate = false)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
@@ -46,23 +58,15 @@ namespace Aiursoft.Probe.Services
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
             }
 
-            if (folderNames == null) {
+            if (folderNames == null || folderNames.Length == 0)
+            {
                 return site.Root;
             }
-            var folder = await LocateAsync(folderNames, site.Root);
+            var folder = await LocateAsync(folderNames, site.Root, recursiveCreate);
             return folder;
         }
 
-        public async Task<File> LocateSiteAndFile(string accessToken, string siteName, string[] folderNames)
-        {
-            if (folderNames.Length == 0) {
-                throw new AiurAPIModelException(ErrorType.InvalidInput,"The root folder isn't a file!");
-            }
-            var folder = await LocateSiteAndFolder(accessToken, siteName, folderNames.Take(folderNames.Length - 1).ToArray());
-            return folder.Files.SingleOrDefault(x => x.FileName == folderNames.Last());
-        }
-
-        public async Task<Folder> LocateAsync(string[] folderNames, Folder root)
+        public async Task<Folder> LocateAsync(string[] folderNames, Folder root, bool recursiveCreate)
         {
             var currentFolder = root;
             foreach (var folder in folderNames)
@@ -74,17 +78,18 @@ namespace Aiursoft.Probe.Services
                     .Include(t => t.Context)
                     .Where(t => t.ContextId == currentFolder.Id)
                     .SingleOrDefaultAsync(t => t.FolderName == folder.ToLower());
-
+                if (recursiveCreate && folderObject == null && !string.IsNullOrWhiteSpace(folder))
+                {
+                    folderObject = new Folder
+                    {
+                        ContextId = currentFolder.Id,
+                        FolderName = folder
+                    };
+                }
                 currentFolder = folderObject
                     ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
             }
             return currentFolder;
-        }
-
-        public async Task<File> LocateFileAsync(string[] folderNames, Folder root)
-        {
-            return (await LocateAsync(folderNames.Take(folderNames.Length - 1).ToArray(), root)).Files.SingleOrDefault(
-                t => t.FileName == folderNames.Last());
         }
     }
 }

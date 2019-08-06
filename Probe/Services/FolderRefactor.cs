@@ -28,10 +28,10 @@ namespace Aiursoft.Probe.Services
             }
 
             var root = await _folderLocator.LocateSiteAndFolder(accessToken, siteName);
-            var folder = await _folderLocator.LocateAsync(folderNames, root);
+            var folder = await _folderLocator.LocateAsync(folderNames, root, false);
             var newParent = folderNames.Take(folderNames.Length - 1).SequenceEqual(newFolderNames.Take(folderNames.Length - 1))
                 ? folder.Context
-                : await _folderLocator.LocateAsync(newFolderNames.Take(newFolderNames.Length - 1).ToArray(), root);
+                : await _folderLocator.LocateAsync(newFolderNames.Take(newFolderNames.Length - 1).ToArray(), root, false);
             if (newParent.SubFolders.Any(t => t.FolderName == newFolderNames.Last()))
             {
                 throw new AiurAPIModelException(ErrorType.NotEnoughResources,
@@ -53,7 +53,7 @@ namespace Aiursoft.Probe.Services
             }
 
             var root = await _folderLocator.LocateSiteAndFolder(accessToken, siteName);
-            var parent = await _folderLocator.LocateAsync(folderNames.Take(folderNames.Length - 1).ToArray(), root);
+            var parent = await _folderLocator.LocateAsync(folderNames.Take(folderNames.Length - 1).ToArray(), root, false);
             var file = parent.Files.SingleOrDefault(t => t.FileName == folderNames.Last());
             if (file == null)
             {
@@ -61,7 +61,7 @@ namespace Aiursoft.Probe.Services
             }
             var newParent = folderNames.Take(folderNames.Length - 1).SequenceEqual(newFolderNames.Take(folderNames.Length - 1))
                 ? parent
-                : await _folderLocator.LocateAsync(newFolderNames.Take(newFolderNames.Length - 1).ToArray(), root);
+                : await _folderLocator.LocateAsync(newFolderNames.Take(newFolderNames.Length - 1).ToArray(), root, false);
             if (newParent.Files.Any(t => t.FileName == newFolderNames.Last()))
             {
                 throw new AiurAPIModelException(ErrorType.NotEnoughResources,

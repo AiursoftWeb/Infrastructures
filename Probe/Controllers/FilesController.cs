@@ -52,7 +52,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, recursiveCreate: true);
             var file = Request.Form.Files.First();
             var newFile = new Pylon.Models.Probe.File
             {
@@ -103,7 +103,9 @@ namespace Aiursoft.Probe.Controllers
         [Route("DeleteFile/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
         {
-            var file = await _folderLocator.LocateSiteAndFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames));
+            var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
             if (file == null)
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");

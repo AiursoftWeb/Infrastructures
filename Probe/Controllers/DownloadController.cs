@@ -46,13 +46,10 @@ namespace Aiursoft.Probe.Controllers
             {
                 return NotFound();
             }
-            var foldersWithFileName = _folderLocator.SplitStrings(model.FolderNames);
-            var fileName = foldersWithFileName.Last();
-            var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
-
+            var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
             try
             {
-                var folder = await _folderLocator.LocateAsync(folders, site.Root);
+                var folder = await _folderLocator.LocateAsync(folders, site.Root, false);
                 var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
                 if (file == null)
                 {
