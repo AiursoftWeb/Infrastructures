@@ -83,8 +83,12 @@ namespace Aiursoft.Probe.Services
                     folderObject = new Folder
                     {
                         ContextId = currentFolder.Id,
-                        FolderName = folder
+                        FolderName = folder,
+                        Files = new List<File>(),
+                        SubFolders = new List<Folder>()
                     };
+                    _dbContext.Folders.Add(folderObject);
+                    await _dbContext.SaveChangesAsync();
                 }
                 currentFolder = folderObject
                     ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
