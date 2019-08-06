@@ -52,7 +52,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, recursiveCreate: true);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             var file = Request.Form.Files.First();
             var newFile = new Pylon.Models.Probe.File
             {

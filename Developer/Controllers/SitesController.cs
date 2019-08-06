@@ -164,7 +164,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                var data = await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName);
+                var data = await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName, false);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
             }
             catch (AiurUnexceptedResponse e)

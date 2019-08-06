@@ -12,5 +12,6 @@ namespace Aiursoft.Pylon.Models.Probe.FilesAddressModels
         [Required]
         public string SiteName { get; set; }
         public string FolderNames { get; set; }
+        public bool RecursiveCreate { get; set; }
     }
 }

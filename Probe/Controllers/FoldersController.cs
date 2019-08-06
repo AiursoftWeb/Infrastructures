@@ -56,7 +56,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             var conflict = await _dbContext
                 .Folders
                 .Where(t => t.ContextId == folder.Id)

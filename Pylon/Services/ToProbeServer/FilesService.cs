@@ -23,11 +23,12 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, Stream fileStream, string fileName)
+        public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, Stream fileStream, string fileName, bool recursiveCreate)
         {
             var url = new AiurUrl(_serviceLocation.Probe, $"/Files/UploadFile/{siteName}/{folderNames}", new UploadFileAddressModel
             {
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                RecursiveCreate = recursiveCreate
             });
             var result = await _http.PostFile(url, fileStream, fileName);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);

@@ -35,13 +35,14 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             return jResult;
         }
 
-        public async Task<AiurProtocol> CreateNewFolderAsync(string accessToken, string siteName, string folderNames, string newFolderName)
+        public async Task<AiurProtocol> CreateNewFolderAsync(string accessToken, string siteName, string folderNames, string newFolderName, bool recursiveCreate)
         {
             var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/CreateNewFolder/{siteName}/{folderNames}", new { });
             var form = new AiurUrl(string.Empty, new CreateNewFolderAddressModel
             {
                 AccessToken = accessToken,
-                NewFolderName = newFolderName
+                NewFolderName = newFolderName,
+                RecursiveCreate = recursiveCreate
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
