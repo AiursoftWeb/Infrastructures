@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.Pylon.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace Aiursoft.Pylon.Models.Probe.FoldersAddressModels
         public string SiteName { get; set; }
         public string FolderNames { get; set; }
         [Required]
+        [ValidFolderName]
         public string NewFolderName { get; set; }
         public bool RecursiveCreate { get; set; } = false;
     }

@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Services;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Aiursoft.Pylon.Attributes
 {
-    [Obsolete]
-    public class NoSpace: ValidationAttribute
+    public class ValidFolderName : ValidationAttribute
     {
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
-                return !val.Contains(" ");
+                return !val.Any(t => StringOperation.InvalidFileAndFolderNames.Contains(t));
             }
             return true;
         }
@@ -23,7 +24,7 @@ namespace Aiursoft.Pylon.Attributes
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain space!");
+                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid charactor!");
             }
         }
     }
