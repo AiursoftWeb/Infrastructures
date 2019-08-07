@@ -54,9 +54,17 @@ namespace Aiursoft.Probe.Controllers
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             var file = Request.Form.Files.First();
+            if (!new ValidFolderName().IsValid(file.FileName))
+            {
+                var arg = new AiurProtocol()
+                {
+                    Code = ErrorType.InvalidInput,
+                    Message = $"Invalid file name: '{file.FileName}'!"
+                };
+            }
             var newFile = new Pylon.Models.Probe.File
             {
-                FileName = Path.GetFileName(file.FileName).ToLower(),
+                FileName = Path.GetFileName(file.FileName),
                 ContextId = folder.Id
             };
             //Ensure there not exists file with the same file name.
