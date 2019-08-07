@@ -13,7 +13,7 @@ namespace Aiursoft.OSS.Controllers
 
         public IActionResult ServerException()
         {
-            return this.Protocol(ErrorType.UnknownError, "Kahla server was crashed! Please tell us!");
+            return this.Protocol(ErrorType.UnknownError, "OSS server was crashed! Please tell us!");
         }
     }
 }

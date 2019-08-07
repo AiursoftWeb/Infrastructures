@@ -19,15 +19,12 @@ namespace Aiursoft.OSS.Controllers
     {
         private readonly char _ = Path.DirectorySeparatorChar;
         private readonly OSSDbContext _dbContext;
-        private readonly ImageCompressor _imageCompressor;
         private readonly IConfiguration _configuration;
         public DownloadController(
             OSSDbContext dbContext,
-            ImageCompressor imageCompressor,
             IConfiguration configuration)
         {
             _dbContext = dbContext;
-            _imageCompressor = imageCompressor;
             _configuration = configuration;
         }
 
@@ -35,39 +32,7 @@ namespace Aiursoft.OSS.Controllers
         {
             try
             {
-                if (realfileName.IsStaticImage() && h > 0 && w > 0)
-                {
-                    if (download)
-                    {
-                        return await this.AiurFile(await _imageCompressor.Compress(path, w, h), realfileName, suggestefFileName);
-                    }
-                    else
-                    {
-                        return await this.AiurFile(await _imageCompressor.Compress(path, w, h), realfileName, suggestefFileName);
-                    }
-                }
-                else if (realfileName.IsStaticImage())
-                {
-                    if (download)
-                    {
-                        return await this.AiurFile(await _imageCompressor.ClearExif(path), realfileName, suggestefFileName);
-                    }
-                    else
-                    {
-                        return await this.AiurFile(await _imageCompressor.ClearExif(path), realfileName, suggestefFileName);
-                    }
-                }
-                else
-                {
-                    if (download)
-                    {
-                        return await this.AiurFile(path, realfileName, suggestefFileName);
-                    }
-                    else
-                    {
-                        return await this.AiurFile(path, realfileName, suggestefFileName);
-                    }
-                }
+                return await this.AiurFile(path, realfileName, suggestefFileName);
             }
             catch (Exception e) when (e is DirectoryNotFoundException || e is FileNotFoundException)
             {
