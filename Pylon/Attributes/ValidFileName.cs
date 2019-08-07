@@ -7,11 +7,25 @@ namespace Aiursoft.Pylon.Attributes
 {
     public class ValidFolderName : ValidationAttribute
     {
+        public static char[] InvalidFileAndFolderNames = new char[]
+        {
+            '\\',
+            ':',
+            '/',
+            '|',
+            '\'',
+            '"',
+            '*',
+            '<',
+            '>',
+            '?'
+        };
+
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
-                return !val.Any(t => StringOperation.InvalidFileAndFolderNames.Contains(t));
+                return !val.Any(t => InvalidFileAndFolderNames.Contains(t));
             }
             return true;
         }

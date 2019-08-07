@@ -178,19 +178,5 @@ namespace Aiursoft.Pylon.Services
             }
             return b.ToString();
         }
-
-        public static char[] InvalidFileAndFolderNames = new char[]
-        {
-            '\\',
-            ':',
-            '/',
-            '|',
-            '\'',
-            '"',
-            '*',
-            '<',
-            '>',
-            '?'
-        };
     }
 }

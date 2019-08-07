@@ -10,6 +10,7 @@ using Aiursoft.Pylon.Services.ToOSSServer;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.OSS.ApiViewModels;
 using Aiursoft.Pylon.Services.ToProbeServer;
+using Aiursoft.Pylon.Attributes;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -80,6 +81,10 @@ namespace Aiursoft.Pylon.Services
             string fileName = options == SaveFileOptions.RandomName ?
                 Guid.NewGuid().ToString("N") + GetExtension(file.FileName) :
                 file.FileName.Replace(" ", "_");
+            if (!new ValidFolderName().IsValid(fileName))
+            {
+                throw new InvalidOperationException($"The file with name: '{fileName}' is invalid!");
+            }
             if (accessToken == null)
             {
                 accessToken = await _appsContainer.AccessToken();
