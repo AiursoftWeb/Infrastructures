@@ -28,7 +28,7 @@ namespace Aiursoft.Probe.Services
                 {
                     Directory.CreateDirectory(clearedFolder);
                 }
-                var clearededImagePath = $"{clearedFolder}oss_cleared_{Path.GetFileNameWithoutExtension(path)}";
+                var clearededImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
                 await GetClearedImage(path, clearededImagePath);
                 return clearededImagePath;
             }
@@ -50,10 +50,14 @@ namespace Aiursoft.Probe.Services
             }
             await Task.Run(() =>
             {
-                var image = Image.Load(sourceImage);
+                var image = Image.Load(sourceImage, out IImageFormat format);
                 image.Mutate(x => x.AutoOrient());
                 image.MetaData.ExifProfile = null;
-                image.Save(saveTarget);
+                using (var stream = File.OpenWrite(saveTarget))
+                {
+                    image.Save(stream, format);
+                    stream.Close();
+                }
             });
         }
 
@@ -66,7 +70,7 @@ namespace Aiursoft.Probe.Services
                 {
                     Directory.CreateDirectory(compressedFolder);
                 }
-                var compressedImagePath = $"{compressedFolder}oss_compressed_w{width}h{height}{Path.GetFileNameWithoutExtension(path)}";
+                var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
                 await GetReducedImage(path, compressedImagePath, width, height);
                 return compressedImagePath;
             }
@@ -93,7 +97,11 @@ namespace Aiursoft.Probe.Services
                 image.MetaData.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(width, height));
-                image.Save(File.OpenWrite(saveTarget), format);
+                using (var stream = File.OpenWrite(saveTarget))
+                {
+                    image.Save(stream, format);
+                    stream.Close();
+                }
             });
         }
     }
