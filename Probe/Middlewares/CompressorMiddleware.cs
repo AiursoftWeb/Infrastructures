@@ -55,7 +55,7 @@ namespace Aiursoft.Probe.Middlewares
                 image.MetaData.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(w, h));
-                context.Response.Body.Position = 0;
+                context.Response.Body.Seek(0, System.IO.SeekOrigin.Begin);
                 image.SaveAsPng(context.Response.Body);
             }
         }
