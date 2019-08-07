@@ -50,11 +50,11 @@ namespace Aiursoft.OSS.Controllers
                 {
                     if (download)
                     {
-                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName, suggestefFileName);
+                        return await this.AiurFile(await _imageCompressor.ClearExif(path), realfileName, suggestefFileName);
                     }
                     else
                     {
-                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName, suggestefFileName);
+                        return await this.AiurFile(await _imageCompressor.ClearExif(path), realfileName, suggestefFileName);
                     }
                 }
                 else

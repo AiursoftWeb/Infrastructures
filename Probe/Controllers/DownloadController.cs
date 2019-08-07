@@ -23,15 +23,18 @@ namespace Aiursoft.Probe.Controllers
         private readonly FolderLocator _folderLocator;
         private readonly ProbeDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly ImageCompressor _imageCompressor;
 
         public DownloadController(
             FolderLocator folderLocator,
             ProbeDbContext dbContext,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ImageCompressor imageCompressor)
         {
             _folderLocator = folderLocator;
             _dbContext = dbContext;
             _configuration = configuration;
+            _imageCompressor = imageCompressor;
         }
 
         [CompressorResultFilter]
@@ -74,18 +77,18 @@ namespace Aiursoft.Probe.Controllers
             }
         }
 
-        //private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
-        //{
-        //    int.TryParse(Request.Query["w"], out int w);
-        //    int.TryParse(Request.Query["h"], out int h);
-        //    if (h > 0 && w > 0)
-        //    {
-        //        return await this.WebFile(await _imageCompressor.Compress(path, realfileName, w, h), extension);
-        //    }
-        //    else
-        //    {
-        //        return await this.WebFile(await _imageCompressor.ClearExif(path, realfileName), extension);
-        //    }
-        //}
+        private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
+        {
+            int.TryParse(Request.Query["w"], out int w);
+            int.TryParse(Request.Query["h"], out int h);
+            if (h > 0 && w > 0)
+            {
+                return await this.WebFile(await _imageCompressor.Compress(path, w, h), extension);
+            }
+            else
+            {
+                return await this.WebFile(await _imageCompressor.ClearExif(path), extension);
+            }
+        }
     }
 }

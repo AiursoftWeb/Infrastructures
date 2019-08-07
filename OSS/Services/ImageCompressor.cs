@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Transforms;
 using System;
+using SixLabors.ImageSharp.Formats;
 
 namespace Aiursoft.OSS.Services
 {
@@ -18,16 +19,16 @@ namespace Aiursoft.OSS.Services
             _configuration = configuration;
         }
 
-        public async Task<string> ClearExif(string path, string realname)
+        public async Task<string> ClearExif(string path)
         {
             try
             {
-                var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
-                if (Directory.Exists(compressedFolder) == false)
+                var clearedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
+                if (Directory.Exists(clearedFolder) == false)
                 {
-                    Directory.CreateDirectory(compressedFolder);
+                    Directory.CreateDirectory(clearedFolder);
                 }
-                var clearededImagePath = $"{compressedFolder}oss_cleared_{realname}";
+                var clearededImagePath = $"{clearedFolder}oss_cleared_{Path.GetFileNameWithoutExtension(path)}";
                 await GetClearedImage(path, clearededImagePath);
                 return clearededImagePath;
             }
@@ -87,12 +88,12 @@ namespace Aiursoft.OSS.Services
             }
             await Task.Run(() =>
             {
-                var image = Image.Load(sourceImage);
+                var image = Image.Load(sourceImage, out IImageFormat format);
                 image.Mutate(x => x.AutoOrient());
                 image.MetaData.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(width, height));
-                image.Save(saveTarget);
+                image.Save(File.OpenWrite(saveTarget), format);
             });
         }
     }
