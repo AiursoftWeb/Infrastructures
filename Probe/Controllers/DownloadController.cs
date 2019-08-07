@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Probe.Attributes;
 
 namespace Aiursoft.Probe.Controllers
 {
@@ -33,6 +34,7 @@ namespace Aiursoft.Probe.Controllers
             _configuration = configuration;
         }
 
+        [CompressorResultFilter]
         [Route("InSites/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> InSites(InSitesAddressModel model)
         {

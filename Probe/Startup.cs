@@ -18,7 +18,6 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Probe.Services;
 using Microsoft.Extensions.Hosting;
-using Aiursoft.Probe.Middlewares;
 
 namespace Aiursoft.Probe
 {
@@ -63,7 +62,6 @@ namespace Aiursoft.Probe
                 app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
             }
             app.UseCors(builder => builder.WithOrigins("*"));
-            app.UseMiddleware<CompressorMiddleware>();
             app.UseMvcWithDefaultRoute();
             app.UseDocGenerator();
         }
