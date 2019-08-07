@@ -8,6 +8,7 @@ using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace Aiursoft.Probe.Controllers
                 }
                 var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
                 var extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();
-                if (file.FileName.IsStaticImage())
+                if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
                     return await FileWithImageCompressor(path, extension);
                 }
