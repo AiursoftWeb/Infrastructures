@@ -39,11 +39,11 @@ namespace Aiursoft.OSS.Controllers
                 {
                     if (download)
                     {
-                        return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName, suggestefFileName);
+                        return await this.AiurFile(await _imageCompressor.Compress(path, w, h), realfileName, suggestefFileName);
                     }
                     else
                     {
-                        return await this.AiurFile(await _imageCompressor.Compress(path, realfileName, w, h), realfileName);
+                        return await this.AiurFile(await _imageCompressor.Compress(path, w, h), realfileName, suggestefFileName);
                     }
                 }
                 else if (realfileName.IsStaticImage())
@@ -54,7 +54,7 @@ namespace Aiursoft.OSS.Controllers
                     }
                     else
                     {
-                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName);
+                        return await this.AiurFile(await _imageCompressor.ClearExif(path, realfileName), realfileName, suggestefFileName);
                     }
                 }
                 else
@@ -65,7 +65,7 @@ namespace Aiursoft.OSS.Controllers
                     }
                     else
                     {
-                        return await this.AiurFile(path, realfileName);
+                        return await this.AiurFile(path, realfileName, suggestefFileName);
                     }
                 }
             }

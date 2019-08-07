@@ -56,7 +56,7 @@ namespace Aiursoft.OSS.Services
             });
         }
 
-        public async Task<string> Compress(string path, string realname, int width, int height)
+        public async Task<string> Compress(string path, int width, int height)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Aiursoft.OSS.Services
                 {
                     Directory.CreateDirectory(compressedFolder);
                 }
-                var compressedImagePath = $"{compressedFolder}oss_compressed_w{width}h{height}{realname}";
+                var compressedImagePath = $"{compressedFolder}oss_compressed_w{width}h{height}{Path.GetFileNameWithoutExtension(path)}";
                 await GetReducedImage(path, compressedImagePath, width, height);
                 return compressedImagePath;
             }

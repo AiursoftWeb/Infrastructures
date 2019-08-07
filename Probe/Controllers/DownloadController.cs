@@ -58,12 +58,34 @@ namespace Aiursoft.Probe.Controllers
                     return NotFound();
                 }
                 var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
-                return await this.AiurFile(path, file.FileName);
+                var extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();
+                if (file.FileName.IsStaticImage())
+                {
+                    return await FileWithImageCompressor(path, extension);
+                }
+                else
+                {
+                    return await this.WebFile(path, extension);
+                }
             }
             catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
             {
                 return NotFound();
             }
         }
+
+        //private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
+        //{
+        //    int.TryParse(Request.Query["w"], out int w);
+        //    int.TryParse(Request.Query["h"], out int h);
+        //    if (h > 0 && w > 0)
+        //    {
+        //        return await this.WebFile(await _imageCompressor.Compress(path, realfileName, w, h), extension);
+        //    }
+        //    else
+        //    {
+        //        return await this.WebFile(await _imageCompressor.ClearExif(path, realfileName), extension);
+        //    }
+        //}
     }
 }
