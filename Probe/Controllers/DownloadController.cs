@@ -8,10 +8,10 @@ using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Probe.Attributes;
 
 namespace Aiursoft.Probe.Controllers
 {
@@ -23,18 +23,20 @@ namespace Aiursoft.Probe.Controllers
         private readonly FolderLocator _folderLocator;
         private readonly ProbeDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly ImageCompressor _imageCompressor;
 
         public DownloadController(
             FolderLocator folderLocator,
             ProbeDbContext dbContext,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ImageCompressor imageCompressor)
         {
             _folderLocator = folderLocator;
             _dbContext = dbContext;
             _configuration = configuration;
+            _imageCompressor = imageCompressor;
         }
 
-        [CompressorResultFilter]
         [Route("InSites/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> InSites(InSitesAddressModel model)
         {
@@ -58,11 +60,33 @@ namespace Aiursoft.Probe.Controllers
                     return NotFound();
                 }
                 var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
-                return await this.AiurFile(path, file.FileName);
+                var extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();
+                if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
+                {
+                    return await FileWithImageCompressor(path, extension);
+                }
+                else
+                {
+                    return await this.WebFile(path, extension);
+                }
             }
             catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
             {
                 return NotFound();
+            }
+        }
+
+        private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
+        {
+            int.TryParse(Request.Query["w"], out int w);
+            int.TryParse(Request.Query["h"], out int h);
+            if (h > 0 && w > 0)
+            {
+                return await this.WebFile(await _imageCompressor.Compress(path, w, h), extension);
+            }
+            else
+            {
+                return await this.WebFile(await _imageCompressor.ClearExif(path), extension);
             }
         }
     }

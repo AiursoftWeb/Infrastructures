@@ -87,7 +87,7 @@ namespace Aiursoft.Pylon.Services
 
         public static bool IsInFollowingExtension(this string filename, params string[] extensions)
         {
-            var ext = System.IO.Path.GetExtension(filename);
+            var ext = Path.GetExtension(filename);
             foreach (var extension in extensions)
             {
                 if (ext.Trim('.').ToLower() == extension)

@@ -13,6 +13,7 @@ namespace Aiursoft.Pylon.Services
 {
     public static class FileService
     {
+        [Obsolete]
         /// <summary>
         /// This triggers the current action to download a real file storaged in disk.
         /// </summary>
@@ -40,20 +41,27 @@ namespace Aiursoft.Pylon.Services
             });
         }
 
-        public static async Task<IActionResult> AiurFile(this ControllerBase controller, string path, string filename)
+        private static (string etag, long length) GetFileHTTPProperties(string path)
+        {
+            var fileInfo = new FileInfo(path);
+            long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
+            var etag = Convert.ToString(etagHash, 16);
+            return (etag, fileInfo.Length);
+        }
+
+        public static async Task<IActionResult> WebFile(this ControllerBase controller, string path, string extension)
         {
             return await Task.Run<IActionResult>(() =>
             {
-                var fileInfo = new FileInfo(path);
-                var extension = filename.LastIndexOf('.') > 0 ? filename.Substring(filename.LastIndexOf('.') + 1) : string.Empty;
-                long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
-                var etag = Convert.ToString(etagHash, 16);
+                var (etag, length) = GetFileHTTPProperties(path);
+                // Handle etag
                 controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
                 if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
                 {
                     return new StatusCodeResult(304);
                 }
-                controller.Response.Headers.Add("Content-Length", fileInfo.Length.ToString());
+                // Return file result.
+                controller.Response.Headers.Add("Content-Length", length.ToString());
                 return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
             });
         }
