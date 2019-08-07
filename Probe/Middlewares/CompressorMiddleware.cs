@@ -36,7 +36,7 @@ namespace Aiursoft.Probe.Middlewares
                 "image/png",
                 "image/tiff"
             };
-            return validImageTypes.Contains(mimeType.ToLower());
+            return validImageTypes.Contains(mimeType?.ToLower());
         }
 
         public async Task Invoke(HttpContext context)
@@ -55,6 +55,7 @@ namespace Aiursoft.Probe.Middlewares
                 image.MetaData.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(w, h));
+                context.Response.Body.Flush();
                 context.Response.Body.Seek(0, System.IO.SeekOrigin.Begin);
                 image.SaveAsPng(context.Response.Body);
             }
