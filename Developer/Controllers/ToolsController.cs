@@ -104,11 +104,11 @@ namespace Aiursoft.Developer.Controllers
             {
                 if (model.Decrypt)
                 {
-                    model.ResultString = WebUtility.UrlDecode(model.SourceString);
+                    model.ResultString = Uri.EscapeUriString(model.SourceString);
                 }
                 else
                 {
-                    model.ResultString = WebUtility.UrlEncode(model.SourceString);
+                    model.ResultString = Uri.EscapeUriString(model.SourceString);
                 }
             }
             catch (Exception e)
