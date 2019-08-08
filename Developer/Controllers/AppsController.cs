@@ -98,25 +98,23 @@ namespace Aiursoft.Developer.Controllers
                 model.RootRecover(cuser, 1);
                 return View(model);
             }
-            string iconPath = string.Empty;
+            var newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
+            {
+                CreatorId = cuser.Id
+            };
+            // Default icon
             if (Request.Form.Files.Count == 0 || Request.Form.Files.First().Length < 1)
             {
-                iconPath = $"{_serviceLocation.UI}/images/appdefaulticon.png";
+                newApp.IconPath = $"appdefaulticon.png";
             }
             else
             {
-                var ossFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 3000);
-                iconPath = ossFile.Path;
+                var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], newApp.AppId, SaveFileOptions.RandomName);
+                newApp.IconPath = $"{probeFile.SiteName}/{probeFile.FilePath}";
             }
-
-            var _newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
-            {
-                CreatorId = cuser.Id,
-                AppIconAddress = iconPath
-            };
-            _dbContext.Apps.Add(_newApp);
+            _dbContext.Apps.Add(newApp);
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(ViewApp), new { id = _newApp.AppId });
+            return RedirectToAction(nameof(ViewApp), new { id = newApp.AppId });
         }
 
         public async Task<IActionResult> ViewApp(string id, bool justHaveUpdated = false)
@@ -269,8 +267,8 @@ namespace Aiursoft.Developer.Controllers
                 return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
             }
             var appExists = await _dbContext.Apps.FindAsync(appId);
-            var ossFile = await _storageService.SaveToOSS(Request.Form.Files.First(), Convert.ToInt32(_configuration["AppsIconBucketId"]), 3000);
-            appExists.AppIconAddress = ossFile.Path;
+            var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], appId, SaveFileOptions.RandomName);
+            appExists.IconPath = $"{probeFile.SiteName}/{probeFile.FilePath}";
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
         }

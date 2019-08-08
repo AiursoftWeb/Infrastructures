@@ -12,19 +12,19 @@ namespace Aiursoft.API.Models.OAuthViewModels
     {
         [Obsolete("This method is only for framework!", true)]
         public AuthorizeViewModel() { }
-        public AuthorizeViewModel(string ToRedirect, string State, string AppId, string Scope, string ResponseTpe, string AppName, string AppImageUrl)
+        public AuthorizeViewModel(string toRedirect, string state, string appId, string scope, string responseType, string appName, string appImageUrl)
         {
-            this.ToRedirect = ToRedirect;
-            this.State = State;
-            this.AppId = AppId;
-            this.Scope = Scope;
-            this.ResponseType = ResponseTpe;
-            Recover(AppName, AppImageUrl);
+            this.ToRedirect = toRedirect;
+            this.State = state;
+            this.AppId = appId;
+            this.Scope = scope;
+            this.ResponseType = responseType;
+            Recover(appName, appImageUrl);
         }
-        public void Recover(string AppName, string AppImageUrl)
+        public void Recover(string appName, string appImageUrl)
         {
-            this.AppName = AppName;
-            this.AppImageUrl = AppImageUrl;
+            this.AppName = appName;
+            this.AppImageUrl = appImageUrl;
         }
         public string AppImageUrl { get; set; }
         [Required(ErrorMessage = "Email is required.")]

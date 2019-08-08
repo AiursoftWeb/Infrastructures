@@ -102,7 +102,7 @@ namespace Aiursoft.API.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.AppIconAddress);
+            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -130,7 +130,7 @@ namespace Aiursoft.API.Controllers
             if (mail == null)
             {
                 ModelState.AddModelError(string.Empty, "Unknown user email.");
-                model.Recover(app.AppName, app.AppIconAddress);
+                model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
             var user = mail.Owner;
@@ -151,7 +151,7 @@ namespace Aiursoft.API.Controllers
             {
                 ModelState.AddModelError(string.Empty, "The password does not match our records.");
             }
-            model.Recover(app.AppName, app.AppIconAddress);
+            model.Recover(app.AppName, app.IconPath);
             return View(model);
         }
 
@@ -227,7 +227,7 @@ namespace Aiursoft.API.Controllers
             {
                 return View("AuthError");
             }
-            var viewModel = new RegisterViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.AppIconAddress);
+            var viewModel = new RegisterViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -246,14 +246,14 @@ namespace Aiursoft.API.Controllers
             }
             if (!ModelState.IsValid)
             {
-                model.Recover(app.AppName, app.AppIconAddress);
+                model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
                 ModelState.AddModelError(string.Empty, $"An user with email '{model.Email}' already exists!");
-                model.Recover(app.AppName, app.AppIconAddress);
+                model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
             var user = new APIUser
@@ -287,7 +287,7 @@ namespace Aiursoft.API.Controllers
                 return await FinishAuth(model);
             }
             AddErrors(result);
-            model.Recover(app.AppName, app.AppIconAddress);
+            model.Recover(app.AppName, app.IconPath);
             return View(model);
         }
 
@@ -307,7 +307,7 @@ namespace Aiursoft.API.Controllers
             return Redirect(model.ToRedirect);
         }
 
-      
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

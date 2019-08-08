@@ -235,7 +235,7 @@
                         <form class="col-sm-12" asp-action="ChangeIcon" asp-controller="Apps" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="AppId" value="@Model.AppId" />
                             <label>@Localizer["Upload your app icon"]</label>
-                            <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@(Model.AppIconAddress)" />
+                            <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppIconAddress)" />
                             <p class="small text-muted">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
                             <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save Image"]</button>
                         </form>

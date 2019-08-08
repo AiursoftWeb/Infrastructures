@@ -26,43 +26,5 @@ namespace Aiursoft.Developer.Data
         {
             base.OnModelCreating(builder);
         }
-
-        public void Seed(IServiceProvider services)
-        {
-            var config = services.GetService<IConfiguration>();
-            var usermanager = services.GetService<UserManager<DeveloperUser>>();
-            var serviceLocation = services.GetService<ServiceLocation>();
-            var logger = services.GetRequiredService<ILogger<DeveloperDbContext>>();
-
-            var firstUserName = config["SeedUserEmail"];
-            var firstUserPass = config["SeedUserPassword"];
-
-            var firstAppId = config["DeveloperAppId"];
-            var firstAppSecret = config["DeveloperAppSecret"];
-
-
-            logger.LogInformation("Seeding developer database...");
-            var newuser = new DeveloperUser
-            {
-                Id = "01307818-4d2d-43d1-acde-c91e333b3ade",
-                UserName = firstUserName,
-                Email = firstUserName,
-                NickName = "Demo User",
-                PreferedLanguage = "en",
-                HeadImgFileKey = 0,
-                IconFilePath = Values.DefaultImagePath
-            };
-            usermanager.CreateAsync(newuser, firstUserPass).Wait();
-
-            var newApp = new App("Developer", "Seeded developer app", Category.AppForAiur, Platform.Web, firstAppId, firstAppSecret)
-            {
-                CreatorId = newuser.Id,
-                AppIconAddress = $"{serviceLocation.UI}/images/appdefaulticon.png"
-            };
-            this.Apps.Add(newApp);
-            this.SaveChanges();
-
-            logger.LogInformation("the developer database was successfully seeded!");
-        }
     }
 }

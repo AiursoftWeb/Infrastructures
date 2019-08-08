@@ -100,6 +100,12 @@ namespace Aiursoft.Pylon.Services
             return $"{serviceLocation.Probe}/Download/InSites/{siteName.ToUrlEncoded()}/{filePath.EncodePath()}";
         }
 
+        /// <summary>
+        /// Get downloadable file address for probe content.
+        /// </summary>
+        /// <param name="serviceLocation"></param>
+        /// <param name="fullpath">sitename/filepath/filename.extension</param>
+        /// <returns></returns>
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
         {
             return $"{serviceLocation.Probe}/Download/InSites/{fullpath.EncodePath()}";

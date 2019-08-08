@@ -70,7 +70,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             DebugMode = thisApp.DebugMode;
             PrivacyStatementUrl = thisApp.PrivacyStatementUrl;
             LicenseUrl = thisApp.LicenseUrl;
-            AppIconAddress = thisApp.AppIconAddress;
+            AppIconAddress = thisApp.IconPath;
             AppDomain = thisApp.AppDomain;
             ViewOpenId = thisApp.ViewOpenId;
             ViewPhoneNumber = thisApp.ViewPhoneNumber;
