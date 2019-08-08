@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,7 @@ namespace Aiursoft.API.Models.OAuthViewModels
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [NoSpace]
         public string Password { get; set; }
 
         [Required]

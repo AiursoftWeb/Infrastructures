@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Account.Models.AccountViewModels
@@ -24,6 +25,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [Display(Name = "New Password")]
         [MinLength(6)]
         [MaxLength(32)]
+        [NoSpace]
         public string NewPassword { get; set; }
 
         [Required]
@@ -32,6 +34,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [Compare(nameof(NewPassword), ErrorMessage = "The new password and confirmation password do not match.")]
         [MinLength(6)]
         [MaxLength(32)]
+        [NoSpace]
         public string RepeatPassword { get; set; }
     }
 }

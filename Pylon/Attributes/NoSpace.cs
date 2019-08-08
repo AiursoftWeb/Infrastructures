@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Attributes
 {
-    [Obsolete]
     public class NoSpace: ValidationAttribute
     {
         public override bool IsValid(object value)
