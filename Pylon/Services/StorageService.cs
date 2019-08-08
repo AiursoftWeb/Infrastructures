@@ -11,6 +11,7 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.OSS.ApiViewModels;
 using Aiursoft.Pylon.Services.ToProbeServer;
 using Aiursoft.Pylon.Attributes;
+using System.Net;
 
 namespace Aiursoft.Pylon.Services
 {
@@ -96,12 +97,17 @@ namespace Aiursoft.Pylon.Services
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string siteName, string path, string fileName)
         {
             var filePath = $"{path}/{fileName}".TrimStart('/');
-            return $"{serviceLocation.Probe}/Download/InSites/{siteName}/{filePath}";
+            return $"{serviceLocation.Probe}/Download/InSites/{WebUtility.UrlEncode(siteName)}/{EncodePath(filePath)}";
         }
 
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
         {
-            return $"{serviceLocation.Probe}/Download/InSites/{fullpath}";
+            return $"{serviceLocation.Probe}/Download/InSites/{EncodePath(fullpath)}";
+        }
+
+        public static string EncodePath(string input)
+        {
+            return WebUtility.UrlEncode(input).Replace("%2F", "/");
         }
     }
 
