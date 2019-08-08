@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<AiurValue<Folder>> ViewContentAsync(string accessToken, string siteName, string folderNames)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/ViewContent/{siteName}/{folderNames?.TrimStart('/')}", new ViewContentAddressModel
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/ViewContent/{Uri.EscapeDataString(siteName)}/{StorageService.EncodePath(folderNames?.TrimStart('/'))}", new ViewContentAddressModel
             {
                 AccessToken = accessToken,
             });
@@ -37,7 +37,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<AiurProtocol> CreateNewFolderAsync(string accessToken, string siteName, string folderNames, string newFolderName, bool recursiveCreate)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/CreateNewFolder/{siteName}/{folderNames}", new { });
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/CreateNewFolder/{Uri.EscapeDataString(siteName)}/{StorageService.EncodePath(folderNames)}", new { });
             var form = new AiurUrl(string.Empty, new CreateNewFolderAddressModel
             {
                 AccessToken = accessToken,
@@ -53,7 +53,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<AiurProtocol> DeleteFolderAsync(string accessToken, string siteName, string folderNames)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/DeleteFolder/{siteName}/{folderNames}", new { });
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Folders/DeleteFolder/{Uri.EscapeDataString(siteName)}/{StorageService.EncodePath(folderNames)}", new { });
             var form = new AiurUrl(string.Empty, new DeleteFolderAddressModel
             {
                 AccessToken = accessToken

@@ -6,7 +6,7 @@
 @{
     string AppendPath(string root, string folder)
     {
-        return root == null ? Uri.EscapeDataString(folder) : StorageService.EncodePath(root) + "/" + Uri.EscapeDataString(folder);
+        return root == null ? folder : root + "/" + folder;
     }
 
     string DetachPath(string path)
