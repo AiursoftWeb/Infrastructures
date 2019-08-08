@@ -31,7 +31,7 @@ namespace Aiursoft.Pylon.Models
                 "American Samoa",684
             },
             {
-                "Andorra",+376
+                "Andorra",376
             },
             {
                 "Angola",244
