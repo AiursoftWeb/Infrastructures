@@ -104,7 +104,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 if (model.Decrypt)
                 {
-                    model.ResultString = Uri.EscapeDataString(model.SourceString);
+                    model.ResultString = WebUtility.UrlDecode(model.SourceString);
                 }
                 else
                 {
