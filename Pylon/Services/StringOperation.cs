@@ -178,5 +178,23 @@ namespace Aiursoft.Pylon.Services
             }
             return b.ToString();
         }
+
+        public static string EncodePath(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return string.Empty;
+            }
+            return input.ToUrlEncoded().Replace("%2F", "/");
+        }
+
+        public static string ToUrlEncoded(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return string.Empty;
+            }
+            return Uri.EscapeDataString(input);
+        }
     }
 }

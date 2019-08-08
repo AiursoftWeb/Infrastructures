@@ -108,7 +108,7 @@ namespace Aiursoft.Developer.Controllers
                 }
                 else
                 {
-                    model.ResultString = Uri.EscapeDataString(model.SourceString);
+                    model.ResultString = model.SourceString.ToUrlEncoded();
                 }
             }
             catch (Exception e)

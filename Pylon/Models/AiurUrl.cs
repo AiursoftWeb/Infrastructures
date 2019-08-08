@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -33,7 +34,7 @@ namespace Aiursoft.Pylon.Models
             string Params = "?";
             foreach (var param in this.Params)
             {
-                Params += param.Key.ToLower() + "=" + Uri.EscapeDataString(param.Value) + "&";
+                Params += param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&";
             }
             return this.Address + Params.TrimEnd('?', '&');
         }

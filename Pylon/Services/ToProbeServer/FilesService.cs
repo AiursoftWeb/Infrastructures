@@ -25,7 +25,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, Stream fileStream, string fileName, bool recursiveCreate)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, $"/Files/UploadFile/{Uri.EscapeDataString(siteName)}/{StorageService.EncodePath(folderNames)}", new UploadFileAddressModel
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Files/UploadFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new UploadFileAddressModel
             {
                 AccessToken = accessToken,
                 RecursiveCreate = recursiveCreate

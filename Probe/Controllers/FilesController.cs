@@ -95,7 +95,7 @@ namespace Aiursoft.Probe.Controllers
                 fileStream.Close();
             }
             var filePath = $"{string.Join('/', model.FolderNames)}/{newFile.FileName}".TrimStart('/');
-            var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.InSites)}/{model.SiteName}/{StorageService.EncodePath(filePath)}";
+            var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.InSites)}/{model.SiteName.ToUrlEncoded()}/{filePath.EncodePath()}";
             return Json(new UploadFileViewModel
             {
                 InternetPath = path,
