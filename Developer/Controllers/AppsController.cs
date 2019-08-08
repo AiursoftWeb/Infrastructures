@@ -105,7 +105,7 @@ namespace Aiursoft.Developer.Controllers
             // Default icon
             if (Request.Form.Files.Count == 0 || Request.Form.Files.First().Length < 1)
             {
-                newApp.IconPath = $"appdefaulticon.png";
+                newApp.IconPath = $"{_configuration["AppsIconSiteName"]}/appdefaulticon.png";
             }
             else
             {
