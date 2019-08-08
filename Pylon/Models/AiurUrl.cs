@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Models
             string Params = "?";
             foreach (var param in this.Params)
             {
-                Params += param.Key.ToLower() + "=" + Uri.EscapeUriString(param.Value) + "&";
+                Params += param.Key.ToLower() + "=" + Uri.EscapeDataString(param.Value) + "&";
             }
             return this.Address + Params.TrimEnd('?', '&');
         }
