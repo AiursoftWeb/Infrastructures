@@ -154,7 +154,7 @@ namespace Aiursoft.Pylon.Models
                 "Cocos (Keeling) Islands",61
             },
             {
-                "Colombia",+57
+                "Colombia",57
             },
             {
                 "Comoros",269
