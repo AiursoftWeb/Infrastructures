@@ -49,6 +49,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("UploadFile/{SiteName}/{**FolderNames}")]
         [FileChecker]
         [APIModelStateChecker]
+        [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);

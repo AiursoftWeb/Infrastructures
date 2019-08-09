@@ -72,6 +72,7 @@ namespace Aiursoft.Probe.Controllers
             return this.Protocol(ErrorType.Success, $"Successfully created your new site: '{site.SiteName}'.");
         }
 
+        [APIProduces(typeof(ViewMySitesViewModel))]
         public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
