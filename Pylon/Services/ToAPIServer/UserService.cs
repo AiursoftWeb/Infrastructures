@@ -24,14 +24,13 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
-        public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, /*[Obsolete]*/int fileKey, string newIconFilePathName, string newBio)
+        public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ChangeProfile", new ChangeProfileAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
                 NewNickName = newNickName,
-                NewIconId = fileKey,
                 NewIconFilePathName = newIconFilePathName,
                 NewBio = newBio
             });

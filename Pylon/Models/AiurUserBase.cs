@@ -20,7 +20,6 @@ namespace Aiursoft.Pylon.Models
             Id = model.User.Id;
             NickName = model.User.NickName;
             Sex = model.User.Sex;
-            HeadImgFileKey = model.User.HeadImgFileKey;
             IconFilePath = model.User.IconFilePath;
             PreferedLanguage = model.User.PreferedLanguage;
             AccountCreateTime = model.User.AccountCreateTime;
@@ -38,9 +37,6 @@ namespace Aiursoft.Pylon.Models
         public virtual string NickName { get; set; }
         [JsonProperty]
         public virtual string Sex { get; set; }
-        [JsonProperty]
-        [Obsolete]
-        public virtual int HeadImgFileKey { get; set; }
         /// <summary>
         /// SiteName/Path/FileName.extision
         /// </summary>

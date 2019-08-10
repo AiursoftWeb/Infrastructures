@@ -102,7 +102,6 @@ namespace Aiursoft.API.Controllers
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = "en",
-                HeadImgFileKey = 0,
                 IconFilePath = Values.DefaultImagePath
             };
             var result = await _userManager.CreateAsync(user, model.Password);

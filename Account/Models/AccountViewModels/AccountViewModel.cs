@@ -19,13 +19,11 @@ namespace Aiursoft.Account.Models.AccountViewModels
         {
             EmailConfirmed = user.EmailConfirmed;
             UserName = user.NickName;
-            UserIconFileKey = user.HeadImgFileKey;
             ActivePanel = activePanel;
             Title = title;
         }
         public virtual bool EmailConfirmed { get; set; }
         public virtual string UserName { get; set; }
-        public virtual int UserIconFileKey { get; set; }
         public virtual int ActivePanel { get; set; }
         public virtual string Title { get; set; }
     }

@@ -20,13 +20,11 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         public virtual void Recover(ColossusUser user, int activePanel, string title)
         {
             this.UserName = user.NickName;
-            this.UserIconFileKey = user.HeadImgFileKey;
             this.EmailConfirmed = user.EmailConfirmed;
             this.ActivePanel = activePanel;
             this.Title = title;
         }
         public string UserName { get; set; }
-        public int UserIconFileKey { get; set; }
         public int ActivePanel { get; set; }
         public string Title { get; set; }
         public bool EmailConfirmed { get; set; }
