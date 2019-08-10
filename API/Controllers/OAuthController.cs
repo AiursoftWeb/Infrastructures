@@ -182,7 +182,6 @@ namespace Aiursoft.API.Controllers
                 State = model.State,
                 Scope = model.Scope,
                 ResponseType = model.ResponseType,
-                UserIconId = user.HeadImgFileKey,
                 // Permissions
                 ViewOpenId = app.ViewOpenId,
                 ViewPhoneNumber = app.ViewPhoneNumber,
@@ -262,7 +261,6 @@ namespace Aiursoft.API.Controllers
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = model.PreferedLanguage,
-                HeadImgFileKey = 0,
                 IconFilePath = Values.DefaultImagePath
             };
             var result = await _userManager.CreateAsync(user, model.Password);

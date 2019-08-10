@@ -21,7 +21,6 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         public string Scope { get; set; }
         public string ResponseType { get; set; }
         public string Email { get; set; }
-        public int UserIconId { get; set; }
 
         [Display(Name = "View your basic identity info")]
         public bool ViewOpenId { get; set; } = true;

@@ -18,7 +18,7 @@ namespace Aiursoft.EE.Models.ProfileViewModels
                 UserNickName = user.NickName,
                 UserName = user.UserName,
                 Email = user.Email,
-                UserIconFileKey = user.HeadImgFileKey,
+                UserIconFilePath = user.IconFilePath,
                 UserId = user.Id,
                 AlreadyFollowed = currentUser != null ? await dbContext
                     .Follows
@@ -56,7 +56,7 @@ namespace Aiursoft.EE.Models.ProfileViewModels
         public string UserNickName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public int UserIconFileKey { get; set; }
+        public string UserIconFilePath { get; set; }
         public string UserId { get; set; }
         public bool AlreadyFollowed { get; set; }
         public bool IsMe { get; set; }

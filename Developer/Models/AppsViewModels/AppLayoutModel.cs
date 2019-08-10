@@ -17,7 +17,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public virtual void RootRecover(DeveloperUser user, int activePanel)
         {
             this.NickName = user.NickName;
-            this.UserIconFileKey = user.HeadImgFileKey;
             this.ActivePanel = activePanel;
             this.AppCount = user.MyApps.Count();
             this.AllApps = user.MyApps;
@@ -25,7 +24,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         }
         public bool EmailConfirmed { get; set; }
         public string NickName { get; set; }
-        public int UserIconFileKey { get; set; }
         public int ActivePanel { get; set; }
         public int AppCount { get; set; }
         public IEnumerable<App> AllApps { get; set; }

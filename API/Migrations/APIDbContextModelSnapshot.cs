@@ -36,8 +36,6 @@ namespace Aiursoft.API.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
-                    b.Property<int>("HeadImgFileKey");
-
                     b.Property<string>("IconFilePath");
 
                     b.Property<bool>("LockoutEnabled");
