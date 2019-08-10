@@ -71,7 +71,7 @@
                             @foreach (var folder in Model.Folder.SubFolders)
                             {
                                 <tr>
-                                    <td>
+                                    <td data-order="A@(folder.FolderName)">
                                         <i class="fa fa-folder text-primary"></i>
                                         <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@AppendPath(Model.Path, folder.FolderName)">
                                             @folder.FolderName
@@ -83,7 +83,7 @@
                             @foreach (var file in Model.Folder.Files)
                             {
                                 <tr>
-                                    <td>
+                                    <td data-order="Z@(file.FileName)">
                                         <i class="fa fa-file-o text-primary"></i>
                                         <a href="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
