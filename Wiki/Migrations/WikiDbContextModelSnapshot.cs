@@ -99,8 +99,6 @@ namespace Aiursoft.Wiki.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<int>("HeadImgFileKey");
-
                     b.Property<string>("IconFilePath");
 
                     b.Property<bool>("LockoutEnabled");
