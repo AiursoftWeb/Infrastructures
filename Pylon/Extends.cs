@@ -100,7 +100,7 @@ namespace Aiursoft.Pylon
             return services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
-                x.MultipartBodyLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = long.MaxValue;
             });
         }
 

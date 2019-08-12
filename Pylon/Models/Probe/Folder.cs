@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Aiursoft.Pylon.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +19,7 @@ namespace Aiursoft.Pylon.Models.Probe
         [JsonIgnore]
         public Folder Context { get; set; }
 
+        [InstanceMakerIgnore]
         [InverseProperty(nameof(Context))]
         public IEnumerable<Folder> SubFolders { get; set; }
 
