@@ -54,7 +54,6 @@ namespace Aiursoft.Pylon.Services
                 return null;
             }
             else if (type.GetConstructors().All(t => t.IsPrivate))
-
             {
                 return null;
             }
