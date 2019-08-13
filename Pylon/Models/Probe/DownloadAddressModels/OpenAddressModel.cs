@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Aiursoft.Pylon.Models.Probe.DownloadAddressModels
 {
-    public class InSitesAddressModel
+    public class OpenAddressModel
     {
         public string FolderNames { get; set; }
         public string SiteName { get; set; }

@@ -37,9 +37,10 @@ namespace Aiursoft.Probe.Controllers
             _imageCompressor = imageCompressor;
         }
 
+        [Route(template: "InSites/{SiteName}/{**FolderNames}", Name = "Insites")] // Will be removed.
         [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
-        [Route(template: "InSites/{SiteName}/{**FolderNames}", Name = "Open")]
-        public async Task<IActionResult> InSites(InSitesAddressModel model)
+        [Route(template: "Open/{SiteName}/{**FolderNames}", Name = "Open")]
+        public async Task<IActionResult> Open(OpenAddressModel model)
         {
             var site = await _dbContext
                 .Sites

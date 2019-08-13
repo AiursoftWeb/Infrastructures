@@ -97,7 +97,7 @@ namespace Aiursoft.Pylon.Services
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string siteName, string path, string fileName)
         {
             var filePath = $"{path}/{fileName}".TrimStart('/');
-            return $"{serviceLocation.Probe}/Download/InSites/{siteName.ToUrlEncoded()}/{filePath.EncodePath()}";
+            return $"{serviceLocation.Probe}/Download/Open/{siteName.ToUrlEncoded()}/{filePath.EncodePath()}";
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Aiursoft.Pylon.Services
         /// <returns></returns>
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
         {
-            return $"{serviceLocation.Probe}/Download/InSites/{fullpath.EncodePath()}";
+            return $"{serviceLocation.Probe}/Download/Open/{fullpath.EncodePath()}";
         }
     }
 

@@ -17,7 +17,7 @@ namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
         public string FilePath { get; set; }
 
         /// <summary>
-        /// For example: https://probe.aiursoft.com/Download/InSites/mynewsite/img_20190727_143308.jpg. Caution: This property is encoded and you can access it directly.
+        /// For example: https://probe.aiursoft.com/Download/Open/mynewsite/img_20190727_143308.jpg. Caution: This property is encoded and you can access it directly.
         /// </summary>
         public string InternetPath { get; set; }
     }
