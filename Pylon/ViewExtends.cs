@@ -10,12 +10,12 @@ namespace Aiursoft.Pylon
     {
         private static IHtmlContentBuilder AppendJavaScript(this IHtmlContentBuilder content, string path)
         {
-            return content.AppendHtmlLine($"<script src='{path}'></script>");
+            return content.AppendHtml($"\n<script src='{path}'></script>");
         }
 
         private static IHtmlContentBuilder AppendStyleSheet(this IHtmlContentBuilder content, string path)
         {
-            return content.AppendHtmlLine($"<link href='{path}' rel='stylesheet' />");
+            return content.AppendHtml($"\n<link href='{path}' rel='stylesheet' />");
         }
 
         public static IHtmlContent UseAiurLogoutter(this RazorPage page)
