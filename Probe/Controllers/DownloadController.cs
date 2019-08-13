@@ -37,7 +37,8 @@ namespace Aiursoft.Probe.Controllers
             _imageCompressor = imageCompressor;
         }
 
-        [Route("InSites/{SiteName}/{**FolderNames}")]
+        [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
+        [Route(template: "InSites/{SiteName}/{**FolderNames}", Name = "Open")]
         public async Task<IActionResult> InSites(InSitesAddressModel model)
         {
             var site = await _dbContext
@@ -61,13 +62,17 @@ namespace Aiursoft.Probe.Controllers
                 }
                 var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
                 var extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();
+                if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "File")
+                {
+                    return this.WebFile(path, "do-not-open");
+                }
                 if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
-                    return await FileWithImageCompressor(path, extension);
+                    return await this.FileWithImageCompressor(path, extension);
                 }
                 else
                 {
-                    return await this.WebFile(path, extension);
+                    return this.WebFile(path, extension);
                 }
             }
             catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
@@ -82,11 +87,11 @@ namespace Aiursoft.Probe.Controllers
             int.TryParse(Request.Query["h"], out int h);
             if (h > 0 && w > 0)
             {
-                return await this.WebFile(await _imageCompressor.Compress(path, w, h), extension);
+                return this.WebFile(await _imageCompressor.Compress(path, w, h), extension);
             }
             else
             {
-                return await this.WebFile(await _imageCompressor.ClearExif(path), extension);
+                return this.WebFile(await _imageCompressor.ClearExif(path), extension);
             }
         }
     }

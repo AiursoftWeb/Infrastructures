@@ -49,21 +49,18 @@ namespace Aiursoft.Pylon.Services
             return (etag, fileInfo.Length);
         }
 
-        public static async Task<IActionResult> WebFile(this ControllerBase controller, string path, string extension)
+        public static IActionResult WebFile(this ControllerBase controller, string path, string extension)
         {
-            return await Task.Run<IActionResult>(() =>
+            var (etag, length) = GetFileHTTPProperties(path);
+            // Handle etag
+            controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
+            if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
             {
-                var (etag, length) = GetFileHTTPProperties(path);
-                // Handle etag
-                controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
-                if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
-                {
-                    return new StatusCodeResult(304);
-                }
-                // Return file result.
-                controller.Response.Headers.Add("Content-Length", length.ToString());
-                return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
-            });
+                return new StatusCodeResult(304);
+            }
+            // Return file result.
+            controller.Response.Headers.Add("Content-Length", length.ToString());
+            return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
         }
     }
 }
