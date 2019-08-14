@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
 {
@@ -11,6 +8,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public IndexViewModel() { }
-        public IndexViewModel(DeveloperUser user) : base(user, 5) { }
+        public IndexViewModel(DeveloperUser user) : base(user, 2) { }
     }
 }

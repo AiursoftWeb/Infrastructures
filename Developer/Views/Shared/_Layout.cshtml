@@ -42,25 +42,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @(Model.ActivePanel == 2 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Buckets">
-                    <a class="nav-link" asp-controller="Bucket" asp-action="Index">
-                        <i class="fa fa-fw fa-inbox"></i>
-                        <span class="nav-link-text">@Localizer["Buckets"]</span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 3 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Files">
-                    <a class="nav-link" asp-controller="Files" asp-action="Index">
-                        <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">@Localizer["Files"]</span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 4 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Stargate">
-                    <a class="nav-link" asp-controller="Files" asp-action="Index">
-                        <i class="fa fa-fw fa-random"></i>
-                        <span class="nav-link-text">@Localizer["Stargate"]</span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 5 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Probe">
+                <li class="nav-item @(Model.ActivePanel == 2 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Probe">
                     <a class="nav-link" asp-controller="Sites" asp-action="Index">
                         <i class="fa fa-fw fa-sitemap"></i>
                         <span class="nav-link-text">@Localizer["Sites"]</span>

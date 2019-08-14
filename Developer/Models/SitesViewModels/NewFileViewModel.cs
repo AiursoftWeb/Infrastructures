@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
 {
@@ -11,7 +8,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public NewFileViewModel() { }
-        public NewFileViewModel(DeveloperUser user) : base(user, 5) { }
+        public NewFileViewModel(DeveloperUser user) : base(user, 2) { }
         public void Recover(DeveloperUser user)
         {
             RootRecover(user, 5);

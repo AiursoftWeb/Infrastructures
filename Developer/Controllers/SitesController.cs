@@ -206,6 +206,51 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
         }
 
+        public async Task<IActionResult> Delete(string appId, string siteName)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new DeleteViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(DeleteViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                await _sitesService.DeleteSiteAsync(token, model.SiteName);
+                return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
+        }
+
         private async Task<DeveloperUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users.Include(t => t.MyApps).SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);

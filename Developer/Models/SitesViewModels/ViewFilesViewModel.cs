@@ -2,9 +2,6 @@
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Probe;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
 {
@@ -12,7 +9,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewFilesViewModel() { }
-        public ViewFilesViewModel(DeveloperUser user) : base(user, 5) { }
+        public ViewFilesViewModel(DeveloperUser user) : base(user, 2) { }
 
         public Folder Folder { get; set; }
         public string AppId { get; set; }
