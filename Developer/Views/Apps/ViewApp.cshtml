@@ -274,44 +274,6 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-bar-chart"></i>
-                    @Localizer["Object Storage Settings"]
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped datatable">
-                            <thead>
-                                <tr>
-                                    <th>@Localizer["Bucket ID"]</th>
-                                    <th>@Localizer["Bucket Name"]</th>
-                                    <th>@Localizer["Files count"]</th>
-                                    <th style="width: 460px">@Localizer["Operation"]</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var buc in Model.Buckets)
-                                {
-                                    <tr>
-                                        <td>@buc.BucketId</td>
-                                        <td>@buc.BucketName</td>
-                                        <td>@buc.FileCount</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-warning">@Localizer["Edit"]</a>
-                                                <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger">@Localizer["Delete"]</a>
-                                                <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info">@Localizer["View Files"]</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Bucket"]</a>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-bar-chart"></i>
                     @Localizer["Site Storage Settings"]
                 </div>
                 <div class="card-body">
