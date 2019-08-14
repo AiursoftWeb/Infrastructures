@@ -131,7 +131,7 @@ namespace Aiursoft.Pylon
             };
             foreach (var domain in domains)
             {
-                builder.AppendHtmlLine($@"<link rel='dns-prefetch' href='{domain}'>");
+                builder.AppendHtml($"\n<link rel='dns-prefetch' href='{domain}'>");
             }
             return builder;
         }
