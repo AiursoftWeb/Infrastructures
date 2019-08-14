@@ -49,6 +49,7 @@ namespace Aiursoft.Colossus.Controllers
             return View(model);
         }
 
+        [Obsolete]
         [HttpPost]
         [APIExpHandler]
         [FileChecker]
