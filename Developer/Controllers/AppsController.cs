@@ -25,38 +25,23 @@ namespace Aiursoft.Developer.Controllers
     [LimitPerMin]
     public class AppsController : Controller
     {
-        private readonly UserManager<DeveloperUser> _userManager;
-        private readonly SignInManager<DeveloperUser> _signInManager;
-        private readonly ILogger _logger;
         private readonly DeveloperDbContext _dbContext;
-        private readonly ServiceLocation _serviceLocation;
         private readonly StorageService _storageService;
-        private readonly OSSApiService _ossApiService;
         private readonly AppsContainer _appsContainer;
         private readonly CoreApiService _coreApiService;
         private readonly IConfiguration _configuration;
         private readonly SitesService _siteService;
 
         public AppsController(
-            UserManager<DeveloperUser> userManager,
-            SignInManager<DeveloperUser> signInManager,
-            ILoggerFactory loggerFactory,
             DeveloperDbContext dbContext,
-            ServiceLocation serviceLocation,
             StorageService storageService,
-            OSSApiService ossApiService,
             AppsContainer appsContainer,
             CoreApiService coreApiService,
             IConfiguration configuration,
             SitesService siteService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<AppsController>();
             _dbContext = dbContext;
-            _serviceLocation = serviceLocation;
             _storageService = storageService;
-            _ossApiService = ossApiService;
             _appsContainer = appsContainer;
             _coreApiService = coreApiService;
             _configuration = configuration;
@@ -125,7 +110,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _ossApiService, _appsContainer, _siteService);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -138,7 +123,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _ossApiService, _appsContainer, _siteService);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(model.AppId);
@@ -240,7 +225,6 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
                 await _siteService.DeleteAppAsync(token, target.AppId);
-                await _ossApiService.DeleteAppAsync(token, target.AppId);
             }
             catch (AiurUnexceptedResponse e)
             {

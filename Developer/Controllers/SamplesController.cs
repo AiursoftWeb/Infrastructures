@@ -17,15 +17,12 @@ namespace Aiursoft.Developer.Controllers
     {
         private readonly StorageService _storageService;
         private readonly IConfiguration _configuration;
-        private readonly HTTPService _http;
         public SamplesController(
             StorageService storageService,
-            IConfiguration configuration,
-            HTTPService http)
+            IConfiguration configuration)
         {
             _storageService = storageService;
             _configuration = configuration;
-            _http = http;
         }
 
         public ActionResult DisableWithForm()
@@ -60,11 +57,11 @@ namespace Aiursoft.Developer.Controllers
             }
             var file = Request.Form.Files.First();
             var model = await _storageService
-                .SaveToOSS(file, Convert.ToInt32(_configuration["SampleBucket"]), 3);
+                .SaveToProbe(file, _configuration["SampleSiteName"], DateTime.UtcNow.ToString("yyyy-MM-dd"), SaveFileOptions.SourceName);
             return Json(new
             {
                 message = "Uploaded!",
-                value = model.Path
+                value = model.InternetPath
             });
         }
 

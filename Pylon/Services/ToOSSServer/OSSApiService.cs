@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToOSSServer
 {
+    [Obsolete]
     public class OSSApiService
     {
         private readonly ServiceLocation _serviceLocation;

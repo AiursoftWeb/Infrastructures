@@ -22,12 +22,11 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             DeveloperUser user,
             App thisApp,
             CoreApiService coreApiService,
-            OSSApiService ossApiService,
             AppsContainer appsContainer,
             SitesService sitesService)
         {
             var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, ossApiService, appsContainer, sitesService);
+            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService);
             return model;
         }
 
@@ -35,15 +34,12 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             DeveloperUser user,
             App thisApp,
             CoreApiService coreApiService,
-            OSSApiService ossApiService,
             AppsContainer appsContainer,
             SitesService sitesService)
         {
             base.RootRecover(user, 1);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
-            var buckets = await ossApiService.ViewMyBucketsAsync(token);
-            Buckets = buckets.Buckets;
 
             var grants = await coreApiService.AllUserGrantedAsync(token);
             Grants = grants.Grants;
@@ -118,7 +114,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         [Display(Name = "Change user's other applications' grant status")]
         public bool ChangeGrantInfo { get; set; }
 
-        public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }
         public IEnumerable<ViewAblePermission> ViewAblePermission { get; set; }

@@ -20,18 +20,15 @@ namespace Aiursoft.Pylon.Services
         private readonly OSSApiService _ossApiService;
         private readonly AppsContainer _appsContainer;
         private readonly FilesService _filesService;
-        private readonly ServiceLocation _serviceLocation;
 
         public StorageService(
             OSSApiService ossApiService,
             AppsContainer appsContainer,
-            FilesService filesService,
-            ServiceLocation serviceLocation)
+            FilesService filesService)
         {
             _ossApiService = ossApiService;
             _appsContainer = appsContainer;
             _filesService = filesService;
-            _serviceLocation = serviceLocation;
         }
 
         [Obsolete]
@@ -42,7 +39,7 @@ namespace Aiursoft.Pylon.Services
             {
                 CreateDirectory(directoryPath);
             }
-            string localFilePath = string.Empty;
+            string localFilePath;
             if (options == SaveFileOptions.RandomName)
             {
                 localFilePath = directoryPath + Guid.NewGuid().ToString("N") + GetExtension(file.FileName);

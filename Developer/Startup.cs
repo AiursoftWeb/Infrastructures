@@ -30,7 +30,7 @@ namespace Aiursoft.Developer
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -56,7 +56,7 @@ namespace Aiursoft.Developer
             services.AddScoped<SecretService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DeveloperDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
