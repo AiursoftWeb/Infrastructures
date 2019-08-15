@@ -18,29 +18,6 @@ namespace Aiursoft.Pylon
             return content.AppendHtml($"\n<link href='{path}' rel='stylesheet' />");
         }
 
-        public static IHtmlContent UseAiurLogoutter(this RazorPage page)
-        {
-            var template = @"<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog' role='document'>
-                                    <form class='modal-content' action='/Home/Logoff' method='post'>
-                                        <div class='modal-header'>
-                                            <h5 class='modal-title' id='exampleModalLabel'>Ready to Leave?</h5>
-                                            <button class='close' type='button' data-dismiss='modal' aria-label='Close'>
-                                                <span aria-hidden='true'>×</span>
-                                            </button>
-                                        </div>
-                                        <div class='modal-body'>Select 'Logout' below if you are ready to end your current session.</div>
-                                        <div class='modal-footer'>
-                                            <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-                                            <input class='btn btn-primary' type='submit' value='Logout' />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>";
-            return new HtmlContentBuilder()
-                .SetHtmlContent(template);
-        }
-
         public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
         {
             var content = new HtmlContentBuilder();

@@ -213,7 +213,7 @@
                 </div>
             </footer>
             @this.UseScrollToTop()
-            @this.UseAiurLogoutter()
+            <vc:aiur-logout></vc:aiur-logout>
             @this.UseAiurDashboardJs()
             @RenderSection("js", required: false)
             @Html.Raw(JavaScriptSnippet.FullScript)
