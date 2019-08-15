@@ -9,14 +9,10 @@ namespace Aiursoft.Pylon.Attributes
     /// </summary>
     public class FileChecker : ActionFilterAttribute
     {
-        public FileChecker()
-        {
-            MaxSize = int.MaxValue;
-        }
         /// <summary>
         /// Of b. For example: 30 x 1024 x 1024 = 30MB.
         /// </summary>
-        public long MaxSize { get; set; } = -1;
+        public long MaxSize { get; set; } = int.MaxValue;
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
