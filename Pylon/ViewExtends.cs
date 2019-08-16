@@ -34,13 +34,6 @@ namespace Aiursoft.Pylon
             return content;
         }
 
-        public static IHtmlContent UseScrollToTop(this RazorPage page)
-        {
-            var content = new HtmlContentBuilder();
-            content.SetHtmlContent("<a class='aiur-scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>");
-            return content;
-        }
-
         public static IHtmlContent UseAiurDashboardCss(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();

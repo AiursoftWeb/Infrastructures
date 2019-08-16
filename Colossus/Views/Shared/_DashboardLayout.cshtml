@@ -161,7 +161,7 @@
                     <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
                 </div>
             </footer>
-            @this.UseScrollToTop()
+            <vc:scroll-to-top></vc:scroll-to-top>
             <vc:aiur-logout></vc:aiur-logout>
             @this.UseAiurDashboardJs()
             @RenderSection("js", required: false)

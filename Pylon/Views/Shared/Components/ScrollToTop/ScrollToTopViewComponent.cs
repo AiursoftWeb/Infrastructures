@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurLogout
+namespace Aiursoft.Pylon.Views.Shared.Components.ScrollToTop
 {
-    public class AiurLogout : ViewComponent
+    public class ScrollToTopViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
