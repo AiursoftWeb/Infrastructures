@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using Aiursoft.Stargate.Services;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Stargate.Controllers
 {
@@ -20,14 +21,18 @@ namespace Aiursoft.Stargate.Controllers
         private StargateDbContext _dbContext;
         private StargateMemory _memoryContext;
         private IPusher<WebSocket> _pusher;
+        private readonly ILogger<ListenController> _logger;
 
-        public ListenController(StargateDbContext dbContext,
+        public ListenController(
+            StargateDbContext dbContext,
             StargateMemory memoryContext,
-            IPusher<WebSocket> pusher)
+            IPusher<WebSocket> pusher,
+            ILogger<ListenController> logger)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
             _pusher = pusher;
+            _logger = logger;
         }
 
         [AiurForceWebSocket]
@@ -66,18 +71,21 @@ namespace Aiursoft.Stargate.Controllers
                     }
                     else
                     {
-                        var nextMessage = nextMessages.OrderBy(t => t.CreateTime).First();
-                        await _pusher.SendMessage(nextMessage.Content);
-                        lastReadTime = nextMessage.CreateTime;
-                        sleepTime = 0;
+                        var nextMessage = nextMessages.OrderBy(t => t.CreateTime).FirstOrDefault();
+                        if (nextMessage != null)
+                        {
+                            await _pusher.SendMessage(nextMessage.Content);
+                            lastReadTime = nextMessage.CreateTime;
+                            sleepTime = 0;
+                        }
                     }
                 }
                 catch (InvalidOperationException e)
                 {
-                    Console.WriteLine(e.Message);
+                    _logger.LogError(e, e.Message);
                 }
             }
-            return null;
+            return Json(new { });
         }
     }
 }
