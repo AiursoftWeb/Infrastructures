@@ -69,7 +69,7 @@ namespace Aiursoft.Probe.Controllers
                 }
                 if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
-                    return await this.FileWithImageCompressor(path, extension);
+                    return await FileWithImageCompressor(path, extension);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace Aiursoft.Probe.Controllers
         {
             int.TryParse(Request.Query["w"], out int w);
             int.TryParse(Request.Query["h"], out int h);
-            if (h > 0 && w > 0)
+            if (h >= 0 && w >= 0 && h + w > 0)
             {
                 return this.WebFile(await _imageCompressor.Compress(path, w, h), extension);
             }
