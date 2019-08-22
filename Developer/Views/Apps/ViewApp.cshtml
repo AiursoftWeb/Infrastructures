@@ -2,339 +2,339 @@
 @{
     ViewData["Title"] = Model.AppName;
 }
-    <div class="container-fluid">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
-            </li>
-            <li class="breadcrumb-item active">
-                <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
-            </li>
-            <li class="breadcrumb-item active">@ViewData["Title"]</li>
-        </ol>
-        @if (Model.JustHaveUpdated)
-        {
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                <strong>@Localizer["Well done!"]</strong> @Localizer["You successfully updated the profile of this app."]
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You successfully updated the profile of this app."]
+        </div>
+    }
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="ModelOnly"></div>
+        </div>
+    }
+    <form class="row" asp-controller="Apps" asp-action="ViewApp" method="post" enctype="multipart/form-data">
+        <div class="col-md-2" style="border-right: 2px inset #eeeeee;">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#homeworkModal">App Icon</a>
+                <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
+                <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth Settings</a>
+                <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
+                <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
             </div>
-        }
-        @if (!Model.ModelStateValid)
-        {
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                <strong>@Localizer["Invalid Input!"]</strong>
-                <div asp-validation-summary="ModelOnly"></div>
-            </div>
-        }
-        <form class="row" asp-controller="Apps" asp-action="ViewApp" method="post" enctype="multipart/form-data">
-            <div class="col-md-2">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#homeworkModal">App Icon</a>
-                    <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
-                    <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth Settings</a>
-                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
-                    <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-bar-chart"></i>
-                                @Localizer["App Info"]
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12 my-auto">
-                                        <div class="form-group">
-                                            <label asp-for="AppName"></label>
-                                            <input asp-for="AppName" type="text" class="form-control" placeholder="Enter your app name...">
-                                            <span asp-validation-for="AppName" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="AppDescription"></label>
-                                            <textarea class="form-control" asp-for="AppDescription" rows="3" placeholder="Enter a short description about your app..."></textarea>
-                                            <span asp-validation-for="AppDescription" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="AppId"></label>
-                                            <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
-                                            <span asp-validation-for="AppId" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group mb-1">
-                                            <label for="AppSecret">@Localizer["AppSecret"]</label>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly" value="aaaaabbbbbcccccccccddddddeeeee">
-                                            <span class="input-group-append">
-                                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@Model.AppSecret">@Localizer["Copy"]</button>
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="AppPlatform"></label>
-                                            <select class="form-control" disabled="disabled" asp-for="AppPlatform">
-                                                <option value="0">@Localizer["Cross Platform"]</option>
-                                                <option value="1">@Localizer["Android"]</option>
-                                                <option value="2">@Localizer["iOS"]</option>
-                                                <option value="3">@Localizer["Windows Desktop"]</option>
-                                                <option value="4">@Localizer["Windows UWP"]</option>
-                                                <option value="5">@Localizer["Linux"]</option>
-                                                <option value="6">@Localizer["Mac OS"]</option>
-                                                <option value="7">@Localizer["Web / HTML / PWA"]</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="AppCategory"></label>
-                                            <select class="form-control" disabled="disabled" asp-for="AppCategory">
-                                                <option value="0">@Localizer["Development"]</option>
-                                                <option value="1">App for @Values.ProjectName</option>
-                                                <option value="2">@Localizer["App for pages"]</option>
-                                                <option value="3">@Localizer["Books"]</option>
-                                                <option value="4">@Localizer["Business"]</option>
-                                                <option value="5">@Localizer["Communication"]</option>
-                                                <option value="6">@Localizer["Education"]</option>
-                                                <option value="7">@Localizer["Entertainment"]</option>
-                                                <option value="8">@Localizer["Fashion"]</option>
-                                                <option value="9">@Localizer["Finance"]</option>
-                                                <option value="10">@Localizer["Food &amp; Drink"]</option>
-                                                <option value="11">@Localizer["Game"]</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="PrivacyStatementUrl"></label>
-                                            <input asp-for="PrivacyStatementUrl" type="url" class="form-control">
-                                            <span asp-validation-for="PrivacyStatementUrl" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="LicenseUrl"></label>
-                                            <input asp-for="LicenseUrl" type="url" class="form-control">
-                                            <span asp-validation-for="LicenseUrl" class="text-danger"></span>
-                                        </div>
-                                        <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save"]</button>
-                                        <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to List"]</a>
-                                        <a class="btn btn-danger" asp-controller="Apps" asp-action="DeleteApp" asp-route-id="@Model.AppId">@Localizer["Delete App"]</a>
-                                    </div>
-                                </div>
-                            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["App Info"]
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-perm" role="tabpanel" aria-labelledby="v-pills-perm-tab">
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                            <strong>@Localizer["If you add a permission, all users already granted this app will be dropped!"]</strong>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-bar-chart"></i>
-                                @Localizer["Permission Settings"]
-                            </div>
-                            <div class="card-body">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ViewOpenId" />
-                                        <label asp-for="ViewOpenId"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ViewPhoneNumber" />
-                                        <label asp-for="ViewPhoneNumber"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ChangePhoneNumber" />
-                                        <label asp-for="ChangePhoneNumber"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ConfirmEmail" />
-                                        <label asp-for="ConfirmEmail"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ChangeBasicInfo" />
-                                        <label asp-for="ChangeBasicInfo"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ChangePassword" />
-                                        <label asp-for="ChangePassword"></label>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" asp-for="ChangeGrantInfo" />
-                                        <label asp-for="ChangeGrantInfo"></label>
-                                    </label>
-                                </div>
-                                <input class="btn btn-primary" data-disable-with="Saving..." id="btn-search" type="submit" value="Save Permission Settings" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-oauth" role="tabpanel" aria-labelledby="v-pills-oauth-tab">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-bar-chart"></i>
-                                @Localizer["OAuth Settings"]
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input asp-for="EnableOAuth" type="checkbox">
-                                            <label asp-for="EnableOAuth"></label>
-                                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12 my-auto">
+                                    <div class="form-group">
+                                        <label asp-for="AppName"></label>
+                                        <input asp-for="AppName" type="text" class="form-control" placeholder="Enter your app name...">
+                                        <span asp-validation-for="AppName" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-8">
-                                        <p>When you set this switch to on, you will be able to using OAuth 2.0 API to authenticate your app with @Values.ProjectName authentication.</p>
+                                    <div class="form-group">
+                                        <label asp-for="AppDescription"></label>
+                                        <textarea class="form-control" asp-for="AppDescription" rows="3" placeholder="Enter a short description about your app..."></textarea>
+                                        <span asp-validation-for="AppDescription" class="text-danger"></span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input type="checkbox" asp-for="ForceInputPassword">
-                                            <label asp-for="ForceInputPassword">@Localizer["Force Input Password"]</label>
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="AppId"></label>
+                                        <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
+                                        <span asp-validation-for="AppId" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-8">
-                                        <p>Force the user to input his password again even when he is already authenicated by @Values.ProjectName. (Not suggested)</p>
+                                    <div class="form-group mb-1">
+                                        <label for="AppSecret">@Localizer["AppSecret"]</label>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input type="checkbox" asp-for="ForceConfirmation">
-                                            <label asp-for="ForceConfirmation">@Localizer["Force Confirmation"]</label>
-                                        </div>
+                                    <div class="input-group mb-3">
+                                        <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly" value="aaaaabbbbbcccccccccddddddeeeee">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@Model.AppSecret">@Localizer["Copy"]</button>
+                                        </span>
                                     </div>
-                                    <div class="col-md-8">
-                                        <p>@Localizer["Force the user to confirm to grant your app even when he is already granted your app."] </p>
+                                    <div class="form-group">
+                                        <label asp-for="AppPlatform"></label>
+                                        <select class="form-control" disabled="disabled" asp-for="AppPlatform">
+                                            <option value="0">@Localizer["Cross Platform"]</option>
+                                            <option value="1">@Localizer["Android"]</option>
+                                            <option value="2">@Localizer["iOS"]</option>
+                                            <option value="3">@Localizer["Windows Desktop"]</option>
+                                            <option value="4">@Localizer["Windows UWP"]</option>
+                                            <option value="5">@Localizer["Linux"]</option>
+                                            <option value="6">@Localizer["Mac OS"]</option>
+                                            <option value="7">@Localizer["Web / HTML / PWA"]</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input type="checkbox" asp-for="DebugMode">
-                                            <label asp-for="DebugMode">@Localizer["Debug Mode"]</label>
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="AppCategory"></label>
+                                        <select class="form-control" disabled="disabled" asp-for="AppCategory">
+                                            <option value="0">@Localizer["Development"]</option>
+                                            <option value="1">App for @Values.ProjectName</option>
+                                            <option value="2">@Localizer["App for pages"]</option>
+                                            <option value="3">@Localizer["Books"]</option>
+                                            <option value="4">@Localizer["Business"]</option>
+                                            <option value="5">@Localizer["Communication"]</option>
+                                            <option value="6">@Localizer["Education"]</option>
+                                            <option value="7">@Localizer["Entertainment"]</option>
+                                            <option value="8">@Localizer["Fashion"]</option>
+                                            <option value="9">@Localizer["Finance"]</option>
+                                            <option value="10">@Localizer["Food &amp; Drink"]</option>
+                                            <option value="11">@Localizer["Game"]</option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-8">
-                                        <p>@Localizer["Debug mode allows any domain accessible to authenticate your app."]</p>
+                                    <div class="form-group">
+                                        <label asp-for="PrivacyStatementUrl"></label>
+                                        <input asp-for="PrivacyStatementUrl" type="url" class="form-control">
+                                        <span asp-validation-for="PrivacyStatementUrl" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label asp-for="LicenseUrl"></label>
+                                        <input asp-for="LicenseUrl" type="url" class="form-control">
+                                        <span asp-validation-for="LicenseUrl" class="text-danger"></span>
+                                    </div>
+                                    <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save"]</button>
+                                    <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to List"]</a>
+                                    <a class="btn btn-danger" asp-controller="Apps" asp-action="DeleteApp" asp-route-id="@Model.AppId">@Localizer["Delete App"]</a>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="AppDomain"></label>
-                                    <input asp-for="AppDomain" type="text" class="form-control" placeholder="Enter your valid app domain. For example: google.com">
-                                    <span asp-validation-for="AppDomain" class="text-danger"></span>
-                                </div>
-                                <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save OAuth Settings"]</button>
-                                <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to list"]</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-grant" role="tabpanel" aria-labelledby="v-pills-grant-tab">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-bar-chart"></i>
-                                @Localizer["App Grant History"]
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>@Localizer["User Open Id"]</th>
-                                                <th>@Localizer["User Name"]</th>
-                                                <th>@Localizer["Grant Time"]</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var grant in Model.Grants)
-                                            {
-                                                <tr>
-                                                    <td>@grant.UserInfo.Id</td>
-                                                    <td>@grant.UserInfo.NickName</td>
-                                                    <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime"></td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-sites" role="tabpanel" aria-labelledby="v-pills-sites-tab">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-bar-chart"></i>
-                                @Localizer["Site Storage Settings"]
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>@Localizer["Site Name"]</th>
-                                                <th>@Localizer["Operation"]</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var site in Model.Sites)
-                                            {
-                                                <tr>
-                                                    <td>@site.SiteName</td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <a asp-controller="Sites" asp-action="EditSite" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-warning">@Localizer["Edit"]</a>
-                                                            <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>
-                                                            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-info">@Localizer["View Files"]</a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <a asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Site"]</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-
-        <div class="modal fade" id="homeworkModal" tabindex="-1" role="dialog" aria-labelledby="homeworkModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        @Localizer["App Icon"]
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <div class="tab-pane fade" id="v-pills-perm" role="tabpanel" aria-labelledby="v-pills-perm-tab">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                        <strong>@Localizer["If you add a permission, all users already granted this app will be dropped!"]</strong>
                     </div>
-                    <div class="modal-body">
-                        <form class="col-sm-12" asp-action="ChangeIcon" asp-controller="Apps" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="AppId" value="@Model.AppId" />
-                            <label>@Localizer["Upload your app icon"]</label>
-                            <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppIconAddress)" />
-                            <p class="small text-muted">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
-                            <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save Image"]</button>
-                        </form>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["Permission Settings"]
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ViewOpenId" />
+                                    <label asp-for="ViewOpenId"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ViewPhoneNumber" />
+                                    <label asp-for="ViewPhoneNumber"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ChangePhoneNumber" />
+                                    <label asp-for="ChangePhoneNumber"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ConfirmEmail" />
+                                    <label asp-for="ConfirmEmail"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ChangeBasicInfo" />
+                                    <label asp-for="ChangeBasicInfo"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ChangePassword" />
+                                    <label asp-for="ChangePassword"></label>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" asp-for="ChangeGrantInfo" />
+                                    <label asp-for="ChangeGrantInfo"></label>
+                                </label>
+                            </div>
+                            <input class="btn btn-primary" data-disable-with="Saving..." id="btn-search" type="submit" value="Save Permission Settings" />
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+                <div class="tab-pane fade" id="v-pills-oauth" role="tabpanel" aria-labelledby="v-pills-oauth-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["OAuth Settings"]
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input asp-for="EnableOAuth" type="checkbox">
+                                        <label asp-for="EnableOAuth"></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>When you set this switch to on, you will be able to using OAuth 2.0 API to authenticate your app with @Values.ProjectName authentication.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" asp-for="ForceInputPassword">
+                                        <label asp-for="ForceInputPassword">@Localizer["Force Input Password"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Force the user to input his password again even when he is already authenicated by @Values.ProjectName. (Not suggested)</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" asp-for="ForceConfirmation">
+                                        <label asp-for="ForceConfirmation">@Localizer["Force Confirmation"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>@Localizer["Force the user to confirm to grant your app even when he is already granted your app."] </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" asp-for="DebugMode">
+                                        <label asp-for="DebugMode">@Localizer["Debug Mode"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>@Localizer["Debug mode allows any domain accessible to authenticate your app."]</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AppDomain"></label>
+                                <input asp-for="AppDomain" type="text" class="form-control" placeholder="Enter your valid app domain. For example: google.com">
+                                <span asp-validation-for="AppDomain" class="text-danger"></span>
+                            </div>
+                            <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save OAuth Settings"]</button>
+                            <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to list"]</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-grant" role="tabpanel" aria-labelledby="v-pills-grant-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["App Grant History"]
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["User Open Id"]</th>
+                                            <th>@Localizer["User Name"]</th>
+                                            <th>@Localizer["Grant Time"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var grant in Model.Grants)
+                                        {
+                                            <tr>
+                                                <td>@grant.UserInfo.Id</td>
+                                                <td>@grant.UserInfo.NickName</td>
+                                                <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime"></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-sites" role="tabpanel" aria-labelledby="v-pills-sites-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["Site Storage Settings"]
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["Site Name"]</th>
+                                            <th>@Localizer["Operation"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var site in Model.Sites)
+                                        {
+                                            <tr>
+                                                <td>@site.SiteName</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a asp-controller="Sites" asp-action="EditSite" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-warning">@Localizer["Edit"]</a>
+                                                        <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>
+                                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-info">@Localizer["View Files"]</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Site"]</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </form>
+
+    <div class="modal fade" id="homeworkModal" tabindex="-1" role="dialog" aria-labelledby="homeworkModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @Localizer["App Icon"]
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="col-sm-12" asp-action="ChangeIcon" asp-controller="Apps" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="AppId" value="@Model.AppId" />
+                        <label>@Localizer["Upload your app icon"]</label>
+                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppIconAddress)" />
+                        <p class="small text-muted">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
+                        <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save Image"]</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 @section css{
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
