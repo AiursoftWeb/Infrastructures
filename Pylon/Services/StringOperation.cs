@@ -196,5 +196,19 @@ namespace Aiursoft.Pylon.Services
             }
             return Uri.EscapeDataString(input);
         }
+
+        public static string AppendPath(this string root, string folder)
+        {
+            return root == null ? folder : root + "/" + folder;
+        }
+
+        public static string DetachPath(this string path)
+        {
+            if (path == null || !path.Contains("/"))
+            {
+                return null;
+            }
+            return path.Replace("/" + path.Split('/').Last(), "");
+        }
     }
 }

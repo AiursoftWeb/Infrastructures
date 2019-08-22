@@ -1,0 +1,55 @@
+﻿@model Aiursoft.Developer.Models.SitesViewModels.DeleteFolderViewModel
+@{
+    ViewData["Title"] = "Delete Folder - " + Model.FolderPath;
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+        <strong>@Localizer["Caution!"]</strong> You are about to delete folder "@Model.FolderPath" in site "@Model.SiteName"! If you are confirmed to continue, you will lose all<strong> folders and files</strong> in it. @Localizer["and this process is not recoverable!"]
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-trash ico"></i>
+            @Localizer["Delete Folder"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Sites" asp-action="DeleteFolder" method="post">
+                    <input asp-for="AppId" type="hidden">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="SiteName"></label>
+                                <input asp-for="SiteName" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="FolderPath"></label>
+                                <input asp-for="FolderPath" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 margin-top-30">
+                            <a class="btn btn-success" asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.FolderPath.DetachPath()">@Localizer["Back to Folder"]</a>
+                            <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

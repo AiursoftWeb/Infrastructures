@@ -122,7 +122,7 @@ namespace Aiursoft.Developer.Controllers
                 };
                 return View(model);
             }
-            catch (AiurUnexceptedResponse e) when(e.Code == ErrorType.NotFound)
+            catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound)
             {
                 return NotFound();
             }
@@ -204,6 +204,54 @@ namespace Aiursoft.Developer.Controllers
             string accessToken = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
             await _storageService.SaveToProbe(file, model.SiteName, model.Path, SaveFileOptions.SourceName, accessToken);
             return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
+        }
+
+        [Route("DeleteFolder/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> DeleteFolder(string appId, string siteName, string path)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new DeleteFolderViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName,
+                FolderPath = path
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("DeleteFolder/{appId}/{siteName}/{**path}")]
+        public async Task<IActionResult> DeleteFolder(DeleteFolderViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                await _foldersService.DeleteFolderAsync(token, model.SiteName, model.FolderPath);
+                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.FolderPath.DetachPath() });
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
         }
 
         public async Task<IActionResult> Delete(string appId, string siteName)

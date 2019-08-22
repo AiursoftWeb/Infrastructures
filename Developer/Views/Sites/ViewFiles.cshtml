@@ -3,21 +3,6 @@
 @{
     ViewData["Title"] = "View files";
 }
-@{
-    string AppendPath(string root, string folder)
-    {
-        return root == null ? folder : root + "/" + folder;
-    }
-
-    string DetachPath(string path)
-    {
-        if (path == null || !path.Contains("/"))
-        {
-            return null;
-        }
-        return path.Replace("/" + path.Split('/').Last(), "");
-    }
-}
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -54,10 +39,15 @@
             <div class="col-12">
                 @if (Model.Path != null)
                 {
-                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@DetachPath(Model.Path)" class="btn btn-secondary mb-3">
+                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.DetachPath()" class="btn btn-secondary mb-3">
                         <i class="fa fa-arrow-up"></i>
                         Up
                     </a>
+                    <a asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-danger mb-3">
+                        <i class="fa fa-trash"></i>
+                        Delete @Model.Folder.FolderName
+                    </a>
+
                 }
                 <div class="table-responsive">
                     <table class="table table-striped my-datatable">
@@ -73,11 +63,16 @@
                                 <tr>
                                     <td data-order="A@(folder.FolderName)">
                                         <i class="fa fa-folder text-primary"></i>
-                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@AppendPath(Model.Path, folder.FolderName)">
+                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
                                             @folder.FolderName
                                         </a>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                            <i class="fa fa-trash"></i>
+                                            Delete
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                             @foreach (var file in Model.Folder.Files)
@@ -96,11 +91,14 @@
                     </table>
                 </div>
                 <div class="mt-3">
+                    <a asp-controller="Sites" asp-action="NewFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-success">
+                        <i class="fa fa-file"></i>
+                        New file
+                    </a>
                     <a asp-controller="Sites" asp-action="NewFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-secondary">
                         <i class="fa fa-folder-open"></i>
                         New folder
                     </a>
-                    <a asp-controller="Sites" asp-action="NewFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-success">New file</a>
                 </div>
             </div>
         </div>
