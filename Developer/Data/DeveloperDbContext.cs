@@ -21,10 +21,5 @@ namespace Aiursoft.Developer.Data
         }
 
         public DbSet<App> Apps { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
     }
 }
