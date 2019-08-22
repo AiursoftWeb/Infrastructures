@@ -67,7 +67,7 @@ namespace Aiursoft.Probe.Controllers
                 {
                     return this.WebFile(path, "do-not-open");
                 }
-                if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
+                else if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
                     return await FileWithImageCompressor(path, extension);
                 }
