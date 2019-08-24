@@ -18,22 +18,6 @@ namespace Aiursoft.Pylon
             return content.AppendHtml($"\n<link href='{path}' rel='stylesheet' />");
         }
 
-        public static IHtmlContent UseChinaRegisterInfo(this RazorPage page)
-        {
-            var content = new HtmlContentBuilder();
-            var requestCultureFeature = page.Context.Features.Get<IRequestCultureFeature>();
-            if (requestCultureFeature == null)
-            {
-                return content;
-            }
-            var requestCulture = requestCultureFeature.RequestCulture.UICulture.IetfLanguageTag;
-            if (requestCulture == "zh")
-            {
-                content.SetHtmlContent("<a href='http://www.miitbeian.gov.cn' target='_blank'>辽ICP备17004979号-1</a>");
-            }
-            return content;
-        }
-
         public static IHtmlContent UseAiurDashboardCss(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
