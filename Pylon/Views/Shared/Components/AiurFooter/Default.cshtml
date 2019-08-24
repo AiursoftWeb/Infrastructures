@@ -1,0 +1,28 @@
+﻿@using Aiursoft.Pylon
+@using Aiursoft.Pylon.Models
+@model Aiursoft.Pylon.Views.Shared.Components.AiurFooter.AiurFooterViewModel
+@inject Aiursoft.Pylon.Services.ServiceLocation ServiceLocation
+@{
+    var classText = "";
+    if (!string.IsNullOrWhiteSpace(Model.Class))
+    {
+        classText = $" class=\"{Model.Class}\"";
+    }
+
+    string GetRenderedFooter(string link, string text)
+    {
+        var templateHead = $"<{Model.Template}{classText}>";
+        var templateTail = $"</{Model.Template}>";
+        var templateLink = $"<a href=\"{link}\">{text}</a>";
+        return $"{templateHead}{templateLink}{templateTail}\n";
+    }
+}
+
+@foreach (var foot in Values.Footer)
+{
+    @Html.Raw(GetRenderedFooter(foot.Value, foot.Key))
+}
+@{
+    var langLink = new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path });
+}
+@Html.Raw(GetRenderedFooter(langLink.ToString(), "Language"))

@@ -87,14 +87,7 @@
             <div class="row">
                 <div class="col-lg-8 h-100 text-center text-lg-left my-auto">
                     <ul class="list-inline mb-2">
-                        @foreach (var foot in Values.Footer)
-                        {
-                            <li class="list-inline-item">
-                                <a href="@foot.Value">@foot.Key</a>
-                            </li>
-                            <li class="list-inline-item">&sdot;</li>
-                        }
-                        <li class="list-inline-item"><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">Language</a></li>
+                        <vc:aiur-footer template="li" item-class="list-inline-item"></vc:aiur-footer>
                     </ul>
                     <p class="text-muted small mb-4 mb-lg-0">
                         &copy; @DateTime.Now.Year - @Values.ProjectName

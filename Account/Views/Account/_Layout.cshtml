@@ -196,27 +196,15 @@
         @RenderBody()
         <footer class="sticky-footer">
             <div class="ml-3">
-                <small class="mr-2 ml-2">
-                    <a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new
-                        {
-                            Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
-                            Path = Context.Request.Path
-                        }))">@Localizer["Language(语言)"]</a>
-                    </small>
-                    @foreach (var foot in Values.Footer)
-                    {
-                        <small class="mr-2 ml-2">
-                            <a href="@foot.Value">@foot.Key</a>
-                        </small>
-                    }
-                    <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
-                </div>
-            </footer>
-            <vc:scroll-to-top></vc:scroll-to-top>
-            <vc:aiur-logout></vc:aiur-logout>
-            @this.UseAiurDashboardJs()
-            @RenderSection("js", required: false)
-            @Html.Raw(JavaScriptSnippet.FullScript)
-        </div>
-    </body>
+                <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
+                <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
+            </div>
+        </footer>
+        <vc:scroll-to-top></vc:scroll-to-top>
+        <vc:aiur-logout></vc:aiur-logout>
+        @this.UseAiurDashboardJs()
+        @RenderSection("js", required: false)
+        @Html.Raw(JavaScriptSnippet.FullScript)
+    </div>
+</body>
 </html>

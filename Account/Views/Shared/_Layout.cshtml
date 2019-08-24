@@ -67,11 +67,7 @@
     <footer class="bd-footer text-muted">
         <div class="container-fluid p-3 p-md-5">
             <ul class="bd-footer-links">
-                @foreach (var foot in Values.Footer)
-                {
-                    <li><a href="@foot.Value">@foot.Key</a></li>
-                }
-                <li><a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path }))">@Localizer["Language"]</a></li>
+                <vc:aiur-footer template="li" item-class=""></vc:aiur-footer>
             </ul>
             <p>
                 &copy; @DateTime.Now.Year - @Values.ProjectName

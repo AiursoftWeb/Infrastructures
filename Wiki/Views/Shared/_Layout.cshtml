@@ -52,7 +52,7 @@
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @await  UserImageGenerator.RenderUserImageAsync(User)
+                            @await UserImageGenerator.RenderUserImageAsync(User)
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown02">
                             <a class="dropdown-item" href="@ServiceLocation.Account">Settings</a>
@@ -87,19 +87,7 @@
         @RenderBody()
         <footer class="sticky-footer">
             <div class="ml-3">
-                <small class="mr-2 ml-2">
-                    <a href="@(new AiurUrl(ServiceLocation.API, "Api", "SetLang", new
-                        {
-                            Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
-                            Path = Context.Request.Path
-                        }))">Language(语言)</a>
-                </small>
-                @foreach (var foot in Values.Footer)
-                {
-                    <small class="mr-2 ml-2">
-                        <a href="@foot.Value">@foot.Key</a>
-                    </small>
-                }
+                <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
                 <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
             </div>
         </footer>

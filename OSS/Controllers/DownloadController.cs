@@ -15,6 +15,7 @@ namespace Aiursoft.OSS.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
+    [Obsolete]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
