@@ -1,12 +1,8 @@
 ﻿<!DOCTYPE html>
 <html ng-app="ee">
 <head>
-    <meta charset="utf-8" />
-    @this.UseSEO()
-    @this.UseDisableZoom()
-    @this.UseDnsPrefetch()
+    <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName EE</title>
-    @this.UseAiurFavicon()
     @this.UseAiurMarketCss()
     <link href="~/css/ee.css" rel="stylesheet">
     @RenderSection("Styles", required: false)

@@ -2,13 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    @this.UseSEO()
-    @this.UseDisableZoom()
-    @this.UseDnsPrefetch()
+    <vc:aiur-header></vc:aiur-header>
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
-    @this.UseAiurFavicon()
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
 </head>

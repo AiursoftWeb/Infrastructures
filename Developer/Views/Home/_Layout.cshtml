@@ -1,13 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    @this.UseSEO()
-    @this.UseDisableZoom()
-    @this.UseDnsPrefetch()
+    <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName Developer Center</title>
-    @this.UseAiurFavicon()
     @this.UseAiurMarketCss()
     @RenderSection("css", required: false)
 </head>

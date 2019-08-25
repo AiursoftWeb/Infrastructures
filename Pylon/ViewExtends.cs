@@ -65,45 +65,5 @@ namespace Aiursoft.Pylon
                 .AppendJavaScript($"{serviceLocation.UI}/dist/AiurCore.min.js")
                 .AppendJavaScript($"{serviceLocation.UI}/dist/AiurMarket.min.js");
         }
-
-        public static IHtmlContent UseAiurFavicon(this RazorPage page)
-        {
-            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            return new HtmlContentBuilder()
-                .SetHtmlContent($"<link rel='icon' type='image/x-icon' href='{serviceLocation.UI}/favicon.ico'>");
-        }
-
-        public static IHtmlContent UseDnsPrefetch(this RazorPage page)
-        {
-            var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
-            var builder = new HtmlContentBuilder();
-            string[] domains = {
-                serviceLocation.API,
-                serviceLocation.OSSEndpoint,
-                serviceLocation.UI,
-                serviceLocation.Account
-            };
-            foreach (var domain in domains)
-            {
-                builder.AppendHtml($"\n<link rel='dns-prefetch' href='{domain}'>");
-            }
-            return builder;
-        }
-
-        public static IHtmlContent UseSEO(this RazorPage page)
-        {
-            var description = page.ViewBag.Des as string;
-            if(string.IsNullOrWhiteSpace(description))
-            {
-                description = "Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.";
-            }
-            return new HtmlContentBuilder()
-                .SetHtmlContent($"<meta name=\"description\" content=\"{description}\" />");
-        }
-
-        public static IHtmlContent UseDisableZoom(this RazorPage page)
-        {
-            return new HtmlContentBuilder().SetHtmlContent("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\">");
-        }
     }
 }
