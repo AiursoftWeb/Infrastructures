@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.Pylon.Models.Developer;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
@@ -15,8 +16,11 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         }
 
         public bool ModelStateValid { get; set; } = true;
+        [FromRoute]
         public string AppId { get; set; }
+        [FromRoute]
         public string SiteName { get; set; }
+        [FromRoute]
         public string Path { get; set; }
     }
 }

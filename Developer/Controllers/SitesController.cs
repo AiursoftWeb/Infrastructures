@@ -17,8 +17,8 @@ using System.Threading.Tasks;
 namespace Aiursoft.Developer.Controllers
 {
     [AiurForceAuth]
-    [Route("Sites")]
     [LimitPerMin]
+    [Route("Dashboard")]
     public class SitesController : Controller
     {
         public DeveloperDbContext _dbContext;
@@ -41,7 +41,7 @@ namespace Aiursoft.Developer.Controllers
             _storageService = storageService;
         }
 
-        [Route(nameof(Index))]
+        [Route("Sites")]
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
@@ -49,8 +49,8 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        [Route(nameof(CreateSite))]
-        public async Task<IActionResult> CreateSite(string id)// app id
+        [Route("Apps/{id}/CreateSite")]
+        public async Task<IActionResult> CreateSite([FromRoute]string id)// app id
         {
             var user = await GetCurrentUserAsync();
             var model = new CreateSiteViewModel(user)
@@ -61,9 +61,9 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
-        [Route(nameof(CreateSite))]
+        [Route("Apps/{id}/CreateSite")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSite(CreateSiteViewModel model)
+        public async Task<IActionResult> CreateSite([FromRoute]string id, CreateSiteViewModel model)
         {
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace Aiursoft.Developer.Controllers
                 model.Recover(user);
                 return View(model);
             }
-            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            var app = await _dbContext.Apps.FindAsync(id);
             if (app == null)
             {
                 return NotFound();
@@ -96,7 +96,7 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        [Route("ViewFiles/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/ViewFiles/{**path}")]
         public async Task<IActionResult> ViewFiles(string appId, string siteName, string path) // siteName
         {
             var user = await GetCurrentUserAsync();
@@ -128,7 +128,7 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        [Route("NewFolder/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/NewFolder/{**path}")]
         public async Task<IActionResult> NewFolder(string appId, string siteName, string path)
         {
             var user = await GetCurrentUserAsync();
@@ -142,7 +142,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
-        [Route("NewFolder/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/NewFolder/{**path}")]
         public async Task<IActionResult> NewFolder(NewFolderViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -176,7 +176,7 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        [Route("NewFile/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/NewFile/{**path}")]
         public async Task<IActionResult> NewFile(string appId, string siteName, string path)
         {
             var user = await GetCurrentUserAsync();
@@ -191,7 +191,7 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [FileChecker]
-        [Route("NewFile/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/NewFile/{**path}")]
         public async Task<IActionResult> NewFile(NewFileViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -206,8 +206,8 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
         }
 
-        [Route("DeleteFolder/{appId}/{siteName}/{**path}")]
-        public async Task<IActionResult> DeleteFolder(string appId, string siteName, string path)
+        [Route("Apps/{appId}/Sites/{siteName}/DeleteFolder/{**path}")]
+        public async Task<IActionResult> DeleteFolder([FromRoute]string appId, [FromRoute]string siteName, [FromRoute]string path)
         {
             var user = await GetCurrentUserAsync();
             var model = new DeleteFolderViewModel(user)
@@ -220,7 +220,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
-        [Route("DeleteFolder/{appId}/{siteName}/{**path}")]
+        [Route("Apps/{appId}/Sites/{siteName}/DeleteFolder/{**path}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -254,6 +254,7 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
+        [Route("Apps/{appId}/Sites/{siteName}/Delete")]
         public async Task<IActionResult> Delete(string appId, string siteName)
         {
             var user = await GetCurrentUserAsync();
@@ -265,6 +266,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps/{appId}/Sites/{siteName}/Delete")]
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {

@@ -12,19 +12,14 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         public CreateSiteViewModel() { }
         public CreateSiteViewModel(DeveloperUser user) : base(user, 2)
         {
-            AppIds = new SelectList(AllApps, nameof(App.AppId), nameof(App.AppName));
         }
 
         public void Recover(DeveloperUser user)
         {
             RootRecover(user, 5);
-            AppIds = new SelectList(AllApps, nameof(App.AppId), nameof(App.AppName));
         }
 
         public bool ModelStateValid { get; set; } = true;
-
-        public SelectList AppIds { get; set; }
-
         public string AppId { get; set; }
 
         [Required]

@@ -26,8 +26,7 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-                <form asp-controller="Sites" asp-action="Delete" method="post">
-                    <input asp-for="AppId" type="hidden">
+                <form asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" method="post">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">

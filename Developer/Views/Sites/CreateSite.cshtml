@@ -29,22 +29,7 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-                <form asp-controller="Sites" asp-action="CreateSite" method="post" class="row">
-                    @if (string.IsNullOrEmpty(Model.AppId))
-                    {
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="AppId"></label>
-                                <select asp-for="AppId" class="form-control" asp-items="@Model.AppIds"></select>
-                                <span asp-validation-for="AppId" class="text-danger"></span>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <input type="hidden" asp-for="AppId" />
-                    }
-
+                <form asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" method="post" class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="SiteName"></label>

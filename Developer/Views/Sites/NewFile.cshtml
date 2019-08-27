@@ -27,10 +27,7 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-                <form class="box-content" asp-controller="Sites" asp-action="NewFile" method="post" enctype="multipart/form-data">
-                    <input type="hidden" asp-for="AppId" />
-                    <input type="hidden" asp-for="SiteName" />
-                    <input type="hidden" asp-for="Path" />
+                <form class="box-content" asp-controller="Sites" asp-action="NewFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" class="dropify" data-max-file-size="1000M" />
                     <p class="help margin-top-10">@Localizer["Only 1000Mb max."]</p>
                     <div class="margin-top-30">
