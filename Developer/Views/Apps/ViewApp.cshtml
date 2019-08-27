@@ -328,12 +328,14 @@
             }
             $('.dropify').change(function () {
                 var form = $('#ChangeIconForm');
-                var fileInput = form.find('input[type="file"]')[0].files[0];
-                var ext = getExtension(fileInput.name);
-                if ('png jpg bmp'.indexOf(ext) === -1) {
+                var fileInput = form.find('input[type="file"]');
+                var file = fileInput[0].files[0];
+                var ext = getExtension(file.name);
+                var validAttr = fileInput.attr('data-allowed-file-extensions');
+                if (validAttr.indexOf(ext) === -1) {
                     return;
                 }
-                form.submit();;
+                form.submit();
             });
         });
     </script>
