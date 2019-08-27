@@ -17,8 +17,9 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         }
 
-        public void Recover(DeveloperUser user)
+        public void Recover(DeveloperUser user,string appName)
         {
+            AppName = appName;
             RootRecover(user, 5);
         }
 
@@ -31,6 +32,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         public string SiteName { get; set; }
 
         [Required]
-        public string FolderPath { get; set; }
+        public string Path { get; set; }
+        public object AppName { get; set; }
     }
 }

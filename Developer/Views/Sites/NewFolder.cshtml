@@ -1,6 +1,7 @@
 ﻿@model Aiursoft.Developer.Models.SitesViewModels.NewFolderViewModel
 @{
     ViewData["Title"] = "Create New Folder";
+    string currentPath = "";
 }
 
 <div class="container-fluid">
@@ -9,9 +10,29 @@
             <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
         </li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="">@Model.SiteName</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
+        <li class="breadcrumb-item active">
+            Create folder
+        </li>
     </ol>
     @if (!Model.ModelStateValid)
     {

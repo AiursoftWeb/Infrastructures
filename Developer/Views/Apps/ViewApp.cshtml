@@ -7,7 +7,7 @@
         <li class="breadcrumb-item">
             <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
-        <li class="breadcrumb-item active">
+        <li class="breadcrumb-item">
             <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
@@ -37,8 +37,8 @@
                     <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
                     <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
                     <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth Settings</a>
-                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
                     <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
+                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
                 </div>
             </div>
         </div>
@@ -243,37 +243,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-grant" role="tabpanel" aria-labelledby="v-pills-grant-tab">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-bar-chart"></i>
-                            @Localizer["App Grant History"]
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>@Localizer["User Open Id"]</th>
-                                            <th>@Localizer["User Name"]</th>
-                                            <th>@Localizer["Grant Time"]</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var grant in Model.Grants)
-                                        {
-                                            <tr>
-                                                <td>@grant.UserInfo.Id</td>
-                                                <td>@grant.UserInfo.NickName</td>
-                                                <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime"></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="tab-pane fade" id="v-pills-sites" role="tabpanel" aria-labelledby="v-pills-sites-tab">
                     <div class="card mb-3">
                         <div class="card-header">
@@ -307,6 +276,37 @@
                                 </table>
                             </div>
                             <a asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Site"]</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-grant" role="tabpanel" aria-labelledby="v-pills-grant-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["App Grant History"]
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["User Open Id"]</th>
+                                            <th>@Localizer["User Name"]</th>
+                                            <th>@Localizer["Grant Time"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var grant in Model.Grants)
+                                        {
+                                            <tr>
+                                                <td>@grant.UserInfo.Id</td>
+                                                <td>@grant.UserInfo.NickName</td>
+                                                <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime"></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

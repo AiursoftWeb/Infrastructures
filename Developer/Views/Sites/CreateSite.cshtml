@@ -9,9 +9,14 @@
             <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
         </li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Create site
+        </li>
     </ol>
     @if (!Model.ModelStateValid)
     {

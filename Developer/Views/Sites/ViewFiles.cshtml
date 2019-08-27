@@ -2,6 +2,7 @@
 @using System.Net
 @{
     ViewData["Title"] = "View files";
+    string currentPath = "";
 }
 <div class="container-fluid">
     <ol class="breadcrumb">
@@ -9,31 +10,34 @@
             <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
         <li class="breadcrumb-item">
-            <a asp-controller="Sites" asp-action="Index">@Localizer["Sites"]</a>
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
         </li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="">@Model.SiteName</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-database ico"></i>
-            Files of
+            <i class="fa fa-folder-open ico"></i>
+            Files in site:
             <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@string.Empty">
                 @Model.SiteName
             </a>
-            @{
-                string currentPath = "";
-            }
-            @foreach (var path in Model.Path?.Split('/') ?? new string[0])
-            {
-                <label>
-                    /
-                </label>
-                currentPath = currentPath + path;
-                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
-                    @path
-                </a>
-                currentPath = currentPath + "/";
-            }
         </div>
         <div class="card-body">
             <div class="col-12">

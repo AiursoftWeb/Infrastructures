@@ -15,8 +15,9 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         }
 
-        public void Recover(DeveloperUser user)
+        public void Recover(DeveloperUser user, string appName)
         {
+            AppName = appName;
             RootRecover(user, 5);
         }
 
@@ -29,5 +30,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [FromRoute]
         [MaxLength(50)]
         public string SiteName { get; set; }
+        public string AppName { get; set; }
     }
 }

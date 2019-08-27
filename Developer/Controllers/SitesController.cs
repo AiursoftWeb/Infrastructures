@@ -53,9 +53,19 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> CreateSite([FromRoute]string id)// app id
         {
             var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(id);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             var model = new CreateSiteViewModel(user)
             {
-                AppId = id
+                AppId = id,
+                AppName = app.AppName
             };
             return View(model);
         }
@@ -118,6 +128,7 @@ namespace Aiursoft.Developer.Controllers
                     Folder = data.Value,
                     AppId = appId,
                     SiteName = siteName,
+                    AppName = app.AppName,
                     Path = path
                 };
                 return View(model);
@@ -132,11 +143,21 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> NewFolder(string appId, string siteName, string path)
         {
             var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             var model = new NewFolderViewModel(user)
             {
                 AppId = appId,
                 SiteName = siteName,
-                Path = path
+                Path = path,
+                AppName = app.AppName
             };
             return View(model);
         }
@@ -146,12 +167,6 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> NewFolder(NewFolderViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user);
-                return View(model);
-            }
             var app = await _dbContext.Apps.FindAsync(model.AppId);
             if (app == null)
             {
@@ -160,6 +175,12 @@ namespace Aiursoft.Developer.Controllers
             if (app.CreatorId != user.Id)
             {
                 return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
             }
             try
             {
@@ -171,7 +192,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
-                model.Recover(user);
+                model.Recover(user, app.AppName);
                 return View(model);
             }
         }
@@ -180,11 +201,21 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> NewFile(string appId, string siteName, string path)
         {
             var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             var model = new NewFileViewModel(user)
             {
                 AppId = appId,
                 SiteName = siteName,
-                Path = path
+                Path = path,
+                AppName = app.AppName
             };
             return View(model);
         }
@@ -197,9 +228,19 @@ namespace Aiursoft.Developer.Controllers
             var user = await GetCurrentUserAsync();
             var file = Request.Form.Files.First();
             var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
             if (app.CreatorId != user.Id)
             {
                 return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
             }
             string accessToken = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
             await _storageService.SaveToProbe(file, model.SiteName, model.Path, SaveFileOptions.SourceName, accessToken);
@@ -210,11 +251,21 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> DeleteFolder([FromRoute]string appId, [FromRoute]string siteName, [FromRoute]string path)
         {
             var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             var model = new DeleteFolderViewModel(user)
             {
                 AppId = appId,
                 SiteName = siteName,
-                FolderPath = path
+                Path = path,
+                AppName = app.AppName
             };
             return View(model);
         }
@@ -224,12 +275,6 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> DeleteFolder(DeleteFolderViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user);
-                return View(model);
-            }
             var app = await _dbContext.Apps.FindAsync(model.AppId);
             if (app == null)
             {
@@ -239,17 +284,23 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _foldersService.DeleteFolderAsync(token, model.SiteName, model.FolderPath);
-                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.FolderPath.DetachPath() });
+                await _foldersService.DeleteFolderAsync(token, model.SiteName, model.Path);
+                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
-                model.Recover(user);
+                model.Recover(user, app.AppName);
                 return View(model);
             }
         }
@@ -258,10 +309,20 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> Delete(string appId, string siteName)
         {
             var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
             var model = new DeleteViewModel(user)
             {
                 AppId = appId,
-                SiteName = siteName
+                SiteName = siteName,
+                AppName = app.AppName
             };
             return View(model);
         }
@@ -271,12 +332,6 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user);
-                return View(model);
-            }
             var app = await _dbContext.Apps.FindAsync(model.AppId);
             if (app == null)
             {
@@ -285,6 +340,12 @@ namespace Aiursoft.Developer.Controllers
             if (app.CreatorId != user.Id)
             {
                 return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
             }
             try
             {
@@ -296,7 +357,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
-                model.Recover(user);
+                model.Recover(user, app.AppName);
                 return View(model);
             }
         }
