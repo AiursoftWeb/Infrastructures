@@ -29,8 +29,7 @@
     }
     <div class="row">
         <div class="col-md-2" style="border-right: 2px inset #eeeeee;">
-            <form id="ChangeIconForm" class="col-md-12 mb-3" asp-action="ChangeIcon" asp-controller="Apps" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="AppId" value="@Model.AppId" />
+            <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-id="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" class="dropify" data-max-file-size="2M" data-allowed-file-extensions="png jpg bmp" data-default-file="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppIconAddress)" />
             </form>
             <div class="col-md-12">
@@ -43,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <form asp-controller="Apps" asp-action="ViewApp" method="post" enctype="multipart/form-data" class="col-md-10">
+        <form asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId" method="post" enctype="multipart/form-data" class="col-md-10">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab">
                     <div class="card mb-3">

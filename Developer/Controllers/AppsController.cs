@@ -23,6 +23,7 @@ namespace Aiursoft.Developer.Controllers
 {
     [AiurForceAuth]
     [LimitPerMin]
+    [Route("Dashboard")]
     public class AppsController : Controller
     {
         private readonly DeveloperDbContext _dbContext;
@@ -55,6 +56,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps")]
         public async Task<IActionResult> AllApps()
         {
             var cuser = await GetCurrentUserAsync();
@@ -65,6 +67,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps/Create")]
         public async Task<IActionResult> CreateApp()
         {
             var cuser = await GetCurrentUserAsync();
@@ -72,6 +75,7 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps/Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateApp(CreateAppViewModel model)
@@ -102,7 +106,8 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(ViewApp), new { id = newApp.AppId });
         }
 
-        public async Task<IActionResult> ViewApp(string id, bool justHaveUpdated = false)
+        [Route("Apps/{id}")]
+        public async Task<IActionResult> ViewApp([FromRoute]string id, bool justHaveUpdated = false)
         {
             var app = await _dbContext.Apps.FindAsync(id);
             if (app == null)
@@ -115,9 +120,10 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ViewApp(ViewAppViewModel model)
+        public async Task<IActionResult> ViewApp([FromRoute]string id, ViewAppViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
@@ -126,7 +132,7 @@ namespace Aiursoft.Developer.Controllers
                 await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService);
                 return View(model);
             }
-            var target = await _dbContext.Apps.FindAsync(model.AppId);
+            var target = await _dbContext.Apps.FindAsync(id);
             if (target == null)
             {
                 return NotFound();
@@ -186,7 +192,8 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
-        public async Task<IActionResult> DeleteApp(string id)
+        [Route("Apps/{id}/Delete")]
+        public async Task<IActionResult> DeleteApp([FromRoute]string id)
         {
             var cuser = await GetCurrentUserAsync();
             var _target = await _dbContext.Apps.FindAsync(id);
@@ -202,9 +209,10 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        [Route("Apps/{id}/Delete")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteApp(DeleteAppViewModel model)
+        public async Task<IActionResult> DeleteApp([FromRoute]string id, DeleteAppViewModel model)
         {
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
@@ -212,7 +220,7 @@ namespace Aiursoft.Developer.Controllers
                 model.RootRecover(cuser, 1);
                 return View(model);
             }
-            var target = await _dbContext.Apps.FindAsync(model.AppId);
+            var target = await _dbContext.Apps.FindAsync(id);
             if (target == null)
             {
                 return NotFound();
@@ -241,20 +249,21 @@ namespace Aiursoft.Developer.Controllers
             return await _dbContext.Users.Include(t => t.MyApps).SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
 
+        [Route("Apps/{id}/ChangeIcon")]
         [HttpPost]
         [FileChecker]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeIcon(string appId)
+        public async Task<IActionResult> ChangeIcon([FromRoute]string id)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
+                return RedirectToAction(nameof(ViewApp), new { id, JustHaveUpdated = true });
             }
-            var appExists = await _dbContext.Apps.FindAsync(appId);
-            var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], appId, SaveFileOptions.RandomName);
+            var appExists = await _dbContext.Apps.FindAsync(id);
+            var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], id, SaveFileOptions.RandomName);
             appExists.IconPath = $"{probeFile.SiteName}/{probeFile.FilePath}";
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
+            return RedirectToAction(nameof(ViewApp), new { id, JustHaveUpdated = true });
         }
     }
 }

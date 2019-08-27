@@ -15,23 +15,23 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-                <form asp-controller="Apps" asp-action="DeleteApp" method="post">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label asp-for="AppName"></label>
-                                    <input asp-for="AppName" type="text" class="form-control" readonly="readonly">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="AppId"></label>
-                                    <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
-                                </div>
+                <form asp-controller="Apps" asp-action="DeleteApp" asp-route-id="@Model.AppId" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="AppName"></label>
+                                <input asp-for="AppName" type="text" class="form-control" readonly="readonly">
                             </div>
+                            <div class="form-group">
+                                <label asp-for="AppId"></label>
+                                <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
 
-                            <div class="col-md-12 margin-top-30">
-                                <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to App"]</a>
-                                <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
-                            </div>
+                        <div class="col-md-12 margin-top-30">
+                            <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to App"]</a>
+                            <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
+                        </div>
                     </div>
                 </form>
             </div>
