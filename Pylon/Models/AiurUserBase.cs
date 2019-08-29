@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Aiursoft.Pylon.Models.API.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Aiursoft.Pylon.Models.API.AccountViewModels;
 
 namespace Aiursoft.Pylon.Models
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurFooter
+﻿namespace Aiursoft.Pylon.Views.Shared.Components.AiurFooter
 {
     public class AiurFooterViewModel
     {

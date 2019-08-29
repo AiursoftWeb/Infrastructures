@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
+﻿namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
 {
     public class UploadFileViewModel : AiurProtocol
     {

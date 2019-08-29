@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Aiursoft.Pylon.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.EE.Models

@@ -1,7 +1,7 @@
-﻿using Aiursoft.Stargate.Data;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Stargate.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Aiursoft.Pylon;
 
 namespace Aiursoft.Stargate
 {

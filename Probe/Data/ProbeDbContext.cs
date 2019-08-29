@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Aiursoft.Pylon.Models.Probe;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Aiursoft.Pylon.Models.Probe;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Aiursoft.Probe.Data
 {

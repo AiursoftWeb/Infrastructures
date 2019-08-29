@@ -1,15 +1,14 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Middlewares;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Middlewares;
 
 namespace Aiursoft.Wiki.Services
 {

@@ -1,14 +1,10 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Aiursoft.EE.Models;
-using Aiursoft.EE.Data;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Attributes;
-using System;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models.ForApps.AddressModels;
+using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Aiursoft.EE.Controllers
 {

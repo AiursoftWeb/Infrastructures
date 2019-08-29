@@ -1,15 +1,14 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
-using Aiursoft.Stargate.Data;
-using System.Net.WebSockets;
-using Aiursoft.Stargate.Services;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+using Aiursoft.Stargate.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Net.WebSockets;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
 {

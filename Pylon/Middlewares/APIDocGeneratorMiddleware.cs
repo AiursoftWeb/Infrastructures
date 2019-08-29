@@ -1,4 +1,6 @@
 ﻿using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,10 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.Pylon.Middlewares
 {

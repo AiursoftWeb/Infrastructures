@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.Pylon.Models.Stargate.ChannelViewModels
+﻿namespace Aiursoft.Pylon.Models.Stargate.ChannelViewModels
 {
     public class CreateChannelViewModel : AiurProtocol
     {

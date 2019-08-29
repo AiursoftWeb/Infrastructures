@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Wiki.Data;
+using Aiursoft.Wiki.Models;
+using Aiursoft.Wiki.Services;
+using Markdig;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Aiursoft.Wiki.Models;
-using Aiursoft.Wiki.Models.HomeViewModels;
-using Aiursoft.Wiki.Data;
-using Microsoft.EntityFrameworkCore;
-using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models;
-using Markdig;
-using Aiursoft.Pylon.Services;
-using Newtonsoft.Json;
-using Aiursoft.Wiki.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Wiki.Controllers
 {

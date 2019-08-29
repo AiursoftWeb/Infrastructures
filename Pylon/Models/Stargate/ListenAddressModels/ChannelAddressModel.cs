@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.Pylon.Models.Stargate.ListenAddressModels
+﻿namespace Aiursoft.Pylon.Models.Stargate.ListenAddressModels
 {
     public class ChannelAddressModel
     {

@@ -1,19 +1,17 @@
-﻿using System;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToArchonServer;
+using Aiursoft.Pylon.Services.ToStargateServer;
+using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Aiursoft.Stargate.Data;
-using Aiursoft.Stargate.Services;
-using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.Hosting;
-using Aiursoft.Pylon.Services.ToStargateServer;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Models;
 using System.Net.WebSockets;
-using Aiursoft.Pylon.Services.ToArchonServer;
 
 namespace Aiursoft.Stargate
 {

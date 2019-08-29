@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aiursoft.Colossus.Data;
+using Aiursoft.Colossus.Models;
+using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Aiursoft.Colossus.Data;
-using Aiursoft.Colossus.Models;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Aiursoft.Pylon;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services.ToOSSServer;
 
 namespace Aiursoft.Colossus
 {

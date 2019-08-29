@@ -1,15 +1,14 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
+using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.EE.Controllers
 {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Probe.Controllers
 {

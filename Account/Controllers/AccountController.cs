@@ -1,22 +1,21 @@
-﻿using Aiursoft.Pylon;
+﻿using Aiursoft.Account.Models;
+using Aiursoft.Account.Models.AccountViewModels;
+using Aiursoft.Account.Services;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Attributes;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Account.Models;
-using Aiursoft.Account.Models.AccountViewModels;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Models;
-using Microsoft.AspNetCore.Identity;
-using Aiursoft.Pylon.Services;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.Extensions.Configuration;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
-using System.Collections.Generic;
-using Aiursoft.Account.Services;
-using Aiursoft.Pylon.Exceptions;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Aiursoft.Account.Controllers
 {

@@ -1,19 +1,16 @@
-using Aiursoft.Pylon;
+using Aiursoft.Developer.Data;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Developer.ApiAddressModels;
 using Aiursoft.Pylon.Models.Developer.ApiViewModels;
-using Aiursoft.Developer.Data;
-using Aiursoft.Developer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
 {

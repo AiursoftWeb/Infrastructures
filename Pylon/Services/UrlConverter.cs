@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
-using Aiursoft.Pylon;
 
 namespace Aiursoft.Pylon.Services
 {

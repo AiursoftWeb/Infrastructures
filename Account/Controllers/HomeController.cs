@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Pylon.Attributes;
+﻿using Aiursoft.Account.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Account.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Controllers
 {

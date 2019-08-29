@@ -1,12 +1,8 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
-using Aiursoft.Pylon.Models.API.ApiViewModels;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToAPIServer

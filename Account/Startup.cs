@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Aiursoft.Account.Data;
+﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
+using Aiursoft.Account.Services;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Aiursoft.Account.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Account
 {

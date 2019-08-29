@@ -32,7 +32,7 @@
             <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-id="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" class="dropify" data-max-file-size="2M" data-allowed-file-extensions="png jpg bmp" data-default-file="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppIconAddress)" />
             </form>
-            <div class="col-md-12">
+            <div class="col-md-12 mb-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
                     <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
@@ -265,7 +265,6 @@
                                                 <td>@site.SiteName</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a asp-controller="Sites" asp-action="EditSite" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-warning">@Localizer["Edit"]</a>
                                                         <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>
                                                         <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-info">@Localizer["View Files"]</a>
                                                     </div>

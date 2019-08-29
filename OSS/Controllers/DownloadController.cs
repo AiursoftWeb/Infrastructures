@@ -1,15 +1,14 @@
 ﻿using Aiursoft.OSS.Data;
 using Aiursoft.OSS.Models.DownloadAddressModels;
-using Aiursoft.OSS.Services;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.OSS.Controllers
 {

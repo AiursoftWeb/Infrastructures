@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services.ToStargateServer;
-using Aiursoft.Pylon;
-using Aiursoft.Stargate.Services;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Stargate.Data;
-using Microsoft.EntityFrameworkCore;
-using Aiursoft.Pylon.Models.Stargate;
+using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToStargateServer;
+using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
 {

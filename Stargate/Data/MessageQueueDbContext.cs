@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Aiursoft.Pylon.Models.Stargate;
 using Microsoft.EntityFrameworkCore;
-using Aiursoft.Stargate.Models;
-using Aiursoft.Pylon.Models.Stargate;
 
 namespace Aiursoft.Stargate.Data
 {

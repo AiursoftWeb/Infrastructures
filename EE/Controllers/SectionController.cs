@@ -1,14 +1,13 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Aiursoft.Pylon.Attributes;
-using Microsoft.EntityFrameworkCore;
 using Aiursoft.EE.Models.SectionViewModels;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Aiursoft.EE.Controllers
 {

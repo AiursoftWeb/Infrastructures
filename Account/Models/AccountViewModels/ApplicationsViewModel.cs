@@ -1,7 +1,7 @@
-﻿using Aiursoft.Pylon.Models.Developer;
+﻿using Aiursoft.Pylon.Models.API;
+using Aiursoft.Pylon.Models.Developer;
 using System;
 using System.Collections.Generic;
-using Aiursoft.Pylon.Models.API;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {

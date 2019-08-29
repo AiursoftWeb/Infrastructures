@@ -1,28 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aiursoft.Developer.Data;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Aiursoft.Developer.Data;
-using Aiursoft.Developer.Models;
-using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models.Developer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.HttpOverrides;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToOSSServer;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Developer
 {

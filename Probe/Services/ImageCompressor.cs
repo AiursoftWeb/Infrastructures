@@ -1,11 +1,10 @@
-﻿using SixLabors.ImageSharp;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Transforms;
-using System;
-using SixLabors.ImageSharp.Formats;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {

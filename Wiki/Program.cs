@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Aiursoft.Pylon;
+﻿using Aiursoft.Pylon;
 using Aiursoft.Wiki.Data;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Aiursoft.Wiki
 {

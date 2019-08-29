@@ -1,9 +1,5 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Aiursoft.Pylon.Models.Probe.FoldersAddressModels
 {

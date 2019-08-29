@@ -1,7 +1,7 @@
 ﻿using Aiursoft.EE.Data;
+using Aiursoft.Pylon;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Aiursoft.Pylon;
 
 namespace Aiursoft.EE
 {
