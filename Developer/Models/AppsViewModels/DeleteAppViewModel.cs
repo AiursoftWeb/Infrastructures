@@ -8,7 +8,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public DeleteAppViewModel() { }
-        public DeleteAppViewModel(DeveloperUser User) : base(User, 1)
+        public DeleteAppViewModel(DeveloperUser user) : base(user, 1)
         {
 
         }

@@ -27,12 +27,12 @@ namespace Aiursoft.Pylon.Models
         public AiurUrl(string host, string controllerName, string actionName, object param) : this(host, $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param) { }
         public override string ToString()
         {
-            string Params = "?";
+            string appendPart = "?";
             foreach (var param in this.Params)
             {
-                Params += param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&";
+                appendPart += param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&";
             }
-            return this.Address + Params.TrimEnd('?', '&');
+            return this.Address + appendPart.TrimEnd('?', '&');
         }
     }
 }

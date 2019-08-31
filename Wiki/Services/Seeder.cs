@@ -8,14 +8,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wiki.Services
 {
     public class Seeder
     {
-        public bool Seeding { get; set; } = false;
-
+        private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
@@ -44,7 +44,7 @@ namespace Aiursoft.Wiki.Services
         {
             try
             {
-                Seeding = true;
+                await _semaphoreSlim.WaitAsync();
                 await AllClear();
                 var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"), false);
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
@@ -120,7 +120,7 @@ namespace Aiursoft.Wiki.Services
             }
             finally
             {
-                Seeding = false;
+                _semaphoreSlim.Release();
             }
         }
     }

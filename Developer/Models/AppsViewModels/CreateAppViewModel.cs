@@ -9,24 +9,24 @@ namespace Aiursoft.Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public CreateAppViewModel() { }
-        public CreateAppViewModel(DeveloperUser User) : base(User, 1) { }
+        public CreateAppViewModel(DeveloperUser user) : base(user, 1) { }
 
         public bool ModelStateValid { get; set; } = true;
 
         [Display(Name = "App Name")]
         [Required]
         [StringLength(maximumLength: 25, MinimumLength = 1)]
-        public virtual string AppName { get; set; }
+        public string AppName { get; set; }
 
         [Display(Name = "App Description")]
-        public virtual string AppDescription { get; set; }
+        public string AppDescription { get; set; }
 
         [Required]
         [Display(Name = "App Category")]
-        public virtual Category AppCategory { get; set; }
+        public Category AppCategory { get; set; }
 
         [Required]
         [Display(Name = "App Platform")]
-        public virtual Platform AppPlatform { get; set; }
+        public Platform AppPlatform { get; set; }
     }
 }

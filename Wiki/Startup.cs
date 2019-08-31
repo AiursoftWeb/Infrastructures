@@ -15,7 +15,7 @@ namespace Aiursoft.Wiki
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
@@ -19,13 +18,13 @@ namespace Aiursoft.Stargate.Controllers
     {
         private StargateDbContext _dbContext;
         private StargateMemory _memoryContext;
-        private IPusher<WebSocket> _pusher;
+        private IPusher _pusher;
         private readonly ILogger<ListenController> _logger;
 
         public ListenController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
-            IPusher<WebSocket> pusher,
+            IPusher pusher,
             ILogger<ListenController> logger)
         {
             _dbContext = dbContext;

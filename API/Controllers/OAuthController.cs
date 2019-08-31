@@ -10,7 +10,6 @@ using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.ForApps.AddressModels;
-using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -45,7 +44,6 @@ namespace Aiursoft.API.Controllers
         private readonly ILogger _logger;
         private readonly APIDbContext _dbContext;
         private readonly DeveloperApiService _apiService;
-        private readonly ACTokenManager _tokenManager;
         private readonly ConfirmationEmailSender _emailSender;
 
         public OAuthController(
@@ -54,7 +52,6 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext context,
             DeveloperApiService developerApiService,
-            ACTokenManager tokenManager,
             ConfirmationEmailSender emailSender)
         {
             _userManager = userManager;
@@ -62,7 +59,6 @@ namespace Aiursoft.API.Controllers
             _logger = loggerFactory.CreateLogger<OAuthController>();
             _dbContext = context;
             _apiService = developerApiService;
-            _tokenManager = tokenManager;
             _emailSender = emailSender;
         }
 

@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<string> Get(AiurUrl url, bool internalRequest)
         {
-            HttpWebRequest request = null;
+            HttpWebRequest request;
             if (internalRequest)
             {
                 url.Address = url.Address.Replace("https://", "http://");
@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services
             {
                 request = WebRequest.CreateHttp(url.ToString());
             }
-            _logger?.LogInformation($"Creating HTTP GET request to: {request.RequestUri.ToString()}");
+            _logger?.LogInformation($"Creating HTTP GET request to: {request.RequestUri}");
             request.CookieContainer = _cc;
             request.Method = "GET";
             request.ContentType = "text/html;charset=utf-8";
@@ -41,7 +41,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest)
         {
-            HttpWebRequest request = null;
+            HttpWebRequest request;
             if (internalRequest)
             {
                 url.Address = url.Address.Replace("https://", "http://");
@@ -52,7 +52,7 @@ namespace Aiursoft.Pylon.Services
             {
                 request = WebRequest.CreateHttp(url.ToString());
             }
-            _logger?.LogInformation($"Creating HTTP Post request to: {request.RequestUri.ToString()}");
+            _logger?.LogInformation($"Creating HTTP Post request to: {request.RequestUri}");
             request.CookieContainer = _cc;
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -68,7 +68,7 @@ namespace Aiursoft.Pylon.Services
                 Timeout = TimeSpan.FromSeconds(3600)
             };
             var form = new MultipartFormDataContent();
-            string responseString = null;
+            string responseString;
             using (var fileStream = new FileStream(filepath, mode: FileMode.Open))
             {
                 using (var bufferedStream = new BufferedStream(fileStream))
@@ -89,7 +89,7 @@ namespace Aiursoft.Pylon.Services
                 Timeout = TimeSpan.FromSeconds(3600)
             };
             var form = new MultipartFormDataContent();
-            string responseString = null;
+            string responseString;
             using (var bufferedStream = new BufferedStream(fileStream))
             {
                 form.Add(new StreamContent(bufferedStream), "file", fileName);

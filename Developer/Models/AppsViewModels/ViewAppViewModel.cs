@@ -34,7 +34,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             AppsContainer appsContainer,
             SitesService sitesService)
         {
-            base.RootRecover(user, 1);
+            RootRecover(user, 1);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
 
@@ -74,27 +74,27 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             ChangeGrantInfo = thisApp.ChangeGrantInfo;
         }
 
-        public virtual bool JustHaveUpdated { get; set; } = false;
-        public virtual string AppId { get; set; }
-        public virtual string AppSecret { get; set; }
-        public virtual string AppIconAddress { get; set; }
+        public bool JustHaveUpdated { get; set; } = false;
+        public string AppId { get; set; }
+        public string AppSecret { get; set; }
+        public string AppIconAddress { get; set; }
         [Url]
         [Display(Name = "Privacy Statement Url")]
-        public virtual string PrivacyStatementUrl { get; set; }
+        public string PrivacyStatementUrl { get; set; }
         [Url]
         [Display(Name = "License Url")]
-        public virtual string LicenseUrl { get; set; }
+        public string LicenseUrl { get; set; }
 
         [Display(Name = "Enable OAuth")]
-        public virtual bool EnableOAuth { get; set; }
+        public bool EnableOAuth { get; set; }
         [Display(Name = "Force Input Password")]
-        public virtual bool ForceInputPassword { get; set; }
+        public bool ForceInputPassword { get; set; }
         [Display(Name = "Force Confirmation")]
-        public virtual bool ForceConfirmation { get; set; }
+        public bool ForceConfirmation { get; set; }
         [Display(Name = "Debug Mode")]
-        public virtual bool DebugMode { get; set; }
+        public bool DebugMode { get; set; }
         [Display(Name = "App Domain")]
-        public virtual string AppDomain { get; set; }
+        public string AppDomain { get; set; }
         // Permissions
         [Display(Name = "View user's basic identity info")]
         public bool ViewOpenId { get; set; } = true;
@@ -118,8 +118,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
     public class ViewAblePermission
     {
-        public virtual int PermissionId { get; set; }
-        public virtual string PermissionName { get; set; }
-        public virtual bool Permitted { get; set; }
+        public int PermissionId { get; set; }
+        public string PermissionName { get; set; }
+        public bool Permitted { get; set; }
     }
 }

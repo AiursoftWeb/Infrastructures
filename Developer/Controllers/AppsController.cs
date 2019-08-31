@@ -10,7 +10,6 @@ using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -166,24 +165,20 @@ namespace Aiursoft.Developer.Controllers
         private bool _ChangePermission(bool inDatabase, bool newValue, ref bool changemark)
         {
             //More permission
-            if (inDatabase == false && newValue == true)
+            if (inDatabase == false && newValue)
             {
                 changemark = true;
                 return true;
             }
             //Less permission
-            else if (inDatabase == true && newValue == false)
+            else if (inDatabase && newValue == false)
             {
                 return false;
             }
             //Not changed
-            else if (inDatabase == newValue)
-            {
-                return newValue;
-            }
             else
             {
-                throw new InvalidOperationException();
+                return newValue;
             }
         }
 
@@ -231,7 +226,7 @@ namespace Aiursoft.Developer.Controllers
             }
             catch (AiurUnexceptedResponse e)
             {
-                if (e.Response.Code != ErrorType.HasDoneAlready) throw e;
+                if (e.Response.Code != ErrorType.HasDoneAlready) throw;
             }
             _dbContext.Apps.Remove(target);
             await _dbContext.SaveChangesAsync();

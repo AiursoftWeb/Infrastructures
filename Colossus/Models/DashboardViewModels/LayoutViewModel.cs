@@ -8,18 +8,18 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         public LayoutViewModel() { }
         public LayoutViewModel(ColossusUser user, int activePanel, string title)
         {
-            this.Recover(user, activePanel, title);
+            Recover(user, activePanel, title);
         }
 
-        public virtual bool ModelStateValid { get; set; } = true;
-        public virtual bool JustHaveUpdated { get; set; } = false;
+        public bool ModelStateValid { get; set; } = true;
+        public bool JustHaveUpdated { get; set; } = false;
 
-        public virtual void Recover(ColossusUser user, int activePanel, string title)
+        public void Recover(ColossusUser user, int activePanel, string title)
         {
-            this.UserName = user.NickName;
-            this.EmailConfirmed = user.EmailConfirmed;
-            this.ActivePanel = activePanel;
-            this.Title = title;
+            UserName = user.NickName;
+            EmailConfirmed = user.EmailConfirmed;
+            ActivePanel = activePanel;
+            Title = title;
         }
         public string UserName { get; set; }
         public int ActivePanel { get; set; }

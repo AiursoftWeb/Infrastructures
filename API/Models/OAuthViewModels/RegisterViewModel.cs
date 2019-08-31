@@ -5,30 +5,29 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.API.Models.OAuthViewModels
 {
-
     public class RegisterViewModel : IAuthorizeViewModel
     {
         [Obsolete(error: true, message: "This function is only for framework.")]
         public RegisterViewModel() { }
-        public RegisterViewModel(string ToRedirect, string State, string AppId, string Scope, string ResponseTpe, string AppName, string AppImageUrl)
+        public RegisterViewModel(string toRedirect, string state, string appId, string scope, string responseTpe, string appName, string appImageUrl)
         {
-            this.ToRedirect = ToRedirect;
-            this.State = State;
-            this.AppId = AppId;
-            this.Scope = Scope;
-            this.ResponseType = ResponseTpe;
-            Recover(AppName, AppImageUrl);
+            this.ToRedirect = toRedirect;
+            this.State = state;
+            this.AppId = appId;
+            this.Scope = scope;
+            this.ResponseType = responseTpe;
+            Recover(appName, appImageUrl);
         }
-        public void Recover(string AppName, string AppImageUrl)
+        public void Recover(string appName, string appImageUrl)
         {
-            this.AppName = AppName;
-            this.AppImageUrl = AppImageUrl;
+            AppName = appName;
+            AppImageUrl = appImageUrl;
         }
 
         [Url]
-        public virtual string ToRedirect { get; set; }
-        public virtual string State { get; set; }
-        public virtual string AppId { get; set; }
+        public string ToRedirect { get; set; }
+        public string State { get; set; }
+        public string AppId { get; set; }
         public string ResponseType { get; set; }
         public string Scope { get; set; }
 

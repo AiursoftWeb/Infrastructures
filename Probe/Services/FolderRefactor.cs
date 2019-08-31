@@ -1,5 +1,4 @@
-﻿using Aiursoft.Probe.Data;
-using Aiursoft.Pylon.Exceptions;
+﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,12 +7,10 @@ namespace Aiursoft.Probe.Services
 {
     public class FolderRefactor
     {
-        private ProbeDbContext _dbContext;
         private FolderLocator _folderLocator;
 
-        public FolderRefactor(ProbeDbContext dbContext, FolderLocator folderLocator)
+        public FolderRefactor(FolderLocator folderLocator)
         {
-            _dbContext = dbContext;
             _folderLocator = folderLocator;
         }
 
@@ -55,7 +52,7 @@ namespace Aiursoft.Probe.Services
             var file = parent.Files.SingleOrDefault(t => t.FileName == folderNames.Last());
             if (file == null)
             {
-                throw new AiurAPIModelException(ErrorType.NotFound, $"Not found file '{file}' under folder '{parent.FolderName}'!");
+                throw new AiurAPIModelException(ErrorType.NotFound, $"Not found file '{folderNames.Last()}' under folder '{parent.FolderName}'!");
             }
             var newParent = folderNames.Take(folderNames.Length - 1).SequenceEqual(newFolderNames.Take(folderNames.Length - 1))
                 ? parent

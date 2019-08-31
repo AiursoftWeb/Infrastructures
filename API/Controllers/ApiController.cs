@@ -7,7 +7,6 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.ApiViewModels;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -26,18 +25,15 @@ namespace Aiursoft.API.Controllers
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly APIDbContext _dbContext;
-        private readonly DeveloperApiService _developerApiService;
         private readonly ACTokenManager _tokenManager;
 
         public ApiController(
             UserManager<APIUser> userManager,
             APIDbContext context,
-            DeveloperApiService developerApiService,
             ACTokenManager tokenManager)
         {
             _userManager = userManager;
             _dbContext = context;
-            _developerApiService = developerApiService;
             _tokenManager = tokenManager;
         }
 

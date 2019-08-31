@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Net.WebSockets;
 
 namespace Aiursoft.Stargate
 {
@@ -44,7 +43,7 @@ namespace Aiursoft.Stargate
             services.AddScoped<PushMessageService>();
 
             services.AddScoped<Debugger>();
-            services.AddScoped<IPusher<WebSocket>, WebSocketPusher>();
+            services.AddScoped<IPusher, WebSocketPusher>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)

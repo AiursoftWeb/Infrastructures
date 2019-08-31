@@ -13,7 +13,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         {
             this.RootRecover(user, activePanel);
         }
-        public virtual void RootRecover(DeveloperUser user, int activePanel)
+        public void RootRecover(DeveloperUser user, int activePanel)
         {
             this.NickName = user.NickName;
             this.ActivePanel = activePanel;

@@ -27,7 +27,6 @@ namespace Aiursoft.Probe.Controllers
         private readonly FolderCleaner _folderCleaner;
         private readonly FolderRefactor _folderRefactor;
         private readonly ServiceLocation _serviceLocation;
-        private readonly static object _obj = new object();
 
         public FilesController(
             ProbeDbContext dbContext,
@@ -57,11 +56,7 @@ namespace Aiursoft.Probe.Controllers
             var file = Request.Form.Files.First();
             if (!new ValidFolderName().IsValid(file.FileName))
             {
-                var arg = new AiurProtocol()
-                {
-                    Code = ErrorType.InvalidInput,
-                    Message = $"Invalid file name: '{file.FileName}'!"
-                };
+                return this.Protocol(ErrorType.InvalidInput, $"Invalid file name: '{file.FileName}'!");
             }
             var newFile = new Pylon.Models.Probe.File
             {

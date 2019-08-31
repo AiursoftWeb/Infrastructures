@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models
 {
-    public interface IPusher<T>
+    public interface IPusher
     {
         bool Connected { get; }
         Task Accept(HttpContext context);

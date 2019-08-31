@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +19,6 @@ namespace Aiursoft.Wiki.Controllers
     public class HomeController : Controller
     {
         private readonly SignInManager<WikiUser> _signInManager;
-        private readonly ILogger _logger;
         private readonly WikiDbContext _dbContext;
         private readonly Seeder _seeder;
         private readonly ServiceLocation _serviceLocation;
@@ -28,14 +26,12 @@ namespace Aiursoft.Wiki.Controllers
 
         public HomeController(
             SignInManager<WikiUser> signInManager,
-            ILoggerFactory loggerFactory,
             WikiDbContext context,
             Seeder seeder,
             ServiceLocation serviceLocation,
             IConfiguration configuration)
         {
             _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<HomeController>();
             _dbContext = context;
             _seeder = seeder;
             _serviceLocation = serviceLocation;
@@ -89,10 +85,6 @@ namespace Aiursoft.Wiki.Controllers
             if (!string.Equals(secret, secretInConfig) || string.IsNullOrWhiteSpace(secretInConfig))
             {
                 return NotFound();
-            }
-            if (_seeder.Seeding)
-            {
-                return this.Protocol(ErrorType.Pending, $"Seeding...");
             }
             await _seeder.Seed();
             return Json(new AiurProtocol

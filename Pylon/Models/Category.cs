@@ -1,6 +1,6 @@
 ﻿namespace Aiursoft.Pylon.Models
 {
-    public enum Category : int
+    public enum Category
     {
         Development = 0,
         AppForAiur = 1,

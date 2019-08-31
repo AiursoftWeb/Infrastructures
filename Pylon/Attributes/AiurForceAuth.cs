@@ -44,7 +44,7 @@ namespace Aiursoft.Pylon.Attributes
         {
             PreferController = preferController;
             PreferAction = preferAction;
-            JustTry = justTry ? true : (bool?) null;
+            JustTry = justTry ? true : (bool?)null;
             PreferPageSet = true;
             Register = register;
         }
@@ -90,7 +90,6 @@ namespace Aiursoft.Pylon.Attributes
             //Signed in and no preferred page, Display current page.
             else
             {
-                return;
             }
         }
 

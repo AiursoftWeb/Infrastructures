@@ -38,7 +38,7 @@ namespace Aiursoft.Developer
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2); ;
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddAiursoftAuth<DeveloperUser>();
             services.AddScoped<SecretService>();
         }
