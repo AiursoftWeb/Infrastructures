@@ -88,7 +88,12 @@
                                             @file.FileName
                                         </a>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                            <i class="fa fa-trash"></i>
+                                            Delete
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

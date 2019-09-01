@@ -1,0 +1,75 @@
+﻿@model Aiursoft.Developer.Models.SitesViewModels.DeleteFileViewModel
+@{
+    ViewData["Title"] = "Delete File - " + Model.Path;
+    string currentPath = "";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="">@Model.SiteName</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
+        <li class="breadcrumb-item active">
+            Delete file
+        </li>
+    </ol>
+
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+        <strong>@Localizer["Caution!"]</strong> You are about to delete file "@Model.Path" in site "@Model.SiteName"! If you are confirmed to continue, you will lose it. @Localizer["and this process is not recoverable!"]
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-trash ico"></i>
+            @Localizer["Delete File"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Sites" asp-action="DeleteFile" method="post" asp-route-siteName="@Model.SiteName" asp-route-appId="@Model.AppId">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="SiteName"></label>
+                                <input asp-for="SiteName" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Path"></label>
+                                <input asp-for="Path" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 margin-top-30">
+                            <a class="btn btn-success" asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.DetachPath()">@Localizer["Back to Folder"]</a>
+                            <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

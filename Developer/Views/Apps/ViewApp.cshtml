@@ -69,7 +69,7 @@
                                         <span asp-validation-for="AppId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group mb-1">
-                                        <label for="AppSecret">@Localizer["AppSecret"]</label>
+                                        <label asp-for="AppSecret">@Localizer["AppSecret"]</label>
                                     </div>
                                     <div class="input-group mb-3">
                                         <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly" value="aaaaabbbbbcccccccccddddddeeeee">

@@ -121,7 +121,7 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [APIModelStateChecker]
-        [Route("DeleteFile/{SiteName}/{**FolderNames}")]
+        [Route("MoveFile/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> MoveFile(MoveFolderAddressModel model)
         {
             await _folderRefactor.MoveFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames),

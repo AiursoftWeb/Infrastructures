@@ -23,19 +23,22 @@ namespace Aiursoft.Developer.Controllers
         private readonly SitesService _sitesService;
         private readonly FoldersService _foldersService;
         private readonly StorageService _storageService;
+        private readonly FilesService _filesService;
 
         public SitesController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
             SitesService sitesService,
             FoldersService foldersService,
-            StorageService storageService)
+            StorageService storageService,
+            FilesService filesService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _sitesService = sitesService;
             _foldersService = foldersService;
             _storageService = storageService;
+            _filesService = filesService;
         }
 
         [Route("Sites")]
@@ -291,6 +294,64 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 await _foldersService.DeleteFolderAsync(token, model.SiteName, model.Path);
+                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+        }
+
+        [Route("Apps/{appId}/Sites/{siteName}/DeleteFile/{**path}")]
+        public async Task<IActionResult> DeleteFile([FromRoute]string appId, [FromRoute]string siteName, [FromRoute]string path)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            var model = new DeleteFileViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName,
+                Path = path,
+                AppName = app.AppName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Apps/{appId}/Sites/{siteName}/DeleteFile/{**path}")]
+        public async Task<IActionResult> DeleteFile(DeleteFileViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                await _filesService.DeleteFileAsync(token, model.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)

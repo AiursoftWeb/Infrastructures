@@ -33,5 +33,19 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
+
+        public async Task<AiurProtocol> DeleteFileAsync(string accessToken, string siteName, string folderNames)
+        {
+            var url = new AiurUrl(_serviceLocation.Probe, $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
+            var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
+            {
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
     }
 }
