@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Colossus.Models
 {
+    [Obsolete]
     public class UploadRecord
     {
         public int Id { get; set; }

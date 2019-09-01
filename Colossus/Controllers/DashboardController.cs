@@ -17,6 +17,7 @@ namespace Aiursoft.Colossus.Controllers
 {
     [LimitPerMin]
     [AiurForceAuth]
+    [Obsolete]
     public class DashboardController : Controller
     {
         private readonly UserManager<ColossusUser> _userManager;
