@@ -34,7 +34,7 @@ namespace Aiursoft.Colossus.Controllers
             _serviceLocation = serviceLocation;
         }
 
-        [AiurForceAuth(preferController: "Siteboard", preferAction: "Index", justTry: true)]
+        [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
         public IActionResult Index()
         {
             var model = new IndexViewModel

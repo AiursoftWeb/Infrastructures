@@ -1,6 +1,5 @@
 @model Aiursoft.Colossus.Models.DashboardViewModels.IndexViewModel
 @{
-    Layout = "_DashboardLayout";
     ViewData["Title"] = Model.Title;
 }
 <div class="container-fluid">
@@ -40,6 +39,7 @@
 @section css{
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
     <style>
+
 
         .dropify-wrapper {
             height: calc(100vh - 550px);
