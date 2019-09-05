@@ -13,7 +13,5 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
 
         }
-
-        public ulong MaxSize { get; set; }
     }
 }

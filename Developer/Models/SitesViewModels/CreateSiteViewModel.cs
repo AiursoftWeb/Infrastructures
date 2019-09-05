@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models.Developer;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,8 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         [Required]
         [MaxLength(50)]
+        [MinLength(5)]
+        [ValidFolderName]
         public string SiteName { get; set; }
         public string AppName { get; set; }
     }

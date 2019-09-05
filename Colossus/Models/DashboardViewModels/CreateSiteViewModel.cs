@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Attributes;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Colossus.Models.DashboardViewModels
 {
@@ -18,6 +20,10 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             RootRecover(user, 0, "Quick upload");
         }
 
+        [Required]
+        [MaxLength(50)]
+        [MinLength(5)]
+        [ValidFolderName]
         public string SiteName { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly SitesService _sitesService;
         private readonly AppsContainer _appsContainer;
         private readonly UserManager<ColossusUser> _userManager;
+        private Task<string> accesstoken => _appsContainer.AccessToken();
 
         public DashboardController(
             SitesService sitesService,
@@ -32,15 +33,14 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
-            var sites = await _sitesService.ViewMySitesAsync(token);
+            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
             if (string.IsNullOrEmpty(user.SiteName) || sites.Sites.Any(t => t.SiteName == user.SiteName))
             {
-                return RedirectToAction();
+                return RedirectToAction(nameof(CreateSite));
             }
             var model = new IndexViewModel(user)
             {
-                MaxSize = 2048 * 1024 * 1024UL
+
             };
             return View(model);
         }

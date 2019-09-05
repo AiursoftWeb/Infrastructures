@@ -1,1 +1,38 @@
 ﻿@model Aiursoft.Colossus.Models.DashboardViewModels.CreateSiteViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Create new site"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Dashboard" asp-action="CreateSite" method="post" class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="SiteName"></label>
+                            <input asp-for="SiteName" type="text" class="form-control" placeholder="Enter your new site name...">
+                            <span asp-validation-for="SiteName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
+                        <button type="reset" class="btn btn-danger btn">@Localizer["Clear"]</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
