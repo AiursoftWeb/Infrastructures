@@ -4,14 +4,16 @@ using Aiursoft.Colossus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Colossus.Migrations
 {
     [DbContext(typeof(ColossusDbContext))]
-    partial class ColossusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190901154329_UserRelatedToSite")]
+    partial class UserRelatedToSite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +84,27 @@ namespace Aiursoft.Colossus.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Aiursoft.Colossus.Models.UploadRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FileId");
+
+                    b.Property<string>("SourceFileName");
+
+                    b.Property<DateTime>("UploadTime");
+
+                    b.Property<string>("UploaderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UploaderId");
+
+                    b.ToTable("UploadRecords");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -192,6 +215,13 @@ namespace Aiursoft.Colossus.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Aiursoft.Colossus.Models.UploadRecord", b =>
+                {
+                    b.HasOne("Aiursoft.Colossus.Models.ColossusUser", "Uploader")
+                        .WithMany()
+                        .HasForeignKey("UploaderId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

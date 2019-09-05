@@ -12,10 +12,6 @@ cd Archon
 dotnet publish --no-restore -c Release
 cd ..
 
-cd OSS
-dotnet publish --no-restore -c Release
-cd ..
-
 cd Account
 dotnet publish --no-restore -c Release
 cd ..

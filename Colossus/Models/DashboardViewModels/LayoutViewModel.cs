@@ -8,13 +8,13 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         public LayoutViewModel() { }
         public LayoutViewModel(ColossusUser user, int activePanel, string title)
         {
-            Recover(user, activePanel, title);
+            RootRecover(user, activePanel, title);
         }
 
         public bool ModelStateValid { get; set; } = true;
         public bool JustHaveUpdated { get; set; } = false;
 
-        public void Recover(ColossusUser user, int activePanel, string title)
+        public void RootRecover(ColossusUser user, int activePanel, string title)
         {
             UserName = user.NickName;
             EmailConfirmed = user.EmailConfirmed;

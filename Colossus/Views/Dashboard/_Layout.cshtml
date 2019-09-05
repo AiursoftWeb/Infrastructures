@@ -20,15 +20,15 @@
                     <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
                         <i class="fa fa-fw fa-upload"></i>
                         <span class="nav-link-text">
-                            @Localizer["Upload new"]
+                            @Localizer["Quick upload"]
                         </span>
                     </a>
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Dashboard" asp-action="Logs">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Site">
                         <i class="fa fa-fw fa-list-alt"></i>
                         <span class="nav-link-text">
-                            @Localizer["File upload logs"]
+                            @Localizer["Site"]
                         </span>
                     </a>
                 </li>

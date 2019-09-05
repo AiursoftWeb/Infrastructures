@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Developer.Data;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +39,6 @@ namespace Aiursoft.Developer
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddAiursoftAuth<DeveloperUser>();
-            services.AddScoped<SecretService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

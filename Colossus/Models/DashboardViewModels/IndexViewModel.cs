@@ -9,10 +9,9 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
         }
 
-        public IndexViewModel(ColossusUser user, int activePanel, string title) : base(user, activePanel, title)
+        public IndexViewModel(ColossusUser user) : base(user, 0, "Quick upload")
         {
-        }
 
-        public int MaxSize { get; set; }
+        }
     }
 }

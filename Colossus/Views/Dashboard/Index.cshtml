@@ -1,6 +1,5 @@
 @model Aiursoft.Colossus.Models.DashboardViewModels.IndexViewModel
 @{
-    Layout = "_DashboardLayout";
     ViewData["Title"] = Model.Title;
 }
 <div class="container-fluid">
@@ -17,38 +16,8 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-                <h2 id="uploadTitle">@Localizer["Upload your file here to share it with others!"]</h2>
-                <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Dashboard" asp-action="Upload">
-                    <input type="file" name="file" class="dropify" data-max-file-size="@(Model.MaxSize)M" />
-                    <div>
-                        <p>Max file size: @(Model.MaxSize / 1024 / 1024) MB.</p>
-                        <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
-                        <a id="copyButton" class="btn btn-warning" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
-                        <a id="openButton" class="btn btn-primary" href="javascript:void(0);" target="_blank">@Localizer["Open in new page"]</a>
-                    </div>
-                </form>
-                <label class="w-100 mt-3 mb-0">
-                    @Localizer["By uploading, you agree to our "]
-                    <a href="@Values.Footer["Terms"]" target="_blank">
-                        @Localizer["Terms"].
-                    </a>
-                </label>
+
             </div>
         </div>
     </div>
 </div>
-@section css{
-    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
-    <style>
-
-        .dropify-wrapper {
-            height: calc(100vh - 550px);
-            min-height: 280px;
-        }
-    </style>
-}
-@section js{
-    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script src="@ServiceLocation.UI/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
-    <script src="~/js/site.js"></script>
-}
