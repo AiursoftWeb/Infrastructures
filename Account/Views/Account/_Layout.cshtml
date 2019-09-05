@@ -86,11 +86,17 @@
                         <i class="fa fa-fw fa-envelope"></i>
                         <span class="d-lg-none">
                             @Localizer["Messages"]
-                            <span class="badge badge-pill badge-primary">@Localizer["12 New"]</span>
+                            @if (false)
+                            {
+                                <span class="badge badge-pill badge-primary">@Localizer["12 New"]</span>
+                            }
                         </span>
-                        <span class="indicator text-primary d-none d-lg-block">
-                            <i class="fa fa-fw fa-circle"></i>
-                        </span>
+                        @if (false)
+                        {
+                            <span class="indicator text-primary d-none d-lg-block">
+                                <i class="fa fa-fw fa-circle"></i>
+                            </span>
+                        }
                     </a>
                     <div class="dropdown-menu" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">@Localizer["New Messages:"]</h6>
