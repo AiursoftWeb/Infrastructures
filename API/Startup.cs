@@ -4,7 +4,6 @@ using Aiursoft.API.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Aiursoft.Pylon.Services.ToOSSServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -48,7 +47,6 @@ namespace Aiursoft.API
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();
-            services.AddScoped<OSSApiService>();
             services.AddTransient<UserImageGenerator<APIUser>>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
