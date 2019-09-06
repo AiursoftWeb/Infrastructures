@@ -1,26 +1,28 @@
 ﻿@using Aiursoft.Pylon.Services
+@using Aiursoft.Pylon
 @inject ServiceLocation ServiceLocation
 @{
     string[] domains = {
         ServiceLocation.API,
-        ServiceLocation.OSSEndpoint,
+        ServiceLocation.Probe,
         ServiceLocation.UI,
         ServiceLocation.Account
     };
 }
+
 <!--Aiur Header-->
 @if (string.IsNullOrWhiteSpace(ViewBag.Des))
 {
-    ViewBag.Des = "Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.";
+    ViewBag.Des = Values.ProjectValue;
 }
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta name="description" content="@ViewBag.Des" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="description" content="@ViewBag.Des" />
 
 @foreach (var domain in domains)
 {
     <link rel="dns-prefetch" href="@domain" />
 }
 
-    <link rel="icon" type="image/x-icon" href="@ServiceLocation.UI/favicon.ico">
+<link rel="icon" type="image/x-icon" href="@ServiceLocation.UI/favicon.ico">

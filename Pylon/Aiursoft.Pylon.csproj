@@ -10,7 +10,7 @@
     <Authors>Anduin</Authors>
     <Description>The base class, interfaces and services for Aiursoft web apps.</Description>
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
-    <PackageIconUrl>https://oss.aiursoft.com/MyPersonalFiles/512x512.png</PackageIconUrl>
+    <PackageIconUrl>https://probe.aiursoft.com/Download/Open/aiursoft/512x512.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/AiursoftWeb/Pylon</PackageProjectUrl>
     <PackageLicense>https://opensource.org/licenses/MIT</PackageLicense>
     <RepositoryType>git</RepositoryType>
