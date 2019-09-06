@@ -21,14 +21,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="SiteName"></label>
-                            <input asp-for="SiteName" type="text" class="form-control" placeholder="Enter your new site name...">
+                            <input asp-for="SiteName" type="text" class="form-control" id="TxtSiteName" placeholder="Enter your new site name...">
                             <span asp-validation-for="SiteName" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-12 margin-top-30">
                         <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
-                        <button type="reset" class="btn btn-danger btn">@Localizer["Clear"]</button>
+                        <button type="reset" class="btn btn-danger btn" id="BtnClear" onclick="ClkClear()">@Localizer["Clear"]</button>
                     </div>
 
                 </form>
@@ -36,3 +36,14 @@
         </div>
     </div>
 </div>
+@section js{
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script>
+        var ClkClear = function () {
+            $('#TxtSiteName').val = "Enter your new site name...";
+          //  alert(1221);
+        }
+    </script>
+}
