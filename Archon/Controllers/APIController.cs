@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Archon;
 using Aiursoft.Pylon.Services;
@@ -14,6 +13,7 @@ namespace Aiursoft.Archon.Controllers
     {
         private readonly ACTokenManager _tokenManager;
         private readonly DeveloperApiService _developerApiService;
+
         public APIController(
             ACTokenManager tokenManager,
             DeveloperApiService developerApiService)
@@ -22,20 +22,12 @@ namespace Aiursoft.Archon.Controllers
             _developerApiService = developerApiService;
         }
 
-
         [APIExpHandler]
         [APIModelStateChecker]
         [APIProduces(typeof(AccessTokenViewModel))]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
-            try
-            {
-                await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
-            }
-            catch (AiurUnexceptedResponse e)
-            {
-                return Json(e.Response);
-            }
+            await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
             var token = _tokenManager.GenerateAccessToken(model.AppId);
             return Json(new AccessTokenViewModel
             {

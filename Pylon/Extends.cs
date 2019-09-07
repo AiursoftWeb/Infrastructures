@@ -195,6 +195,8 @@ namespace Aiursoft.Pylon
             services.AddScoped<AccountService>();
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddTransient<AuthService<TUser>>();
+            services.AddMemoryCache();
+            services.AddTransient<AiurCache>();
             return services;
         }
 

@@ -4,12 +4,11 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Developer.ApiAddressModels;
 using Aiursoft.Pylon.Models.Developer.ApiViewModels;
+using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -22,14 +21,14 @@ namespace Aiursoft.Developer.Controllers
         private readonly SignInManager<DeveloperUser> _signInManager;
         private readonly ILogger _logger;
         private readonly DeveloperDbContext _dbContext;
-        private readonly IMemoryCache _cache;
+        private readonly AiurCache _cache;
 
         public ApiController(
         UserManager<DeveloperUser> userManager,
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
         DeveloperDbContext context,
-        IMemoryCache cache)
+        AiurCache cache)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,15 +39,7 @@ namespace Aiursoft.Developer.Controllers
 
         public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
         {
-            if (!_cache.TryGetValue(model.AppId, out App target))
-            {
-                target = await _dbContext.Apps.FindAsync(model.AppId);
-
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(20));
-
-                _cache.Set(model.AppId, target, cacheEntryOptions);
-            }
+            var target = await _cache.GetAndCache(model.AppId, _dbContext.Apps.FindAsync(model.AppId));
             if (target == null)
             {
                 return Json(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
