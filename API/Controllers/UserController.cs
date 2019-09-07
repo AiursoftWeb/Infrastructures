@@ -154,7 +154,7 @@ namespace Aiursoft.API.Controllers
             }
             if (useremail.Validated)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was already validated!");
+                return this.Protocol(ErrorType.HasDoneAlready, $"The email: {model.Email} was already validated!");
             }
             // limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
