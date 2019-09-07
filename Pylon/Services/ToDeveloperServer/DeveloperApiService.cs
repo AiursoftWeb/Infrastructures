@@ -19,7 +19,7 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
             _http = http;
         }
 
-        public async Task<AiurProtocol> IsValidAppAsync(string appId, string appSecret)
+        public async Task<bool> IsValidAppAsync(string appId, string appSecret)
         {
             var url = new AiurUrl(_serviceLocation.Developer, "api", "IsValidApp", new IsValidateAppAddressModel
             {
@@ -28,9 +28,7 @@ namespace Aiursoft.Pylon.Services.ToDeveloperServer
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            return jresult.Code == ErrorType.Success;
         }
 
         public async Task<AppInfoViewModel> AppInfoAsync(string appId)

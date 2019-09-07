@@ -13,11 +13,11 @@ namespace Aiursoft.Pylon.Services
             _cache = cache;
         }
 
-        public async Task<T> GetAndCache<T>(string cacheKey, Task<T> backup)
+        public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup)
         {
             if (!_cache.TryGetValue(cacheKey, out T resultValue))
             {
-                resultValue = await backup;
+                resultValue = await backup();
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromMinutes(20));

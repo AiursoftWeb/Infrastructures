@@ -39,7 +39,7 @@ namespace Aiursoft.Developer.Controllers
 
         public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
         {
-            var target = await _cache.GetAndCache(model.AppId, _dbContext.Apps.FindAsync(model.AppId));
+            var target = await _cache.GetAndCache(model.AppId, () => _dbContext.Apps.FindAsync(model.AppId));
             if (target == null)
             {
                 return Json(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });

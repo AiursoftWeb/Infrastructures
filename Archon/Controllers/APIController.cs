@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Attributes;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Archon;
 using Aiursoft.Pylon.Services;
@@ -30,16 +31,23 @@ namespace Aiursoft.Archon.Controllers
         [APIProduces(typeof(AccessTokenViewModel))]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
-            await _cache.GetAndCache($"Id-{model.AppId}-Secret-{model.AppSecret}",
-                _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret));
-            var token = _tokenManager.GenerateAccessToken(model.AppId);
-            return Json(new AccessTokenViewModel
+            var cacheKey = $"Id-{model.AppId}-Secret-{model.AppSecret}";
+            var correctApp = await _cache.GetAndCache(cacheKey, () => _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret));
+            if (correctApp)
             {
-                Code = ErrorType.Success,
-                Message = "Successfully get access token.",
-                AccessToken = token.Item1,
-                DeadTime = token.Item2
-            });
+                var token = _tokenManager.GenerateAccessToken(model.AppId);
+                return Json(new AccessTokenViewModel
+                {
+                    Code = ErrorType.Success,
+                    Message = "Successfully get access token.",
+                    AccessToken = token.Item1,
+                    DeadTime = token.Item2
+                });
+            }
+            else
+            {
+                return this.Protocol(ErrorType.WrongKey, "Wrong app info.");
+            }
         }
     }
 }
