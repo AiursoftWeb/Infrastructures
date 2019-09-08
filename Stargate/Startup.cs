@@ -57,7 +57,7 @@ namespace Aiursoft.Stargate
             {
                 app.UseHandleRobots();
                 app.UseEnforceHttps();
-                app.UseExceptionHandler("/Home/Error");
+                app.UseAPIFriendlyErrorPage();
             }
             app.UseWebSockets();
             app.UseMvcWithDefaultRoute();

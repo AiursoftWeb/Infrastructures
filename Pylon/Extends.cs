@@ -101,6 +101,12 @@ namespace Aiursoft.Pylon
             return app;
         }
 
+        public static IApplicationBuilder UseAPIFriendlyErrorPage(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
+            return app;
+        }
+
         public static IServiceCollection ConfigureLargeFileUpload(this IServiceCollection services)
         {
             return services.Configure<FormOptions>(x =>

@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
@@ -49,9 +50,9 @@ namespace Aiursoft.Probe
             {
                 app.UseHandleRobots();
                 app.UseEnforceHttps();
-                app.UseExceptionHandler("/Error/ServerException");
-                app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
+                app.UseAPIFriendlyErrorPage();
             }
+            app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
             app.UseCors(builder => builder.WithOrigins("*"));
             app.UseMvcWithDefaultRoute();
             app.UseDocGenerator();
