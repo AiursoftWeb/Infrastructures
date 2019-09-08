@@ -54,8 +54,7 @@ namespace Aiursoft.Account
             {
                 app.UseHandleRobots();
                 app.UseEnforceHttps();
-                app.UseExceptionHandler("/Error/ServerException");
-                app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
+                app.UseUserFriendlyErrorPage();
             }
 
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Account");

@@ -50,8 +50,7 @@ namespace Aiursoft.Developer
             {
                 app.UseHandleRobots();
                 app.UseEnforceHttps();
-                app.UseExceptionHandler("/Error/ServerException");
-                app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
+                app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Developer");

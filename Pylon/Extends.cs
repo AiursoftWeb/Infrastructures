@@ -94,6 +94,13 @@ namespace Aiursoft.Pylon
             return app.UseMiddleware<APIDocGeneratorMiddleware>();
         }
 
+        public static IApplicationBuilder UseUserFriendlyErrorPage(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
+            app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
+            return app;
+        }
+
         public static IServiceCollection ConfigureLargeFileUpload(this IServiceCollection services)
         {
             return services.Configure<FormOptions>(x =>
