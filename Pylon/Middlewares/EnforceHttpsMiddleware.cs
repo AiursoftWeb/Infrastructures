@@ -27,7 +27,8 @@ namespace Aiursoft.Pylon.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            var hsts = Convert.ToBoolean(_configuration["HSTS"]);
+            // default to true.
+            var hsts = _configuration["HSTS"] != false.ToString();
             if (hsts && !context.Response.Headers.ContainsKey("Strict-Transport-Security"))
             {
                 context.Response.Headers.Add("Strict-Transport-Security", "max-age=15552001; includeSubDomains; preload");
