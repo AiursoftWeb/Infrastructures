@@ -48,7 +48,7 @@ namespace Aiursoft.Pylon.Middlewares
                         continue;
                     }
                     var args = GenerateArguments(method);
-                    var possibleResponses = PossibleResponses(method);
+                    var possibleResponses = GetPossibleResponses(method);
                     var api = new API
                     {
                         ControllerName = controller.Name,
@@ -66,7 +66,7 @@ namespace Aiursoft.Pylon.Middlewares
             return;
         }
 
-        private string[] PossibleResponses(MethodInfo action)
+        private string[] GetPossibleResponses(MethodInfo action)
         {
             try
             {
