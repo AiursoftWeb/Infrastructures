@@ -45,6 +45,7 @@ namespace Aiursoft.API.Controllers
             _emailSender = emailSender;
         }
 
+        [Obsolete]
         [HttpPost]
         [APIProduces(typeof(AiurValue<int>))]
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
@@ -87,6 +88,7 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [Obsolete]
         [HttpPost]
         public async Task<IActionResult> AppRegister(AppRegisterAddressModel model)
         {
