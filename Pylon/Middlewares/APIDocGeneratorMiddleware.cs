@@ -139,7 +139,8 @@ namespace Aiursoft.Pylon.Middlewares
                 !method.IsVirtual &&
                 !method.IsStatic &&
                 !method.IsConstructor &&
-                !method.IsDefined(typeof(NonActionAttribute));
+                !method.IsDefined(typeof(NonActionAttribute)) &&
+                !method.IsDefined(typeof(ObsoleteAttribute));
         }
 
         private bool IsAPIAction(MethodInfo action, Type controller)
