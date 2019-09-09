@@ -106,7 +106,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ConfirmEmail { get; set; }
         [Display(Name = "Change user's basic info like nickname and bio")]
         public bool ChangeBasicInfo { get; set; }
-        [Display(Name = "Change user's password")]
+        [Display(Name = "Change the user's password based on source password")]
         public bool ChangePassword { get; set; }
         [Display(Name = "Change user's other applications' grant status")]
         public bool ChangeGrantInfo { get; set; }

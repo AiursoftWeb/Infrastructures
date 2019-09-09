@@ -28,7 +28,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         public bool ConfirmEmail { get; set; }
         [Display(Name = "Change your basic info like nickname and bio")]
         public bool ChangeBasicInfo { get; set; }
-        [Display(Name = "Change your password")]
+        [Display(Name = "Request to change your password")]
         public bool ChangePassword { get; set; }
         [Display(Name = "Change user's other applications' grant status")]
         public bool ChangeGrantInfo { get; set; }
