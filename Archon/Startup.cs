@@ -16,7 +16,6 @@ namespace Aiursoft.Archon
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
-            services.AddMemoryCache();
             services.AddTransient<AiurCache>();
         }
 
