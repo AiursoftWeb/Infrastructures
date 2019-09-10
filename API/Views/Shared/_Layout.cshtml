@@ -9,5 +9,6 @@
     @RenderBody()
     @this.UseAiurDashboardJs()
     @RenderSection("scripts", required: false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </body>
 </html>
