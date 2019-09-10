@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Aiursoft.API.Controllers
@@ -43,95 +41,6 @@ namespace Aiursoft.API.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
-        }
-
-        [Obsolete]
-        [HttpPost]
-        [APIProduces(typeof(AiurValue<int>))]
-        public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
-        {
-            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var mail = await _dbContext
-                .UserEmails
-                .Include(t => t.Owner)
-                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
-            if (mail == null)
-            {
-                return this.Protocol(ErrorType.NotFound, $"The account with email {model.Email} was not found!");
-            }
-            var user = mail.Owner;
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
-            if (result.Succeeded)
-            {
-                if (!await user.HasAuthorizedApp(_dbContext, appId))
-                {
-                    await user.GrantTargetApp(_dbContext, appId);
-                }
-                var pack = await user.GeneratePack(_dbContext, appId);
-                return Json(new AiurValue<int>(pack.Code)
-                {
-                    Code = ErrorType.Success,
-                    Message = "Auth success."
-                });
-            }
-            else if (result.RequiresTwoFactor)
-            {
-                throw new NotImplementedException();
-            }
-            else if (result.IsLockedOut)
-            {
-                return this.Protocol(ErrorType.Unauthorized, $"The account with email {model.Email} was locked! Please try again several minutes later!");
-            }
-            else
-            {
-                return this.Protocol(ErrorType.Unauthorized, "Wrong password!");
-            }
-        }
-
-        [Obsolete]
-        [HttpPost]
-        public async Task<IActionResult> AppRegister(AppRegisterAddressModel model)
-        {
-            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
-            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
-            if (exists)
-            {
-                return this.Protocol(ErrorType.NotEnoughResources, $"A user with email '{model.Email}' already exists!");
-            }
-            var user = new APIUser
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                NickName = model.Email.Split('@')[0],
-                PreferedLanguage = "en",
-                IconFilePath = Values.DefaultImagePath
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                var primaryMail = new UserEmail
-                {
-                    EmailAddress = model.Email.ToLower(),
-                    OwnerId = user.Id,
-                    ValidateToken = Guid.NewGuid().ToString("N")
-                };
-                _dbContext.UserEmails.Add(primaryMail);
-                await _dbContext.SaveChangesAsync();
-                // Send him an confirmation email here:
-                try
-                {
-                    await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
-                }
-                // Ignore smtp exception.
-                catch (SmtpException) { }
-                // Grant this app.
-                if (!await user.HasAuthorizedApp(_dbContext, appId))
-                {
-                    await user.GrantTargetApp(_dbContext, appId);
-                }
-                return this.Protocol(ErrorType.Success, "Successfully created your account.");
-            }
-            return this.Protocol(ErrorType.NotEnoughResources, result.Errors.First().Description);
         }
 
         [APIProduces(typeof(CodeToOpenIdViewModel))]
