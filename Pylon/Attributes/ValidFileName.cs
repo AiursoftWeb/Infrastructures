@@ -37,7 +37,15 @@ namespace Aiursoft.Pylon.Attributes
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid charactor!");
+                var invalidCharators = string.Empty;
+                foreach (var invalidChar in InvalidFileAndFolderNames)
+                {
+                    if (value is string val && val.Contains(invalidChar))
+                    {
+                        invalidCharators += $" '{invalidChar}',";
+                    }
+                }
+                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid charactor{invalidCharators.TrimEnd(',')}!");
             }
         }
     }
