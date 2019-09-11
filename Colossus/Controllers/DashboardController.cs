@@ -34,7 +34,7 @@ namespace Aiursoft.Colossus.Controllers
         {
             var user = await GetCurrentUserAsync();
             var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
-            if (string.IsNullOrEmpty(user.SiteName) || sites.Sites.Any(t => t.SiteName == user.SiteName))
+            if (string.IsNullOrEmpty(user.SiteName) || !sites.Sites.Any(t => t.SiteName == user.SiteName))
             {
                 return RedirectToAction(nameof(CreateSite));
             }
@@ -48,6 +48,11 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> CreateSite([FromRoute]string id)// app id
         {
             var user = await GetCurrentUserAsync();
+            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
+            if (!string.IsNullOrEmpty(user.SiteName) && sites.Sites.Any(t => t.SiteName == user.SiteName))
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var model = new CreateSiteViewModel(user)
             {
 
@@ -70,6 +75,8 @@ namespace Aiursoft.Colossus.Controllers
             {
                 var token = await _appsContainer.AccessToken();
                 await _sitesService.CreateNewSiteAsync(token, model.SiteName);
+                user.SiteName = model.SiteName;
+                await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));
             }
             catch (AiurUnexceptedResponse e)
