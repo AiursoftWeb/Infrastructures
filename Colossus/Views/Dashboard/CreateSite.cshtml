@@ -1,6 +1,6 @@
 ﻿@model Aiursoft.Colossus.Models.DashboardViewModels.CreateSiteViewModel
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Create new site";
 }
 <div class="container-fluid">
     <ol class="breadcrumb">
@@ -38,6 +38,23 @@
                             <label asp-for="SiteName"></label>
                             <input asp-for="SiteName" type="text" class="form-control" placeholder="Enter your new site name...">
                             <span asp-validation-for="SiteName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AdminUserName">Admin UserName</label>
+                            <input asp-for="AdminUserName" type="text" class="form-control" placeholder="Enter your admin user name...">
+                            <span asp-validation-for="AdminUserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AdminPassword">Admin Password</label>
+                            <input asp-for="AdminPassword" type="password" class="form-control" placeholder="Enter your admin password ...">
+                            <span asp-validation-for="AdminPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ChoseID">Please select the service you want to use</label>
+                            <select name="select" class="form-control">
+                                <option style="width:auto">WebSite</option>
+                                <option style="width:auto">Document management</option>
+                            </select>
                         </div>
                     </div>
 
