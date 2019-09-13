@@ -21,16 +21,16 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
-        private readonly FolderCleaner _folderCleaner;
+        private readonly FolderOperator _folderCleaner;
 
         public SitesController(
             ProbeDbContext dbContext,
             ACTokenManager tokenManager,
-            FolderCleaner folderCleaner)
+            FolderOperator folderOperator)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
-            _folderCleaner = folderCleaner;
+            _folderCleaner = folderOperator;
         }
 
         [HttpPost]
@@ -89,7 +89,12 @@ namespace Aiursoft.Probe.Controllers
             var sites = await _dbContext
                 .Sites
                 .Where(t => t.AppId == appid)
+                .Include(t => t.Root)
                 .ToListAsync();
+            foreach (var site in sites)
+            {
+                site.SiteSize = await _folderCleaner.GetFolderSite(site.Root);
+            }
             var viewModel = new ViewMySitesViewModel
             {
                 AppId = appLocal.AppId,
@@ -116,7 +121,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The site you tried to delete is not your app's site.");
             }
-            await _folderCleaner.DeleteFolderAsync(site.Root);
+            await _folderCleaner.DeleteFolder(site.Root);
             _dbContext.Sites.Remove(site);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your site!");

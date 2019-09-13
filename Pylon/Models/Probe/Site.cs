@@ -20,5 +20,9 @@ namespace Aiursoft.Pylon.Models.Probe
         public Folder Root { get; set; }
 
         public string SiteName { get; set; }
+
+        [JsonProperty]
+        [NotMapped]
+        public long SiteSize { get; set; }
     }
 }

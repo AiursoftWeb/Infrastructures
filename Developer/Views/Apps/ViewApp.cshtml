@@ -255,6 +255,7 @@
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Site Name"]</th>
+                                            <th>@Localizer["Site Size"]</th>
                                             <th>@Localizer["Operation"]</th>
                                         </tr>
                                     </thead>
@@ -263,6 +264,7 @@
                                         {
                                             <tr>
                                                 <td>@site.SiteName</td>
+                                                <td>@(site.SiteSize / 1000 / 1000) MB</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>

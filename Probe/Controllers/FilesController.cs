@@ -5,7 +5,6 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Probe.FilesAddressModels;
 using Aiursoft.Pylon.Models.Probe.FilesViewModels;
-using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -24,22 +23,19 @@ namespace Aiursoft.Probe.Controllers
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
         private readonly IConfiguration _configuration;
-        private readonly FolderCleaner _folderCleaner;
-        private readonly FolderRefactor _folderRefactor;
+        private readonly FolderOperator _folderCleaner;
         private readonly ServiceLocation _serviceLocation;
 
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            FolderCleaner folderCleaner,
+            FolderOperator folderCleaner,
             IConfiguration configuration,
-            FolderRefactor folderRefactor,
             ServiceLocation serviceLocation)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
-            _folderRefactor = folderRefactor;
             _serviceLocation = serviceLocation;
             _folderCleaner = folderCleaner;
         }
@@ -117,17 +113,6 @@ namespace Aiursoft.Probe.Controllers
             _folderCleaner.DeleteFile(file);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
-        }
-
-        [HttpPost]
-        [APIModelStateChecker]
-        [Route("MoveFile/{SiteName}/{**FolderNames}")]
-        public async Task<IActionResult> MoveFile(MoveFolderAddressModel model)
-        {
-            await _folderRefactor.MoveFile(model.AccessToken, model.SiteName, _folderLocator.SplitStrings(model.FolderNames),
-                _folderLocator.SplitStrings(model.NewFolderNames));
-            await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, "Successfully moved your file.");
         }
     }
 }

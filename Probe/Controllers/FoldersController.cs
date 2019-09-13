@@ -19,19 +19,16 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
-        private readonly FolderCleaner _folderCleaner;
-        private readonly FolderRefactor _folderRefactor;
+        private readonly FolderOperator _folderOperator;
 
         public FoldersController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            FolderCleaner folderCleaner,
-            FolderRefactor folderRefactor)
+            FolderOperator folderCleaner)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
-            _folderCleaner = folderCleaner;
-            _folderRefactor = folderRefactor;
+            _folderOperator = folderCleaner;
         }
 
         [Route("ViewContent/{SiteName}/{**FolderNames}")]
@@ -81,19 +78,9 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
             }
-            await _folderCleaner.DeleteFolderAsync(folder);
+            await _folderOperator.DeleteFolder(folder);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");
-        }
-
-        [HttpPost]
-        [Route("MoveFolder/{SiteName}/{**FolderNames}")]
-        public async Task<IActionResult> MoveFolder(MoveFolderAddressModel model)
-        {
-            await _folderRefactor.MoveFolder(model.AccessToken, model.SiteName,
-                _folderLocator.SplitStrings(model.FolderNames), _folderLocator.SplitStrings(model.NewFolderNames));
-            await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, "Successfully moved your folder.");
         }
     }
 }
