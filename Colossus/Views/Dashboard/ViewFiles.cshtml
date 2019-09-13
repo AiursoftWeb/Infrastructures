@@ -31,7 +31,7 @@
             </a>
         </div>
         <div class="card-body">
-            <div class="col-12">
+            <div class="col-12 p-0">
                 @if (Model.Path != null)
                 {
                     <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-secondary mb-3">
@@ -107,13 +107,14 @@
 
 @section js{
     <script>
-        var sortData = function () {
-            $('.my-datatable').dataTable({
-                "order": [[0, "desc"]],
-                "pageLength": 30
-            });
-            $('#sortButton').addClass('d-none');
-        }
-        sortData();
+        $(document).ready(function () {
+            var sortData = function () {
+                $('.my-datatable').dataTable({
+                    "order": [[0, "asc"]],
+                    "pageLength": 30
+                });
+            }
+            sortData();
+        });
     </script>
 }

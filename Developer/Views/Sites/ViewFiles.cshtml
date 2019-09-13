@@ -40,7 +40,7 @@
             </a>
         </div>
         <div class="card-body">
-            <div class="col-12">
+            <div class="col-12 p-0">
                 @if (Model.Path != null)
                 {
                     <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.DetachPath()" class="btn btn-secondary mb-3">
@@ -118,7 +118,7 @@
     <script>
         var sortData = function () {
             $('.my-datatable').dataTable({
-                "order": [[0, "desc"]],
+                "order": [[0, "asc"]],
                 "pageLength": 30
             });
             $('#sortButton').addClass('d-none');
