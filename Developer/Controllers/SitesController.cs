@@ -226,12 +226,18 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> NewFile(NewFileViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var file = Request.Form.Files.First();
             var app = await _dbContext.Apps.FindAsync(model.AppId);
             if (app == null)
             {
                 return NotFound();
             }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+            var file = Request.Form.Files.First();
             if (app.CreatorId != user.Id)
             {
                 return Unauthorized();

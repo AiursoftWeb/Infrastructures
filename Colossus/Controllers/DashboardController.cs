@@ -181,6 +181,12 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> NewFile(NewFileViewModel model)
         {
             var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
             var file = Request.Form.Files.First();
             if (!ModelState.IsValid)
             {
