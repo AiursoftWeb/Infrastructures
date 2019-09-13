@@ -99,6 +99,13 @@
                         <i class="fa fa-folder-open"></i>
                         New folder
                     </a>
+                    @if (string.IsNullOrWhiteSpace(Model.Path))
+                    {
+                        <a asp-controller="Dashboard" asp-action="Delete" class="btn btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                            Destory the entire site
+                        </a>
+                    }
                 </div>
             </div>
         </div>
