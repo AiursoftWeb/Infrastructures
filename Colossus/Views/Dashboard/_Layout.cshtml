@@ -26,9 +26,17 @@
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)">
                     <a class="nav-link" asp-controller="Dashboard" asp-action="ViewFiles">
-                        <i class="fa fa-fw fa-list-alt"></i>
+                        <i class="fa fa-fw fa-sitemap"></i>
                         <span class="nav-link-text">
                             @Localizer["Site"]
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item @(Model.ActivePanel == 2 ? "active":string.Empty)">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="ViewFiles">
+                        <i class="fa fa-fw fa-sitemap"></i>
+                        <span class="nav-link-text">
+                            @Localizer["Settings"]
                         </span>
                     </a>
                 </li>

@@ -91,14 +91,41 @@ namespace Aiursoft.Probe.Controllers
                 .Where(t => t.AppId == appid)
                 .Include(t => t.Root)
                 .ToListAsync();
-            foreach (var site in sites)
-            {
-                site.SiteSize = await _folderCleaner.GetFolderSite(site.Root);
-            }
             var viewModel = new ViewMySitesViewModel
             {
                 AppId = appLocal.AppId,
                 Sites = sites,
+                Code = ErrorType.Success,
+                Message = "Successfully get your buckets!"
+            };
+            return Json(viewModel);
+        }
+
+        [APIProduces(typeof(ViewSiteDetailViewModel))]
+        public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
+            if (appLocal == null)
+            {
+                appLocal = new ProbeApp
+                {
+                    AppId = appid
+                };
+                _dbContext.Apps.Add(appLocal);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            var site = await _dbContext
+                .Sites
+                .Where(t => t.AppId == appid)
+                .Include(t => t.Root)
+                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
+            var viewModel = new ViewSiteDetailViewModel
+            {
+                AppId = appLocal.AppId,
+                Site = site,
+                Size = await _folderCleaner.GetFolderSite(site.Root),
                 Code = ErrorType.Success,
                 Message = "Successfully get your buckets!"
             };
