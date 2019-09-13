@@ -114,7 +114,8 @@ namespace Aiursoft.Colossus.Controllers
                 var model = new ViewFilesViewModel(user)
                 {
                     Folder = data.Value,
-                    Path = path
+                    Path = path,
+                    SiteName = user.SiteName
                 };
                 return View(model);
             }
@@ -167,7 +168,8 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             var model = new NewFileViewModel(user)
             {
-                Path = path
+                Path = path,
+                SiteName = user.SiteName
             };
             return View(model);
         }

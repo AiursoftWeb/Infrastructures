@@ -11,5 +11,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
 
         public Folder Folder { get; set; }
         public string Path { get; set; }
+        public string SiteName { get; set; }
     }
 }

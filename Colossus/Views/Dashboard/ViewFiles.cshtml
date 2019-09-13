@@ -1,0 +1,119 @@
+﻿@model Aiursoft.Colossus.Models.DashboardViewModels.ViewFilesViewModel
+@using System.Net
+@{
+    ViewData["Title"] = "View files";
+    string currentPath = "";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-folder-open ico"></i>
+            Files in site:
+            <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@string.Empty">
+                @Model.SiteName
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                @if (Model.Path != null)
+                {
+                    <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-secondary mb-3">
+                        <i class="fa fa-arrow-up"></i>
+                        Up
+                    </a>
+                    <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-danger mb-3">
+                        <i class="fa fa-trash"></i>
+                        Delete @Model.Folder.FolderName
+                    </a>
+
+                }
+                <div class="table-responsive">
+                    <table class="table table-striped my-datatable">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Name"]</th>
+                                <td>Operations</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var folder in Model.Folder.SubFolders)
+                            {
+                                <tr>
+                                    <td data-order="A@(folder.FolderName)">
+                                        <i class="fa fa-folder text-primary"></i>
+                                        <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                            @folder.FolderName
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                            <i class="fa fa-trash"></i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            @foreach (var file in Model.Folder.Files)
+                            {
+                                <tr>
+                                    <td data-order="Z@(file.FileName)">
+                                        <i class="fa fa-file-o text-primary"></i>
+                                        <a href="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                            @file.FileName
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-controller="Dashboard" asp-action="DeleteFile" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                            <i class="fa fa-trash"></i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3">
+                    <a asp-controller="Dashboard" asp-action="NewFile" asp-route-path="@Model.Path" class="btn btn-success">
+                        <i class="fa fa-file"></i>
+                        New file
+                    </a>
+                    <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-secondary">
+                        <i class="fa fa-folder-open"></i>
+                        New folder
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script>
+        var sortData = function () {
+            $('.my-datatable').dataTable({
+                "order": [[0, "desc"]],
+                "pageLength": 30
+            });
+            $('#sortButton').addClass('d-none');
+        }
+        sortData();
+    </script>
+}

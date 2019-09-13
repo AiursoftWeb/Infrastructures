@@ -14,5 +14,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         }
         [FromRoute]
         public string Path { get; set; }
+
+        public string SiteName { get; set; }
     }
 }

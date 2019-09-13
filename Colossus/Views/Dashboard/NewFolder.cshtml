@@ -1,0 +1,61 @@
+﻿@model Aiursoft.Colossus.Models.DashboardViewModels.NewFolderViewModel
+@{
+    ViewData["Title"] = "Create New Folder";
+    string currentPath = "";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
+        <li class="breadcrumb-item active">
+            Create folder
+        </li>
+    </ol>
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox"></i>
+            @Localizer["New Folder Info"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" method="post" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="NewFolderName"></label>
+                            <input asp-for="NewFolderName" type="text" class="form-control" placeholder="Enter your new folder name...">
+                            <span asp-validation-for="NewFolderName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
+                        <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path" class="btn btn-secondary btn">@Localizer["Back"]</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
