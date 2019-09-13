@@ -88,8 +88,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                await _sitesService.CreateNewSiteAsync(token, model.SiteName);
+                await _sitesService.CreateNewSiteAsync(await accesstoken, model.SiteName);
                 user.SiteName = model.SiteName;
                 await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));
@@ -107,10 +106,13 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> ViewFiles(string path)
         {
             var user = await GetCurrentUserAsync();
+            if (string.IsNullOrWhiteSpace(user.SiteName))
+            {
+                return RedirectToAction(nameof(CreateSite));
+            }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                var data = await _foldersService.ViewContentAsync(token, user.SiteName, path);
+                var data = await _foldersService.ViewContentAsync(await accesstoken, user.SiteName, path);
                 var model = new ViewFilesViewModel(user)
                 {
                     Folder = data.Value,
@@ -149,8 +151,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                await _foldersService.CreateNewFolderAsync(token, user.SiteName, model.Path, model.NewFolderName, false);
+                await _foldersService.CreateNewFolderAsync(await accesstoken, user.SiteName, model.Path, model.NewFolderName, false);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path });
             }
             catch (AiurUnexceptedResponse e)
@@ -187,8 +188,7 @@ namespace Aiursoft.Colossus.Controllers
                 model.Recover(user);
                 return View(model);
             }
-            string accessToken = await _appsContainer.AccessToken();
-            await _storageService.SaveToProbe(file, user.SiteName, model.Path, SaveFileOptions.SourceName, accessToken);
+            await _storageService.SaveToProbe(file, user.SiteName, model.Path, SaveFileOptions.SourceName, await accesstoken);
             return RedirectToAction(nameof(ViewFiles), new { path = model.Path });
         }
 
@@ -216,8 +216,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                await _foldersService.DeleteFolderAsync(token, user.SiteName, model.Path);
+                await _foldersService.DeleteFolderAsync(await accesstoken, user.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)
@@ -253,8 +252,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                await _filesService.DeleteFileAsync(token, user.SiteName, model.Path);
+                await _filesService.DeleteFileAsync(await accesstoken, user.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)
@@ -290,8 +288,9 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken();
-                await _sitesService.DeleteSiteAsync(token, user.SiteName);
+                await _sitesService.DeleteSiteAsync(await accesstoken, user.SiteName);
+                user.SiteName = string.Empty;
+                await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(CreateSite));
             }
             catch (AiurUnexceptedResponse e)
