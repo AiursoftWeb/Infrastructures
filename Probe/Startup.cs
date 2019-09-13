@@ -36,6 +36,7 @@ namespace Aiursoft.Probe
             services.AddTransient<FolderLocator>();
             services.AddTransient<FolderOperator>();
             services.AddTransient<FolderRefactor>();
+            services.AddTransient<AiurCache>();
             services.AddMvc();
         }
 
