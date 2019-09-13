@@ -27,7 +27,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-inbox"></i>
-            @Localizer["Create new site"]
+            @Localizer["Create a new site to save all your files"]
         </div>
         <div class="card-body">
             <div class="col-12">
@@ -35,7 +35,10 @@
                     <div class="w-100">
                         <div class="alert alert-warning alert-dismissible d-none d-lg-block" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <a class="alert-link" href="profile/index.html">You need to name your new site!</a> Site is your space for storing and sharing files! It is your personal space!
+                            <a href="javascript:void(0)" class="alert-link">You need to name your new site!</a>
+                            <p class="mb-0">
+                                Site is your space for storing and sharing files! It is your personal space!
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -47,7 +50,7 @@
                     </div>
 
                     <div class="col-md-12 margin-top-30">
-                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
+                        <button type="submit" data-disable-with="Creating..." class="btn btn-success btn">@Localizer["Name it!"]</button>
                         <input type="reset" class="btn btn-danger btn" value="@Localizer["Clear"]" />
                     </div>
                 </form>

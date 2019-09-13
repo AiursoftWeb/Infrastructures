@@ -30,6 +30,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         [Required]
         public string Path { get; set; }
-        public object AppName { get; set; }
+        public string AppName { get; set; }
     }
 }
