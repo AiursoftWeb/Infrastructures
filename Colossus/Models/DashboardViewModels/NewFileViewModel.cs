@@ -7,10 +7,10 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public NewFileViewModel() { }
-        public NewFileViewModel(ColossusUser user) : base(user, 2, "Upload new file") { }
+        public NewFileViewModel(ColossusUser user) : base(user, 1, "Upload new file") { }
         public void Recover(ColossusUser user)
         {
-            RootRecover(user, 5, "Upload new file");
+            RootRecover(user, 1, "Upload new file");
         }
         [FromRoute]
         public string Path { get; set; }

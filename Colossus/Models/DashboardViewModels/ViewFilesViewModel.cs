@@ -7,7 +7,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewFilesViewModel() { }
-        public ViewFilesViewModel(ColossusUser user) : base(user, 2, "View files") { }
+        public ViewFilesViewModel(ColossusUser user) : base(user, 1, "View files") { }
 
         public Folder Folder { get; set; }
         public string Path { get; set; }
