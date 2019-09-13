@@ -20,6 +20,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             RootRecover(user, 0, "Quick upload");
         }
 
+        [Display(Name = "New site name")]
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
