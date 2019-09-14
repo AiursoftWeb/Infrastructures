@@ -308,6 +308,32 @@ namespace Aiursoft.Colossus.Controllers
             }
         }
 
+        [Route("Settings")]
+        public async Task<IActionResult> Settings()
+        {
+            var user = await GetCurrentUserAsync();
+            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
+            var hasASite = !string.IsNullOrEmpty(user.SiteName) && sites.Sites.Any(t => t.SiteName == user.SiteName);
+            if (hasASite)
+            {
+                var siteDetail = await _sitesService.ViewSiteDetailAsync(await accesstoken, user.SiteName);
+                var model = new SettingsViewModel(user)
+                {
+                    SiteSize = siteDetail.Size,
+                    HasASite = true
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new SettingsViewModel(user)
+                {
+                    HasASite = false
+                };
+                return View(model);
+            }
+        }
+
         private async Task<ColossusUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(User);
