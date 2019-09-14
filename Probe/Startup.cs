@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Middlewares;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +42,7 @@ namespace Aiursoft.Probe
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
+            app.UseMiddleware<ProbeCORSMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,8 +54,6 @@ namespace Aiursoft.Probe
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
-            app.UseCors(builder => builder.WithOrigins("*"));
             app.UseMvcWithDefaultRoute();
             app.UseDocGenerator();
         }
