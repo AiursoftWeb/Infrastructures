@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Pylon.Models.Probe
@@ -20,5 +21,7 @@ namespace Aiursoft.Pylon.Models.Probe
         public Folder Root { get; set; }
 
         public string SiteName { get; set; }
+
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
     }
 }
