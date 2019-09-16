@@ -1,30 +1,35 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.Probe.Services
 {
-    public class ACToken
+    public class PBToken
     {
-        public string AppId { get; set; }
+        public string SiteName { get; set; }
+        public string UnderPath { get; set; }
+        public string Permissions { get; set; }
         public DateTime Expires { get; set; }
     }
 
-    public class ACTokenManager
+    public class PBTokenManager
     {
         private readonly RSAService _rsa;
-        public ACTokenManager(RSAService rsa)
+        public PBTokenManager(RSAService rsa)
         {
             _rsa = rsa;
         }
 
-        public (string, DateTime) GenerateAccessToken(string appId)
+        public (string, DateTime) GenerateAccessToken(string siteName, string underPath, string permissions)
         {
-            var token = new ACToken
+            var token = new PBToken
             {
-                AppId = appId,
+                SiteName = siteName,
+                UnderPath = underPath,
+                Permissions = permissions,
                 Expires = DateTime.UtcNow + new TimeSpan(0, 20, 0)
             };
             var tokenJson = JsonConvert.SerializeObject(token, new JsonSerializerSettings
@@ -40,14 +45,15 @@ namespace Aiursoft.Pylon.Services
             return ($"{tokenBase64}.{tokenSign}", token.Expires);
         }
 
-        public string ValidateAccessToken(string value)
+        public PBToken ValidateAccessToken(string value)
         {
-            ACToken token;
+            PBToken token;
             try
             {
                 var tokenparts = value.Split('.');
-                string tokenBase64 = tokenparts[0], tokenSign = tokenparts[1];
-                token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
+                string tokenBase64 = tokenparts[0];
+                string tokenSign = tokenparts[1];
+                token = JsonConvert.DeserializeObject<PBToken>(tokenBase64.Base64ToString());
                 if (DateTime.UtcNow > token.Expires)
                 {
                     throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
@@ -61,7 +67,7 @@ namespace Aiursoft.Pylon.Services
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was not in a valid format and can not be verified!");
             }
-            return token.AppId;
+            return token;
         }
     }
 }
