@@ -43,7 +43,7 @@
                 <div class="col-12">
                     You site size is
                     <br>
-                    <kbd>@(Model.SiteSize / 1024.0 / 1024.0)MB</kbd>
+                    <span class="badge badge-primary">@((Model.SiteSize / 1024.0 / 1024.0).ToString("0.00")) MB</span>
                 </div>
             </div>
         </div>
