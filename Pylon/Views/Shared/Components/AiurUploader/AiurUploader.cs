@@ -1,0 +1,33 @@
+﻿using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToProbeServer;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+
+namespace Aiursoft.Pylon.Views.Shared.Components.AiurUploader
+{
+    public class AiurUploader : ViewComponent
+    {
+        private readonly AppsContainer _appsContainer;
+        private readonly TokenService _tokenService;
+
+        public AiurUploader(
+            AppsContainer appsContainer,
+            TokenService tokenService)
+        {
+            _appsContainer = appsContainer;
+            _tokenService = tokenService;
+        }
+
+        public async Task<IViewComponentResult> Invoke(string aspFor, string siteName, string path)
+        {
+            var accessToken = await _appsContainer.AccessToken();
+            var token = await _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
+            var model = new AiurUploaderViewModel
+            {
+                Name = aspFor,
+                PBToken = token
+            };
+            return View(model);
+        }
+    }
+}

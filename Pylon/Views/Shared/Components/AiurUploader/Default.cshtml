@@ -1,0 +1,19 @@
+﻿@using Aiursoft.Pylon.Models
+@using Aiursoft.Pylon.Services
+@model Aiursoft.Pylon.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
+@inject ServiceLocation ServiceLocation
+@{
+    var url = new AiurUrl(ServiceLocation.Probe, $"Files/UploadFile/{Model.SiteName}/{Model.Path}", new
+    {
+        PBToken = Model.PBToken
+    });
+}
+<form id="@(Model.Name)fileform" method="post" enctype="multipart/form-data" action="@Html.Raw(url)">
+    <input type="file" name="@Model.Name" class="dropify" data-max-file-size="@(Model.SizeInMB)M" data-height="300" />
+    <div>
+        <p>Max file size: @Model.SizeInMB MB.</p>
+        <a class="btn btn-success" asp-controller="Dashboard" asp-action="Index">
+            <i class="fa fa-upload"></i>
+        </a>
+    </div>
+</form>
