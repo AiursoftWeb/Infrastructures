@@ -17,8 +17,8 @@ namespace Aiursoft.Probe.Services
 
     public class PBTokenManager
     {
-        private readonly RSAService _rsa;
-        public PBTokenManager(RSAService rsa)
+        private readonly PBRSAService _rsa;
+        public PBTokenManager(PBRSAService rsa)
         {
             _rsa = rsa;
         }
