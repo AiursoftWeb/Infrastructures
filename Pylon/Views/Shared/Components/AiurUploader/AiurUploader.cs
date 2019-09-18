@@ -18,14 +18,17 @@ namespace Aiursoft.Pylon.Views.Shared.Components.AiurUploader
             _tokenService = tokenService;
         }
 
-        public async Task<IViewComponentResult> Invoke(string aspFor, string siteName, string path)
+        public async Task<IViewComponentResult> InvokeAsync(string aspFor, string siteName, string path, int sizeInMb)
         {
             var accessToken = await _appsContainer.AccessToken();
             var token = await _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
             var model = new AiurUploaderViewModel
             {
                 Name = aspFor,
-                PBToken = token
+                PBToken = token,
+                Path = path,
+                SiteName = siteName,
+                SizeInMB = sizeInMb
             };
             return View(model);
         }

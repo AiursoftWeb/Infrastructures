@@ -92,7 +92,7 @@ namespace Aiursoft.API.Controllers
             }
             if (!await user.HasAuthorizedApp(_dbContext, appId))
             {
-                return this.Protocol(ErrorType.NotFound, "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
+                return this.Protocol(ErrorType.Unauthorized, "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
             }
             var viewModel = new UserInfoViewModel
             {
