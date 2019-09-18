@@ -8,12 +8,6 @@ namespace Aiursoft.Pylon
         public static string ProjectName = "Aiursoft";
         public static string ProjectValue = "Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.";
         public static string DefaultImagePath = "usericon/default.png";
-        public static string CorpPhoneNumber = "(+86) 8368-5000";
-        public static string Schema = "https";
-        public static string WsSchema = "wss";
-        public static string GitHubOrganizationAddress { get; } = "https://gitzab.com/AiursoftWeb/";
-        public static string FacebookAddress { get; } = "https://facebook.com/";
-        public static string TwitterAddress { get; } = "https://twitter.com/";
         public static KeyValuePair<string, string> DirectShowString => new KeyValuePair<string, string>("show", "direct");
         public static PasswordOptions PasswordOptions => new PasswordOptions
         {
