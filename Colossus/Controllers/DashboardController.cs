@@ -164,41 +164,6 @@ namespace Aiursoft.Colossus.Controllers
             }
         }
 
-        [Route("NewFile/{**path}")]
-        public async Task<IActionResult> NewFile(string path)
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new NewFileViewModel(user)
-            {
-                Path = path,
-                SiteName = user.SiteName
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [FileChecker]
-        [Route("NewFile/{**path}")]
-        public async Task<IActionResult> NewFile(NewFileViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user);
-                return View(model);
-            }
-            var file = Request.Form.Files.First();
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user);
-                return View(model);
-            }
-            await _storageService.SaveToProbe(file, user.SiteName, model.Path, SaveFileOptions.SourceName, await accesstoken);
-            return RedirectToAction(nameof(ViewFiles), new { path = model.Path });
-        }
-
         [Route("DeleteFolder/{**path}")]
         public async Task<IActionResult> DeleteFolder([FromRoute]string path)
         {
