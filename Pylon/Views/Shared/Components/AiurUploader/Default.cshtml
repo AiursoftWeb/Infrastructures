@@ -35,7 +35,11 @@
         var progressbar = $('#progressbar-@Model.Name');
         var addressInput = $('[name=@Model.Name]');
         var uploadUrl = '@Html.Raw(url)';
-
+        var validExtensions = '@Html.Raw(Model.AllowedExtensions)'
+        var getExtension = function (filename) {
+            var parts = filename.split('.');
+            return (parts[parts.length - 1]).toLowerCase();
+        }
         var reset = function () {
             addressInput.val("");
             addressInput.attr('data-internet-path', "");
@@ -44,11 +48,16 @@
         }
 
         fileInput.on('change', function () {
+            var file = fileInput.prop("files")[0];
+            var ext = getExtension(file.name);
+            if (validExtensions.length > 0 && validExtensions.indexOf(ext) === -1) {
+                return;
+            }
+
             window.onbeforeunload = function () {
                 return "Your file is still uploading. Are you sure to quit?";
             };
 
-            var file = fileInput.prop("files")[0];
             var formData = new FormData();
 
             progress.removeClass('d-none');
