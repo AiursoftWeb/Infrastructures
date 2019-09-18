@@ -54,7 +54,7 @@
 
                 }
                 <div class="table-responsive">
-                    <table class="table table-striped my-datatable">
+                    <table class="table my-datatable">
                         <thead>
                             <tr>
                                 <th>@Localizer["Name"]</th>
@@ -72,10 +72,17 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                            <i class="fa fa-trash"></i>
-                                            Delete
-                                        </a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -89,10 +96,17 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                            <i class="fa fa-trash"></i>
-                                            Delete
-                                        </a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
