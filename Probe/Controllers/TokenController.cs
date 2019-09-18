@@ -30,6 +30,7 @@ namespace Aiursoft.Probe.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> GetUploadToken(GetUploadTokenAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
