@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
 
         public async Task<string> GetUploadTokenAsync(string accessToken, string siteName, string permissions, string underPath)
         {
-            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "DeleteSite", new { });
+            var url = new AiurUrl(_serviceLocation.Probe, "Token", "GetUploadToken", new { });
             var form = new AiurUrl(string.Empty, new GetUploadTokenAddressModel
             {
                 AccessToken = accessToken,
