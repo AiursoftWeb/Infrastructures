@@ -35,7 +35,18 @@
         var progressbar = $('#progressbar-@Model.Name');
         var addressInput = $('[name=@Model.Name]');
         var uploadUrl = '@Html.Raw(url)';
+
+        var reset = function () {
+            addressInput.val("");
+            addressInput.attr('data-internet-path', "");
+            progressbar.css('width', '0%');
+            window.onbeforeunload = function () { };
+        }
+
         fileInput.on('change', function () {
+            window.onbeforeunload = function () {
+                return "Your file is still uploading. Are you sure to quit?";
+            };
 
             var file = fileInput.prop("files")[0];
             var formData = new FormData();
@@ -45,6 +56,7 @@
 
             formData.append("file", file);
             formData.append("recursiveCreate", true);
+
             $.ajax({
                 url: uploadUrl,
                 type: 'post',
@@ -65,22 +77,18 @@
                     return myXhr;
                 },
                 success: function (data) {
+                    window.onbeforeunload = function () { };
                     var probePath = data.siteName + '/' + data.filePath;
                     addressInput.val(probePath);
                     addressInput.attr('data-internet-path', data.internetPath);
                     progressbar.css('width', '0%');
                 },
-                error: function () {
-                }
+                error: reset
             });
         });
 
         var dropi = $('.dropify').dropify();
-        dropi.on('dropify.afterClear', function (event, element) {
-            addressInput.val("");
-            addressInput.attr('data-internet-path', "");
-            progressbar.css('width', '0%');
-        });
+        dropi.on('dropify.afterClear', reset);
     })
 
 </script>
