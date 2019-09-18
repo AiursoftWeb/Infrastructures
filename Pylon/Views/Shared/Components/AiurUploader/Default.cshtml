@@ -21,7 +21,7 @@
         extension += $"data-max-file-size=\"{Model.SizeInMB}M\"";
     }
 }
-<input style="width:0;height:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." />
+<input style="width:0;height:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." data-internet-path="" />
 <input form="fakeForm" type="file" id="@Model.Name-file-input" class="dropify" @Html.Raw(extension) />
 
 <div id="progress-@Model.Name" class="progress mb-3 mt-3 d-none">
@@ -67,6 +67,8 @@
                 success: function (data) {
                     var probePath = data.siteName + '/' + data.filePath;
                     addressInput.val(probePath);
+                    addressInput.attr('data-internet-path', data.internetPath);
+                    progressbar.css('width', '0%');
                 },
                 error: function () {
                 }
@@ -76,7 +78,8 @@
         var dropi = $('.dropify').dropify();
         dropi.on('dropify.afterClear', function (event, element) {
             addressInput.val("");
-            progressbar.css('width', 100 + '%');
+            addressInput.attr('data-internet-path', "");
+            progressbar.css('width', '0%');
         });
     })
 

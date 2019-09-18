@@ -19,14 +19,40 @@
                 <div class="form-group">
                     <label>@Localizer["Upload anything to your site!"]</label>
                     <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="" size-in-mb="2000" allowed-extensions="" default-file=""></vc:aiur-uploader>
+                    <p class="text-muted">Your file will be uploaded to your root folder of your site.</p>
                 </div>
+                <a id="copyButton" class="btn btn-warning text-white" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
+                <a id="openButton" class="btn btn-primary" href="#" target="_blank">@Localizer["Open in new page"]</a>
             </div>
         </div>
     </div>
 </div>
+
 @section css{
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
+
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script>
+        var updateButtons = function () {
+            var value = $("[name=file]").attr('data-internet-path');
+            if (value && value.length > 0) {
+                $('#openButton').show();
+                $('#copyButton').show();
+                $('#openButton').attr('href', value);
+                $('#copyButton').attr('data-clipboard-text', value);
+            } else {
+                $('#openButton').hide();
+                $('#copyButton').hide();
+            }
+        };
+
+        var loopRenderJobs = function () {
+            updateButtons();
+            setTimeout(loopRenderJobs, 100);
+        };
+        loopRenderJobs();
+
+    </script>
 }
