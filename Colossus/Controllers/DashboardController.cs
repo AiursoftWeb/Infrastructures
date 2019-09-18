@@ -21,7 +21,6 @@ namespace Aiursoft.Colossus.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly UserManager<ColossusUser> _userManager;
         private readonly FoldersService _foldersService;
-        private readonly StorageService _storageService;
         private readonly FilesService _filesService;
 
         private Task<string> accesstoken => _appsContainer.AccessToken();
@@ -31,14 +30,12 @@ namespace Aiursoft.Colossus.Controllers
             AppsContainer appsContainer,
             UserManager<ColossusUser> userManager,
             FoldersService foldersService,
-            StorageService storageService,
             FilesService filesService)
         {
             _sitesService = sitesService;
             _appsContainer = appsContainer;
             _userManager = userManager;
             _foldersService = foldersService;
-            _storageService = storageService;
             _filesService = filesService;
         }
 
