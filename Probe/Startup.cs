@@ -30,8 +30,11 @@ namespace Aiursoft.Probe
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
+            services.AddSingleton<PBKeyPair>();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
+            services.AddTransient<PBRSAService>();
+            services.AddTransient<PBTokenManager>();
             services.AddTransient<ImageCompressor>();
             services.AddTransient<FolderLocator>();
             services.AddTransient<FolderOperator>();
