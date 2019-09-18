@@ -103,7 +103,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [Route("ViewFiles/{**path}")]
-        public async Task<IActionResult> ViewFiles(string path)
+        public async Task<IActionResult> ViewFiles(string path, bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             if (string.IsNullOrWhiteSpace(user.SiteName))
@@ -117,7 +117,8 @@ namespace Aiursoft.Colossus.Controllers
                 {
                     Folder = data.Value,
                     Path = path,
-                    SiteName = user.SiteName
+                    SiteName = user.SiteName,
+                    JustHaveUpdated = justHaveUpdated
                 };
                 return View(model);
             }

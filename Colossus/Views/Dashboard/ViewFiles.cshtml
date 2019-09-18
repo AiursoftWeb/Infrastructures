@@ -9,6 +9,9 @@
         <li class="breadcrumb-item">
             <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="">@Model.SiteName</a>
+        </li>
         @foreach (var path in Model.Path?.Split('/') ?? new string[0])
         {
             <li class="breadcrumb-item">
@@ -22,41 +25,54 @@
             </li>
         }
     </ol>
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You successfully uploaded your new file!"]
+        </div>
+    }
     <div class="card mb-3">
-        <div class="card-header">
+        <div class="card-header pb-1">
             <i class="fa fa-folder-open ico"></i>
             Files in site:
             <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@string.Empty">
                 @Model.SiteName
             </a>
-        </div>
-        <div class="card-body">
-            <div class="col-12 p-0">
-                @if (Model.Path != null)
-                {
-                    <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-secondary mb-3">
-                        <i class="fa fa-arrow-up"></i>
-                        Up
-                    </a>
-                    <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-danger mb-3">
-                        <i class="fa fa-trash"></i>
-                        Delete @Model.Folder.FolderName
-                    </a>
 
-                }
+            <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-secondary mr-2 pull-right">
+                <i class="fa fa-folder-open"></i>
+                New folder
+            </a>
+
+            @if (Model.Path != null)
+            {
+                <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-sm btn-secondary mr-2 pull-right">
+                    <i class="fa fa-arrow-up"></i>
+                    Up
+                </a>
+                <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-danger mr-2 pull-right">
+                    <i class="fa fa-trash"></i>
+                    Delete @Model.Folder.FolderName
+                </a>
+
+            }
+        </div>
+        <div class="card-body p-0">
+            <div class="col-12 p-0">
                 <div class="table-responsive">
-                    <table class="table my-datatable">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th>@Localizer["Name"]</th>
-                                <td>Operations</td>
+                                <th class="pl-4">@Localizer["Name"]</th>
+                                <th>Operations</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var folder in Model.Folder.SubFolders)
                             {
                                 <tr>
-                                    <td data-order="A@(folder.FolderName)">
+                                    <td class="pl-4">
                                         <i class="fa fa-folder text-primary"></i>
                                         <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
                                             @folder.FolderName
@@ -80,7 +96,7 @@
                             @foreach (var file in Model.Folder.Files)
                             {
                                 <tr>
-                                    <td data-order="Z@(file.FileName)">
+                                    <td class="pl-4">
                                         <i class="fa fa-file-o text-primary"></i>
                                         <a href="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
@@ -104,31 +120,45 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-3">
-                    <a asp-controller="Dashboard" asp-action="NewFile" asp-route-path="@Model.Path" class="btn btn-success">
-                        <i class="fa fa-file"></i>
-                        New file
-                    </a>
-                    <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-secondary">
-                        <i class="fa fa-folder-open"></i>
-                        New folder
-                    </a>
-                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-5">
+        <div class="card-header">
+            <i class="fa fa-book"></i>
+            Upload new file here
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>@Localizer["Upload anything to your site!"]</label>
+                <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file=""></vc:aiur-uploader>
             </div>
         </div>
     </div>
 </div>
 
+@section css{
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+
 @section js{
+    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script>
-        $(document).ready(function () {
-            var sortData = function () {
-                $('.my-datatable').dataTable({
-                    "order": [[0, "asc"]],
-                    "pageLength": 30
-                });
+        var updateButtons = function () {
+            var value = $("[name=file]").attr('data-internet-path');
+            if (value && value.length > 0) {
+                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
+                $("[name=file]").attr('data-internet-path', '');
             }
-            sortData();
-        });
+        };
+
+        var loopRenderJobs = function () {
+            updateButtons();
+            setTimeout(loopRenderJobs, 100);
+        };
+        loopRenderJobs();
+
     </script>
 }
