@@ -29,6 +29,7 @@ namespace Aiursoft.Probe.Controllers
             _pbTokenManager = pbTokenManager;
         }
 
+        [HttpPost]
         public async Task<IActionResult> GetUploadToken(GetUploadTokenAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);

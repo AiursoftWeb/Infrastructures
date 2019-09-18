@@ -12,13 +12,16 @@ namespace Aiursoft.Pylon.Services
     {
         private readonly AppsContainer _appsContainer;
         private readonly FilesService _filesService;
+        private readonly TokenService _tokenService;
 
         public StorageService(
             AppsContainer appsContainer,
-            FilesService filesService)
+            FilesService filesService,
+            TokenService tokenService)
         {
             _appsContainer = appsContainer;
             _filesService = filesService;
+            _tokenService = tokenService;
         }
 
         public async Task<UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options, string accessToken = null)
@@ -34,7 +37,8 @@ namespace Aiursoft.Pylon.Services
             {
                 accessToken = await _appsContainer.AccessToken();
             }
-            var result = await _filesService.UploadFileAsync(accessToken, siteName, path, file.OpenReadStream(), fileName, true);
+            var pbToken = _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
+            var result = await _filesService.UploadFileAsync(pbToken, siteName, path, file.OpenReadStream(), fileName, true);
             return result;
         }
 

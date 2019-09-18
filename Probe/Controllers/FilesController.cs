@@ -25,18 +25,21 @@ namespace Aiursoft.Probe.Controllers
         private readonly IConfiguration _configuration;
         private readonly FolderOperator _folderCleaner;
         private readonly ServiceLocation _serviceLocation;
+        private readonly PBTokenManager _pbTokenManager;
 
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
             FolderOperator folderCleaner,
             IConfiguration configuration,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            PBTokenManager pbTokenManager)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
             _serviceLocation = serviceLocation;
+            _pbTokenManager = pbTokenManager;
             _folderCleaner = folderCleaner;
         }
 
@@ -47,8 +50,17 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
+            var token = _pbTokenManager.ValidateAccessToken(model.PBToken);
+            if (token.SiteName != model.SiteName)
+            {
+                return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to upload files to this site.");
+            }
+            if (!model.FolderNames.StartsWith(token.UnderPath))
+            {
+                return this.Protocol(ErrorType.Unauthorized, $"Your token not authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
+            }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
+            var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
             var file = Request.Form.Files.First();
             if (!new ValidFolderName().IsValid(file.FileName))
             {
@@ -86,7 +98,7 @@ namespace Aiursoft.Probe.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
-            var filePath = $"{string.Join('/', model.FolderNames)}/{newFile.FileName}".TrimStart('/');
+            var filePath = $"{string.Join('/', folders)}/{newFile.FileName}".TrimStart('/');
             var path = $"{_serviceLocation.Probe}/Download/{nameof(DownloadController.Open)}/{model.SiteName.ToUrlEncoded()}/{filePath.EncodePath()}";
             return Json(new UploadFileViewModel
             {
