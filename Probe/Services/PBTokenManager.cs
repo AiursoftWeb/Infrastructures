@@ -30,7 +30,7 @@ namespace Aiursoft.Probe.Services
                 SiteName = siteName,
                 UnderPath = underPath,
                 Permissions = permissions,
-                Expires = DateTime.UtcNow + new TimeSpan(0, 20, 0)
+                Expires = DateTime.UtcNow + new TimeSpan(0, 60, 0)
             };
             var tokenJson = JsonConvert.SerializeObject(token, new JsonSerializerSettings
             {
