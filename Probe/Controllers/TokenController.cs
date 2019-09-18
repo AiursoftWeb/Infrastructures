@@ -48,7 +48,7 @@ namespace Aiursoft.Probe.Controllers
             return Json(new AiurValue<string>(pbToken)
             {
                 Code = ErrorType.Success,
-                Message = "Successfully get your pbToken!"
+                Message = $"Successfully get your pbToken! Use it before {deadline} UTC!"
             });
         }
     }

@@ -37,7 +37,7 @@ namespace Aiursoft.Pylon.Services
             {
                 accessToken = await _appsContainer.AccessToken();
             }
-            var pbToken = _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
+            var pbToken = await _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
             var result = await _filesService.UploadFileAsync(pbToken, siteName, path, file.OpenReadStream(), fileName, true);
             return result;
         }
