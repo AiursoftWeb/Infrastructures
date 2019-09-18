@@ -53,7 +53,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             var model = new IndexViewModel(user)
             {
-
+                SiteName = user.SiteName
             };
             return View(model);
         }

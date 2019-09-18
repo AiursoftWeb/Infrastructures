@@ -16,8 +16,17 @@
         </div>
         <div class="card-body">
             <div class="col-12">
-
+                <div class="form-group">
+                    <label>@Localizer["Upload anything to your site!"]</label>
+                    <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="" size-in-mb="1000" allowed-extensions="" default-file=""></vc:aiur-uploader>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@section css{
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+@section js{
+    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+}

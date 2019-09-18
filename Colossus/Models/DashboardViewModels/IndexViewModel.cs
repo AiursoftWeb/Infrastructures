@@ -13,5 +13,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
 
         }
+
+        public string SiteName { get; set; }
     }
 }
