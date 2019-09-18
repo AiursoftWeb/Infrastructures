@@ -81,20 +81,10 @@ namespace Aiursoft.Developer.Controllers
                 model.RootRecover(cuser, 1);
                 return View(model);
             }
-            var newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform)
+            var newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform, model.IconPath)
             {
                 CreatorId = cuser.Id
             };
-            // Default icon
-            if (Request.Form.Files.Count == 0 || Request.Form.Files.First().Length < 1)
-            {
-                newApp.IconPath = $"{_configuration["AppsIconSiteName"]}/appdefaulticon.png";
-            }
-            else
-            {
-                var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], newApp.AppId, SaveFileOptions.RandomName);
-                newApp.IconPath = $"{probeFile.SiteName}/{probeFile.FilePath}";
-            }
             _dbContext.Apps.Add(newApp);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = newApp.AppId });

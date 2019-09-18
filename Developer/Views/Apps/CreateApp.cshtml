@@ -1,4 +1,6 @@
 @model Aiursoft.Developer.Models.AppsViewModels.CreateAppViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Create New App";
 }
@@ -70,9 +72,12 @@
                                 <option value="11">@Localizer["Game"]</option>
                             </select>
                         </div>
-                        <label>@Localizer["Upload your app icon"]</label>
-                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@ServiceLocation.UI/images/appdefaulticon.png" />
-                        <p class="small text-muted">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
+                        <div class="form-group">
+                            <label asp-for="IconPath">@Localizer["Upload your app icon"]</label>
+                            <vc:aiur-uploader asp-for="@nameof(Model.IconPath)" site-name="@Configuration["AppsIconSiteName"]" path="Unamed-Apps" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="aiursoft-app-icons/appdefaulticon.png"></vc:aiur-uploader>
+                            <span asp-validation-for="IconPath" class="text-danger"></span>
+                            <p class="small text-muted">@Localizer["Only jpg, bmp, png images, 2M max."]</p>
+                        </div>
                         <button type="submit" data-disable-with="Creating..." class="btn btn-primary mt-3">@Localizer["Create"]</button>
                         <input type="reset" class="btn btn-danger mt-3" value="@Localizer["Clear"]" />
                         <a class="btn btn-info mt-3" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to list"]</a>
@@ -87,9 +92,4 @@
 }
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dropify').dropify();
-        });
-    </script>
 }

@@ -7,15 +7,52 @@
     {
         PBToken = Model.PBToken
     });
+    string extension = " ";
+    if (!string.IsNullOrWhiteSpace(Model.AllowedExtensions))
+    {
+        extension += $"data-allowed-file-extensions=\"{Model.AllowedExtensions}\" ";
+    }
+    if (!string.IsNullOrWhiteSpace(Model.DefaultFile))
+    {
+        extension += $"data-default-file=\"{StorageService.GetProbeDownloadAddress(ServiceLocation, Model.DefaultFile)}\" ";
+    }
+    if (Model.SizeInMB > 0)
+    {
+        extension += $"data-max-file-size=\"{Model.SizeInMB}M\"";
+    }
 }
-
-<form id="@(Model.Name)fileform" method="post" enctype="multipart/form-data" action="@Html.Raw(url)">
-    <input type="file" name="@Model.Name" class="dropify" data-max-file-size="@(Model.SizeInMB)M" data-height="300" />
-</form>
+<input style="width:0;height:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." />
+<input form="fakeForm" type="file" id="@Model.Name-file-input" class="dropify" @Html.Raw(extension) />
 
 <script>
     window.addEventListener('load', function () {
-        var settings = {};
-        $('[name=@Model.Name]').setProgressedUploader(settings);
+        var fileInput = $('#@Model.Name-file-input');
+        fileInput.on('change', function () {
+            var file = fileInput.prop("files")[0];
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("recursiveCreate", true);
+            $.ajax({
+                url: '@url.ToString()',
+                type: 'post',
+                enctype: 'multipart/form-data',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var probePath = data.siteName + '/' + data.filePath;
+                    $('[name=@Model.Name]').val(probePath);
+                },
+                error: function () {
+                }
+            });
+        });
+
+        var dropi = $('.dropify').dropify();
+        dropi.on('dropify.afterClear', function (event, element) {
+            $('[name=@Model.Name]').val("");
+        });
     })
+
 </script>

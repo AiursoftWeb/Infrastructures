@@ -7,5 +7,7 @@
         public string SiteName { get; set; }
         public string Path { get; set; }
         public int SizeInMB { get; set; }
+        public string AllowedExtensions { get; set; }
+        public string DefaultFile { get; set; }
     }
 }

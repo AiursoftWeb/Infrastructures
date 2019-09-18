@@ -28,5 +28,9 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         [Required]
         [Display(Name = "App Platform")]
         public Platform AppPlatform { get; set; }
+
+        [Required]
+        [Display(Name = "Icon Path")]
+        public string IconPath { get; set; }
     }
 }
