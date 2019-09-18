@@ -8,7 +8,6 @@ namespace Aiursoft.Pylon.Models.Probe.TokenAddressModels
         public string AccessToken { get; set; }
         [Required]
         public string SiteName { get; set; }
-        [Required]
         public string UnderPath { get; set; }
         /// <summary>
         /// Upload,Download

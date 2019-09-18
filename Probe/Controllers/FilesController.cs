@@ -55,7 +55,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to upload files to this site.");
             }
-            if (!model.FolderNames.StartsWith(token.UnderPath))
+            if (!string.IsNullOrWhiteSpace(token.UnderPath) || !model.FolderNames.StartsWith(token.UnderPath))
             {
                 return this.Protocol(ErrorType.Unauthorized, $"Your token not authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
             }
