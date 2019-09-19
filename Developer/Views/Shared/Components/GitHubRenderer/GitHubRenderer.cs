@@ -9,15 +9,21 @@ namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
     public class GitHubRenderer : ViewComponent
     {
         private readonly HTTPService _http;
-        public GitHubRenderer(HTTPService http)
+        private readonly AiurCache _cache;
+
+        public GitHubRenderer(
+            HTTPService http,
+            AiurCache cache)
         {
             _http = http;
+            _cache = cache;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string org, string repo)
         {
             var markdownUrl = $"https://raw.githubusercontent.com/{org}/{repo}/master/README.md";
-            var markdown = await _http.Get(new AiurUrl(markdownUrl), false);
+            var markdown = await _cache.GetAndCache($"github.{org}.{repo}.cache",
+                async () => await _http.Get(new AiurUrl(markdownUrl), false));
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .Build();
