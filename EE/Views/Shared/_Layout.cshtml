@@ -118,5 +118,6 @@
     @this.UseAiurMarketJs()
     <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </body>
 </html>

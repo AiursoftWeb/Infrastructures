@@ -11,6 +11,8 @@
     <Description>Colossus is a file uploader and downloader as an OSS example application.</Description>
     <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <ApplicationInsightsResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ColossusHK</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ColossusHK</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
