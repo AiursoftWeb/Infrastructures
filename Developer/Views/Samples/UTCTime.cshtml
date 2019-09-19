@@ -86,11 +86,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            @await Component.InvokeAsync(typeof(GitHubRenderer), new GitHubRendererArgs
-            {
-                Org = "Anduin2017",
-                Repo = "jquery-utc-time"
-            })
+            <vc:git-hub-renderer org="Anduin2017" repo="jquery-utc-time"></vc:git-hub-renderer>
         </div>
     </div>
 </div>
