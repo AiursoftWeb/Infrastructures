@@ -16,5 +16,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         public string SiteName { get; set; }
         public string Path { get; set; }
         public string AppName { get; set; }
+        public string AccessToken { get; set; }
     }
 }

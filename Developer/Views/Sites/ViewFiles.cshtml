@@ -126,9 +126,27 @@
             </div>
         </div>
     </div>
+
+    <div class="card mb-5">
+        <div class="card-header">
+            <i class="fa fa-book"></i>
+            Upload new file here
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>@Localizer["Upload file here"]</label>
+                <vc:aiur-uploader-with-access-token asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file="" access-token="@Model.AccessToken"></vc:aiur-uploader-with-access-token>
+            </div>
+        </div>
+    </div>
 </div>
 
+@section css{
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
+}
+
 @section js{
+    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script>
         var sortData = function () {
             $('.my-datatable').dataTable({
@@ -138,5 +156,21 @@
             $('#sortButton').addClass('d-none');
         }
         sortData();
+    </script>
+    <script>
+        var updateButtons = function () {
+            var value = $("[name=file]").attr('data-internet-path');
+            if (value && value.length > 0) {
+                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
+                $("[name=file]").attr('data-internet-path', '');
+            }
+        };
+
+        var loopRenderJobs = function () {
+            updateButtons();
+            setTimeout(loopRenderJobs, 100);
+        };
+        loopRenderJobs();
+
     </script>
 }

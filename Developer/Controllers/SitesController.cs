@@ -129,7 +129,8 @@ namespace Aiursoft.Developer.Controllers
                     AppId = appId,
                     SiteName = siteName,
                     AppName = app.AppName,
-                    Path = path
+                    Path = path,
+                    AccessToken = token
                 };
                 return View(model);
             }
