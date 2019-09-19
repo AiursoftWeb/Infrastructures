@@ -24,6 +24,7 @@ namespace Aiursoft.Pylon.Services
             _tokenService = tokenService;
         }
 
+        [Obsolete(message: "We strongly suggest using the PBToken + Probe API to upload file to Probe to get better performance.")]
         public async Task<UploadFileViewModel> SaveToProbe(IFormFile file, string siteName, string path, SaveFileOptions options, string accessToken = null)
         {
             string fileName = options == SaveFileOptions.RandomName ?
