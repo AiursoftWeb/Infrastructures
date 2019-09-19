@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Version>0.16.1</Version>
+    <Version>0.16.2</Version>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Title>Aiursoft.Pylon</Title>
     <AssemblyName>Aiursoft.Pylon</AssemblyName>
@@ -17,11 +17,12 @@
     <RepositoryUrl>https://github.com/AiursoftWeb/Pylon.git</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Polly" Version="7.1.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
-    <PackageReference Include="SendGrid" Version="9.11.0" />
+    <PackageReference Include="Polly" Version="7.1.1" />
+    <PackageReference Include="SendGrid" Version="9.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 </Project>
