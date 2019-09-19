@@ -7,8 +7,6 @@ using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Controllers
@@ -17,19 +15,16 @@ namespace Aiursoft.Colossus.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly StorageService _storageService;
         private readonly SignInManager<ColossusUser> _signInManager;
         private readonly ServiceLocation _serviceLocation;
         private const int _defaultSize = 30 * 1024 * 1024;
 
         public HomeController(
             IConfiguration configuration,
-            StorageService storageService,
             SignInManager<ColossusUser> signInManager,
             ServiceLocation serviceLocation)
         {
             _configuration = configuration;
-            _storageService = storageService;
             _signInManager = signInManager;
             _serviceLocation = serviceLocation;
         }
@@ -42,26 +37,6 @@ namespace Aiursoft.Colossus.Controllers
                 MaxSize = _defaultSize
             };
             return View(model);
-        }
-
-        [HttpPost]
-        [APIExpHandler]
-        [FileChecker(MaxSize = _defaultSize)]
-        [APIModelStateChecker]
-        public async Task<IActionResult> Upload()
-        {
-            if (HttpContext.Request.Form.Files.First().Length > _defaultSize)
-            {
-                return Unauthorized();
-            }
-            var file = Request.Form.Files.First();
-            var model = await _storageService
-                .SaveToProbe(file, _configuration["ColossusPublicSiteName"], $"{DateTime.UtcNow.Date.ToString("yyyy-MM-dd")}", SaveFileOptions.SourceName);
-            return Json(new AiurValue<string>(model.InternetPath)
-            {
-                Code = ErrorType.Success,
-                Message = "Uploaded!"
-            });
         }
 
         [HttpPost]
