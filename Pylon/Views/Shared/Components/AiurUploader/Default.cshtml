@@ -50,7 +50,12 @@
         fileInput.on('change', function () {
             var file = fileInput.prop("files")[0];
             var ext = getExtension(file.name);
+
             if (validExtensions.length > 0 && validExtensions.indexOf(ext) === -1) {
+                return;
+            }
+
+            if (file.size / 1024 / 1024 > @Model.SizeInMB) {
                 return;
             }
 
