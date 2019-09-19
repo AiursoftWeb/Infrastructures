@@ -62,6 +62,8 @@
 
             progress.removeClass('d-none');
             progressbar.css('width', '0%');
+            progressbar.removeClass('bg-success');
+            progressbar.addClass('progress-bar-animated');
 
             formData.append("file", file);
             formData.append("recursiveCreate", true);
@@ -80,6 +82,7 @@
                         myXhr.upload.addEventListener('progress', function (e) {
                             if (e.lengthComputable) {
                                 progressbar.css('width', 100 * e.loaded / e.total + '%');
+
                             }
                         }, false);
                     }
@@ -90,6 +93,8 @@
                     var probePath = data.siteName + '/' + data.filePath;
                     addressInput.val(probePath);
                     addressInput.attr('data-internet-path', data.internetPath);
+                    progressbar.addClass('bg-success');
+                    progressbar.removeClass('progress-bar-animated');
                     progressbar.css('width', '100%');
                 },
                 error: reset

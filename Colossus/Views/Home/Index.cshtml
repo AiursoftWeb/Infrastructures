@@ -1,4 +1,6 @@
 @model Aiursoft.Colossus.Models.HomeViewModels.IndexViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Home";
 }
@@ -19,19 +21,17 @@
         <div class="col-md-12 mt-5">
             <h2>@Localizer["Try now!"]</h2>
             <h3 id="uploadTitle">@Localizer["Upload your file here to share it."]</h3>
-            <form id="fileform" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
-                <input type="file" name="file" class="dropify" data-max-file-size="@(Model.SizeInMB)M" data-height="300" />
-                <div>
-                    <p>Max file size: @Model.SizeInMB MB.</p>
+            <div>
+                <vc:aiur-uploader asp-for="file" site-name="@Configuration["ColossusPublicSiteName"]" path="@DateTime.UtcNow.Date.ToString("yyyy-MM-dd")" size-in-mb="@Model.SizeInMB" allowed-extensions="" default-file=""></vc:aiur-uploader>
+                <div class="mt-2">
                     <a class="btn btn-success" asp-controller="Dashboard" asp-action="Index">
                         <i class="fa fa-upload"></i>
                         @Localizer["Sign in to enjoy 1000MB max file size!"]
                     </a>
-                    <input type="submit" class="btn btn-success" value="Upload" id="uploadButton" />
                     <a id="copyButton" class="btn btn-warning text-white" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
                     <a id="openButton" class="btn btn-primary" href="#" target="_blank">@Localizer["Open in new page"]</a>
                 </div>
-            </form>
+            </div>
             <label class="w-100 mt-3 mb-0">
                 @Localizer["By uploading, you agree to our "]
                 <a href="@Values.Footer["Terms"]" target="_blank">
@@ -146,6 +146,28 @@
 }
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script src="@ServiceLocation.UI/node_modules/jquery-progress-upload/src/jquery-progress-upload.js"></script>
-    <script src="~/js/site.js"></script>
+    <script>
+        var copyButton = $('#copyButton');
+        var openButton = $('#openButton');
+
+        var updateButtons = function () {
+            var value = $("[name=file]").attr('data-internet-path');
+            if (value && value.length > 0) {
+                copyButton.show();
+                openButton.show();
+                copyButton.attr('data-clipboard-text', value);
+                openButton.attr('href', value);
+            } else {
+                copyButton.hide();
+                openButton.hide();
+            }
+        };
+
+        var loopRenderJobs = function () {
+            updateButtons();
+            setTimeout(loopRenderJobs, 100);
+        };
+        loopRenderJobs();
+
+    </script>
 }
