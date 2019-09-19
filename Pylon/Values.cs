@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon
         {
             {"Home", "https://www.aiursoft.com"},
             {"Develop", "https://developer.aiursoft.com"},
-            {"Company", "#"},
+            {"Company", "https://github.com/AiursoftWeb"},
             {"Privacy", "https://www.aiursoft.com/docs/terms"},
             {"Terms", "https://www.aiursoft.com/docs/terms"},
             {"Wiki", "https://wiki.aiursoft.com"},
