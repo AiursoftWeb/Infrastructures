@@ -9,7 +9,6 @@ using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,25 +20,19 @@ namespace Aiursoft.Developer.Controllers
     public class AppsController : Controller
     {
         private readonly DeveloperDbContext _dbContext;
-        private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
         private readonly CoreApiService _coreApiService;
-        private readonly IConfiguration _configuration;
         private readonly SitesService _siteService;
 
         public AppsController(
             DeveloperDbContext dbContext,
-            StorageService storageService,
             AppsContainer appsContainer,
             CoreApiService coreApiService,
-            IConfiguration configuration,
             SitesService siteService)
         {
             _dbContext = dbContext;
-            _storageService = storageService;
             _appsContainer = appsContainer;
             _coreApiService = coreApiService;
-            _configuration = configuration;
             _siteService = siteService;
         }
 
@@ -229,21 +222,19 @@ namespace Aiursoft.Developer.Controllers
             return await _dbContext.Users.Include(t => t.MyApps).SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
 
-        [Route("Apps/{id}/ChangeIcon")]
+        [Route("Apps/{appId}/ChangeIcon")]
         [HttpPost]
-        [FileChecker]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeIcon([FromRoute]string id)
+        public async Task<IActionResult> ChangeIcon([FromRoute]string appId, string iconFile)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(ViewApp), new { id, JustHaveUpdated = true });
+                return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
             }
-            var appExists = await _dbContext.Apps.FindAsync(id);
-            var probeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["AppsIconSiteName"], id, SaveFileOptions.RandomName);
-            appExists.IconPath = $"{probeFile.SiteName}/{probeFile.FilePath}";
+            var appExists = await _dbContext.Apps.FindAsync(appId);
+            appExists.IconPath = iconFile;
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(ViewApp), new { id, JustHaveUpdated = true });
+            return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
         }
     }
 }
