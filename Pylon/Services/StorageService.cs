@@ -44,16 +44,10 @@ namespace Aiursoft.Pylon.Services
 
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string siteName, string path, string fileName)
         {
-            var filePath = $"{path}/{fileName}".TrimStart('/');
-            return $"{serviceLocation.Probe}/Download/Open/{siteName.ToUrlEncoded()}/{filePath.EncodePath()}";
+            var filePath = $"{siteName}/{path}/{fileName}".TrimStart('/');
+            return GetProbeDownloadAddress(serviceLocation, filePath);
         }
 
-        /// <summary>
-        /// Get downloadable file address for probe content.
-        /// </summary>
-        /// <param name="serviceLocation"></param>
-        /// <param name="fullpath">sitename/filepath/filename.extension</param>
-        /// <returns></returns>
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
         {
             return $"{serviceLocation.Probe}/Download/Open/{fullpath.EncodePath()}";
