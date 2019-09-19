@@ -26,7 +26,6 @@ namespace Aiursoft.Account.Controllers
         private readonly UserManager<AccountUser> _userManager;
         private readonly AccountSmsSender _smsSender;
         private readonly UserService _userService;
-        private readonly StorageService _storageService;
         private readonly AppsContainer _appsContainer;
         private readonly IConfiguration _configuration;
         private readonly DeveloperApiService _developerApiService;
@@ -36,7 +35,6 @@ namespace Aiursoft.Account.Controllers
             UserManager<AccountUser> userManager,
             AccountSmsSender smsSender,
             UserService userService,
-            StorageService storageService,
             AppsContainer appsContainer,
             IConfiguration configuration,
             DeveloperApiService developerApiSerivce,
@@ -45,7 +43,6 @@ namespace Aiursoft.Account.Controllers
             _userManager = userManager;
             _smsSender = smsSender;
             _userService = userService;
-            _storageService = storageService;
             _appsContainer = appsContainer;
             _configuration = configuration;
             _developerApiService = developerApiSerivce;
@@ -177,13 +174,13 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var model = new AvatarViewModel(user)
             {
-                JustHaveUpdated = justHaveUpdated
+                JustHaveUpdated = justHaveUpdated,
+                NewIconAddres = user.IconFilePath
             };
             return View(model);
         }
 
         [HttpPost]
-        [FileChecker]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Avatar(AvatarViewModel model)
         {
@@ -194,8 +191,7 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(cuser);
                 return View(model);
             }
-            var uploadedProbeFile = await _storageService.SaveToProbe(Request.Form.Files.First(), _configuration["UserIconSiteName"], DateTime.UtcNow.ToString("yyyy-MM-dd"), SaveFileOptions.RandomName);
-            cuser.IconFilePath = $"{uploadedProbeFile.SiteName}/{uploadedProbeFile.FilePath}";
+            cuser.IconFilePath = model.NewIconAddres;
             await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });

@@ -1,4 +1,6 @@
 @model Aiursoft.Account.Models.AccountViewModels.AvatarViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Avatar";
 }
@@ -37,8 +39,8 @@
                 <div class="row">
                     <form asp-controller="Account" asp-action="Avatar" method="post" class="col-md-10" enctype="multipart/form-data">
                         <h4 class="box-title">@Localizer["Upload Your profile picture"]</h4>
-                        <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@await UserImageGenerator.GetUserImageUrl(User)" />
-                        <p class="help margin-top-10">@Localizer["Only jpg, bmp, png images, 2M max, 2000px max height and 3000px max weight."]</p>
+                        <vc:aiur-uploader asp-for="@nameof(Model.NewIconAddres)" site-name="@Configuration["UserIconSiteName"]" path="@DateTime.UtcNow.ToString("yyyy-MM-dd")" size-in-mb="5" allowed-extensions="jpg png bmp" default-file="@Model.NewIconAddres"></vc:aiur-uploader>
+                        <p class="help margin-top-10">@Localizer["Only jpg, bmp, png images, 5MB max."]</p>
                         <div class="col-12 mt-3">
                             <button type="submit" data-disable-with="Uploading" class="btn btn-primary">@Localizer["Upload"]</button>
                         </div>
@@ -53,9 +55,4 @@
 }
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dropify').dropify();
-        });
-    </script>
 }

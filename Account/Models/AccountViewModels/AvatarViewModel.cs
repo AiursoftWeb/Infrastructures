@@ -11,5 +11,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         {
             base.Recover(user, 3, "Avatar");
         }
+        public string NewIconAddres { get; set; }
     }
 }
