@@ -8,7 +8,6 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -22,7 +21,6 @@ namespace Aiursoft.Developer.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly SitesService _sitesService;
         private readonly FoldersService _foldersService;
-        private readonly StorageService _storageService;
         private readonly FilesService _filesService;
 
         public SitesController(
@@ -30,14 +28,12 @@ namespace Aiursoft.Developer.Controllers
             AppsContainer appsContainer,
             SitesService sitesService,
             FoldersService foldersService,
-            StorageService storageService,
             FilesService filesService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _sitesService = sitesService;
             _foldersService = foldersService;
-            _storageService = storageService;
             _filesService = filesService;
         }
 
@@ -196,62 +192,6 @@ namespace Aiursoft.Developer.Controllers
                 model.Recover(user, app.AppName);
                 return View(model);
             }
-        }
-
-        [Route("Apps/{appId}/Sites/{siteName}/NewFile/{**path}")]
-        public async Task<IActionResult> NewFile(string appId, string siteName, string path)
-        {
-            var user = await GetCurrentUserAsync();
-            var app = await _dbContext.Apps.FindAsync(appId);
-            if (app == null)
-            {
-                return NotFound();
-            }
-            if (app.CreatorId != user.Id)
-            {
-                return Unauthorized();
-            }
-            var model = new NewFileViewModel(user)
-            {
-                AppId = appId,
-                SiteName = siteName,
-                Path = path,
-                AppName = app.AppName
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [FileChecker]
-        [Route("Apps/{appId}/Sites/{siteName}/NewFile/{**path}")]
-        public async Task<IActionResult> NewFile(NewFileViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            var app = await _dbContext.Apps.FindAsync(model.AppId);
-            if (app == null)
-            {
-                return NotFound();
-            }
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user, app.AppName);
-                return View(model);
-            }
-            var file = Request.Form.Files.First();
-            if (app.CreatorId != user.Id)
-            {
-                return Unauthorized();
-            }
-            if (!ModelState.IsValid)
-            {
-                model.ModelStateValid = false;
-                model.Recover(user, app.AppName);
-                return View(model);
-            }
-            string accessToken = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-            await _storageService.SaveToProbe(file, model.SiteName, model.Path, SaveFileOptions.SourceName, accessToken);
-            return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
         }
 
         [Route("Apps/{appId}/Sites/{siteName}/DeleteFolder/{**path}")]
