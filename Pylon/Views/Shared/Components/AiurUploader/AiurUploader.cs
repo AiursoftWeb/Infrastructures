@@ -26,7 +26,7 @@ namespace Aiursoft.Pylon.Views.Shared.Components.AiurUploader
                 string defaultFile,
                 string allowedExtensions)
         {
-            var accessToken = await _appsContainer.AccessToken();
+            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
             var token = await _tokenService.GetUploadTokenAsync(accessToken, siteName, "Upload", path);
             var model = new AiurUploaderViewModel
             {

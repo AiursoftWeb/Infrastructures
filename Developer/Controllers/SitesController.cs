@@ -123,6 +123,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 var data = await _foldersService.ViewContentAsync(token, siteName, path);
+                ViewData["AccessToken"] = token;
                 var model = new ViewFilesViewModel(user)
                 {
                     Folder = data.Value,
@@ -130,7 +131,6 @@ namespace Aiursoft.Developer.Controllers
                     SiteName = siteName,
                     AppName = app.AppName,
                     Path = path,
-                    AccessToken = token
                 };
                 return View(model);
             }

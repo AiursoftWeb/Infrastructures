@@ -9,7 +9,7 @@ namespace Aiursoft.Pylon.Models.Developer
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public App() { }
-        public App(string name, string description, Category category, Platform platform, string forceAppId = null, string forceAppSecret = null, string iconPath = null)
+        public App(string name, string description, Category category, Platform platform, string iconPath = null, string forceAppId = null, string forceAppSecret = null)
         {
             if (!string.IsNullOrWhiteSpace(forceAppId) && !string.IsNullOrWhiteSpace(forceAppSecret))
             {

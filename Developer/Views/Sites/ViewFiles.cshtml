@@ -135,7 +135,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label>@Localizer["Upload file here"]</label>
-                <vc:aiur-uploader-with-access-token asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file="" access-token="@Model.AccessToken"></vc:aiur-uploader-with-access-token>
+                <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file=""></vc:aiur-uploader>
             </div>
         </div>
     </div>
