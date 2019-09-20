@@ -51,6 +51,7 @@ namespace Aiursoft.API.Models.OAuthViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Captcha")]
         [Required]
         [StringLength(4)]
         public string CaptchaCode { get; set; }
