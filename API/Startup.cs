@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Aiursoft.API
 {
@@ -29,6 +30,12 @@ namespace Aiursoft.API
         {
             services.AddDbContext<APIDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+            });
 
             services.AddIdentity<APIUser, IdentityRole>(options => options.Password = Values.PasswordOptions)
                 .AddEntityFrameworkStores<APIDbContext>()
