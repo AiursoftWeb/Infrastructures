@@ -12,7 +12,7 @@ namespace Aiursoft.Pylon.Attributes
         /// <summary>
         /// Of b. For example: 30 x 1024 x 1024 = 30MB.
         /// </summary>
-        public long MaxSize { get; set; } = int.MaxValue;
+        public long MaxSize { get; set; } = long.MaxValue;
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);

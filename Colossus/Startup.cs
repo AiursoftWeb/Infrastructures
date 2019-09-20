@@ -23,7 +23,6 @@ namespace Aiursoft.Colossus
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureLargeFileUpload();
             services.AddDbContext<ColossusDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
