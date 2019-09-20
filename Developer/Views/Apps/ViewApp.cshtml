@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-2" style="border-right: 2px inset #eeeeee;">
             <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-appId="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3" method="post" enctype="multipart/form-data">
-                <vc:aiur-uploader asp-for="iconFile" site-name="@Configuration["AppsIconSiteName"]" path="@Model.AppId" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="@Model.AppIconAddress"></vc:aiur-uploader>
+                <vc:aiur-uploader asp-for="iconFile" site-name="@Configuration["AppsIconSiteName"]" path="@Model.AppId" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="@Model.IconPath"></vc:aiur-uploader>
             </form>
             <div class="col-md-12 mb-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -45,6 +45,7 @@
             </div>
         </div>
         <form asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId" method="post" enctype="multipart/form-data" class="col-md-10">
+            <input type="hidden" asp-for="IconPath" />
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab">
                     <div class="card mb-3">

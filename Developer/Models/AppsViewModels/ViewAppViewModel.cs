@@ -63,7 +63,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             DebugMode = thisApp.DebugMode;
             PrivacyStatementUrl = thisApp.PrivacyStatementUrl;
             LicenseUrl = thisApp.LicenseUrl;
-            AppIconAddress = thisApp.IconPath;
+            IconPath = thisApp.IconPath;
             AppDomain = thisApp.AppDomain;
             ViewOpenId = thisApp.ViewOpenId;
             ViewPhoneNumber = thisApp.ViewPhoneNumber;
@@ -77,7 +77,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool JustHaveUpdated { get; set; } = false;
         public string AppId { get; set; }
         public string AppSecret { get; set; }
-        public string AppIconAddress { get; set; }
         [Url]
         [Display(Name = "Privacy Statement Url")]
         public string PrivacyStatementUrl { get; set; }
@@ -113,13 +112,5 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }
-        public IEnumerable<ViewAblePermission> ViewAblePermission { get; set; }
-    }
-
-    public class ViewAblePermission
-    {
-        public int PermissionId { get; set; }
-        public string PermissionName { get; set; }
-        public bool Permitted { get; set; }
     }
 }
