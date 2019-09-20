@@ -309,6 +309,7 @@ namespace Aiursoft.API.Controllers
             return Redirect(model.ToRedirect);
         }
 
+        [AiurNoCache]
         [Route("get-captcha-image")]
         public IActionResult GetCaptchaImage()
         {
