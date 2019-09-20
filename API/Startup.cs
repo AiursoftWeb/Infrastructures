@@ -4,6 +4,7 @@ using Aiursoft.API.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -51,6 +52,7 @@ namespace Aiursoft.API
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
             services.AddTransient<ConfirmationEmailSender>();
+            services.AddTransient<ISessionBasedCaptcha, BasicLetterCaptcha>();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)

@@ -36,6 +36,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <img id="img-captcha" src="~/get-captcha-image" />
+                    </div>
+                    <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
+                </div>
+                <span asp-validation-for="CaptchaCode" class="text-danger"></span>
                 <button class="btn btn-primary btn-block" data-disable-with="Signing up..." type="submit">@Localizer["Sign up"]</button>
                 <label class="w-100 mt-3 mb-0">
                     @Localizer["By register, you agree to our "]

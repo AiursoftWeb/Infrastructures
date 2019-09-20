@@ -11,6 +11,7 @@ using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,7 @@ namespace Aiursoft.API.Controllers
         private readonly APIDbContext _dbContext;
         private readonly DeveloperApiService _apiService;
         private readonly ConfirmationEmailSender _emailSender;
+        private readonly ISessionBasedCaptcha _captcha;
 
         public OAuthController(
             UserManager<APIUser> userManager,
@@ -52,7 +54,8 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext context,
             DeveloperApiService developerApiService,
-            ConfirmationEmailSender emailSender)
+            ConfirmationEmailSender emailSender,
+            ISessionBasedCaptcha sessionBasedCaptcha)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -60,6 +63,7 @@ namespace Aiursoft.API.Controllers
             _dbContext = context;
             _apiService = developerApiService;
             _emailSender = emailSender;
+            _captcha = sessionBasedCaptcha;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -230,6 +234,10 @@ namespace Aiursoft.API.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (!_captcha.ValidateCaptchaCode(model.CaptchaCode, HttpContext.Session))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid captacha code!");
+            }
             App app;
             try
             {
@@ -301,6 +309,12 @@ namespace Aiursoft.API.Controllers
             return Redirect(model.ToRedirect);
         }
 
+        [Route("get-captcha-image")]
+        public IActionResult GetCaptchaImage()
+        {
+            var s = _captcha.GenerateCaptchaImageFileStream(HttpContext.Session, 100, 36);
+            return s;
+        }
 
         private void AddErrors(IdentityResult result)
         {
