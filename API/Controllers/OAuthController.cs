@@ -312,8 +312,7 @@ namespace Aiursoft.API.Controllers
         [Route("get-captcha-image")]
         public IActionResult GetCaptchaImage()
         {
-            var s = _captcha.GenerateCaptchaImageFileStream(HttpContext.Session);
-            return s;
+            return _captcha.GenerateCaptchaImageFileStream(HttpContext.Session, 100, 33);
         }
 
         private void AddErrors(IdentityResult result)

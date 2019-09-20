@@ -21,7 +21,7 @@
                 <input asp-for="ResponseType" type="hidden" />
                 <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
                 <div class="form-group">
-                    <label for="exampleInputEmail1">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
+                    <label asp-for="Email">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
                     <input type="email" asp-for="Email" class="form-control" placeholder="@Localizer["Enter your email account..."]" aria-describedby="emailHelp">
                 </div>
                 <div class="form-group">
@@ -36,13 +36,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <img id="img-captcha" src="~/get-captcha-image" />
+                <div class="form-group">
+                    <label asp-for="CaptchaCode"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <img src="~/get-captcha-image" />
+                        </div>
+                        <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
                     </div>
-                    <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
+                    <span asp-validation-for="CaptchaCode" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+
                 <button class="btn btn-primary btn-block" data-disable-with="Signing up..." type="submit">@Localizer["Sign up"]</button>
                 <label class="w-100 mt-3 mb-0">
                     @Localizer["By register, you agree to our "]
