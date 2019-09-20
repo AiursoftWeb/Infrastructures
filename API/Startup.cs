@@ -77,6 +77,7 @@ namespace Aiursoft.API
             }
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
             app.UseMvcWithDefaultRoute();
