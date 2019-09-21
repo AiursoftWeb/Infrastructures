@@ -95,8 +95,7 @@
                 },
                 success: function (data) {
                     window.onbeforeunload = function () { };
-                    var probePath = data.siteName + '/' + data.filePath;
-                    addressInput.val(probePath);
+                    addressInput.val(data.filePath);
                     addressInput.attr('data-internet-path', data.internetPath);
                     progressbar.addClass('bg-success');
                     progressbar.removeClass('progress-bar-animated');
