@@ -43,13 +43,13 @@ namespace Aiursoft.Probe.Controllers
             }
             if (site.AppId != appid)
             {
-                return this.Protocol(ErrorType.Unauthorized, $"The site you tried to delete is not your app's site.");
+                return this.Protocol(ErrorType.Unauthorized, $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
             }
             var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions);
             return Json(new AiurValue<string>(pbToken)
             {
                 Code = ErrorType.Success,
-                Message = $"Successfully get your pbToken! Use it before {deadline} UTC!"
+                Message = $"Successfully get your PBToken! Use it before {deadline} UTC!"
             });
         }
     }
