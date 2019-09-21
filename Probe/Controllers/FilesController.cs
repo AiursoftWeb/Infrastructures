@@ -57,7 +57,7 @@ namespace Aiursoft.Probe.Controllers
             }
             if (!string.IsNullOrWhiteSpace(token.UnderPath) && model.FolderNames != null && !model.FolderNames.StartsWith(token.UnderPath))
             {
-                return this.Protocol(ErrorType.Unauthorized, $"Your token not authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
+                return this.Protocol(ErrorType.Unauthorized, $"Your token is authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
