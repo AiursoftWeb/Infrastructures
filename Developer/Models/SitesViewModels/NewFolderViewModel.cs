@@ -2,6 +2,7 @@
 using Aiursoft.Pylon.Models.Developer;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Developer.Models.SitesViewModels
 {
@@ -20,6 +21,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         public string NewFolderName { get; set; }
 
         [FromRoute]
+        [Required]
         public string AppId { get; set; }
         [FromRoute]
         public string SiteName { get; set; }

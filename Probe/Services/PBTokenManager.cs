@@ -11,6 +11,9 @@ namespace Aiursoft.Probe.Services
     {
         public string SiteName { get; set; }
         public string UnderPath { get; set; }
+        /// <summary>
+        /// Upload, Download
+        /// </summary>
         public string Permissions { get; set; }
         public DateTime Expires { get; set; }
     }

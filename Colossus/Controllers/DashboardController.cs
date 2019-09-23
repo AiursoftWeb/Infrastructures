@@ -85,7 +85,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _sitesService.CreateNewSiteAsync(await accesstoken, model.SiteName);
+                await _sitesService.CreateNewSiteAsync(await accesstoken, model.SiteName, model.OpenToUpload);
                 user.SiteName = model.SiteName;
                 await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));

@@ -19,13 +19,14 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName)
+        public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload)
         {
             var url = new AiurUrl(_serviceLocation.Probe, "Sites", "CreateNewSite", new { });
             var form = new AiurUrl(string.Empty, new CreateNewSiteAddressModel
             {
                 AccessToken = accessToken,
-                NewSiteName = newSiteName
+                NewSiteName = newSiteName,
+                OpenToUpload = openToUpload
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);

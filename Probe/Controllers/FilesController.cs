@@ -7,6 +7,7 @@ using Aiursoft.Pylon.Models.Probe.FilesAddressModels;
 using Aiursoft.Pylon.Models.Probe.FilesViewModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
@@ -50,14 +51,24 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
-            var token = _pbTokenManager.ValidateAccessToken(model.PBToken);
-            if (token.SiteName != model.SiteName)
+            var site = await _dbContext
+                .Sites
+                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
+            if (!site.OpenToUpload)
             {
-                return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to upload files to this site.");
-            }
-            if (!string.IsNullOrWhiteSpace(token.UnderPath) && model.FolderNames != null && !model.FolderNames.StartsWith(token.UnderPath))
-            {
-                return this.Protocol(ErrorType.Unauthorized, $"Your token is authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
+                var token = _pbTokenManager.ValidateAccessToken(model.PBToken);
+                if (token.SiteName != model.SiteName)
+                {
+                    return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to upload files to this site.");
+                }
+                if (!token.Permissions.Contains("Upload"))
+                {
+                    return this.Protocol(ErrorType.Unauthorized, $"Your token was not authorized to upload. Your token is only permitted to '{token.Permissions}'");
+                }
+                if (!string.IsNullOrWhiteSpace(token.UnderPath) && model.FolderNames != null && !model.FolderNames.StartsWith(token.UnderPath))
+                {
+                    return this.Protocol(ErrorType.Unauthorized, $"Your token is authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
+                }
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
