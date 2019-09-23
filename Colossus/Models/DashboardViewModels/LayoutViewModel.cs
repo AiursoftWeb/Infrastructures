@@ -23,9 +23,9 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             HasASite = !string.IsNullOrWhiteSpace(user.SiteName);
         }
         public string UserName { get; set; }
+        public bool EmailConfirmed { get; set; }
         public int ActivePanel { get; set; }
         public string Title { get; set; }
-        public bool EmailConfirmed { get; set; }
         public bool HasASite { get; set; }
     }
 }
