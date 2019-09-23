@@ -12,5 +12,8 @@ namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
         [MinLength(5)]
         [ValidFolderName]
         public string NewSiteName { get; set; }
+
+        [Required]
+        public bool OpenToUpload { get; set; }
     }
 }

@@ -26,5 +26,9 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         [MinLength(5)]
         [ValidFolderName]
         public string SiteName { get; set; }
+
+        [Required]
+        [Display(Name = "Open to upload")]
+        public bool OpenToUpload { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace Aiursoft.Pylon.Models.Probe
         public Folder Root { get; set; }
 
         public string SiteName { get; set; }
+        public bool OpenToUpload { get; set; }
 
         public DateTime CreationTime { get; set; } = DateTime.UtcNow;
     }

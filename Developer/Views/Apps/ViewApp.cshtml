@@ -259,6 +259,7 @@
                                         <tr>
                                             <th>@Localizer["Site Name"]</th>
                                             <th>@Localizer["Create Time"]</th>
+                                            <th>@Localizer["Open to upload"]</th>
                                             <th>@Localizer["Operation"]</th>
                                         </tr>
                                     </thead>
@@ -268,6 +269,20 @@
                                             <tr>
                                                 <td>@site.SiteName</td>
                                                 <td data-utc-time="@site.CreationTime"></td>
+                                                <td>
+                                                    @if (site.OpenToUpload)
+                                                    {
+                                                        <label class="text-success">
+                                                            <i class="fa fa-check"></i>
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="text-danger">
+                                                            <i class="fa fa-times"></i>
+                                                        </label>
+                                                    }
+                                                </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>

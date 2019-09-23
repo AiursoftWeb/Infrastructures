@@ -27,6 +27,11 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [MinLength(5)]
         [ValidFolderName]
         public string SiteName { get; set; }
+
         public string AppName { get; set; }
+
+        [Required]
+        [Display(Name = "Open to upload")]
+        public bool OpenToUpload { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Aiursoft.Pylon.Models.Probe.TokenAddressModels
         public string SiteName { get; set; }
         public string UnderPath { get; set; }
         /// <summary>
-        /// Upload,Download
+        /// Upload, Download
         /// </summary>
         [Required]
         public string Permissions { get; set; }
