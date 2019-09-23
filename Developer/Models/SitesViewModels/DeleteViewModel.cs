@@ -24,6 +24,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         public bool ModelStateValid { get; set; } = true;
 
         [FromRoute]
+        [Required]
         public string AppId { get; set; }
 
         [Required]

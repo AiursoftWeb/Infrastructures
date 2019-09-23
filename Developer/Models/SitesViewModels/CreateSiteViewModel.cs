@@ -20,6 +20,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         }
 
         public bool ModelStateValid { get; set; } = true;
+        [Required]
         public string AppId { get; set; }
 
         [Required]

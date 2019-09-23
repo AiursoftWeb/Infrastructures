@@ -14,7 +14,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         }
 
-        public void Recover(DeveloperUser user,string appName)
+        public void Recover(DeveloperUser user, string appName)
         {
             AppName = appName;
             RootRecover(user, 5);
@@ -22,6 +22,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         public bool ModelStateValid { get; set; } = true;
 
+        [Required]
         public string AppId { get; set; }
 
         [Required]
