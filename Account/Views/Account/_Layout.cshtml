@@ -66,7 +66,7 @@
                 </li>
                 <li class="nav-item @(Model.ActivePanel == 6 ? " active":string.Empty)">
                     <a class="nav-link" asp-controller="Account" asp-action="TwoFactorAuthentication">
-                        <i class="fa fa-fw fa-code"></i>
+                        <i class="fa fa-fw fa-address-card"></i>
                         <span class="nav-link-text">
                             @Localizer["TwoFactorAuthentication"]
                         </span>
@@ -77,15 +77,6 @@
                         <i class="fa fa-fw fa-code"></i>
                         <span class="nav-link-text">
                             @Localizer["Develope"]
-                        </span>
-                    </a>
-                </li>
-
-                <li class="nav-item @(Model.ActivePanel == 7 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Test">
-                        <i class="fa fa-fw fa-pencil-square"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Test"]
                         </span>
                     </a>
                 </li>

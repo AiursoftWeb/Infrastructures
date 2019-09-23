@@ -355,7 +355,7 @@ namespace Aiursoft.Account.Controllers
         [HttpGet]
         public async Task<IActionResult> TwoFactorAuthentication()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetCurrentUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -385,8 +385,8 @@ namespace Aiursoft.Account.Controllers
                 JustHaveUpdated = justHaveUpdated
             };
             await LoadSharedKeyAndQrCodeUriAsync(user, model);
-            return View(model);
-            
+
+            return View(model);   
         }
 
         [HttpPost]
@@ -407,10 +407,8 @@ namespace Aiursoft.Account.Controllers
 
             // Strip spaces and hypens
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
-
             if (!is2faTokenValid)
             {
                 ModelState.AddModelError("Code", "Verification code is invalid.");
@@ -437,14 +435,9 @@ namespace Aiursoft.Account.Controllers
             }
 
             var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+
             return View(model);
         }
-
-        //[HttpGet]
-        //public IActionResult ResetAuthenticatorWarning()
-        //{
-        //    return View(nameof(ResetAuthenticator));
-        //}
 
         [HttpGet]
         public async Task<IActionResult> ResetAuthenticatorWarning(bool? justHaveUpdated)
@@ -454,6 +447,7 @@ namespace Aiursoft.Account.Controllers
             {
                 JustHaveUpdated = justHaveUpdated ?? false
             };
+
             return View(model);
         }
 
@@ -469,7 +463,6 @@ namespace Aiursoft.Account.Controllers
 
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
-            //_logger.LogInformation("User with id '{UserId}' has reset their authentication app key.", user.Id);
 
             return RedirectToAction(nameof(EnableAuthenticator));
         }
@@ -508,18 +501,17 @@ namespace Aiursoft.Account.Controllers
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
-            string tmp = string.Format(
+            return string.Format(
                 AuthenticatorUriFormat,
                 "Aiursoft.Account",
                 email,
                 unformattedKey);
-
-            return tmp;
             //return string.Format(
             //    AuthenticatorUriFormat,
             //    _urlEncoder.Encode("Aiursoft.Account"),
             //    _urlEncoder.Encode(email),
             //    unformattedKey);
+            // _urlEncoder.Encode cant be used
         }
 
         private async Task LoadSharedKeyAndQrCodeUriAsync(AccountUser user, EnableAuthenticatorViewModel model)
@@ -536,16 +528,5 @@ namespace Aiursoft.Account.Controllers
         }
 
         #endregion
-
-        public async Task<IActionResult> Test(bool? justHaveUpdated)
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new IndexViewModel(user)
-            {
-                JustHaveUpdated = justHaveUpdated ?? false
-            };
-            return View(model);
-        }
-
     }
 }
