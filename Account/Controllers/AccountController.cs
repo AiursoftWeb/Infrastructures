@@ -11,10 +11,13 @@ using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Controllers
@@ -30,6 +33,11 @@ namespace Aiursoft.Account.Controllers
         private readonly IConfiguration _configuration;
         private readonly DeveloperApiService _developerApiService;
         private readonly AuthService<AccountUser> _authService;
+
+        private readonly UrlEncoder _urlEncoder;
+        private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
+        private readonly ILogger _logger;
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public AccountController(
             UserManager<AccountUser> userManager,
@@ -344,9 +352,200 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> TwoFactorAuthentication()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new TwoFactorAuthenticationViewModel(user)
+            {
+                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
+                Is2faEnabled = user.TwoFactorEnabled,
+                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EnableAuthenticator(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new EnableAuthenticatorViewModel(user)
+            {
+                JustHaveUpdated = justHaveUpdated
+            };
+            await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            return View(model);
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                return View(model);
+            }
+
+            // Strip spaces and hypens
+            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+            if (!is2faTokenValid)
+            {
+                ModelState.AddModelError("Code", "Verification code is invalid.");
+                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                return View(model);
+            }
+
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+            _logger.LogInformation("User with ID {UserId} has enabled 2FA with an authenticator app.", user.Id);
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+            TempData[RecoveryCodesKey] = recoveryCodes.ToArray();
+
+            return RedirectToAction(nameof(ShowRecoveryCodes));
+        }
+
+        [HttpGet]
+        public IActionResult ShowRecoveryCodes()
+        {
+            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
+            if (recoveryCodes == null)
+            {
+                //return RedirectToAction(nameof(TwoFactorAuthentication));
+                return RedirectToAction(nameof(Index));
+            }
+
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+            return View(model);
+        }
+
+        //[HttpGet]
+        //public IActionResult ResetAuthenticatorWarning()
+        //{
+        //    return View(nameof(ResetAuthenticator));
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> ResetAuthenticatorWarning(bool? justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new IndexViewModel(user)
+            {
+                JustHaveUpdated = justHaveUpdated ?? false
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetAuthenticator()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            //_logger.LogInformation("User with id '{UserId}' has reset their authentication app key.", user.Id);
+
+            return RedirectToAction(nameof(EnableAuthenticator));
+        }
+
         private async Task<AccountUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(User);
         }
+
+        #region Helpers
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        private string FormatKey(string unformattedKey)
+        {
+            var result = new StringBuilder();
+            int currentPosition = 0;
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                currentPosition += 4;
+            }
+            if (currentPosition < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition));
+            }
+
+            return result.ToString().ToLowerInvariant();
+        }
+
+        private string GenerateQrCodeUri(string email, string unformattedKey)
+        {
+            string tmp = string.Format(
+                AuthenticatorUriFormat,
+                "Aiursoft.Account",
+                email,
+                unformattedKey);
+
+            return tmp;
+            //return string.Format(
+            //    AuthenticatorUriFormat,
+            //    _urlEncoder.Encode("Aiursoft.Account"),
+            //    _urlEncoder.Encode(email),
+            //    unformattedKey);
+        }
+
+        private async Task LoadSharedKeyAndQrCodeUriAsync(AccountUser user, EnableAuthenticatorViewModel model)
+        {
+            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            if (string.IsNullOrEmpty(unformattedKey))
+            {
+                await _userManager.ResetAuthenticatorKeyAsync(user);
+                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            }
+
+            model.SharedKey = FormatKey(unformattedKey);
+            model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+        }
+
+        #endregion
+
+        public async Task<IActionResult> Test(bool? justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new IndexViewModel(user)
+            {
+                JustHaveUpdated = justHaveUpdated ?? false
+            };
+            return View(model);
+        }
+
     }
 }

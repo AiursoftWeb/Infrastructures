@@ -1,0 +1,8 @@
+﻿@model TwoFactorAuthenticationViewModel
+@{
+    ViewData["Title"] = "Two-factor authentication";
+    //ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+<a asp-action="EnableAuthenticator" class="btn btn-default">Configure authenticator app</a>
+<a asp-action="ResetAuthenticatorWarning" class="btn btn-default">Reset authenticator key</a>
