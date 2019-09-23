@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.17.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
