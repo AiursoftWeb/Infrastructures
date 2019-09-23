@@ -12,7 +12,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             RootRecover(user, 2, "Settings");
         }
 
-        public bool HasASite { get; set; }
         public long SiteSize { get; set; }
     }
 }
