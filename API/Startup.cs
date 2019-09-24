@@ -60,7 +60,7 @@ namespace Aiursoft.API
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
             services.AddTransient<ConfirmationEmailSender>();
-            services.AddTransient<ISessionBasedCaptcha, BasicLetterCaptcha>();
+            services.AddSessionBasedCaptcha();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
