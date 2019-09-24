@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System;
@@ -152,7 +153,7 @@ namespace Aiursoft.Pylon
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var context = services.GetService<TContext>();
                 var configuration = services.GetService<IConfiguration>();
-                var env = services.GetService<IHostingEnvironment>();
+                var env = services.GetService<IWebHostEnvironment>();
 
                 var connectionString = configuration.GetConnectionString("DatabaseConnection");
                 try
