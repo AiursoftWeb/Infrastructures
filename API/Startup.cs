@@ -28,6 +28,7 @@ namespace Aiursoft.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<APIDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
@@ -62,7 +63,7 @@ namespace Aiursoft.API
             services.AddTransient<ISessionBasedCaptcha, BasicLetterCaptcha>();
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -79,8 +80,10 @@ namespace Aiursoft.API
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseLanguageSwitcher();
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
         }
     }

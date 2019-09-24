@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.WWW
 {
@@ -21,6 +22,7 @@ namespace Aiursoft.WWW
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<WWWDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
@@ -36,7 +38,7 @@ namespace Aiursoft.WWW
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -54,7 +56,8 @@ namespace Aiursoft.WWW
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

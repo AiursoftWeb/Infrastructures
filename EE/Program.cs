@@ -1,7 +1,5 @@
-﻿using Aiursoft.EE.Data;
-using Aiursoft.Pylon;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.EE
 {
@@ -9,15 +7,16 @@ namespace Aiursoft.EE
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
-                .MigrateDbContext<EEDbContext>()
-                .Run();
+            BuildHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
-                .UseStartup<Startup>()
-                .Build();
+        public static IHost BuildHost(string[] args)
+        {
+            var host = Host.CreateDefaultBuilder(args)
+                 .ConfigureWebHostDefaults(t => t.UseStartup<Startup>())
+                 .Build();
+
+            return host;
+        }
     }
 }
