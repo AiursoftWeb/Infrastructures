@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.EE.Data;
+using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.EE
@@ -7,7 +9,9 @@ namespace Aiursoft.EE
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<EEDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)

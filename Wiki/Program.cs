@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Wiki.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Wiki
@@ -7,7 +9,9 @@ namespace Aiursoft.Wiki
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<WikiDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)

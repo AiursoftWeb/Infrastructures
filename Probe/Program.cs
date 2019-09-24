@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.Probe.Data;
+using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Probe
@@ -7,7 +9,9 @@ namespace Aiursoft.Probe
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<ProbeDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)

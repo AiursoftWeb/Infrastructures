@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.Account.Data;
+using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Account
@@ -7,7 +9,9 @@ namespace Aiursoft.Account
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<AccountDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)

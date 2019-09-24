@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.API.Data;
+using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.API
@@ -7,7 +9,9 @@ namespace Aiursoft.API
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<APIDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)

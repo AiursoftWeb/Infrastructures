@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Aiursoft.Developer.Data;
+using Aiursoft.Pylon;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Developer
@@ -7,7 +9,9 @@ namespace Aiursoft.Developer
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .MigrateDbContext<DeveloperDbContext>()
+                .Run();
         }
 
         public static IHost BuildHost(string[] args)
