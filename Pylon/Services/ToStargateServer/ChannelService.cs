@@ -21,13 +21,13 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             _http = http;
         }
 
-        public async Task<CreateChannelViewModel> CreateChannelAsync(string AccessToken, string Description)
+        public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "CreateChannel", new { });
             var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
             {
-                AccessToken = AccessToken,
-                Description = Description
+                AccessToken = accessToken,
+                Description = description
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
@@ -36,12 +36,12 @@ namespace Aiursoft.Pylon.Services.ToStargateServer
             return jResult;
         }
 
-        public async Task<AiurProtocol> ValidateChannelAsync(int Id, string Key)
+        public async Task<AiurProtocol> ValidateChannelAsync(int id, string key)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ValidateChannel", new ChannelAddressModel
             {
-                Id = Id,
-                Key = Key
+                Id = id,
+                Key = key
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);

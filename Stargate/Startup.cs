@@ -25,9 +25,13 @@ namespace Aiursoft.Stargate
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<StargateDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
-            services.AddMvc();
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddTokenManager();
 
@@ -46,7 +50,7 @@ namespace Aiursoft.Stargate
             services.AddScoped<IPusher, WebSocketPusher>();
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -59,10 +63,11 @@ namespace Aiursoft.Stargate
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseWebSockets();
-            app.UseMvcWithDefaultRoute();
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Test");
+            app.UseWebSockets();
             app.UseDocGenerator();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }
