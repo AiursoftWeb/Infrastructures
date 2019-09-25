@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Wiki.Data;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Wiki
 {
@@ -9,19 +9,16 @@ namespace Aiursoft.Wiki
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
+            CreateHostBuilder(args)
+                .Build()
                 .MigrateDbContext<WikiDbContext>()
                 .Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            var host = WebHost.CreateDefaultBuilder(args)
-                 .UseApplicationInsights()
-                 .UseStartup<Startup>()
-                 .Build();
-
-            return host;
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
         }
     }
 }

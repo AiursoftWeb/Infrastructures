@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Pylon;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Account
 {
@@ -9,19 +9,16 @@ namespace Aiursoft.Account
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
+            CreateHostBuilder(args)
+                .Build()
                 .MigrateDbContext<AccountDbContext>()
                 .Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            var host = WebHost.CreateDefaultBuilder(args)
-                 .UseApplicationInsights()
-                 .UseStartup<Startup>()
-                 .Build();
-
-            return host;
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
         }
     }
 }

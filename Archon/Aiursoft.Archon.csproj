@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ArchonHK</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ArchonHK</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>

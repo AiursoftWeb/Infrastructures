@@ -2,25 +2,22 @@
 
   <PropertyGroup>
     <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>Aiursoft.Colossus</AssemblyName>
     <PackageId>Aiursoft.Colossus</PackageId>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>Colossus is a file uploader and downloader as an OSS example application.</Description>
-    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <Description>Colossus is a file uploader and downloader as an Probe example application.</Description>
     <ApplicationInsightsResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ColossusHK</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/ColossusHK</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.0" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />

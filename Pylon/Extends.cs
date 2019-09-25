@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System;
@@ -144,15 +145,15 @@ namespace Aiursoft.Pylon
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
         }
 
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
+        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
         {
-            using (var scope = webHost.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var context = services.GetService<TContext>();
                 var configuration = services.GetService<IConfiguration>();
-                var env = services.GetService<IHostingEnvironment>();
+                var env = services.GetService<IWebHostEnvironment>();
 
                 var connectionString = configuration.GetConnectionString("DatabaseConnection");
                 try
@@ -190,7 +191,7 @@ namespace Aiursoft.Pylon
                 }
             }
 
-            return webHost;
+            return host;
         }
 
         public static IServiceCollection AddAiursoftAuth<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
