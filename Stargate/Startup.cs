@@ -28,7 +28,10 @@ namespace Aiursoft.Stargate
             services.AddApplicationInsightsTelemetry();
             services.AddDbContext<StargateDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
-            services.AddMvc();
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddTokenManager();
 

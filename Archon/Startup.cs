@@ -14,7 +14,9 @@ namespace Aiursoft.Archon
         {
             services.AddApplicationInsightsTelemetry();
 
-            services.AddControllersWithViews();
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();

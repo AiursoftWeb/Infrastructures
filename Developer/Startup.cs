@@ -36,6 +36,7 @@ namespace Aiursoft.Developer
 
             services
                 .AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

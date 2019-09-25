@@ -30,7 +30,9 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddMvc();
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddAiursoftAuth<WikiUser>();
             services.AddTransient<Seeder>();

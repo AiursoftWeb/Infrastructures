@@ -32,7 +32,9 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc()
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             services.AddAiursoftAuth<EEUser>();

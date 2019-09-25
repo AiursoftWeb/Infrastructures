@@ -47,7 +47,9 @@ namespace Aiursoft.API
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
