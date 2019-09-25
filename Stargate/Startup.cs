@@ -39,9 +39,9 @@ namespace Aiursoft.Stargate
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<Counter>();
             services.AddSingleton<AppsContainer>();
-            services.AddSingleton<ArchonApiService>();
             services.AddSingleton<StargateMemory>();
             services.AddSingleton<TimeoutCleaner>();
+            services.AddScoped<ArchonApiService>();
             services.AddScoped<HTTPService>();
             services.AddScoped<ChannelService>();
             services.AddScoped<PushMessageService>();
