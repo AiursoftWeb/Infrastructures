@@ -6,6 +6,7 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,7 @@ namespace Aiursoft.Probe
         {
             services.AddApplicationInsightsTelemetry();
 
-            services.ConfigureLargeFileUpload();
+            services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 
             services.AddDbContext<ProbeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));

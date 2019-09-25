@@ -8,7 +8,6 @@ using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -106,14 +105,6 @@ namespace Aiursoft.Pylon
         {
             app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
             return app;
-        }
-
-        public static IServiceCollection ConfigureLargeFileUpload(this IServiceCollection services)
-        {
-            return services.Configure<FormOptions>(x =>
-            {
-                x.MultipartBodyLengthLimit = long.MaxValue;
-            });
         }
 
         public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
