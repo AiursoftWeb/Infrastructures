@@ -81,12 +81,13 @@ namespace Aiursoft.Probe.Services
         private async Task GetReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
             var sourceFileInfo = new FileInfo(sourceImage);
-            if (File.Exists(saveTarget))
+            if (File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
             {
-                if (new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
-                {
-                    return;
-                }
+                return;
+            }
+            else
+            {
+                File.Create(saveTarget);
             }
             await Task.Run(() =>
             {
