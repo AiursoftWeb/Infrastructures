@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Wiki
 {
@@ -23,23 +22,20 @@ namespace Aiursoft.Wiki
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<WikiDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
+            services.AddMvc();
 
             services.AddAiursoftAuth<WikiUser>();
             services.AddTransient<Seeder>();
             services.AddTransient<MarkDownGenerator>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -56,8 +52,7 @@ namespace Aiursoft.Wiki
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

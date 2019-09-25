@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Pylon;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Probe
 {
@@ -9,16 +9,19 @@ namespace Aiursoft.Probe
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<ProbeDbContext>()
+            BuildWebHost(args)
+                .MigrateDbContext<ProbeDbContext>((db, services) => db.Seed(services))
                 .Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
+        public static IWebHost BuildWebHost(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            var host = WebHost.CreateDefaultBuilder(args)
+                 .UseApplicationInsights()
+                 .UseStartup<Startup>()
+                 .Build();
+
+            return host;
         }
     }
 }
