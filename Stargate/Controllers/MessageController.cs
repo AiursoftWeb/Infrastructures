@@ -31,6 +31,7 @@ namespace Aiursoft.Stargate.Controllers
             _tokenManager = tokenManager;
         }
 
+        [HttpPost]
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
         {
             //Ensure app
