@@ -65,9 +65,9 @@ namespace Aiursoft.Stargate
             }
             app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Test");
             app.UseWebSockets();
-            app.UseDocGenerator();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseDocGenerator();
         }
     }
 }
