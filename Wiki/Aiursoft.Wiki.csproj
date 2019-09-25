@@ -2,23 +2,26 @@
 
   <PropertyGroup>
     <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Aiursoft.Wiki</AssemblyName>
     <PackageId>Aiursoft.Wiki</PackageId>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>The wiki center for aiursoft.</Description>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <ApplicationInsightsResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/WikiHK</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/71480737-25ec-4638-aa39-1c3a9a20f354/resourcegroups/AiursoftHK/providers/microsoft.insights/components/WikiHK</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+    <PackageReference Include="Markdig" Version="0.17.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.17.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.0" />
+    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />

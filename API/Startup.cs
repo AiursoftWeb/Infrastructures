@@ -28,7 +28,6 @@ namespace Aiursoft.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<APIDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
@@ -47,9 +46,7 @@ namespace Aiursoft.API
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
+            services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
@@ -62,10 +59,10 @@ namespace Aiursoft.API
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<APISMSSender>();
             services.AddTransient<ConfirmationEmailSender>();
-            services.AddSessionBasedCaptcha();
+            services.AddTransient<ISessionBasedCaptcha, BasicLetterCaptcha>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -82,10 +79,8 @@ namespace Aiursoft.API
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
-            app.UseAuthorization();
             app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseMvcWithDefaultRoute();
             app.UseDocGenerator();
         }
     }
