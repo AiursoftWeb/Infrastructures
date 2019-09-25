@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Pylon.Models;
-using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,17 +7,12 @@ namespace Aiursoft.Pylon.Services
 {
     public class HTTPService
     {
-        private readonly ILogger _logger;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly CookieContainer _cc;
+        private readonly HttpClient _client;
 
         public HTTPService(
-            ILogger<HTTPService> logger,
             IHttpClientFactory clientFactory)
         {
-            _logger = logger;
-            _clientFactory = clientFactory;
-            _cc = new CookieContainer();
+            _client = clientFactory.CreateClient();
         }
 
         public async Task<string> Get(AiurUrl url, bool internalRequest)
@@ -35,7 +29,7 @@ namespace Aiursoft.Pylon.Services
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
 
-            var response = await _clientFactory.CreateClient().SendAsync(request);
+            var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -59,7 +53,7 @@ namespace Aiursoft.Pylon.Services
             };
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
-            var response = await _clientFactory.CreateClient().SendAsync(request);
+            var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
