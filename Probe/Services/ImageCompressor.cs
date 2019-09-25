@@ -85,10 +85,7 @@ namespace Aiursoft.Probe.Services
             {
                 return;
             }
-            else
-            {
-                File.Create(saveTarget);
-            }
+            File.OpenWrite(saveTarget).Close();
             await Task.Run(() =>
             {
                 var image = Image.Load(sourceImage, out IImageFormat format);
