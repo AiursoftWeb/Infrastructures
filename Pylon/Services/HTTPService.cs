@@ -53,7 +53,7 @@ namespace Aiursoft.Pylon.Services
                 url.Address = url.Address.Replace("https://", "http://");
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url.Address)
+            var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
             {
                 Content = new FormUrlEncodedContent(postDataStr.Params)
             };
