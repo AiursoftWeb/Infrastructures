@@ -205,7 +205,6 @@ namespace Aiursoft.Pylon
             services.AddScoped<FoldersService>();
             services.AddScoped<FilesService>();
             services.AddScoped<TokenService>();
-            services.AddScoped<StorageService>();
             services.AddScoped<CoreApiService>();
             services.AddScoped<AccountService>();
             services.AddScoped<UserImageGenerator<TUser>>();
