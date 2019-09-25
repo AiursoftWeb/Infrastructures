@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.EE
 {
@@ -22,6 +23,7 @@ namespace Aiursoft.EE
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<EEDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
@@ -30,14 +32,16 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc()
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             services.AddAiursoftAuth<EEUser>();
             services.AddTransient<ScriptsFilter>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -55,7 +59,8 @@ namespace Aiursoft.EE
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

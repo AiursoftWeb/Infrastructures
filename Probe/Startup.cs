@@ -23,9 +23,16 @@ namespace Aiursoft.Probe
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.ConfigureLargeFileUpload();
+
             services.AddDbContext<ProbeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
@@ -40,10 +47,10 @@ namespace Aiursoft.Probe
             services.AddTransient<FolderOperator>();
             services.AddTransient<FolderRefactor>();
             services.AddTransient<AiurCache>();
-            services.AddMvc();
+
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ProbeCORSMiddleware>();
             if (env.IsDevelopment())
@@ -57,7 +64,8 @@ namespace Aiursoft.Probe
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
         }
     }

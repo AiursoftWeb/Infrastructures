@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Archon
 {
@@ -7,16 +7,16 @@ namespace Aiursoft.Archon
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
-                .Run();
+            BuildHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static IHost BuildHost(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                 .UseApplicationInsights()
-                 .UseStartup<Startup>()
+            var host = Host.CreateDefaultBuilder(args)
+                 .ConfigureWebHostDefaults(t => t.UseStartup<Startup>())
                  .Build();
+
+            return host;
         }
     }
 }
