@@ -189,6 +189,7 @@ namespace Aiursoft.Pylon
             services.AddSingleton<AppsContainer>();
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<ArchonApiService>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<SitesService>();

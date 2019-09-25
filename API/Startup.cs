@@ -55,6 +55,7 @@ namespace Aiursoft.API
 
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<ServiceLocation>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddScoped<GrantChecker>();

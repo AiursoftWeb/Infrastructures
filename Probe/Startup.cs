@@ -38,6 +38,7 @@ namespace Aiursoft.Probe
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<PBKeyPair>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
             services.AddTransient<PBRSAService>();

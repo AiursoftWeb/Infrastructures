@@ -20,6 +20,7 @@ namespace Aiursoft.Archon
 
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddTransient<AiurCache>();
