@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Pylon.Models;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
@@ -19,7 +20,7 @@ namespace Aiursoft.Pylon.Services
         {
             if (internalRequest)
             {
-                url.Address = url.Address.Replace("https://", "http://");
+                url.Address = Regex.Replace(url.Address, "^https://", "http://", RegexOptions.Compiled);
             }
 
             var request = new HttpRequestMessage(HttpMethod.Get, url.Address)
@@ -44,7 +45,7 @@ namespace Aiursoft.Pylon.Services
         {
             if (internalRequest)
             {
-                url.Address = url.Address.Replace("https://", "http://");
+                url.Address = Regex.Replace(url.Address, "^https://", "http://", RegexOptions.Compiled);
             }
 
             var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
@@ -60,7 +61,7 @@ namespace Aiursoft.Pylon.Services
             }
             else
             {
-                throw new WebException(response.ReasonPhrase);
+                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
     }
