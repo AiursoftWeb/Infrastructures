@@ -39,20 +39,13 @@ namespace Aiursoft.Stargate.Services
 
         private async void DoWork(object state)
         {
-            try
+            _logger.LogInformation("Cleaner task started!");
+            using (var scope = _scopeFactory.CreateScope())
             {
-                _logger.LogInformation("Cleaner task started!");
-                using (var scope = _scopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
-                    await AllClean(dbContext);
-                }
+                var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
+                await AllClean(dbContext);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred.");
-            }
-
+            _logger.LogInformation("Cleaner task finished!");
         }
 
         public async Task AllClean(StargateDbContext dbContext)
