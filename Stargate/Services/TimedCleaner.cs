@@ -1,8 +1,10 @@
 ﻿using Aiursoft.Stargate.Data;
+using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,19 +12,22 @@ namespace Aiursoft.Stargate.Services
 {
     public class TimedCleaner : IHostedService, IDisposable
     {
-        private readonly ILogger _logger;
         private Timer _timer;
-        private IServiceScopeFactory _scopeFactory;
-        private TimeoutCleaner _timeoutCleaner;
+        private readonly ILogger _logger;
+        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly StargateMemory _memoryContext;
+        private readonly TelemetryClient _telemetryClient;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            TimeoutCleaner timeoutCleaner)
+            StargateMemory memoryContext,
+            TelemetryClient telemetryClient)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _timeoutCleaner = timeoutCleaner;
+            _memoryContext = memoryContext;
+            _telemetryClient = telemetryClient;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -40,7 +45,7 @@ namespace Aiursoft.Stargate.Services
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
-                    await _timeoutCleaner.AllClean(dbContext);
+                    await AllClean(dbContext);
                 }
             }
             catch (Exception ex)
@@ -48,6 +53,20 @@ namespace Aiursoft.Stargate.Services
                 _logger.LogError(ex, "An error occurred.");
             }
 
+        }
+
+        public async Task AllClean(StargateDbContext dbContext)
+        {
+            try
+            {
+                _memoryContext.Messages.RemoveAll(t => t.CreateTime < DateTime.UtcNow - new TimeSpan(0, 1, 0));
+                dbContext.Channels.RemoveRange(dbContext.Channels.Where(t => DateTime.UtcNow > t.CreateTime + TimeSpan.FromSeconds(t.LifeTime)));
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

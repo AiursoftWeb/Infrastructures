@@ -40,7 +40,6 @@ namespace Aiursoft.Stargate
             services.AddSingleton<Counter>();
             services.AddSingleton<AppsContainer>();
             services.AddSingleton<StargateMemory>();
-            services.AddSingleton<TimeoutCleaner>();
             services.AddHttpClient();
             services.AddScoped<ArchonApiService>();
             services.AddScoped<HTTPService>();
