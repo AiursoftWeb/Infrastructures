@@ -1,11 +1,11 @@
 ﻿using Aiursoft.Probe.Data;
-using Aiursoft.Probe.Middlewares;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,10 +25,12 @@ namespace Aiursoft.Probe
         {
             services.AddApplicationInsightsTelemetry();
 
-            //services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
+            services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 
             services.AddDbContext<ProbeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddCors();
 
             services
                 .AddControllersWithViews()
@@ -53,7 +55,6 @@ namespace Aiursoft.Probe
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ProbeCORSMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -65,6 +66,7 @@ namespace Aiursoft.Probe
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
