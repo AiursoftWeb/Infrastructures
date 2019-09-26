@@ -2,7 +2,7 @@
 {
     public static class StorageService
     {
-        public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string siteName, string path, string fileName)
+        public static string GetProbeDownloadAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
         {
             var fullPath = GetProbeFullPath(siteName, path, fileName);
             return GetProbeDownloadAddress(serviceLocation, fullPath);

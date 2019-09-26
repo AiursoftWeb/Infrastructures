@@ -97,7 +97,7 @@
                                 <tr>
                                     <td class="pl-4">
                                         <i class="fa fa-file-o text-primary"></i>
-                                        <a href="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                        <a href="@ServiceLocation.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
                                         </a>
                                     </td>
