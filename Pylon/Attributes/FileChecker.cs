@@ -30,7 +30,7 @@ namespace Aiursoft.Pylon.Attributes
                     context.ModelState.AddModelError("", "Please provide a file!");
                     return;
                 }
-                var file = context.HttpContext.Request.Form.Files.First();
+                var file = context.HttpContext.Request.Form.Files.FirstOrDefault();
                 // File is null
                 if (file == null)
                 {
