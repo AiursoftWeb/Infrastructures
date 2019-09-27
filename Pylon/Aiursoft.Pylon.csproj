@@ -10,13 +10,16 @@
     <Authors>Anduin</Authors>
     <Description>The base class, interfaces and services for Aiursoft web apps.</Description>
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
-    <PackageIconUrl>https://probe.aiursoft.com/Download/Open/aiursoft/512x512.png</PackageIconUrl>
+    <PackageIcon>pylon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AiursoftWeb/Pylon</PackageProjectUrl>
     <PackageLicense>https://opensource.org/licenses/MIT</PackageLicense>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/Pylon.git</RepositoryUrl>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="pylon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   <ItemGroup>
      <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
