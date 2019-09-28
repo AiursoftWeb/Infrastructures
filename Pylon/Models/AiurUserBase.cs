@@ -27,6 +27,11 @@ namespace Aiursoft.Pylon.Models
             Email = model.User.Email;
             Bio = model.User.Bio;
             EmailConfirmed = model.User.EmailConfirmed;
+
+            Bio2 = model.User.Bio2;
+            //TwoFACode = model.User.TwoFACode;
+            TwoFASharedKey = model.User.TwoFASharedKey;
+            //TowFAuthenticatorUri = model.User.TowFAuthenticatorUri;
         }
 
         [JsonProperty]
@@ -53,5 +58,18 @@ namespace Aiursoft.Pylon.Models
         public override string Email { get; set; }
         [NotMapped]
         public override bool PhoneNumberConfirmed => !string.IsNullOrEmpty(PhoneNumber);
+
+        /// <summary>
+        /// TwoFA
+        /// </summary>
+        //[JsonProperty]
+        //public virtual string TwoFACode { get; set; }
+        [JsonProperty]
+        public virtual string TwoFASharedKey { get; set; }
+
+        [JsonProperty]
+        public virtual string Bio2 { get; set; }
+        //[JsonProperty]
+        //public virtual string TowFAuthenticatorUri { get; set; }
     }
 }

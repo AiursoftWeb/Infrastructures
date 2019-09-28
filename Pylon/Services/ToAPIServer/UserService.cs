@@ -20,7 +20,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             _http = http;
         }
 
-        public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio)
+        public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio, string newBio2)
         {
             var url = new AiurUrl(_serviceLocation.API, "User", "ChangeProfile", new ChangeProfileAddressModel
             {
@@ -28,7 +28,8 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 OpenId = openId,
                 NewNickName = newNickName,
                 NewIconFilePathName = newIconFilePathName,
-                NewBio = newBio
+                NewBio = newBio,
+                NewBio2 = newBio2
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
@@ -187,6 +188,22 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurProtocol> SaveTwoFAAsync(string openId, string accessToken, string newTwoFASharekey)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "SaveTwoFA", new SetTwoFAAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId,
+                TwoFASharedKey = newTwoFASharekey                
+            });
+            var result = await _http.Get(url, true);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

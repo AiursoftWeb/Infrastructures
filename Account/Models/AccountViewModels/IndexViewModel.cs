@@ -16,6 +16,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
             base.Recover(user, 0, "Profile");
             NickName = user.NickName;
             Bio = user.Bio;
+            Bio2 = user.Bio;
         }
         [Required]
         [MaxLength(20)]
@@ -24,5 +25,8 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [MaxLength(80)]
         [Display(Name = "Bio")]
         public virtual string Bio { get; set; }
+        [MaxLength(80)]
+        [Display(Name = "Bio2")]
+        public virtual string Bio2 { get; set; }
     }
 }

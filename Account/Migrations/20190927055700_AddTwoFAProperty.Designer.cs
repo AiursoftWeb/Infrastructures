@@ -4,14 +4,16 @@ using Aiursoft.Account.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Account.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    partial class AccountDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190927055700_AddTwoFAProperty")]
+    partial class AddTwoFAProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,6 @@ namespace Aiursoft.Account.Migrations
                     b.Property<DateTime>("AccountCreateTime");
 
                     b.Property<string>("Bio");
-
-                    b.Property<string>("Bio2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -63,6 +63,10 @@ namespace Aiursoft.Account.Migrations
                     b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Sex");
+
+                    b.Property<string>("TowFAuthenticatorUri");
+
+                    b.Property<string>("TwoFACode");
 
                     b.Property<string>("TwoFASharedKey");
 

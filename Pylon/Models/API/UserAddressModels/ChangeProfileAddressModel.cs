@@ -11,5 +11,7 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
         public string NewIconFilePathName { get; set; }
         [MaxLength(80)]
         public string NewBio { get; set; }
+        [MaxLength(80)]
+        public string NewBio2 { get; set; }
     }
 }

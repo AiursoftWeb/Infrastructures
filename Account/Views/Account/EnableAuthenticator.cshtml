@@ -34,10 +34,10 @@
                             </p>
                         </li>
                         <li>
-                            <p>Scan the QR Code or enter this key <kbd>@Model.SharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                            <p>Scan the QR Code or enter this key <kbd>@Model.TwoFASharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
                             <div class="alert alert-info">To enable QR code generation please read our <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentation</a>.</div>
                             <div id="qrCode"></div>
-                            <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
+                            @*<div id="qrCodeData" data-url="@Model.TowFAuthenticatorUri"></div>*@
                         </li>
                         <li>
                             <p>
@@ -48,9 +48,9 @@
                                 <div class="col-md-6">
                                     <form method="post">
                                         <div class="form-group">
-                                            <label asp-for="Code" class="control-label">Verification Code</label>
-                                            <input asp-for="Code" class="form-control" autocomplete="off" />
-                                            <span asp-validation-for="Code" class="text-danger"></span>
+                                            <label asp-for="TwoFACode" class="control-label">Verification Code</label>
+                                            <input asp-for="TwoFACode" class="form-control" autocomplete="off" />
+                                            <span asp-validation-for="TwoFACode" class="text-danger"></span>
                                         </div>
                                         <button type="submit" class="btn btn-success">Verify</button>
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

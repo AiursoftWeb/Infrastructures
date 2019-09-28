@@ -48,6 +48,13 @@
                             <textarea asp-for="Bio" class="form-control" placeholder="Enter a short description about you..." rows="3"></textarea>
                             <span asp-validation-for="Bio" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label asp-for="Bio2"></label>
+                            <textarea asp-for="Bio2" class="form-control" placeholder="Enter " rows="3"></textarea>
+                            <span asp-validation-for="Bio2" class="text-danger"></span>
+                        </div>
+
                         <button data-disable-with="Updating..." class="btn btn-success" type="submit">@Localizer["Update Profile"]</button>
                     </form>
                 </div>

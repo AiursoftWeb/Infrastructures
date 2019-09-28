@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Services;
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -15,6 +16,7 @@ namespace Aiursoft.Pylon.Models
         public AiurUrl(string address, object param) : this(address)
         {
             var t = param.GetType();
+          
             foreach (var prop in t.GetProperties())
             {
                 if (prop.GetValue(param) != null)

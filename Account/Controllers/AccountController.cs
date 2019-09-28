@@ -56,7 +56,7 @@ namespace Aiursoft.Account.Controllers
             _developerApiService = developerApiSerivce;
             _authService = authService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index(bool? justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
@@ -64,6 +64,7 @@ namespace Aiursoft.Account.Controllers
             {
                 JustHaveUpdated = justHaveUpdated ?? false
             };
+
             return View(model);
         }
 
@@ -80,7 +81,8 @@ namespace Aiursoft.Account.Controllers
             }
             cuser.NickName = model.NickName;
             cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio);
+            cuser.Bio2 = model.Bio;
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio ,cuser.Bio2);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -200,7 +202,7 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             cuser.IconFilePath = model.NewIconAddres;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio);
+            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio, cuser.Bio2);
             await _userManager.UpdateAsync(cuser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
@@ -386,7 +388,14 @@ namespace Aiursoft.Account.Controllers
             };
             await LoadSharedKeyAndQrCodeUriAsync(user, model);
 
-            return View(model);   
+            model.Recover(user);
+            user.TwoFASharedKey = model.TwoFASharedKey;
+            //user.TowFAuthenticatorUri = model.TowFAuthenticatorUri;
+
+            await _userService.SaveTwoFAAsync(user.Id, await _appsContainer.AccessToken(), user.TwoFASharedKey);
+            await _userManager.UpdateAsync(user);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -394,6 +403,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
         {
             var user = await GetCurrentUserAsync();
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -406,7 +416,7 @@ namespace Aiursoft.Account.Controllers
             }
 
             // Strip spaces and hypens
-            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var verificationCode = model.TwoFACode.Replace(" ", string.Empty).Replace("-", string.Empty);
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
             if (!is2faTokenValid)
@@ -422,21 +432,6 @@ namespace Aiursoft.Account.Controllers
             TempData[RecoveryCodesKey] = recoveryCodes.ToArray();
 
             return RedirectToAction(nameof(ShowRecoveryCodes));
-        }
-
-        [HttpGet]
-        public IActionResult ShowRecoveryCodes()
-        {
-            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
-            if (recoveryCodes == null)
-            {
-                //return RedirectToAction(nameof(TwoFactorAuthentication));
-                return RedirectToAction(nameof(Index));
-            }
-
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
-
-            return View(model);
         }
 
         [HttpGet]
@@ -467,12 +462,22 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(EnableAuthenticator));
         }
 
-        private async Task<AccountUser> GetCurrentUserAsync()
+        [HttpGet]
+        public IActionResult ShowRecoveryCodes()
         {
-            return await _userManager.GetUserAsync(User);
+            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
+            if (recoveryCodes == null)
+            {
+                //return RedirectToAction(nameof(TwoFactorAuthentication));
+                return RedirectToAction(nameof(Index));
+            }
+
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
+
+            return View(model);
         }
 
-        #region Helpers
+        #region --- Helpers ----
 
         private void AddErrors(IdentityResult result)
         {
@@ -523,10 +528,15 @@ namespace Aiursoft.Account.Controllers
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 
-            model.SharedKey = FormatKey(unformattedKey);
-            model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+            model.TwoFASharedKey = FormatKey(unformattedKey);           
+            model.TowFAuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
 
         #endregion
+
+        private async Task<AccountUser> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(User);
+        }
     }
 }
