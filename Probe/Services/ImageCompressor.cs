@@ -2,7 +2,6 @@
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Processing.Transforms;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -51,7 +50,7 @@ namespace Aiursoft.Probe.Services
             {
                 var image = Image.Load(sourceImage, out IImageFormat format);
                 image.Mutate(x => x.AutoOrient());
-                image.MetaData.ExifProfile = null;
+                image.Metadata.ExifProfile = null;
                 using (var stream = File.OpenWrite(saveTarget))
                 {
                     image.Save(stream, format);
@@ -82,18 +81,16 @@ namespace Aiursoft.Probe.Services
         private async Task GetReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
             var sourceFileInfo = new FileInfo(sourceImage);
-            if (File.Exists(saveTarget))
+            if (File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
             {
-                if (new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
-                {
-                    return;
-                }
+                return;
             }
+            File.OpenWrite(saveTarget).Close();
             await Task.Run(() =>
             {
                 var image = Image.Load(sourceImage, out IImageFormat format);
                 image.Mutate(x => x.AutoOrient());
-                image.MetaData.ExifProfile = null;
+                image.Metadata.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(width, height));
                 using (var stream = File.OpenWrite(saveTarget))

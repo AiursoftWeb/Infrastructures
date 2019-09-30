@@ -259,7 +259,7 @@ namespace Aiursoft.Account.Controllers
             }
             var phone = model.ZoneNumber + model.NewPhoneNumber;
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
-            await _smsSender.SendAsync(phone, $"[Aiursoft] Your Aiursoft verification code is: {code}.");
+            await _smsSender.SendAsync(phone, $"Your Aiursoft verification code is: {code}.");
             return RedirectToAction(nameof(EnterCode), new { newPhoneNumber = phone });
         }
 

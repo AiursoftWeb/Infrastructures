@@ -8,12 +8,12 @@ using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System;
@@ -107,15 +107,6 @@ namespace Aiursoft.Pylon
             return app;
         }
 
-        public static IServiceCollection ConfigureLargeFileUpload(this IServiceCollection services)
-        {
-            return services.Configure<FormOptions>(x =>
-            {
-                x.ValueLengthLimit = int.MaxValue;
-                x.MultipartBodyLengthLimit = long.MaxValue;
-            });
-        }
-
         public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
         {
             var request = controller.HttpContext.Request;
@@ -144,15 +135,15 @@ namespace Aiursoft.Pylon
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
         }
 
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
+        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
         {
-            using (var scope = webHost.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var context = services.GetService<TContext>();
                 var configuration = services.GetService<IConfiguration>();
-                var env = services.GetService<IHostingEnvironment>();
+                var env = services.GetService<IWebHostEnvironment>();
 
                 var connectionString = configuration.GetConnectionString("DatabaseConnection");
                 try
@@ -190,7 +181,7 @@ namespace Aiursoft.Pylon
                 }
             }
 
-            return webHost;
+            return host;
         }
 
         public static IServiceCollection AddAiursoftAuth<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
@@ -198,16 +189,17 @@ namespace Aiursoft.Pylon
             services.AddSingleton<AppsContainer>();
             services.AddSingleton<ServiceLocation>();
             services.AddScoped<ArchonApiService>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<UrlConverter>();
             services.AddScoped<SitesService>();
             services.AddScoped<FoldersService>();
             services.AddScoped<FilesService>();
             services.AddScoped<TokenService>();
-            services.AddScoped<StorageService>();
             services.AddScoped<CoreApiService>();
             services.AddScoped<AccountService>();
             services.AddScoped<UserImageGenerator<TUser>>();
+            services.AddMemoryCache();
             services.AddTransient<AuthService<TUser>>();
             services.AddTransient<AiurCache>();
             return services;

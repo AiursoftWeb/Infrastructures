@@ -1,11 +1,11 @@
 ﻿using Aiursoft.Probe.Data;
-using Aiursoft.Probe.Middlewares;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,14 +23,24 @@ namespace Aiursoft.Probe
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureLargeFileUpload();
+            services.AddApplicationInsightsTelemetry();
+
+            services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
+
             services.AddDbContext<ProbeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddCors();
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
 
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddSingleton<PBKeyPair>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<CoreApiService>();
             services.AddTransient<PBRSAService>();
@@ -40,12 +50,11 @@ namespace Aiursoft.Probe
             services.AddTransient<FolderOperator>();
             services.AddTransient<FolderRefactor>();
             services.AddTransient<AiurCache>();
-            services.AddMvc();
+
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ProbeCORSMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,7 +66,9 @@ namespace Aiursoft.Probe
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseMvcWithDefaultRoute();
+            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
         }
     }

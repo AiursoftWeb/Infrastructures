@@ -16,9 +16,9 @@ namespace Aiursoft.Stargate.Services
             _ws = await context.WebSockets.AcceptWebSocketAsync();
         }
 
-        public async Task SendMessage(string Message)
+        public async Task SendMessage(string message)
         {
-            await _ws.SendMessage(Message);
+            await _ws.SendMessage(message);
         }
     }
 }

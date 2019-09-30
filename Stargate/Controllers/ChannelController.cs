@@ -87,7 +87,7 @@ namespace Aiursoft.Stargate.Controllers
 
         [HttpPost]
         [APIProduces(typeof(CreateChannelViewModel))]
-        public async Task<IActionResult> CreateChannel([FromForm]CreateChannelAddressModel model)
+        public async Task<IActionResult> CreateChannel(CreateChannelAddressModel model)
         {
             //Update app info
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -121,7 +121,7 @@ namespace Aiursoft.Stargate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteChannel([FromForm]DeleteChannelAddressModel model)
+        public async Task<IActionResult> DeleteChannel(DeleteChannelAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var channel = await _dbContext.Channels.FindAsync(model);
@@ -140,7 +140,7 @@ namespace Aiursoft.Stargate.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> DeleteApp([FromForm]DeleteAppAddressModel model)
+        public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)

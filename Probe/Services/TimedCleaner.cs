@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
-using Microsoft.Extensions.Configuration;
+using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,19 +11,19 @@ namespace Aiursoft.Probe.Services
 {
     public class TimedCleaner : IHostedService, IDisposable
     {
-        public IConfiguration Configuration { get; }
-        private readonly ILogger _logger;
         private Timer _timer;
+        private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly TelemetryClient _telemetryClient;
 
         public TimedCleaner(
-            IConfiguration configuration,
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            TelemetryClient telemetryClient)
         {
-            Configuration = configuration;
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _telemetryClient = telemetryClient;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -43,10 +43,11 @@ namespace Aiursoft.Probe.Services
                     var dbContext = scope.ServiceProvider.GetRequiredService<ProbeDbContext>();
                     await AllClean(dbContext);
                 }
+                _logger.LogInformation("Cleaner task finished!");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred.");
+                _telemetryClient.TrackException(ex);
             }
         }
 

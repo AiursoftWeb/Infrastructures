@@ -4,6 +4,7 @@ using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Archon
 {
@@ -11,15 +12,21 @@ namespace Aiursoft.Archon
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddApplicationInsightsTelemetry();
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson();
+
             services.AddTokenManager();
             services.AddSingleton<ServiceLocation>();
+            services.AddHttpClient();
             services.AddScoped<HTTPService>();
             services.AddScoped<DeveloperApiService>();
             services.AddTransient<AiurCache>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -32,7 +39,8 @@ namespace Aiursoft.Archon
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
         }
     }

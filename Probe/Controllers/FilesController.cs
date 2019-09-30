@@ -18,6 +18,7 @@ namespace Aiursoft.Probe.Controllers
     [APIExpHandler]
     [APIModelStateChecker]
     [Route("Files")]
+    [DisableRequestSizeLimit]
     public class FilesController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
@@ -46,7 +47,6 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("UploadFile/{SiteName}/{**FolderNames}")]
-        [FileChecker]
         [APIModelStateChecker]
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
@@ -72,7 +72,13 @@ namespace Aiursoft.Probe.Controllers
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
-            var file = Request.Form.Files.First();
+
+            // Executing here will let the browser upload the file.
+            if (HttpContext.Request.Form.Files.Count < 1)
+            {
+                return this.Protocol(ErrorType.InvalidInput, "Please provide a file!");
+            }
+            var file = HttpContext.Request.Form.Files.First();
             if (!new ValidFolderName().IsValid(file.FileName))
             {
                 return this.Protocol(ErrorType.InvalidInput, $"Invalid file name: '{file.FileName}'!");
@@ -82,6 +88,7 @@ namespace Aiursoft.Probe.Controllers
                 FileName = Path.GetFileName(file.FileName),
                 ContextId = folder.Id
             };
+
             //Ensure there not exists file with the same file name.
             while (true)
             {
