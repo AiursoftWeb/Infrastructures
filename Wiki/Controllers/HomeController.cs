@@ -42,10 +42,10 @@ namespace Aiursoft.Wiki.Controllers
         public async Task<IActionResult> Index()//Title
         {
             var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstAsync();
-            return Redirect($"/ReadDoc/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
+            return Redirect($"/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
         }
 
-        [Route(template: "/ReadDoc/{collectionTitle}/{articleTitle}.md")]
+        [Route(template: "/{collectionTitle}/{articleTitle}.md")]
         public async Task<IActionResult> ReadDoc(string collectionTitle, string articleTitle)
         {
             var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();

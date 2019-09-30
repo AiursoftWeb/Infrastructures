@@ -19,7 +19,7 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 @foreach (var collection in Model.Collections)
                 {
-                    <li class="nav-item @(Model.CurrentCollection.CollectionId==collection.CollectionId?"active":"")">
+                    <li class="nav-item @(Model.CurrentCollection.CollectionId==collection.CollectionId ? "active" : "")">
                         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti@(collection.CollectionId)" data-parent="#exampleAccordion">
                             <i class="fa fa-fw fa-book"></i>
                             <span class="nav-link-text">@collection.CollectionTitle</span>
@@ -28,7 +28,7 @@
                             @foreach (var article in collection.Articles)
                             {
                                 <li>
-                                    <a href="/ReadDoc/@collection.CollectionTitle/@(article.ArticleTitle).md">@article.ArticleTitle</a>
+                                    <a href="/@collection.CollectionTitle/@(article.ArticleTitle).md">@article.ArticleTitle</a>
                                 </li>
                             }
                         </ul>
