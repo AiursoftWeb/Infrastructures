@@ -352,6 +352,17 @@ namespace Aiursoft.Account.Controllers
             {
                 Logs = (await _userService.ViewAuditLogAsync(token, user.Id)).Items
             };
+            var taskList = new List<Task>();
+            foreach (var appId in model.Logs.Select(t => t.AppId).Distinct())
+            {
+                async Task AddApp()
+                {
+                    var appInfo = await _developerApiService.AppInfoAsync(appId);
+                    model.Apps.Add(appInfo.App);
+                }
+                taskList.Add(AddApp());
+            }
+            await Task.WhenAll(taskList);
             return View(model);
         }
 

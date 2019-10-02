@@ -6,7 +6,6 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.Developer;
@@ -136,11 +135,12 @@ namespace Aiursoft.API.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
-            var log = new AuditLog
+            var log = new AuditLogLocal
             {
                 UserId = user.Id,
                 IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                Success = result.Succeeded
+                Success = result.Succeeded,
+                AppId = app.AppId
             };
             _dbContext.AuditLogs.Add(log);
             await _dbContext.SaveChangesAsync();

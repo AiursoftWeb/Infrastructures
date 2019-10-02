@@ -20,8 +20,8 @@ namespace Aiursoft.API.Models
         public IEnumerable<AppGrant> GrantedApps { get; set; }
         [InverseProperty(nameof(UserEmail.Owner))]
         public IEnumerable<UserEmail> Emails { get; set; }
-        [InverseProperty(nameof(AuditLog.User))]
-        public IEnumerable<AuditLog> AuditLogs { get; set; }
+        [InverseProperty(nameof(AuditLogLocal.User))]
+        public IEnumerable<AuditLogLocal> AuditLogs { get; set; }
 
         public virtual string SMSPasswordResetToken { get; set; }
 

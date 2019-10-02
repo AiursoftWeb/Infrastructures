@@ -40,16 +40,17 @@
             <ul class="list-group list-group-flush">
                 @foreach (var log in Model.Logs)
                 {
+                    var app = Model.Apps.SingleOrDefault(t => t.AppId == log.AppId);
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-10 d-flex">
-                                <img class="rounded mr-3" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, "")?w=100&h=100" style="width:40px; height:40px;" />
+                                <img class="rounded mr-3" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, app.IconPath)?w=100&h=100" style="width:40px; height:40px;" />
                                 <div class="d-block">
                                     <h5>App name</h5>
                                     <p>
-                                        ""
+                                        Attempt to log in to @app.AppName
                                         <br>
-                                        Sign time:
+                                        Happen time:
                                         <lable class="text-muted" data-utc-time="@log.HappenTime"></lable>
                                         Result:
                                         <lable class="text-muted">@log.Success</lable>

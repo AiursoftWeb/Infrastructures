@@ -4,7 +4,6 @@ using Aiursoft.API.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -232,7 +231,7 @@ namespace Aiursoft.API.Controllers
             return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
         }
 
-        [APIProduces(typeof(AiurCollection<AuditLog>))]
+        [APIProduces(typeof(AiurCollection<AuditLogLocal>))]
         public async Task<IActionResult> ViewAuditLog(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
@@ -241,7 +240,7 @@ namespace Aiursoft.API.Controllers
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime)
                 .ToListAsync();
-            return Json(new AiurCollection<AuditLog>(logs)
+            return Json(new AiurCollection<AuditLogLocal>(logs)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your audit log!"
