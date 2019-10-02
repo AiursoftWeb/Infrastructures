@@ -95,6 +95,15 @@ namespace Aiursoft.API.Controllers
             // Signed in. App is not in force input password mode. User did not specify force input.
             else if (user != null && app.ForceInputPassword != true && model.forceConfirm != true)
             {
+                var log = new AuditLogLocal
+                {
+                    UserId = user.Id,
+                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                    Success = true,
+                    AppId = app.AppId
+                };
+                _dbContext.AuditLogs.Add(log);
+                await _dbContext.SaveChangesAsync();
                 return await FinishAuth(model.Convert(user.Email), app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
@@ -135,6 +144,15 @@ namespace Aiursoft.API.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
+            var log = new AuditLogLocal
+            {
+                UserId = user.Id,
+                IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                Success = result.Succeeded,
+                AppId = app.AppId
+            };
+            _dbContext.AuditLogs.Add(log);
+            await _dbContext.SaveChangesAsync();
             if (result.Succeeded)
             {
                 return await FinishAuth(model, app.ForceConfirmation);
@@ -189,6 +207,9 @@ namespace Aiursoft.API.Controllers
                 ConfirmEmail = app.ConfirmEmail,
                 ChangeBasicInfo = app.ChangeBasicInfo,
                 ChangePassword = app.ChangePassword,
+                ChangeGrantInfo = app.ChangeGrantInfo,
+                ViewAuditLog = app.ViewAuditLog,
+
                 TermsUrl = app.LicenseUrl,
                 PStatementUrl = app.PrivacyStatementUrl
             };
@@ -286,6 +307,15 @@ namespace Aiursoft.API.Controllers
                 // Ignore smtp exception.
                 catch (SmtpException) { }
                 await _signInManager.SignInAsync(user, isPersistent: true);
+                var log = new AuditLogLocal
+                {
+                    UserId = user.Id,
+                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                    Success = true,
+                    AppId = app.AppId
+                };
+                _dbContext.AuditLogs.Add(log);
+                await _dbContext.SaveChangesAsync();
                 return await FinishAuth(model);
             }
             AddErrors(result);

@@ -154,21 +154,6 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> DeleteGrant(string appId)
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
-            if (_configuration["AccountAppId"] == appId)
-            {
-                return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
-            }
-            var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
-            return Json(result);
-        }
-
         public async Task<IActionResult> Avatar(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
@@ -341,6 +326,43 @@ namespace Aiursoft.Account.Controllers
             await Task.WhenAll(taskList);
             model.Apps = model.Apps.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime).ToList();
+            return View(model);
+        }
+
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> DeleteGrant(string appId)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            if (_configuration["AccountAppId"] == appId)
+            {
+                return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+            }
+            var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
+            return Json(result);
+        }
+
+        public async Task<IActionResult> AuditLog()
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var model = new AuditLogViewModel(user)
+            {
+                Logs = (await _userService.ViewAuditLogAsync(token, user.Id)).Items
+            };
+            var taskList = new List<Task>();
+            foreach (var appId in model.Logs.Select(t => t.AppId).Distinct())
+            {
+                async Task AddApp()
+                {
+                    var appInfo = await _developerApiService.AppInfoAsync(appId);
+                    model.Apps.Add(appInfo.App);
+                }
+                taskList.Add(AddApp());
+            }
+            await Task.WhenAll(taskList);
             return View(model);
         }
 

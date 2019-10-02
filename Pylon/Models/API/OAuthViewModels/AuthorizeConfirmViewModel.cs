@@ -33,6 +33,10 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         [Display(Name = "Change user's other applications' grant status")]
         public bool ChangeGrantInfo { get; set; }
 
+        [Display(Name = "View user's sign in log.")]
+        public bool ViewAuditLog { get; set; }
+
+
         public string TermsUrl { get; set; }
         public string PStatementUrl { get; set; }
 

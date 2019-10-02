@@ -72,6 +72,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             ChangeBasicInfo = thisApp.ChangeBasicInfo;
             ChangePassword = thisApp.ChangePassword;
             ChangeGrantInfo = thisApp.ChangeGrantInfo;
+            ViewAuditLog = thisApp.ViewAuditLog;
         }
 
         public bool JustHaveUpdated { get; set; } = false;
@@ -109,6 +110,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ChangePassword { get; set; }
         [Display(Name = "Change user's other applications' grant status")]
         public bool ChangeGrantInfo { get; set; }
+        [Display(Name = "View user's sign in log.")]
+        public bool ViewAuditLog { get; set; }
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }

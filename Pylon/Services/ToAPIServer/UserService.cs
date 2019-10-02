@@ -164,7 +164,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ViewGrantedApps", new ViewGrantedAppsAddressModel
+            var url = new AiurUrl(_serviceLocation.API, "User", "ViewGrantedApps", new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId
@@ -187,6 +187,20 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             });
             var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurCollection<AuditLog>> ViewAuditLogAsync(string accessToken, string userId)
+        {
+            var url = new AiurUrl(_serviceLocation.API, "User", "ViewAuditLog", new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId
+            });
+            var result = await _http.Get(url, true);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<AuditLog>>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

@@ -47,6 +47,10 @@
                 {
                     <li><label asp-for="ChangeGrantInfo"></label></li>
                 }
+                @if (Model.ViewAuditLog)
+                {
+                    <li><label asp-for="ViewAuditLog"></label></li>
+                }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post">
                 <input asp-for="AppId" type="hidden" />
