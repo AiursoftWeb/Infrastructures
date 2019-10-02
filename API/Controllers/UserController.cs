@@ -4,6 +4,7 @@ using Aiursoft.API.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -203,7 +204,7 @@ namespace Aiursoft.API.Controllers
         }
 
         [APIProduces(typeof(AiurCollection<AppGrant>))]
-        public async Task<IActionResult> ViewGrantedApps(ViewGrantedAppsAddressModel model)
+        public async Task<IActionResult> ViewGrantedApps(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
             var applications = await _dbContext.LocalAppGrant.Where(t => t.APIUserId == user.Id).ToListAsync();

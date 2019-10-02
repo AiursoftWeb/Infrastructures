@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-namespace Aiursoft.API.Models
+namespace Aiursoft.Pylon.Models.API
 {
     public class AuditLog
     {
@@ -9,7 +10,8 @@ namespace Aiursoft.API.Models
 
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public APIUser User { get; set; }
+        [JsonIgnore]
+        public AiurUserBase User { get; set; }
 
         public DateTime HappenTime { get; set; } = DateTime.UtcNow;
         public bool Success { get; set; }

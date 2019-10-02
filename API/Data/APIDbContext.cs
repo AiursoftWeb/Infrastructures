@@ -1,4 +1,5 @@
 ﻿using Aiursoft.API.Models;
+using Aiursoft.Pylon.Models.API;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -6,6 +6,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.Developer;
