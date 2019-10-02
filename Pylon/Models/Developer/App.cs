@@ -59,6 +59,7 @@ namespace Aiursoft.Pylon.Models.Developer
         public bool ChangeBasicInfo { get; set; }
         public bool ChangePassword { get; set; }
         public bool ChangeGrantInfo { get; set; }
+        public bool ViewAuditLog { get; set; }
 
         public virtual string CreatorId { get; set; }
         [ForeignKey(nameof(CreatorId))]

@@ -197,6 +197,9 @@ namespace Aiursoft.API.Controllers
                 ConfirmEmail = app.ConfirmEmail,
                 ChangeBasicInfo = app.ChangeBasicInfo,
                 ChangePassword = app.ChangePassword,
+                ChangeGrantInfo = app.ChangeGrantInfo,
+                ViewAuditLog = app.ViewAuditLog,
+
                 TermsUrl = app.LicenseUrl,
                 PStatementUrl = app.PrivacyStatementUrl
             };

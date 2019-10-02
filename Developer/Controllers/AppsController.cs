@@ -136,6 +136,7 @@ namespace Aiursoft.Developer.Controllers
             target.ChangeBasicInfo = _ChangePermission(target.ChangeBasicInfo, model.ChangeBasicInfo, ref permissionAdded);
             target.ChangePassword = _ChangePermission(target.ChangePassword, model.ChangePassword, ref permissionAdded);
             target.ChangeGrantInfo = _ChangePermission(target.ChangeGrantInfo, model.ChangeGrantInfo, ref permissionAdded);
+            target.ViewAuditLog = _ChangePermission(target.ViewAuditLog, model.ViewAuditLog, ref permissionAdded);
             if (permissionAdded)
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
