@@ -214,6 +214,7 @@ namespace Aiursoft.API.Controllers
             });
         }
 
+        [HttpPost]
         public async Task<IActionResult> DropGrantedApps(DropGrantedAppsAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
@@ -228,6 +229,18 @@ namespace Aiursoft.API.Controllers
             _dbContext.LocalAppGrant.Remove(appToDelete);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
+        }
+
+        [APIProduces(typeof(AiurCollection<AuditLog>))]
+        public async Task<IActionResult> ViewAuditLog(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
+            var logs = await _dbContext.AuditLogs.Where(t => t.UserId == user.Id).ToListAsync();
+            return Json(new AiurCollection<AuditLog>(logs)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get all your audit log!"
+            });
         }
     }
 }
