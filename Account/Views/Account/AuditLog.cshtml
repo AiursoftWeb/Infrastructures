@@ -36,6 +36,9 @@
                 <p>
                     You have @Model.Logs.Count() log in attempt@(Model.Logs.Count() > 1 ? "s" : string.Empty) to your account.
                 </p>
+                <p class="text-muted">
+                    The audit log feature is for your account security. We respect your privacy and will never track your login activity by human or AI. Only the apps you granted to view the log can get these log.
+                </p>
             </div>
             <ul class="list-group list-group-flush">
                 @foreach (var log in Model.Logs)
@@ -49,11 +52,21 @@
                                     <h5>@app.AppName</h5>
                                     <p>
                                         Attempt to log in to @app.AppName
-                                        <br>
-                                        Happen time:
                                         <lable class="text-muted" data-utc-time="@log.HappenTime"></lable>
+                                        <br>
                                         Result:
-                                        <lable class="text-muted">@log.Success</lable>
+                                        @if (log.Success)
+                                        {
+                                            <lable class="text-muted">
+                                                <span class="badge badge-primary">Success</span>
+                                            </lable>
+                                        }
+                                        else
+                                        {
+                                            <lable class="text-muted">
+                                                <span class="badge badge-danger">Failed</span>
+                                            </lable>
+                                        }
                                         IP address:
                                         <lable class="text-muted">@log.IPAddress</lable>
                                     </p>
