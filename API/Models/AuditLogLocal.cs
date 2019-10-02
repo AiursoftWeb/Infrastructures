@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Models.API;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace Aiursoft.API.Models
 {
