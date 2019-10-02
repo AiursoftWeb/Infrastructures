@@ -236,7 +236,11 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> ViewAuditLog(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
-            var logs = await _dbContext.AuditLogs.Where(t => t.UserId == user.Id).ToListAsync();
+            var logs = await _dbContext
+                .AuditLogs
+                .Where(t => t.UserId == user.Id)
+                .OrderByDescending(t => t.HappenTime)
+                .ToListAsync();
             return Json(new AiurCollection<AuditLog>(logs)
             {
                 Code = ErrorType.Success,

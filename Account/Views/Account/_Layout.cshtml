@@ -64,6 +64,14 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-item @(Model.ActivePanel == 6 ? " active":string.Empty)">
+                    <a class="nav-link" asp-controller="Account" asp-action="AuditLog">
+                        <i class="fa fa-fw fa-lock"></i>
+                        <span class="nav-link-text">
+                            @Localizer["Audit log"]
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@ServiceLocation.Developer/Dashboard/Apps">
                         <i class="fa fa-fw fa-code"></i>
