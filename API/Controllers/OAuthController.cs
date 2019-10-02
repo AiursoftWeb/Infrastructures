@@ -135,6 +135,14 @@ namespace Aiursoft.API.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
+            var log = new AuditLog
+            {
+                UserId = user.Id,
+                IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                Success = result.Succeeded
+            };
+            _dbContext.AuditLogs.Add(log);
+            await _dbContext.SaveChangesAsync();
             if (result.Succeeded)
             {
                 return await FinishAuth(model, app.ForceConfirmation);
