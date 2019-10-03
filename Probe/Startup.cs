@@ -23,8 +23,6 @@ namespace Aiursoft.Probe
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
-
             services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 
             services.AddDbContext<ProbeDbContext>(options =>

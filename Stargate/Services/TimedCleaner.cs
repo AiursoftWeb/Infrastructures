@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Stargate.Data;
-using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,18 +15,15 @@ namespace Aiursoft.Stargate.Services
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly StargateMemory _memoryContext;
-        private readonly TelemetryClient _telemetryClient;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            StargateMemory memoryContext,
-            TelemetryClient telemetryClient)
+            StargateMemory memoryContext)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
             _memoryContext = memoryContext;
-            _telemetryClient = telemetryClient;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -58,7 +54,7 @@ namespace Aiursoft.Stargate.Services
             }
             catch (Exception e)
             {
-                _telemetryClient.TrackException(e);
+                _logger.LogError(e, "Cleaner crashed!");
             }
         }
 

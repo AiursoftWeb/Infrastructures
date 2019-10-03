@@ -12,7 +12,6 @@ namespace Aiursoft.Archon
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
 
             services
                 .AddControllersWithViews()

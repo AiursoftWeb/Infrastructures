@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Probe.Data;
-using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,16 +13,13 @@ namespace Aiursoft.Probe.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly TelemetryClient _telemetryClient;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory,
-            TelemetryClient telemetryClient)
+            IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _telemetryClient = telemetryClient;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -47,7 +43,7 @@ namespace Aiursoft.Probe.Services
             }
             catch (Exception ex)
             {
-                _telemetryClient.TrackException(ex);
+                _logger.LogError(ex, "Cleaner crashed!");
             }
         }
 
