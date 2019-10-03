@@ -1,9 +1,8 @@
 ﻿using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,17 +12,14 @@ namespace Aiursoft.Pylon.Middlewares
     public class APIFriendlyServerExceptionMiddeware
     {
         private readonly RequestDelegate _next;
-        private readonly ServiceLocation _serviceLocation;
-        private readonly DiagnosticSource _diagnosticSource;
+        private readonly ILogger<APIFriendlyServerExceptionMiddeware> _logger;
 
         public APIFriendlyServerExceptionMiddeware(
             RequestDelegate next,
-            ServiceLocation serviceLocation,
-            DiagnosticSource diagnosticSource)
+            ILogger<APIFriendlyServerExceptionMiddeware> logger)
         {
             _next = next;
-            _serviceLocation = serviceLocation;
-            _diagnosticSource = diagnosticSource;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -46,11 +42,7 @@ namespace Aiursoft.Pylon.Middlewares
                         Message = $"{projectName} server was crashed! Sorry about that."
                     });
                     await context.Response.WriteAsync(message, Encoding.UTF8);
-
-                    if (_diagnosticSource.IsEnabled("Microsoft.AspNetCore.Diagnostics.UnhandledException"))
-                    {
-                        _diagnosticSource.Write("Microsoft.AspNetCore.Diagnostics.UnhandledException", new { httpContext = context, exception = e });
-                    }
+                    _logger.LogError(e, e.Message);
                     return;
                 }
                 throw;
