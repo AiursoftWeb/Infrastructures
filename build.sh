@@ -4,7 +4,7 @@ cd Pylon
 dotnet build
 cd ..
 
-cd API
+cd Gateway
 dotnet publish --no-restore -c Release
 cd ..
 
