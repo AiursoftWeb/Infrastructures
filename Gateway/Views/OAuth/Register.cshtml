@@ -1,0 +1,65 @@
+@model Aiursoft.Gateway.Models.OAuthViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = Localizer["Sign Up"];
+}
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
+            </div>
+            <form asp-controller="OAuth" asp-action="Register" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input asp-for="ToRedirect" type="hidden" />
+                <input asp-for="State" type="hidden" />
+                <input asp-for="AppId" type="hidden" />
+                <input asp-for="Scope" type="hidden" />
+                <input asp-for="ResponseType" type="hidden" />
+                <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
+                <div class="form-group">
+                    <label asp-for="Email">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
+                    <input type="email" asp-for="Email" class="form-control" placeholder="@Localizer["Enter your email account..."]" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label asp-for="Password"></label>
+                            <input type="password" asp-for="Password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CaptchaCode"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <img src="~/get-captcha-image" style="width:100px;height:33px;" />
+                        </div>
+                        <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" data-disable-with="Signing up..." type="submit">@Localizer["Sign up"]</button>
+                <label class="w-100 mt-3 mb-0">
+                    @Localizer["By register, you agree to our "]
+                    <a href="@Values.Footer["Terms"]" target="_blank">
+                        @Localizer["Terms"].
+                    </a>
+                </label>
+            </form>
+        </div>
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
+            <span class="float-left">@Localizer["Sign in"]</span>
+            <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+            </span>
+        </a>
+    </div>
+</div>

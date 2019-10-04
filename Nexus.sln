@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Account", "Account\Aiursoft.Account.csproj", "{9A623027-D46C-4D27-B794-030305C8314F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.API", "API\Aiursoft.API.csproj", "{09723551-A1BF-40A9-86DC-BDDAB3E2D52E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Gateway", "Gateway\Aiursoft.Gateway.csproj", "{09723551-A1BF-40A9-86DC-BDDAB3E2D52E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Colossus", "Colossus\Aiursoft.Colossus.csproj", "{D7E4B6C1-DC9A-4850-BA1C-F93BDCE38D96}"
 EndProject

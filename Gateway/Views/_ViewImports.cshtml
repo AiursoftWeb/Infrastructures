@@ -1,0 +1,13 @@
+﻿@using Aiursoft.Gateway
+@using Aiursoft.Gateway.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Aiursoft.Pylon
+@using Aiursoft.Pylon.Services;
+@using Aiursoft.Pylon.Models
+
+@inject IViewLocalizer Localizer
+@inject UserImageGenerator<GatewayUser> UserImageGenerator
+@inject ServiceLocation ServiceLocation
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Aiursoft.Pylon
