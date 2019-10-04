@@ -30,6 +30,7 @@ namespace Aiursoft.Account.Controllers
         private readonly IConfiguration _configuration;
         private readonly DeveloperApiService _developerApiService;
         private readonly AuthService<AccountUser> _authService;
+        private readonly AiurCache _cache;
 
         public AccountController(
             UserManager<AccountUser> userManager,
@@ -38,7 +39,8 @@ namespace Aiursoft.Account.Controllers
             AppsContainer appsContainer,
             IConfiguration configuration,
             DeveloperApiService developerApiSerivce,
-            AuthService<AccountUser> authService)
+            AuthService<AccountUser> authService,
+            AiurCache cache)
         {
             _userManager = userManager;
             _smsSender = smsSender;
@@ -47,6 +49,7 @@ namespace Aiursoft.Account.Controllers
             _configuration = configuration;
             _developerApiService = developerApiSerivce;
             _authService = authService;
+            _cache = cache;
         }
 
         public async Task<IActionResult> Index(bool? justHaveUpdated)
@@ -352,17 +355,11 @@ namespace Aiursoft.Account.Controllers
             {
                 Logs = (await _userService.ViewAuditLogAsync(token, user.Id)).Items
             };
-            var taskList = new List<Task>();
-            foreach (var appId in model.Logs.Select(t => t.AppId).Distinct())
+            await model.Logs.Select(t => t.AppId).Distinct().ForEachParallal(async (id) =>
             {
-                async Task AddApp()
-                {
-                    var appInfo = await _developerApiService.AppInfoAsync(appId);
-                    model.Apps.Add(appInfo.App);
-                }
-                taskList.Add(AddApp());
-            }
-            await Task.WhenAll(taskList);
+                var appInfo = await _cache.GetAndCache($"appInfo-{id}", () => _developerApiService.AppInfoAsync(id));
+                model.Apps.Add(appInfo.App);
+            });
             return View(model);
         }
 

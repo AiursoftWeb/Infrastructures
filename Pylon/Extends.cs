@@ -17,8 +17,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon
 {
@@ -231,6 +233,16 @@ namespace Aiursoft.Pylon
         public static string UserAgent(this HttpRequest request)
         {
             return request.Headers["User-Agent"];
+        }
+
+        public static Task ForEachParallal<T>(this IEnumerable<T> items, Func<T, Task> function)
+        {
+            var taskList = new List<Task>();
+            foreach (var item in items)
+            {
+                taskList.Add(function(item));
+            }
+            return Task.WhenAll(taskList);
         }
     }
 }
