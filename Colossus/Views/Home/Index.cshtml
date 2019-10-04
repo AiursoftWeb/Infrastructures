@@ -7,11 +7,11 @@
 <div class="jumbotron">
     <div class="container">
         <h3>Welcome to @Values.ProjectName Colossus</h3>
-        <p>@Localizer["Colossus helps you share any file. Upload your file and share the link anywhere!"]</p>
+        <p>@Localizer["Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."]</p>
         <div class="btn-group" role="group">
             <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
                 <i class="fa fa-pencil"></i>
-                @Localizer["Sign in to Colossus"]
+                @Localizer["Sign in to your personal storage"]
             </a>
         </div>
     </div>
@@ -58,7 +58,11 @@
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
-                        @Localizer["3 Days time limit"]
+                        @Localizer["30 days limit"]
+                    </li>
+                    <li>
+                        <i class="fa fa-times text-danger"></i>
+                        @Localizer["All files public"]
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
@@ -66,11 +70,11 @@
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
-                        @Localizer["No one-time link"]
+                        @Localizer["No custom domain"]
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
-                        @Localizer["Random file name"]
+                        @Localizer["Shared storage with others"]
                     </li>
                 </ul>
                 <button onclick="$('html, body').animate({ scrollTop: 0 }, 1000, 'easeInOutExpo');" class="btn btn-lg btn-block btn-outline-primary">@Localizer["Upload now"]</button>
@@ -85,11 +89,15 @@
                 <ul class="list-unstyled mt-3 mb-4">
                     <li>
                         <i class="fa fa-check text-success"></i>
-                        @Localizer["2GB file size limit"]
+                        @Localizer["2Gb file size limit"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["No time limit and programmable"]
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["365 days limit"]
+                    </li>
+                    <li>
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["Private site supported"]
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
@@ -97,11 +105,11 @@
                     </li>
                     <li>
                         <i class="fa fa-times text-danger"></i>
-                        @Localizer["No one-time link"]
+                        @Localizer["No custom domain"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["Source file name"]
+                        <i class="fa fa-times text-danger"></i>
+                        @Localizer["Your personal storage"]
                     </li>
                 </ul>
                 <a asp-controller="Dashboard" asp-action="Index" class="btn btn-lg btn-block btn-secondary">@Localizer["Sign in"]</a>
@@ -116,26 +124,30 @@
                 <ul class="list-unstyled mt-3 mb-4">
                     <li>
                         <i class="fa fa-check text-success"></i>
-                        @Localizer["2GB file size limit"]
+                        @Localizer["2Gb file size limit"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["No time limit and programmable"]
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["No time limit"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["Download log and 7*24 support"]
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["Private site supported"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["Enabled to create one-time link"]
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["Download logs"]
                     </li>
                     <li>
-                        <i class="fa fa-check text-success"></i>
-                        @Localizer["Customizable file name"]
+                        <i class="fa fa-times text-success"></i>
+                        @Localizer["Custom domain supported"]
+                    </li>
+                    <li>
+                        <i class="fa fa-times text-danger"></i>
+                        @Localizer["Multiple customizable storage"]
                     </li>
                 </ul>
-                <a href="@ServiceLocation.Developer" class="btn btn-lg btn-block btn-success">@Localizer["Get started"]</a>
+                <a href="@ServiceLocation.Wiki/Integrated%20Website/Getting%20Started.md" class="btn btn-lg btn-block btn-success">@Localizer["Get started"]</a>
             </div>
         </div>
     </div>
