@@ -43,7 +43,7 @@ namespace Aiursoft.Gateway.Models
                 var appGrant = new AppGrant
                 {
                     AppID = appId,
-                    APIUserId = Id
+                    GatewayUserId = Id
                 };
                 dbContext.LocalAppGrant.Add(appGrant);
                 await dbContext.SaveChangesAsync();
@@ -65,7 +65,7 @@ namespace Aiursoft.Gateway.Models
 
         public async Task<bool> HasAuthorizedApp(GatewayDbContext dbContext, string appId)
         {
-            return await dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.APIUserId == Id);
+            return await dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.GatewayUserId == Id);
         }
     }
 

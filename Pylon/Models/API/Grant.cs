@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Models.API
     {
         public string AppID { get; set; }
         public DateTime GrantTime { get; set; } = DateTime.UtcNow;
-        public string APIUserId { get; set; }
+        public string GatewayUserId { get; set; }
         [NotMapped]
         public virtual AiurUserBase UserInfo { get; set; }
     }

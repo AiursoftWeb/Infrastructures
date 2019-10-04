@@ -206,7 +206,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewGrantedApps(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
-            var applications = await _dbContext.LocalAppGrant.Where(t => t.APIUserId == user.Id).ToListAsync();
+            var applications = await _dbContext.LocalAppGrant.Where(t => t.GatewayUserId == user.Id).ToListAsync();
             return Json(new AiurCollection<AppGrant>(applications)
             {
                 Code = ErrorType.Success,
@@ -220,7 +220,7 @@ namespace Aiursoft.Gateway.Controllers
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
             var appToDelete = await _dbContext
                 .LocalAppGrant
-                .Where(t => t.APIUserId == user.Id)
+                .Where(t => t.GatewayUserId == user.Id)
                 .SingleOrDefaultAsync(t => t.AppID == model.AppIdToDrop);
             if (appToDelete == null)
             {
