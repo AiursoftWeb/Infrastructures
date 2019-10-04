@@ -14,7 +14,7 @@ namespace Aiursoft.Pylon.Services
         private AiurUrl GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
         {
             var action = register ? "register" : "authorize";
-            var url = new AiurUrl(_serviceLocation.API, "oauth", action, new AuthorizeAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "oauth", action, new AuthorizeAddressModel
             {
                 appid = Extends.CurrentAppId,
                 redirect_uri = destination.ToString(),

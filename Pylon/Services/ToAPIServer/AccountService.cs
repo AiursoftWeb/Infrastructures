@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
         {
-            var url = new AiurUrl(_serviceLocation.API, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
                 AccessToken = accessToken,
                 Code = code
@@ -37,7 +37,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
         {
-            var url = new AiurUrl(_serviceLocation.API, "Account", "UserInfo", new UserInfoAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "Account", "UserInfo", new UserInfoAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openid

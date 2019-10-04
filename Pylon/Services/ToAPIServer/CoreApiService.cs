@@ -23,7 +23,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
         [Obsolete(message: "Token was signed!", error: true)]
         public async Task<ValidateAccessTokenViewModel> ValidateAccessTokenAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "api", "ValidateAccessToken", new
+            var url = new AiurUrl(_serviceLocation.Gateway, "api", "ValidateAccessToken", new
             {
                 accessToken
             });
@@ -39,7 +39,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AllUserGrantedViewModel> AllUserGrantedAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "API", "AllUserGranted", new
+            var url = new AiurUrl(_serviceLocation.Gateway, "API", "AllUserGranted", new
             {
                 accessToken
             });
@@ -53,7 +53,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> DropGrantsAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "API", "DropGrants", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "API", "DropGrants", new { });
             var form = new AiurUrl(string.Empty, new
             {
                 AccessToken = accessToken

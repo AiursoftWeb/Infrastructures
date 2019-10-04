@@ -5,7 +5,7 @@ namespace Aiursoft.Pylon.Services
     public class ServiceLocation
     {
         public readonly string Account;
-        public readonly string API;
+        public readonly string Gateway;
         public readonly string Archon;
         public readonly string UI;
         public readonly string Colossus;
@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon.Services
         {
             var section = configuration.GetSection("Dependencies");
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
-            API = TrySet(section["APIPath"], "https://api.aiursoft.com");
+            Gateway = TrySet(section["GatewayPath"], "https://gateway.aiursoft.com");
             Archon = TrySet(section["ArchonPath"], "https://archon.aiursoft.com");
             UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");

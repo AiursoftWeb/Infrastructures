@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ChangeProfile", new ChangeProfileAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangeProfile", new ChangeProfileAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -40,7 +40,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ChangePassword", new ChangePasswordAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangePassword", new ChangePasswordAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -57,7 +57,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -71,7 +71,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -86,7 +86,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurCollection<AiurUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -100,7 +100,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> BindNewEmailAsync(string openId, string newEmail, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "BindNewEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "BindNewEmail", new { });
             var form = new AiurUrl(string.Empty, new BindNewEmailAddressModel
             {
                 OpenId = openId,
@@ -116,7 +116,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "DeleteEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DeleteEmail", new { });
             var form = new AiurUrl(string.Empty, new DeleteEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -132,7 +132,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "SendConfirmationEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SendConfirmationEmail", new { });
             var form = new AiurUrl(string.Empty, new SendConfirmationEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -148,7 +148,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> SetPrimaryEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "SetPrimaryEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPrimaryEmail", new { });
             var form = new AiurUrl(string.Empty, new SetPrimaryEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -164,7 +164,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ViewGrantedApps", new UserOperationAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewGrantedApps", new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId
@@ -178,7 +178,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurProtocol> DropGrantedAppsAsync(string accessToken, string userId, string appId)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "DropGrantedApps", new { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DropGrantedApps", new { });
             var form = new AiurUrl(string.Empty, new DropGrantedAppsAddressModel
             {
                 AccessToken = accessToken,
@@ -194,7 +194,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurCollection<AuditLog>> ViewAuditLogAsync(string accessToken, string userId)
         {
-            var url = new AiurUrl(_serviceLocation.API, "User", "ViewAuditLog", new UserOperationAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAuditLog", new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId
