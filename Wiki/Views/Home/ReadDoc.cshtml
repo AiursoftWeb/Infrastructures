@@ -2,8 +2,13 @@
 
 <div class="container-fluid">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">@Values.ProjectName Wiki Center</li>
-        <li class="breadcrumb-item">@Model.CurrentCollection.CollectionTitle</li>
+        <li class="breadcrumb-item">
+            <a href="/">@Values.ProjectName Wiki Center</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/@Model.CurrentCollection.CollectionTitle/@Model.CurrentCollection.Articles.First().ArticleTitle">@Model.CurrentCollection.CollectionTitle</a>
+
+        </li>
         <li class="breadcrumb-item active">@Model.CurrentArticle.ArticleTitle</li>
     </ol>
     <article>
