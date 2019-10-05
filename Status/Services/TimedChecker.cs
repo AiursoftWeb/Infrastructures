@@ -1,6 +1,5 @@
 ﻿namespace Aiursoft.Status.Services
 {
-    using global::Aiursoft.Pylon;
     using global::Aiursoft.Pylon.Models;
     using global::Aiursoft.Pylon.Services;
     using global::Aiursoft.Status.Data;
@@ -57,13 +56,18 @@
             private async Task AllCheck(StatusDbContext dbContext, HTTPService http)
             {
                 var items = await dbContext.MonitorRules.ToListAsync();
-                await items.ForEachParallal(async t =>
+                foreach (var item in items)
                 {
-                    var content = await http.Get(new AiurUrl(t.CheckAddress), false);
-                    var success = content.Contains(t.ExpectedContent);
-                    t.LastHealthStatus = success;
-                    dbContext.Update(t);
-                });
+                    var content = await http.Get(new AiurUrl(item.CheckAddress), false);
+                    var success = content.Contains(item.ExpectedContent);
+                    if (!success)
+                    {
+                        var errorMessage = $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got content: {content}";
+                        _logger.LogError(errorMessage);
+                    }
+                    item.LastHealthStatus = success;
+                    dbContext.Update(item);
+                }
                 await dbContext.SaveChangesAsync();
             }
 
