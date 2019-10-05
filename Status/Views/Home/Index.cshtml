@@ -2,61 +2,66 @@
 @{
     ViewData["Title"] = Localizer["Home"];
 }
-<header class="masthead text-white text-center www-back" style="background-image: url('/img/statusbg.jpg'); background-size: cover">
+<header class="masthead text-white text-center status-back" style="background-image: url('/img/statusbg.jpg'); background-size: cover">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
             <div class="col-xl-9 mx-auto">
-                <h1 class="mb-5 www-shadow">@Localizer["Aiursoft health status center"]</h1>
-                <h3>Monitor Aiursoft service status, submit service request, review source code.</h3>
+                <h1 class="mb-5 status-shadow">@Localizer["Aiursoft health status center"]</h1>
+                <h3 class="status-shadow">Monitor Aiursoft service status, submit service request, review source code.</h3>
             </div>
         </div>
     </div>
 </header>
 <section class="bg-light pt-5 pb-5">
     <div class="container">
-        @if (Model.Data.All(t => t.LastHealthStatus))
-        {
-            <div class="row">
-                <div class="alert alert-success w-100" role="alert">
-                    <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-up"></i>All Systems Operational</h4>
-                    <p>Aww yeah, Aiursoft is woking just fine.</p>
-                    <hr>
-                    <p class="mb-0">If you found any bad happened, please <a href="https://github.com/AiursoftWeb/Nexus/issues">submit an issue</a>.</p>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="row">
-                <div class="alert alert-danger w-100" role="alert">
-                    <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-down"></i>System down.</h4>
-                    <p>Aiursoft is with some issue. We will repair this soon.</p>
-                    <hr>
-                    <p class="mb-0">If you found any bad happened, please <a href="https://github.com/AiursoftWeb/Nexus/issues">submit an issue</a>.</p>
-                </div>
-            </div>
-        }
         <div class="row">
-            <h2 class="mt-4">Current status</h2>
-            <div class="card w-100" style="width: 18rem;">
-                <ul class="list-group list-group-flush">
-                    @foreach (var item in Model.Data)
-                    {
-                        <li class="list-group-item">
-                            <label style="font-size:16px; font-weight:500">@item.ProjectName</label>
-                            @if (item.LastHealthStatus)
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                @if (Model.Data.All(t => t.LastHealthStatus))
+                {
+                    <div class="w-100">
+                        <div class="alert alert-success bg-success text-white w-100" role="alert">
+                            <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-up"></i>All Systems Operational</h4>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-1">Aww yeah, Aiursoft is woking just fine.</p>
+                }
+                else
+                {
+                    <div class="w-100">
+                        <div class="alert alert-danger w-100" role="alert">
+                            <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-down"></i>System down.</h4>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-1">Aiursoft is with some issue. We will repair this soon.</p>
+                }
+                <p class="text-muted">If you found something bad happened, please <a style="color:#002bff" href="https://github.com/AiursoftWeb/Nexus/issues">submit an issue</a>.</p>
+
+                <div class="w-100">
+                    <h2 class="mt-4">Current status</h2>
+                    <div class="card w-100">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.Data)
                             {
-                                <p class="pull-right text-success"><i class="fa fa-fw fa-check"></i>Operational</p>
+                                <li class="list-group-item">
+                                    <label style="font-size:16px; font-weight:500">@item.ProjectName</label>
+                                    @if (item.LastHealthStatus)
+                                    {
+                                        <p class="pull-right text-success"><i class="fa fa-fw fa-check"></i>Operational</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="pull-right text-danger"><i class="fa fa-fw fa-times"></i>Issue</p>
+                                    }
+                                    <p class="mb-0 text-muted">Update: <label data-utc-time="@item.LastCheckTime"></label></p>
+                                </li>
                             }
-                            else
-                            {
-                                <p class="pull-right text-danger"><i class="fa fa-fw fa-times"></i>Issue</p>
-                            }
-                        </li>
-                    }
-                </ul>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 </section>

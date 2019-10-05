@@ -58,6 +58,7 @@
                 var items = await dbContext.MonitorRules.ToListAsync();
                 foreach (var item in items)
                 {
+                    _logger.LogInformation($"Checking status for: {item.ProjectName}");
                     var content = await http.Get(new AiurUrl(item.CheckAddress), false);
                     var success = content.Contains(item.ExpectedContent);
                     if (!success)
@@ -66,9 +67,10 @@
                         _logger.LogError(errorMessage);
                     }
                     item.LastHealthStatus = success;
+                    item.LastCheckTime = DateTime.UtcNow;
                     dbContext.Update(item);
+                    await dbContext.SaveChangesAsync();
                 }
-                await dbContext.SaveChangesAsync();
             }
 
             public Task StopAsync(CancellationToken cancellationToken)

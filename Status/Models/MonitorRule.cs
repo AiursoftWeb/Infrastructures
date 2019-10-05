@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Status.Models
+﻿using System;
+
+namespace Aiursoft.Status.Models
 {
     public class MonitorRule
     {
@@ -7,5 +9,6 @@
         public string CheckAddress { get; set; }
         public bool LastHealthStatus { get; set; } = false;
         public string ExpectedContent { get; set; }
+        public DateTime LastCheckTime { get; set; } = DateTime.UtcNow;
     }
 }

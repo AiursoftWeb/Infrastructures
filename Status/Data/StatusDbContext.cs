@@ -19,9 +19,8 @@ namespace Aiursoft.Status.Data
 
         public void Seed()
         {
-            MonitorRules.RemoveRange(MonitorRules);
-            SaveChanges();
-
+            //MonitorRules.RemoveRange(MonitorRules);
+            //SaveChanges();
             var existingData = MonitorRules.ToList();
             foreach (var item in SeedData.GetRules())
             {
