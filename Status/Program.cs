@@ -1,7 +1,7 @@
 using Aiursoft.Pylon;
+using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Aiursoft.Status.Data;
 
 namespace Aiursoft.Status
 {
@@ -11,7 +11,7 @@ namespace Aiursoft.Status
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StatusDbContext>()
+                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed())
                 .Run();
         }
 

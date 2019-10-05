@@ -3,14 +3,16 @@ using Aiursoft.Status.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Status.Migrations
 {
     [DbContext(typeof(StatusDbContext))]
-    partial class StatusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191005082735_AddMonitorRule")]
+    partial class AddMonitorRule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

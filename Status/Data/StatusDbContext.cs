@@ -1,5 +1,6 @@
-using Aiursoft.Pylon.Models.Stargate;
+using Aiursoft.Status.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Aiursoft.Status.Data
 {
@@ -12,6 +13,21 @@ namespace Aiursoft.Status.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+
+        public DbSet<MonitorRule> MonitorRules { get; set; }
+
+        public void Seed()
+        {
+            var existingData = MonitorRules.ToList();
+            foreach (var item in SeedData.GetRules())
+            {
+                if (!existingData.Exists(t => t.ProjectName == item.ProjectName))
+                {
+                    MonitorRules.Add(item);
+                }
+            }
+            SaveChanges();
         }
     }
 }
