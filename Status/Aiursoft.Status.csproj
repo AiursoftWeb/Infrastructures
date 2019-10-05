@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Version>0.9.1</Version>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>Aiursoft.Status</AssemblyName>
+    <PackageId>Aiursoft.Status</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>The status check center for aiursoft.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+  </ItemGroup>
+</Project>

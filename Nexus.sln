@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Archon", "Archon\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe", "Probe\Aiursoft.Probe.csproj", "{33D29374-4551-43E5-AD37-E06650237429}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "Probe\Aiursoft.Status.csproj", "{33D29374-4551-43E5-AD37-E06650237429}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
