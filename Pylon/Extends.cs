@@ -163,16 +163,13 @@ namespace Aiursoft.Pylon
                     {
                         // Migrate even in production level.
                         context.Database.Migrate();
-                        if (env.IsDevelopment())
+                        try
                         {
-                            try
-                            {
-                                seeder?.Invoke(context, services);
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.LogError(ex, $"An error occurred while seeding the database used on context {typeof(TContext).Name}");
-                            }
+                            seeder?.Invoke(context, services);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogError(ex, $"An error occurred while seeding the database used on context {typeof(TContext).Name}");
                         }
                     });
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
