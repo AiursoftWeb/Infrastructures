@@ -1,9 +1,8 @@
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToArchonServer;
-using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Status.Data;
+using Aiursoft.Status.Services.Aiursoft.Probe.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +31,7 @@ namespace Aiursoft.Status
                 .AddNewtonsoftJson();
 
             services.AddTokenManager();
-
+            services.AddSingleton<IHostedService, TimedChecker>();
             services.AddSingleton<ServiceLocation>();
             services.AddSingleton<Counter>();
             services.AddSingleton<AppsContainer>();
