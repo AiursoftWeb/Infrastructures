@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Status.Data;
+using Aiursoft.Status.Models.HomeViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -17,7 +18,11 @@ namespace Aiursoft.Status.Controllers
         public async Task<IActionResult> Index()
         {
             var data = await _dbContext.MonitorRules.ToListAsync();
-            return Json(data);
+            var model = new IndexViewModel
+            {
+                Data = data
+            };
+            return View(model);
         }
     }
 }

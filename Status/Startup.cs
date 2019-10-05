@@ -5,6 +5,7 @@ using Aiursoft.Status.Data;
 using Aiursoft.Status.Services.Aiursoft.Probe.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,8 @@ namespace Aiursoft.Status
 
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             services.AddTokenManager();
             services.AddSingleton<IHostedService, TimedChecker>();
@@ -53,6 +55,8 @@ namespace Aiursoft.Status
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
+            app.UseAiursoftSupportedCultures();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
