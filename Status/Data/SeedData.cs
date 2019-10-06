@@ -69,6 +69,12 @@ namespace Aiursoft.Status.Data
                     CheckAddress = "https://server.kahla.app",
                     ExpectedContent = "Welcome to Aiursoft Kahla server!"
                 },
+                new MonitorRule
+                {
+                    ProjectName = "Aiursoft Tracer",
+                    CheckAddress = "https://tracer.aiursoft.com",
+                    ExpectedContent = "Welcome to Aiursoft Kahla server!"
+                },
             };
         }
     }
