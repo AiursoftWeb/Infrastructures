@@ -73,7 +73,7 @@ namespace Aiursoft.Status.Data
                 {
                     ProjectName = "Aiursoft Tracer",
                     CheckAddress = "https://tracer.aiursoft.com",
-                    ExpectedContent = "Welcome to Aiursoft Kahla server!"
+                    ExpectedContent = "Tracer is a simple network quality testing app."
                 },
             };
         }
