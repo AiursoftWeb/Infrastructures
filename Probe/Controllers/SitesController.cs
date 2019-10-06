@@ -123,6 +123,10 @@ namespace Aiursoft.Probe.Controllers
                 .Where(t => t.AppId == appid)
                 .Include(t => t.Root)
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
+            if (site == null)
+            {
+                return this.Protocol(ErrorType.NotFound, $"Could not find your site with name: {model.SiteName}");
+            }
             var viewModel = new ViewSiteDetailViewModel
             {
                 AppId = appLocal.AppId,
@@ -132,6 +136,36 @@ namespace Aiursoft.Probe.Controllers
                 Message = "Successfully get your buckets!"
             };
             return Json(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSiteInfo(UpdateSiteInfoAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var site = await _dbContext
+                .Sites
+                .Include(t => t.Root)
+                .SingleOrDefaultAsync(t => t.SiteName == model.OldSiteName);
+            if (site == null)
+            {
+                return this.Protocol(ErrorType.NotFound, $"Could not find a site with name: '{model.OldSiteName}'");
+            }
+            if (site.AppId != appid)
+            {
+                return this.Protocol(ErrorType.Unauthorized, $"The site you tried to update is not your app's site.");
+            }
+            var conflict = await _dbContext.Sites
+                .Where(t => t.Id != site.Id)
+                .AnyAsync(t => t.SiteName.ToLower().Trim() == model.NewSiteName.ToLower().Trim());
+            if (conflict)
+            {
+                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
+            }
+            site.SiteName = model.NewSiteName;
+            site.OpenToDownload = model.OpenToDownload;
+            site.OpenToUpload = model.OpenToUpload;
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "Successfully updated your site!");
         }
 
         [HttpPost]

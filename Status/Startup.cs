@@ -57,6 +57,7 @@ namespace Aiursoft.Status
             }
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
+            app.UseLanguageSwitcher();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseDocGenerator();
