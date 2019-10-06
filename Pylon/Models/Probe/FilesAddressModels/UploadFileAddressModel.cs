@@ -4,7 +4,6 @@ namespace Aiursoft.Pylon.Models.Probe.FilesAddressModels
 {
     public class UploadFileAddressModel
     {
-        [Required]
         public string PBToken { get; set; }
         [Required]
         public string SiteName { get; set; }

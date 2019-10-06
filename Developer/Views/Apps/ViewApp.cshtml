@@ -266,6 +266,7 @@
                                             <th>@Localizer["Site Name"]</th>
                                             <th>@Localizer["Create Time"]</th>
                                             <th>@Localizer["Open to upload"]</th>
+                                            <th>@Localizer["Open to download"]</th>
                                             <th>@Localizer["Operation"]</th>
                                         </tr>
                                     </thead>
@@ -277,6 +278,20 @@
                                                 <td data-utc-time="@site.CreationTime"></td>
                                                 <td>
                                                     @if (site.OpenToUpload)
+                                                    {
+                                                        <label class="text-success">
+                                                            <i class="fa fa-check"></i>
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="text-danger">
+                                                            <i class="fa fa-times"></i>
+                                                        </label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (site.OpenToDownload)
                                                     {
                                                         <label class="text-success">
                                                             <i class="fa fa-check"></i>

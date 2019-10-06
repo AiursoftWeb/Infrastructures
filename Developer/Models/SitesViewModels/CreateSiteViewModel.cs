@@ -34,5 +34,9 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [Required]
         [Display(Name = "Open to upload")]
         public bool OpenToUpload { get; set; }
+
+        [Required]
+        [Display(Name = "Open to download")]
+        public bool OpenToDownload { get; set; }
     }
 }

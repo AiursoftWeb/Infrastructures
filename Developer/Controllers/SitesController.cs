@@ -90,7 +90,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _sitesService.CreateNewSiteAsync(token, model.SiteName, model.OpenToUpload);
+                await _sitesService.CreateNewSiteAsync(token, model.SiteName, model.OpenToUpload, model.OpenToDownload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)

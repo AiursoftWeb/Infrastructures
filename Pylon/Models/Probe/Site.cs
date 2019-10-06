@@ -22,6 +22,7 @@ namespace Aiursoft.Pylon.Models.Probe
 
         public string SiteName { get; set; }
         public bool OpenToUpload { get; set; }
+        public bool OpenToDownload { get; set; }
 
         public DateTime CreationTime { get; set; } = DateTime.UtcNow;
     }

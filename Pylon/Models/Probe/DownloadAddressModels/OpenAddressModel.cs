@@ -4,5 +4,6 @@
     {
         public string FolderNames { get; set; }
         public string SiteName { get; set; }
+        public string PBToken { get; set; }
     }
 }

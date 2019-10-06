@@ -65,7 +65,8 @@ namespace Aiursoft.Probe.Controllers
                 AppId = appid,
                 SiteName = model.NewSiteName.ToLower(),
                 FolderId = newRootFolder.Id,
-                OpenToUpload = model.OpenToUpload
+                OpenToUpload = model.OpenToUpload,
+                OpenToDownload = model.OpenToDownload
             };
             _dbContext.Sites.Add(site);
             await _dbContext.SaveChangesAsync();

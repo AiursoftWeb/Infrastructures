@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
+using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
@@ -24,17 +25,20 @@ namespace Aiursoft.Probe.Controllers
         private readonly ProbeDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly ImageCompressor _imageCompressor;
+        private readonly PBTokenManager _pbTokenManager;
 
         public DownloadController(
             FolderLocator folderLocator,
             ProbeDbContext dbContext,
             IConfiguration configuration,
-            ImageCompressor imageCompressor)
+            ImageCompressor imageCompressor,
+            PBTokenManager pbTokenManager)
         {
             _folderLocator = folderLocator;
             _dbContext = dbContext;
             _configuration = configuration;
             _imageCompressor = imageCompressor;
+            _pbTokenManager = pbTokenManager;
         }
 
         [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
@@ -50,6 +54,22 @@ namespace Aiursoft.Probe.Controllers
             if (site == null)
             {
                 return NotFound();
+            }
+            if (!site.OpenToDownload)
+            {
+                var token = _pbTokenManager.ValidateAccessToken(model.PBToken);
+                if (token.SiteName != model.SiteName)
+                {
+                    return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to download files to this site.");
+                }
+                if (!token.Permissions.Contains("Download"))
+                {
+                    return this.Protocol(ErrorType.Unauthorized, $"Your token was not authorized to download. Your token is only permitted to '{token.Permissions}'");
+                }
+                if (!string.IsNullOrWhiteSpace(token.UnderPath) && model.FolderNames != null && !model.FolderNames.StartsWith(token.UnderPath))
+                {
+                    return this.Protocol(ErrorType.Unauthorized, $"Your token is authorized to download files from path: '{token.UnderPath}', not '{model.FolderNames}'.");
+                }
             }
             var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
             try

@@ -15,5 +15,8 @@ namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
 
         [Required]
         public bool OpenToUpload { get; set; }
+
+        [Required]
+        public bool OpenToDownload { get; set; }
     }
 }
