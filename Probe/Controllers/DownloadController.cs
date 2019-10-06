@@ -18,6 +18,7 @@ namespace Aiursoft.Probe.Controllers
 {
     [LimitPerMin]
     [Route("Download")]
+    [APIExpHandler]
     public class DownloadController : Controller
     {
         private readonly char _ = Path.DirectorySeparatorChar;
