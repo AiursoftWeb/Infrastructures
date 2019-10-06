@@ -11,8 +11,6 @@ namespace Aiursoft.Probe.Migrations
                 table: "Sites",
                 nullable: false,
                 defaultValue: true);
-
-            migrationBuilder.Sql("Update sites set OpenToDownload=true");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
