@@ -46,5 +46,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [Required]
         [Display(Name = "Open to download")]
         public bool OpenToDownload { get; set; }
+        public long Size { get; set; }
     }
 }

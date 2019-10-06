@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models.Developer;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,6 +22,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         public bool ModelStateValid { get; set; } = true;
         [Required]
+        [FromRoute]
         public string AppId { get; set; }
 
         [Required]

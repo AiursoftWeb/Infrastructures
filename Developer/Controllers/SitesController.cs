@@ -67,9 +67,9 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
-        [Route("Apps/{id}/CreateSite")]
+        [Route("Apps/{AppId}/CreateSite")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSite([FromRoute]string id, CreateSiteViewModel model)
+        public async Task<IActionResult> CreateSite(CreateSiteViewModel model)
         {
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace Aiursoft.Developer.Controllers
                 model.Recover(user);
                 return View(model);
             }
-            var app = await _dbContext.Apps.FindAsync(id);
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
             if (app == null)
             {
                 return NotFound();
@@ -323,12 +323,17 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
+            var accesstoken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            var siteDetail = await _sitesService.ViewSiteDetailAsync(await accesstoken, siteName);
             var model = new EditViewModel(user)
             {
                 AppId = appId,
                 OldSiteName = siteName,
                 NewSiteName = siteName,
-                AppName = app.AppName
+                AppName = app.AppName,
+                OpenToDownload = siteDetail.Site.OpenToDownload,
+                OpenToUpload = siteDetail.Site.OpenToUpload,
+                Size = siteDetail.Size
             };
             return View(model);
         }
@@ -364,6 +369,7 @@ namespace Aiursoft.Developer.Controllers
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
                 model.Recover(user, app.AppName);
+                model.NewSiteName = model.OldSiteName;
                 return View(model);
             }
         }

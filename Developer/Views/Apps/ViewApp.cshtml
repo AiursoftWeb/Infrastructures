@@ -307,8 +307,8 @@
                                                 <td>
                                                     <div class="btn-group">
                                                         <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-danger">@Localizer["Delete"]</a>
-                                                        <a asp-controller="Sites" asp-action="Edit" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-info">@Localizer["Change Settings"]</a>
-                                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-info">@Localizer["View Files"]</a>
+                                                        <a asp-controller="Sites" asp-action="Edit" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-secondary">@Localizer["Settings"]</a>
+                                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@site.SiteName" class="btn btn-primary">@Localizer["View Files"]</a>
                                                     </div>
                                                 </td>
                                             </tr>

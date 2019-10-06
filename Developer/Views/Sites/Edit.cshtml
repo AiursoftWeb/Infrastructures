@@ -26,7 +26,7 @@
             <div asp-validation-summary="All"></div>
         </div>
     }
-
+    
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-inbox"></i>
@@ -68,6 +68,38 @@
                         <a class="btn btn-info secondary" asp-controller="Sites" asp-action="Index">@Localizer["Back to all sites"]</a>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Site Size"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                Site size is
+                <br>
+                <span class="badge badge-primary">@((Model.Size / 1024.0 / 1024.0).ToString("0.00")) MB</span>
+            </div>
+            <div class="col-12">
+                <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.OldSiteName" class="btn btn-primary mt-3">@Localizer["View Files"]</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header text-danger">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Danger zone"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <a asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.OldSiteName" class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i>
+                    Destory the entire site
+                </a>
             </div>
         </div>
     </div>
