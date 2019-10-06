@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Description>Aiursoft app authentication service.</Description>
   </PropertyGroup>
 
   <ItemGroup>

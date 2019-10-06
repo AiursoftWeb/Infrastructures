@@ -1,3 +1,4 @@
+@using System.Reflection
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,6 +9,10 @@
             <div class="col-xl-9 mx-auto">
                 <h1>@Localizer["Unlock the power of your"]</h1>
                 <h1 class="mb-5">@Values.ProjectName Account</h1>
+                @{
+                    var description = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
+                }
+                <h3>@description</h3>
             </div>
             <div class="col-xl-9 mx-auto">
                 <div class="form-row">

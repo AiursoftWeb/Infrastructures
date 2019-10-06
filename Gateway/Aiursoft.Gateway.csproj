@@ -8,12 +8,8 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>All core API implementations for Aiursoft authorization.</Description>
+    <Description>The core authentication gateway for Aiursoft apps.</Description>
     <PackageTags>api</PackageTags>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <ItemGroup>

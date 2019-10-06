@@ -1,5 +1,7 @@
 ﻿@using Aiursoft.Pylon.Services
 @using Aiursoft.Pylon
+@using System.Reflection
+
 @inject ServiceLocation ServiceLocation
 @{
     string[] domains = {
@@ -8,10 +10,15 @@
         ServiceLocation.UI,
         ServiceLocation.Account
     };
+    var descriptionAttribute = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
 }
 
 <!--Aiur Header-->
-@if (string.IsNullOrWhiteSpace(ViewBag.Des))
+@if (!string.IsNullOrEmpty(descriptionAttribute))
+{
+    ViewBag.Des = descriptionAttribute;
+}
+else if (!string.IsNullOrWhiteSpace(Values.ProjectValue))
 {
     ViewBag.Des = Values.ProjectValue;
 }

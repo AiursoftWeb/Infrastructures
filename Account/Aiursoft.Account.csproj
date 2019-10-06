@@ -8,7 +8,7 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>The account management center for Aiursoft web apps.</Description>
+    <Description>Account management center for Aiursoft.</Description>
   </PropertyGroup>
 
   <ItemGroup>

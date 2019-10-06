@@ -8,7 +8,7 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>The status check center for aiursoft.</Description>
+    <Description>The status check center for aiursoft. Monitor Aiursoft service status, submit service request, review source code.</Description>
   </PropertyGroup>
 
   <ItemGroup>
