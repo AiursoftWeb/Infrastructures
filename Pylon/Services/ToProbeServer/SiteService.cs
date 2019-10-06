@@ -63,6 +63,24 @@ namespace Aiursoft.Pylon.Services.ToProbeServer
             return jResult;
         }
 
+        public async Task<AiurProtocol> UpdateSiteInfoAsync(string accessToken, string oldSiteName, string newSiteName, bool openToUpload, bool openToDownload)
+        {
+            var url = new AiurUrl(_serviceLocation.Probe, "Sites", "UpdateSiteInfo", new { });
+            var form = new AiurUrl(string.Empty, new UpdateSiteInfoAddressModel
+            {
+                AccessToken = accessToken,
+                OldSiteName = oldSiteName,
+                NewSiteName = newSiteName,
+                OpenToDownload = openToDownload,
+                OpenToUpload = openToUpload
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
         public async Task<AiurProtocol> DeleteSiteAsync(string accessToken, string siteName)
         {
             var url = new AiurUrl(_serviceLocation.Probe, "Sites", "DeleteSite", new { });
