@@ -310,6 +310,64 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
+        [Route("Apps/{appId}/Sites/{siteName}/Edit")]
+        public async Task<IActionResult> Edit(string appId, string siteName)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            var model = new EditViewModel(user)
+            {
+                AppId = appId,
+                OldSiteName = siteName,
+                NewSiteName = siteName,
+                AppName = app.AppName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Apps/{appId}/Sites/{oldSiteName}/Edit")]
+        public async Task<IActionResult> Edit(EditViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload, model.OpenToDownload);
+                return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+        }
+
         [Route("Apps/{appId}/Sites/{siteName}/Delete")]
         public async Task<IActionResult> Delete(string appId, string siteName)
         {
