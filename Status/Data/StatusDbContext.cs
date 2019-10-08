@@ -1,3 +1,4 @@
+using Aiursoft.Pylon.Models.Status;
 using Aiursoft.Status.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Aiursoft.Status.Data
         }
 
         public DbSet<MonitorRule> MonitorRules { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+        public DbSet<StatusApp> StatusApps { get; set; }
 
         public void Seed()
         {

@@ -18,8 +18,8 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="pylon.png" Pack="true" PackagePath="\"/>
-    <None Include="LICENSE" Pack="true" PackagePath="\"/>
+    <None Include="pylon.png" Pack="true" PackagePath="\" />
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
      <FrameworkReference Include="Microsoft.AspNetCore.App" />

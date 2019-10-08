@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.Pylon.Models.Probe
+namespace Aiursoft.Pylon.Models.Status
 {
-    public class ProbeApp
+    public class StatusApp
     {
         [Key]
         public string AppId { get; set; }
 
-        [InverseProperty(nameof(Site.Context))]
-        public IEnumerable<Site> Sites { get; set; }
+        [InverseProperty(nameof(ErrorLog.Context))]
+        public IEnumerable<ErrorLog> ErrorLogs { get; set; }
     }
 }
