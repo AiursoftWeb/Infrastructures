@@ -7,6 +7,7 @@ using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToProbeServer;
+using Aiursoft.Pylon.Services.ToStatusServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -23,17 +24,20 @@ namespace Aiursoft.Developer.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly CoreApiService _coreApiService;
         private readonly SitesService _siteService;
+        private readonly EventService _eventService;
 
         public AppsController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
             CoreApiService coreApiService,
-            SitesService siteService)
+            SitesService siteService,
+            EventService eventService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _coreApiService = coreApiService;
             _siteService = siteService;
+            _eventService = eventService;
         }
 
         public async Task<IActionResult> Index()
@@ -92,7 +96,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -106,7 +110,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);

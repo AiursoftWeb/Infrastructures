@@ -1,9 +1,11 @@
 ﻿using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Probe;
+using Aiursoft.Pylon.Models.Status;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToAPIServer;
 using Aiursoft.Pylon.Services.ToProbeServer;
+using Aiursoft.Pylon.Services.ToStatusServer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,10 +22,11 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             App thisApp,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
-            SitesService sitesService)
+            SitesService sitesService,
+            EventService eventService)
         {
             var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService);
+            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService);
             return model;
         }
 
@@ -32,7 +35,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             App thisApp,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
-            SitesService sitesService)
+            SitesService sitesService,
+            EventService eventService)
         {
             RootRecover(user, 1);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
@@ -43,6 +47,9 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
             var sites = await sitesService.ViewMySitesAsync(token);
             Sites = sites.Sites;
+
+            var errorLogs = await eventService.ViewAsync(token);
+            ErrorLogs = errorLogs.Logs;
         }
 
         private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
@@ -115,5 +122,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }
+        public IEnumerable<ErrorLog> ErrorLogs { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -31,6 +32,12 @@ namespace Aiursoft.Developer.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [AiurForceAuth("", "", justTry: true)]
+        public IActionResult Error()
+        {
+            throw new NotImplementedException("This is a test error.");
         }
 
         [HttpPost]

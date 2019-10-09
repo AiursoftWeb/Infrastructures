@@ -29,10 +29,10 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
 
         [Required]
         [Display(Name = "Open to upload")]
-        public bool OpenToUpload { get; set; }
+        public bool OpenToUpload { get; set; } = true;
 
         [Required]
         [Display(Name = "Open to download")]
-        public bool OpenToDownload { get; set; }
+        public bool OpenToDownload { get; set; } = true;
     }
 }
