@@ -1,16 +1,18 @@
-﻿using Aiursoft.Pylon.Services.ToStargateServer;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Services.ToStargateServer;
 using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Services
 {
-    public class Debugger
+    public class Debugger : IScopedDependency
     {
         private readonly PushMessageService _messageService;
         public Debugger(PushMessageService messageService)
         {
             _messageService = messageService;
         }
+
         public async Task SendDebuggingMessages(string accessToken, int channelId)
         {
             var random = new Random();

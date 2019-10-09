@@ -1,8 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
-using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -34,20 +31,7 @@ namespace Aiursoft.Probe
                 .AddControllersWithViews()
                 .AddNewtonsoftJson();
 
-            services.AddTokenManager();
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<IHostedService, TimedCleaner>();
-            services.AddSingleton<PBKeyPair>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<CoreApiService>();
-            services.AddTransient<PBRSAService>();
-            services.AddTransient<PBTokenManager>();
-            services.AddTransient<ImageCompressor>();
-            services.AddTransient<FolderLocator>();
-            services.AddTransient<FolderOperator>();
-            services.AddTransient<FolderRefactor>();
-            services.AddTransient<AiurCache>();
+            services.AddAiursoftDependencies();
 
         }
 

@@ -1,9 +1,10 @@
-﻿using Aiursoft.Pylon.Services;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Services;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Probe.Services
 {
-    public class PBRSAService
+    public class PBRSAService : ITransientDependency
     {
         private readonly RSAParameters _privateKey;
         private readonly RSAParameters _publicKey;

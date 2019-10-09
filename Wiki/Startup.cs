@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.Wiki.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,9 +32,7 @@ namespace Aiursoft.Wiki
                 .AddControllersWithViews()
                 .AddNewtonsoftJson();
 
-            services.AddAiursoftAuth<WikiUser>();
-            services.AddTransient<Seeder>();
-            services.AddTransient<MarkDownGenerator>();
+            services.AddAiursoftDependencies<WikiUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

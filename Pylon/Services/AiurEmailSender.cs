@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Aiursoft.Pylon.Interfaces;
+using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class AiurEmailSender
+    public class AiurEmailSender : ITransientDependency
     {
         private readonly IConfiguration _configuration;
 

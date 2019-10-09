@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Account.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,10 +37,7 @@ namespace Aiursoft.Account
                 .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-            services.AddAiursoftAuth<AccountUser>();
-            services.AddScoped<UserService>();
-            services.AddScoped<DeveloperApiService>();
-            services.AddTransient<AccountSmsSender>();
+            services.AddAiursoftDependencies<AccountUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

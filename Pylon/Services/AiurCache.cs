@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Aiursoft.Pylon.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class AiurCache
+    public class AiurCache : ITransientDependency
     {
         private readonly IMemoryCache _cache;
 

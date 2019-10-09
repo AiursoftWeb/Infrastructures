@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Services;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderLocator
+    public class FolderLocator : ITransientDependency
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;

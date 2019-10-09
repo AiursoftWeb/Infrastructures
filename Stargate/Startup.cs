@@ -1,10 +1,5 @@
 ﻿using Aiursoft.Pylon;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToArchonServer;
-using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Stargate.Data;
-using Aiursoft.Stargate.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,21 +27,7 @@ namespace Aiursoft.Stargate
                 .AddControllersWithViews()
                 .AddNewtonsoftJson();
 
-            services.AddTokenManager();
-
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<IHostedService, TimedCleaner>();
-            services.AddSingleton<Counter>();
-            services.AddSingleton<AppsContainer>();
-            services.AddSingleton<StargateMemory>();
-            services.AddHttpClient();
-            services.AddScoped<ArchonApiService>();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<ChannelService>();
-            services.AddScoped<PushMessageService>();
-
-            services.AddScoped<Debugger>();
-            services.AddScoped<IPusher, WebSocketPusher>();
+            services.AddAiursoftDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

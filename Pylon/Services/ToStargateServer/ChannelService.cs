@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.ChannelAddressModels;
 using Aiursoft.Pylon.Models.Stargate.ChannelViewModels;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToStargateServer
 {
-    public class ChannelService
+    public class ChannelService : IScopedDependency
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;

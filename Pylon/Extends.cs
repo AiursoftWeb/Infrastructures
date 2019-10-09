@@ -1,10 +1,8 @@
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Services.ToArchonServer;
-using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +17,8 @@ using Polly;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -183,32 +183,43 @@ namespace Aiursoft.Pylon
             return host;
         }
 
-        public static IServiceCollection AddAiursoftAuth<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiursoftDependencies<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
         {
-            services.AddSingleton<AppsContainer>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddScoped<ArchonApiService>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<SitesService>();
-            services.AddScoped<FoldersService>();
-            services.AddScoped<FilesService>();
-            services.AddScoped<TokenService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<AccountService>();
             services.AddScoped<UserImageGenerator<TUser>>();
-            services.AddMemoryCache();
             services.AddTransient<AuthService<TUser>>();
-            services.AddTransient<AiurCache>();
+            services.AddAiursoftDependencies();
             return services;
         }
 
-        public static IServiceCollection AddTokenManager(this IServiceCollection services)
+        public static IServiceCollection AddAiursoftDependencies(this IServiceCollection services)
         {
-            services.AddSingleton<AiurKeyPair>();
-            services.AddTransient<RSAService>();
-            services.AddTransient<ACTokenManager>();
+            services.AddHttpClient();
+            services.AddMemoryCache();
+            var executingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
+            var entryTypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !t.IsInterface);
+            executingTypes.AddRange(entryTypes);
+            foreach (var item in executingTypes)
+            {
+                if (item.GetInterfaces().Contains(typeof(ISingletonDependency)))
+                {
+                    if (item.GetInterfaces().Contains(typeof(IHostedService)))
+                    {
+                        services.AddSingleton(typeof(IHostedService), item);
+                    }
+                    else
+                    {
+                        services.AddSingleton(item);
+                    }
+                }
+                else if (item.GetInterfaces().Contains(typeof(IScopedDependency)))
+                {
+                    services.AddScoped(item);
+                }
+                else if (item.GetInterfaces().Contains(typeof(ITransientDependency)))
+                {
+                    services.AddTransient(item);
+                }
+            }
             return services;
         }
 
@@ -232,7 +243,7 @@ namespace Aiursoft.Pylon
             return request.Headers["User-Agent"];
         }
 
-        public static Task ForEachParallal<T>(this IEnumerable<T> items, Func<T, Task> function)
+        public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
         {
             var taskList = new List<Task>();
             foreach (var item in items)

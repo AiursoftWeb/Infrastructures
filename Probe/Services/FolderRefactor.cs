@@ -1,11 +1,12 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderRefactor
+    public class FolderRefactor : ITransientDependency
     {
         private FolderLocator _folderLocator;
 

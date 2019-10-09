@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
+using Aiursoft.Pylon.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class TimedCleaner : IHostedService, IDisposable
+    public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         private Timer _timer;
         private readonly ILogger _logger;

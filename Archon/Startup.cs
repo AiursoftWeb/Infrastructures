@@ -1,6 +1,4 @@
 ﻿using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,12 +15,7 @@ namespace Aiursoft.Archon
                 .AddControllersWithViews()
                 .AddNewtonsoftJson();
 
-            services.AddTokenManager();
-            services.AddSingleton<ServiceLocation>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<DeveloperApiService>();
-            services.AddTransient<AiurCache>();
+            services.AddAiursoftDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

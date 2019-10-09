@@ -35,7 +35,9 @@ namespace Aiursoft.WWW
                 .AddControllersWithViews()
                 .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
-            services.AddAiursoftAuth<WWWUser>();
+
+            services.AddAiursoftDependencies<WWWUser>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

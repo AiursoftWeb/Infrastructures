@@ -1,10 +1,11 @@
-﻿using Aiursoft.Pylon.Services;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Probe.Services
 {
-    public class PBKeyPair
+    public class PBKeyPair : ISingletonDependency
     {
         public RSAParameters PublicKey { get; set; }
         public RSAParameters PrivateKey { get; set; }

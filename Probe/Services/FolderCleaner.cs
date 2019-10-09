@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using File = Aiursoft.Pylon.Models.Probe.File;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderOperator
+    public class FolderOperator : ITransientDependency
     {
         private readonly char _ = Path.DirectorySeparatorChar;
         private readonly ProbeDbContext _dbContext;

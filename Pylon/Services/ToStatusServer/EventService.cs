@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Status;
 using Aiursoft.Pylon.Models.Status.EventAddressModels;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToStatusServer
 {
-    public class EventService
+    public class EventService : IScopedDependency
     {
         private readonly HTTPService _http;
         private readonly ServiceLocation _serviceLocation;

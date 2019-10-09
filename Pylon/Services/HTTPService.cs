@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class HTTPService
+    public class HTTPService : IScopedDependency
     {
         private readonly HttpClient _client;
 

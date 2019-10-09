@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Services.ToArchonServer;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Services.ToArchonServer;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Aiursoft.Pylon.Services
     /// <summary>
     /// For storaging other apps with appid and appsecret for current app.
     /// </summary>
-    public class AppsContainer
+    public class AppsContainer : ISingletonDependency
     {
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;

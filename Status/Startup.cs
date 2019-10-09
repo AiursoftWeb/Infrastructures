@@ -1,8 +1,5 @@
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToArchonServer;
 using Aiursoft.Status.Data;
-using Aiursoft.Status.Services.Aiursoft.Probe.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -32,14 +29,7 @@ namespace Aiursoft.Status
                 .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-            services.AddTokenManager();
-            services.AddSingleton<IHostedService, TimedChecker>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddSingleton<Counter>();
-            services.AddSingleton<AppsContainer>();
-            services.AddHttpClient();
-            services.AddScoped<ArchonApiService>();
-            services.AddScoped<HTTPService>();
+            services.AddAiursoftDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

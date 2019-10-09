@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Http;
 using System.Net.WebSockets;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Services
 {
-    public class WebSocketPusher : IPusher
+    public class WebSocketPusher : IScopedDependency
     {
         private WebSocket _ws;
         public bool Connected => _ws.State == WebSocketState.Open;

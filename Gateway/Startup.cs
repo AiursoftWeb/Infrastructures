@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,8 +38,6 @@ namespace Aiursoft.Gateway
                 .AddEntityFrameworkStores<GatewayDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTokenManager();
-
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -52,16 +47,7 @@ namespace Aiursoft.Gateway
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
-            services.AddSingleton<IHostedService, TimedCleaner>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<DeveloperApiService>();
-            services.AddScoped<GrantChecker>();
-            services.AddTransient<UserImageGenerator<GatewayUser>>();
-            services.AddTransient<AiurEmailSender>();
-            services.AddTransient<APISMSSender>();
-            services.AddTransient<ConfirmationEmailSender>();
+            services.AddAiursoftDependencies<GatewayUser>();
             services.AddSessionBasedCaptcha();
         }
 

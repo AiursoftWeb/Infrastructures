@@ -39,7 +39,7 @@ namespace Aiursoft.Colossus
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddAiursoftAuth<ColossusUser>();
+            services.AddAiursoftDependencies<ColossusUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

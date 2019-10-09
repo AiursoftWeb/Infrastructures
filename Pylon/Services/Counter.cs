@@ -1,6 +1,8 @@
-﻿namespace Aiursoft.Pylon.Services
+﻿using Aiursoft.Pylon.Interfaces;
+
+namespace Aiursoft.Pylon.Services
 {
-    public class Counter
+    public class Counter : ISingletonDependency
     {
         private readonly object _obj = new object();
         public int _Counted = 0;

@@ -1,9 +1,10 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class UrlConverter
+    public class UrlConverter : ITransientDependency
     {
         public readonly ServiceLocation _serviceLocation;
         public UrlConverter(ServiceLocation serviceLocation)

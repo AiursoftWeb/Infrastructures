@@ -39,7 +39,8 @@ namespace Aiursoft.Developer
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddAiursoftAuth<DeveloperUser>();
+
+            services.AddAiursoftDependencies<DeveloperUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,7 +1,6 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,13 +30,13 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services
                 .AddControllersWithViews()
                 .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-            services.AddAiursoftAuth<EEUser>();
-            services.AddTransient<ScriptsFilter>();
+            services.AddAiursoftDependencies<EEUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
