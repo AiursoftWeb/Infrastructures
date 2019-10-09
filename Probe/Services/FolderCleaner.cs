@@ -4,7 +4,6 @@ using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,16 +66,10 @@ namespace Aiursoft.Probe.Services
                 .Folders
                 .Where(t => t.ContextId == folder.Id)
                 .ToListAsync();
-            var tasks = new List<Task>();
             foreach (var subfolder in subfolders)
             {
-                async Task addSubfolder()
-                {
-                    size += await GetFolderSite(subfolder);
-                }
-                tasks.Add(addSubfolder());
+                size += await GetFolderSite(subfolder);
             }
-            await Task.WhenAll(tasks);
             var localFiles = await _dbContext
                 .Files
                 .Where(t => t.ContextId == folder.Id)
