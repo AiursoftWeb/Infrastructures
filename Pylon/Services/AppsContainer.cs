@@ -1,4 +1,6 @@
-﻿using Aiursoft.Pylon.Services.ToArchonServer;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Services.ToArchonServer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,15 +12,26 @@ namespace Aiursoft.Pylon.Services
     /// <summary>
     /// For storaging other apps with appid and appsecret for current app.
     /// </summary>
-    public class AppsContainer
+    public class AppsContainer : ISingletonDependency
     {
+        public static string CurrentAppName { get; set; }
+        public readonly string _currentAppId;
+        private readonly string _currentAppSecret;
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public AppsContainer(IServiceScopeFactory scopeFactory)
+        public AppsContainer(
+            IServiceScopeFactory scopeFactory,
+            IConfiguration configuration)
         {
             _allApps = new List<AppContainer>();
             _scopeFactory = scopeFactory;
+            _currentAppId = configuration[$"{CurrentAppName}AppId"];
+            _currentAppSecret = configuration[$"{CurrentAppName}AppSecret"];
+            if (string.IsNullOrWhiteSpace(_currentAppId) || string.IsNullOrWhiteSpace(_currentAppSecret))
+            {
+                throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
+            }
         }
 
         private AppContainer GetApp(string appId, string appSecret)
@@ -35,7 +48,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<string> AccessToken()
         {
-            return await AccessToken(Extends.CurrentAppId, Extends.CurrentAppSecret);
+            return await AccessToken(_currentAppId, _currentAppSecret);
         }
 
         public async Task<string> AccessToken(string appId, string appSecret)

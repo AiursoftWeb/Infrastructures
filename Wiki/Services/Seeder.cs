@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Middlewares;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Wiki.Data;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Wiki.Services
 {
-    public class Seeder
+    public class Seeder : ITransientDependency
     {
         private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly WikiDbContext _dbContext;

@@ -1,13 +1,9 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Account.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,17 +29,9 @@ namespace Aiursoft.Account
                 .AddEntityFrameworkStores<AccountDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddAiurMvc();
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
-
-            services.AddAiursoftAuth<AccountUser>();
-            services.AddScoped<UserService>();
-            services.AddScoped<DeveloperApiService>();
-            services.AddTransient<AccountSmsSender>();
+            services.AddAiurDependencies<AccountUser>("Account");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -60,7 +48,6 @@ namespace Aiursoft.Account
                 app.UseUserFriendlyErrorPage();
             }
 
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Account");
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();

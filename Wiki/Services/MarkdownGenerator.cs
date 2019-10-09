@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Middlewares;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Newtonsoft.Json;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace Aiursoft.Wiki.Services
 {
-    public class MarkDownGenerator
+    public class MarkDownGenerator : ITransientDependency
     {
         private string _post = "<span class=\"badge badge-pill badge-warning text-white\">POST</span>";
         private string _get = "<span class=\"badge badge-pill badge-success\">GET</span>";

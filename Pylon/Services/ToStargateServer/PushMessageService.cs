@@ -1,4 +1,5 @@
 using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.MessageAddressModels;
 using Newtonsoft.Json;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToStargateServer
 {
-    public class PushMessageService
+    public class PushMessageService : IScopedDependency
     {
         private readonly HTTPService _httpService;
         private readonly ServiceLocation _serviceLocation;

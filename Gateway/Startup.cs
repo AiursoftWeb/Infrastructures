@@ -1,14 +1,10 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,27 +37,9 @@ namespace Aiursoft.Gateway
                 .AddEntityFrameworkStores<GatewayDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTokenManager();
+            services.AddAiurMvc();
 
-            services
-                .AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
-
-            services.AddSingleton<IHostedService, TimedCleaner>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<DeveloperApiService>();
-            services.AddScoped<GrantChecker>();
-            services.AddTransient<UserImageGenerator<GatewayUser>>();
-            services.AddTransient<AiurEmailSender>();
-            services.AddTransient<APISMSSender>();
-            services.AddTransient<ConfirmationEmailSender>();
+            services.AddAiurDependencies<GatewayUser>("Gateway");
             services.AddSessionBasedCaptcha();
         }
 

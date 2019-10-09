@@ -1,4 +1,7 @@
 ﻿using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.Status;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToStatusServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -13,13 +16,19 @@ namespace Aiursoft.Pylon.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<APIFriendlyServerExceptionMiddeware> _logger;
+        private readonly AppsContainer _appsContainer;
+        private readonly EventService _eventService;
 
         public APIFriendlyServerExceptionMiddeware(
             RequestDelegate next,
-            ILogger<APIFriendlyServerExceptionMiddeware> logger)
+            ILogger<APIFriendlyServerExceptionMiddeware> logger,
+            AppsContainer appsContainer,
+            EventService eventService)
         {
             _next = next;
             _logger = logger;
+            _appsContainer = appsContainer;
+            _eventService = eventService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -42,7 +51,13 @@ namespace Aiursoft.Pylon.Middlewares
                         Message = $"{projectName} server was crashed! Sorry about that."
                     });
                     await context.Response.WriteAsync(message, Encoding.UTF8);
-                    _logger.LogError(e, e.Message);
+                    try
+                    {
+                        _logger.LogError(e, e.Message);
+                        var accessToken = _appsContainer.AccessToken();
+                        await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception);
+                    }
+                    catch { }
                     return;
                 }
                 throw;

@@ -1,9 +1,10 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class RSAService
+    public class RSAService : IScopedDependency
     {
         private readonly RSAParameters _privateKey;
         private readonly RSAParameters _publicKey;

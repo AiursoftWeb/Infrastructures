@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -12,7 +13,7 @@ namespace Aiursoft.Pylon.Services
         public DateTime Expires { get; set; }
     }
 
-    public class ACTokenManager
+    public class ACTokenManager : IScopedDependency
     {
         private readonly RSAService _rsa;
         public ACTokenManager(RSAService rsa)

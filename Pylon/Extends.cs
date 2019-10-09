@@ -1,15 +1,14 @@
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
-using Aiursoft.Pylon.Services.ToArchonServer;
-using Aiursoft.Pylon.Services.ToProbeServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +18,8 @@ using Polly;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -26,9 +27,6 @@ namespace Aiursoft.Pylon
 {
     public static class Extends
     {
-        public static string CurrentAppId { get; private set; } = string.Empty;
-        public static string CurrentAppSecret { get; private set; } = string.Empty;
-
         private static CultureInfo[] GetSupportedLanguages()
         {
             var supportedCultures = new[]
@@ -47,32 +45,6 @@ namespace Aiursoft.Pylon
                 SupportedCultures = GetSupportedLanguages(),
                 SupportedUICultures = GetSupportedLanguages()
             });
-            return app;
-        }
-
-        public static IApplicationBuilder UseAiursoftAuthenticationFromConfiguration(this IApplicationBuilder app, IConfiguration configuration, string appName)
-        {
-            var appId = configuration[$"{appName}AppId"];
-            var appSecret = configuration[$"{appName}AppSecret"];
-            if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(appSecret))
-            {
-                throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
-            }
-            return app.UseAiursoftAuthentication(appId, appSecret);
-        }
-
-        public static IApplicationBuilder UseAiursoftAuthentication(this IApplicationBuilder app, string appId, string appSecret)
-        {
-            if (string.IsNullOrWhiteSpace(appId))
-            {
-                throw new InvalidOperationException(nameof(appId));
-            }
-            if (string.IsNullOrWhiteSpace(appSecret))
-            {
-                throw new InvalidOperationException(nameof(appSecret));
-            }
-            CurrentAppId = appId;
-            CurrentAppSecret = appSecret;
             return app;
         }
 
@@ -183,32 +155,58 @@ namespace Aiursoft.Pylon
             return host;
         }
 
-        public static IServiceCollection AddAiursoftAuth<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurMvc(this IServiceCollection services)
         {
-            services.AddSingleton<AppsContainer>();
-            services.AddSingleton<ServiceLocation>();
-            services.AddScoped<ArchonApiService>();
-            services.AddHttpClient();
-            services.AddScoped<HTTPService>();
-            services.AddScoped<UrlConverter>();
-            services.AddScoped<SitesService>();
-            services.AddScoped<FoldersService>();
-            services.AddScoped<FilesService>();
-            services.AddScoped<TokenService>();
-            services.AddScoped<CoreApiService>();
-            services.AddScoped<AccountService>();
-            services.AddScoped<UserImageGenerator<TUser>>();
-            services.AddMemoryCache();
-            services.AddTransient<AuthService<TUser>>();
-            services.AddTransient<AiurCache>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             return services;
         }
 
-        public static IServiceCollection AddTokenManager(this IServiceCollection services)
+        public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
-            services.AddSingleton<AiurKeyPair>();
-            services.AddTransient<RSAService>();
-            services.AddTransient<ACTokenManager>();
+            services.AddScoped<UserImageGenerator<TUser>>();
+            services.AddTransient<AuthService<TUser>>();
+            services.AddAiurDependencies(appName);
+            return services;
+        }
+
+        public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
+        {
+            AppsContainer.CurrentAppName = appName;
+            services.AddHttpClient();
+            services.AddMemoryCache();
+            var executingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
+            var entryTypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !t.IsInterface);
+            executingTypes.AddRange(entryTypes);
+            foreach (var item in executingTypes)
+            {
+                if (item.GetInterfaces().Contains(typeof(ISingletonDependency)))
+                {
+                    if (item.GetInterfaces().Contains(typeof(IHostedService)))
+                    {
+                        services.AddSingleton(typeof(IHostedService), item);
+                    }
+                    else
+                    {
+                        services.AddSingleton(item);
+                    }
+                }
+                else if (item.GetInterfaces().Contains(typeof(IScopedDependency)))
+                {
+                    services.AddScoped(item);
+                }
+                else if (item.GetInterfaces().Contains(typeof(ITransientDependency)))
+                {
+                    services.AddTransient(item);
+                }
+            }
             return services;
         }
 
@@ -232,7 +230,7 @@ namespace Aiursoft.Pylon
             return request.Headers["User-Agent"];
         }
 
-        public static Task ForEachParallal<T>(this IEnumerable<T> items, Func<T, Task> function)
+        public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
         {
             var taskList = new List<Task>();
             foreach (var item in items)

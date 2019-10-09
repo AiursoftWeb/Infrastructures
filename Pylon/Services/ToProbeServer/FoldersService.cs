@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Models.Probe.FoldersAddressModels;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToProbeServer
 {
-    public class FoldersService
+    public class FoldersService : IScopedDependency
     {
         private readonly HTTPService _http;
         private readonly ServiceLocation _serviceLocation;

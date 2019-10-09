@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToAPIServer
 {
-    public class UserService
+    public class UserService : IScopedDependency
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;

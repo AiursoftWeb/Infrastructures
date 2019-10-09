@@ -1,6 +1,7 @@
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Services;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Gateway.Services
 {
 
-    public class GrantChecker
+    public class GrantChecker : IScopedDependency
     {
         private readonly GatewayDbContext _dbContext;
         private readonly DeveloperApiService _developerApiService;

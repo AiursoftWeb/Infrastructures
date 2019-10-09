@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace Aiursoft.Probe.Services
         public DateTime Expires { get; set; }
     }
 
-    public class PBTokenManager
+    public class PBTokenManager : ITransientDependency
     {
         private readonly PBRSAService _rsa;
         public PBTokenManager(PBRSAService rsa)

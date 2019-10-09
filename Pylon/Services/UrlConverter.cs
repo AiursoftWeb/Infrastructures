@@ -1,14 +1,20 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class UrlConverter
+    public class UrlConverter : ITransientDependency
     {
         public readonly ServiceLocation _serviceLocation;
-        public UrlConverter(ServiceLocation serviceLocation)
+        private readonly AppsContainer _appsContainer;
+
+        public UrlConverter(
+            ServiceLocation serviceLocation,
+            AppsContainer appsContainer)
         {
             _serviceLocation = serviceLocation;
+            _appsContainer = appsContainer;
         }
 
         private AiurUrl GenerateAuthUrl(AiurUrl destination, string state, bool? justTry, bool register)
@@ -16,7 +22,7 @@ namespace Aiursoft.Pylon.Services
             var action = register ? "register" : "authorize";
             var url = new AiurUrl(_serviceLocation.Gateway, "oauth", action, new AuthorizeAddressModel
             {
-                appid = Extends.CurrentAppId,
+                appid = _appsContainer._currentAppId,
                 redirect_uri = destination.ToString(),
                 response_type = "code",
                 scope = "snsapi_base",

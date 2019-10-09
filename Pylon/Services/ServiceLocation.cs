@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Aiursoft.Pylon.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Pylon.Services
 {
-    public class ServiceLocation
+    public class ServiceLocation : ISingletonDependency
     {
         public readonly string Account;
         public readonly string Gateway;

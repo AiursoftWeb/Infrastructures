@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Aiursoft.Pylon.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using Twilio.Types;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class APISMSSender
+    public class APISMSSender : ITransientDependency
     {
         public string SMSAccountIdentification;
         public string SMSAccountPassword;

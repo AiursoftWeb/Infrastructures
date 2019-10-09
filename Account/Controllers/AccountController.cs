@@ -355,7 +355,7 @@ namespace Aiursoft.Account.Controllers
             {
                 Logs = (await _userService.ViewAuditLogAsync(token, user.Id)).Items
             };
-            await model.Logs.Select(t => t.AppId).Distinct().ForEachParallal(async (id) =>
+            await model.Logs.Select(t => t.AppId).Distinct().ForEachParallel(async (id) =>
             {
                 var appInfo = await _cache.GetAndCache($"appInfo-{id}", () => _developerApiService.AppInfoAsync(id));
                 model.Apps.Add(appInfo.App);

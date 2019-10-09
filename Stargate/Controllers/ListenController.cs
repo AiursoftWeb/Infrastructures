@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,13 +19,13 @@ namespace Aiursoft.Stargate.Controllers
     {
         private StargateDbContext _dbContext;
         private StargateMemory _memoryContext;
-        private IPusher _pusher;
+        private WebSocketPusher _pusher;
         private readonly ILogger<ListenController> _logger;
 
         public ListenController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
-            IPusher pusher,
+            WebSocketPusher pusher,
             ILogger<ListenController> logger)
         {
             _dbContext = dbContext;

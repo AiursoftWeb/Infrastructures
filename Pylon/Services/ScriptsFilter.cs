@@ -1,6 +1,8 @@
+using Aiursoft.Pylon.Interfaces;
+
 namespace Aiursoft.Pylon.Services
 {
-    public class ScriptsFilter
+    public class ScriptsFilter : ITransientDependency
     {
         public string Filt(string html)
         {

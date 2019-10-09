@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.Wiki.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -29,13 +28,10 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
 
-            services.AddAiursoftAuth<WikiUser>();
-            services.AddTransient<Seeder>();
-            services.AddTransient<MarkDownGenerator>();
+            services.AddAiurMvc();
+
+            services.AddAiurDependencies<WikiUser>("Wiki");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,7 +47,6 @@ namespace Aiursoft.Wiki
                 app.UseEnforceHttps();
                 app.UseUserFriendlyErrorPage();
             }
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Wiki");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();

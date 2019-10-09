@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Gateway.Data;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class TimedCleaner : IHostedService, IDisposable
+    public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         private readonly ILogger _logger;
         private Timer _timer;

@@ -1,5 +1,6 @@
 ﻿namespace Aiursoft.Status.Services
 {
+    using global::Aiursoft.Pylon.Interfaces;
     using global::Aiursoft.Pylon.Models;
     using global::Aiursoft.Pylon.Services;
     using global::Aiursoft.Status.Data;
@@ -13,7 +14,7 @@
 
     namespace Aiursoft.Probe.Services
     {
-        public class TimedChecker : IHostedService, IDisposable
+        public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
         {
             private Timer _timer;
             private readonly ILogger _logger;

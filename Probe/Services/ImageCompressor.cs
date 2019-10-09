@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Aiursoft.Pylon.Interfaces;
+using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class ImageCompressor
+    public class ImageCompressor : ITransientDependency
     {
         private readonly IConfiguration _configuration;
 

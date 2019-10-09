@@ -1,12 +1,13 @@
 ﻿using Aiursoft.Gateway.Controllers;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class ConfirmationEmailSender
+    public class ConfirmationEmailSender : ITransientDependency
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly AiurEmailSender _emailSender;

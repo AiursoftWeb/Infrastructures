@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Archon;
 using Newtonsoft.Json;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToArchonServer
 {
-    public class ArchonApiService
+    public class ArchonApiService : IScopedDependency
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;

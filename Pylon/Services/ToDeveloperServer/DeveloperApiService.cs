@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer.ApiAddressModels;
 using Aiursoft.Pylon.Models.Developer.ApiViewModels;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.ToDeveloperServer
 {
-    public class DeveloperApiService
+    public class DeveloperApiService : IScopedDependency
     {
         private readonly ServiceLocation _serviceLocation;
         private readonly HTTPService _http;
