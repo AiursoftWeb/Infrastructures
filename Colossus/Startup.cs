@@ -4,8 +4,6 @@ using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,15 +29,9 @@ namespace Aiursoft.Colossus
                 .AddEntityFrameworkStores<ColossusDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddAiurMvc();
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            services.AddAiursoftDependencies<ColossusUser>();
+            services.AddAiurDependencies<ColossusUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

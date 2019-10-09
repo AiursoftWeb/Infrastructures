@@ -10,12 +10,9 @@ namespace Aiursoft.Archon
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAiurMvc();
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
-
-            services.AddAiursoftDependencies();
+            services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

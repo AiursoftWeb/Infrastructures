@@ -4,8 +4,6 @@ using Aiursoft.Pylon.Models.Developer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,16 +29,8 @@ namespace Aiursoft.Developer
                 .AddEntityFrameworkStores<DeveloperDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            services.AddAiursoftDependencies<DeveloperUser>();
+            services.AddAiurMvc();
+            services.AddAiurDependencies<DeveloperUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

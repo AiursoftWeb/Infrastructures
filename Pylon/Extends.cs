@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -183,15 +184,29 @@ namespace Aiursoft.Pylon
             return host;
         }
 
-        public static IServiceCollection AddAiursoftDependencies<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurMvc(this IServiceCollection services)
         {
-            services.AddScoped<UserImageGenerator<TUser>>();
-            services.AddTransient<AuthService<TUser>>();
-            services.AddAiursoftDependencies();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             return services;
         }
 
-        public static IServiceCollection AddAiursoftDependencies(this IServiceCollection services)
+        public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        {
+            services.AddScoped<UserImageGenerator<TUser>>();
+            services.AddTransient<AuthService<TUser>>();
+            services.AddAiurDependencies();
+            return services;
+        }
+
+        public static IServiceCollection AddAiurDependencies(this IServiceCollection services)
         {
             services.AddHttpClient();
             services.AddMemoryCache();

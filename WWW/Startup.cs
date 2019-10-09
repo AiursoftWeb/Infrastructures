@@ -4,7 +4,6 @@ using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,14 +28,8 @@ namespace Aiursoft.WWW
                 .AddEntityFrameworkStores<WWWDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
-
-            services.AddAiursoftDependencies<WWWUser>();
+            services.AddAiurMvc();
+            services.AddAiurDependencies<WWWUser>();
 
         }
 

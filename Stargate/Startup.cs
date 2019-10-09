@@ -23,11 +23,9 @@ namespace Aiursoft.Stargate
             services.AddDbContext<StargateDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
+            services.AddAiurMvc();
 
-            services.AddAiursoftDependencies();
+            services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

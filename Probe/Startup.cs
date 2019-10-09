@@ -27,11 +27,9 @@ namespace Aiursoft.Probe
 
             services.AddCors();
 
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
+            services.AddAiurMvc();
 
-            services.AddAiursoftDependencies();
+            services.AddAiurDependencies();
 
         }
 

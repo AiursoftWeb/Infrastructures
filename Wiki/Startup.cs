@@ -28,11 +28,10 @@ namespace Aiursoft.Wiki
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()
                 .AddDefaultTokenProviders();
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson();
 
-            services.AddAiursoftDependencies<WikiUser>();
+            services.AddAiurMvc();
+
+            services.AddAiurDependencies<WikiUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
