@@ -183,7 +183,7 @@ namespace Aiursoft.Pylon
             services.AddHttpClient();
             services.AddMemoryCache();
             var executingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
-            var entryTypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !t.IsInterface);
+            var entryTypes = Assembly.GetEntryAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
             executingTypes.AddRange(entryTypes);
             foreach (var item in executingTypes)
             {

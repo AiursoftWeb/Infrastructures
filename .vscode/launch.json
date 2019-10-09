@@ -33,6 +33,37 @@
             }
         },
         {
+            "name": "Gateway",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildGateway",
+            "program": "${workspaceFolder}/Gateway/bin/Debug/netcoreapp3.0/Aiursoft.Gateway.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Gateway",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": "EE",
             "type": "coreclr",
             "request": "launch",

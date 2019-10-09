@@ -12,6 +12,16 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "buildGateway",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Gateway/Aiursoft.Gateway.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "buildee",
             "command": "dotnet",
             "type": "process",
