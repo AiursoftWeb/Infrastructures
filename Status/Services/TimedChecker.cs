@@ -60,16 +60,24 @@
                 foreach (var item in items)
                 {
                     _logger.LogInformation($"Checking status for: {item.ProjectName}");
-                    var content = await http.Get(new AiurUrl(item.CheckAddress), false);
-                    var success = content.Contains(item.ExpectedContent);
-                    if (!success)
+                    try
                     {
-                        var errorMessage = $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got content: {content}";
-                        _logger.LogError(errorMessage);
+                        var content = await http.Get(new AiurUrl(item.CheckAddress), false);
+                        var success = content.Contains(item.ExpectedContent);
+                        if (!success)
+                        {
+                            var errorMessage = $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got content: {content}";
+                            _logger.LogError(errorMessage);
+                        }
+                        item.LastHealthStatus = success;
+                        item.LastCheckTime = DateTime.UtcNow;
+                        dbContext.Update(item);
                     }
-                    item.LastHealthStatus = success;
-                    item.LastCheckTime = DateTime.UtcNow;
-                    dbContext.Update(item);
+                    catch
+                    {
+                        item.LastHealthStatus = false;
+                        item.LastCheckTime = DateTime.UtcNow;
+                    }
                     await dbContext.SaveChangesAsync();
                 }
             }
