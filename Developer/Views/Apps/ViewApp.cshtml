@@ -380,6 +380,7 @@
                                                     var first = log.OrderByDescending(t => t.LogTime).First();
                                                 }
                                                 <td data-utc-time="@first.LogTime"></td>
+                                                <td>@first.EventLevel.ToString()</td>
                                                 <td><a href="javascript: alert('@(first.StackTrace)');">View more</a></td>
                                             </tr>
                                         }
