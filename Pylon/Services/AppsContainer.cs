@@ -30,7 +30,8 @@ namespace Aiursoft.Pylon.Services
             _currentAppSecret = configuration[$"{CurrentAppName}AppSecret"];
             if (string.IsNullOrWhiteSpace(_currentAppId) || string.IsNullOrWhiteSpace(_currentAppSecret))
             {
-                throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
+#warning Throw an exception.
+                //throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
             }
         }
 
