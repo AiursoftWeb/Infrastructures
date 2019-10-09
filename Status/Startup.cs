@@ -25,7 +25,7 @@ namespace Aiursoft.Status
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies();
+            services.AddAiurDependencies("Status");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

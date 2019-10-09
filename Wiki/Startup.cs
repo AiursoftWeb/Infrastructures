@@ -31,7 +31,7 @@ namespace Aiursoft.Wiki
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies<WikiUser>();
+            services.AddAiurDependencies<WikiUser>("Wiki");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,7 +47,6 @@ namespace Aiursoft.Wiki
                 app.UseEnforceHttps();
                 app.UseUserFriendlyErrorPage();
             }
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Wiki");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();

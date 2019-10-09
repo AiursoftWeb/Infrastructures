@@ -31,7 +31,7 @@ namespace Aiursoft.Account
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies<AccountUser>();
+            services.AddAiurDependencies<AccountUser>("Account");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,7 +48,6 @@ namespace Aiursoft.Account
                 app.UseUserFriendlyErrorPage();
             }
 
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Account");
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();

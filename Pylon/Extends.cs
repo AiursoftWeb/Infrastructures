@@ -27,9 +27,6 @@ namespace Aiursoft.Pylon
 {
     public static class Extends
     {
-        public static string CurrentAppId { get; private set; } = string.Empty;
-        public static string CurrentAppSecret { get; private set; } = string.Empty;
-
         private static CultureInfo[] GetSupportedLanguages()
         {
             var supportedCultures = new[]
@@ -48,32 +45,6 @@ namespace Aiursoft.Pylon
                 SupportedCultures = GetSupportedLanguages(),
                 SupportedUICultures = GetSupportedLanguages()
             });
-            return app;
-        }
-
-        public static IApplicationBuilder UseAiursoftAuthenticationFromConfiguration(this IApplicationBuilder app, IConfiguration configuration, string appName)
-        {
-            var appId = configuration[$"{appName}AppId"];
-            var appSecret = configuration[$"{appName}AppSecret"];
-            if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(appSecret))
-            {
-                throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
-            }
-            return app.UseAiursoftAuthentication(appId, appSecret);
-        }
-
-        public static IApplicationBuilder UseAiursoftAuthentication(this IApplicationBuilder app, string appId, string appSecret)
-        {
-            if (string.IsNullOrWhiteSpace(appId))
-            {
-                throw new InvalidOperationException(nameof(appId));
-            }
-            if (string.IsNullOrWhiteSpace(appSecret))
-            {
-                throw new InvalidOperationException(nameof(appSecret));
-            }
-            CurrentAppId = appId;
-            CurrentAppSecret = appSecret;
             return app;
         }
 
@@ -198,16 +169,17 @@ namespace Aiursoft.Pylon
             return services;
         }
 
-        public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddTransient<AuthService<TUser>>();
-            services.AddAiurDependencies();
+            services.AddAiurDependencies(appName);
             return services;
         }
 
-        public static IServiceCollection AddAiurDependencies(this IServiceCollection services)
+        public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
         {
+            AppsContainer.CurrentAppName = appName;
             services.AddHttpClient();
             services.AddMemoryCache();
             var executingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsInterface).ToList();

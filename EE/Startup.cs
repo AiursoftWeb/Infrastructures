@@ -29,7 +29,7 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<EEUser>();
+            services.AddAiurDependencies<EEUser>("EE");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,7 +46,6 @@ namespace Aiursoft.EE
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "EE");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();

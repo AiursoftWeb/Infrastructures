@@ -31,7 +31,7 @@ namespace Aiursoft.Colossus
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies<ColossusUser>();
+            services.AddAiurDependencies<ColossusUser>("Colossus");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,7 +48,6 @@ namespace Aiursoft.Colossus
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Colossus");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();

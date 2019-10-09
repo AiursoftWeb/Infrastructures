@@ -29,7 +29,7 @@ namespace Aiursoft.Probe
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies();
+            services.AddAiurDependencies("Probe");
 
         }
 

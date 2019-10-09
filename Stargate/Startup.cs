@@ -25,7 +25,7 @@ namespace Aiursoft.Stargate
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies();
+            services.AddAiurDependencies("Test");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,7 +41,6 @@ namespace Aiursoft.Stargate
                 app.UseEnforceHttps();
                 app.UseAPIFriendlyErrorPage();
             }
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Test");
             app.UseWebSockets();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());

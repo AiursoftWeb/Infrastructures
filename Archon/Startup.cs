@@ -12,7 +12,7 @@ namespace Aiursoft.Archon
         {
             services.AddAiurMvc();
 
-            services.AddAiurDependencies();
+            services.AddAiurDependencies("Archon");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

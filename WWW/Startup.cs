@@ -29,7 +29,7 @@ namespace Aiursoft.WWW
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<WWWUser>();
+            services.AddAiurDependencies<WWWUser>("WWW");
 
         }
 
@@ -47,7 +47,6 @@ namespace Aiursoft.WWW
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "WWW");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();

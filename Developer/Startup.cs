@@ -30,7 +30,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<DeveloperUser>();
+            services.AddAiurDependencies<DeveloperUser>("Developer");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,7 +47,6 @@ namespace Aiursoft.Developer
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseAiursoftAuthenticationFromConfiguration(Configuration, "Developer");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
