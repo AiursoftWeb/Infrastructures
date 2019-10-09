@@ -2,6 +2,7 @@
 using Aiursoft.Pylon.Services.ToArchonServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,21 @@ namespace Aiursoft.Pylon.Services
         private readonly string _currentAppSecret;
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ILogger<AppsContainer> _logger;
 
         public AppsContainer(
             IServiceScopeFactory scopeFactory,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ILogger<AppsContainer> logger)
         {
             _allApps = new List<AppContainer>();
             _scopeFactory = scopeFactory;
+            _logger = logger;
             _currentAppId = configuration[$"{CurrentAppName}AppId"];
             _currentAppSecret = configuration[$"{CurrentAppName}AppSecret"];
             if (string.IsNullOrWhiteSpace(_currentAppId) || string.IsNullOrWhiteSpace(_currentAppSecret))
             {
-#warning Throw an exception.
-                //throw new InvalidOperationException("Did not get appId and appSecret from configuration!");
+                _logger.LogError("Did not get appId and appSecret from configuration!");
             }
         }
 
