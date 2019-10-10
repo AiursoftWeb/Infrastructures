@@ -1,5 +1,6 @@
 @model Aiursoft.Developer.Models.AppsViewModels.ViewAppViewModel
 @using Microsoft.Extensions.Configuration
+@using Aiursoft.Pylon.Models.Status
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = Model.AppName;
@@ -360,12 +361,12 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped datatable">
+                                <table class="table table-striped datatable-exception">
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Message"]</th>
-                                            <th>@Localizer["Happend Times"]</th>
-                                            <th>@Localizer["Last Happen Time"]</th>
+                                            <th>@Localizer["Happend times"]</th>
+                                            <th>@Localizer["Last happen time"]</th>
                                             <th>@Localizer["Security level"]</th>
                                             <th>@Localizer["View more"]</th>
                                         </tr>
@@ -373,15 +374,26 @@
                                     <tbody>
                                         @foreach (var log in Model.ErrorLogs.GroupBy(t => t.Message))
                                         {
+                                            var first = log.OrderByDescending(t => t.LogTime).First();
                                             <tr>
                                                 <td>@log.Key.ToString()</td>
                                                 <td>@log.Count()</td>
-                                                @{
-                                                    var first = log.OrderByDescending(t => t.LogTime).First();
+                                                <td data-order="@first.LogTime" data-utc-time="@first.LogTime"></td>
+                                                @switch (first.EventLevel)
+                                                {
+                                                    case EventLevel.Exception:
+                                                        <td><span class="badge badge-danger">@first.EventLevel</span></td>
+                                                        break;
+                                                    case EventLevel.Info:
+                                                        <td><span class="badge badge-info">@first.EventLevel.ToString()</span></td>
+                                                        break;
+                                                    case EventLevel.Warning:
+                                                        <td><span class="badge badge-warning">@first.EventLevel.ToString()</span></td>
+                                                        break;
+                                                    default:
+                                                        break;
                                                 }
-                                                <td data-utc-time="@first.LogTime"></td>
-                                                <td>@first.EventLevel.ToString()</td>
-                                                <td><a href="javascript: alert('@(first.StackTrace)');">View more</a></td>
+                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@first.Message" data-stacktrace="@first.StackTrace">View stack trace</a></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -394,11 +406,41 @@
         </form>
     </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="error-detail-modal" tabindex="-1" role="dialog" aria-labelledby="error-detail-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="modal-message" class="col-form-label">Message:</label>
+                        <input type="text" readonly="readonly" class="form-control" id="modal-message">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-stacktrace" class="col-form-label">Stack Trace:</label>
+                        <textarea class="form-control" readonly="readonly" rows="15" id="modal-stacktrace"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section css{
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 }
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+    @* Auto submit icon change *@
     <script>
         var updateButtons = function () {
             var value = $("[name=iconFile]").attr('data-internet-path');
@@ -413,5 +455,24 @@
             setTimeout(loopRenderJobs, 100);
         };
         loopRenderJobs();
+    </script>
+
+    @* View error stack trace modal *@
+    <script>
+        $('#error-detail-modal').on('show.bs.modal', function (event) {
+            var stacktrace = $(event.relatedTarget).data('stacktrace');
+            var message = $(event.relatedTarget).data('message');
+            var modal = $(this);
+            modal.find('#modal-message').val(message);
+            modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.datatable-exception').DataTable({
+                "order": [[2, "desc"]]
+            });
+        });
     </script>
 }
