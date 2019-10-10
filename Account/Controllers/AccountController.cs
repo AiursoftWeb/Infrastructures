@@ -363,6 +363,49 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> TwoFactorAuthentication(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var model = new TwoFAViewModel(user)
+            {
+                JustHaveUpdated = justHaveUpdated,
+                NewTwoFAKey = TwoFAKey.Value
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TwoFactorAuthentication(TwoFAViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.Recover(user);
+                model.ModelStateValid = ModelState.IsValid;
+                return View(model);
+            }
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(TwoFactorAuthentication), new { justHaveUpdated = true });
+        }
+
+        public async Task<IActionResult> SetTwoFactorAuthentication(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
+        public async Task<IActionResult> ResetTwoFactorAuthentication(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
         private async Task<AccountUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(User);

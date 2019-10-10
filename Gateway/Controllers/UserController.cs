@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
@@ -23,17 +25,22 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GatewayDbContext _dbContext;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
+        private readonly UrlEncoder _urlEncoder;
+
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public UserController(
-            UserManager<GatewayUser> userManager,
-            GatewayDbContext context,
-            ConfirmationEmailSender emailSender,
-            GrantChecker grantChecker)
+             UserManager<GatewayUser> userManager,
+             GatewayDbContext context,
+             ConfirmationEmailSender emailSender,
+             GrantChecker grantChecker,
+              UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _dbContext = context;
             _emailSender = emailSender;
             _grantChecker = grantChecker;
+            _urlEncoder = urlEncoder;
         }
 
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
@@ -246,5 +253,94 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get all your audit log!"
             });
         }
+
+        [APIProduces(typeof(AiurValue<string>))]
+        public async Task<IActionResult> ViewTwoFAKey(ViewTwoFAAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
+            return Json(new AiurValue<string>(user.TwoFAKey)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's TwoFAKey  ."
+            });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SetTwoFAKey(SetTwoFAAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            if (string.IsNullOrEmpty(unformattedKey))
+            {
+                await _userManager.ResetAuthenticatorKeyAsync(user);
+                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            }
+            user.TwoFAKey = FormatKey(unformattedKey);
+            await _userManager.UpdateAsync(user);
+            return Json(new AiurValue<string>(user.TwoFAKey)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ResetTwoFAKey(SetTwoFAAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            await SetTwoFAKey(model);
+            return Json(new AiurValue<string>(user.TwoFAKey)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully reset the user's TwoFAKey!"
+            });
+        }
+
+        #region --- TwoFAKey Helper---
+
+        private async Task LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, SetTwoFAAddressModel model)
+        {
+            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            if (string.IsNullOrEmpty(unformattedKey))
+            {
+                await _userManager.ResetAuthenticatorKeyAsync(user);
+                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            }
+
+            user.TwoFAKey = FormatKey(unformattedKey);
+            // model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+        }
+        private string FormatKey(string unformattedKey)
+        {
+            var result = new StringBuilder();
+            int currentPosition = 0;
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                currentPosition += 4;
+            }
+            if (currentPosition < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition));
+            }
+
+            return result.ToString().ToLowerInvariant();
+        }
+        private string GenerateQrCodeUri(string email, string unformattedKey)
+        {
+            return string.Format(
+                AuthenticatorUriFormat,
+                _urlEncoder.Encode("Account.TwoFAKey"),
+                _urlEncoder.Encode(email),
+                unformattedKey);
+        }
+
+        #endregion
     }
 }
