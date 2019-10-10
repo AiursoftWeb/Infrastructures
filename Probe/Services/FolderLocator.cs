@@ -30,7 +30,7 @@ namespace Aiursoft.Probe.Services
 
         public (string[] folders, string fileName) SplitToPath(string folderNames)
         {
-            if (folderNames.Length == 0)
+            if (folderNames == null || folderNames.Length == 0)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, "The root folder isn't a file!");
             }
