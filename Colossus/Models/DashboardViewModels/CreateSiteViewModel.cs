@@ -24,7 +24,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
-        [ValidFolderName]
+        [ValidDomainName]
         public string SiteName { get; set; }
 
         [Required]

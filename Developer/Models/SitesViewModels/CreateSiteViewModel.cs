@@ -28,7 +28,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
-        [ValidFolderName]
+        [ValidDomainName]
         public string SiteName { get; set; }
 
         public string AppName { get; set; }
