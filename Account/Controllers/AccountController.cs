@@ -386,10 +386,26 @@ namespace Aiursoft.Account.Controllers
                 model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
-            await _userManager.UpdateAsync(user);
-            return RedirectToAction(nameof(TwoFactorAuthentication), new { justHaveUpdated = true });
+            var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());
+            model.RecoveryCodesKey = RecoveryCodesKey.Value;
+            var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            //var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+            //var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+            //    user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+            model.NewTwoFAKey = TwoFAKey.Value;
+            //if(!is2faTokenValid)
+            //{
+            //    model.RecoveryCodesKey = "11111111";
+
+            //}
+            //else
+            //{
+            //    model.RecoveryCodesKey = null;
+            //}
+            return View(model);
         }
 
+        //[HttpPost]
         public async Task<IActionResult> SetTwoFactorAuthentication(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
@@ -398,7 +414,17 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 
+        //[HttpPost]
         public async Task<IActionResult> ResetTwoFactorAuthentication(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();
+            var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
+        //[HttpPost]
+        public async Task<IActionResult> TwoFAVerificyCode()
         {
             var user = await GetCurrentUserAsync();
             var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());

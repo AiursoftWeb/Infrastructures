@@ -257,7 +257,7 @@ namespace Aiursoft.Gateway.Controllers
         [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> ViewTwoFAKey(ViewTwoFAAddressModel model)
         {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             return Json(new AiurValue<string>(user.TwoFAKey)
             {
                 Code = ErrorType.Success,
@@ -276,6 +276,7 @@ namespace Aiursoft.Gateway.Controllers
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
             user.TwoFAKey = FormatKey(unformattedKey);
+            user.TwoFactorEnabled = true;
             await _userManager.UpdateAsync(user);
             return Json(new AiurValue<string>(user.TwoFAKey)
             {
@@ -287,7 +288,7 @@ namespace Aiursoft.Gateway.Controllers
         [HttpPost]
         public async Task<JsonResult> ResetTwoFAKey(SetTwoFAAddressModel model)
         {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -302,6 +303,45 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
+        [HttpPost]
+        public async Task<JsonResult> TwoFAVerificyCode(SetTwoFAAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            // Strip spaces and hypens
+            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+            if (!is2faTokenValid)
+            {
+                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+
+                return Json(new AiurValue<string>(null)
+                {
+                    Code = ErrorType.Success,
+                    Message = "Verification code is invalid."
+                });
+            }
+            else
+            {
+                await _userManager.SetTwoFactorEnabledAsync(user, true);
+                var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+                model.RecoveryCodesKey = recoveryCodes.ToString();
+
+                return Json(new AiurValue<string>(model.RecoveryCodesKey)
+                {
+                    Code = ErrorType.Success,
+                    Message = "Sucess Verified code ."
+                });
+            }
+        }
+
         #region --- TwoFAKey Helper---
 
         private async Task LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, SetTwoFAAddressModel model)
@@ -314,7 +354,7 @@ namespace Aiursoft.Gateway.Controllers
             }
 
             user.TwoFAKey = FormatKey(unformattedKey);
-            // model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
+            //model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
         private string FormatKey(string unformattedKey)
         {

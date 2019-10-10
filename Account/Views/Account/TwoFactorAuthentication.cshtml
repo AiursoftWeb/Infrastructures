@@ -22,6 +22,9 @@
                 <li class="list-group-item">
                     @if (null == Model.NewTwoFAKey)
                     {
+                        <p>
+                            After this function is enabled, you must enter the verification code on the Authentication APP every time you want to log on to this website.
+                        </p>
                         <a asp-controller="Account" asp-action="SetTwoFactorAuthentication" class="btn btn-success">Configure authenticator app</a>
                     }
                     else
@@ -51,19 +54,31 @@
                                 </p>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <form method="post">
-                                            @*<div class="form-group">
-                                                    <label asp-for="" class="control-label">Verification Code</label>
-                                                    <input asp-for="TwoFACode" class="form-control" autocomplete="off" />
-                                                    <span asp-validation-for="TwoFACode" class="text-danger"></span>
-                                                </div>
-                                                <button type="submit" class="btn btn-success">Verify</button>
-                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                                        <form asp-controller="Account" asp-action="TwoFactorAuthentication" method="post">
+                                            <div class="form-group">
+                                                <label asp-for="Code" class="control-label">Verification Code</label>
+                                                <input asp-for="Code" class="form-control" autocomplete="off" />
+                                                <span asp-validation-for="Code" class="text-danger"></span>
+                                            </div>
+
+                                            <button class="btn btn-success" type="submit">Verify</button>
+                                           
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         </form>
                                     </div>
                                 </div>
                             </li>
                             <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">Reset authenticator key</a>
+                        </ol>
+                        <ol class="list">
+                            @if (null == Model.RecoveryCodesKey)
+                            {
+                                <p>verif failled</p>
+                            }
+                            else
+                            {
+                                <p>@Model.RecoveryCodesKey</p>
+                            }
                         </ol>
                     }
                 </li>
