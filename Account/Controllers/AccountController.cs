@@ -389,19 +389,7 @@ namespace Aiursoft.Account.Controllers
             var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());
             model.RecoveryCodesKey = RecoveryCodesKey.Value;
             var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            //var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-            //var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
-            //    user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
-            model.NewTwoFAKey = TwoFAKey.Value;
-            //if(!is2faTokenValid)
-            //{
-            //    model.RecoveryCodesKey = "11111111";
-
-            //}
-            //else
-            //{
-            //    model.RecoveryCodesKey = null;
-            //}
+            model.NewTwoFAKey = TwoFAKey.Value;        
             return View(model);
         }
 

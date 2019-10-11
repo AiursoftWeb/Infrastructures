@@ -276,7 +276,7 @@ namespace Aiursoft.Gateway.Controllers
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
             user.TwoFAKey = FormatKey(unformattedKey);
-            user.TwoFactorEnabled = true;
+            //user.TwoFactorEnabled = true;
             await _userManager.UpdateAsync(user);
             return Json(new AiurValue<string>(user.TwoFAKey)
             {
