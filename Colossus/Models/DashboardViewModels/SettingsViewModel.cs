@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Attributes;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Colossus.Models.DashboardViewModels
 {
@@ -11,6 +13,26 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
             RootRecover(user, 2, "Settings");
         }
+
+        [Required]
+        [MaxLength(50)]
+        [MinLength(5)]
+        [ValidDomainName]
+        public string OldSiteName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [MinLength(5)]
+        [ValidDomainName]
+        public string NewSiteName { get; set; }
+
+        [Required]
+        [Display(Name = "Open to upload")]
+        public bool OpenToUpload { get; set; }
+
+        [Required]
+        [Display(Name = "Open to download")]
+        public bool OpenToDownload { get; set; }
 
         public long SiteSize { get; set; }
     }

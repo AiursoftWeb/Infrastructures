@@ -26,7 +26,7 @@
             <div asp-validation-summary="All"></div>
         </div>
     }
-    
+
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-inbox"></i>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-md-12 margin-top-30">
-                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Update"]</button>
+                        <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
                         @if (!string.IsNullOrEmpty(Model.AppId))
                         {
                             <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
