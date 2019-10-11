@@ -40,7 +40,7 @@
                     <label asp-for="CaptchaCode"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <img src="~/get-captcha-image" style="width:100px;height:33px;" />
+                            <img src="~/get-captcha-image" style="width:100px;height:33px;" onclick="$(this).attr('src', '/get-captcha-image?t=' + new Date().getTime())" />
                         </div>
                         <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
                     </div>
