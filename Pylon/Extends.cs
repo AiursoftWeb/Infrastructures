@@ -197,14 +197,17 @@ namespace Aiursoft.Pylon
                     {
                         services.AddSingleton(item);
                     }
+                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a singleton service.");
                 }
                 else if (item.GetInterfaces().Contains(typeof(IScopedDependency)))
                 {
                     services.AddScoped(item);
+                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a scoped service.");
                 }
                 else if (item.GetInterfaces().Contains(typeof(ITransientDependency)))
                 {
                     services.AddTransient(item);
+                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a transient service.");
                 }
             }
             return services;
