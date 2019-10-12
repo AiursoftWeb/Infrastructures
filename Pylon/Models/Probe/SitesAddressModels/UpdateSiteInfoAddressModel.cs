@@ -9,13 +9,13 @@ namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
         public string AccessToken { get; set; }
 
         [Required]
-        [ValidFolderName]
+        [ValidDomainName]
         public string OldSiteName { get; set; }
 
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
-        [ValidFolderName]
+        [ValidDomainName]
         public string NewSiteName { get; set; }
 
         [Required]

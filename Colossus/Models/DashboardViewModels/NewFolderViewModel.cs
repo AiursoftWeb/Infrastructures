@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.Pylon.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Aiursoft.Colossus.Models.DashboardViewModels
@@ -13,6 +14,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             RootRecover(user, 1, "Create new folder");
         }
 
+        [ValidFolderName]
         public string NewFolderName { get; set; }
 
         [FromRoute]

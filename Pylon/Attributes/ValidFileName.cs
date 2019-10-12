@@ -1,30 +1,15 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace Aiursoft.Pylon.Attributes
 {
     public class ValidFolderName : ValidationAttribute
     {
-        public static char[] InvalidFileAndFolderNames = new char[]
-        {
-            '\\',
-            ':',
-            '/',
-            '|',
-            '\'',
-            '"',
-            '*',
-            '<',
-            '>',
-            '?'
-        };
-
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
-                return !val.Any(t => InvalidFileAndFolderNames.Contains(t));
+                return val.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
             }
             return true;
         }
@@ -38,7 +23,7 @@ namespace Aiursoft.Pylon.Attributes
             else
             {
                 var invalidCharators = string.Empty;
-                foreach (var invalidChar in InvalidFileAndFolderNames)
+                foreach (var invalidChar in Path.GetInvalidFileNameChars())
                 {
                     if (value is string val && val.Contains(invalidChar))
                     {

@@ -272,7 +272,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [Route("Settings")]
-        public async Task<IActionResult> Settings()
+        public async Task<IActionResult> Settings(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
             var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
@@ -283,7 +283,12 @@ namespace Aiursoft.Colossus.Controllers
                 var model = new SettingsViewModel(user)
                 {
                     SiteSize = siteDetail.Size,
-                    HasASite = true
+                    HasASite = true,
+                    JustHaveUpdated = justHaveUpdated,
+                    NewSiteName = siteDetail.Site.SiteName,
+                    OldSiteName = siteDetail.Site.SiteName,
+                    OpenToDownload = siteDetail.Site.OpenToDownload,
+                    OpenToUpload = siteDetail.Site.OpenToUpload
                 };
                 return View(model);
             }
@@ -291,8 +296,38 @@ namespace Aiursoft.Colossus.Controllers
             {
                 var model = new SettingsViewModel(user)
                 {
-                    HasASite = false
+                    HasASite = false,
+                    JustHaveUpdated = justHaveUpdated
                 };
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        [Route("Settings")]
+        public async Task<IActionResult> Settings(SettingsViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                model.Recover(user);
+                return View(model);
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken();
+                await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload, model.OpenToDownload);
+                user.SiteName = model.NewSiteName;
+                await _userManager.UpdateAsync(user);
+                return RedirectToAction(nameof(DashboardController.Settings), "Dashboard", new { JustHaveUpdated = true });
+            }
+            catch (AiurUnexceptedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.ModelStateValid = false;
+                model.Recover(user);
+                model.NewSiteName = model.OldSiteName;
                 return View(model);
             }
         }

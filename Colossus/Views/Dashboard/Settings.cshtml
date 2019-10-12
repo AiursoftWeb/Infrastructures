@@ -37,6 +37,46 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-inbox"></i>
+                @Localizer["Edit Site Info"]
+            </div>
+            <div class="card-body">
+                <div class="col-12">
+                    <form asp-controller="Dashboard" asp-action="Settings" asp-route-oldSiteName="@Model.OldSiteName" method="post" class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="NewSiteName"></label>
+                                <input asp-for="NewSiteName" type="text" class="form-control">
+                                <span asp-validation-for="NewSiteName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-check col-12 pl-5">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" asp-for="OpenToUpload" />
+                                <label asp-for="OpenToUpload"></label>
+                            </label>
+                            <p class="text-muted">If you wanna allow users to upload files to your site anonymously and without permission, check this.</p>
+                        </div>
+
+                        <div class="form-check col-12 pl-5">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" asp-for="OpenToDownload" />
+                                <label asp-for="OpenToDownload"></label>
+                            </label>
+                            <p class="text-muted">If you wanna allow users to upload files to your site anonymously and without permission, check this.</p>
+                        </div>
+
+                        <div class="col-md-12 margin-top-30">
+                            <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-inbox"></i>
                 @Localizer["Site Size"]
             </div>
             <div class="card-body">

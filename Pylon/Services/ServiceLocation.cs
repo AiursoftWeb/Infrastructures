@@ -17,6 +17,7 @@ namespace Aiursoft.Pylon.Services
         public readonly string Wiki;
         public readonly string WWW;
         public readonly string Probe;
+        public readonly string ProbeIO;
         public readonly string Status;
 
         public ServiceLocation(IConfiguration configuration)
@@ -33,6 +34,7 @@ namespace Aiursoft.Pylon.Services
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
             Probe = TrySet(section["ProbePath"], "https://probe.aiursoft.com");
+            ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiursoft.io");
             Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
 
             StargateListenAddress = Stargate
