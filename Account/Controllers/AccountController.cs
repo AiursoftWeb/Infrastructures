@@ -386,14 +386,33 @@ namespace Aiursoft.Account.Controllers
                 model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
-            var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());
-            model.RecoveryCodesKey = RecoveryCodesKey.Value;
+            var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());         
+            var ReCodeStr = RecoveryCodesKey.Value;
+            if (null != ReCodeStr)
+            {
+                int len = ReCodeStr.Length;
+                var ReCodeList = new List<string>();
+                for (int i = 0; i < len; i += 8)
+                {
+                    string str = null;
+                    for (int j = i; j < i + 8; j++)
+                    {
+                        str += ReCodeStr[j];
+                        if (j == i + 3)
+                        {
+                            str += " ";
+                        }
+                    }
+                    ReCodeList.Add(str);
+                }
+                model.RecCodesKeyArray = ReCodeList;
+            }
+            else model.RecCodesKeyArray = null;
             var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            model.NewTwoFAKey = TwoFAKey.Value;        
+            model.NewTwoFAKey = TwoFAKey.Value;
             return View(model);
         }
 
-        //[HttpPost]
         public async Task<IActionResult> SetTwoFactorAuthentication(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
@@ -402,7 +421,6 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 
-        //[HttpPost]
         public async Task<IActionResult> ResetTwoFactorAuthentication(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
@@ -411,7 +429,6 @@ namespace Aiursoft.Account.Controllers
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 
-        //[HttpPost]
         public async Task<IActionResult> TwoFAVerificyCode()
         {
             var user = await GetCurrentUserAsync();

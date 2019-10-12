@@ -60,25 +60,32 @@
                                                 <input asp-for="Code" class="form-control" autocomplete="off" />
                                                 <span asp-validation-for="Code" class="text-danger"></span>
                                             </div>
-
-                                            <button class="btn btn-success" type="submit">Verify</button>
-                                           
+                                            <div class="form-group">
+                                                <label asp-for="RecCodesKeyArray" class="control-label">Recovery Codes</label>
+                                                @if (null != Model.RecCodesKeyArray)
+                                                {
+                                                    @foreach (var ReCodeItem in Model.RecCodesKeyArray)
+                                                    {
+                                                        <p>
+                                                            <code>@ReCodeItem</code>
+                                                        </p>
+                                                        <br />
+                                                    }
+                                                }
+                                            </div>
+                                            <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         </form>
                                     </div>
                                 </div>
                             </li>
-                            <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">Reset authenticator key</a>
-                        </ol>
-                        <ol class="list">
-                            @if (null == Model.RecoveryCodesKey)
-                            {
-                                <p>verif failled</p>
-                            }
-                            else
-                            {
-                                <p>@Model.RecoveryCodesKey</p>
-                            }
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">Reset authenticator key</a>
+                                    </div>
+                                </div>
+                            </li>
                         </ol>
                     }
                 </li>

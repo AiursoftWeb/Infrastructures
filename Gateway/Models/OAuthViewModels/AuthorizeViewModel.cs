@@ -46,6 +46,8 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         public string ResponseType { get; set; }
         public string Scope { get; set; }
         public string AppName { get; set; }
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
         public string GetRegexRedirectUrl()
         {
             var url = new Uri(ToRedirect);

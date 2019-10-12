@@ -19,6 +19,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         [Display(Name = "TwoFAKey")]
         public string NewTwoFAKey { get; set; }
         public string Code { get; set; }
-        public string RecoveryCodesKey { get; set; }
+        public List<string> RecCodesKeyArray { get; set; }
     }
 }

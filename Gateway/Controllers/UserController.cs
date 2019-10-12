@@ -332,7 +332,13 @@ namespace Aiursoft.Gateway.Controllers
             {
                 await _userManager.SetTwoFactorEnabledAsync(user, true);
                 var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-                model.RecoveryCodesKey = recoveryCodes.ToString();
+                var recodeArray =  recoveryCodes.ToArray();
+                //var len = recodeArray.Length;
+                model.RecoveryCodesKey = null;
+                foreach(var i in recodeArray)
+                {
+                    model.RecoveryCodesKey += i;
+                }
 
                 return Json(new AiurValue<string>(model.RecoveryCodesKey)
                 {
