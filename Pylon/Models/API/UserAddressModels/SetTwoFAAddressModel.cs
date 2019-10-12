@@ -8,7 +8,7 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
     {
         public string Code { get; set; }
         public string RecoveryCodesKey { get; set; }
-
+        public string TwoFAKey { get; set; }
         public string AuthenticatorTokenProvider { get; set; }
     }
 }

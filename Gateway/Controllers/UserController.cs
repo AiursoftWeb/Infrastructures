@@ -254,35 +254,16 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
-        [APIProduces(typeof(AiurValue<string>))]
-        public async Task<IActionResult> ViewTwoFAKey(ViewTwoFAAddressModel model)
-        {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            return Json(new AiurValue<string>(user.TwoFAKey)
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully get the target user's TwoFAKey  ."
-            });
-        }
-
         [HttpPost]
         public async Task<JsonResult> SetTwoFAKey(SetTwoFAAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
-            {
-                await _userManager.ResetAuthenticatorKeyAsync(user);
-                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            }
-            user.TwoFAKey = FormatKey(unformattedKey);
-            //user.TwoFactorEnabled = true;
-            await _userManager.UpdateAsync(user);
-            return Json(new AiurValue<string>(user.TwoFAKey)
+            await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            return Json(new AiurValue<string>(model.TwoFAKey)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
-            });
+            }); 
         }
 
         [HttpPost]
@@ -296,10 +277,52 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
             await SetTwoFAKey(model);
-            return Json(new AiurValue<string>(user.TwoFAKey)
+            return Json(new AiurValue<string>(model.TwoFAKey)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully reset the user's TwoFAKey!"
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Disable2faWarning()
+        {
+            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
+            }
+
+            return View(nameof(Disable2fa));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Disable2fa()
+        {
+            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (!disable2faResult.Succeeded)
+            {
+                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
+            }
+
+            return Json(new AiurValue<string>(null)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
             });
         }
 
@@ -348,6 +371,50 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GenerateRecoveryCodesWarning()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' because they do not have 2FA enabled.");
+            }
+
+            return View(nameof(GenerateRecoveryCodes));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GenerateRecoveryCodes()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
+            }
+
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+
+            //var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
+
+            //return View(nameof(ShowRecoveryCodes), model);
+            return Json(new AiurValue<string>(null)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
         #region --- TwoFAKey Helper---
 
         private async Task LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, SetTwoFAAddressModel model)
@@ -359,7 +426,7 @@ namespace Aiursoft.Gateway.Controllers
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 
-            user.TwoFAKey = FormatKey(unformattedKey);
+            model.TwoFAKey = FormatKey(unformattedKey);
             //model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
         private string FormatKey(string unformattedKey)

@@ -24,7 +24,6 @@ namespace Aiursoft.Gateway.Models
         public IEnumerable<AuditLogLocal> AuditLogs { get; set; }
 
         public virtual string SMSPasswordResetToken { get; set; }
-        public virtual string TwoFAKey { get; set; }
 
         [JsonProperty]
         [NotMapped]

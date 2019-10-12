@@ -366,7 +366,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> TwoFactorAuthentication(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFAViewModel(user)
             {
                 JustHaveUpdated = justHaveUpdated,
@@ -408,7 +408,7 @@ namespace Aiursoft.Account.Controllers
                 model.RecCodesKeyArray = ReCodeList;
             }
             else model.RecCodesKeyArray = null;
-            var TwoFAKey = await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
             model.NewTwoFAKey = TwoFAKey.Value;
             return View(model);
         }
@@ -417,7 +417,6 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            await _userManager.UpdateAsync(user);
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 
@@ -425,15 +424,6 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            await _userManager.UpdateAsync(user);
-            return RedirectToAction(nameof(TwoFactorAuthentication));
-        }
-
-        public async Task<IActionResult> TwoFAVerificyCode()
-        {
-            var user = await GetCurrentUserAsync();
-            var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            await _userManager.UpdateAsync(user);
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 

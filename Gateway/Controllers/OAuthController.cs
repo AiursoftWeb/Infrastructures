@@ -535,5 +535,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             return Redirect(url.ToString());
         }
+
+
     }
 }

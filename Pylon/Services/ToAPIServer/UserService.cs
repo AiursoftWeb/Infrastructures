@@ -205,23 +205,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
-        }
-        
-        public async Task<AiurValue<string>> ViewTwoFAKeyAsync(string openId, string accessToken)
-        {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewTwoFAKey", new ViewTwoFAAddressModel { });
-            var form = new AiurUrl(string.Empty, new ViewTwoFAAddressModel
-            {
-                OpenId = openId,
-                AccessToken = accessToken
-            });
-            var result = await _http.Post(url, form, true);
-
-            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
-        }
+        }        
 
         public async Task<AiurValue<string>> SetTwoFAKeyAsync(string openId, string accessToken)
         {
