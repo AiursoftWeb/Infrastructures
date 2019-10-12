@@ -424,6 +424,7 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
         {
+            // return await FinishAuth(model, app.ForceConfirmation);
             if (!ModelState.IsValid)
             {
                 return View(model);
