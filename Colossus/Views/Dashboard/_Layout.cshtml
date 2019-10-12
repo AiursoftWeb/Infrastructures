@@ -6,34 +6,10 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
-    <style>
-        .bg-azure {
-            background-color: #0082C9 !important;
-        }
-
-        #exampleAccordion {
-            background: #fafafa !important;
-            border-right: 1px solid rgba(0,0,0,.125) !important;
-        }
-
-        #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
-            color: #fff!important;
-            background-color: #0072B9 !important;
-        }
-        #mainNav.fixed-top.navbar-dark .sidenav-toggler li.active a {
-            color: #fff!important;
-            background-color: #0072B9 !important;
-        }
-        @@media (min-width: 992px) {
-            #mainNav.fixed-top .navbar-sidenav {
-                height: calc(100vh);
-            }
-        }
-    </style>
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-azure fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-azure bg-azure fixed-top" id="mainNav">
         <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer["Aiursoft Colossus"]</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -58,6 +34,14 @@
                             </span>
                         </a>
                     </li>
+                    <li class="nav-item @(Model.ActivePanel == 2 ? "active" : string.Empty)">
+                        <a class="nav-link" asp-controller="Dashboard" asp-action="Settings">
+                            <i class="fa fa-fw fa-dashboard"></i>
+                            <span class="nav-link-text">
+                                @Localizer["Settings"]
+                            </span>
+                        </a>
+                    </li>
                 }
                 else
                 {
@@ -72,12 +56,9 @@
                 }
             </ul>
             <ul class="navbar-nav sidenav-toggler">
-                <li class="nav-item @(Model.ActivePanel == 2 ? "active" : string.Empty)">
-                    <a class="nav-link" asp-controller="Dashboard" asp-action="Settings">
-                        <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Settings"]
-                        </span>
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
                     </a>
                 </li>
             </ul>
