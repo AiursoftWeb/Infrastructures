@@ -6,6 +6,8 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
+    <link href="~/js/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -143,7 +145,9 @@
                 </div>
             </div>
         }
-        @RenderBody()
+        <div id="render-part">
+            @RenderBody()
+        </div>
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -153,6 +157,82 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
+        <script src="~/js/nprogress/nprogress.js"></script>
+        <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+        <script>
+            var initUnder = function (query) {
+                $(query).each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var href = $(this).attr("href");
+                        if (href.startsWith('#')) {
+                            return;
+                        }
+                        NProgress.start();
+                        $.ajax({
+                            url: href,
+                            headers: { "X-No-Layout": "true" },
+                            success: function (data) {
+                                $('#render-part').html(data);
+                                window.history.pushState({ "html": data, "pageTitle": "" }, "", href);
+                                setTimeout(function () {
+                                    initUnder('#render-part a[href]');
+                                    initForm();
+                                    dispatchEvent(new Event('load'));
+                                    NProgress.done();
+                                }, 1);
+                            },
+                            error: function () {
+                                window.location = href;
+                            }
+                        });
+                    })
+                });
+            }
+
+            var initForm = function () {
+                $('#render-part form').submit(function (e) {
+                    e.preventDefault();
+                    NProgress.start();
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        headers: { "X-No-Layout": "true" },
+                        success: function (data) {
+                            $('#render-part').html(data);
+                            window.history.pushState({ "html": data, "pageTitle": "" }, "", $(this).attr('action'));
+                            setTimeout(function () {
+                                initUnder('#render-part a[href]');
+                                dispatchEvent(new Event('load'));
+                                NProgress.done();
+                            }, 1);
+                        },
+                        error: function () {
+                            alert('Unknown error!');
+                        }
+                    });
+                });
+            }
+            initUnder('a[href]');
+        </script>
+
+        <script>
+            var updateButtons = function () {
+                var value = $("[name=file]").attr('data-internet-path');
+                if (value && value.length > 0) {
+                    window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
+                    $("[name=file]").attr('data-internet-path', '');
+                }
+            };
+
+            var loopRenderJobs = function () {
+                updateButtons();
+                setTimeout(loopRenderJobs, 100);
+            };
+            loopRenderJobs();
+
+        </script>
         @RenderSection("js", required: false)
     </div>
 </body>
