@@ -163,11 +163,14 @@
             var initUnder = function (query) {
                 $(query).each(function () {
                     $(this).click(function (e) {
-                        e.preventDefault();
                         var href = $(this).attr("href");
                         if (href.startsWith('#')) {
                             return;
                         }
+                        if (href.toLowerCase().startsWith('https')) {
+                            return;
+                        }
+                        e.preventDefault();
                         NProgress.start();
                         $.ajax({
                             url: href,
@@ -192,6 +195,9 @@
 
             var initForm = function () {
                 $('#render-part form').submit(function (e) {
+                    if (href.toLowerCase().startsWith('https')) {
+                        return;
+                    }
                     e.preventDefault();
                     NProgress.start();
                     $.ajax({
