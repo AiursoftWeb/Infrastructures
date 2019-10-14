@@ -35,23 +35,25 @@
 @section js{
     <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
     <script>
-        var updateButtons = function () {
-            var value = $("[name=file]").attr('data-internet-path');
-            if (value && value.length > 0) {
-                $('#openButton').show();
-                $('#copyButton').show();
-                $('#openButton').attr('href', value);
-                $('#copyButton').attr('data-clipboard-text', value);
-            } else {
-                $('#openButton').hide();
-                $('#copyButton').hide();
-            }
-        };
+        window.addEventListener('load', function () {
+            var updateButtons = function () {
+                var value = $("[name=file]").attr('data-internet-path');
+                if (value && value.length > 0) {
+                    $('#openButton').show();
+                    $('#copyButton').show();
+                    $('#openButton').attr('href', value);
+                    $('#copyButton').attr('data-clipboard-text', value);
+                } else {
+                    $('#openButton').hide();
+                    $('#copyButton').hide();
+                }
+            };
 
-        var loopRenderJobs = function () {
-            updateButtons();
-            setTimeout(loopRenderJobs, 100);
-        };
-        loopRenderJobs();
+            var loopRenderJobs = function () {
+                updateButtons();
+                setTimeout(loopRenderJobs, 100);
+            };
+            loopRenderJobs();
+        });
     </script>
 }

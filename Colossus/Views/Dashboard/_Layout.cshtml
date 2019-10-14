@@ -195,6 +195,7 @@
 
             var initForm = function () {
                 $('#render-part form').submit(function (e) {
+                    var href = $(this).attr("action");
                     if (href.toLowerCase().startsWith('https')) {
                         return;
                     }
@@ -221,23 +222,7 @@
                 });
             }
             initUnder('a[href]');
-        </script>
-
-        <script>
-            var updateButtons = function () {
-                var value = $("[name=file]").attr('data-internet-path');
-                if (value && value.length > 0) {
-                    window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
-                    $("[name=file]").attr('data-internet-path', '');
-                }
-            };
-
-            var loopRenderJobs = function () {
-                updateButtons();
-                setTimeout(loopRenderJobs, 100);
-            };
-            loopRenderJobs();
-
+            initForm();
         </script>
         @RenderSection("js", required: false)
     </div>

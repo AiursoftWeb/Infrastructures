@@ -46,7 +46,7 @@
             progressbar.css('width', '0%');
             window.onbeforeunload = function () { };
         }
-
+        fileInput.unbind('change');
         fileInput.on('change', function () {
             var file = fileInput.prop("files")[0];
             var ext = getExtension(file.name);

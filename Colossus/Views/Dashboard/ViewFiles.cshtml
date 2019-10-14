@@ -138,4 +138,21 @@
     </div>
 </div>
 
+<script>
+    window.addEventListener('load', function () {
+        var updateButtons = function () {
+            var value = $("[name=file]").attr('data-internet-path');
+            if (value && value.length > 0) {
+                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
+                $("[name=file]").attr('data-internet-path', '');
+            }
+        };
+
+        var loopRenderJobs = function () {
+            updateButtons();
+            setTimeout(loopRenderJobs, 100);
+        };
+        loopRenderJobs();
+    });
+</script>
 
