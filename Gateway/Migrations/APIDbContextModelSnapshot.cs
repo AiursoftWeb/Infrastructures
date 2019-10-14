@@ -93,6 +93,9 @@ namespace Aiursoft.Gateway.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<bool>("HasAuthenticator")
+                        .HasColumnType("bit");
+
                     b.Property<string>("IconFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -129,9 +132,6 @@ namespace Aiursoft.Gateway.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sex")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwoFAKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")

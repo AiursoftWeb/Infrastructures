@@ -24,7 +24,7 @@ namespace Aiursoft.Gateway.Models
         public IEnumerable<AuditLogLocal> AuditLogs { get; set; }
 
         public virtual string SMSPasswordResetToken { get; set; }
-
+        public virtual bool HasAuthenticator { get; set; }
         [JsonProperty]
         [NotMapped]
         public override bool EmailConfirmed => Emails?.Any(t => t.Validated) ?? false;

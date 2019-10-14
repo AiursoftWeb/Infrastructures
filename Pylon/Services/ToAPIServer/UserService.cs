@@ -205,9 +205,24 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
-        }        
+        }
 
-        public async Task<AiurValue<string>> SetTwoFAKeyAsync(string openId, string accessToken)
+        public async Task<AiurCollection<SetTwoFAAddressModel>> ViewTwoFAKeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewTwoFAKey", new SetTwoFAAddressModel { });
+            var form = new AiurUrl(string.Empty, new SetTwoFAAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<SetTwoFAAddressModel>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurCollection<SetTwoFAAddressModel>> SetTwoFAKeyAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetTwoFAKey", new SetTwoFAAddressModel { });
             var form = new AiurUrl(string.Empty, new SetTwoFAAddressModel
@@ -216,22 +231,22 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<SetTwoFAAddressModel>>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
 
-        public async Task<AiurValue<string>> ResetTwoFAKeyAsync(string openId, string accessToken)
+        public async Task<AiurCollection<SetTwoFAAddressModel>> ResetTwoFAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new ViewTwoFAAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new SetTwoFAAddressModel { });
             var form = new AiurUrl(string.Empty, new SetTwoFAAddressModel
             {
                 OpenId = openId,
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<SetTwoFAAddressModel>>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

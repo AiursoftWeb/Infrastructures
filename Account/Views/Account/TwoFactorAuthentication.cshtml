@@ -20,7 +20,7 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    @if (null == Model.NewTwoFAKey)
+                    @if (!Model.NewHasAuthenticator)
                     {
                         <p>
                             After this function is enabled, you must enter the verification code on the Authentication APP every time you want to log on to this website.

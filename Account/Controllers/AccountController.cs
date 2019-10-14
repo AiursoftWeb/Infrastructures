@@ -366,12 +366,14 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> TwoFactorAuthentication(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var ReturnList = (await _userService.ViewTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Items;
             var model = new TwoFAViewModel(user)
             {
                 JustHaveUpdated = justHaveUpdated,
-                NewTwoFAKey = TwoFAKey.Value
-            };
+                NewTwoFAKey = ReturnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString(),
+                NewHasAuthenticator = ReturnList.Select(t => t.HasAuthenticator).FirstOrDefault(),
+                NewIs2faEnabled = ReturnList.Select(t => t.Is2faEnabled).FirstOrDefault()
+            };          
             return View(model);
         }
 
@@ -408,8 +410,10 @@ namespace Aiursoft.Account.Controllers
                 model.RecCodesKeyArray = ReCodeList;
             }
             else model.RecCodesKeyArray = null;
-            var TwoFAKey = await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            model.NewTwoFAKey = TwoFAKey.Value;
+            var ReturnList = (await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Items;
+            model.NewTwoFAKey = ReturnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString();
+            model.NewHasAuthenticator = ReturnList.Select(t => t.HasAuthenticator).FirstOrDefault();
+            model.NewIs2faEnabled = ReturnList.Select(t => t.Is2faEnabled).FirstOrDefault();
             return View(model);
         }
 
