@@ -24,8 +24,8 @@ namespace Aiursoft.Pylon.Services
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
             var domain = string.Format(serviceLocation.ProbeIO, siteName);
-            var path = (string.Join('/', folders).EncodePath() + "/").Trim('/');
-            return $"{domain}/{path}/{fileName.ToUrlEncoded()}";
+            var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
+            return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
 
         private static (string siteName, string[] folders, string fileName) SplitToPath(string fullpath)

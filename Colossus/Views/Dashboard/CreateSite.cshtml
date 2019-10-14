@@ -45,7 +45,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="SiteName"></label>
-                            <input asp-for="SiteName" type="text" class="form-control" placeholder="Enter your new site name...">
+                            <div class="input-group mb-3">
+                                <input asp-for="SiteName" type="text" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">.aiursoft.io</span>
+                                </div>
+                            </div>
                             <span asp-validation-for="SiteName" class="text-danger"></span>
                         </div>
                     </div>
