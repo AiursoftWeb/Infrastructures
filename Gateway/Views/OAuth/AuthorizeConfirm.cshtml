@@ -69,6 +69,13 @@
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
                 </p>
+                @if (Model.RequiresTwoFactor)
+                {
+                    <div class="form-group">
+                        <label asp-for="VerifyCode"></label>
+                        <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
+                    </div>
+                }
                 <div class="row">
                     <div class="col-md-4 mt-3">
                         <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Allow"]</button>

@@ -13,7 +13,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         public string ToRedirect { get; set; }
         public string Scope { get; set; }
         public string ResponseType { get; set; }
-
+        public bool RequiresTwoFactor { get; set; }
         public string GetRegexRedirectUrl()
         {
             var url = new Uri(ToRedirect);

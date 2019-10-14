@@ -48,6 +48,8 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         public string AppName { get; set; }
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public bool RequiresTwoFactor { get; set; }
+
         public string GetRegexRedirectUrl()
         {
             var url = new Uri(ToRedirect);

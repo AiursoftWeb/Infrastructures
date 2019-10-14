@@ -36,6 +36,9 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         [Display(Name = "View user's sign in log.")]
         public bool ViewAuditLog { get; set; }
 
+        [Display(Name = "Verify Code")]
+        public string VerifyCode { get; set; }
+        public bool RequiresTwoFactor { get; set; }
 
         public string TermsUrl { get; set; }
         public string PStatementUrl { get; set; }

@@ -111,7 +111,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
+            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);           
             return View(viewModel);
         }
 
@@ -144,6 +144,8 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = mail.Owner;
+            //user.TwoFactorEnabled = true;
+            //await _dbContext.SaveChangesAsync();
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
             var log = new AuditLogLocal
             {
@@ -154,20 +156,21 @@ namespace Aiursoft.Gateway.Controllers
             };
             _dbContext.AuditLogs.Add(log);
             await _dbContext.SaveChangesAsync();
+                       
             if (result.Succeeded)
             {
-                return await FinishAuth(model, app.ForceConfirmation);
+
+                 return await FinishAuth(model, app.ForceConfirmation);   
             }
-            //else if (result.RequiresTwoFactor)
-            //{
-            //    throw new NotImplementedException();
-            //}
-            else if (result.RequiresTwoFactor)
+
+            if (result.RequiresTwoFactor)
             {
-                return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                return await FinishAuthByTwoFA(model, app.ForceConfirmation);
+                //return RedirectToAction(nameof(LoginWith2fa), new { model.RememberMe, returnUrl });
             }
-            else if (result.IsLockedOut)
-            {
+
+            if (result.IsLockedOut)
+            { 
                 ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
             }
             else
@@ -214,6 +217,7 @@ namespace Aiursoft.Gateway.Controllers
                 ChangePassword = app.ChangePassword,
                 ChangeGrantInfo = app.ChangeGrantInfo,
                 ViewAuditLog = app.ViewAuditLog,
+                RequiresTwoFactor = model.RequiresTwoFactor,
 
                 TermsUrl = app.LicenseUrl,
                 PStatementUrl = app.PrivacyStatementUrl
@@ -230,10 +234,38 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View(model);
             }
-            var user = await GetCurrentUserAsync();
-            model.Email = user.Email;
-            await user.GrantTargetApp(_dbContext, model.AppId);
-            return await FinishAuth(model);
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, false);
+
+            if (result.Succeeded)
+            {
+                //_logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+
+                //return RedirectToLocal(returnUrl);
+                var iuser = await GetCurrentUserAsync();
+                model.Email = iuser.Email;
+                await user.GrantTargetApp(_dbContext, model.AppId);
+                return await FinishAuth(model);
+            }
+            else if (result.IsLockedOut)
+            {
+                //_logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                return RedirectToAction(nameof(Lockout));
+            }
+            else
+            {
+                //_logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
+                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                return View();
+            }            
         }
 
         [HttpGet]
@@ -401,6 +433,47 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
+        private async Task<IActionResult> FinishAuthByTwoFA(AuthorizeViewModel model, bool forceGrant = false)
+        {
+            //var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            //if (user == null)
+            //{
+            //    throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            //}
+
+            //var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            //var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, model.RememberMe, false);
+
+            //if (result.Succeeded)
+            //{
+            //    //_logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+            //    return await FinishAuth(model, forceGrant);
+            //    //return RedirectToLocal(returnUrl);
+            //}
+            //else if (result.IsLockedOut)
+            //{
+            //    //_logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+            //    return RedirectToAction(nameof(Lockout));
+            //}
+            //else
+            //{
+            //    //_logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
+            //    ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+            //    return View();
+            //}        
+            return RedirectToAction(nameof(AuthorizeConfirm), new AuthorizeConfirmAddressModel
+            {
+                AppId = model.AppId,
+                State = model.State,
+                ToRedirect = model.ToRedirect,
+                Scope = model.Scope,
+                ResponseType = model.ResponseType,
+                RequiresTwoFactor = true
+
+            }) ;
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
@@ -443,6 +516,7 @@ namespace Aiursoft.Gateway.Controllers
             if (result.Succeeded)
             {
                 //_logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+                //return await FinishAuth(model, app.ForceConfirmation);
                 return RedirectToLocal(returnUrl);
             }
             else if (result.IsLockedOut)
