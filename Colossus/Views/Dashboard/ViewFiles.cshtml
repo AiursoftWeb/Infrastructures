@@ -130,7 +130,7 @@
             Upload new file here
         </div>
         <div class="card-body">
-            <div class="form-group">
+            <div class="form-group upload-form">
                 <label>@Localizer["Upload anything to your site!"]</label>
                 <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file=""></vc:aiur-uploader>
             </div>
@@ -141,7 +141,7 @@
 <script>
     window.addEventListener('load', function () {
         var updateButtons = function () {
-            var value = $("[name=file]").attr('data-internet-path');
+            var value = $(".upload-form [name=file]").attr('data-internet-path');
             if (value && value.length > 0) {
                 window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
                 $("[name=file]").attr('data-internet-path', '');
@@ -149,8 +149,10 @@
         };
 
         var loopRenderJobs = function () {
-            updateButtons();
-            setTimeout(loopRenderJobs, 100);
+            if($(".upload-form [name=file]").length > 0) {
+                updateButtons();
+                setTimeout(loopRenderJobs, 100);
+            }
         };
         loopRenderJobs();
     });
