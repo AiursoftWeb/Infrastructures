@@ -9,7 +9,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
         }
 
-        public IndexViewModel(ColossusUser user) : base(user, 0, "Quick upload")
+        public IndexViewModel(ColossusUser user) : base(user, "Quick upload")
         {
 
         }

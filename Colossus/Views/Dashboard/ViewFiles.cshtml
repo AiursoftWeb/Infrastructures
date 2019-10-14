@@ -33,25 +33,18 @@
         </div>
     }
     <div class="card mb-3">
-        <div class="card-header pb-1">
-            <i class="fa fa-folder-open ico"></i>
-            Files in site:
-            <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@string.Empty">
-                @Model.SiteName
-            </a>
-
-            <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-secondary mr-2 pull-right">
+        <div class="card-header">
+            <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-secondary mr-2">
                 <i class="fa fa-folder-open"></i>
                 New folder
             </a>
-
             @if (Model.Path != null)
             {
-                <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-sm btn-secondary mr-2 pull-right">
+                <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.DetachPath()" class="btn btn-sm btn-secondary mr-2">
                     <i class="fa fa-arrow-up"></i>
                     Up
                 </a>
-                <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-danger mr-2 pull-right">
+                <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-danger mr-2">
                     <i class="fa fa-trash"></i>
                     Delete @Model.Folder.FolderName
                 </a>
@@ -118,8 +111,15 @@
                             }
                         </tbody>
                     </table>
+                    @if(!Model.Folder.SubFolders.Any() && !Model.Folder.Files.Any())
+                    {
+                        <div class="text-center w-100 pt-5 pb-5">
+                            <i class="fa fa-5x fa-folder" style="color: #99cde9!important"></i>
+                            <h5>Nothing in here.</h5>
+                            <p class="text-muted">Upload some content first!</p>
+                        </div>
+                    }
                 </div>
-
             </div>
         </div>
     </div>
@@ -149,7 +149,7 @@
         };
 
         var loopRenderJobs = function () {
-            if($(".upload-form [name=file]").length > 0) {
+            if ($(".upload-form [name=file]").length > 0) {
                 updateButtons();
                 setTimeout(loopRenderJobs, 100);
             }

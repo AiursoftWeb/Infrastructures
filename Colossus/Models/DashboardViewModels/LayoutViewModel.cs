@@ -6,25 +6,23 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public LayoutViewModel() { }
-        public LayoutViewModel(ColossusUser user, int activePanel, string title)
+        public LayoutViewModel(ColossusUser user, string title)
         {
-            RootRecover(user, activePanel, title);
+            RootRecover(user, title);
         }
 
         public bool ModelStateValid { get; set; } = true;
         public bool JustHaveUpdated { get; set; } = false;
 
-        public void RootRecover(ColossusUser user, int activePanel, string title)
+        public void RootRecover(ColossusUser user, string title)
         {
             UserName = user.NickName;
             EmailConfirmed = user.EmailConfirmed;
-            ActivePanel = activePanel;
             Title = title;
             HasASite = !string.IsNullOrWhiteSpace(user.SiteName);
         }
         public string UserName { get; set; }
         public bool EmailConfirmed { get; set; }
-        public int ActivePanel { get; set; }
         public string Title { get; set; }
         public bool HasASite { get; set; }
     }

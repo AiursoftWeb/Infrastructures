@@ -7,14 +7,14 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public DeleteFileViewModel() { }
-        public DeleteFileViewModel(ColossusUser user) : base(user, 1, "Delete file")
+        public DeleteFileViewModel(ColossusUser user) : base(user, "Delete file")
         {
 
         }
 
         public void Recover(ColossusUser user)
         {
-            RootRecover(user, 1, "Delete file");
+            RootRecover(user, "Delete file");
         }
 
         [Required]

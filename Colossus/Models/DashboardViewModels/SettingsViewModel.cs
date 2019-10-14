@@ -8,10 +8,10 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public SettingsViewModel() { }
-        public SettingsViewModel(ColossusUser user) : base(user, 2, "Settings") { }
+        public SettingsViewModel(ColossusUser user) : base(user, "Settings") { }
         public void Recover(ColossusUser user)
         {
-            RootRecover(user, 2, "Settings");
+            RootRecover(user, "Settings");
         }
 
         [Required]
