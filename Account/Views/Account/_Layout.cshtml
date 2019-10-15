@@ -6,6 +6,7 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Account Management Center"]</title>
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -141,7 +142,9 @@
                 </div>
             </div>
         }
-        @RenderBody()
+        <div id="render-part">
+            @RenderBody()
+        </div>
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -151,6 +154,11 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
+        <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+        <script src="~/js/site.js"></script>
+        <script>
+            asyncLayout('#render-part');
+        </script>
         @RenderSection("js", required: false)
     </div>
 </body>

@@ -47,7 +47,7 @@
                             <span class="badge badge-danger">@Localizer["Not validated!"]</span>
                             <button id="@mail.Id" class="btn-sm btn btn-secondary float-right" onclick="sendValidationEmail('@mail.EmailAddress', '@mail.Id')">@Localizer["Send Validation Email"]</button>
                         }
-                        @if(mail.Validated && mail.EmailAddress != Model.PrimaryEmail.ToLower())
+                        @if (mail.Validated && mail.EmailAddress != Model.PrimaryEmail.ToLower())
                         {
                             <button class="btn-sm btn btn-primary float-right mr-1" onclick="SetPrimaryEmail('@mail.EmailAddress')">@Localizer["Set Primary"]</button>
                         }
@@ -79,6 +79,3 @@
         </div>
     </div>
 </div>
-@section js{
-    <script src="~/js/site.js"></script>
-}
