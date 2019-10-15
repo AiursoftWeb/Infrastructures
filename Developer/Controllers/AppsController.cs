@@ -75,7 +75,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.RootRecover(cuser, 1);
+                model.RootRecover(cuser);
                 return View(model);
             }
             var newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform, model.IconPath)
@@ -195,7 +195,7 @@ namespace Aiursoft.Developer.Controllers
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.RootRecover(cuser, 1);
+                model.RootRecover(cuser);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);

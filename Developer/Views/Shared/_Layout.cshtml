@@ -23,13 +23,13 @@
                         <span class="nav-link-text">@Localizer["Developer Center"]</span>
                     </a>
                 </li>
-                <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" asp-controller="Apps" asp-action="Index">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">@Localizer["Dashboard"]</span>
                     </a>
                 </li>
-                <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)" data-toggle="tooltip" data-placement="right" title="All Apps">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="All Apps">
                     <a class="nav-link" asp-controller="Apps" asp-action="AllApps">
                         <i class="fa fa-fw fa-server"></i>
                         <span class="nav-link-text">
@@ -38,7 +38,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @(Model.ActivePanel == 2 ? " active" : string.Empty)" data-toggle="tooltip" data-placement="right" title="Probe">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Probe">
                     <a class="nav-link" asp-controller="Sites" asp-action="Index">
                         <i class="fa fa-fw fa-sitemap"></i>
                         <span class="nav-link-text">@Localizer["Sites"]</span>

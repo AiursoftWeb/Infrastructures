@@ -9,7 +9,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewFilesViewModel() { }
-        public ViewFilesViewModel(DeveloperUser user) : base(user, 2) { }
+        public ViewFilesViewModel(DeveloperUser user) : base(user) { }
 
         public Folder Folder { get; set; }
         public string AppId { get; set; }
