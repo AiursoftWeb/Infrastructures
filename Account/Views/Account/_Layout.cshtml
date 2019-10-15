@@ -17,69 +17,79 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item @(Model.ActivePanel == 0 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Index">
-                        <i class="fa fa-fw fa-pencil-square"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Basic Info"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 1 ? "active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Email">
-                        <i class="fa fa-fw fa-envelope"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Email"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 2 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Security">
-                        <i class="fa fa-fw fa-lock"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Security"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 3 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Avatar">
-                        <i class="fa fa-fw fa-user-circle-o"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Avatar"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 4 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Phone">
-                        <i class="fa fa-fw fa-phone"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Phone"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 5 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="Applications">
-                        <i class="fa fa-fw fa-adn"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Applicaions"]
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @(Model.ActivePanel == 6 ? " active":string.Empty)">
-                    <a class="nav-link" asp-controller="Account" asp-action="AuditLog">
-                        <i class="fa fa-fw fa-file-text-o"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Audit log"]
-                        </span>
-                    </a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@ServiceLocation.Developer/Dashboard/Apps">
-                        <i class="fa fa-fw fa-code"></i>
-                        <span class="nav-link-text">
-                            @Localizer["Develope"]
-                        </span>
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">@Localizer["Basic info"]</span>
                     </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti1">
+                        <li>
+                            <a asp-controller="Account" asp-action="Index">
+                                <i class="fa fa-fw fa-sliders"></i>
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="Avatar">
+                                <i class="fa fa-fw fa-user-circle-o"></i>
+                                Avatar
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="Email">
+                                <i class="fa fa-fw fa-envelope"></i>
+                                Email
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="Phone">
+                                <i class="fa fa-fw fa-phone"></i>
+                                Phone
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-shield"></i>
+                        <span class="nav-link-text">@Localizer["Security"]</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti2">
+                        <li>
+                            <a asp-controller="Account" asp-action="Security">
+                                <i class="fa fa-fw fa-lock"></i>
+                                Password
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="AuditLog">
+                                <i class="fa fa-fw fa-file-text-o"></i>
+                                @Localizer["Audit log"]
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-adn"></i>
+                        <span class="nav-link-text">@Localizer["Applications"]</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti2">
+                        <li>
+                            <a asp-controller="Account" asp-action="Applications">
+                                <i class="fa fa-fw fa-sitemap"></i>
+                                @Localizer["Granted apps"]
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@ServiceLocation.Developer/Dashboard/Apps">
+                                <i class="fa fa-fw fa-code"></i>
+                                @Localizer["Develope"]
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <ul class="navbar-nav sidenav-toggler">
