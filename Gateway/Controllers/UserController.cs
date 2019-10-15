@@ -193,10 +193,6 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return this.Protocol(ErrorType.Pending, $"The email :{model.Email} was not validated!");
             }
-            if (userEmail.Priority == user.Emails.Max(t => t.Priority))
-            {
-                return this.Protocol(ErrorType.HasDoneAlready, $"The email :{model.Email} was already primary email!");
-            }
             userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
