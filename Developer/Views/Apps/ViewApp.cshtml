@@ -464,13 +464,13 @@
             modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
         });
 
-        $('.datatable').DataTable().clear().destroy();
+        $('.datatable').DataTable().destroy();
         $('.datatable').dataTable({
             "pageLength": 15
         });
 
         // Init errors table.
-        $('.datatable-exception').DataTable().clear().destroy();
+        $('.datatable-exception').DataTable().destroy();
         $('.datatable-exception').DataTable({
             "order": [[2, "desc"]]
         });
