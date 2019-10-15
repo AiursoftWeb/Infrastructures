@@ -10,7 +10,7 @@
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
     <div class="row">
-        @foreach (var app in Model.AllApps)
+        @foreach (var app in Model.AllApps.OrderBy(t => t.AppCreateTime))
         {
             string icon = "";
             switch (Math.Abs(app.AppId.GetHashCode()) % 4)

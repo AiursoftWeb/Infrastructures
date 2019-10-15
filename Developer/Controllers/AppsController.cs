@@ -42,9 +42,11 @@ namespace Aiursoft.Developer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var cuser = await GetCurrentUserAsync();
-            var model = new IndexViewModel(cuser);
-            return View(model);
+            return RedirectToAction(nameof(AllApps));
+            // We did not implement the report page.
+            //var cuser = await GetCurrentUserAsync();
+            //var model = new IndexViewModel(cuser);
+            //return View(model);
         }
 
         [Route("Apps")]
