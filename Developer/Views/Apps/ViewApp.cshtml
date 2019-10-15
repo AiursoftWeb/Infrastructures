@@ -32,7 +32,7 @@
     }
     <div class="row">
         <div class="col-md-2" style="border-right: 2px inset #eeeeee;">
-            <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-appId="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3" method="post" enctype="multipart/form-data">
+            <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-appId="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3 icon-form" method="post" enctype="multipart/form-data">
                 <vc:aiur-uploader asp-for="iconFile" site-name="@Configuration["AppsIconSiteName"]" path="@Model.AppId" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="@Model.IconPath"></vc:aiur-uploader>
             </form>
             <div class="col-md-12 mb-3">
@@ -435,44 +435,44 @@
         </div>
     </div>
 </div>
-@section css{
-    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
-}
-@section js{
-    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    @* Auto submit icon change *@
-    <script>
+
+<script>
+    window.addEventListener('load', function () {
+        // Auto submit icon change
         var updateButtons = function () {
-            var value = $("[name=iconFile]").attr('data-internet-path');
+            var value = $(".icon-form [name=iconFile]").attr('data-internet-path');
             if (value && value.length > 0) {
-                $("[name=iconFile]").attr('data-internet-path', '');
-                $("#ChangeIconForm").submit();
+                $(".icon-form [name=iconFile]").attr('data-internet-path', '');
+                $(".icon-form").submit();
             }
         };
 
         var loopRenderJobs = function () {
-            updateButtons();
-            setTimeout(loopRenderJobs, 100);
+            if ($(".icon-form [name=iconFile]").length > 0) {
+                updateButtons();
+                setTimeout(loopRenderJobs, 100);
+            }
         };
         loopRenderJobs();
-    </script>
 
-    @* View error stack trace modal *@
-    <script>
+        // View error stack trace modal
         $('#error-detail-modal').on('show.bs.modal', function (event) {
             var stacktrace = $(event.relatedTarget).data('stacktrace');
             var message = $(event.relatedTarget).data('message');
             var modal = $(this);
             modal.find('#modal-message').val(message);
             modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
-        })
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('.datatable-exception').DataTable({
-                "order": [[2, "desc"]]
-            });
         });
-    </script>
-}
+
+        $('.datatable').DataTable().clear().destroy();
+        $('.datatable').dataTable({
+            "pageLength": 15
+        });
+
+        // Init errors table.
+        $('.datatable-exception').DataTable().clear().destroy();
+        $('.datatable-exception').DataTable({
+            "order": [[2, "desc"]]
+        });
+    });
+</script>

@@ -6,6 +6,7 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -17,7 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                    <a class="nav-link" href="/" target="_top">
                         <i class="fa fa-fw fa-bank"></i>
                         <span class="nav-link-text">@Localizer["Developer Center"]</span>
                     </a>
@@ -140,7 +141,9 @@
                 </div>
             </div>
         }
-        @RenderBody()
+        <div id="render-part">
+            @RenderBody()
+        </div>
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -150,6 +153,10 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
+        <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+        <script>
+            asyncLayout('#render-part');
+        </script>
         @RenderSection("js", required: false)
     </div>
 </body>

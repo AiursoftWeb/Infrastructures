@@ -7,13 +7,13 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public IndexViewModel() { }
-        public IndexViewModel(AccountUser user) : base(user, 0, "Profile")
+        public IndexViewModel(AccountUser user) : base(user, "Profile")
         {
             Recover(user);
         }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 0, "Profile");
+            base.Recover(user, "Profile");
             NickName = user.NickName;
             Bio = user.Bio;
         }

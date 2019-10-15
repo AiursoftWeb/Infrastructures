@@ -1,3 +1,6 @@
 ﻿@{
-    Layout = "_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "_Layout";
+    }
 }

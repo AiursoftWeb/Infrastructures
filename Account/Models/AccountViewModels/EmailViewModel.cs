@@ -9,7 +9,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public EmailViewModel() { }
-        public EmailViewModel(AccountUser user) : base(user, 1, "Email") { }
+        public EmailViewModel(AccountUser user) : base(user, "Email") { }
 
         public IEnumerable<AiurUserEmail> Emails { get; set; }
         public string PrimaryEmail { get; set; }
@@ -19,7 +19,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public string NewEmail { get; set; }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 1, "Email");
+            base.Recover(user, "Email");
         }
     }
 }

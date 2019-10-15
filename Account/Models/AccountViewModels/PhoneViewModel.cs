@@ -8,10 +8,10 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public PhoneViewModel() { }
-        public PhoneViewModel(AccountUser user) : base(user, 4, "Phone") { }
+        public PhoneViewModel(AccountUser user) : base(user, "Phone") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 4, "Phone");
+            base.Recover(user, "Phone");
         }
         [Display(Name = "Current Phone Number")]
         public string CurrentPhoneNumber { get; set; }
