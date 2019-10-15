@@ -1,5 +1,9 @@
 ﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models.Status;
+using Aiursoft.Pylon.Services.ToStatusServer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -12,33 +16,57 @@ namespace Aiursoft.Pylon.Services
         private readonly string _mailUser;
         private readonly string _mailPassword;
         private readonly string _mailServer;
+        private readonly ILogger<AiurEmailSender> _logger;
+        private readonly AppsContainer _appsContainer;
+        private readonly EventService _eventService;
 
-        public AiurEmailSender(IConfiguration configuration)
+        public AiurEmailSender(
+            IConfiguration configuration,
+            ILogger<AiurEmailSender> logger,
+            AppsContainer appsContainer,
+            EventService eventService)
         {
             _mailFrom = configuration["MailFrom"];
             _mailUser = configuration["MailUser"];
             _mailPassword = configuration["MailPassword"];
             _mailServer = configuration["MailServer"];
+            _logger = logger;
+            _appsContainer = appsContainer;
+            _eventService = eventService;
         }
 
         public async Task SendEmail(string target, string targetsubject, string content)
         {
-            var client = new SmtpClient(_mailServer)
+            try
             {
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(_mailUser, _mailPassword),
-                EnableSsl = true,
-                Port = 587
-            };
-            var mailMessage = new MailMessage
+                var client = new SmtpClient(_mailServer)
+                {
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(_mailUser, _mailPassword),
+                    EnableSsl = true,
+                    Port = 587
+                };
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_mailFrom),
+                    Body = content,
+                    Subject = targetsubject,
+                    IsBodyHtml = true
+                };
+                mailMessage.To.Add(target);
+                await client.SendMailAsync(mailMessage);
+                return;
+            }
+            catch (Exception e)
             {
-                From = new MailAddress(_mailFrom),
-                Body = content,
-                Subject = targetsubject,
-                IsBodyHtml = true
-            };
-            mailMessage.To.Add(target);
-            await client.SendMailAsync(mailMessage);
+                try
+                {
+                    _logger.LogError(e, e.Message);
+                    var accessToken = _appsContainer.AccessToken();
+                    await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception);
+                }
+                catch { }
+            }
         }
     }
 }
