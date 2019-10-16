@@ -53,7 +53,7 @@
         <div class="card-body p-0">
             <div class="col-12 p-0">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="pl-4">@Localizer["Name"]</th>
@@ -64,11 +64,17 @@
                             @foreach (var folder in Model.Folder.SubFolders)
                             {
                                 <tr>
-                                    <td class="pl-4">
-                                        <i class="fa fa-folder text-primary"></i>
-                                        <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                            @folder.FolderName
-                                        </a>
+                                    <td class="pl-4 pb-0">
+                                        <div class="row">
+                                            <div class="pl-3">
+                                                <i class="fa fa-fw fa-2x fa-folder text-azure"></i>
+                                            </div>
+                                            <div class="ml-3 pt-1">
+                                                <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                                    @folder.FolderName
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="dropdown">
@@ -89,10 +95,16 @@
                             {
                                 <tr>
                                     <td class="pl-4">
-                                        <i class="fa fa-file-o text-primary"></i>
-                                        <a href="@ServiceLocation.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
-                                            @file.FileName
-                                        </a>
+                                        <div class="row">
+                                            <div class="pl-3">
+                                                <i class="fa fa-fw fa-2x fa-file-text text-azure"></i>
+                                            </div>
+                                            <div class="ml-3 pt-1">
+                                                <a href="@ServiceLocation.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                                    @file.FileName
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="dropdown">
@@ -111,7 +123,7 @@
                             }
                         </tbody>
                     </table>
-                    @if(!Model.Folder.SubFolders.Any() && !Model.Folder.Files.Any())
+                    @if (!Model.Folder.SubFolders.Any() && !Model.Folder.Files.Any())
                     {
                         <div class="text-center w-100 pt-5 pb-5">
                             <i class="fa fa-5x fa-folder" style="color: #99cde9!important"></i>
