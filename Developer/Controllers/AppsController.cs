@@ -40,7 +40,7 @@ namespace Aiursoft.Developer.Controllers
             _eventService = eventService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return RedirectToAction(nameof(AllApps));
             // We did not implement the report page.

@@ -35,7 +35,7 @@ namespace Aiursoft.Pylon.Services
             _eventService = eventService;
         }
 
-        public async Task SendEmail(string target, string targetsubject, string content)
+        public async Task SendEmail(string fromDisplayName, string target, string targetsubject, string content)
         {
             try
             {
@@ -48,10 +48,10 @@ namespace Aiursoft.Pylon.Services
                 };
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(_mailFrom),
+                    From = new MailAddress(_mailFrom, fromDisplayName),
                     Body = content,
                     Subject = targetsubject,
-                    IsBodyHtml = true
+                    IsBodyHtml = true,
                 };
                 mailMessage.To.Add(target);
                 await client.SendMailAsync(mailMessage);

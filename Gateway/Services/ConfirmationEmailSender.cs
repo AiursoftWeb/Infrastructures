@@ -26,7 +26,7 @@ namespace Aiursoft.Gateway.Services
                 userId,
                 code = token
             });
-            await _emailSender.SendEmail(emailAddress, $"{Values.ProjectName} Account Email Confirmation",
+            await _emailSender.SendEmail("Aiursoft Account Service", emailAddress, $"{Values.ProjectName} Account Email Confirmation",
                 $"Please confirm your email by clicking <a href='{callbackUrl}'>here</a>");
         }
 
@@ -37,7 +37,7 @@ namespace Aiursoft.Gateway.Services
                 Code = code,
                 UserId = userId
             });
-            return _emailSender.SendEmail(targetEmail, "Reset Password",
+            return _emailSender.SendEmail("Aiursoft Account Service", targetEmail, "Reset Password",
                 $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
         }
     }
