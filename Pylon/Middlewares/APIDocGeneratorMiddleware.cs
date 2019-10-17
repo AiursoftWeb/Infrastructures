@@ -145,6 +145,8 @@ namespace Aiursoft.Pylon.Middlewares
         private bool IsAPIAction(MethodInfo action, Type controller)
         {
             return
+                action.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
+                controller.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
                 action.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
                 controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
                 action.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker)) ||

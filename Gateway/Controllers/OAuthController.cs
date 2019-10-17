@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
+    [GenerateDoc]
     public class OAuthController : Controller
     {
         //Ensure App
