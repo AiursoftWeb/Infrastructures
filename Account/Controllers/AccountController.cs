@@ -394,13 +394,13 @@ namespace Aiursoft.Account.Controllers
             {
                 int len = ReCodeStr.Length;
                 var ReCodeList = new List<string>();
-                for (int i = 0; i < len; i += 8)
+                for (int i = 0; i < len; i += 16)
                 {
                     string str = null;
-                    for (int j = i; j < i + 8; j++)
+                    for (int j = i; j < i + 16; j++)
                     {
                         str += ReCodeStr[j];
-                        if (j == i + 3)
+                        if (j == i + 7)
                         {
                             str += " ";
                         }
@@ -507,13 +507,13 @@ namespace Aiursoft.Account.Controllers
             {
                 int len = ReCodeStr.Length;
                 var ReCodeList = new List<string>();
-                for (int i = 0; i < len; i += 8)
+                for (int i = 0; i < len; i += 16)
                 {
                     string str = null;
-                    for (int j = i; j < i + 8; j++)
+                    for (int j = i; j < i + 16; j++)
                     {
                         str += ReCodeStr[j];
-                        if (j == i + 3)
+                        if (j == i + 7)
                         {
                             str += " ";
                         }

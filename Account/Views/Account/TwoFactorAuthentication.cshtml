@@ -11,90 +11,93 @@
             @ViewData["Title"]
         </li>
     </ol>
-
-    <ol class="col-md-6 pl-0">
+    <div class="col-md-8 pl-0">
         <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-fw fa-address-card"></i>
-                @Localizer["TwoFactorAuthentication Settings"]
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    @if (!Model.NewHasAuthenticator)
-                    {
-                        <p>
-                            After this function is enabled, you must enter the verification code on the Authentication APP every time you want to log on to this website.
-                        </p>
-                        <a asp-controller="Account" asp-action="SetTwoFactorAuthentication" class="btn btn-success">Configure authenticator app</a>
-                    }
-                    else
-                    {
-                        <ol class="list">
-                            <li>
-                                <a asp-action="DisableTwoFA" class="btn btn-success">@Localizer["Disable TwoFA"]</a>
-                                <a asp-action="RegenerateRecoveryCodes" class="btn btn-success">@Localizer["Generate Recovery Codes"]</a>
-                            </li>
-                        </ol>
-                        <ol class="list">
-                            <li>
-                                <p>
-                                    Download a two-factor authenticator app like Microsoft Authenticator for
-                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
-                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
-                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
-                                    Google Authenticator for
-                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
-                                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
-                                </p>
-                            </li>
-                            <li>
-                                <p>Scan the QR Code or enter this key <kbd>@Model.NewTwoFAKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
-                                <div class="alert alert-info">To enable QR code generation please read our <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentation</a>.</div>
-                                <div id="qrCode"></div>
-                                @*<div id="qrCodeData" data-url="@Model.TowFAuthenticatorUri"></div>*@
-                            </li>
-                            <li>
-                                <p>
-                                    Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
-                                    with a unique code. Enter the code in the confirmation box below.
-                                </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <form asp-controller="Account" asp-action="TwoFactorAuthentication" method="post">
-                                            <div class="form-group">
-                                                <label asp-for="Code" class="control-label">Verification Code</label>
-                                                <input asp-for="Code" class="form-control" autocomplete="off" />
-                                                <span asp-validation-for="Code" class="text-danger"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label asp-for="RecCodesKeyArray" class="control-label">Recovery Codes</label>
-                                                @if (null != Model.RecCodesKeyArray)
-                                                {
-                                                    @foreach (var ReCodeItem in Model.RecCodesKeyArray)
+            <div class="card-body">
+                <div class="card-header">
+                    <i class="fa fa-fw fa-address-card"></i>
+                    @Localizer["TwoFactorAuthentication Settings"]
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        @if (!Model.NewHasAuthenticator)
+                        {
+                            <p>
+                                After this function is enabled, you must enter the verification code on the Authentication APP every time you want to log on to this website.
+                            </p>
+                            <a asp-controller="Account" asp-action="SetTwoFactorAuthentication" class="btn btn-success">Configure authenticator app</a>
+                        }
+                        else
+                        {
+                            <ol class="list">
+                                <li>
+                                    <p>
+                                        Download a two-factor authenticator app like Microsoft Authenticator for
+                                        <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
+                                        <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
+                                        <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
+                                        Google Authenticator for
+                                        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
+                                        <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>Scan the QR Code or enter this key <kbd>@Model.NewTwoFAKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                                    <div class="alert alert-info">To enable QR code generation please read our <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentation</a>.</div>
+                                    <div id="qrCode"></div>
+                                    @*<div id="qrCodeData" data-url="@Model.TowFAuthenticatorUri"></div>*@
+                                </li>
+                                <li>
+                                    <p>
+                                        Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
+                                        with a unique code. Enter the code in the confirmation box below.
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form asp-controller="Account" asp-action="TwoFactorAuthentication" method="post">
+                                                <div class="form-group">
+                                                    <label asp-for="Code" class="control-label">Verification Code</label>
+                                                    <input asp-for="Code" class="form-control" autocomplete="off" />
+                                                    <span asp-validation-for="Code" class="text-danger"></span>
+                                                </div>
+                                                <text class="form-group">
+                                                    <label asp-for="RecCodesKeyArray" class="control-label">Recovery Codes</label><br />
+                                                    @if (null != Model.RecCodesKeyArray)
                                                     {
-                                                        <p>
-                                                            <code>@ReCodeItem</code>
-                                                        </p>
-                                                        <br />
+                                                        @foreach (var ReCodeItem in Model.RecCodesKeyArray)
+                                                        {
+                                                            <p>
+                                                                <code>@ReCodeItem</code>
+                                                            </p>
+                                                        }
                                                     }
-                                                }
-                                            </div>
-                                            <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        </form>
+                                                </text>
+                                                <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ol>
-                        <ol class="list">
-                            <li>
-                                <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">@Localizer["authenticator key"]</a>>
-                            </li>
-                        </ol>
-                    }
-                </li>
-            </ul>
+                                </li>
+                                <li>
+                                    <p>
+                                        Clicking this button will reset your TwoFactorAuthentication key.
+                                        You need to re-enter verify code to generate recovery codes to enable TwoFactorAuthentication.
+                                    </p>
+                                    <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">@Localizer["Reset TwoFactorAuthentication key"]</a>>
+                                </li>
+                                <li>
+                                    <p>Click to chose function</p>
+                                    <a asp-action="DisableTwoFA" class="btn btn-success">@Localizer["Disable TwoFA"]</a>
+                                    @if (Model.NewIs2faEnabled)
+                                    {
+                                        <a asp-action="RegenerateRecoveryCodes" class="btn btn-success">@Localizer["Generate Recovery Codes"]</a>
+                                    }
+                                </li>
+                            </ol>
+                        }
+                    </li>
+                </ul>
+            </div>
         </div>
-</div>
-
+    </div>
 </div>
