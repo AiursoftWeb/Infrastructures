@@ -362,7 +362,6 @@ namespace Aiursoft.Gateway.Controllers
             if (user == null)
             {
                 returnValue = "Userisnull";
-               // throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             else
             {
@@ -370,7 +369,6 @@ namespace Aiursoft.Gateway.Controllers
                 if (!disable2faResult.Succeeded)
                 {
                     returnValue = "error";
-                 //   throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
                 }
                 else
                 {                   
@@ -403,7 +401,7 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
             var recodeArray = recoveryCodes.ToArray();
-            //var len = recodeArray.Length;
+
             model.RecoveryCodesKey = null;
             foreach (var i in recodeArray)
             {

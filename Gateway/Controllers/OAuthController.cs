@@ -119,7 +119,6 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
             App app;
             try
             {
@@ -144,8 +143,6 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = mail.Owner;
-            //user.TwoFactorEnabled = true;
-            //await _dbContext.SaveChangesAsync();
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
             var log = new AuditLogLocal
             {
@@ -165,8 +162,7 @@ namespace Aiursoft.Gateway.Controllers
 
             if (result.RequiresTwoFactor)
             {
-                return await FinishAuthByTwoFA(model, app.ForceConfirmation);
-                //return RedirectToAction(nameof(LoginWith2fa), new { model.RememberMe, returnUrl });
+                return await FinishAuthByTwoFA(model, app.ForceConfirmation);          
             }
 
             if (result.IsLockedOut)
@@ -260,7 +256,6 @@ namespace Aiursoft.Gateway.Controllers
             }
 
             //var user = await GetCurrentUserAsync(); // can`t be used because of use TwoFA permission
-            /// var user = await GetUserFromEmail(model.Email);
             var viewModel = new TwoFAAuthorizeConfirmViewModel
             {
                 AppId = model.AppId,
@@ -287,7 +282,6 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            //var user = await GetUserFromEmail(model.Email);
             await user.GrantTargetApp(_dbContext, model.AppId);           
 
             if (user == null)
@@ -304,13 +298,11 @@ namespace Aiursoft.Gateway.Controllers
                     return await FinishAuthByTwoFA(model);
                 }
                 else if (result.IsLockedOut)
-                {
-                    //_logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                {                    
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
-                {
-                    //_logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
+                {                    
                     ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
                     return View(model);
                 }
@@ -324,13 +316,11 @@ namespace Aiursoft.Gateway.Controllers
                     return await FinishAuthByTwoFA(model);
                 }
                 else if (result.IsLockedOut)
-                {
-                    //_logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                {                    
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
-                {
-                    //_logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
+                {                    
                     ModelState.AddModelError(string.Empty, "Invalid recovery authenticator codes.");
                     return View(model);
                 }
@@ -528,61 +518,7 @@ namespace Aiursoft.Gateway.Controllers
                     Email = model.Email
                 });
             }           
-        }
-        
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
-        {
-            // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            ViewData["ReturnUrl"] = returnUrl;
-
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWithRecoveryCode(LoginWithRecoveryCodeViewModel model, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
-
-            var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
-                return RedirectToLocal(returnUrl);
-            }
-            if (result.IsLockedOut)
-            {
-                // _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
-                return RedirectToAction(nameof(Lockout));
-            }
-            else
-            {
-                //_logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
-                return View();
-            }
-        }
+        }       
 
         [HttpGet]
         [AllowAnonymous]

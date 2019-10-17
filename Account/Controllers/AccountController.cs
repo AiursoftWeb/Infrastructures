@@ -410,6 +410,7 @@ namespace Aiursoft.Account.Controllers
                 model.RecCodesKeyArray = ReCodeList;
             }
             else model.RecCodesKeyArray = null;
+            
             var ReturnList = (await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Items;
             model.NewTwoFAKey = ReturnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString();
             model.NewHasAuthenticator = ReturnList.Select(t => t.HasAuthenticator).FirstOrDefault();
@@ -452,10 +453,13 @@ namespace Aiursoft.Account.Controllers
         {
             //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                model.Recover(user);
+                model.ModelStateValid = ModelState.IsValid;
+                return View(model);
             }
+            
             var returnValue = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken());
             
             if ("succeeded" == returnValue.Value)
@@ -478,8 +482,8 @@ namespace Aiursoft.Account.Controllers
         [HttpGet]
         public async Task<IActionResult> RegenerateRecoveryCodes(bool justHaveUpdated)
         {
-
             var user = await GetCurrentUserAsync();
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -495,11 +499,13 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> RegenerateRecoveryCodes(RegenerateRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                model.Recover(user);
+                model.ModelStateValid = ModelState.IsValid;
+                return View(model);
             }
-            
+
             var RecoveryCodesKey = await _userService.RegenerateRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
 
             var ReCodeStr = RecoveryCodesKey.Value;
