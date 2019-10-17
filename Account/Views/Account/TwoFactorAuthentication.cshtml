@@ -12,7 +12,7 @@
         </li>
     </ol>
 
-    <div class="col-md-6 pl-0">
+    <ol class="col-md-6 pl-0">
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-address-card"></i>
@@ -29,6 +29,12 @@
                     }
                     else
                     {
+                        <ol class="list">
+                            <li>
+                                <a asp-action="DisableTwoFA" class="btn btn-success">@Localizer["Disable TwoFA"]</a>
+                                <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-success">@Localizer["Generate Recovery Codes"]</a>
+                            </li>
+                        </ol>
                         <ol class="list">
                             <li>
                                 <p>
@@ -79,16 +85,16 @@
                                     </div>
                                 </div>
                             </li>
-                        </ol> 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">Reset authenticator key</a>
-                            </div>
-                        </div>
+                        </ol>
+                        <ol class="list">
+                            <li>
+                                <a asp-action="ResetTwoFactorAuthentication" class="btn btn-success">@Localizer["authenticator key"]</a>>
+                            </li>
+                        </ol>
                     }
                 </li>
             </ul>
         </div>
-    </div>
+</div>
 
 </div>

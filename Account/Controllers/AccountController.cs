@@ -373,7 +373,7 @@ namespace Aiursoft.Account.Controllers
                 NewTwoFAKey = ReturnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString(),
                 NewHasAuthenticator = ReturnList.Select(t => t.HasAuthenticator).FirstOrDefault(),
                 NewIs2faEnabled = ReturnList.Select(t => t.Is2faEnabled).FirstOrDefault()
-            };          
+            };
             return View(model);
         }
 
@@ -388,7 +388,7 @@ namespace Aiursoft.Account.Controllers
                 model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
-            var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());         
+            var RecoveryCodesKey = await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code.ToString());
             var ReCodeStr = RecoveryCodesKey.Value;
             if (null != ReCodeStr)
             {
@@ -429,6 +429,106 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var TwoFAKey = await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
             return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+               
+        [HttpGet]
+        public async Task<IActionResult> DisableTwoFA(bool justHaveUpdated)
+        {
+            var user = await GetCurrentUserAsync();           
+            if (null == user)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            else
+            {
+                var model = new DisableTwoFAViewModel(user) { };
+                return View(model);
+            }
+           
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel model)
+        {
+            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            var returnValue = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken());
+            
+            if ("succeeded" == returnValue.Value)
+            {
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+            else if("error" == returnValue.Value)
+            {
+                // retunr error page;
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+            else
+            {
+                // return error-userisnull page;
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GenerateRecoveryCodesWarning()
+        {
+            var user = await GetCurrentUserAsync();           
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' because they do not have 2FA enabled.");
+            }
+            return View(nameof(GenerateRecoveryCodes));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GenerateRecoveryCodes(GenerateRecoveryCodesViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (!user.TwoFactorEnabled)
+            {
+                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
+            }
+            var RecoveryCodesKey = await _userService.RegenerateRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
+
+            var ReCodeStr = RecoveryCodesKey.Value;
+            if (null != ReCodeStr)
+            {
+                int len = ReCodeStr.Length;
+                var ReCodeList = new List<string>();
+                for (int i = 0; i < len; i += 8)
+                {
+                    string str = null;
+                    for (int j = i; j < i + 8; j++)
+                    {
+                        str += ReCodeStr[j];
+                        if (j == i + 3)
+                        {
+                            str += " ";
+                        }
+                    }
+                    ReCodeList.Add(str);
+                }
+                model.RecCodesKeyArray = ReCodeList;
+            }
+            else model.RecCodesKeyArray = null;
+            return View(model);
         }
 
         private async Task<AccountUser> GetCurrentUserAsync()

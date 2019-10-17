@@ -268,7 +268,7 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully set the user's TwoFAKey!"
             });
         }
-        
+
         [HttpPost]
         [APIProduces(typeof(AiurCollection<SetTwoFAAddressModel>))]
         public async Task<IActionResult> SetTwoFAKey(SetTwoFAAddressModel model)
@@ -303,48 +303,6 @@ namespace Aiursoft.Gateway.Controllers
             var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, model);
             model.HasAuthenticator = user.HasAuthenticator;
             return Json(new AiurCollection<SetTwoFAAddressModel>(returnList)
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully set the user's TwoFAKey!"
-            });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Disable2faWarning()
-        {
-            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
-            }
-
-            return View(nameof(Disable2fa));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable2fa()
-        {
-            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if (!disable2faResult.Succeeded)
-            {
-                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
-            }
-
-            return Json(new AiurValue<string>(null)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
@@ -387,7 +345,6 @@ namespace Aiursoft.Gateway.Controllers
                 {
                     model.RecoveryCodesKey += i;
                 }
-
                 return Json(new AiurValue<string>(model.RecoveryCodesKey)
                 {
                     Code = ErrorType.Success,
@@ -396,26 +353,44 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GenerateRecoveryCodesWarning()
+        [HttpPost]
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAAddressModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
+            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            string returnValue = null;
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                returnValue = "Userisnull";
+               // throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (!user.TwoFactorEnabled)
+            else
             {
-                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' because they do not have 2FA enabled.");
+                var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+                if (!disable2faResult.Succeeded)
+                {
+                    returnValue = "error";
+                 //   throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
+                }
+                else
+                {                   
+                    user.HasAuthenticator = false;
+                    await _dbContext.SaveChangesAsync();
+                    returnValue = "succeeded";
+                }
             }
 
-            return View(nameof(GenerateRecoveryCodes));
+            return Json(new AiurValue<string>(returnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully called DisableTwoFA method!"
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateRecoveryCodes()
+        public async Task<IActionResult> RegenerateRecoveryCodes(RegenerateRecoveryCodesAddressModel model)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -428,15 +403,19 @@ namespace Aiursoft.Gateway.Controllers
                 throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
             }
 
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-
-            //var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
-
-            //return View(nameof(ShowRecoveryCodes), model);
-            return Json(new AiurValue<string>(null)
+            var recodeArray = recoveryCodes.ToArray();
+            //var len = recodeArray.Length;
+            model.RecoveryCodesKey = null;
+            foreach (var i in recodeArray)
+            {
+                model.RecoveryCodesKey += i;
+            }
+            return Json(new AiurValue<string>(model.RecoveryCodesKey)
             {
                 Code = ErrorType.Success,
-                Message = "Successfully set the user's TwoFAKey!"
+                Message = "Sucess regenerate recovery Codes!."
             });
         }
 

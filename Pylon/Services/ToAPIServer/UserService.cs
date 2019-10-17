@@ -267,5 +267,34 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+        public async Task<AiurValue<string>> DisableTwoFAAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new DisableTwoFAAddressModel { });
+            var form = new AiurUrl(string.Empty, new DisableTwoFAAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<string>> RegenerateRecoveryCodesAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", " RegenerateRecoveryCodes", new RegenerateRecoveryCodesAddressModel { });
+            var form = new AiurUrl(string.Empty, new RegenerateRecoveryCodesAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
     }
 }
