@@ -284,7 +284,7 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
 
         public async Task<AiurValue<string>> RegenerateRecoveryCodesAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", " RegenerateRecoveryCodes", new RegenerateRecoveryCodesAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "RegenerateRecoveryCodes", new RegenerateRecoveryCodesAddressModel { });
             var form = new AiurUrl(string.Empty, new RegenerateRecoveryCodesAddressModel
             {
                 OpenId = openId,
@@ -296,5 +296,6 @@ namespace Aiursoft.Pylon.Services.ToAPIServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+
     }
 }

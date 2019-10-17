@@ -476,35 +476,30 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GenerateRecoveryCodesWarning()
+        public async Task<IActionResult> RegenerateRecoveryCodes(bool justHaveUpdated)
         {
-            var user = await GetCurrentUserAsync();           
+
+            var user = await GetCurrentUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (!user.TwoFactorEnabled)
+            else
             {
-                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' because they do not have 2FA enabled.");
-            }
-            return View(nameof(GenerateRecoveryCodes));
+                var model = new RegenerateRecoveryCodesViewModel(user) { };
+                return View(model);
+            }            
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateRecoveryCodes(GenerateRecoveryCodesViewModel model)
+        public async Task<IActionResult> RegenerateRecoveryCodes(RegenerateRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
-            }
+            
             var RecoveryCodesKey = await _userService.RegenerateRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
 
             var ReCodeStr = RecoveryCodesKey.Value;

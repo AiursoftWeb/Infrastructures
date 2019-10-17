@@ -352,11 +352,10 @@ namespace Aiursoft.Gateway.Controllers
                 });
             }
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> DisableTwoFA(DisableTwoFAAddressModel model)
         {
-            //var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 
             string returnValue = null;
@@ -389,15 +388,13 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegenerateRecoveryCodes(RegenerateRecoveryCodesAddressModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
             if (!user.TwoFactorEnabled)
             {
                 throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");

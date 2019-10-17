@@ -96,6 +96,9 @@ namespace Aiursoft.Gateway.Migrations
                     b.Property<bool>("HasAuthenticator")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("HasTwoFArecoveryCodes")
+                        .HasColumnType("bit");
+
                     b.Property<string>("IconFilePath")
                         .HasColumnType("nvarchar(max)");
 

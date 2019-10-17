@@ -6,6 +6,6 @@ namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
     public class RegenerateRecoveryCodesAddressModel : UserOperationAddressModel
     {
-        public string RecoveryCodesKey { get; set; }        
+        public string RecoveryCodesKey { get; set; }
     }
 }
