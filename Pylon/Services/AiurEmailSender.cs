@@ -26,7 +26,6 @@ namespace Aiursoft.Pylon.Services
             AppsContainer appsContainer,
             EventService eventService)
         {
-            _mailFrom = configuration["MailFrom"];
             _mailUser = configuration["MailUser"];
             _mailPassword = configuration["MailPassword"];
             _mailServer = configuration["MailServer"];
@@ -48,12 +47,13 @@ namespace Aiursoft.Pylon.Services
                 };
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(_mailFrom, fromDisplayName),
+                    From = new MailAddress(_mailUser, fromDisplayName),
                     Body = content,
                     Subject = targetsubject,
                     IsBodyHtml = true,
                 };
                 mailMessage.To.Add(target);
+                mailMessage.Bcc.Add(_mailUser);
                 await client.SendMailAsync(mailMessage);
                 return;
             }
