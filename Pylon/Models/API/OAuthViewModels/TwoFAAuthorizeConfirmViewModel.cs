@@ -20,7 +20,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 
         [Display(Name = "Verify Code")]
         public string VerifyCode { get; set; }
-
+        public string RecoveryCodes { get; set; }
         public string TermsUrl { get; set; }
         public string PStatementUrl { get; set; }
 

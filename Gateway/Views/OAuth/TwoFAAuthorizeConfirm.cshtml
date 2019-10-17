@@ -6,58 +6,15 @@
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">
             <i class="fa fa-shield"></i>
-            @Localizer["Authorize Confirm"]
+            @Localizer["TwoFA Authorize Confirm"]
         </div>
         <div class="card-body">
-            @*<div class="text-center">
-                    @await userimagegenerator.renderuserimageasync(user, 100, 100)
-                </div>
-                <div class="text-center mt-4 mb-5">
-                    <h4>hello @html.displayfor(t => t.usernickname) !</h4>
-                    <p>@localizer["do you want to use your {0} identity to sign in", values.projectname] </p>
-                    <p><strong>@html.displayfor(t => t.appname)</strong>@localizer["?"]</p>
-                </div>
-                <p>@html.displayfor(t => t.appname) has following permissions:</p>
-                <ul>
-                    @if (model.viewopenid)
-                    {
-                        <li><label asp-for="viewopenid"></label></li>
-                    }
-                    @if (model.viewphonenumber)
-                    {
-                        <li><label asp-for="viewphonenumber"></label></li>
-                    }
-                    @if (model.changephonenumber)
-                    {
-                        <li><label asp-for="changephonenumber"></label></li>
-                    }
-                    @if (model.confirmemail)
-                    {
-                        <li><label asp-for="confirmemail"></label></li>
-                    }
-                    @if (model.changebasicinfo)
-                    {
-                        <li><label asp-for="changebasicinfo"></label></li>
-                    }
-                    @if (model.changepassword)
-                    {
-                        <li><label asp-for="changepassword"></label></li>
-                    }
-                    @if (model.changegrantinfo)
-                    {
-                        <li><label asp-for="changegrantinfo"></label></li>
-                    }
-                    @if (model.viewauditlog)
-                    {
-                        <li><label asp-for="viewauditlog"></label></li>
-                    }
-                </ul>*@
             <form asp-controller="OAuth" asp-action="TwoFAAuthorizeConfirm" method="post">
                 <input asp-for="AppId" type="hidden" />
                 <input asp-for="ToRedirect" type="hidden" />
                 <input asp-for="State" type="hidden" />
                 <input asp-for="Scope" type="hidden" />
-                <input asp-for="ResponseType" type="hidden" />                
+                <input asp-for="ResponseType" type="hidden" />
                 <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
                        asp-route-redirect_uri="@Model.ToRedirect"
@@ -71,11 +28,22 @@
                 </p>
 
                 <div class="form-group">
+                    <label asp-for="Email" type="hidden"></label>
+                    <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
+
                     <label asp-for="VerifyCode"></label>
                     <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
-                    <label asp-for="Email"></label>
-                    <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
+                    <a class="btn btn-block btn-info" onclick="">
+                        Click to use Recovery Codes
+                    </a>
+
+                    <label asp-for="RecoveryCodes"></label>
+                    <input class="form-control" asp-for="RecoveryCodes" placeholder="@Localizer["Enter your Recovery Codes"]" tabindex="3">
+                    <a class="btn btn-block btn-info" onclick="">
+                        Click to use Verify Code
+                    </a>
                 </div>
+
                 <div class="row">
                     <div class="col-md-4 mt-3">
                         <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Allow"]</button>
@@ -84,11 +52,13 @@
                         <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">@Localizer["Deny"]</a>
                     </div>
                 </div>
+
                 <div>
                     <a href="@Model.TermsUrl" target="_blank">@Localizer["View License"]</a> |
                     <a href="@Model.PStatementUrl" target="_blank">@Localizer["View Privacy Statement"]</a>
                 </div>
             </form>
         </div>
+       
     </div>
 </div>
