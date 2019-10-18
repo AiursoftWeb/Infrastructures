@@ -30,6 +30,7 @@ namespace Aiursoft.Pylon.Services
             };
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
+            request.Headers.Add("accept", "application/json");
 
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -55,6 +56,8 @@ namespace Aiursoft.Pylon.Services
             };
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
+            request.Headers.Add("accept", "application/json");
+
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
