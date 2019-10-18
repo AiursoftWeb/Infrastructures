@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Pylon.Services.ToGitHubServer
 {
@@ -15,13 +16,28 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
     {
         private readonly HTTPService _http;
         private readonly HttpClient _client;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
 
         public GitHubService(
             HTTPService http,
-            IHttpClientFactory clientFactory)
+            IHttpClientFactory clientFactory,
+            IConfiguration configuration)
         {
             _http = http;
             _client = clientFactory.CreateClient();
+            _clientId = configuration["GitHub:ClientId"];
+            _clientSecret = configuration["GitHub:ClientSecret"];
+            if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
+            {
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github settings!");
+            }
+        }
+
+        public async Task<GitHubUserDetail> GetUserDetail(string code)
+        {
+            var token = await GetAccessToken(_clientId, _clientSecret, code);
+            return await GetUserDetail(token);
         }
 
         public async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
