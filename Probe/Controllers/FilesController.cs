@@ -27,7 +27,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly IConfiguration _configuration;
         private readonly FolderOperator _folderCleaner;
         private readonly ServiceLocation _serviceLocation;
-        private readonly PBTokenManager _pbTokenManager;
+        private readonly TokenEnsurer _tokenEnsurer;
 
         public FilesController(
             ProbeDbContext dbContext,
@@ -35,13 +35,13 @@ namespace Aiursoft.Probe.Controllers
             FolderOperator folderCleaner,
             IConfiguration configuration,
             ServiceLocation serviceLocation,
-            PBTokenManager pbTokenManager)
+            TokenEnsurer tokenEnsurer)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
             _serviceLocation = serviceLocation;
-            _pbTokenManager = pbTokenManager;
+            _tokenEnsurer = tokenEnsurer;
             _folderCleaner = folderCleaner;
         }
 
@@ -56,19 +56,7 @@ namespace Aiursoft.Probe.Controllers
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
             if (!site.OpenToUpload)
             {
-                var token = _pbTokenManager.ValidateAccessToken(model.PBToken);
-                if (token.SiteName != model.SiteName)
-                {
-                    return this.Protocol(ErrorType.Unauthorized, "Your token was not authorized to upload files to this site.");
-                }
-                if (!token.Permissions.Contains("Upload"))
-                {
-                    return this.Protocol(ErrorType.Unauthorized, $"Your token was not authorized to upload. Your token is only permitted to '{token.Permissions}'");
-                }
-                if (!string.IsNullOrWhiteSpace(token.UnderPath) && model.FolderNames != null && !model.FolderNames.StartsWith(token.UnderPath))
-                {
-                    return this.Protocol(ErrorType.Unauthorized, $"Your token is authorized to upload files to path: '{token.UnderPath}', not '{model.FolderNames}'.");
-                }
+                _tokenEnsurer.Ensure(model.PBToken, "Upload", model.SiteName, model.FolderNames);
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
