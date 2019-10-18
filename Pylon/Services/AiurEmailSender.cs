@@ -12,7 +12,6 @@ namespace Aiursoft.Pylon.Services
 {
     public class AiurEmailSender : ITransientDependency
     {
-        private readonly string _mailFrom;
         private readonly string _mailUser;
         private readonly string _mailPassword;
         private readonly string _mailServer;
