@@ -9,10 +9,10 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public DisableTwoFAViewModel() { }
-        public DisableTwoFAViewModel(AccountUser user) : base(user, 7, "Authentication") { }
+        public DisableTwoFAViewModel(AccountUser user) : base(user, "Authentication") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 7, "Authentication");
+            base.Recover(user, "Authentication");
         }      
     }
 }
