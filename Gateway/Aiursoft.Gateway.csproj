@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Twilio" Version="5.33.0" />
+    <PackageReference Include="Twilio" Version="5.34.0" />
     <PackageReference Include="Edi.Captcha" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <div class="text-center">
-                <img class="rounded" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
+                <img class="rounded" style="width:100px; height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
             <form asp-controller="OAuth" asp-action="Authorize" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
