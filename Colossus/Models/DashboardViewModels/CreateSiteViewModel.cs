@@ -11,13 +11,13 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         {
         }
 
-        public CreateSiteViewModel(ColossusUser user) : base(user, 0, "Quick upload")
+        public CreateSiteViewModel(ColossusUser user) : base(user, "Quick upload")
         {
         }
 
         public void Recover(ColossusUser user)
         {
-            RootRecover(user, 0, "Quick upload");
+            RootRecover(user, "Quick upload");
         }
 
         [Display(Name = "New site name")]

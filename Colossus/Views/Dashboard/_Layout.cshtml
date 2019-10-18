@@ -6,6 +6,7 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     @this.UseAiurDashboardCss()
     @RenderSection("css", required: false)
+    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -16,44 +17,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                @if (Model.HasASite)
-                {
-                    <li class="nav-item @(Model.ActivePanel == 0 ? " active" : string.Empty)">
-                        <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
-                            <i class="fa fa-fw fa-upload"></i>
-                            <span class="nav-link-text">
-                                @Localizer["Quick upload"]
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item @(Model.ActivePanel == 1 ? "active" : string.Empty)">
-                        <a class="nav-link" asp-controller="Dashboard" asp-action="ViewFiles">
-                            <i class="fa fa-fw fa-sitemap"></i>
-                            <span class="nav-link-text">
-                                @Localizer["Site"]
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item @(Model.ActivePanel == 2 ? "active" : string.Empty)">
-                        <a class="nav-link" asp-controller="Dashboard" asp-action="Settings">
-                            <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">
-                                @Localizer["Settings"]
-                            </span>
-                        </a>
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item @(Model.ActivePanel == 0 ? " active" : string.Empty)">
-                        <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
-                            <i class="fa fa-fw fa-magic"></i>
-                            <span class="nav-link-text">
-                                @Localizer["Name your site"]
-                            </span>
-                        </a>
-                    </li>
-                }
+                <li class="nav-item">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-folder"></i>
+                        <span class="nav-link-text">@Localizer["Files"]</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti1">
+                        <li>
+                            <a asp-controller="Dashboard" asp-action="Index">
+                                <i class="fa fa-fw fa-upload"></i>
+                                Quick upload
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Dashboard" asp-action="ViewFiles">
+                                <i class="fa fa-fw fa-hdd-o"></i>
+                                My files
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">@Localizer["Settings"]</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti2">
+                        <li>
+                            <a asp-controller="Dashboard" asp-action="Settings">
+                                <i class="fa fa-fw fa-sliders"></i>
+                                @Localizer["Overview"]
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -143,7 +140,9 @@
                 </div>
             </div>
         }
-        @RenderBody()
+        <div id="render-part">
+            @RenderBody()
+        </div>
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -153,6 +152,10 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
+        <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
+        <script>
+            asyncLayout('#render-part');
+        </script>
         @RenderSection("js", required: false)
     </div>
 </body>

@@ -8,6 +8,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public IndexViewModel() { }
-        public IndexViewModel(DeveloperUser user) : base(user, 2) { }
+        public IndexViewModel(DeveloperUser user) : base(user) { }
     }
 }

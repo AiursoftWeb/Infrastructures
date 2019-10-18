@@ -11,13 +11,13 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public CreateSiteViewModel() { }
-        public CreateSiteViewModel(DeveloperUser user) : base(user, 2)
+        public CreateSiteViewModel(DeveloperUser user) : base(user)
         {
         }
 
         public void Recover(DeveloperUser user)
         {
-            RootRecover(user, 5);
+            RootRecover(user);
         }
 
         public bool ModelStateValid { get; set; } = true;

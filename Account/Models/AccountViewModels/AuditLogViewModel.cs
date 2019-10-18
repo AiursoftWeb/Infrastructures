@@ -11,7 +11,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public AuditLogViewModel()
         {
         }
-        public AuditLogViewModel(AccountUser user) : base(user, 6, "Audit Log") { }
+        public AuditLogViewModel(AccountUser user) : base(user, "Audit Log") { }
 
         public List<AuditLog> Logs { get; set; }
         public List<App> Apps { get; set; } = new List<App>();

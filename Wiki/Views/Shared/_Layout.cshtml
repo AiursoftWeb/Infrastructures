@@ -19,7 +19,7 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 @foreach (var collection in Model.Collections)
                 {
-                    <li class="nav-item @(Model.CurrentCollection.CollectionId==collection.CollectionId ? "active" : "")">
+                    <li class="nav-item">
                         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti@(collection.CollectionId)" data-parent="#exampleAccordion">
                             <i class="fa fa-fw fa-book"></i>
                             <span class="nav-link-text">@collection.CollectionTitle</span>
@@ -67,7 +67,9 @@
         </div>
     </nav>
     <div class="content-wrapper">
-        @RenderBody()
+        <div id="render-part">
+            @RenderBody()
+        </div>
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -77,6 +79,9 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
+        <script>
+            asyncLayout('#render-part');
+        </script>
         @RenderSection("Scripts", required: false)
     </div>
 </body>

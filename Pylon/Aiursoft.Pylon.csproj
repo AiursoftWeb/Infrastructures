@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Version>0.18.0</Version>
+    <Version>0.18.1</Version>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Title>Aiursoft.Pylon</Title>
     <AssemblyName>Aiursoft.Pylon</AssemblyName>
@@ -31,6 +31,5 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
     <PackageReference Include="Polly" Version="7.1.1" />
-    <PackageReference Include="SendGrid" Version="9.12.0" />
   </ItemGroup>
 </Project>

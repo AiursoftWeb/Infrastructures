@@ -9,7 +9,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public CreateAppViewModel() { }
-        public CreateAppViewModel(DeveloperUser user) : base(user, 1) { }
+        public CreateAppViewModel(DeveloperUser user) : base(user) { }
 
         public bool ModelStateValid { get; set; } = true;
 

@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                @if (Model.Data.All(t => t.LastHealthStatus))
+                @if (Model.Data.All(t => t.LastHealthStatus) && Model.Data.Min(t => t.LastCheckTime) > DateTime.UtcNow - TimeSpan.FromMinutes(12))
                 {
                     <div class="w-100">
                         <div class="alert alert-success bg-success text-white w-100" role="alert">

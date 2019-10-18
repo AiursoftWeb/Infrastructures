@@ -11,7 +11,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public ApplicationsViewModel()
         {
         }
-        public ApplicationsViewModel(AccountUser user) : base(user, 5, "Applications") { }
+        public ApplicationsViewModel(AccountUser user) : base(user, "Applications") { }
 
         public ICollection<App> Apps { get; set; } = new List<App>();
 

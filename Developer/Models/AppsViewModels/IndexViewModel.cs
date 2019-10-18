@@ -8,7 +8,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         [Obsolete(message: "This method is only for framework", error: true)]
 
         public IndexViewModel() { }
-        public IndexViewModel(DeveloperUser User) : base(User, 0)
+        public IndexViewModel(DeveloperUser user) : base(user)
         {
         }
     }

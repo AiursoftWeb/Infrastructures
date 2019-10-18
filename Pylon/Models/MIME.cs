@@ -21,6 +21,8 @@ namespace Aiursoft.Pylon.Models
         }
         private static readonly Dictionary<string, string> _mimeTypesDictionary = new Dictionary<string, string>
         {
+            {"wav", "audio/wav"},
+            {"mkv", "video/x-matroska"},
             {"avi", "video/x-msvideo"},
             {"bmp", "image/bmp"},
             {"css", "text/css"},

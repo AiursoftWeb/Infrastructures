@@ -8,10 +8,10 @@ namespace Aiursoft.Account.Models.AccountViewModels
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public SecurityViewModel() { }
-        public SecurityViewModel(AccountUser user) : base(user, 2, "Security") { }
+        public SecurityViewModel(AccountUser user) : base(user, "Security") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, 2, "Security");
+            base.Recover(user, "Security");
         }
         [Required]
         [DataType(DataType.Password)]

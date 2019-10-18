@@ -141,14 +141,10 @@
     </div>
 </div>
 
-@section css{
-    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
-}
-
-@section js{
-    <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
-    <script>
+<script>
+    window.addEventListener('load', function () {
         var sortData = function () {
+            $('.my-datatable').DataTable().destroy();
             $('.my-datatable').dataTable({
                 "order": [[0, "asc"]],
                 "pageLength": 30
@@ -156,21 +152,21 @@
             $('#sortButton').addClass('d-none');
         }
         sortData();
-    </script>
-    <script>
+
         var updateButtons = function () {
-            var value = $("[name=file]").attr('data-internet-path');
+            var value = $(".form-group [name=file]").attr('data-internet-path');
             if (value && value.length > 0) {
-                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
-                $("[name=file]").attr('data-internet-path', '');
+                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true";
+                $(".form-group [name=file]").attr('data-internet-path', '');
             }
         };
 
         var loopRenderJobs = function () {
-            updateButtons();
-            setTimeout(loopRenderJobs, 100);
+            if ($(".form-group [name=file]").length > 0) {
+                updateButtons();
+                setTimeout(loopRenderJobs, 100);
+            }
         };
         loopRenderJobs();
-
-    </script>
-}
+    });
+</script>

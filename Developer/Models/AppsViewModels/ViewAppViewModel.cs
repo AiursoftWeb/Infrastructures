@@ -38,7 +38,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             SitesService sitesService,
             EventService eventService)
         {
-            RootRecover(user, 1);
+            RootRecover(user);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
 

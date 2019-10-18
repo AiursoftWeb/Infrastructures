@@ -10,10 +10,10 @@ namespace Aiursoft.Developer.Models.SitesViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public NewFolderViewModel() { }
-        public NewFolderViewModel(DeveloperUser user) : base(user, 2) { }
+        public NewFolderViewModel(DeveloperUser user) : base(user) { }
         public void Recover(DeveloperUser user, string appName)
         {
-            RootRecover(user, 5);
+            RootRecover(user);
             AppName = appName;
         }
 
