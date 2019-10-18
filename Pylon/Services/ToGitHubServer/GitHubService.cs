@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Aiursoft.Pylon.Exceptions;
 
 namespace Aiursoft.Pylon.Services.ToGitHubServer
 {
@@ -34,6 +35,10 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
             });
             var json = await _http.Get(url, false);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
+            if (string.IsNullOrWhiteSpace(response.access_token))
+            {
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github crenditial");
+            }
             return response.access_token;
         }
 
@@ -43,6 +48,7 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
             request.Headers.Add("Authorization", $"token {accessToken}");
+            request.Headers.Add("User-Agent", $"curl/7.65.3");
 
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
