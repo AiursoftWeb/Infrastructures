@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Aiursoft.Pylon.Services.ToGitHubServer;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace Aiursoft.Pylon
@@ -16,6 +18,11 @@ namespace Aiursoft.Pylon
             RequireLowercase = false,
             RequireUppercase = false,
             RequireNonAlphanumeric = false
+        };
+
+        public static readonly Dictionary<string, Type> AvailableAuthProviders = new Dictionary<string, Type>
+        {
+            {"GitHub", typeof(GitHubService)}
         };
 
         public static readonly Dictionary<string, string> Footer = new Dictionary<string, string>

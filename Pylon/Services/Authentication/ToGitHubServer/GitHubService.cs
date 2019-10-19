@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Aiursoft.Pylon.Exceptions;
 using Microsoft.Extensions.Configuration;
+using Aiursoft.Pylon.Services.Authentication;
 
-namespace Aiursoft.Pylon.Services.ToGitHubServer
+namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 {
-    public class GitHubService : IScopedDependency
+    public class GitHubService : IScopedDependency, IAuthProvider
     {
         private readonly HTTPService _http;
         private readonly HttpClient _client;
@@ -34,13 +35,19 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
             }
         }
 
-        public async Task<GitHubUserDetail> GetUserDetail(string code)
+        public string GetName() => "GitHub";
+
+        public string GetButtonColor() => "dark";
+
+        public string GetButtonIcon() => "github";
+
+        public async Task<IUserDetail> GetUserDetail(string code)
         {
             var token = await GetAccessToken(_clientId, _clientSecret, code);
             return await GetUserDetail(token);
         }
 
-        public async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
+        private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
         {
             var apiAddress = "https://github.com/login/oauth/access_token";
             var url = new AiurUrl(apiAddress, new
@@ -58,7 +65,7 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
             return response.access_token;
         }
 
-        public async Task<GitHubUserDetail> GetUserInfo(string accessToken)
+        private async Task<GitHubUserDetail> GetUserInfo(string accessToken)
         {
             var apiAddress = "https://api.github.com/user";
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);

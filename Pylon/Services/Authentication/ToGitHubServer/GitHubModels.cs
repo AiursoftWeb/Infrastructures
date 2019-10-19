@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Aiursoft.Pylon.Services.Authentication;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aiursoft.Pylon.Services.ToGitHubServer
+namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 {
     public class AccessTokenResponse
     {
@@ -19,12 +21,13 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
         public int private_repos { get; set; }
     }
 
-    public class GitHubUserDetail
+    public class GitHubUserDetail : IUserDetail
     {
         public string login { get; set; }
-        public int id { get; set; }
+        public int Id { get; set; }
         public string node_id { get; set; }
-        public string avatar_url { get; set; }
+        [JsonProperty("avatar_url")]
+        public string AvatarUrl { get; set; }
         public string gravatar_id { get; set; }
         public string url { get; set; }
         public string html_url { get; set; }
@@ -39,13 +42,13 @@ namespace Aiursoft.Pylon.Services.ToGitHubServer
         public string received_events_url { get; set; }
         public string type { get; set; }
         public string site_admin { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
         public string company { get; set; }
         public string blog { get; set; }
         public string location { get; set; }
-        public string email { get; set; }
+        public string Email { get; set; }
         public string hireable { get; set; }
-        public string bio { get; set; }
+        public string Bio { get; set; }
         public int public_repos { get; set; }
         public int public_gists { get; set; }
         public int followers { get; set; }
