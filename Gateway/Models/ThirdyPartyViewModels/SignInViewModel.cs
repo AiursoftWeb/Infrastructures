@@ -17,18 +17,5 @@ namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
         public string AppImageUrl { get; set; }
         public bool CanFindAnAccountWithEmail { get; set; }
         public IAuthProvider Provider { get; internal set; }
-
-        // To Submit
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress]
-        [Display(Name = "Aiursoft Account")]
-        public string Email { get; set; }
-
-
-        [Required(ErrorMessage = "Password is required.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        [NoSpace]
-        public string Password { get; set; }
     }
 }
