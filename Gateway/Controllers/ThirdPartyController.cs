@@ -121,6 +121,16 @@ namespace Aiursoft.Gateway.Controllers
                 };
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
+
+                var link = new ThirdPartyAccount
+                {
+                    OwnerId = user.Id,
+                    ProviderName = model.ProviderName,
+                    OpenId = model.UserDetail.Id.ToString()
+                };
+                _dbContext.ThirdPartyAccounts.Add(link);
+                await _dbContext.SaveChangesAsync();
+
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 var log = new AuditLogLocal
                 {
