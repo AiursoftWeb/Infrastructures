@@ -1,0 +1,80 @@
+﻿@model Aiursoft.Gateway.Models.ThirdyPartyViewModels.SignInViewModel
+@{
+    ViewData["Title"] = Localizer["Sign In by "].Value + Model.ProviderName;
+}
+<div class="container">
+    <div class="card mx-auto mt-5" style="max-width: 50rem;">
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" style="width:100px;height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
+                <img class="rounded ml-3" style="width:100px;height:100px;" src="@Model.UserDetail.AvatarUrl">
+            </div>
+            <form asp-controller="ThirdParty" asp-action="SignIn" method="post">
+                @if (Model.CanFindAnAccountWithEmail)
+                {
+                    <div class="alert alert-success alert-dismissible mt-3" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                        <strong>@Localizer["Welcome to Aiursoft!"]</strong>
+                        <p class="mb-0">
+                            There already exists an @Values.ProjectName account with email: <strong>@Model.UserDetail.Email</strong>.
+                        </p>
+                    </div>
+                    <p class="mb-0">
+                        Please link your @Values.ProjectName account with your @Model.ProviderName identity: <strong>@Model.UserDetail.Name</strong>.
+                    </p>
+                }
+                else
+                {
+                    <div class="alert alert-warning alert-dismissible mt-3" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                        <strong>@Localizer["Welcome to Aiursoft!"]</strong>
+                        <p class="mb-0">
+                            It seems to be your first time sign in by @Model.ProviderName.
+                        </p>
+                    </div>
+                    <p>
+                        We could not find an account with email: <strong>@Model.UserDetail.Email</strong>. Do you have an @Values.ProjectName account before?
+                    </p>
+                    <hr />
+                    <div class="form-row">
+                        <div class="col-md-6 pr-3" style="border-right: 1px solid rgba(0,0,0,.1)">
+                            <h5>Yes. I already have an @Values.ProjectName account.</h5>
+                            <p class="text-muted">We will automatically link your Aiursoft account with your @Model.ProviderName identity.</p>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]" tabindex="1">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="w-100">
+                                    @Localizer["Password"]
+                                    <a class="d-block float-right" asp-controller="Password" asp-action="ForgotpasswordFor" target="_blank" tabindex="5">
+                                        @Localizer["Forgot Password?"]
+                                    </a>
+                                </label>
+                                <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
+                            </div>
+                            <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in and link "]@Model.ProviderName</button>
+                        </div>
+                        <div class="col-md-6 pl-3">
+                            <h5>No. Sign in by GitHub now.</h5>
+                            <p class="text-muted">We will automatically create a new @Values.ProjectName account with the following information:</p>
+                            <ul class="text-muted">
+                                <li>Email: @Model.UserDetail.Email</li>
+                                <li>Name: @Model.UserDetail.Name</li>
+                                <li>Bio: @Model.UserDetail.Bio</li>
+                            </ul>
+                            <button type="submit" class="btn btn-@Model.Provider.GetButtonColor() btn-block mt-5" href="#" data-disable-with="Creating account...">Create account and continue sign in</button>
+                        </div>
+                    </div>
+                }
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+            </form>
+        </div>
+    </div>
+</div>

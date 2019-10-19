@@ -1,8 +1,10 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
+using Aiursoft.Gateway.Models.ThirdyPartyViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.Authentication;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,15 +20,18 @@ namespace Aiursoft.Gateway.Controllers
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly GatewayDbContext _dbContext;
         private readonly AuthFinisher _authFinisher;
+        private readonly DeveloperApiService _apiService;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
             GatewayDbContext dbContext,
-            AuthFinisher authFinisher)
+            AuthFinisher authFinisher,
+            DeveloperApiService apiService)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
             _authFinisher = authFinisher;
+            _apiService = apiService;
         }
 
         [Route("Sign-in/{providerName}")]
@@ -39,6 +44,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var oauthModel = model.BuildOAuthInfo();
             var info = await provider.GetUserDetail(model.Code);
+            var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             var account = await _dbContext
                 .ThirdPartyAccounts
                 .Include(t => t.Owner)
@@ -49,7 +55,16 @@ namespace Aiursoft.Gateway.Controllers
                 oauthModel.Email = account.Owner.Email;
                 await _authFinisher.FinishAuth(this, oauthModel);
             }
-            return Json(info);
+            var viewModel = new SignInViewModel
+            {
+                OAuthInfo = oauthModel,
+                UserDetail = info,
+                ProviderName = model.ProviderName,
+                AppImageUrl = app.IconPath,
+                CanFindAnAccountWithEmail =  await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == info.Email.ToLower()),
+                Provider = provider
+            };
+            return View(viewModel);
         }
     }
 }
