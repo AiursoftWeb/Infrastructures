@@ -44,10 +44,21 @@
                         <h5>Yes. I already have an @Values.ProjectName account.</h5>
                         <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
                         <a class="btn btn-success btn-block" href="@ServiceLocation.Account" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
-                        <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in again</a>
+                        <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
                     </div>
-                    <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" method="post" class="col-md-6 pl-3">
-                        <h5>No. Sign in by GitHub now.</h5>
+                    <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" asp-route-providerName="@Model.ProviderName" method="post" class="col-md-6 pl-3">
+                        <input asp-for="OAuthInfo.ToRedirect" value="" type="hidden" />
+                        <input asp-for="OAuthInfo.State" type="hidden" />
+                        <input asp-for="OAuthInfo.AppId" type="hidden" />
+                        <input asp-for="OAuthInfo.Scope" type="hidden" />
+                        <input asp-for="OAuthInfo.ResponseType" type="hidden" />
+                        <input asp-for="UserDetail.Email" type="hidden" />
+                        <input asp-for="UserDetail.Name" type="hidden" />
+                        <input asp-for="UserDetail.Bio" type="hidden" />
+                        <input asp-for="UserDetail.Id" type="hidden" />
+                        <input asp-for="UserDetail.AvatarUrl" type="hidden" />
+                        <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
+                        <h5>No. Sign in by @Model.ProviderName now.</h5>
                         <p class="text-muted">We will automatically create a new @Values.ProjectName account with the following information:</p>
                         <ul class="text-muted">
                             <li>Email: @Model.UserDetail.Email</li>
