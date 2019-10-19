@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Pylon.Interfaces;
+using Aiursoft.Pylon.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Aiursoft.Pylon.Services.Authentication
         string GetName();
         string GetButtonColor();
         string GetButtonIcon();
-        string GetSignInRedirectLink(string state);
+        string GetSignInRedirectLink(AiurUrl state);
         Task<IUserDetail> GetUserDetail(string code);
     }
 }

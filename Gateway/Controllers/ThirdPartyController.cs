@@ -19,14 +19,14 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [Route("Sign-in/{providerName}")]
-        public IActionResult SignIn(SignInAddressModel model)
+        public async Task<IActionResult> SignIn(SignInAddressModel model)
         {
             var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
             if(provider == null)
             {
                 return NotFound();
             }
-            var info = = provider.GetUserDetail(model.Code);
+            var info = await provider.GetUserDetail(model.Code);
             return Json(info);
         }
     }

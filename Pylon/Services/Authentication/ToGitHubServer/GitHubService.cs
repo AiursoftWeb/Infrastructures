@@ -44,20 +44,20 @@ namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 
         public string GetButtonIcon() => "github";
 
-        public string GetSignInRedirectLink(string state = null)
+        public string GetSignInRedirectLink(AiurUrl state)
         {
             return new AiurUrl("https://github.com", "/login/oauth/authorize", new 
             {
                 client_id = _clientId,
-                redirect_uri = new AiurUrl(_serviceLocation.Gateway, $"third-party/sign-in/{GetName()}", new { }).ToString(),
-                state
+                redirect_uri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                state = state.ToString()
             }).ToString();
         }
 
         public async Task<IUserDetail> GetUserDetail(string code)
         {
             var token = await GetAccessToken(_clientId, _clientSecret, code);
-            return await GetUserDetail(token);
+            return await GetUserInfo(token);
         }
 
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)

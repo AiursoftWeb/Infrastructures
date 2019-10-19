@@ -36,9 +36,19 @@
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                 </div>
                 <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
-                @foreach (var provider in AuthProviders)
-                {
-                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", Model).ToString())"><i class="fa fa-fw fa-@provider.GetButtonIcon()"></i>Sign in by @provider.GetName()</a>
+                @{
+                    var oauthInfo = new
+                    {
+                        appid = Model.AppId,
+                        redirect_uri = Model.ToRedirect,
+                        state = Model.State,
+                        scope = Model.Scope,
+                        response_type = Model.ResponseType
+                    };
+                    @foreach (var provider in AuthProviders)
+                    {
+                        <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))"><i class="fa fa-fw fa-@provider.GetButtonIcon()"></i>Sign in by @provider.GetName()</a>
+                    }
                 }
             </form>
         </div>
