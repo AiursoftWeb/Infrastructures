@@ -104,7 +104,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = new GatewayUser
             {
-                UserName = model.UserDetail.Email,
+                UserName = model.UserDetail.Email + $".from.{model.ProviderName}.com",
                 Email = model.UserDetail.Email,
                 NickName = model.UserDetail.Name,
                 PreferedLanguage = model.PreferedLanguage,
