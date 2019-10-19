@@ -22,6 +22,8 @@ namespace Aiursoft.Gateway.Models
         public IEnumerable<UserEmail> Emails { get; set; }
         [InverseProperty(nameof(AuditLogLocal.User))]
         public IEnumerable<AuditLogLocal> AuditLogs { get; set; }
+        [InverseProperty(nameof(ThirdPartyAccount.Owner))]
+        public IEnumerable<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
 
         public virtual string SMSPasswordResetToken { get; set; }
 
@@ -82,5 +84,15 @@ namespace Aiursoft.Gateway.Models
         public DateTime LastSendTime { get; set; } = DateTime.MinValue;
         [JsonIgnore]
         public int Priority { get; set; }
+    }
+
+    public class ThirdPartyAccount
+    {
+        public int Id { get; set; }
+        public string ProviderName { get; set; }
+        public string OpenId { get; set; }
+        public string OwnerId { get; set; }
+        [ForeignKey(nameof(OwnerId))]
+        public GatewayUser Owner { get; set; }
     }
 }

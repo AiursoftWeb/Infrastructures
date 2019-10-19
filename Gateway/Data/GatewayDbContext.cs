@@ -14,5 +14,6 @@ namespace Aiursoft.Gateway.Data
         public DbSet<AppGrant> LocalAppGrant { get; set; }
         public DbSet<UserEmail> UserEmails { get; set; }
         public DbSet<AuditLogLocal> AuditLogs { get; set; }
+        public DbSet<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
     }
 }
