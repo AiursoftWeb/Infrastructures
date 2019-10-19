@@ -13,9 +13,10 @@ using Aiursoft.Pylon.Services.Authentication;
 
 namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 {
-    public class GitHubService : IScopedDependency, IAuthProvider
+    public class GitHubService : IAuthProvider
     {
         private readonly HTTPService _http;
+        private readonly ServiceLocation _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
@@ -23,9 +24,11 @@ namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
         public GitHubService(
             HTTPService http,
             IHttpClientFactory clientFactory,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ServiceLocation serviceLocation)
         {
             _http = http;
+            _serviceLocation = serviceLocation;
             _client = clientFactory.CreateClient();
             _clientId = configuration["GitHub:ClientId"];
             _clientSecret = configuration["GitHub:ClientSecret"];
@@ -40,6 +43,16 @@ namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
         public string GetButtonColor() => "dark";
 
         public string GetButtonIcon() => "github";
+
+        public string GetSignInRedirectLink(string state = null)
+        {
+            return new AiurUrl("https://github.com", "/login/oauth/authorize", new 
+            {
+                client_id = _clientId,
+                redirect_uri = new AiurUrl(_serviceLocation.Gateway, $"third-party/sign-in/{GetName()}", new { }).ToString(),
+                state
+            }).ToString();
+        }
 
         public async Task<IUserDetail> GetUserDetail(string code)
         {
