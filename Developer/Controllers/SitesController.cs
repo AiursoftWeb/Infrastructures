@@ -161,6 +161,7 @@ namespace Aiursoft.Developer.Controllers
 
         [HttpPost]
         [Route("Apps/{appId}/Sites/{siteName}/NewFolder/{**path}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> NewFolder(NewFolderViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -218,6 +219,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("Apps/{appId}/Sites/{siteName}/DeleteFolder/{**path}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderViewModel model)
         {
@@ -276,6 +278,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("Apps/{appId}/Sites/{siteName}/DeleteFile/{**path}")]
         public async Task<IActionResult> DeleteFile(DeleteFileViewModel model)
         {
@@ -339,6 +342,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("Apps/{appId}/Sites/{oldSiteName}/Edit")]
         public async Task<IActionResult> Edit(EditViewModel model)
         {
@@ -396,8 +400,9 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        [Route("Apps/{appId}/Sites/{siteName}/Delete")]
         [HttpPost]
+        [Route("Apps/{appId}/Sites/{siteName}/Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
             var user = await GetCurrentUserAsync();

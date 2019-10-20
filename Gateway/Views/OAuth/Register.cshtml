@@ -13,9 +13,9 @@
                 <img class="rounded" style="width:100px;height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
             <form asp-controller="OAuth" asp-action="Register" method="post"
+                asp-route-appId="@Model.AppId"
                 asp-route-redirect_uri="@Model.RedirectUri"
-                asp-route-state="@Model.State"
-                asp-route-appId="@Model.AppId">
+                asp-route-state="@Model.State">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
                 <div class="form-group">
@@ -54,9 +54,9 @@
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" 
+           asp-route-appId="@Model.AppId"
            asp-route-redirect_uri="@Model.RedirectUri" 
-           asp-route-state="@Model.State" 
-           asp-route-appId="@Model.AppId">
+           asp-route-state="@Model.State">
             <span class="float-left">@Localizer["Sign in"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>

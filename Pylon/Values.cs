@@ -1,6 +1,4 @@
-﻿using Aiursoft.Pylon.Services.Authentications.ToGitHubServer;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace Aiursoft.Pylon

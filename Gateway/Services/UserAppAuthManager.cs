@@ -39,8 +39,8 @@ namespace Aiursoft.Gateway.Services
             {
                 var url = new AiurUrl("", "OAuth", nameof(OAuthController.AuthorizeConfirm), new FinishAuthInfo
                 {
-                    RedirectUri = model.RedirectUri,
                     AppId = model.AppId,
+                    RedirectUri = model.RedirectUri,
                     State = model.State
                 });
                 return new RedirectResult(url.ToString());

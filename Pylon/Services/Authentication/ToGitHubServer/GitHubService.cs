@@ -1,15 +1,11 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services.Authentication;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Pylon.Exceptions;
-using Microsoft.Extensions.Configuration;
-using Aiursoft.Pylon.Services.Authentication;
 
 namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 {

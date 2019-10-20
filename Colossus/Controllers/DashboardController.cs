@@ -23,7 +23,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly FoldersService _foldersService;
         private readonly FilesService _filesService;
 
-        private Task<string> accesstoken => _appsContainer.AccessToken();
+        private Task<string> _accesstoken => _appsContainer.AccessToken();
 
         public DashboardController(
             SitesService sitesService,
@@ -43,7 +43,7 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
+            var sites = await _sitesService.ViewMySitesAsync(await _accesstoken);
             if (string.IsNullOrEmpty(user.SiteName) || !sites.Sites.Any(t => t.SiteName == user.SiteName))
             {
                 return RedirectToAction(nameof(CreateSite));
@@ -59,7 +59,7 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> CreateSite()
         {
             var user = await GetCurrentUserAsync();
-            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
+            var sites = await _sitesService.ViewMySitesAsync(await _accesstoken);
             if (!string.IsNullOrEmpty(user.SiteName) && sites.Sites.Any(t => t.SiteName == user.SiteName))
             {
                 return RedirectToAction(nameof(Index));
@@ -85,7 +85,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _sitesService.CreateNewSiteAsync(await accesstoken, model.SiteName, model.OpenToUpload, model.OpenToDownload);
+                await _sitesService.CreateNewSiteAsync(await _accesstoken, model.SiteName, model.OpenToUpload, model.OpenToDownload);
                 user.SiteName = model.SiteName;
                 await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));
@@ -109,7 +109,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                var data = await _foldersService.ViewContentAsync(await accesstoken, user.SiteName, path);
+                var data = await _foldersService.ViewContentAsync(await _accesstoken, user.SiteName, path);
                 var model = new ViewFilesViewModel(user)
                 {
                     Folder = data.Value,
@@ -137,6 +137,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("NewFolder/{**path}")]
         public async Task<IActionResult> NewFolder(NewFolderViewModel model)
         {
@@ -149,7 +150,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _foldersService.CreateNewFolderAsync(await accesstoken, user.SiteName, model.Path, model.NewFolderName, false);
+                await _foldersService.CreateNewFolderAsync(await _accesstoken, user.SiteName, model.Path, model.NewFolderName, false);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path });
             }
             catch (AiurUnexceptedResponse e)
@@ -173,6 +174,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("DeleteFolder/{**path}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderViewModel model)
         {
@@ -185,7 +187,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _foldersService.DeleteFolderAsync(await accesstoken, user.SiteName, model.Path);
+                await _foldersService.DeleteFolderAsync(await _accesstoken, user.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)
@@ -209,6 +211,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("DeleteFile/{**path}")]
         public async Task<IActionResult> DeleteFile(DeleteFileViewModel model)
         {
@@ -221,7 +224,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _filesService.DeleteFileAsync(await accesstoken, user.SiteName, model.Path);
+                await _filesService.DeleteFileAsync(await _accesstoken, user.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { path = model.Path.DetachPath() });
             }
             catch (AiurUnexceptedResponse e)
@@ -246,6 +249,7 @@ namespace Aiursoft.Colossus.Controllers
 
         [Route("Delete")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -257,7 +261,7 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
-                await _sitesService.DeleteSiteAsync(await accesstoken, user.SiteName);
+                await _sitesService.DeleteSiteAsync(await _accesstoken, user.SiteName);
                 user.SiteName = string.Empty;
                 await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(CreateSite));
@@ -275,11 +279,11 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> Settings(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var sites = await _sitesService.ViewMySitesAsync(await accesstoken);
+            var sites = await _sitesService.ViewMySitesAsync(await _accesstoken);
             var hasASite = !string.IsNullOrEmpty(user.SiteName) && sites.Sites.Any(t => t.SiteName == user.SiteName);
             if (hasASite)
             {
-                var siteDetail = await _sitesService.ViewSiteDetailAsync(await accesstoken, user.SiteName);
+                var siteDetail = await _sitesService.ViewSiteDetailAsync(await _accesstoken, user.SiteName);
                 var model = new SettingsViewModel(user)
                 {
                     SiteSize = siteDetail.Size,
@@ -304,6 +308,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("Settings")]
         public async Task<IActionResult> Settings(SettingsViewModel model)
         {

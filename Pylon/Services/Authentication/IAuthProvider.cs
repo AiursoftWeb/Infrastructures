@@ -1,8 +1,5 @@
 ﻿using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.Authentication

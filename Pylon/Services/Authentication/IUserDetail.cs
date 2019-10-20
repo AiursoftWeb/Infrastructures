@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.Pylon.Services.Authentication
+﻿namespace Aiursoft.Pylon.Services.Authentication
 {
     public interface IUserDetail
     {

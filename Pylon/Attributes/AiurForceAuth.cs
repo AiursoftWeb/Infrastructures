@@ -12,41 +12,41 @@ namespace Aiursoft.Pylon.Attributes
     /// </summary>
     public class AiurForceAuth : ActionFilterAttribute
     {
-        private string PreferController { get; }
-        private string PreferAction { get; }
-        private bool? JustTry { get; } = false;
-        private bool PreferPageSet { get; }
-        private bool Register { get; }
-        private bool DirectlyReject { get; }
+        private string _preferController { get; }
+        private string _preferAction { get; }
+        private bool? _justTry { get; } = false;
+        private bool _preferPageSet { get; }
+        private bool _register { get; }
+        private bool _directlyReject { get; }
 
-        private bool HasAPreferPage => (!string.IsNullOrEmpty(PreferController)
-            && !string.IsNullOrEmpty(PreferAction))
-            || PreferPageSet;
+        private bool _hasAPreferPage => (!string.IsNullOrEmpty(_preferController)
+            && !string.IsNullOrEmpty(_preferAction))
+            || _preferPageSet;
 
-        private string PreferPage
+        private string _preferPage
         {
             get
             {
-                if (string.IsNullOrEmpty(PreferController) && string.IsNullOrEmpty(PreferAction))
+                if (string.IsNullOrEmpty(_preferController) && string.IsNullOrEmpty(_preferAction))
                 {
                     return "/";
                 }
-                return new AiurUrl(string.Empty, PreferController, PreferAction, new { }).ToString();
+                return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
             }
         }
 
         public AiurForceAuth(bool directlyReject = false)
         {
-            DirectlyReject = directlyReject;
+            _directlyReject = directlyReject;
         }
 
         public AiurForceAuth(string preferController, string preferAction, bool justTry, bool register = false)
         {
-            PreferController = preferController;
-            PreferAction = preferAction;
-            JustTry = justTry ? true : (bool?)null;
-            PreferPageSet = true;
-            Register = register;
+            _preferController = preferController;
+            _preferAction = preferAction;
+            _justTry = justTry ? true : (bool?)null;
+            _preferPageSet = true;
+            _register = register;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -61,31 +61,31 @@ namespace Aiursoft.Pylon.Attributes
             //Not signed in
             if (!controller.User.Identity.IsAuthenticated)
             {
-                if (HasAPreferPage)
+                if (_hasAPreferPage)
                 {
                     // Just redirected back, leave him here.
-                    if (show == Values.DirectShowString.Value && JustTry == true)
+                    if (show == Values.DirectShowString.Value && _justTry == true)
                     {
                         return;
                     }
                     // Try him.
-                    context.Result = Redirect(context, PreferPage, JustTry, Register);
+                    context.Result = Redirect(context, _preferPage, _justTry, _register);
                 }
                 // Directly response a 403
-                else if (DirectlyReject)
+                else if (_directlyReject)
                 {
                     context.Result = new UnauthorizedResult();
                 }
                 // Don't have a prefer page, force him to sign in.
                 else
                 {
-                    context.Result = Redirect(context, controller.Request.Path.Value, justTry: null, register: Register);
+                    context.Result = Redirect(context, controller.Request.Path.Value, justTry: null, register: _register);
                 }
             }
             //Signed in, let him go to preferred page directly.
-            else if (HasAPreferPage && !controller.Request.Path.Value.ToLower().StartsWith(PreferPage.ToLower()))
+            else if (_hasAPreferPage && !controller.Request.Path.Value.ToLower().StartsWith(_preferPage.ToLower()))
             {
-                context.HttpContext.Response.Redirect(PreferPage);
+                context.HttpContext.Response.Redirect(_preferPage);
             }
             //Signed in and no preferred page, Display current page.
             else

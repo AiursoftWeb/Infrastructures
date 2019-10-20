@@ -61,7 +61,6 @@ namespace Aiursoft.Gateway.Controllers
             _authLogger = authLogger;
         }
 
-        //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
@@ -141,11 +140,11 @@ namespace Aiursoft.Gateway.Controllers
         [Authorize]
         public async Task<IActionResult> AuthorizeConfirm(FinishAuthInfo model)
         {
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
             }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var user = await GetCurrentUserAsync();
             var viewModel = new AuthorizeConfirmViewModel
             {
@@ -236,14 +235,9 @@ namespace Aiursoft.Gateway.Controllers
                 _dbContext.UserEmails.Add(primaryMail);
                 await _dbContext.SaveChangesAsync();
                 // Send him an confirmation email here:
-                try
-                {
-                    await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
-                }
-                // Ignore smtp exception.
-                catch (SmtpException) { }
-                await _signInManager.SignInAsync(user, isPersistent: true);
+                await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                await _signInManager.SignInAsync(user, isPersistent: true);
                 return await _authManager.FinishAuth(user, model);
             }
             AddErrors(result);
@@ -281,11 +275,6 @@ namespace Aiursoft.Gateway.Controllers
                 .Users
                 .Include(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
-        }
-
-        private RedirectResult Redirect(AiurUrl url)
-        {
-            return Redirect(url.ToString());
         }
     }
 }
