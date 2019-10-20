@@ -26,21 +26,9 @@ namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
     [GenerateDoc]
+    [APINotfoundHandler]
     public class OAuthController : Controller
     {
-        //Ensure App
-        //  if app is null
-        //  return not found
-        //Ensure model state
-        //  if model state invalid in HTTP Get
-        //      return autherror
-        //  if model state invalid in HTTP Post
-        //      return view with model
-        //Prepare user
-        //Check validation
-        //Do jobs
-        //Return success message
-
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
         private readonly ILogger _logger;
@@ -77,15 +65,7 @@ namespace Aiursoft.Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
@@ -118,15 +98,7 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 model.Recover(app.AppName, app.IconPath);
@@ -169,15 +141,7 @@ namespace Aiursoft.Gateway.Controllers
         [Authorize]
         public async Task<IActionResult> AuthorizeConfirm(FinishAuthInfo model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
@@ -222,15 +186,7 @@ namespace Aiursoft.Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
@@ -247,15 +203,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Invalid captacha code!");
             }
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 model.Recover(app.AppName, app.IconPath);
@@ -317,13 +265,6 @@ namespace Aiursoft.Gateway.Controllers
         {
             await _signInManager.SignOutAsync();
             return Redirect(model.ToRedirect);
-        }
-
-        [AiurNoCache]
-        [Route("get-captcha-image")]
-        public IActionResult GetCaptchaImage()
-        {
-            return _captcha.GenerateCaptchaImageFileStream(HttpContext.Session, 100, 33);
         }
 
         private void AddErrors(IdentityResult result)
