@@ -12,11 +12,11 @@
             <div class="text-center">
                 <img class="rounded" style="width:100px;height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
-            <form asp-controller="OAuth" asp-action="Register" method="post">
+            <form asp-controller="OAuth" asp-action="Register" method="post"
+                asp-route-RedirectUrl="@Model.RedirectUrl"
+                asp-route-State="@Model.State"
+                asp-route-AppId="@Model.AppId">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <input asp-for="RedirectUrl" type="hidden" />
-                <input asp-for="State" type="hidden" />
-                <input asp-for="AppId" type="hidden" />
                 <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
                 <div class="form-group">
                     <label asp-for="Email">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
