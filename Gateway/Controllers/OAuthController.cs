@@ -304,7 +304,7 @@ namespace Aiursoft.Gateway.Controllers
                 };
                 _dbContext.AuditLogs.Add(log);
                 await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model);
+                return await _authFinisher.FinishAuth(user, model);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);

@@ -14,11 +14,9 @@
             </div>
             <form asp-controller="OAuth" asp-action="Register" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <input asp-for="ToRedirect" type="hidden" />
+                <input asp-for="RedirectUrl" type="hidden" />
                 <input asp-for="State" type="hidden" />
                 <input asp-for="AppId" type="hidden" />
-                <input asp-for="Scope" type="hidden" />
-                <input asp-for="ResponseType" type="hidden" />
                 <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
                 <div class="form-group">
                     <label asp-for="Email">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
@@ -55,7 +53,7 @@
                 </label>
             </form>
         </div>
-        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" asp-route-RedirectUrl="@Model.RedirectUrl" asp-route-State="@Model.State" asp-route-AppId="@Model.AppId">
             <span class="float-left">@Localizer["Sign in"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>

@@ -60,13 +60,11 @@ namespace Aiursoft.Gateway.Controllers
             }
             catch (AiurAPIModelException)
             {
-                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new
+                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
                 {
-                    appid = oauthModel.AppId,
-                    redirect_uri = oauthModel.ToRedirect,
-                    state = oauthModel.State,
-                    scope = oauthModel.Scope,
-                    response_type = oauthModel.ResponseType
+                    AppId = oauthModel.AppId,
+                    RedirectUrl = oauthModel.RedirectUrl,
+                    State = oauthModel.State,
                 }));
                 return Redirect(refreshlink);
             }
@@ -78,8 +76,7 @@ namespace Aiursoft.Gateway.Controllers
                 .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
             if (account != null)
             {
-                oauthModel.Email = account.Owner.Email;
-                await _authFinisher.FinishAuth(this, oauthModel);
+                await _authFinisher.FinishAuth(account.Owner, oauthModel);
             }
             var viewModel = new SignInViewModel
             {
@@ -141,7 +138,7 @@ namespace Aiursoft.Gateway.Controllers
                 };
                 _dbContext.AuditLogs.Add(log);
                 await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model.OAuthInfo);
+                return await _authFinisher.FinishAuth(user, model.OAuthInfo);
             }
             else
             {

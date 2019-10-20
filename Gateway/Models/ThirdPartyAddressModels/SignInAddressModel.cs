@@ -26,11 +26,9 @@ namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
                     .Select(t => new KeyValuePair<string, string>(t[0].ToLower(), WebUtility.UrlDecode(t[1])));
                 return new FinishAuthInfo
                 {
-                    AppId = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.appid)).Value,
-                    ToRedirect = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.redirect_uri).ToLower()).Value,
-                    State = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.state).ToLower()).Value,
-                    Scope = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.scope).ToLower()).Value,
-                    ResponseType = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.response_type).ToLower()).Value,
+                    AppId = values.SingleOrDefault(t => t.Key == "appid").Value,
+                    RedirectUrl = values.SingleOrDefault(t => t.Key == "redirect-url").Value,
+                    State = values.SingleOrDefault(t => t.Key == "state".ToLower()).Value,
                 };
             }
             catch (Exception e) when (e is IndexOutOfRangeException || e is NullReferenceException)

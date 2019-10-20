@@ -50,11 +50,9 @@
                         <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
                     </div>
                     <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" asp-route-providerName="@Model.ProviderName" method="post" class="col-md-6 pl-3">
-                        <input asp-for="OAuthInfo.ToRedirect" value="" type="hidden" />
+                        <input asp-for="OAuthInfo.RedirectUrl" value="" type="hidden" />
                         <input asp-for="OAuthInfo.State" type="hidden" />
                         <input asp-for="OAuthInfo.AppId" type="hidden" />
-                        <input asp-for="OAuthInfo.Scope" type="hidden" />
-                        <input asp-for="OAuthInfo.ResponseType" type="hidden" />
                         <input asp-for="UserDetail.Email" type="hidden" />
                         <input asp-for="UserDetail.Name" type="hidden" />
                         <input asp-for="UserDetail.Bio" type="hidden" />
