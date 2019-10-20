@@ -53,15 +53,15 @@
                 }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post"
-                asp-route-RedirectUrl="@Model.RedirectUrl"
-                asp-route-State="@Model.State"
-                asp-route-AppId="@Model.AppId">
+                asp-route-redirect-url="@Model.RedirectUrl"
+                asp-route-state="@Model.State"
+                asp-route-appid="@Model.AppId">
                 <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
-                       asp-route-RedirectUrl="@Model.RedirectUrl"
-                       asp-route-State="@Model.State"
-                       asp-route-AppId="@Model.AppId"
-                       asp-route-ForceConfirm="true">
+                        asp-route-redirect-url="@Model.RedirectUrl"
+                        asp-route-state="@Model.State"
+                        asp-route-appid="@Model.AppId"
+                        asp-route-ForceConfirm="true">
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
                 </p>

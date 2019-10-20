@@ -83,7 +83,9 @@ namespace Aiursoft.Gateway.Controllers
             }
             var viewModel = new SignInViewModel
             {
-                OAuthInfo = oauthModel,
+                RedirectUrl = oauthModel.RedirectUrl,
+                State = oauthModel.State,
+                AppId = oauthModel.AppId,
                 UserDetail = info,
                 ProviderName = model.ProviderName,
                 AppImageUrl = app.IconPath,
@@ -132,8 +134,8 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.OAuthInfo.AppId);
-                return await _authManager.FinishAuth(user, model.OAuthInfo);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.AppId);
+                return await _authManager.FinishAuth(user, model);
             }
             else
             {

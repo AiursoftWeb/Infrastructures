@@ -49,11 +49,12 @@
                         <a class="btn btn-success btn-block" href="@ServiceLocation.Account" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
                         <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
                     </div>
-                    <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" asp-route-providerName="@Model.ProviderName" method="post" class="col-md-6 pl-3">
+                    <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" method="post" class="col-md-6 pl-3"
+                          asp-route-providerName="@Model.ProviderName"
+                          asp-route-redirect-url="@Model.RedirectUrl"
+                          asp-route-state="@Model.State"
+                          asp-route-appid="@Model.AppId">
                         <div asp-validation-summary="All" class="text-danger"></div>
-                        <input asp-for="OAuthInfo.RedirectUrl" value="" type="hidden" />
-                        <input asp-for="OAuthInfo.State" type="hidden" />
-                        <input asp-for="OAuthInfo.AppId" type="hidden" />
                         <input asp-for="UserDetail.Email" type="hidden" />
                         <input asp-for="UserDetail.Name" type="hidden" />
                         <input asp-for="UserDetail.Bio" type="hidden" />
