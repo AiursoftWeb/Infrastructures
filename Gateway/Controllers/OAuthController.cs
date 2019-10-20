@@ -48,6 +48,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly DeveloperApiService _apiService;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly ISessionBasedCaptcha _captcha;
+        private readonly AuthFinisher _authFinisher;
 
         public OAuthController(
             UserManager<GatewayUser> userManager,
@@ -56,7 +57,8 @@ namespace Aiursoft.Gateway.Controllers
             GatewayDbContext context,
             DeveloperApiService developerApiService,
             ConfirmationEmailSender emailSender,
-            ISessionBasedCaptcha sessionBasedCaptcha)
+            ISessionBasedCaptcha sessionBasedCaptcha,
+            AuthFinisher authFinisher)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -65,6 +67,7 @@ namespace Aiursoft.Gateway.Controllers
             _apiService = developerApiService;
             _emailSender = emailSender;
             _captcha = sessionBasedCaptcha;
+            _authFinisher = authFinisher;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -105,7 +108,7 @@ namespace Aiursoft.Gateway.Controllers
                 };
                 _dbContext.AuditLogs.Add(log);
                 await _dbContext.SaveChangesAsync();
-                return await FinishAuth(model.Convert(user.Email), app.ForceConfirmation);
+                return await _authFinisher.FinishAuth(this, model.Convert(user.Email), app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
             else if (model.tryAutho == true)
@@ -156,7 +159,7 @@ namespace Aiursoft.Gateway.Controllers
             await _dbContext.SaveChangesAsync();
             if (result.Succeeded)
             {
-                return await FinishAuth(model, app.ForceConfirmation);
+                return await _authFinisher.FinishAuth(this, model, app.ForceConfirmation);
             }
             else if (result.RequiresTwoFactor)
             {
@@ -229,7 +232,7 @@ namespace Aiursoft.Gateway.Controllers
             var user = await GetCurrentUserAsync();
             model.Email = user.Email;
             await user.GrantTargetApp(_dbContext, model.AppId);
-            return await FinishAuth(model);
+            return await _authFinisher.FinishAuth(this, model);
         }
 
         [HttpGet]
@@ -317,7 +320,7 @@ namespace Aiursoft.Gateway.Controllers
                 };
                 _dbContext.AuditLogs.Add(log);
                 await _dbContext.SaveChangesAsync();
-                return await FinishAuth(model);
+                return await _authFinisher.FinishAuth(this, model);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);
@@ -355,46 +358,12 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
-        private Task<GatewayUser> GetUserFromEmail(string email)
-        {
-            return _dbContext
-                .Users
-                .Include(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.Emails.Any(p => p.EmailAddress == email));
-        }
-
         private Task<GatewayUser> GetCurrentUserAsync()
         {
             return _dbContext
                 .Users
                 .Include(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
-        }
-
-        private async Task<IActionResult> FinishAuth(IAuthorizeViewModel model, bool forceGrant = false)
-        {
-            var user = await GetUserFromEmail(model.Email);
-            if (await user.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
-            {
-                var pack = await user.GeneratePack(_dbContext, model.AppId);
-                var url = new AiurUrl(model.GetRegexRedirectUrl(), new AuthResultAddressModel
-                {
-                    Code = pack.Code,
-                    State = model.State
-                });
-                return Redirect(url);
-            }
-            else
-            {
-                return RedirectToAction(nameof(AuthorizeConfirm), new AuthorizeConfirmAddressModel
-                {
-                    AppId = model.AppId,
-                    State = model.State,
-                    ToRedirect = model.ToRedirect,
-                    Scope = model.Scope,
-                    ResponseType = model.ResponseType
-                });
-            }
         }
 
         private RedirectResult Redirect(AiurUrl url)

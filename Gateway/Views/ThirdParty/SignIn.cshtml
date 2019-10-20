@@ -1,0 +1,77 @@
+﻿@model Aiursoft.Gateway.Models.ThirdyPartyViewModels.SignInViewModel
+@{
+    ViewData["Title"] = Localizer["Sign In by "].Value + Model.ProviderName;
+}
+<div class="container">
+    <div class="card mx-auto mt-5" style="max-width: 50rem;">
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" style="width:100px;height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
+                <img class="rounded ml-3" style="width:100px;height:100px;" src="@Model.UserDetail.AvatarUrl">
+            </div>
+            @if (Model.CanFindAnAccountWithEmail)
+            {
+                <div class="alert alert-success alert-dismissible mt-3" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <strong>@Localizer["Welcome to Aiursoft!"]</strong>
+                    <p class="mb-0">
+                        There already exists an @Values.ProjectName account with email: <strong>@Model.UserDetail.Email</strong>.
+                    </p>
+                </div>
+                <p class="mb-0">
+                    Please link your @Values.ProjectName account with your @Model.ProviderName identity: <strong>@Model.UserDetail.Name</strong>.
+                </p>
+                <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
+                <a class="btn btn-success btn-block" href="@ServiceLocation.Account" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
+                <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
+            }
+            else
+            {
+                <div class="alert alert-warning alert-dismissible mt-3" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <strong>@Localizer["Welcome to Aiursoft!"]</strong>
+                    <p class="mb-0">
+                        It seems to be your first time sign in by @Model.ProviderName.
+                    </p>
+                </div>
+                <p>
+                    We could not find an account with email: <strong>@Model.UserDetail.Email</strong>. Do you have an @Values.ProjectName account before?
+                </p>
+                <hr />
+                <div class="form-row">
+                    <div class="col-md-6 pr-3" style="border-right: 1px solid rgba(0,0,0,.1)">
+                        <h5>Yes. I already have an @Values.ProjectName account.</h5>
+                        <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
+                        <a class="btn btn-success btn-block" href="@ServiceLocation.Account" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
+                        <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
+                    </div>
+                    <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" asp-route-providerName="@Model.ProviderName" method="post" class="col-md-6 pl-3">
+                        <input asp-for="OAuthInfo.ToRedirect" value="" type="hidden" />
+                        <input asp-for="OAuthInfo.State" type="hidden" />
+                        <input asp-for="OAuthInfo.AppId" type="hidden" />
+                        <input asp-for="OAuthInfo.Scope" type="hidden" />
+                        <input asp-for="OAuthInfo.ResponseType" type="hidden" />
+                        <input asp-for="UserDetail.Email" type="hidden" />
+                        <input asp-for="UserDetail.Name" type="hidden" />
+                        <input asp-for="UserDetail.Bio" type="hidden" />
+                        <input asp-for="UserDetail.Id" type="hidden" />
+                        <input asp-for="UserDetail.AvatarUrl" type="hidden" />
+                        <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
+                        <h5>No. Sign in by @Model.ProviderName now.</h5>
+                        <p class="text-muted">We will automatically create a new @Values.ProjectName account with the following information:</p>
+                        <ul class="text-muted">
+                            <li>Email: @Model.UserDetail.Email</li>
+                            <li>Name: @Model.UserDetail.Name</li>
+                        </ul>
+                        <button type="submit" class="btn btn-@Model.Provider.GetButtonColor() btn-block" href="#" data-disable-with="Creating account...">Create account and continue sign in</button>
+                    </form>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+    </div>
+</div>

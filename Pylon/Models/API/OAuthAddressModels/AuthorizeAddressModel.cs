@@ -27,6 +27,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
             string result = $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";
             return result;
         }
+
         public IAuthorizeViewModel Convert(string email)
         {
             return new OAuthInfo

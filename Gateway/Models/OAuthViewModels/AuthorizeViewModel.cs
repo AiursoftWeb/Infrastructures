@@ -24,6 +24,7 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
             this.AppImageUrl = appImageUrl;
         }
         public string AppImageUrl { get; set; }
+
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         [Display(Name = "Aiursoft Account")]

@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -201,7 +202,14 @@ namespace Aiursoft.Pylon
                 }
                 else if (item.GetInterfaces().Contains(typeof(IScopedDependency)))
                 {
-                    services.AddScoped(item);
+                    if (item.GetInterfaces().Contains(typeof(IAuthProvider)))
+                    {
+                        services.AddScoped(typeof(IAuthProvider), item);
+                    }
+                    else
+                    {
+                        services.AddScoped(item);
+                    }
                     Console.WriteLine($"Service: {item.Name} - was successfully registered as a scoped service.");
                 }
                 else if (item.GetInterfaces().Contains(typeof(ITransientDependency)))

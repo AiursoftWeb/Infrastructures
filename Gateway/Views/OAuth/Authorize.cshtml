@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = Localizer["Sign in"];
 }
+@inject IEnumerable<IAuthProvider> AuthProviders
 
 <div class="container">
     <div class="card card-login mx-auto mt-5">
@@ -35,6 +36,20 @@
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                 </div>
                 <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
+                @{
+                    var oauthInfo = new
+                    {
+                        appid = Model.AppId,
+                        redirect_uri = Model.ToRedirect,
+                        state = Model.State,
+                        scope = Model.Scope,
+                        response_type = Model.ResponseType
+                    };
+                    @foreach (var provider in AuthProviders)
+                    {
+                        <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))"><i class="fa fa-fw fa-@provider.GetButtonIcon()"></i>Sign in by @provider.GetName()</a>
+                    }
+                }
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType" tabindex="4">
