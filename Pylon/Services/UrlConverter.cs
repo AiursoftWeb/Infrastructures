@@ -23,7 +23,7 @@ namespace Aiursoft.Pylon.Services
             var url = new AiurUrl(_serviceLocation.Gateway, "oauth", action, new AuthorizeAddressModel
             {
                 AppId = _appsContainer._currentAppId,
-                RedirectUrl = destination.ToString(),
+                RedirectUri = destination.ToString(),
                 State = state,
                 TryAutho = justTry
             });

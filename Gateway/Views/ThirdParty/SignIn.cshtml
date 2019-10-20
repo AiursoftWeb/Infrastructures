@@ -51,7 +51,7 @@
                     </div>
                     <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" method="post" class="col-md-6 pl-3"
                           asp-route-providerName="@Model.ProviderName"
-                          asp-route-redirect-url="@Model.RedirectUrl"
+                          asp-route-redirect_uri="@Model.RedirectUri"
                           asp-route-state="@Model.State"
                           asp-route-appid="@Model.AppId">
                         <div asp-validation-summary="All" class="text-danger"></div>

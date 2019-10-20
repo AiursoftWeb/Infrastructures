@@ -53,12 +53,12 @@
                 }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post"
-                asp-route-redirect-url="@Model.RedirectUrl"
+                asp-route-redirect_uri="@Model.RedirectUri"
                 asp-route-state="@Model.State"
                 asp-route-appid="@Model.AppId">
                 <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
-                        asp-route-redirect-url="@Model.RedirectUrl"
+                        asp-route-redirect_uri="@Model.RedirectUri"
                         asp-route-state="@Model.State"
                         asp-route-appid="@Model.AppId"
                         asp-route-ForceConfirm="true">

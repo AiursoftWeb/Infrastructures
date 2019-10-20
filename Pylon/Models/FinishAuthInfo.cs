@@ -13,7 +13,7 @@ namespace Aiursoft.Pylon.Models
         [Url]
         [Required]
         [FromQuery(Name = "redirect_uri")]
-        public string RedirectUrl { get; set; }
+        public string RedirectUri { get; set; }
 
         [FromQuery(Name = "state")]
         public string State { get; set; }

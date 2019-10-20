@@ -70,7 +70,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View("AuthError");
             }
-            var url = new Uri(model.RedirectUrl);
+            var url = new Uri(model.RedirectUri);
             var user = await GetCurrentUserAsync();
             // Wrong domain
             if (url.Host != app.AppDomain && app.DebugMode == false)
@@ -90,7 +90,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.RedirectUrl, model.State, model.AppId, app.AppName, app.IconPath);
+            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -152,7 +152,7 @@ namespace Aiursoft.Gateway.Controllers
                 AppName = app.AppName,
                 UserNickName = user.NickName,
                 AppId = model.AppId,
-                RedirectUrl = model.RedirectUrl,
+                RedirectUri = model.RedirectUri,
                 State = model.State,
                 // Permissions
                 ViewOpenId = app.ViewOpenId,
@@ -191,7 +191,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View("AuthError");
             }
-            var viewModel = new RegisterViewModel(model.RedirectUrl, model.State, model.AppId, app.AppName, app.IconPath);
+            var viewModel = new RegisterViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 

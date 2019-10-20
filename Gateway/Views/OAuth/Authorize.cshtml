@@ -15,7 +15,7 @@
                 <img class="rounded" style="width:100px; height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
             <form asp-controller="OAuth" asp-action="Authorize" method="post" 
-                  asp-route-redirect-url="@Model.RedirectUrl"
+                  asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State"
                   asp-route-appid="@Model.AppId">
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -38,7 +38,7 @@
                     var oauthInfo = new FinishAuthInfo
                     {
                         AppId = Model.AppId,
-                        RedirectUrl = Model.RedirectUrl,
+                        RedirectUri = Model.RedirectUri,
                         State = Model.State,
                     };
                     @foreach (var provider in AuthProviders)
@@ -49,7 +49,7 @@
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
-           asp-route-redirect-url="@Model.RedirectUrl" 
+           asp-route-redirect_uri="@Model.RedirectUri" 
            asp-route-state="@Model.State" 
            asp-route-appId="@Model.AppId">
             <span class="float-left">@Localizer["Sign up"]</span>

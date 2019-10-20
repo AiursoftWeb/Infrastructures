@@ -28,7 +28,7 @@ namespace Aiursoft.Gateway.Services
             if (await HasAuthorizedApp(user, model.AppId) && forceGrant == false)
             {
                 var pack = await GeneratePack(user, model.AppId);
-                var url = new AiurUrl(GetRegexRedirectUrl(model.RedirectUrl), new AuthResultAddressModel
+                var url = new AiurUrl(GetRegexRedirectUri(model.RedirectUri), new AuthResultAddressModel
                 {
                     Code = pack.Code,
                     State = model.State
@@ -74,7 +74,7 @@ namespace Aiursoft.Gateway.Services
             return await _dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.GatewayUserId == user.Id);
         }
 
-        private string GetRegexRedirectUrl(string sourceUrl)
+        private string GetRegexRedirectUri(string sourceUrl)
         {
             var url = new Uri(sourceUrl);
             return $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";

@@ -9,9 +9,9 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
     {
         [Obsolete(error: true, message: "This function is only for framework.")]
         public RegisterViewModel() { }
-        public RegisterViewModel(string redirectUrl, string state, string appId, string appName, string appImageUrl)
+        public RegisterViewModel(string redirectUri, string state, string appId, string appName, string appImageUrl)
         {
-            RedirectUrl = redirectUrl;
+            RedirectUri = redirectUri;
             State = state;
             AppId = appId;
             Recover(appName, appImageUrl);

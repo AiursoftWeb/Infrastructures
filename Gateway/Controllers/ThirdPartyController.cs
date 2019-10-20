@@ -66,7 +66,7 @@ namespace Aiursoft.Gateway.Controllers
                 var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
                 {
                     AppId = oauthModel.AppId,
-                    RedirectUrl = oauthModel.RedirectUrl,
+                    RedirectUri = oauthModel.RedirectUri,
                     State = oauthModel.State,
                 }));
                 return Redirect(refreshlink);
@@ -83,7 +83,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var viewModel = new SignInViewModel
             {
-                RedirectUrl = oauthModel.RedirectUrl,
+                RedirectUri = oauthModel.RedirectUri,
                 State = oauthModel.State,
                 AppId = oauthModel.AppId,
                 UserDetail = info,
