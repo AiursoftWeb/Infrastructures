@@ -10,6 +10,6 @@ namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
         public bool? ForceConfirm { get; set; } = null;
 
         [FromQuery(Name = "try-auth")]
-        public bool? tryAutho { get; set; } = null;
+        public bool? TryAutho { get; set; } = null;
     }
 }

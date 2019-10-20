@@ -48,7 +48,7 @@
                 }
             </form>
         </div>
-        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType" tabindex="4">
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-RedirectUrl="@Model.RedirectUrl" asp-route-State="@Model.State" asp-route-AppId="@Model.AppId" tabindex="4">
             <span class="float-left">@Localizer["Sign up"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>

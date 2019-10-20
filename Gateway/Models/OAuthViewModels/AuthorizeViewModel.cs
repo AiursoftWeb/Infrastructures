@@ -38,7 +38,5 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         [Display(Name = "Password")]
         [NoSpace]
         public string Password { get; set; }
-
-
     }
 }

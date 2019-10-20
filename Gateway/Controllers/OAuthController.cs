@@ -106,7 +106,7 @@ namespace Aiursoft.Gateway.Controllers
                 return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
-            else if (model.tryAutho == true)
+            else if (model.TryAutho == true)
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
@@ -129,6 +129,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (!ModelState.IsValid)
             {
+                model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
             var mail = await _dbContext
@@ -143,15 +144,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
-            var log = new AuditLogLocal
-            {
-                UserId = user.Id,
-                IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                Success = result.Succeeded,
-                AppId = app.AppId
-            };
-            _dbContext.AuditLogs.Add(log);
-            await _dbContext.SaveChangesAsync();
+            await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), result.Succeeded, app.AppId);
             if (result.Succeeded)
             {
                 return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
@@ -195,10 +188,8 @@ namespace Aiursoft.Gateway.Controllers
                 AppName = app.AppName,
                 UserNickName = user.NickName,
                 AppId = model.AppId,
-                ToRedirect = model.ToRedirect,
+                RedirectUrl = model.RedirectUrl,
                 State = model.State,
-                Scope = model.Scope,
-                ResponseType = model.ResponseType,
                 // Permissions
                 ViewOpenId = app.ViewOpenId,
                 ViewPhoneNumber = app.ViewPhoneNumber,
@@ -208,7 +199,6 @@ namespace Aiursoft.Gateway.Controllers
                 ChangePassword = app.ChangePassword,
                 ChangeGrantInfo = app.ChangeGrantInfo,
                 ViewAuditLog = app.ViewAuditLog,
-
                 TermsUrl = app.LicenseUrl,
                 PStatementUrl = app.PrivacyStatementUrl
             };
@@ -225,9 +215,8 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
-            model.Email = user.Email;
             await user.GrantTargetApp(_dbContext, model.AppId);
-            return await _authFinisher.FinishAuth(this, model);
+            return await _authFinisher.FinishAuth(user, model);
         }
 
         [HttpGet]
@@ -236,7 +225,7 @@ namespace Aiursoft.Gateway.Controllers
             App app;
             try
             {
-                app = (await _apiService.AppInfoAsync(model.appid)).App;
+                app = (await _apiService.AppInfoAsync(model.AppId)).App;
             }
             catch (AiurUnexceptedResponse)
             {
@@ -246,7 +235,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View("AuthError");
             }
-            var viewModel = new RegisterViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
+            var viewModel = new RegisterViewModel(model.RedirectUrl, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
