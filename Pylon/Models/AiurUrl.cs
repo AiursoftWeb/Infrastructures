@@ -1,5 +1,7 @@
 ﻿using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Aiursoft.Pylon.Models
@@ -19,7 +21,13 @@ namespace Aiursoft.Pylon.Models
             {
                 if (prop.GetValue(param) != null)
                 {
-                    Params.Add(prop.Name, prop.GetValue(param).ToString());
+                    var propName = prop.Name;
+                    var fromQuery = prop.GetCustomAttributes(typeof(FromQueryAttribute), true).FirstOrDefault();
+                    if (fromQuery != null)
+                    {
+                        propName = (fromQuery as FromQueryAttribute).Name;
+                    }
+                    Params.Add(propName, prop.GetValue(param).ToString());
                 }
             }
         }

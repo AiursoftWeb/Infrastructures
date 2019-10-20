@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
@@ -6,13 +7,14 @@ namespace Aiursoft.Pylon.Models.API.OAuthAddressModels
     public class AuthorizeAddressModel
     {
         [Required]
-        public string appid { get; set; }
-        [Required]
+        [FromQuery(Name = "appid")]
+        public string AppId { get; set; }
         [Url]
-        public string redirect_uri { get; set; }
-        public string state { get; set; }
-        public string scope { get; set; }
-        public string response_type { get; set; }
+        [Required]
+        [FromQuery(Name = "redirect_uri")]
+        public string RedirectUrl { get; set; }
+        [FromQuery(Name = "state")]
+        public string State { get; set; }
         /// <summary>
         /// Force the user to input his password even when he is already signed in.
         /// </summary>
