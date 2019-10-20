@@ -23,25 +23,28 @@ namespace Aiursoft.Gateway.Controllers
     {
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly GatewayDbContext _dbContext;
-        private readonly AuthFinisher _authFinisher;
+        private readonly UserAppAuthManager _authManager;
         private readonly DeveloperApiService _apiService;
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
+        private readonly AuthLogger _authLogger;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
             GatewayDbContext dbContext,
-            AuthFinisher authFinisher,
+            UserAppAuthManager authManager,
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
-            SignInManager<GatewayUser> signInManager)
+            SignInManager<GatewayUser> signInManager,
+            AuthLogger authLogger)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
-            _authFinisher = authFinisher;
+            _authManager = authManager;
             _apiService = apiService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _authLogger = authLogger;
         }
 
         [Route("Sign-in/{providerName}")]
@@ -60,13 +63,11 @@ namespace Aiursoft.Gateway.Controllers
             }
             catch (AiurAPIModelException)
             {
-                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new
+                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
                 {
-                    appid = oauthModel.AppId,
-                    redirect_uri = oauthModel.ToRedirect,
-                    state = oauthModel.State,
-                    scope = oauthModel.Scope,
-                    response_type = oauthModel.ResponseType
+                    AppId = oauthModel.AppId,
+                    RedirectUri = oauthModel.RedirectUri,
+                    State = oauthModel.State,
                 }));
                 return Redirect(refreshlink);
             }
@@ -78,12 +79,13 @@ namespace Aiursoft.Gateway.Controllers
                 .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
             if (account != null)
             {
-                oauthModel.Email = account.Owner.Email;
-                await _authFinisher.FinishAuth(this, oauthModel);
+                await _authManager.FinishAuth(account.Owner, oauthModel);
             }
             var viewModel = new SignInViewModel
             {
-                OAuthInfo = oauthModel,
+                RedirectUri = oauthModel.RedirectUri,
+                State = oauthModel.State,
+                AppId = oauthModel.AppId,
                 UserDetail = info,
                 ProviderName = model.ProviderName,
                 AppImageUrl = app.IconPath,
@@ -132,16 +134,8 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = model.OAuthInfo.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model.OAuthInfo);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.AppId);
+                return await _authManager.FinishAuth(user, model);
             }
             else
             {

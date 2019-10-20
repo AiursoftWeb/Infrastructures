@@ -14,13 +14,11 @@
             <div class="text-center">
                 <img class="rounded" style="width:100px; height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
-            <form asp-controller="OAuth" asp-action="Authorize" method="post">
+            <form asp-controller="OAuth" asp-action="Authorize" method="post" 
+                  asp-route-redirect_uri="@Model.RedirectUri"
+                  asp-route-state="@Model.State"
+                  asp-route-appid="@Model.AppId">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <input asp-for="ToRedirect" type="hidden" />
-                <input asp-for="State" type="hidden" />
-                <input asp-for="AppId" type="hidden" />
-                <input asp-for="Scope" type="hidden" />
-                <input asp-for="ResponseType" type="hidden" />
                 <div class="form-group">
                     <label asp-for="Email"></label>
                     <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]" tabindex="1">
@@ -37,13 +35,11 @@
                 </div>
                 <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
                 @{
-                    var oauthInfo = new
+                    var oauthInfo = new FinishAuthInfo
                     {
-                        appid = Model.AppId,
-                        redirect_uri = Model.ToRedirect,
-                        state = Model.State,
-                        scope = Model.Scope,
-                        response_type = Model.ResponseType
+                        AppId = Model.AppId,
+                        RedirectUri = Model.RedirectUri,
+                        State = Model.State,
                     };
                     @foreach (var provider in AuthProviders)
                     {
@@ -52,7 +48,10 @@
                 }
             </form>
         </div>
-        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType" tabindex="4">
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
+           asp-route-redirect_uri="@Model.RedirectUri" 
+           asp-route-state="@Model.State" 
+           asp-route-appId="@Model.AppId">
             <span class="float-left">@Localizer["Sign up"]</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>

@@ -23,24 +23,18 @@ namespace Aiursoft.Gateway.Controllers
         private readonly ACTokenManager _tokenManager;
         private readonly DeveloperApiService _apiService;
         private readonly GatewayDbContext _dbContext;
-        private readonly SignInManager<GatewayUser> _signInManager;
-        private readonly UserManager<GatewayUser> _userManager;
-        private readonly ConfirmationEmailSender _emailSender;
+        private readonly UserAppAuthManager _authManager;
 
         public AccountController(
             ACTokenManager tokenManager,
             DeveloperApiService apiService,
             GatewayDbContext dbContext,
-            SignInManager<GatewayUser> signInManager,
-            UserManager<GatewayUser> userManager,
-            ConfirmationEmailSender emailSender)
+            UserAppAuthManager authManager)
         {
             _tokenManager = tokenManager;
             _apiService = apiService;
             _dbContext = dbContext;
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _emailSender = emailSender;
+            _authManager = authManager;
         }
 
         [APIProduces(typeof(CodeToOpenIdViewModel))]
@@ -90,7 +84,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);
             }
-            if (!await user.HasAuthorizedApp(_dbContext, appId))
+            if (!await _authManager.HasAuthorizedApp(user, appId))
             {
                 return this.Protocol(ErrorType.Unauthorized, "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
             }

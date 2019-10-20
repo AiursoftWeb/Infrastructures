@@ -37,38 +37,6 @@ namespace Aiursoft.Gateway.Models
             .ThenByDescending(t => t.Priority)
             .First()?
             .EmailAddress ?? string.Empty;
-
-        public async virtual Task GrantTargetApp(GatewayDbContext dbContext, string appId)
-        {
-            if (!await HasAuthorizedApp(dbContext, appId))
-            {
-                var appGrant = new AppGrant
-                {
-                    AppID = appId,
-                    GatewayUserId = Id
-                };
-                dbContext.LocalAppGrant.Add(appGrant);
-                await dbContext.SaveChangesAsync();
-            }
-        }
-
-        public async virtual Task<OAuthPack> GeneratePack(GatewayDbContext dbContext, string appId)
-        {
-            var pack = new OAuthPack
-            {
-                Code = Math.Abs(Guid.NewGuid().GetHashCode()),
-                UserId = Id,
-                ApplyAppId = appId
-            };
-            dbContext.OAuthPack.Add(pack);
-            await dbContext.SaveChangesAsync();
-            return pack;
-        }
-
-        public async Task<bool> HasAuthorizedApp(GatewayDbContext dbContext, string appId)
-        {
-            return await dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.GatewayUserId == Id);
-        }
     }
 
     public class UserEmail : AiurUserEmail

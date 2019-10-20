@@ -26,21 +26,9 @@ namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
     [GenerateDoc]
+    [APINotfoundHandler]
     public class OAuthController : Controller
     {
-        //Ensure App
-        //  if app is null
-        //  return not found
-        //Ensure model state
-        //  if model state invalid in HTTP Get
-        //      return autherror
-        //  if model state invalid in HTTP Post
-        //      return view with model
-        //Prepare user
-        //Check validation
-        //Do jobs
-        //Return success message
-
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
         private readonly ILogger _logger;
@@ -48,7 +36,8 @@ namespace Aiursoft.Gateway.Controllers
         private readonly DeveloperApiService _apiService;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly ISessionBasedCaptcha _captcha;
-        private readonly AuthFinisher _authFinisher;
+        private readonly UserAppAuthManager _authManager;
+        private readonly AuthLogger _authLogger;
 
         public OAuthController(
             UserManager<GatewayUser> userManager,
@@ -58,7 +47,8 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService developerApiService,
             ConfirmationEmailSender emailSender,
             ISessionBasedCaptcha sessionBasedCaptcha,
-            AuthFinisher authFinisher)
+            UserAppAuthManager authManager,
+            AuthLogger authLogger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -67,55 +57,40 @@ namespace Aiursoft.Gateway.Controllers
             _apiService = developerApiService;
             _emailSender = emailSender;
             _captcha = sessionBasedCaptcha;
-            _authFinisher = authFinisher;
+            _authManager = authManager;
+            _authLogger = authLogger;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.appid)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
             }
-            var url = new Uri(model.redirect_uri);
+            var url = new Uri(model.RedirectUri);
             var user = await GetCurrentUserAsync();
             // Wrong domain
             if (url.Host != app.AppDomain && app.DebugMode == false)
             {
                 ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
-                _logger.LogInformation($"A request with appId {model.appid} is access wrong domian.");
+                _logger.LogInformation($"A request with appId {model.AppId} is access wrong domian.");
                 return View("AuthError");
             }
             // Signed in. App is not in force input password mode. User did not specify force input.
-            else if (user != null && app.ForceInputPassword != true && model.forceConfirm != true)
+            else if (user != null && app.ForceInputPassword != true && model.ForceConfirm != true)
             {
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = app.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model.Convert(user.Email), app.ForceConfirmation);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
-            else if (model.tryAutho == true)
+            else if (model.TryAutho == true)
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
+            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -123,17 +98,10 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
+                model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
             var mail = await _dbContext
@@ -148,18 +116,10 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
-            var log = new AuditLogLocal
-            {
-                UserId = user.Id,
-                IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                Success = result.Succeeded,
-                AppId = app.AppId
-            };
-            _dbContext.AuditLogs.Add(log);
-            await _dbContext.SaveChangesAsync();
+            await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), result.Succeeded, app.AppId);
             if (result.Succeeded)
             {
-                return await _authFinisher.FinishAuth(this, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             else if (result.RequiresTwoFactor)
             {
@@ -179,17 +139,9 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmAddressModel model)
+        public async Task<IActionResult> AuthorizeConfirm(FinishAuthInfo model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
@@ -200,10 +152,8 @@ namespace Aiursoft.Gateway.Controllers
                 AppName = app.AppName,
                 UserNickName = user.NickName,
                 AppId = model.AppId,
-                ToRedirect = model.ToRedirect,
+                RedirectUri = model.RedirectUri,
                 State = model.State,
-                Scope = model.Scope,
-                ResponseType = model.ResponseType,
                 // Permissions
                 ViewOpenId = app.ViewOpenId,
                 ViewPhoneNumber = app.ViewPhoneNumber,
@@ -213,7 +163,6 @@ namespace Aiursoft.Gateway.Controllers
                 ChangePassword = app.ChangePassword,
                 ChangeGrantInfo = app.ChangeGrantInfo,
                 ViewAuditLog = app.ViewAuditLog,
-
                 TermsUrl = app.LicenseUrl,
                 PStatementUrl = app.PrivacyStatementUrl
             };
@@ -230,28 +179,19 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
-            model.Email = user.Email;
-            await user.GrantTargetApp(_dbContext, model.AppId);
-            return await _authFinisher.FinishAuth(this, model);
+            await _authManager.GrantTargetApp(user, model.AppId);
+            return await _authManager.FinishAuth(user, model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.appid)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
             }
-            var viewModel = new RegisterViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
+            var viewModel = new RegisterViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -263,15 +203,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Invalid captacha code!");
             }
-            App app;
-            try
-            {
-                app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            }
-            catch (AiurUnexceptedResponse)
-            {
-                return NotFound();
-            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 model.Recover(app.AppName, app.IconPath);
@@ -311,16 +243,8 @@ namespace Aiursoft.Gateway.Controllers
                 // Ignore smtp exception.
                 catch (SmtpException) { }
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = app.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                return await _authManager.FinishAuth(user, model);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);
@@ -341,13 +265,6 @@ namespace Aiursoft.Gateway.Controllers
         {
             await _signInManager.SignOutAsync();
             return Redirect(model.ToRedirect);
-        }
-
-        [AiurNoCache]
-        [Route("get-captcha-image")]
-        public IActionResult GetCaptchaImage()
-        {
-            return _captcha.GenerateCaptchaImageFileStream(HttpContext.Session, 100, 33);
         }
 
         private void AddErrors(IdentityResult result)

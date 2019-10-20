@@ -5,17 +5,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.Models.OAuthViewModels
 {
-    public class RegisterViewModel : IAuthorizeViewModel
+    public class RegisterViewModel : FinishAuthInfo
     {
         [Obsolete(error: true, message: "This function is only for framework.")]
         public RegisterViewModel() { }
-        public RegisterViewModel(string toRedirect, string state, string appId, string scope, string responseTpe, string appName, string appImageUrl)
+        public RegisterViewModel(string redirectUri, string state, string appId, string appName, string appImageUrl)
         {
-            this.ToRedirect = toRedirect;
-            this.State = state;
-            this.AppId = appId;
-            this.Scope = scope;
-            this.ResponseType = responseTpe;
+            RedirectUri = redirectUri;
+            State = state;
+            AppId = appId;
             Recover(appName, appImageUrl);
         }
         public void Recover(string appName, string appImageUrl)
@@ -24,16 +22,11 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
             AppImageUrl = appImageUrl;
         }
 
-        [Url]
-        public string ToRedirect { get; set; }
-        public string State { get; set; }
-        public string AppId { get; set; }
-        public string ResponseType { get; set; }
-        public string Scope { get; set; }
-
+        // Display part
         public string AppName { get; set; }
         public string AppImageUrl { get; set; }
 
+        // Submit part
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -57,12 +50,5 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         public string CaptchaCode { get; set; }
 
         public string PreferedLanguage { get; set; }
-
-        public string GetRegexRedirectUrl()
-        {
-            var url = new Uri(ToRedirect);
-            string result = $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";
-            return result;
-        }
     }
 }

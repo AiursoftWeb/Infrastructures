@@ -3,21 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 {
-    public class AuthorizeConfirmViewModel : IAuthorizeViewModel
+    public class AuthorizeConfirmViewModel : FinishAuthInfo
     {
-        public virtual string AppName { get; set; }
-        public virtual string UserNickName { get; set; }
-
-        [Url]
-        [Required]
-        public string ToRedirect { get; set; }
-
-        public string State { get; set; }
-        public string AppId { get; set; }
-        public string Scope { get; set; }
-        public string ResponseType { get; set; }
+        // Display part:
+        public string AppName { get; set; }
+        public string UserNickName { get; set; }
         public string Email { get; set; }
-
         [Display(Name = "View your basic identity info")]
         public bool ViewOpenId { get; set; } = true;
         [Display(Name = "View your phone number")]
@@ -35,21 +26,12 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 
         [Display(Name = "View user's sign in log.")]
         public bool ViewAuditLog { get; set; }
-
-
         public string TermsUrl { get; set; }
         public string PStatementUrl { get; set; }
 
-        public string GetRegexRedirectUrl()
-        {
-            var url = new Uri(ToRedirect);
-            string result = $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";
-            return result;
-        }
-
         public string GetRedirectRoot()
         {
-            var url = new Uri(ToRedirect);
+            var url = new Uri(RedirectUri);
             return $@"{url.Scheme}://{url.Host}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}";
         }
     }
