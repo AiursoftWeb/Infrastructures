@@ -22,12 +22,10 @@ namespace Aiursoft.Pylon.Services
             var action = register ? "register" : "authorize";
             var url = new AiurUrl(_serviceLocation.Gateway, "oauth", action, new AuthorizeAddressModel
             {
-                appid = _appsContainer._currentAppId,
-                redirect_uri = destination.ToString(),
-                response_type = "code",
-                scope = "snsapi_base",
-                state = state,
-                tryAutho = justTry
+                AppId = _appsContainer._currentAppId,
+                RedirectUrl = destination.ToString(),
+                State = state,
+                TryAutho = justTry
             });
             return url;
         }
