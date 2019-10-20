@@ -295,15 +295,7 @@ namespace Aiursoft.Gateway.Controllers
                 // Ignore smtp exception.
                 catch (SmtpException) { }
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = app.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
                 return await _authFinisher.FinishAuth(user, model);
             }
             AddErrors(result);

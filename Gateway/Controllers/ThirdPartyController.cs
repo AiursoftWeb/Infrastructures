@@ -27,6 +27,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly DeveloperApiService _apiService;
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
+        private readonly AuthLogger _authLogger;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
@@ -34,7 +35,8 @@ namespace Aiursoft.Gateway.Controllers
             AuthFinisher authFinisher,
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
-            SignInManager<GatewayUser> signInManager)
+            SignInManager<GatewayUser> signInManager,
+            AuthLogger authLogger)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
@@ -42,6 +44,7 @@ namespace Aiursoft.Gateway.Controllers
             _apiService = apiService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _authLogger = authLogger;
         }
 
         [Route("Sign-in/{providerName}")]
@@ -129,15 +132,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = model.OAuthInfo.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.OAuthInfo.AppId);
                 return await _authFinisher.FinishAuth(user, model.OAuthInfo);
             }
             else
