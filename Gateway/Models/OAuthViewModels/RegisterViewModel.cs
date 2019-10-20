@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.Models.OAuthViewModels
 {
-    public class RegisterViewModel : IAuthorizeViewModel
+    public class RegisterViewModel : IFinishAuthable
     {
         [Obsolete(error: true, message: "This function is only for framework.")]
         public RegisterViewModel() { }

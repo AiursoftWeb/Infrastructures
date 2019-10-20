@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 {
-    public class AuthorizeConfirmViewModel : IAuthorizeViewModel
+    public class AuthorizeConfirmViewModel : IFinishAuthable
     {
         public virtual string AppName { get; set; }
         public virtual string UserNickName { get; set; }

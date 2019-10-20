@@ -11,7 +11,7 @@ namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
         {
             UserDetail = new GitHubUserDetail();
         }
-        public OAuthInfo OAuthInfo { get; set; }
+        public FinishAuthInfo OAuthInfo { get; set; }
         public IUserDetail UserDetail { get; set; }
         public string ProviderName { get; set; }
         public string AppImageUrl { get; set; }

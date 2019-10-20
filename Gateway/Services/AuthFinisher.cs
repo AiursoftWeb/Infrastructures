@@ -23,29 +23,21 @@ namespace Aiursoft.Gateway.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> FinishAuth(Controller controller, IAuthorizeViewModel model, bool forceGrant = false)
+        public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant = false)
         {
-            var user = await GetUserFromEmail(model.Email);
             if (await user.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
             {
                 var pack = await user.GeneratePack(_dbContext, model.AppId);
-                var url = new AiurUrl(model.GetRegexRedirectUrl(), new AuthResultAddressModel
+                var url = new AiurUrl(GetRegexRedirectUrl(model.RedirectUrl), new AuthResultAddressModel
                 {
                     Code = pack.Code,
                     State = model.State
                 });
-                return controller.Redirect(url.ToString());
+                return new RedirectResult(url.ToString());
             }
             else
             {
-                return controller.RedirectToAction(nameof(OAuthController.AuthorizeConfirm), new AuthorizeConfirmAddressModel
-                {
-                    AppId = model.AppId,
-                    State = model.State,
-                    ToRedirect = model.ToRedirect,
-                    Scope = model.Scope,
-                    ResponseType = model.ResponseType
-                });
+                return new RedirectToActionResult(nameof(OAuthController.AuthorizeConfirm), "OAuth", model);
             }
         }
 
@@ -55,6 +47,12 @@ namespace Aiursoft.Gateway.Services
                 .Users
                 .Include(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.Emails.Any(p => p.EmailAddress == email));
+        }
+
+        private string GetRegexRedirectUrl(string sourceUrl)
+        {
+            var url = new Uri(sourceUrl);
+            return $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";
         }
     }
 }

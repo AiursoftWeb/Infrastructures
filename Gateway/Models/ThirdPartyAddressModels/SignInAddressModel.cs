@@ -15,7 +15,7 @@ namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
         public string Code { get; set; }
         public string State { get; set; }
 
-        public OAuthInfo BuildOAuthInfo()
+        public FinishAuthInfo BuildOAuthInfo()
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
                     .Split('&')
                     .Select(t => t.Split('='))
                     .Select(t => new KeyValuePair<string, string>(t[0].ToLower(), WebUtility.UrlDecode(t[1])));
-                return new OAuthInfo
+                return new FinishAuthInfo
                 {
                     AppId = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.appid)).Value,
                     ToRedirect = values.SingleOrDefault(t => t.Key == nameof(AuthorizeAddressModel.redirect_uri).ToLower()).Value,

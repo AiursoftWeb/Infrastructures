@@ -49,6 +49,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly ConfirmationEmailSender _emailSender;
         private readonly ISessionBasedCaptcha _captcha;
         private readonly AuthFinisher _authFinisher;
+        private readonly AuthLogger _authLogger;
 
         public OAuthController(
             UserManager<GatewayUser> userManager,
@@ -58,7 +59,8 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService developerApiService,
             ConfirmationEmailSender emailSender,
             ISessionBasedCaptcha sessionBasedCaptcha,
-            AuthFinisher authFinisher)
+            AuthFinisher authFinisher,
+            AuthLogger authLogger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -68,6 +70,7 @@ namespace Aiursoft.Gateway.Controllers
             _emailSender = emailSender;
             _captcha = sessionBasedCaptcha;
             _authFinisher = authFinisher;
+            _authLogger = authLogger;
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
@@ -77,7 +80,7 @@ namespace Aiursoft.Gateway.Controllers
             App app;
             try
             {
-                app = (await _apiService.AppInfoAsync(model.appid)).App;
+                app = (await _apiService.AppInfoAsync(model.AppId)).App;
             }
             catch (AiurUnexceptedResponse)
             {
@@ -87,35 +90,27 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View("AuthError");
             }
-            var url = new Uri(model.redirect_uri);
+            var url = new Uri(model.RedirectUrl);
             var user = await GetCurrentUserAsync();
             // Wrong domain
             if (url.Host != app.AppDomain && app.DebugMode == false)
             {
                 ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
-                _logger.LogInformation($"A request with appId {model.appid} is access wrong domian.");
+                _logger.LogInformation($"A request with appId {model.AppId} is access wrong domian.");
                 return View("AuthError");
             }
             // Signed in. App is not in force input password mode. User did not specify force input.
-            else if (user != null && app.ForceInputPassword != true && model.forceConfirm != true)
+            else if (user != null && app.ForceInputPassword != true && model.ForceConfirm != true)
             {
-                var log = new AuditLogLocal
-                {
-                    UserId = user.Id,
-                    IPAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Success = true,
-                    AppId = app.AppId
-                };
-                _dbContext.AuditLogs.Add(log);
-                await _dbContext.SaveChangesAsync();
-                return await _authFinisher.FinishAuth(this, model.Convert(user.Email), app.ForceConfirmation);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
             else if (model.tryAutho == true)
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.IconPath);
+            var viewModel = new AuthorizeViewModel(model.RedirectUrl, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
         }
 
@@ -159,7 +154,7 @@ namespace Aiursoft.Gateway.Controllers
             await _dbContext.SaveChangesAsync();
             if (result.Succeeded)
             {
-                return await _authFinisher.FinishAuth(this, model, app.ForceConfirmation);
+                return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
             }
             else if (result.RequiresTwoFactor)
             {
@@ -179,7 +174,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmAddressModel model)
+        public async Task<IActionResult> AuthorizeConfirm(FinishAuthInfo model)
         {
             App app;
             try

@@ -5,31 +5,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.Models.OAuthViewModels
 {
-    public class AuthorizeViewModel : IAuthorizeViewModel
+    public class AuthorizeViewModel : FinishAuthInfo
     {
         [Obsolete("This method is only for framework!", true)]
         public AuthorizeViewModel() { }
-        public AuthorizeViewModel(string toRedirect, string state, string appId, string scope, string responseType, string appName, string appImageUrl)
+        public AuthorizeViewModel(string redirectUrl, string state, string appId, string appName, string appImageUrl)
         {
-            this.ToRedirect = toRedirect;
-            this.State = state;
-            this.AppId = appId;
-            this.Scope = scope;
-            this.ResponseType = responseType;
+            RedirectUrl = redirectUrl;
+            State = state;
+            AppId = appId;
             Recover(appName, appImageUrl);
         }
+
         public void Recover(string appName, string appImageUrl)
         {
-            this.AppName = appName;
-            this.AppImageUrl = appImageUrl;
+            AppName = appName;
+            AppImageUrl = appImageUrl;
         }
+
+        // Display part:
+        public string AppName { get; set; }
         public string AppImageUrl { get; set; }
 
+        // Submit part:
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         [Display(Name = "Aiursoft Account")]
         public string Email { get; set; }
-
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
@@ -37,21 +39,6 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         [NoSpace]
         public string Password { get; set; }
 
-        [Required]
-        [Url]
-        public string ToRedirect { get; set; }
 
-        public string State { get; set; }
-        [Required]
-        public string AppId { get; set; }
-        public string ResponseType { get; set; }
-        public string Scope { get; set; }
-        public string AppName { get; set; }
-        public string GetRegexRedirectUrl()
-        {
-            var url = new Uri(ToRedirect);
-            string result = $@"{url.Scheme}://{url.Host}:{url.Port}{url.AbsolutePath}";
-            return result;
-        }
     }
 }
