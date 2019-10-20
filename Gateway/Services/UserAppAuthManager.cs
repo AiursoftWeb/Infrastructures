@@ -14,20 +14,20 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class AuthFinisher : IScopedDependency
+    public class UserAppAuthManager : IScopedDependency
     {
         private readonly GatewayDbContext _dbContext;
 
-        public AuthFinisher(GatewayDbContext dbContext)
+        public UserAppAuthManager(GatewayDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant = false)
         {
-            if (await user.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
+            if (await HasAuthorizedApp(user, model.AppId) && forceGrant == false)
             {
-                var pack = await user.GeneratePack(_dbContext, model.AppId);
+                var pack = await GeneratePack(user, model.AppId);
                 var url = new AiurUrl(GetRegexRedirectUrl(model.RedirectUrl), new AuthResultAddressModel
                 {
                     Code = pack.Code,
@@ -41,12 +41,37 @@ namespace Aiursoft.Gateway.Services
             }
         }
 
-        private Task<GatewayUser> GetUserFromEmail(string email)
+
+        public async Task GrantTargetApp(GatewayUser user, string appId)
         {
-            return _dbContext
-                .Users
-                .Include(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.Emails.Any(p => p.EmailAddress == email));
+            if (!await HasAuthorizedApp(user, appId))
+            {
+                var appGrant = new AppGrant
+                {
+                    AppID = appId,
+                    GatewayUserId = user.Id
+                };
+                _dbContext.LocalAppGrant.Add(appGrant);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<OAuthPack> GeneratePack(GatewayUser user, string appId)
+        {
+            var pack = new OAuthPack
+            {
+                Code = Math.Abs(Guid.NewGuid().GetHashCode()),
+                UserId = user.Id,
+                ApplyAppId = appId
+            };
+            _dbContext.OAuthPack.Add(pack);
+            await _dbContext.SaveChangesAsync();
+            return pack;
+        }
+
+        public async Task<bool> HasAuthorizedApp(GatewayUser user, string appId)
+        {
+            return await _dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.GatewayUserId == user.Id);
         }
 
         private string GetRegexRedirectUrl(string sourceUrl)

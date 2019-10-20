@@ -36,7 +36,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly DeveloperApiService _apiService;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly ISessionBasedCaptcha _captcha;
-        private readonly AuthFinisher _authFinisher;
+        private readonly UserAppAuthManager _authManager;
         private readonly AuthLogger _authLogger;
 
         public OAuthController(
@@ -47,7 +47,7 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService developerApiService,
             ConfirmationEmailSender emailSender,
             ISessionBasedCaptcha sessionBasedCaptcha,
-            AuthFinisher authFinisher,
+            UserAppAuthManager authManager,
             AuthLogger authLogger)
         {
             _userManager = userManager;
@@ -57,7 +57,7 @@ namespace Aiursoft.Gateway.Controllers
             _apiService = developerApiService;
             _emailSender = emailSender;
             _captcha = sessionBasedCaptcha;
-            _authFinisher = authFinisher;
+            _authManager = authManager;
             _authLogger = authLogger;
         }
 
@@ -83,7 +83,7 @@ namespace Aiursoft.Gateway.Controllers
             else if (user != null && app.ForceInputPassword != true && model.ForceConfirm != true)
             {
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
-                return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
             else if (model.TryAutho == true)
@@ -119,7 +119,7 @@ namespace Aiursoft.Gateway.Controllers
             await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), result.Succeeded, app.AppId);
             if (result.Succeeded)
             {
-                return await _authFinisher.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             else if (result.RequiresTwoFactor)
             {
@@ -179,8 +179,8 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
-            await user.GrantTargetApp(_dbContext, model.AppId);
-            return await _authFinisher.FinishAuth(user, model);
+            await _authManager.GrantTargetApp(user, model.AppId);
+            return await _authManager.FinishAuth(user, model);
         }
 
         [HttpGet]
@@ -244,7 +244,7 @@ namespace Aiursoft.Gateway.Controllers
                 catch (SmtpException) { }
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
-                return await _authFinisher.FinishAuth(user, model);
+                return await _authManager.FinishAuth(user, model);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);

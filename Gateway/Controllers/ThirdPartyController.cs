@@ -23,7 +23,7 @@ namespace Aiursoft.Gateway.Controllers
     {
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly GatewayDbContext _dbContext;
-        private readonly AuthFinisher _authFinisher;
+        private readonly UserAppAuthManager _authManager;
         private readonly DeveloperApiService _apiService;
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
@@ -32,7 +32,7 @@ namespace Aiursoft.Gateway.Controllers
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
             GatewayDbContext dbContext,
-            AuthFinisher authFinisher,
+            UserAppAuthManager authManager,
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
             SignInManager<GatewayUser> signInManager,
@@ -40,7 +40,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
-            _authFinisher = authFinisher;
+            _authManager = authManager;
             _apiService = apiService;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -79,7 +79,7 @@ namespace Aiursoft.Gateway.Controllers
                 .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
             if (account != null)
             {
-                await _authFinisher.FinishAuth(account.Owner, oauthModel);
+                await _authManager.FinishAuth(account.Owner, oauthModel);
             }
             var viewModel = new SignInViewModel
             {
@@ -133,7 +133,7 @@ namespace Aiursoft.Gateway.Controllers
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.OAuthInfo.AppId);
-                return await _authFinisher.FinishAuth(user, model.OAuthInfo);
+                return await _authManager.FinishAuth(user, model.OAuthInfo);
             }
             else
             {
