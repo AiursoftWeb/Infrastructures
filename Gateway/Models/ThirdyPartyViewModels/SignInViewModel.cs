@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.Authentication;
-using Aiursoft.Pylon.Services.Authentications.ToGitHubServer;
-using System.ComponentModel.DataAnnotations;
+using Aiursoft.Pylon.Services.Authentication.ToGitHubServer;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {
