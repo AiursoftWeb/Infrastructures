@@ -142,10 +142,10 @@
             Upload new file here
         </div>
         <div class="card-body">
-            <div class="form-group upload-form">
+            <form class="form-group upload-form" asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path" asp-route-justHaveUpdated="true" method="get">
                 <label>@Localizer["Upload anything to your site!"]</label>
                 <vc:aiur-uploader asp-for="file" site-name="@Model.SiteName" path="@Model.Path" size-in-mb="2000" allowed-extensions="" default-file=""></vc:aiur-uploader>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -155,7 +155,7 @@
         var updateButtons = function () {
             var value = $(".upload-form [name=file]").attr('data-internet-path');
             if (value && value.length > 0) {
-                window.location.href = window.location.href.split('?')[0] + "?JustHaveUpdated=true"
+                $('.upload-form').submit();
                 $("[name=file]").attr('data-internet-path', '');
             }
         };
