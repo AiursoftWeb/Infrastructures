@@ -1,13 +1,12 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services.Authentication;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 {
     public class GitHubService : IAuthProvider
     {
@@ -42,11 +41,11 @@ namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
 
         public string GetSignInRedirectLink(AiurUrl state)
         {
-            return new AiurUrl("https://github.com", "/login/oauth/authorize", new 
+            return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
             {
-                client_id = _clientId,
-                redirect_uri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
-                state = state.ToString()
+                ClientId = _clientId,
+                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                State = state.ToString()
             }).ToString();
         }
 
@@ -59,19 +58,19 @@ namespace Aiursoft.Pylon.Services.Authentications.ToGitHubServer
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
         {
             var apiAddress = "https://github.com/login/oauth/access_token";
-            var url = new AiurUrl(apiAddress, new
+            var url = new AiurUrl(apiAddress, new GitHubAccessTokenAddressModel
             {
-                client_id = clientId,
-                client_secret = clientSecret,
-                code
+                ClientId = clientId,
+                ClientSecret = clientSecret,
+                Code = code
             });
             var json = await _http.Get(url, false);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
-            if (string.IsNullOrWhiteSpace(response.access_token))
+            if (string.IsNullOrWhiteSpace(response.AccessToken))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github crenditial");
             }
-            return response.access_token;
+            return response.AccessToken;
         }
 
         private async Task<GitHubUserDetail> GetUserInfo(string accessToken)
