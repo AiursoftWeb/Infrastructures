@@ -86,6 +86,14 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<GitHubUserDetail>(json);
+                if (string.IsNullOrWhiteSpace(user.Email))
+                {
+                    user.Email = string.Empty;
+                }
+                if (string.IsNullOrWhiteSpace(user.Name))
+                {
+                    user.Name = string.Empty;
+                }
                 return user;
             }
             else

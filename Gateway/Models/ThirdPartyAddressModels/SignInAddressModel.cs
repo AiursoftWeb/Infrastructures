@@ -27,7 +27,7 @@ namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
                 return new FinishAuthInfo
                 {
                     AppId = values.SingleOrDefault(t => t.Key == "appid").Value,
-                    RedirectUri = values.SingleOrDefault(t => t.Key == "redirect-url").Value,
+                    RedirectUri = values.SingleOrDefault(t => t.Key == "redirect_uri").Value,
                     State = values.SingleOrDefault(t => t.Key == "state".ToLower()).Value,
                 };
             }
