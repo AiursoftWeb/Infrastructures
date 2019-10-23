@@ -78,7 +78,7 @@ namespace Aiursoft.Gateway.Controllers
                 .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
             if (account != null)
             {
-                await _authManager.FinishAuth(account.Owner, oauthModel);
+                return await _authManager.FinishAuth(account.Owner, oauthModel);
             }
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             var viewModel = new SignInViewModel
