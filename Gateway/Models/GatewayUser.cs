@@ -1,13 +1,10 @@
-﻿using Aiursoft.Gateway.Data;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Models
 {
@@ -62,5 +59,6 @@ namespace Aiursoft.Gateway.Models
         public string OwnerId { get; set; }
         [ForeignKey(nameof(OwnerId))]
         public GatewayUser Owner { get; set; }
+        public DateTime BindTime { get; set; } = DateTime.UtcNow;
     }
 }
