@@ -22,7 +22,12 @@ namespace Aiursoft.Gateway.Models
         [InverseProperty(nameof(ThirdPartyAccount.Owner))]
         public IEnumerable<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
 
-        public virtual string SMSPasswordResetToken { get; set; }
+        public string SMSPasswordResetToken { get; set; }
+
+        /// <summary>
+        /// Anti-spam usage. Private. Client IP address when creating this account.
+        /// </summary>
+        public string RegisterIPAddress { get; set; }
 
         [JsonProperty]
         [NotMapped]

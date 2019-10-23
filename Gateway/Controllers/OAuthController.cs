@@ -221,7 +221,8 @@ namespace Aiursoft.Gateway.Controllers
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = model.PreferedLanguage,
-                IconFilePath = Values.DefaultImagePath
+                IconFilePath = Values.DefaultImagePath,
+                RegisterIPAddress = HttpContext.Connection.RemoteIpAddress.ToString()
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
