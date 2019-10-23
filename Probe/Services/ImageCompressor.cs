@@ -28,7 +28,7 @@ namespace Aiursoft.Probe.Services
                     Directory.CreateDirectory(clearedFolder);
                 }
                 var clearededImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await GetClearedImage(path, clearededImagePath);
+                await ClearImage(path, clearededImagePath);
                 return clearededImagePath;
             }
             catch (ImageFormatException)
@@ -37,27 +37,35 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        private async Task GetClearedImage(string sourceImage, string saveTarget)
+        private async Task ClearImage(string sourceImage, string saveTarget)
         {
-            var sourceFileInfo = new FileInfo(sourceImage);
-            if (File.Exists(saveTarget))
+            var fileIsHere = File.Exists(saveTarget);
+            var fileIsLatest = new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileCanRead = FileCanBeRead(saveTarget);
+            if (fileIsHere && fileIsLatest && fileCanRead)
             {
-                if (new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
+                return;
+            }
+            else if (fileIsHere && fileIsLatest && !fileCanRead)
+            {
+                while (!FileCanBeRead(saveTarget))
                 {
-                    return;
+                    await Task.Delay(500);
                 }
             }
-            await Task.Run(() =>
+            else
             {
-                var image = Image.Load(sourceImage, out IImageFormat format);
-                image.Mutate(x => x.AutoOrient());
-                image.Metadata.ExifProfile = null;
-                using (var stream = File.OpenWrite(saveTarget))
+                File.OpenWrite(saveTarget).Close();
+                await Task.Run(() =>
                 {
+                    var image = Image.Load(sourceImage, out IImageFormat format);
+                    image.Mutate(x => x.AutoOrient());
+                    image.Metadata.ExifProfile = null;
+                    using var stream = File.OpenWrite(saveTarget);
                     image.Save(stream, format);
                     stream.Close();
-                }
-            });
+                });
+            }
         }
 
         public async Task<string> Compress(string path, int width, int height)
@@ -70,7 +78,7 @@ namespace Aiursoft.Probe.Services
                     Directory.CreateDirectory(compressedFolder);
                 }
                 var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await GetReducedImage(path, compressedImagePath, width, height);
+                await SaveReducedImage(path, compressedImagePath, width, height);
                 return compressedImagePath;
             }
             catch (ImageFormatException)
@@ -79,27 +87,50 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        private async Task GetReducedImage(string sourceImage, string saveTarget, int width, int height)
+        private async Task SaveReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
-            var sourceFileInfo = new FileInfo(sourceImage);
-            if (File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
+            var fileIsHere = File.Exists(saveTarget);
+            var fileIsLatest = new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileCanRead = FileCanBeRead(saveTarget);
+            if (fileIsHere && fileIsLatest && fileCanRead)
             {
                 return;
             }
-            File.OpenWrite(saveTarget).Close();
-            await Task.Run(() =>
+            else if (fileIsHere && fileIsLatest && !fileCanRead)
             {
-                var image = Image.Load(sourceImage, out IImageFormat format);
-                image.Mutate(x => x.AutoOrient());
-                image.Metadata.ExifProfile = null;
-                image.Mutate(x => x
-                    .Resize(width, height));
-                using (var stream = File.OpenWrite(saveTarget))
+                while (!FileCanBeRead(saveTarget))
                 {
+                    await Task.Delay(500);
+                }
+            }
+            else
+            {
+                File.OpenWrite(saveTarget).Close();
+                await Task.Run(() =>
+                {
+                    var image = Image.Load(sourceImage, out IImageFormat format);
+                    image.Mutate(x => x.AutoOrient());
+                    image.Metadata.ExifProfile = null;
+                    image.Mutate(x => x
+                        .Resize(width, height));
+                    using var stream = File.OpenWrite(saveTarget);
                     image.Save(stream, format);
                     stream.Close();
-                }
-            });
+                });
+            }
+        }
+
+        private bool FileCanBeRead(string filepath)
+        {
+            try
+            {
+                File.Open(filepath, FileMode.Open, FileAccess.Read).Dispose();
+                return true;
+            }
+            catch (IOException)
+            {
+                return false;
+            }
         }
     }
 }
