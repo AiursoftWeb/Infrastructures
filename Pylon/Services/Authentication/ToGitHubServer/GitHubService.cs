@@ -2,6 +2,7 @@
 using Aiursoft.Pylon.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -88,11 +89,11 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
                 var user = JsonConvert.DeserializeObject<GitHubUserDetail>(json);
                 if (string.IsNullOrWhiteSpace(user.Email))
                 {
-                    user.Email = string.Empty;
+                    user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
                 }
                 if (string.IsNullOrWhiteSpace(user.Name))
                 {
-                    user.Name = string.Empty;
+                    user.Name = Guid.NewGuid().ToString();
                 }
                 return user;
             }

@@ -71,7 +71,6 @@ namespace Aiursoft.Gateway.Controllers
                 }));
                 return Redirect(refreshlink);
             }
-            var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             var account = await _dbContext
                 .ThirdPartyAccounts
                 .Include(t => t.Owner)
@@ -81,6 +80,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 await _authManager.FinishAuth(account.Owner, oauthModel);
             }
+            var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             var viewModel = new SignInViewModel
             {
                 RedirectUri = oauthModel.RedirectUri,
@@ -106,6 +106,7 @@ namespace Aiursoft.Gateway.Controllers
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
             if (exists)
             {
+                // TODO: Handle.
                 throw new AiurAPIModelException(ErrorType.HasDoneAlready, $"An user with email '{model.UserDetail.Email}' already exists!");
             }
             var user = new GatewayUser

@@ -39,14 +39,13 @@ namespace Aiursoft.Probe.Services
 
         private async Task ClearImage(string sourceImage, string saveTarget)
         {
-            var fileIsHere = File.Exists(saveTarget);
-            var fileIsLatest = new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileIsLatest = File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
             var fileCanRead = FileCanBeRead(saveTarget);
-            if (fileIsHere && fileIsLatest && fileCanRead)
+            if (fileIsLatest && fileCanRead)
             {
                 return;
             }
-            else if (fileIsHere && fileIsLatest && !fileCanRead)
+            else if (fileIsLatest && !fileCanRead)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
@@ -89,14 +88,13 @@ namespace Aiursoft.Probe.Services
 
         private async Task SaveReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
-            var fileIsHere = File.Exists(saveTarget);
-            var fileIsLatest = new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileIsLatest = File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
             var fileCanRead = FileCanBeRead(saveTarget);
-            if (fileIsHere && fileIsLatest && fileCanRead)
+            if (fileIsLatest && fileCanRead)
             {
                 return;
             }
-            else if (fileIsHere && fileIsLatest && !fileCanRead)
+            else if (fileIsLatest && !fileCanRead)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
