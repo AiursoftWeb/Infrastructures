@@ -82,9 +82,16 @@ namespace Aiursoft.Probe.Services
         private async Task GetReducedImage(string sourceImage, string saveTarget, int width, int height)
         {
             var sourceFileInfo = new FileInfo(sourceImage);
-            if (File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime)
+            if (File.Exists(saveTarget) &&
+                new FileInfo(saveTarget).LastWriteTime > sourceFileInfo.LastWriteTime &&
+                new FileInfo(saveTarget).Length > 0 &&
+                !IsFileLocked(saveTarget))
             {
                 return;
+            }
+            while (IsFileLocked(saveTarget))
+            {
+                await Task.Delay(500);
             }
             File.OpenWrite(saveTarget).Close();
             await Task.Run(() =>
@@ -100,6 +107,26 @@ namespace Aiursoft.Probe.Services
                     stream.Close();
                 }
             });
+        }
+
+        private bool IsFileLocked(string file)
+        {
+            var fileInfo = new FileInfo(file);
+            FileStream stream = null;
+            try
+            {
+                stream = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+                return false;
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
         }
     }
 }
