@@ -105,13 +105,13 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<GoogleUserDetail>(json);
-                if (string.IsNullOrWhiteSpace(user.Email))
-                {
-                    user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
-                }
                 if (string.IsNullOrWhiteSpace(user.Name))
                 {
                     user.Name = Guid.NewGuid().ToString();
+                }
+                if (string.IsNullOrWhiteSpace(user.Email))
+                {
+                    user.Email = user.Name.Replace(' ', '_') + $"@from.{GetName().ToLower()}.com";
                 }
                 return user;
             }
