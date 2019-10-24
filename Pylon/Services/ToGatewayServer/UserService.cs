@@ -206,5 +206,19 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+
+        public async Task<AiurCollection<AiurThirdPartyAccount>> ViewSocialAccountsAsync(string accessToken, string userId)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewSocialAccounts", new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId
+            });
+            var result = await _http.Get(url, true);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<AiurThirdPartyAccount>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
     }
 }

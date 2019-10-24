@@ -4,6 +4,7 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -227,7 +228,7 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
         }
 
-        [APIProduces(typeof(AiurCollection<AuditLogLocal>))]
+        [APIProduces(typeof(AiurCollection<AuditLog>))]
         public async Task<IActionResult> ViewAuditLog(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
@@ -243,7 +244,7 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
-        [APIProduces(typeof(AiurCollection<ThirdPartyAccount>))]
+        [APIProduces(typeof(AiurCollection<AiurThirdPartyAccount>))]
         public async Task<IActionResult> ViewSocialAccounts(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ManageSocialAccount);

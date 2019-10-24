@@ -56,11 +56,10 @@ namespace Aiursoft.Gateway.Models
         public int Priority { get; set; }
     }
 
-    public class ThirdPartyAccount
+    public class ThirdPartyAccount : AiurThirdPartyAccount
     {
         [JsonIgnore]
         public int Id { get; set; }
-        public string ProviderName { get; set; }
         [JsonIgnore]
         public string OpenId { get; set; }
         [JsonIgnore]
@@ -68,6 +67,5 @@ namespace Aiursoft.Gateway.Models
         [JsonIgnore]
         [ForeignKey(nameof(OwnerId))]
         public GatewayUser Owner { get; set; }
-        public DateTime BindTime { get; set; } = DateTime.UtcNow;
     }
 }
