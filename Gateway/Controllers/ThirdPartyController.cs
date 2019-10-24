@@ -8,6 +8,7 @@ using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -145,8 +146,66 @@ namespace Aiursoft.Gateway.Controllers
             }
             else
             {
+                // TODO: Handle
                 throw new AiurAPIModelException(ErrorType.HasDoneAlready, result.Errors.First().Description);
             }
+        }
+
+        [Authorize]
+        [Route("bind-account/{providerName}")]
+        public async Task<IActionResult> BindAccount(BindAccountAddressModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user.ThirdPartyAccounts.Any(t => t.ProviderName == model.ProviderName))
+            {
+                var toDelete = await _dbContext.ThirdPartyAccounts
+                    .Where(t => t.OwnerId == user.Id)
+                    .Where(t => t.ProviderName == model.ProviderName)
+                    .ToListAsync();
+                _dbContext.ThirdPartyAccounts.RemoveRange(toDelete);
+                await _dbContext.SaveChangesAsync();
+            }
+            var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
+            if (provider == null)
+            {
+                // TODO: Handle.
+                throw new NotImplementedException($"Provider: '{model.ProviderName}' is not implemented!");
+            }
+            IUserDetail info;
+            try
+            {
+                info = await provider.GetUserDetail(model.Code);
+            }
+            catch (AiurAPIModelException)
+            {
+                // TODO: Invalid code. Handle.
+                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl(""));
+                return Redirect(refreshlink);
+            }
+            var link = new ThirdPartyAccount
+            {
+                OwnerId = user.Id,
+                OpenId = info.Id.ToString(),
+                ProviderName = provider.GetName()
+            };
+            _dbContext.ThirdPartyAccounts.Add(link);
+            await _dbContext.SaveChangesAsync();
+            // Complete
+            var viewModel = new BindAccountViewModel
+            {
+                UserDetail = info,
+                Provider = provider,
+                User = user
+            };
+            return View(viewModel);
+        }
+
+        private Task<GatewayUser> GetCurrentUserAsync()
+        {
+            return _dbContext
+                .Users
+                .Include(t => t.ThirdPartyAccounts)
+                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
         }
     }
 }

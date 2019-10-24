@@ -10,7 +10,6 @@ namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
         {
             UserDetail = new GitHubUserDetail();
         }
-        // Display part.
         public string ProviderName { get; set; }
         public string AppImageUrl { get; set; }
         public bool CanFindAnAccountWithEmail { get; set; }

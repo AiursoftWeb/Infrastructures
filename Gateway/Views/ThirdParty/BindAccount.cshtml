@@ -1,0 +1,27 @@
+﻿@model Aiursoft.Gateway.Models.ThirdyPartyViewModels.BindAccountViewModel
+@{
+    ViewData["Title"] = "Bind success with " + Model.Provider.GetName();
+}
+<div class="container">
+    <div class="card mx-auto mt-5" style="max-width: 50rem;">
+        <div class="card-header">
+            <i class="fa fa-shield"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" style="width:100px;height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.User.IconFilePath)?w=100&h=100">
+                <img class="rounded ml-3" style="width:100px;height:100px;" src="@Model.UserDetail.AvatarUrl">
+            </div>
+            <div class="alert alert-success alert-dismissible mt-3" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <strong>@Localizer["Bind success!"]</strong>
+                <p class="mb-0">
+                    You have successfully bind your Aiursoft account <strong>@Model.User.NickName</strong> with @Model.Provider.GetName() account <strong>@Model.UserDetail.Name</strong>!
+                </p>
+            </div>
+            <p class="text-muted">Now you can use your @Model.Provider.GetName() identity to sign in your Aiursoft account.</p>
+            <a class="btn btn-success btn-block" href="@ServiceLocation.Account" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Back to account center</a>
+        </div>
+    </div>
+</div>

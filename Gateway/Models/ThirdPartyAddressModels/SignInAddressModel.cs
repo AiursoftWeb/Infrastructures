@@ -1,18 +1,20 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API.OAuthAddressModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
 {
     public class SignInAddressModel
     {
+        [FromRoute]
         public string ProviderName { get; set; }
+        [FromQuery(Name = "code")]
         public string Code { get; set; }
+        [FromQuery(Name = "state")]
         public string State { get; set; }
 
         public FinishAuthInfo BuildOAuthInfo()
