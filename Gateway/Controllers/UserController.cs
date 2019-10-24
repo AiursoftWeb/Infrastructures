@@ -273,6 +273,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.ProviderName.ToLower() == model.ProviderName.ToLower())
                 .ToListAsync();
             _dbContext.ThirdPartyAccounts.RemoveRange(accounts);
+            await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully unbound your {model.ProviderName} account.");
         }
     }

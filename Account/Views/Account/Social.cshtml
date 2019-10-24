@@ -42,9 +42,9 @@
                 {
                     var main = Model.Accounts.FirstOrDefault(t => t.ProviderName == provider.GetName());
                     <li class="list-group-item">
-                        <div class="row">
+                        <form class="row" asp-controller="Account" asp-action="UnBindAccount">
                             <div class="col-10 d-flex">
-                                <i class="fa fa-fw fa-3x fa-@provider.GetButtonIcon() text-@provider.GetButtonColor()" style="width:40px; height:40px;" />
+                                <i class="fa fa-fw fa-3x fa-@provider.GetButtonIcon() text-@provider.GetButtonColor()" style="width:40px; height:40px;"></i>
                                 <div class="d-block ml-3">
                                     <h5>@provider.GetName()</h5>
 
@@ -75,7 +75,7 @@
                                     <a class="btn-sm btn btn-outline-success float-right mr-1 text-success" href="@provider.GetBindRedirectLink()">Bind now</a>
                                 }
                             </div>
-                        </div>
+                        </form>
                     </li>
                 }
             </ul>
