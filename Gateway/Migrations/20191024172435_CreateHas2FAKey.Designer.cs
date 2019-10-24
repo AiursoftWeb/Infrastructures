@@ -4,14 +4,16 @@ using Aiursoft.Gateway.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Gateway.Migrations
 {
     [DbContext(typeof(GatewayDbContext))]
-    partial class APIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191024172435_CreateHas2FAKey")]
+    partial class CreateHas2FAKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

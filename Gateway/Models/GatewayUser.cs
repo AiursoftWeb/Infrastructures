@@ -23,7 +23,7 @@ namespace Aiursoft.Gateway.Models
         public IEnumerable<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
 
         public string SMSPasswordResetToken { get; set; }
-
+        public bool Has2FAKey { get; set; }
         /// <summary>
         /// Anti-spam usage. Private. Client IP address when creating this account.
         /// </summary>
