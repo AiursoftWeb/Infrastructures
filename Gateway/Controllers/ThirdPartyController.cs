@@ -4,6 +4,7 @@ using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
 using Aiursoft.Gateway.Models.ThirdyPartyViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.Authentication;
@@ -19,7 +20,10 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
 {
+    [GenerateDoc]
+    [LimitPerMin]
     [Route("Third-party")]
+    [APINotfoundHandler]
     public class ThirdPartyController : Controller
     {
         private readonly IEnumerable<IAuthProvider> _authProviders;
@@ -77,11 +81,11 @@ namespace Aiursoft.Gateway.Controllers
                 .Include(t => t.Owner)
                 .ThenInclude(t => t.Emails)
                 .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
+            var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
-                return await _authManager.FinishAuth(account.Owner, oauthModel);
+                return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
             }
-            var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             var viewModel = new SignInViewModel
             {
                 RedirectUri = oauthModel.RedirectUri,
@@ -110,6 +114,7 @@ namespace Aiursoft.Gateway.Controllers
                 // TODO: Handle.
                 throw new AiurAPIModelException(ErrorType.HasDoneAlready, $"An user with email '{model.UserDetail.Email}' already exists!");
             }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var user = new GatewayUser
             {
                 UserName = model.UserDetail.Email + $".from.{model.ProviderName}.com",
@@ -142,7 +147,7 @@ namespace Aiursoft.Gateway.Controllers
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.AppId);
-                return await _authManager.FinishAuth(user, model);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             else
             {

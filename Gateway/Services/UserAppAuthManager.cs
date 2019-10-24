@@ -3,13 +3,10 @@ using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
@@ -23,7 +20,7 @@ namespace Aiursoft.Gateway.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant = false)
+        public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant)
         {
             if (await HasAuthorizedApp(user, model.AppId) && forceGrant == false)
             {

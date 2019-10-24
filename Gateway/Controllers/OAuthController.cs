@@ -176,7 +176,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = await GetCurrentUserAsync();
             await _authManager.GrantTargetApp(user, model.AppId);
-            return await _authManager.FinishAuth(user, model);
+            return await _authManager.FinishAuth(user, model, false);
         }
 
         [HttpGet]
@@ -236,7 +236,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                return await _authManager.FinishAuth(user, model);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);
