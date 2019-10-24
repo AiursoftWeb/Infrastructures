@@ -7,9 +7,9 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
         private readonly AuthLogger _authLogger;
+        private readonly ServiceLocation _serviceLocation;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
@@ -41,7 +42,8 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
             SignInManager<GatewayUser> signInManager,
-            AuthLogger authLogger)
+            AuthLogger authLogger,
+            ServiceLocation serviceLocation)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
@@ -50,6 +52,7 @@ namespace Aiursoft.Gateway.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _authLogger = authLogger;
+            _serviceLocation = serviceLocation;
         }
 
         [Route("sign-in/{providerName}")]
@@ -157,11 +160,14 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
-        [Authorize]
         [Route("bind-account/{providerName}")]
         public async Task<IActionResult> BindAccount(BindAccountAddressModel model)
         {
             var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return Redirect(_serviceLocation.Account + "/Auth/GoAuth");
+            }
             if (user.ThirdPartyAccounts.Any(t => t.ProviderName == model.ProviderName))
             {
                 var toDelete = await _dbContext.ThirdPartyAccounts
