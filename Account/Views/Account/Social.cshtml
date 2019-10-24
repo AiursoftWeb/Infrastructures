@@ -68,7 +68,7 @@
                             <div class="col-2">
                                 @if (main != null)
                                 {
-                                    <a class="btn-sm btn btn-outline-danger float-right mr-1 text-danger" onclick="void(0)">Unlink</a>
+                                    <button class="btn-sm btn btn-outline-danger float-right mr-1 text-danger" onclick="UnbindAccount('@provider.GetName()')">@Localizer["Unlink"]</button>
                                 }
                                 else
                                 {

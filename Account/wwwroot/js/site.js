@@ -41,3 +41,13 @@ var DeleteGrant = function (appId) {
         }
     });
 };
+
+var UnbindAccount = function (provider) {
+    $.post('/Account/UnBindAccount', { provider: provider }, function (data) {
+        if (data.code === 0) {
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
+};

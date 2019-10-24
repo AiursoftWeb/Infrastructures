@@ -379,6 +379,18 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        [APIExpHandler]
+        [APIModelStateChecker]
+        public async Task<IActionResult> UnBindAccount(string provider)
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var result = await _userService.UnBindSocialAccountAsync(user.Id, provider, token);
+            return Json(result);
+        }
+
         private async Task<AccountUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(User);
