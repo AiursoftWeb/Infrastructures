@@ -42,6 +42,15 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 
         public string GetButtonIcon() => "github";
 
+        public string GetBindRedirectLink()
+        {
+            return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
+            {
+                ClientId = _clientId,
+                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+            }).ToString();
+        }
+
         public string GetSignInRedirectLink(AiurUrl state)
         {
             return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel

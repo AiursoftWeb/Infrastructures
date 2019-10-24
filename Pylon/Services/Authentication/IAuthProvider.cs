@@ -10,6 +10,7 @@ namespace Aiursoft.Pylon.Services.Authentication
         string GetButtonColor();
         string GetButtonIcon();
         string GetSignInRedirectLink(AiurUrl state);
+        string GetBindRedirectLink();
         Task<IUserDetail> GetUserDetail(string code);
     }
 }
