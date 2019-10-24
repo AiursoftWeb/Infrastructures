@@ -23,7 +23,8 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
 
         public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangeProfile", new ChangeProfileAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangeProfile", new { });
+            var form = new AiurUrl(string.Empty, new ChangeProfileAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
@@ -31,7 +32,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 NewIconFilePathName = newIconFilePathName,
                 NewBio = newBio
             });
-            var result = await _http.Get(url, true);
+            var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
             if (jresult.Code != ErrorType.Success)
@@ -41,14 +42,15 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
 
         public async Task<AiurProtocol> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangePassword", new ChangePasswordAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangePassword", new { });
+            var form = new AiurUrl(string.Empty, new ChangePasswordAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
                 OldPassword = oldPassword,
                 NewPassword = newPassword
             });
-            var result = await _http.Get(url, true);
+            var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
             if (jresult.Code != ErrorType.Success)
@@ -72,13 +74,14 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
 
         public async Task<AiurProtocol> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPhoneNumber", new SetPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPhoneNumber", new { });
+            var form = new AiurUrl(string.Empty, new SetPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId,
                 Phone = phoneNumber
             });
-            var result = await _http.Get(url, true);
+            var result = await _http.Post(url, form, true);
             var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);

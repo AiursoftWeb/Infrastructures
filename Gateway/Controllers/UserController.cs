@@ -37,6 +37,7 @@ namespace Aiursoft.Gateway.Controllers
             _grantChecker = grantChecker;
         }
 
+        [HttpPost]
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -47,6 +48,7 @@ namespace Aiursoft.Gateway.Controllers
             return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
 
+        [HttpPost]
         public async Task<JsonResult> ChangePassword(ChangePasswordAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePassword);
@@ -54,7 +56,7 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully " });
+                return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed your password!" });
             }
             else
             {
@@ -73,6 +75,7 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
+        [HttpPost]
         public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePhoneNumber);
@@ -258,6 +261,12 @@ namespace Aiursoft.Gateway.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your audit log!"
             });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnBindSocialAccount()
+        {
+            throw new NotImplementedException();
         }
     }
 }
