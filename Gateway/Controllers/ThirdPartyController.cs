@@ -80,7 +80,7 @@ namespace Aiursoft.Gateway.Controllers
                 .ThirdPartyAccounts
                 .Include(t => t.Owner)
                 .ThenInclude(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
+                .SingleOrDefaultAsync(t => t.OpenId == info.Id);
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
@@ -140,7 +140,7 @@ namespace Aiursoft.Gateway.Controllers
                 {
                     OwnerId = user.Id,
                     ProviderName = model.ProviderName,
-                    OpenId = model.UserDetail.Id.ToString()
+                    OpenId = model.UserDetail.Id
                 };
                 _dbContext.ThirdPartyAccounts.Add(link);
                 await _dbContext.SaveChangesAsync();
@@ -190,7 +190,7 @@ namespace Aiursoft.Gateway.Controllers
             var link = new ThirdPartyAccount
             {
                 OwnerId = user.Id,
-                OpenId = info.Id.ToString(),
+                OpenId = info.Id,
                 ProviderName = provider.GetName()
             };
             _dbContext.ThirdPartyAccounts.Add(link);

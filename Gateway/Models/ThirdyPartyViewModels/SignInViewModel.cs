@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services.Authentication;
-using Aiursoft.Pylon.Services.Authentication.ToGitHubServer;
+using Aiursoft.Pylon.Services.Authentication.ToGoogerServer;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {
@@ -8,7 +8,7 @@ namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
     {
         public SignInViewModel()
         {
-            UserDetail = new GitHubUserDetail();
+            UserDetail = new GoogleUserDetail();
         }
         public string ProviderName { get; set; }
         public string AppImageUrl { get; set; }
