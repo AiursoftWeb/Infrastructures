@@ -52,7 +52,7 @@ namespace Aiursoft.Gateway.Controllers
             _authLogger = authLogger;
         }
 
-        [Route("Sign-in/{providerName}")]
+        [Route("sign-in/{providerName}")]
         public async Task<IActionResult> SignIn(SignInAddressModel model)
         {
             var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
@@ -84,6 +84,7 @@ namespace Aiursoft.Gateway.Controllers
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
+                await _signInManager.SignInAsync(account.Owner, true);
                 return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
             }
             var viewModel = new SignInViewModel
