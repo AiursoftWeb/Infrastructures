@@ -44,20 +44,20 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-10 d-flex">
-                                <i class="fa fa-fw fa-@provider.GetButtonIcon()" style="width:40px; height:40px;" />
-                                <div class="d-block">
+                                <i class="fa fa-fw fa-3x fa-@provider.GetButtonIcon() text-@provider.GetButtonColor()" style="width:40px; height:40px;" />
+                                <div class="d-block ml-3">
                                     <h5>@provider.GetName()</h5>
 
                                     @if (main != null)
                                     {
-                                        <p>
+                                        <p class="mb-1">
                                             <label>You have bind your Aiursoft account with @provider.GetName(). Bind time:</label>
                                             <lable class="text-muted" data-utc-time="@main.BindTime"></lable>
                                         </p>
                                     }
                                     else
                                     {
-                                        <p class="text-muted">
+                                        <p class="text-muted mb-1">
                                             You did not bind your account with @provider.GetName().
                                         </p>
                                     }
@@ -68,11 +68,11 @@
                             <div class="col-2">
                                 @if (main != null)
                                 {
-                                    <a class="btn-sm btn btn-outline-danger float-right mr-1" onclick="void(0)">Unlink</a>
+                                    <a class="btn-sm btn btn-outline-danger float-right mr-1 text-danger" onclick="void(0)">Unlink</a>
                                 }
                                 else
                                 {
-                                    <a class="btn-sm btn btn-outline-success float-right mr-1" href="@provider.GetBindRedirectLink()">Bind now</a>
+                                    <a class="btn-sm btn btn-outline-success float-right mr-1 text-success" href="@provider.GetBindRedirectLink()">Bind now</a>
                                 }
                             </div>
                         </div>
