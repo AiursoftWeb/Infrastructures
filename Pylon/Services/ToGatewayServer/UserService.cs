@@ -6,7 +6,7 @@ using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services.ToAPIServer
+namespace Aiursoft.Pylon.Services.ToGatewayServer
 {
     public class UserService : IScopedDependency
     {

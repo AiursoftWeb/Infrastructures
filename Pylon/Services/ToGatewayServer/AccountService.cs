@@ -6,7 +6,7 @@ using Aiursoft.Pylon.Models.API.AccountViewModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services.ToAPIServer
+namespace Aiursoft.Pylon.Services.ToGatewayServer
 {
     public class AccountService : IScopedDependency
     {

@@ -5,7 +5,7 @@ using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToGatewayServer;
 using Aiursoft.Pylon.Services.ToProbeServer;
 using Aiursoft.Pylon.Services.ToStatusServer;
 using Microsoft.AspNetCore.Mvc;

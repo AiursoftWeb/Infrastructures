@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.ForApps.AddressModels;
-using Aiursoft.Pylon.Services.ToAPIServer;
+using Aiursoft.Pylon.Services.ToGatewayServer;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Text;

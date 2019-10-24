@@ -5,7 +5,7 @@ using Aiursoft.Pylon.Models.API.ApiViewModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services.ToAPIServer
+namespace Aiursoft.Pylon.Services.ToGatewayServer
 {
     public class CoreApiService : IScopedDependency
     {
