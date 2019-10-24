@@ -387,7 +387,7 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
-            var result = await _userService.UnBindSocialAccountAsync(user.Id, provider, token);
+            var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
             return Json(result);
         }
 
