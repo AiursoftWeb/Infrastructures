@@ -184,8 +184,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             catch (AiurAPIModelException)
             {
-                // TODO: Invalid code. Handle.
-                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl(""));
+                var refreshlink = provider.GetBindRedirectLink();
                 return Redirect(refreshlink);
             }
             var link = new ThirdPartyAccount
