@@ -11,6 +11,6 @@ namespace Aiursoft.Pylon.Services.Authentication
         string GetButtonIcon();
         string GetSignInRedirectLink(AiurUrl state);
         string GetBindRedirectLink();
-        Task<IUserDetail> GetUserDetail(string code);
+        Task<IUserDetail> GetUserDetail(string code, bool isBinding = false);
     }
 }

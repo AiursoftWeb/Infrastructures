@@ -48,6 +48,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                State = "a",
                 Scope = "profile",
                 ResponseType = "code"
             }).ToString();
@@ -65,22 +66,23 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             }).ToString();
         }
 
-        public async Task<IUserDetail> GetUserDetail(string code)
+        public async Task<IUserDetail> GetUserDetail(string code, bool isBinding = false)
         {
-            var token = await GetAccessToken(_clientId, _clientSecret, code);
+            var token = await GetAccessToken(_clientId, _clientSecret, code, isBinding);
             return await GetUserInfo(token);
         }
 
-        private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
+        private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
         {
             var apiAddress = "https://oauth2.googleapis.com/token";
             var url = new AiurUrl(apiAddress, new { });
+            var action = isBinding ? "bind-account" : "sign-in";
             var form = new AiurUrl(string.Empty, new GoogleAccessTokenAddressModel
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GrantType = "authorization_code"
             });
             try

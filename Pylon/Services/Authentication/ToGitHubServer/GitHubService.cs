@@ -61,7 +61,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             }).ToString();
         }
 
-        public async Task<IUserDetail> GetUserDetail(string code)
+        public async Task<IUserDetail> GetUserDetail(string code, bool isBinding = false)
         {
             var token = await GetAccessToken(_clientId, _clientSecret, code);
             return await GetUserInfo(token);

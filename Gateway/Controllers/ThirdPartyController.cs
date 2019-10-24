@@ -186,7 +186,7 @@ namespace Aiursoft.Gateway.Controllers
             IUserDetail info;
             try
             {
-                info = await provider.GetUserDetail(model.Code);
+                info = await provider.GetUserDetail(model.Code, true);
             }
             catch (AiurAPIModelException)
             {
