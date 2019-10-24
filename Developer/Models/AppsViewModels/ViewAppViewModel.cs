@@ -72,6 +72,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             LicenseUrl = thisApp.LicenseUrl;
             IconPath = thisApp.IconPath;
             AppDomain = thisApp.AppDomain;
+
             ViewOpenId = thisApp.ViewOpenId;
             ViewPhoneNumber = thisApp.ViewPhoneNumber;
             ChangePhoneNumber = thisApp.ChangePhoneNumber;
@@ -80,6 +81,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             ChangePassword = thisApp.ChangePassword;
             ChangeGrantInfo = thisApp.ChangeGrantInfo;
             ViewAuditLog = thisApp.ViewAuditLog;
+            ManageSocialAccount = thisApp.ManageSocialAccount;
         }
 
         public bool JustHaveUpdated { get; set; } = false;
@@ -119,6 +121,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ChangeGrantInfo { get; set; }
         [Display(Name = "View user's sign in log.")]
         public bool ViewAuditLog { get; set; }
+        [Display(Name = "Manage user's social account.")]
+        public bool ManageSocialAccount { get; set; }
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }

@@ -51,17 +51,21 @@
                 {
                     <li><label asp-for="ViewAuditLog"></label></li>
                 }
+                @if (Model.ManageSocialAccount)
+                {
+                    <li><label asp-for="ManageSocialAccount"></label></li>
+                }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post"
-                asp-route-appid="@Model.AppId"
-                asp-route-redirect_uri="@Model.RedirectUri"
-                asp-route-state="@Model.State">
+                  asp-route-appid="@Model.AppId"
+                  asp-route-redirect_uri="@Model.RedirectUri"
+                  asp-route-state="@Model.State">
                 <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
-                        asp-route-appid="@Model.AppId"
-                        asp-route-redirect_uri="@Model.RedirectUri"
-                        asp-route-state="@Model.State"
-                        asp-route-force-confirm="true">
+                       asp-route-appid="@Model.AppId"
+                       asp-route-redirect_uri="@Model.RedirectUri"
+                       asp-route-state="@Model.State"
+                       asp-route-force-confirm="true">
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
                 </p>

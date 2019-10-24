@@ -4,12 +4,9 @@ using Aiursoft.Gateway.Models.OAuthViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Models.API.OAuthViewModels;
-using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
@@ -163,7 +159,8 @@ namespace Aiursoft.Gateway.Controllers
                 ChangeGrantInfo = app.ChangeGrantInfo,
                 ViewAuditLog = app.ViewAuditLog,
                 TermsUrl = app.LicenseUrl,
-                PStatementUrl = app.PrivacyStatementUrl
+                PStatementUrl = app.PrivacyStatementUrl,
+                ManageSocialAccount = app.ManageSocialAccount
             };
             return View(viewModel);
         }
