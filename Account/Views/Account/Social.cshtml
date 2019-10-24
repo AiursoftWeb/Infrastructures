@@ -1,0 +1,84 @@
+@model Aiursoft.Account.Models.AccountViewModels.SocialViewModel
+@{
+    ViewData["Title"] = "Social accounts";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="Index">@Localizer["Management Center"]</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
+        </div>
+    }
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="col-md-8 pl-0">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-fw fa-lock"></i>
+                @Localizer["Social accounts"]
+            </div>
+            <div class="card-body">
+                <p>
+                    You have @Model.Accounts.Count() third-party accounts linked to your Aiursoft account.
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var provider in Model.Providers)
+                {
+                    var main = Model.Accounts.FirstOrDefault(t => t.ProviderName == provider.GetName());
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-10 d-flex">
+                                <i class="fa fa-fw fa-@provider.GetButtonIcon()" style="width:40px; height:40px;" />
+                                <div class="d-block">
+                                    <h5>@provider.GetName()</h5>
+
+                                    @if (main != null)
+                                    {
+                                        <p>
+                                            <label>You have bind your Aiursoft account with @provider.GetName(). Bind time:</label>
+                                            <lable class="text-muted" data-utc-time="@main.BindTime"></lable>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">
+                                            You did not bind your account with @provider.GetName().
+                                        </p>
+                                    }
+                                    <br>
+
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                @if (main != null)
+                                {
+                                    <a class="btn-sm btn btn-outline-danger float-right mr-1" onclick="void(0)">Unlink</a>
+                                }
+                                else
+                                {
+                                    <a class="btn-sm btn btn-outline-success float-right mr-1" onclick="void(0)">Bind now</a>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

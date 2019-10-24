@@ -6,6 +6,7 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Aiursoft.Pylon.Services.ToGatewayServer;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,7 @@ namespace Aiursoft.Account.Controllers
         private readonly IConfiguration _configuration;
         private readonly DeveloperApiService _developerApiService;
         private readonly AuthService<AccountUser> _authService;
+        private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly AiurCache _cache;
 
         public AccountController(
@@ -40,6 +42,7 @@ namespace Aiursoft.Account.Controllers
             IConfiguration configuration,
             DeveloperApiService developerApiSerivce,
             AuthService<AccountUser> authService,
+            IEnumerable<IAuthProvider> authProviders,
             AiurCache cache)
         {
             _userManager = userManager;
@@ -49,6 +52,7 @@ namespace Aiursoft.Account.Controllers
             _configuration = configuration;
             _developerApiService = developerApiSerivce;
             _authService = authService;
+            _authProviders = authProviders;
             _cache = cache;
         }
 
@@ -360,6 +364,18 @@ namespace Aiursoft.Account.Controllers
                 var appInfo = await _cache.GetAndCache($"appInfo-{id}", () => _developerApiService.AppInfoAsync(id));
                 model.Apps.Add(appInfo.App);
             });
+            return View(model);
+        }
+
+        public async Task<IActionResult> Social()
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var model = new SocialViewModel(user)
+            {
+                Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items,
+                Providers = _authProviders
+            };
             return View(model);
         }
 
