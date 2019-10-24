@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -21,7 +22,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             HTTPService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            ILogger<GitHubService> logger)
         {
             _http = http;
             _serviceLocation = serviceLocation;
@@ -30,7 +32,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             _clientSecret = configuration["GitHub:ClientSecret"];
             if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github settings!");
+                logger.LogWarning("Did not set correct GitHub credential! You can only access the service property but can execute OAuth process!");
             }
         }
 
