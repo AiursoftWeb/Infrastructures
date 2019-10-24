@@ -223,5 +223,21 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+
+        public async Task<AiurProtocol> UnBindSocialAccountAsync(string accessToken, string userId, string providerName)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "UnBindSocialAccount", new { });
+            var form = new AiurUrl(string.Empty, new UnBindSocialAccountAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = userId,
+                ProviderName = providerName
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
     }
 }

@@ -264,9 +264,16 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UnBindSocialAccount()
+        public async Task<IActionResult> UnBindSocialAccount(UnBindSocialAccountAddressModel model)
         {
-            throw new NotImplementedException();
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ManageSocialAccount);
+            var accounts = await _dbContext
+                .ThirdPartyAccounts
+                .Where(t => t.OwnerId == user.Id)
+                .Where(t => t.ProviderName.ToLower() == model.ProviderName.ToLower())
+                .ToListAsync();
+            _dbContext.ThirdPartyAccounts.RemoveRange(accounts);
+            return this.Protocol(ErrorType.Success, $"Successfully unbound your {model.ProviderName} account.");
         }
     }
 }
