@@ -385,6 +385,10 @@ namespace Aiursoft.Account.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> UnBindAccount(string provider)
         {
+            if (string.IsNullOrWhiteSpace(provider))
+            {
+                return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
+            }
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
             var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
