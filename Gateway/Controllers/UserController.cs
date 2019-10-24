@@ -242,5 +242,21 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get all your audit log!"
             });
         }
+
+        [APIProduces(typeof(AiurCollection<ThirdPartyAccount>))]
+        public async Task<IActionResult> ViewSocialAccounts(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ManageSocialAccount);
+            var accounts = await _dbContext
+                .ThirdPartyAccounts
+                .Where(t => t.OwnerId == user.Id)
+                .OrderByDescending(t => t.BindTime)
+                .ToListAsync();
+            return Json(new AiurCollection<ThirdPartyAccount>(accounts)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get all your audit log!"
+            });
+        }
     }
 }

@@ -58,10 +58,14 @@ namespace Aiursoft.Gateway.Models
 
     public class ThirdPartyAccount
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string ProviderName { get; set; }
+        [JsonIgnore]
         public string OpenId { get; set; }
+        [JsonIgnore]
         public string OwnerId { get; set; }
+        [JsonIgnore]
         [ForeignKey(nameof(OwnerId))]
         public GatewayUser Owner { get; set; }
         public DateTime BindTime { get; set; } = DateTime.UtcNow;
