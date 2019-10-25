@@ -17,5 +17,13 @@ namespace Aiursoft.Pylon.Services
                 return _Counted;
             }
         }
+
+        public int GetCurrent
+        {
+            get
+            {
+                return _Counted;
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                 </div>
                 <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
+                <hr />
                 @{
                     var oauthInfo = new FinishAuthInfo
                     {

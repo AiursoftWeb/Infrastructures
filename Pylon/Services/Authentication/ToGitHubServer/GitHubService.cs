@@ -61,7 +61,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             }).ToString();
         }
 
-        public async Task<IUserDetail> GetUserDetail(string code)
+        public async Task<IUserDetail> GetUserDetail(string code, bool isBinding = false)
         {
             var token = await GetAccessToken(_clientId, _clientSecret, code);
             return await GetUserInfo(token);
@@ -98,13 +98,13 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<GitHubUserDetail>(json);
-                if (string.IsNullOrWhiteSpace(user.Email))
-                {
-                    user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
-                }
                 if (string.IsNullOrWhiteSpace(user.Name))
                 {
                     user.Name = Guid.NewGuid().ToString();
+                }
+                if (string.IsNullOrWhiteSpace(user.Email))
+                {
+                    user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
                 }
                 return user;
             }

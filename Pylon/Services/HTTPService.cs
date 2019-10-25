@@ -65,6 +65,7 @@ namespace Aiursoft.Pylon.Services
             }
             else
             {
+                var content = await response.Content.ReadAsStringAsync();
                 throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }

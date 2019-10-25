@@ -7,9 +7,9 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
         private readonly AuthLogger _authLogger;
+        private readonly ServiceLocation _serviceLocation;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
@@ -41,7 +42,8 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
             SignInManager<GatewayUser> signInManager,
-            AuthLogger authLogger)
+            AuthLogger authLogger,
+            ServiceLocation serviceLocation)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
@@ -50,9 +52,10 @@ namespace Aiursoft.Gateway.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _authLogger = authLogger;
+            _serviceLocation = serviceLocation;
         }
 
-        [Route("Sign-in/{providerName}")]
+        [Route("sign-in/{providerName}")]
         public async Task<IActionResult> SignIn(SignInAddressModel model)
         {
             var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
@@ -80,10 +83,11 @@ namespace Aiursoft.Gateway.Controllers
                 .ThirdPartyAccounts
                 .Include(t => t.Owner)
                 .ThenInclude(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.OpenId == info.Id.ToString());
+                .SingleOrDefaultAsync(t => t.OpenId == info.Id);
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
+                await _signInManager.SignInAsync(account.Owner, true);
                 return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
             }
             var viewModel = new SignInViewModel
@@ -140,7 +144,7 @@ namespace Aiursoft.Gateway.Controllers
                 {
                     OwnerId = user.Id,
                     ProviderName = model.ProviderName,
-                    OpenId = model.UserDetail.Id.ToString()
+                    OpenId = model.UserDetail.Id
                 };
                 _dbContext.ThirdPartyAccounts.Add(link);
                 await _dbContext.SaveChangesAsync();
@@ -156,11 +160,14 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
-        [Authorize]
         [Route("bind-account/{providerName}")]
         public async Task<IActionResult> BindAccount(BindAccountAddressModel model)
         {
             var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return Redirect(_serviceLocation.Account + "/Auth/GoAuth");
+            }
             if (user.ThirdPartyAccounts.Any(t => t.ProviderName == model.ProviderName))
             {
                 var toDelete = await _dbContext.ThirdPartyAccounts
@@ -179,18 +186,17 @@ namespace Aiursoft.Gateway.Controllers
             IUserDetail info;
             try
             {
-                info = await provider.GetUserDetail(model.Code);
+                info = await provider.GetUserDetail(model.Code, true);
             }
             catch (AiurAPIModelException)
             {
-                // TODO: Invalid code. Handle.
-                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl(""));
+                var refreshlink = provider.GetBindRedirectLink();
                 return Redirect(refreshlink);
             }
             var link = new ThirdPartyAccount
             {
                 OwnerId = user.Id,
-                OpenId = info.Id.ToString(),
+                OpenId = info.Id,
                 ProviderName = provider.GetName()
             };
             _dbContext.ThirdPartyAccounts.Add(link);

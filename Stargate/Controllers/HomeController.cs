@@ -19,23 +19,31 @@ namespace Aiursoft.Stargate.Controllers
         private Debugger _debugger;
         private readonly AppsContainer _appsContainer;
         private readonly ChannelService _channelService;
+        private readonly Counter _counter;
+        private readonly StargateMemory _memory;
 
         public HomeController(
             StargateDbContext dbContext,
             Debugger debugger,
             AppsContainer appsContainer,
-            ChannelService channelService)
+            ChannelService channelService,
+            Counter counter,
+            StargateMemory memory)
         {
             _dbContext = dbContext;
             _debugger = debugger;
             _appsContainer = appsContainer;
             _channelService = channelService;
+            _counter = counter;
+            _memory = memory;
         }
 
         public IActionResult Index()
         {
-            return Json(new AiurProtocol
+            return Json(new
             {
+                CurrentId = _counter.GetCurrent,
+                TotalMemoryMessages = _memory.Messages.Count,
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
             });
