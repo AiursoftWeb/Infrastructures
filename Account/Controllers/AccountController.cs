@@ -374,10 +374,23 @@ namespace Aiursoft.Account.Controllers
             var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
-                NewHas2FAKey =has2FAkey.Value,
-                NewTwoFactorEnabled = twoFactorEnabled.Value
-            };            
+                NewHas2FAKey = true,//has2FAkey.Value,
+                NewTwoFactorEnabled = true//twoFactorEnabled.Value
+            };
             return View(model);
+        }
+
+        public async Task<IActionResult> ViewTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            var returnList = (await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessToken())).Items;
+            var model = new View2FAKeyViewModel(user)
+            {
+                NewTwoFAKey = returnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString(),
+                NewTwoFAQRUri = returnList.Select(t => t.TwoFAQRUri).FirstOrDefault().ToString()
+            };
+            return View(model);
+
         }
 
         public async Task<IActionResult> Social()
@@ -391,7 +404,6 @@ namespace Aiursoft.Account.Controllers
             };
             return View(model);
         }
-
 
         [HttpPost]
         [APIExpHandler]

@@ -10,8 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
@@ -24,17 +27,22 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GatewayDbContext _dbContext;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
+        private readonly UrlEncoder _urlEncoder;
+
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public UserController(
-            UserManager<GatewayUser> userManager,
-            GatewayDbContext context,
-            ConfirmationEmailSender emailSender,
-            GrantChecker grantChecker)
+             UserManager<GatewayUser> userManager,
+             GatewayDbContext context,
+             ConfirmationEmailSender emailSender,
+             GrantChecker grantChecker,
+              UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _dbContext = context;
             _emailSender = emailSender;
             _grantChecker = grantChecker;
+            _urlEncoder = urlEncoder;
         }
 
         [HttpPost]
@@ -282,23 +290,79 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool ReturnValue = user.Has2FAKey;
-            return Json(new AiurValue<bool >(ReturnValue)
+            return Json(new AiurValue<bool>(ReturnValue)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's Has2FAkey."
             });
         }
-        
+
         [HttpPost]
         public async Task<JsonResult> ViewTwoFactorEnabled(ViewTwoFactorEnabledAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool ReturnValue = user.TwoFactorEnabled;
-            return Json(new AiurValue<bool >(ReturnValue)
+            return Json(new AiurValue<bool>(ReturnValue)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's TwoFactorEnabled."
             });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> View2FAKey(View2FAKeyAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var returnList = new List<View2FAKeyAddressModel>();
+            await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            returnList.Add(model);
+            return Json(new AiurCollection<View2FAKeyAddressModel>(returnList)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
+        #region --- TwoFAKey Helper---
+
+        private async Task LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, View2FAKeyAddressModel model)
+        {
+            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            if (string.IsNullOrEmpty(unformattedKey))
+            {
+                await _userManager.ResetAuthenticatorKeyAsync(user);
+                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+            }
+
+            model.TwoFAKey = FormatKey(unformattedKey);
+            model.TwoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
+        }
+        private string FormatKey(string unformattedKey)
+        {
+            var result = new StringBuilder();
+            int currentPosition = 0;
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                currentPosition += 4;
+            }
+            if (currentPosition < unformattedKey.Length)
+            {
+                result.Append(unformattedKey.Substring(currentPosition));
+            }
+
+            return result.ToString().ToLowerInvariant();
+        }
+
+        private string GenerateQrCodeUri(string email, string unformattedKey)
+        {
+            return string.Format(
+                AuthenticatorUriFormat,
+                _urlEncoder.Encode("Aiursoft.Nexus.Account"),
+                _urlEncoder.Encode(email),
+                unformattedKey);
+        }
+
+        #endregion
     }
 }

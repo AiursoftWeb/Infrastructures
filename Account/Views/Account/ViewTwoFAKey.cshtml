@@ -1,0 +1,26 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.View2FAKeyViewModel
+@{
+    ViewData["Title"] = "ViewTwoFAKey";
+}
+
+    <div>
+        <h1>ViewTwoFAKey</h1>
+        <h3>@Model.NewTwoFAKey</h3>
+        <h3>@Model.NewTwoFAQRUri</h3>
+        @*<div id="qrCode"></div>
+        <div id="qrCodeData" data-url="@Model.NewTwoFAQRUri"></div>*@
+    </div>
+@*@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript" src="~/js/qrcode.js/qrcode.js"></script>
+    <script type="text/javascript">
+        new QRCode(document.getElementById("qrCode"),
+            {
+                text: "@Html.Raw(Model.NewTwoFAQRUri)",
+                width: 150,
+                height: 150
+            });
+    </script>
+}*@
+
+
