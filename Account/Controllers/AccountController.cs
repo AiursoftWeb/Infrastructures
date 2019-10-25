@@ -367,6 +367,17 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> TwoFactorAuthentication()
+        {
+            var user = await GetCurrentUserAsync();        
+            var model = new TwoFactorAuthenticationViewModel(user)
+            {
+                NewHas2FAKey = true,
+                NewTwoFactorEnabled = true
+            };            
+            return View(model);
+        }
+
         public async Task<IActionResult> Social()
         {
             var user = await GetCurrentUserAsync();
