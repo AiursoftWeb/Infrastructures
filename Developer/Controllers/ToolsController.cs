@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
@@ -107,6 +108,36 @@ namespace Aiursoft.Developer.Controllers
                 else
                 {
                     model.ResultString = model.SourceString.ToUrlEncoded();
+                }
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
+
+        public IActionResult JsonFormat()
+        {
+            var model = new JsonFormatViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult JsonFormat(JsonFormatViewModel model)
+        {
+            try
+            {
+                if (model.Format)
+                {
+                    var dybject = JsonConvert.DeserializeObject(model.SourceString);
+                    model.ResultString = JsonConvert.SerializeObject(dybject, Formatting.Indented);
+                }
+                else
+                {
+                    var dybject = JsonConvert.DeserializeObject(model.SourceString);
+                    model.ResultString = JsonConvert.SerializeObject(dybject, Formatting.None);
                 }
             }
             catch (Exception e)
