@@ -278,7 +278,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> ViewHas2FAkey(SetPhoneNumberAddressModel model)
+        public async Task<JsonResult> ViewHas2FAkey(ViewHas2FAkeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool ReturnValue = user.Has2FAKey;
@@ -286,6 +286,18 @@ namespace Aiursoft.Gateway.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's Has2FAkey."
+            });
+        }
+        
+        [HttpPost]
+        public async Task<JsonResult> ViewTwoFactorEnabled(ViewTwoFactorEnabledAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            bool ReturnValue = user.TwoFactorEnabled;
+            return Json(new AiurValue<bool >(ReturnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's TwoFactorEnabled."
             });
         }
     }

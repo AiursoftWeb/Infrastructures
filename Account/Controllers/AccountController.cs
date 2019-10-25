@@ -371,10 +371,11 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var has2FAkey = await _userService.ViewHas2FAkeyAsync(user.Id, await _appsContainer.AccessToken());
+            var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
                 NewHas2FAKey =has2FAkey.Value,
-                NewTwoFactorEnabled = true
+                NewTwoFactorEnabled = twoFactorEnabled.Value
             };            
             return View(model);
         }
