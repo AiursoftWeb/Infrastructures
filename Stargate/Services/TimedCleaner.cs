@@ -49,7 +49,8 @@ namespace Aiursoft.Stargate.Services
         {
             try
             {
-                _memoryContext.Messages.RemoveAll(t => t.CreateTime < DateTime.UtcNow - new TimeSpan(0, 1, 0));
+                var middleMessage = _memoryContext.Messages.Average(t => t.Id);
+                _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
                 dbContext.Channels.RemoveRange(dbContext.Channels.Where(t => DateTime.UtcNow > t.CreateTime + TimeSpan.FromSeconds(t.LifeTime)));
                 await dbContext.SaveChangesAsync();
             }

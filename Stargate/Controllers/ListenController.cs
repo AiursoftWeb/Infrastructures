@@ -37,7 +37,7 @@ namespace Aiursoft.Stargate.Controllers
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
-            var lastReadTime = DateTime.UtcNow;
+            int lastReadId = 0;
             var channel = await _dbContext.Channels.FindAsync(model.Id);
             if (channel == null)
             {
@@ -60,7 +60,7 @@ namespace Aiursoft.Stargate.Controllers
                     var nextMessages = _memoryContext
                         .Messages
                         .Where(t => t.ChannelId == model.Id)
-                        .Where(t => t.CreateTime > lastReadTime)
+                        .Where(t => t.Id > lastReadId)
                         .ToList();
                     if (!nextMessages.Any())
                     {
@@ -70,11 +70,11 @@ namespace Aiursoft.Stargate.Controllers
                     }
                     else
                     {
-                        var nextMessage = nextMessages.OrderBy(t => t.CreateTime).FirstOrDefault();
+                        var nextMessage = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
                         if (nextMessage != null)
                         {
                             await _pusher.SendMessage(nextMessage.Content);
-                            lastReadTime = nextMessage.CreateTime;
+                            lastReadId = nextMessage.Id;
                             sleepTime = 0;
                         }
                     }
