@@ -2,6 +2,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+using Aiursoft.Pylon.Services;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -21,23 +22,26 @@ namespace Aiursoft.Stargate.Controllers
         private StargateMemory _memoryContext;
         private WebSocketPusher _pusher;
         private readonly ILogger<ListenController> _logger;
+        private readonly Counter _counter;
 
         public ListenController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
             WebSocketPusher pusher,
-            ILogger<ListenController> logger)
+            ILogger<ListenController> logger,
+            Counter counter)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
             _pusher = pusher;
             _logger = logger;
+            _counter = counter;
         }
 
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
-            int lastReadId = 0;
+            int lastReadId = _counter.GetCurrent;
             var channel = await _dbContext.Channels.FindAsync(model.Id);
             if (channel == null)
             {
