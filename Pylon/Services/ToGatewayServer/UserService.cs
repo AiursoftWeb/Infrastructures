@@ -239,5 +239,21 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+
+        public async Task<AiurValue<bool>> ViewHas2FAkeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewHas2FAkey", new { });
+            var form = new AiurUrl(string.Empty, new SetPhoneNumberAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            //var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
     }
 }

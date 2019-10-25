@@ -276,5 +276,17 @@ namespace Aiursoft.Gateway.Controllers
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully unbound your {model.ProviderName} account.");
         }
+
+        [HttpPost]
+        public async Task<JsonResult> ViewHas2FAkey(SetPhoneNumberAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            bool ReturnValue = user.Has2FAKey;
+            return Json(new AiurValue<bool >(ReturnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's Has2FAkey."
+            });
+        }
     }
 }

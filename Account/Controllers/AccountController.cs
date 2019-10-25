@@ -369,10 +369,11 @@ namespace Aiursoft.Account.Controllers
 
         public async Task<IActionResult> TwoFactorAuthentication()
         {
-            var user = await GetCurrentUserAsync();        
+            var user = await GetCurrentUserAsync();
+            var has2FAkey = await _userService.ViewHas2FAkeyAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
-                NewHas2FAKey = true,
+                NewHas2FAKey =has2FAkey.Value,
                 NewTwoFactorEnabled = true
             };            
             return View(model);
