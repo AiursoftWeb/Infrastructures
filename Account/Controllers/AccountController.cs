@@ -374,7 +374,7 @@ namespace Aiursoft.Account.Controllers
             var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
-                NewHas2FAKey = true,//has2FAkey.Value,
+                NewHas2FAKey = has2FAkey.Value,
                 NewTwoFactorEnabled = true//twoFactorEnabled.Value
             };
             return View(model);
@@ -391,6 +391,21 @@ namespace Aiursoft.Account.Controllers
             };
             return View(model);
 
+        }
+
+        public async Task<IActionResult> SetTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Value;
+            if (ReturnValue)
+            {
+                return RedirectToAction(nameof(ViewTwoFAKey));
+            }
+            else
+            { 
+                //error page
+                return View();
+            }
         }
 
         public async Task<IActionResult> Social()

@@ -310,13 +310,28 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> View2FAKey(View2FAKeyAddressModel model)
+        public async Task<IActionResult> View2FAKey(Get2FAKeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var returnList = new List<View2FAKeyAddressModel>();
-            await LoadSharedKeyAndQrCodeUriAsync(user, model);
-            returnList.Add(model);
-            return Json(new AiurCollection<View2FAKeyAddressModel>(returnList)
+            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            return Json(new AiurCollection<Get2FAKeyAddressModel>(returnList)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetTwoFAKey(Set2FAKeyAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);            
+            if (!user.Has2FAKey)
+            {
+                user.Has2FAKey = true;
+                await _userManager.UpdateAsync(user);
+            }
+            var ReturnValue = user.Has2FAKey;
+            return Json(new AiurValue<bool>(ReturnValue)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
@@ -325,7 +340,7 @@ namespace Aiursoft.Gateway.Controllers
 
         #region --- TwoFAKey Helper---
 
-        private async Task LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, View2FAKeyAddressModel model)
+        private async Task<List<Get2FAKeyAddressModel>> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, Get2FAKeyAddressModel model)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
@@ -333,9 +348,13 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
-
             model.TwoFAKey = FormatKey(unformattedKey);
             model.TwoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
+            
+            var returnList = new List<Get2FAKeyAddressModel>();            
+            returnList.Add(model);
+
+            return returnList;
         }
         private string FormatKey(string unformattedKey)
         {
