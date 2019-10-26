@@ -42,7 +42,7 @@
                                 If you click this button, you will need to re-enter the Verify Code in the Authentication app to enable the 2fa security authentication function.
                             </p>
                             <P>
-                                <a asp-controller="Account" asp-action="" class="btn btn-success">@Localizer["Reset 2fa key"]</a>
+                                <a asp-controller="Account" asp-action="ResetTwoFAKey" class="btn btn-success">@Localizer["Reset 2fa key"]</a>
                             </P>
                             if (!Model.NewTwoFactorEnabled)
                             {

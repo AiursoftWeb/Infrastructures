@@ -337,6 +337,31 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully set the user's TwoFAKey!"
             });
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> ResetTwoFAKey(Reset2FAKeyAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);            
+            
+            // reset 2fa key
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+
+            // check 2fa key
+            var ReturnValue = false;
+            var Rest2FAModel = new Get2FAKeyAddressModel();
+            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);           
+            if (null != returnList)
+            {
+                ReturnValue = true;
+            }
+
+            return Json(new AiurValue<bool>(ReturnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully reset the user's TwoFAKey!"
+            });
+        }        
 
         #region --- TwoFAKey Helper---
 

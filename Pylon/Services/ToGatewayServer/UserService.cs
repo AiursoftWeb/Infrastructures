@@ -300,5 +300,20 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
+        public async Task<AiurValue<bool>> ResetTwoFAKeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new { });
+            var form = new AiurUrl(string.Empty, new Reset2FAKeyAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
     }
 }

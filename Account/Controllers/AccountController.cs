@@ -408,6 +408,21 @@ namespace Aiursoft.Account.Controllers
             }
         }
 
+        public async Task<IActionResult> ResetTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Value;
+            if (ReturnValue)
+            {
+                return RedirectToAction(nameof(ViewTwoFAKey));
+            }
+            else
+            {
+                //error page
+                return View();
+            }
+        }
+
         public async Task<IActionResult> Social()
         {
             var user = await GetCurrentUserAsync();
