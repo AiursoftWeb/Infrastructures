@@ -1,12 +1,47 @@
-﻿
+﻿@model Aiursoft.Account.Models.AccountViewModels.DisableTwoFAViewModel
 @{
     ViewData["Title"] = "DisableTwoFA";
 }
 
-<h1>DisableTwoFA Warning</h1>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="TwoFactorAuthentication">@Localizer["Two-factor authentication"]</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
 
-<div>
-    <form asp-action="DisableTwoFA" method="post" class="form-group">
-        <button class="btn btn-danger" type="submit">Disable 2FA</button>
-    </form>
+    <div class="col-md-6 pl-0">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-fw fa-address-card"></i>
+                @Localizer["TwoFactorAuthentication Settings"]
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="alert alert-warning" role="alert">
+                        <p>
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            <strong>This action only disables 2FA.</strong>
+                        </p>
+                        <p>
+                            Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key
+                            used in an authenticator app you should
+                            <a asp-action="ResetAuthenticatorWarning"> reset your authenticator keys.</a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <form asp-action="DisableTwoFA" method="post" class="form-group">
+                            <button class="btn btn-danger" type="submit">Disable 2FA</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>
+
