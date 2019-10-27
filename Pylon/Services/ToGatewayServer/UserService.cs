@@ -315,5 +315,21 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
+        public async Task<AiurValue<bool>> TwoFAVerificyCodeAsync(string openId, string accessToken, string code)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "TwoFAVerificyCode", new TwoFAVerificyCodeAddressModel { });
+            var form = new AiurUrl(string.Empty, new TwoFAVerificyCodeAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken,
+                Code = code
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
     }
 }

@@ -375,7 +375,7 @@ namespace Aiursoft.Account.Controllers
             var model = new TwoFactorAuthenticationViewModel(user)
             {
                 NewHas2FAKey = has2FAkey.Value,
-                NewTwoFactorEnabled = true//twoFactorEnabled.Value
+                NewTwoFactorEnabled = twoFactorEnabled.Value
             };
             return View(model);
         }
@@ -402,7 +402,7 @@ namespace Aiursoft.Account.Controllers
                 return RedirectToAction(nameof(ViewTwoFAKey));
             }
             else
-            { 
+            {
                 //error page
                 return View();
             }
@@ -414,6 +414,30 @@ namespace Aiursoft.Account.Controllers
             var ReturnValue = (await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Value;
             if (ReturnValue)
             {
+                return RedirectToAction(nameof(ViewTwoFAKey));
+            }
+            else
+            {
+                //error page
+                return View();
+            }
+        }
+        
+        public async Task<IActionResult> VerifyTwoFACode()
+        {
+            var user = await GetCurrentUserAsync();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.NewCode)).Value;
+            if (ReturnValue)
+            {
+                // go to recoverycodes page
+ 
                 return RedirectToAction(nameof(ViewTwoFAKey));
             }
             else

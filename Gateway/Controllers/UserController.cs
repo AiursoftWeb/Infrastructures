@@ -324,8 +324,8 @@ namespace Aiursoft.Gateway.Controllers
         [HttpPost]
         public async Task<IActionResult> SetTwoFAKey(Set2FAKeyAddressModel model)
         {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);            
-            if (!user.Has2FAKey)
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            if (false ==  user.Has2FAKey)
             {
                 user.Has2FAKey = true;
                 await _userManager.UpdateAsync(user);
@@ -337,12 +337,12 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully set the user's TwoFAKey!"
             });
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> ResetTwoFAKey(Reset2FAKeyAddressModel model)
         {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);            
-            
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
             // reset 2fa key
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
@@ -350,7 +350,7 @@ namespace Aiursoft.Gateway.Controllers
             // check 2fa key
             var ReturnValue = false;
             var Rest2FAModel = new Get2FAKeyAddressModel();
-            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);           
+            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);
             if (null != returnList)
             {
                 ReturnValue = true;
@@ -361,7 +361,37 @@ namespace Aiursoft.Gateway.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully reset the user's TwoFAKey!"
             });
-        }        
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TwoFAVerificyCode(TwoFAVerificyCodeAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            // Strip spaces and hypens
+            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+            // change TwoFactorEnabled key
+            if (is2faTokenValid)
+            {
+                if (false == user.TwoFactorEnabled)
+                {
+                    user.TwoFactorEnabled = true;
+                    await _userManager.UpdateAsync(user);
+                }
+            }
+
+            var ReturnValue = is2faTokenValid;
+
+            return Json(new AiurValue<bool>(ReturnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Sucess Verified code ."
+            });
+        }
 
         #region --- TwoFAKey Helper---
 
@@ -375,12 +405,13 @@ namespace Aiursoft.Gateway.Controllers
             }
             model.TwoFAKey = FormatKey(unformattedKey);
             model.TwoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
-            
-            var returnList = new List<Get2FAKeyAddressModel>();            
+
+            var returnList = new List<Get2FAKeyAddressModel>();
             returnList.Add(model);
 
             return returnList;
         }
+
         private string FormatKey(string unformattedKey)
         {
             var result = new StringBuilder();

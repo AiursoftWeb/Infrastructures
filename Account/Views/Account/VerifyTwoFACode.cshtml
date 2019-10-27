@@ -1,0 +1,21 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.VerifyTwoFACodeViewModel
+@{
+    ViewData["Title"] = "VerifyTwoFACode";
+}
+
+<h1>VerifyTwoFACode</h1>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Account" asp-action="VerifyTwoFACode" method="post">
+
+            <div class="form-group">
+                <label asp-for="NewCode" class="control-label">Verification Code</label>
+                <input asp-for="NewCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="NewCode" class="text-danger"></span>
+            </div>
+
+            <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </form>
+    </div>
+</div>
