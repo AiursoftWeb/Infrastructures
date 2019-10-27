@@ -10,6 +10,7 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -160,14 +161,11 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
+        [Authorize]
         [Route("bind-account/{providerName}")]
         public async Task<IActionResult> BindAccount(BindAccountAddressModel model)
         {
             var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                return Redirect(_serviceLocation.Account + "/Auth/GoAuth");
-            }
             if (user.ThirdPartyAccounts.Any(t => t.ProviderName == model.ProviderName))
             {
                 var toDelete = await _dbContext.ThirdPartyAccounts
