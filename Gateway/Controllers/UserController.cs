@@ -414,6 +414,27 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);           
+
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+            var recodeArray = recoveryCodes.ToArray();
+
+            model.RecoveryCodesKey = null;
+            foreach (var i in recodeArray)
+            {
+                model.RecoveryCodesKey += i;
+            }
+            return Json(new AiurValue<string>(model.RecoveryCodesKey)
+            {
+                Code = ErrorType.Success,
+                Message = "Sucess regenerate recovery Codes!."
+            });
+        }
+
         #region --- TwoFAKey Helper---
 
         private async Task<List<Get2FAKeyAddressModel>> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, Get2FAKeyAddressModel model)

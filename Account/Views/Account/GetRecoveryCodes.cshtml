@@ -1,0 +1,17 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.GetRecoveryCodesViewModel
+@{
+    ViewData["Title"] = "GetRecoveryCodes";
+}
+
+<h1>GetRecoveryCodes</h1>
+
+@if(null!=Model.NewRecoveryCodesKey)
+{
+    <p>@Model.NewRecoveryCodesKey </p>
+}
+
+<div>
+    <form asp-action="GetRecoveryCodes" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">GetRecovery Codes</button>
+    </form>
+</div>

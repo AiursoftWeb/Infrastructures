@@ -345,6 +345,21 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+        
+        public async Task<AiurValue<string>> GetRecoveryCodesAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new GetRecoveryCodesAddressModel { });
+            var form = new AiurUrl(string.Empty, new GetRecoveryCodesAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
 
     }
 }

@@ -422,7 +422,7 @@ namespace Aiursoft.Account.Controllers
                 return View();
             }
         }
-        
+
         public async Task<IActionResult> VerifyTwoFACode()
         {
             var user = await GetCurrentUserAsync();
@@ -437,7 +437,7 @@ namespace Aiursoft.Account.Controllers
             if (ReturnValue)
             {
                 // go to recoverycodes page
- 
+
                 return RedirectToAction(nameof(ViewTwoFAKey));
             }
             else
@@ -470,6 +470,27 @@ namespace Aiursoft.Account.Controllers
                 //error page
                 return View();
             }
+        }
+
+        public async Task<IActionResult> GetRecoveryCodes()
+        {
+            // warning page
+            var user = await GetCurrentUserAsync();
+            var model = new GetRecoveryCodesViewModel(user)
+            {
+                NewRecoveryCodesKey = null
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken())).Value;
+
+            model.NewRecoveryCodesKey = ReturnValue;
+            return View(model);
         }
 
         public async Task<IActionResult> Social()
