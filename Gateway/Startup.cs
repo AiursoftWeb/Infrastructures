@@ -57,13 +57,8 @@ namespace Aiursoft.Gateway
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseStaticFiles();
             app.UseSession();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseSystemDefault();
             app.UseDocGenerator();
         }
     }

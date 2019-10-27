@@ -47,11 +47,8 @@ namespace Aiursoft.Wiki
                 app.UseEnforceHttps();
                 app.UseUserFriendlyErrorPage();
             }
-            app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseAiursoftSupportedCultures();
+            app.UseSystemDefault();
         }
     }
 }

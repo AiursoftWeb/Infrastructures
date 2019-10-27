@@ -42,8 +42,7 @@ namespace Aiursoft.Stargate
                 app.UseAPIFriendlyErrorPage();
             }
             app.UseWebSockets();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseSystemDefault();
             app.UseDocGenerator();
         }
     }

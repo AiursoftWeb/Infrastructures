@@ -42,10 +42,7 @@ namespace Aiursoft.Status
                 app.UseAPIFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseStaticFiles();
-            app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseSystemDefault();
             app.UseDocGenerator();
         }
     }

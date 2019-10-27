@@ -47,8 +47,7 @@ namespace Aiursoft.Probe
                 app.UseAPIFriendlyErrorPage();
             }
             app.UseCors(builder => builder.AllowAnyOrigin());
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseSystemDefault();
             app.UseDocGenerator();
         }
     }

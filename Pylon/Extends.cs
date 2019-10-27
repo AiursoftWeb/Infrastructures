@@ -49,6 +49,23 @@ namespace Aiursoft.Pylon
             return app;
         }
 
+
+        /// <summary>
+        /// Static files, routing, auth, language switcher, endpoints.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseSystemDefault(this IApplicationBuilder app)
+        {
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseLanguageSwitcher();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            return app;
+        }
+
         public static IApplicationBuilder UseEnforceHttps(this IApplicationBuilder app)
         {
             return app.UseMiddleware<EnforceHttpsMiddleware>();

@@ -46,11 +46,7 @@ namespace Aiursoft.EE
                 app.UseUserFriendlyErrorPage();
             }
             app.UseAiursoftSupportedCultures();
-            app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseSystemDefault();
         }
     }
 }
