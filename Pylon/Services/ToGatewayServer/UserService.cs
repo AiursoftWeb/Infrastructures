@@ -330,6 +330,21 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+        
+        public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new DisableTwoFAAddressModel { });
+            var form = new AiurUrl(string.Empty, new DisableTwoFAAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
 
     }
 }

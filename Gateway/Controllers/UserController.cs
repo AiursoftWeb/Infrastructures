@@ -325,7 +325,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> SetTwoFAKey(Set2FAKeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            if (false ==  user.Has2FAKey)
+            if (false == user.Has2FAKey)
             {
                 user.Has2FAKey = true;
                 await _userManager.UpdateAsync(user);
@@ -390,6 +390,27 @@ namespace Aiursoft.Gateway.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Sucess Verified code ."
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (true == disable2faResult.Succeeded)
+            {
+                user.TwoFactorEnabled = false;
+                user.Has2FAKey = false;
+                await _userManager.UpdateAsync(user);
+            }
+            bool ReturnValue = disable2faResult.Succeeded;
+
+            return Json(new AiurValue<bool>(ReturnValue)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully called DisableTwoFA method!"
             });
         }
 

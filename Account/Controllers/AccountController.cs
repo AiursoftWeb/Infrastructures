@@ -447,6 +447,31 @@ namespace Aiursoft.Account.Controllers
             }
         }
 
+        public async Task<IActionResult> DisableTwoFA()
+        {
+            // warning page
+            var user = await GetCurrentUserAsync();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken())).Value;
+            if (ReturnValue)
+            {
+                // go to TwoFactorAuthentication page
+
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+            else
+            {
+                //error page
+                return View();
+            }
+        }
+
         public async Task<IActionResult> Social()
         {
             var user = await GetCurrentUserAsync();
