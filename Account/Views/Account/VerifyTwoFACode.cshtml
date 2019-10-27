@@ -3,19 +3,42 @@
     ViewData["Title"] = "VerifyTwoFACode";
 }
 
-<h1>VerifyTwoFACode</h1>
-<div class="row">
-    <div class="col-md-6">
-        <form asp-controller="Account" asp-action="VerifyTwoFACode" method="post">
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="TwoFactorAuthentication">@Localizer["Two-factor authentication"]</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    <div class="col-md-8 pl-0">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-header">
+                    <i class="fa fa-fw fa-address-card"></i>
+                    @Localizer["TwoFactorAuthentication Settings"]
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form asp-controller="Account" asp-action="VerifyTwoFACode" method="post">
 
-            <div class="form-group">
-                <label asp-for="NewCode" class="control-label">Verification Code</label>
-                <input asp-for="NewCode" class="form-control" autocomplete="off" />
-                <span asp-validation-for="NewCode" class="text-danger"></span>
+                                    <div class="form-group">
+                                        <label asp-for="NewCode" class="control-label">Verification Code</label>
+                                        <input asp-for="NewCode" class="form-control" autocomplete="off" />
+                                        <span asp-validation-for="NewCode" class="text-danger"></span>
+                                    </div>
+
+                                    <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-
-            <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        </form>
+        </div>
     </div>
 </div>
