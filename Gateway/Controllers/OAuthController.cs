@@ -116,11 +116,11 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
-            else if (result.RequiresTwoFactor)
-            {
-                throw new NotImplementedException();
+            if (result.RequiresTwoFactor)
+            {               
+                return await _authManager.TwoFAFinishAuth(user, model, app.ForceConfirmation);
             }
-            else if (result.IsLockedOut)
+             if (result.IsLockedOut)
             {
                 ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
             }
@@ -177,6 +177,95 @@ namespace Aiursoft.Gateway.Controllers
             var user = await GetCurrentUserAsync();
             await _authManager.GrantTargetApp(user, model.AppId);
             return await _authManager.FinishAuth(user, model, false);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> TwoFAAuthorizeConfirm(FinishAuthInfo model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AuthError");
+            }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+            //var user = await GetCurrentUserAsync();
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            var viewModel = new TwoFAAuthorizeConfirmViewModel
+            {
+                AppName = app.AppName,
+                UserNickName = user.NickName,
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State,
+                Email = user.Email,
+                // Permissions
+                ViewOpenId = app.ViewOpenId,
+                ViewPhoneNumber = app.ViewPhoneNumber,
+                ChangePhoneNumber = app.ChangePhoneNumber,
+                ConfirmEmail = app.ConfirmEmail,
+                ChangeBasicInfo = app.ChangeBasicInfo,
+                ChangePassword = app.ChangePassword,
+                ChangeGrantInfo = app.ChangeGrantInfo,
+                ViewAuditLog = app.ViewAuditLog,
+                TermsUrl = app.LicenseUrl,
+                PStatementUrl = app.PrivacyStatementUrl,
+                ManageSocialAccount = app.ManageSocialAccount
+            };
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TwoFAAuthorizeConfirm(TwoFAAuthorizeConfirmViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;           
+
+            var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, false, false);
+            if (result.Succeeded)
+            {
+                await _authManager.GrantTargetApp(user, model.AppId);
+                return await _authManager.TwoFAFinishAuth(user, model, false);
+
+            }
+            else if (result.IsLockedOut)            
+            {
+                ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "The password does not match our records.");
+            }
+
+            var viewModel = new TwoFAAuthorizeConfirmViewModel
+            {
+                AppName = app.AppName,
+                UserNickName = user.NickName,
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State,
+                Email = user.Email,
+                // Permissions
+                ViewOpenId = app.ViewOpenId,
+                ViewPhoneNumber = app.ViewPhoneNumber,
+                ChangePhoneNumber = app.ChangePhoneNumber,
+                ConfirmEmail = app.ConfirmEmail,
+                ChangeBasicInfo = app.ChangeBasicInfo,
+                ChangePassword = app.ChangePassword,
+                ChangeGrantInfo = app.ChangeGrantInfo,
+                ViewAuditLog = app.ViewAuditLog,
+                TermsUrl = app.LicenseUrl,
+                PStatementUrl = app.PrivacyStatementUrl,
+                ManageSocialAccount = app.ManageSocialAccount
+            };
+            return View(viewModel);
         }
 
         [HttpGet]

@@ -44,6 +44,29 @@ namespace Aiursoft.Gateway.Services
             }
         }
 
+        public async Task<IActionResult> TwoFAFinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant)
+        {
+            if (await HasAuthorizedApp(user, model.AppId) && forceGrant == false)
+            {
+                var pack = await GeneratePack(user, model.AppId);
+                var url = new AiurUrl(GetRegexRedirectUri(model.RedirectUri), new AuthResultAddressModel
+                {
+                    Code = pack.Code,
+                    State = model.State
+                });
+                return new RedirectResult(url.ToString());
+            }
+            else
+            {
+                var url = new AiurUrl("", "OAuth", nameof(OAuthController.TwoFAAuthorizeConfirm), new FinishAuthInfo
+                {
+                    AppId = model.AppId,
+                    RedirectUri = model.RedirectUri,
+                    State = model.State
+                });
+                return new RedirectResult(url.ToString());
+            }
+        }
 
         public async Task GrantTargetApp(GatewayUser user, string appId)
         {
