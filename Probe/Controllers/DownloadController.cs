@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
 {
-    [LimitPerMin]
+    [LimitPerMin(200)]
     [Route("Download")]
     [APIExpHandler]
     public class DownloadController : Controller
