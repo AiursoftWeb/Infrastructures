@@ -403,7 +403,6 @@ namespace Aiursoft.Account.Controllers
             }
             else
             {
-                //error page
                 return View();
             }
         }
@@ -418,7 +417,6 @@ namespace Aiursoft.Account.Controllers
             }
             else
             {
-                //error page
                 return View();
             }
         }
@@ -437,12 +435,10 @@ namespace Aiursoft.Account.Controllers
             if (ReturnValue)
             {
                 // go to recoverycodes page
-
                 return RedirectToAction(nameof(GetRecoveryCodes));
             }
             else
             {
-                //error page
                 return View();
             }
         }
