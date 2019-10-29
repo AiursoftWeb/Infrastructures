@@ -12,9 +12,7 @@
         </div>
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
-                <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
-                <p>@Localizer["Do you want to use your {0} identity to sign in", Values.ProjectName] </p>
-                <p><strong>@Html.DisplayFor(t => t.AppName)</strong>@Localizer["?"]</p>
+                <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>               
             </div>
             <p>@Html.DisplayFor(t => t.AppName) has following permissions:</p>
             <ul>
@@ -71,8 +69,6 @@
                 <div class="row">
                     <label asp-for="Email" type="hidden"></label>
                     <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
-
-                    <label asp-for="VerifyCode"></label>
                     <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
 
                     <div class="col-md-4 mt-3">

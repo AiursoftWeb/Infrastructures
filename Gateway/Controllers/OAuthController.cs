@@ -188,7 +188,6 @@ namespace Aiursoft.Gateway.Controllers
                 return View("AuthError");
             }
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            //var user = await GetCurrentUserAsync();
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var viewModel = new TwoFAAuthorizeConfirmViewModel
             {
