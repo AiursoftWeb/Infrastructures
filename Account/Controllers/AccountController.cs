@@ -438,7 +438,7 @@ namespace Aiursoft.Account.Controllers
             {
                 // go to recoverycodes page
 
-                return RedirectToAction(nameof(ViewTwoFAKey));
+                return RedirectToAction(nameof(GetRecoveryCodes));
             }
             else
             {
