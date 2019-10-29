@@ -28,7 +28,8 @@ namespace Aiursoft.Gateway.Controllers
         private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
         private readonly UrlEncoder _urlEncoder;
-
+        private readonly TwoFAHelper _twoFAHelper;
+        
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public UserController(
@@ -36,13 +37,15 @@ namespace Aiursoft.Gateway.Controllers
              GatewayDbContext context,
              ConfirmationEmailSender emailSender,
              GrantChecker grantChecker,
-              UrlEncoder urlEncoder)
+              UrlEncoder urlEncoder,
+              TwoFAHelper twoFAHelper)
         {
             _userManager = userManager;
             _dbContext = context;
             _emailSender = emailSender;
             _grantChecker = grantChecker;
             _urlEncoder = urlEncoder;
+            _twoFAHelper = twoFAHelper;
         }
 
         [HttpPost]
@@ -313,7 +316,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> View2FAKey(Get2FAKeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            var returnList = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user, model);
             return Json(new AiurCollection<Get2FAKeyAddressModel>(returnList)
             {
                 Code = ErrorType.Success,
@@ -350,7 +353,7 @@ namespace Aiursoft.Gateway.Controllers
             // check 2fa key
             var ReturnValue = false;
             var Rest2FAModel = new Get2FAKeyAddressModel();
-            var returnList = await LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);
+            var returnList = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);
             if (null != returnList)
             {
                 ReturnValue = true;
@@ -424,9 +427,9 @@ namespace Aiursoft.Gateway.Controllers
             var recodeArray = recoveryCodes.ToArray();
 
             model.RecoveryCodesKey = null;
-            foreach (var i in recodeArray)
+            foreach (var item in recodeArray)
             {
-                model.RecoveryCodesKey += i;
+                model.RecoveryCodesKey += item;
             }
             return Json(new AiurValue<string>(model.RecoveryCodesKey)
             {
@@ -434,52 +437,5 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Sucess regenerate recovery Codes!."
             });
         }
-
-        #region --- TwoFAKey Helper---
-
-        private async Task<List<Get2FAKeyAddressModel>> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, Get2FAKeyAddressModel model)
-        {
-            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
-            {
-                await _userManager.ResetAuthenticatorKeyAsync(user);
-                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            }
-            model.TwoFAKey = FormatKey(unformattedKey);
-            model.TwoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
-
-            var returnList = new List<Get2FAKeyAddressModel>();
-            returnList.Add(model);
-
-            return returnList;
-        }
-
-        private string FormatKey(string unformattedKey)
-        {
-            var result = new StringBuilder();
-            int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
-                currentPosition += 4;
-            }
-            if (currentPosition < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition));
-            }
-
-            return result.ToString().ToLowerInvariant();
-        }
-
-        private string GenerateQrCodeUri(string email, string unformattedKey)
-        {
-            return string.Format(
-                AuthenticatorUriFormat,
-                _urlEncoder.Encode("Aiursoft.Nexus.Account"),
-                _urlEncoder.Encode(email),
-                unformattedKey);
-        }
-
-        #endregion
     }
 }
