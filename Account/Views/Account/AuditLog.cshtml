@@ -80,7 +80,9 @@
                     </li>
                 }
             </ul>
-            @Html.PagedListPager(new StaticPagedList<AuditLog>(Model.Logs, Model.PageIndex, 10, Model.TotalCount), page => Url.Action("AuditLog", new { page }))
+            <div class="pl-3">
+                @Html.PagedListPager(new StaticPagedList<AuditLog>(Model.Logs, Model.PageIndex, 10, Model.TotalCount), page => Url.Action("AuditLog", new { page }))
+            </div>
         </div>
     </div>
 </div>
