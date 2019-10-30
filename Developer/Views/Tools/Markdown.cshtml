@@ -6,22 +6,12 @@
 }
 @section css{
     @this.UseAiurDashboardCss(false)
-    <style>
-
-        textarea {
-            resize: none;
-            overflow: hidden;
-            min-height: 312px;
-        }
-    </style>
 }
 @section js{
     @this.UseAiurDashboardJs(false)
+    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     <script>
-        function auto_grow(element) {
-            element.style.height = "5px";
-            element.style.height = (element.scrollHeight) + "px";
-        }
+        autosize($('textarea'));
     </script>
 }
 <div class="jumbotron">
@@ -61,7 +51,7 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="SourceMarkdown"></label>
-                            <textarea asp-for="SourceMarkdown" onclick="auto_grow(this)" onkeydown="auto_grow(this)" onkeyup="auto_grow(this)" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
+                            <textarea asp-for="SourceMarkdown" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
                         </div>
 
                     </form>
@@ -104,9 +94,3 @@
         </div>
     </div>
 </div>
-@section js{
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-    <script>
-        autosize($('textarea'));
-    </script>
-}
