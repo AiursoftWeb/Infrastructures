@@ -117,6 +117,34 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        public IActionResult HtmlEncode()
+        {
+            var model = new HtmlEncodeViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult HtmlEncode(HtmlEncodeViewModel model)
+        {
+            try
+            {
+                if (model.Decrypt)
+                {
+                    model.ResultString = WebUtility.HtmlDecode(model.SourceString);
+                }
+                else
+                {
+                    model.ResultString = WebUtility.HtmlEncode(model.SourceString);
+                }
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
+
         public IActionResult JsonFormat()
         {
             var model = new JsonFormatViewModel();
