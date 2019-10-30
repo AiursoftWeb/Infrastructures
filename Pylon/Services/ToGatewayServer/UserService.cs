@@ -196,15 +196,23 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
-        public async Task<AiurCollection<AuditLog>> ViewAuditLogAsync(string accessToken, string userId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="userId"></param>
+        /// <param name="pageNumber">Starts from 1.</param>
+        /// <returns></returns>
+        public async Task<AiurPagedCollection<AuditLog>> ViewAuditLogAsync(string accessToken, string userId, int pageNumber)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAuditLog", new UserOperationAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAuditLog", new ViewAuditLogAddressModel
             {
                 AccessToken = accessToken,
-                OpenId = userId
+                OpenId = userId,
+                PageNumber = pageNumber - 1
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<AuditLog>>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurPagedCollection<AuditLog>>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

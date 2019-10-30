@@ -1,4 +1,6 @@
 @model Aiursoft.Account.Models.AccountViewModels.AuditLogViewModel
+@using Aiursoft.Pylon.Models.API
+@using Microsoft.AspNetCore.Routing
 @{
     ViewData["Title"] = "Audit Log";
 }
@@ -78,6 +80,7 @@
                     </li>
                 }
             </ul>
+            @Html.PagedListPager(new StaticPagedList<AuditLog>(Model.Logs, Model.PageIndex, 10, Model.TotalCount), page => Url.Action("AuditLog", new { page }))
         </div>
     </div>
 </div>

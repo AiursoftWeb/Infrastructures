@@ -15,5 +15,8 @@ namespace Aiursoft.Account.Models.AccountViewModels
 
         public List<AuditLog> Logs { get; set; }
         public List<App> Apps { get; set; } = new List<App>();
+
+        public int PageIndex { get; set; }
+        public int TotalCount { get; set; }
     }
 }

@@ -351,13 +351,16 @@ namespace Aiursoft.Account.Controllers
             return Json(result);
         }
 
-        public async Task<IActionResult> AuditLog()
+        public async Task<IActionResult> AuditLog(int page = 1)
         {
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
+            var logs = await _userService.ViewAuditLogAsync(token, user.Id, page);
             var model = new AuditLogViewModel(user)
             {
-                Logs = (await _userService.ViewAuditLogAsync(token, user.Id)).Items
+                Logs = logs.Items,
+                TotalCount = logs.TotalCount,
+                PageIndex = page,
             };
             await model.Logs.Select(t => t.AppId).Distinct().ForEachParallel(async (id) =>
             {

@@ -231,19 +231,25 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
         }
 
-        [APIProduces(typeof(AiurCollection<AuditLog>))]
-        public async Task<IActionResult> ViewAuditLog(UserOperationAddressModel model)
+        [APIProduces(typeof(AiurPagedCollection<AuditLog>))]
+        public async Task<IActionResult> ViewAuditLog(ViewAuditLogAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
-            var logs = await _dbContext
+            var logsQuery = _dbContext
                 .AuditLogs
                 .Where(t => t.UserId == user.Id)
-                .OrderByDescending(t => t.HappenTime)
+                .OrderByDescending(t => t.HappenTime);
+            var logs = await logsQuery
+                .Skip(model.PageNumber * model.PageSize)
+                .Take(model.PageSize)
                 .ToListAsync();
-            return Json(new AiurCollection<AuditLogLocal>(logs)
+            var logsCount = await logsQuery
+                .CountAsync();
+            return Json(new AiurPagedCollection<AuditLogLocal>(logs)
             {
                 Code = ErrorType.Success,
-                Message = "Successfully get all your audit log!"
+                Message = "Successfully get all your audit log!",
+                TotalCount = logsCount
             });
         }
 
