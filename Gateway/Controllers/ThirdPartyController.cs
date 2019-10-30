@@ -88,6 +88,7 @@ namespace Aiursoft.Gateway.Controllers
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
+                await _authLogger.LogAuthRecord(account.OwnerId, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
                 await _signInManager.SignInAsync(account.Owner, true);
                 return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
             }
