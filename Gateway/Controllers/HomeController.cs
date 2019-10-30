@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -84,7 +85,11 @@ namespace Aiursoft.Gateway.Controllers
                     .CountAsync(),
                 AverageUserGrantedApps = await _dbContext
                     .LocalAppGrant.CountAsync() * 1.0 /
-                    await _dbContext.Users.CountAsync()
+                    await _dbContext.Users.CountAsync(),
+                SocialAccounts = await _dbContext.ThirdPartyAccounts
+                    .GroupBy(t => t.ProviderName)
+                    .Select(t => KeyValuePair.Create(t.Key, t.Count()))
+                    .ToListAsync()
             });
         }
 
