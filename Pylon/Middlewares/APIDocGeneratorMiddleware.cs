@@ -27,7 +27,7 @@ namespace Aiursoft.Pylon.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Request.Path.ToString().ToLower() != "/doc")
+            if (context.Request.Path.ToString().Trim().Trim('/').ToLower() != "doc")
             {
                 await _next.Invoke(context);
                 return;

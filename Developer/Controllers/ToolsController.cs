@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Developer.Models.ToolsViewModels;
+using Aiursoft.Developer.Services;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Markdig;
@@ -13,6 +14,13 @@ namespace Aiursoft.Developer.Controllers
     [LimitPerMin]
     public class ToolsController : Controller
     {
+        private readonly QRCodeService _qrCodeService;
+
+        public ToolsController(QRCodeService qrCodeService)
+        {
+            _qrCodeService = qrCodeService;
+        }
+
         public IActionResult WebSocket()
         {
             return View();
@@ -117,6 +125,34 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
+        public IActionResult HtmlEncode()
+        {
+            var model = new HtmlEncodeViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult HtmlEncode(HtmlEncodeViewModel model)
+        {
+            try
+            {
+                if (model.Decrypt)
+                {
+                    model.ResultString = WebUtility.HtmlDecode(model.SourceString);
+                }
+                else
+                {
+                    model.ResultString = WebUtility.HtmlEncode(model.SourceString);
+                }
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
+
         public IActionResult JsonFormat()
         {
             var model = new JsonFormatViewModel();
@@ -139,6 +175,27 @@ namespace Aiursoft.Developer.Controllers
                     var dybject = JsonConvert.DeserializeObject(model.SourceString);
                     model.ResultString = JsonConvert.SerializeObject(dybject, Formatting.None);
                 }
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
+
+        public IActionResult QRCode()
+        {
+            var model = new QRCodeViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult QRCode(QRCodeViewModel model)
+        {
+            try
+            {
+                model.ResultString = _qrCodeService.ToQRCodeBase64(model.SourceString);
             }
             catch (Exception e)
             {

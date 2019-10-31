@@ -37,4 +37,10 @@ namespace Aiursoft.Pylon.Models
         }
         public List<T> Items { get; set; }
     }
+
+    public class AiurPagedCollection<T> : AiurCollection<T>
+    {
+        public AiurPagedCollection(List<T> items) : base(items) { }
+        public int TotalCount { get; set; }
+    }
 }

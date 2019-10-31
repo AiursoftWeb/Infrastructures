@@ -30,23 +30,8 @@ namespace Aiursoft.Status
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseAPIFriendlyErrorPage();
-            }
-            app.UseAiursoftSupportedCultures();
-            app.UseStaticFiles();
-            app.UseLanguageSwitcher();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
-            app.UseDocGenerator();
+            app.UseAiurAPIHandler(env.IsDevelopment());
+            app.UseAiursoftDefault();
         }
     }
 }
