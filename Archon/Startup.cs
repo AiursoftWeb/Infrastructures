@@ -11,26 +11,13 @@ namespace Aiursoft.Archon
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAiurMvc();
-
             services.AddAiurDependencies("Archon");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseAPIFriendlyErrorPage();
-            }
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
-            app.UseDocGenerator();
+            app.UseAiurAPIHandler(env.IsDevelopment());
+            app.UseAiursoftDefault();
         }
     }
 }

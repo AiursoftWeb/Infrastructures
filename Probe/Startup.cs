@@ -26,29 +26,15 @@ namespace Aiursoft.Probe
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddCors();
-
             services.AddAiurMvc();
-
             services.AddAiurDependencies("Probe");
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseAPIFriendlyErrorPage();
-            }
+            app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseCors(builder => builder.AllowAnyOrigin());
-            app.UseSystemDefault();
-            app.UseDocGenerator();
+            app.UseAiursoftDefault();
         }
     }
 }

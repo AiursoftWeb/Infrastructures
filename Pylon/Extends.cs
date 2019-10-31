@@ -38,65 +38,65 @@ namespace Aiursoft.Pylon
             return supportedCultures;
         }
 
-        public static IApplicationBuilder UseAiursoftSupportedCultures(this IApplicationBuilder app, string defaultLanguage = "en")
+        public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
         {
-            app.UseRequestLocalization(new RequestLocalizationOptions
+            if (isDevelopment)
             {
-                DefaultRequestCulture = new RequestCulture(defaultLanguage),
-                SupportedCultures = GetSupportedLanguages(),
-                SupportedUICultures = GetSupportedLanguages()
-            });
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseMiddleware<EnforceHttpsMiddleware>();
+                app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
+            }
             return app;
         }
 
+        public static IApplicationBuilder UseAiurUserHandler(this IApplicationBuilder app, bool isDevelopment)
+        {
+            if (isDevelopment)
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseMiddleware<EnforceHttpsMiddleware>();
+                app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
+                app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
+            }
+            return app;
+        }
 
         /// <summary>
         /// Static files, routing, auth, language switcher, endpoints.
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseSystemDefault(this IApplicationBuilder app)
+        public static IApplicationBuilder UseAiursoftDefault(this IApplicationBuilder app)
         {
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                SupportedCultures = GetSupportedLanguages(),
+                SupportedUICultures = GetSupportedLanguages()
+            });
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseLanguageSwitcher();
+            app.UseMiddleware<SwitchLanguageMiddleware>();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseDocGenerator();
             return app;
-        }
-
-        public static IApplicationBuilder UseEnforceHttps(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<EnforceHttpsMiddleware>();
-        }
-
-        public static IApplicationBuilder UseHandleRobots(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<HandleRobotsMiddleware>();
-        }
-
-        public static IApplicationBuilder UseLanguageSwitcher(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<SwitchLanguageMiddleware>();
         }
 
         public static IApplicationBuilder UseDocGenerator(this IApplicationBuilder app)
         {
             return app.UseMiddleware<APIDocGeneratorMiddleware>();
-        }
-
-        public static IApplicationBuilder UseUserFriendlyErrorPage(this IApplicationBuilder app)
-        {
-            app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
-            app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
-            return app;
-        }
-
-        public static IApplicationBuilder UseAPIFriendlyErrorPage(this IApplicationBuilder app)
-        {
-            app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
-            return app;
         }
 
         public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)

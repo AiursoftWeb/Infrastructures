@@ -30,20 +30,9 @@ namespace Aiursoft.Stargate
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseAPIFriendlyErrorPage();
-            }
+            app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseWebSockets();
-            app.UseSystemDefault();
-            app.UseDocGenerator();
+            app.UseAiursoftDefault();
         }
     }
 }

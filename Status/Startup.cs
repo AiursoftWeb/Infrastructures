@@ -30,20 +30,8 @@ namespace Aiursoft.Status
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseAPIFriendlyErrorPage();
-            }
-            app.UseAiursoftSupportedCultures();
-            app.UseSystemDefault();
-            app.UseDocGenerator();
+            app.UseAiurAPIHandler(env.IsDevelopment());
+            app.UseAiursoftDefault();
         }
     }
 }

@@ -45,21 +45,9 @@ namespace Aiursoft.Gateway
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseHandleRobots();
-                app.UseEnforceHttps();
-                app.UseUserFriendlyErrorPage();
-            }
-            app.UseAiursoftSupportedCultures();
+            app.UseAiurUserHandler(env.IsDevelopment());
             app.UseSession();
-            app.UseSystemDefault();
-            app.UseDocGenerator();
+            app.UseAiursoftDefault();
         }
     }
 }
