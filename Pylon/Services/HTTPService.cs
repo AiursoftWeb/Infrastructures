@@ -24,10 +24,7 @@ namespace Aiursoft.Pylon.Services
                 url.Address = Regex.Replace(url.Address, "^https://", "http://", RegexOptions.Compiled);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url.Address)
-            {
-                Content = new FormUrlEncodedContent(url.Params)
-            };
+            var request = new HttpRequestMessage(HttpMethod.Get, url.ToString());
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
             request.Headers.Add("accept", "application/json");
