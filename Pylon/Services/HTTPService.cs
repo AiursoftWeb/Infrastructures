@@ -10,10 +10,12 @@ namespace Aiursoft.Pylon.Services
     public class HTTPService : IScopedDependency
     {
         private readonly HttpClient _client;
+        private readonly Regex _regex;
 
         public HTTPService(
             IHttpClientFactory clientFactory)
         {
+            _regex = new Regex("^https://", RegexOptions.Compiled);
             _client = clientFactory.CreateClient();
         }
 
@@ -21,7 +23,7 @@ namespace Aiursoft.Pylon.Services
         {
             if (internalRequest)
             {
-                url.Address = Regex.Replace(url.Address, "^https://", "http://", RegexOptions.Compiled);
+                url.Address = _regex.Replace(url.Address, "http://");
             }
 
             var request = new HttpRequestMessage(HttpMethod.Get, url.ToString());
@@ -44,7 +46,7 @@ namespace Aiursoft.Pylon.Services
         {
             if (internalRequest)
             {
-                url.Address = Regex.Replace(url.Address, "^https://", "http://", RegexOptions.Compiled);
+                url.Address = _regex.Replace(url.Address, "http://");
             }
 
             var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
