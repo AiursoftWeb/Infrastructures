@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -26,7 +27,10 @@ namespace Aiursoft.Pylon.Services
                 url.Address = _regex.Replace(url.Address, "http://");
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url.ToString());
+            var request = new HttpRequestMessage(HttpMethod.Get, url.ToString())
+            {
+                Content = new FormUrlEncodedContent(new Dictionary<string, string>())
+            };
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
             request.Headers.Add("accept", "application/json");
