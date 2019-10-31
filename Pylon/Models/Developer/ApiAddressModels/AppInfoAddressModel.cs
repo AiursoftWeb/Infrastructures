@@ -6,7 +6,7 @@ namespace Aiursoft.Pylon.Models.Developer.ApiAddressModels
     public class AppInfoAddressModel
     {
         [Required]
-        [FromQuery(Name = "appId")]
+        [FromQuery(Name = "appid")]
         public string AppId { get; set; }
     }
 }
