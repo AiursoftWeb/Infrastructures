@@ -3,12 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Attributes
 {
-    public class IsGuid : ValidationAttribute
+    public class IsGuidOrEmpty : ValidationAttribute
     {
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
+                if(string.IsNullOrWhiteSpace(val))
+                {
+                    return true;
+                }
                 return Guid.TryParse(val, out _);
             }
             return true;
