@@ -76,6 +76,10 @@ namespace Aiursoft.Pylon.Services
             {
                 return DateTime.UtcNow;
             }
+            else if (type == typeof(Guid) || type == typeof(Guid?))
+            {
+                return Guid.NewGuid();
+            }
             else if (type == typeof(DateTimeOffset) || type == typeof(DateTimeOffset?))
             {
                 return DateTimeOffset.UtcNow;
