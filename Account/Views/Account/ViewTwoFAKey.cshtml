@@ -13,11 +13,11 @@
     </ol>
     <div class="col-md-8 pl-0">
         <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-fw fa-address-card"></i>
+                @Localizer["TwoFactorAuthentication Settings"]
+            </div>
             <div class="card-body">
-                <div class="card-header">
-                    <i class="fa fa-fw fa-address-card"></i>
-                    @Localizer["TwoFactorAuthentication Settings"]
-                </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <ol class="list">
@@ -44,11 +44,20 @@
                                     with a unique code. Enter the code in the confirmation box below.
                                 </p>
                             </li>
-                            <a asp-controller="Account" asp-action="VerifyTwoFACode" class="btn btn-success">@Localizer["Go to enable 2fa"]</a>
                         </ol>
                     </li>
                 </ul>
+                <a asp-controller="Account" asp-action="VerifyTwoFACode" class="btn btn-success">@Localizer["Go to enable 2fa"]</a>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="@ServiceLocation.UI/node_modules/qrcodejs/qrcode.min.js"></script>
+<script type="text/javascript">
+    new QRCode(document.getElementById("qrCode"),
+    {
+        text: "@Html.Raw(Model.NewTwoFAQRUri)",
+        width: 150,
+        height: 150
+    });
+</script>
