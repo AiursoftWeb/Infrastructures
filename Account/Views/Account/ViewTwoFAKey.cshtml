@@ -1,0 +1,54 @@
+﻿@model Aiursoft.Account.Models.AccountViewModels.View2FAKeyViewModel
+@{
+    ViewData["Title"] = "ViewTwoFAKey";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Account" asp-action="TwoFactorAuthentication">@Localizer["Two-factor authentication"]</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    <div class="col-md-8 pl-0">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-header">
+                    <i class="fa fa-fw fa-address-card"></i>
+                    @Localizer["TwoFactorAuthentication Settings"]
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <ol class="list">
+                            <li>
+                                <p>
+                                    Download a two-factor authenticator app like Microsoft Authenticator for
+                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
+                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
+                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
+                                    Google Authenticator for
+                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
+                                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+                                </p>
+                            </li>
+                            <li>
+                                <p>Scan the QR Code or enter this key <kbd>@Model.NewTwoFAKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                                <div class="alert alert-info">To enable QR code generation please read our <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentation</a>.</div>
+                                <div id="qrCode"></div>
+                                <div id="qrCodeData" data-url="@Model.NewTwoFAQRUri"></div>
+                            </li>
+                            <li>
+                                <p>
+                                    Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
+                                    with a unique code. Enter the code in the confirmation box below.
+                                </p>
+                            </li>
+                            <a asp-controller="Account" asp-action="VerifyTwoFACode" class="btn btn-success">@Localizer["Go to enable 2fa"]</a>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,12 +6,14 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
+using Aiursoft.Pylon.Models.API.UserViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Net.Mail;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
@@ -24,17 +26,23 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GatewayDbContext _dbContext;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
+        private readonly UrlEncoder _urlEncoder;
+        private readonly TwoFAHelper _twoFAHelper;
 
         public UserController(
-            UserManager<GatewayUser> userManager,
-            GatewayDbContext context,
-            ConfirmationEmailSender emailSender,
-            GrantChecker grantChecker)
+             UserManager<GatewayUser> userManager,
+             GatewayDbContext context,
+             ConfirmationEmailSender emailSender,
+             GrantChecker grantChecker,
+              UrlEncoder urlEncoder,
+              TwoFAHelper twoFAHelper)
         {
             _userManager = userManager;
             _dbContext = context;
             _emailSender = emailSender;
             _grantChecker = grantChecker;
+            _urlEncoder = urlEncoder;
+            _twoFAHelper = twoFAHelper;
         }
 
         [HttpPost]
@@ -281,6 +289,143 @@ namespace Aiursoft.Gateway.Controllers
             _dbContext.ThirdPartyAccounts.RemoveRange(accounts);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully unbound your {model.ProviderName} account.");
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
+        public async Task<JsonResult> ViewHas2FAkey(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            bool key = user.Has2FAKey;
+            return Json(new AiurValue<bool>(key)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's Has2FAkey."
+            });
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
+        public async Task<JsonResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            bool enabled = user.TwoFactorEnabled;
+            return Json(new AiurValue<bool>(enabled)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully get the target user's TwoFactorEnabled."
+            });
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(View2FAKeyViewModel))]
+        public async Task<IActionResult> View2FAKey(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            var (twoFAKey, twoFAQRUri) = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user);
+            return Json(new View2FAKeyViewModel
+            {
+                TwoFAKey = twoFAKey,
+                TwoFAQRUri = twoFAQRUri,
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
+        public async Task<IActionResult> SetTwoFAKey(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+            if (!user.Has2FAKey)
+            {
+                user.Has2FAKey = true;
+                await _userManager.UpdateAsync(user);
+            }
+            var hasKey = user.Has2FAKey;
+            return Json(new AiurValue<bool>(hasKey)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully set the user's TwoFAKey!"
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetTwoFAKey(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            // reset 2fa key
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            return this.Protocol(ErrorType.Success, "Successfully reset the user's TwoFAKey!");
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
+        public async Task<IActionResult> TwoFAVerificyCode(TwoFAVerificyCodeAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            // Strip spaces and hypens
+            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+            if (is2faTokenValid)
+            {
+                // enable 2fa.
+                if (!user.TwoFactorEnabled)
+                {
+                    user.TwoFactorEnabled = true;
+                    await _userManager.UpdateAsync(user);
+                }
+            }
+
+            return Json(new AiurValue<bool>(is2faTokenValid)
+            {
+                Code = ErrorType.Success,
+                Message = "Sucess Verified code."
+            });
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
+        public async Task<IActionResult> DisableTwoFA(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (true == disable2faResult.Succeeded)
+            {
+                user.TwoFactorEnabled = false;
+                user.Has2FAKey = false;
+                await _userManager.UpdateAsync(user);
+            }
+            bool success = disable2faResult.Succeeded;
+
+            return Json(new AiurValue<bool>(success)
+            {
+                Code = ErrorType.Success,
+                Message = "Successfully called DisableTwoFA method!"
+            });
+        }
+
+        [HttpPost]
+        [APIProduces(typeof(AiurCollection<string>))]
+        public async Task<IActionResult> GetRecoveryCodes(UserOperationAddressModel model)
+        {
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
+
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+
+            return Json(new AiurCollection<string>(recoveryCodes.ToList())
+            {
+                Code = ErrorType.Success,
+                Message = "Sucess regenerate recovery Codes!."
+            });
         }
     }
 }

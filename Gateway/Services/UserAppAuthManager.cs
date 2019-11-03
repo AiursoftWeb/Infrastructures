@@ -44,7 +44,6 @@ namespace Aiursoft.Gateway.Services
             }
         }
 
-
         public async Task GrantTargetApp(GatewayUser user, string appId)
         {
             if (!await HasAuthorizedApp(user, appId))

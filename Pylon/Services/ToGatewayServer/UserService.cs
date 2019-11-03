@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
+using Aiursoft.Pylon.Models.API.UserViewModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -247,5 +248,127 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
+
+        public async Task<AiurValue<bool>> ViewHas2FAkeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewHas2FAkey", new { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<bool>> ViewTwoFactorEnabledAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewTwoFactorEnabled", new { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "View2FAKey", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<View2FAKeyViewModel>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<bool>> SetTwoFAKeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetTwoFAKey", new { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurProtocol> ResetTwoFAKeyAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                AccessToken = accessToken,
+                OpenId = openId
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<bool>> TwoFAVerificyCodeAsync(string openId, string accessToken, string code)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "TwoFAVerificyCode", new TwoFAVerificyCodeAddressModel { });
+            var form = new AiurUrl(string.Empty, new TwoFAVerificyCodeAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken,
+                Code = code
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
+        public async Task<AiurValue<string>> GetRecoveryCodesAsync(string openId, string accessToken)
+        {
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
+            {
+                OpenId = openId,
+                AccessToken = accessToken
+            });
+            var result = await _http.Post(url, form, true);
+            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jresult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jresult);
+            return jresult;
+        }
+
     }
 }

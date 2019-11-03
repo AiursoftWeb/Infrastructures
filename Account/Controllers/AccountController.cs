@@ -370,6 +370,115 @@ namespace Aiursoft.Account.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> TwoFactorAuthentication()
+        {
+            var user = await GetCurrentUserAsync();
+            var has2FAkey = await _userService.ViewHas2FAkeyAsync(user.Id, await _appsContainer.AccessToken());
+            var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
+            var model = new TwoFactorAuthenticationViewModel(user)
+            {
+                NewHas2FAKey = has2FAkey.Value,
+                NewTwoFactorEnabled = twoFactorEnabled.Value
+            };
+            return View(model);
+        }
+
+        public async Task<IActionResult> ViewTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var model = new View2FAKeyViewModel(user)
+            {
+                NewTwoFAKey = key.TwoFAKey,
+                NewTwoFAQRUri = key.TwoFAQRUri
+            };
+            return View(model);
+
+        }
+
+        public async Task<IActionResult> SetTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            return RedirectToAction(nameof(ViewTwoFAKey));
+        }
+
+        public async Task<IActionResult> ResetTwoFAKey()
+        {
+            var user = await GetCurrentUserAsync();
+            await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            return RedirectToAction(nameof(ViewTwoFAKey));
+        }
+
+        public async Task<IActionResult> VerifyTwoFACode()
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new VerifyTwoFACodeViewModel(user);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var success = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.NewCode)).Value;
+            if (success)
+            {
+                // go to recoverycodes page
+                return RedirectToAction(nameof(GetRecoveryCodes));
+            }
+            else
+            {
+                return RedirectToAction(nameof(VerifyTwoFACode));
+            }
+        }
+
+        public async Task<IActionResult> DisableTwoFA()
+        {
+            var user = await GetCurrentUserAsync();
+            var model = new DisableTwoFAViewModel(user);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var ReturnValue = (await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken())).Value;
+            if (ReturnValue)
+            {
+                // go to TwoFactorAuthentication page
+
+                return RedirectToAction(nameof(TwoFactorAuthentication));
+            }
+            else
+            {
+                //error page
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> GetRecoveryCodes()
+        {
+            // warning page
+            var user = await GetCurrentUserAsync();
+            var model = new GetRecoveryCodesViewModel(user)
+            {
+                NewRecoveryCodesKey = null
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
+            model.NewRecoveryCodesKey = newCodesKey.Value;
+            model.Recover(user, "Two-factor Authentication");
+            return View(model);
+        }
+
         public async Task<IActionResult> Social()
         {
             var user = await GetCurrentUserAsync();
@@ -381,7 +490,6 @@ namespace Aiursoft.Account.Controllers
             };
             return View(model);
         }
-
 
         [HttpPost]
         [APIExpHandler]
