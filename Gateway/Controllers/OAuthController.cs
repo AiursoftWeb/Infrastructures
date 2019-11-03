@@ -117,10 +117,15 @@ namespace Aiursoft.Gateway.Controllers
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             if (result.RequiresTwoFactor)
-            {               
-                return await _authManager.TwoFAFinishAuth(user, model, app.ForceConfirmation);
+            {
+                return RedirectToAction(nameof(TwoFAAuthorizeConfirm), new FinishAuthInfo
+                {
+                    AppId = model.AppId,
+                    RedirectUri = model.RedirectUri,
+                    State = model.State
+                });
             }
-             if (result.IsLockedOut)
+            if (result.IsLockedOut)
             {
                 ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
             }
@@ -196,19 +201,7 @@ namespace Aiursoft.Gateway.Controllers
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
                 State = model.State,
-                Email = user.Email,
-                // Permissions
-                ViewOpenId = app.ViewOpenId,
-                ViewPhoneNumber = app.ViewPhoneNumber,
-                ChangePhoneNumber = app.ChangePhoneNumber,
-                ConfirmEmail = app.ConfirmEmail,
-                ChangeBasicInfo = app.ChangeBasicInfo,
-                ChangePassword = app.ChangePassword,
-                ChangeGrantInfo = app.ChangeGrantInfo,
-                ViewAuditLog = app.ViewAuditLog,
-                TermsUrl = app.LicenseUrl,
-                PStatementUrl = app.PrivacyStatementUrl,
-                ManageSocialAccount = app.ManageSocialAccount
+                Email = user.Email
             };
             return View(viewModel);
         }
@@ -224,25 +217,24 @@ namespace Aiursoft.Gateway.Controllers
             }
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;           
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
 
             var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, false, false);
             if (result.Succeeded)
             {
                 await _authManager.GrantTargetApp(user, model.AppId);
-                return await _authManager.TwoFAFinishAuth(user, model, false);
-
+                return await _authManager.FinishAuth(user, model, false);
             }
-            else if (result.IsLockedOut)            
+            else if (result.IsLockedOut)
             {
                 ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
             }
             else
             {
+                // TODO: What the hell is that?
                 ModelState.AddModelError(string.Empty, "The password does not match our records.");
             }
-
             var viewModel = new TwoFAAuthorizeConfirmViewModel
             {
                 AppName = app.AppName,
@@ -251,18 +243,6 @@ namespace Aiursoft.Gateway.Controllers
                 RedirectUri = model.RedirectUri,
                 State = model.State,
                 Email = user.Email,
-                // Permissions
-                ViewOpenId = app.ViewOpenId,
-                ViewPhoneNumber = app.ViewPhoneNumber,
-                ChangePhoneNumber = app.ChangePhoneNumber,
-                ConfirmEmail = app.ConfirmEmail,
-                ChangeBasicInfo = app.ChangeBasicInfo,
-                ChangePassword = app.ChangePassword,
-                ChangeGrantInfo = app.ChangeGrantInfo,
-                ViewAuditLog = app.ViewAuditLog,
-                TermsUrl = app.LicenseUrl,
-                PStatementUrl = app.PrivacyStatementUrl,
-                ManageSocialAccount = app.ManageSocialAccount
             };
             return View(viewModel);
         }

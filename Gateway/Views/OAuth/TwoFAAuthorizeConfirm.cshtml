@@ -14,45 +14,6 @@
                 <p>@Localizer["Do you want to use your {0} identity to sign in", Values.ProjectName] </p>
                 <p><strong>@Html.DisplayFor(t => t.AppName)</strong>@Localizer["?"]</p>
             </div>
-            <p>@Html.DisplayFor(t => t.AppName) has following permissions:</p>
-            <ul>
-                @if (Model.ViewOpenId)
-                {
-                    <li><label asp-for="ViewOpenId"></label></li>
-                }
-                @if (Model.ViewPhoneNumber)
-                {
-                    <li><label asp-for="ViewPhoneNumber"></label></li>
-                }
-                @if (Model.ChangePhoneNumber)
-                {
-                    <li><label asp-for="ChangePhoneNumber"></label></li>
-                }
-                @if (Model.ConfirmEmail)
-                {
-                    <li><label asp-for="ConfirmEmail"></label></li>
-                }
-                @if (Model.ChangeBasicInfo)
-                {
-                    <li><label asp-for="ChangeBasicInfo"></label></li>
-                }
-                @if (Model.ChangePassword)
-                {
-                    <li><label asp-for="ChangePassword"></label></li>
-                }
-                @if (Model.ChangeGrantInfo)
-                {
-                    <li><label asp-for="ChangeGrantInfo"></label></li>
-                }
-                @if (Model.ViewAuditLog)
-                {
-                    <li><label asp-for="ViewAuditLog"></label></li>
-                }
-                @if (Model.ManageSocialAccount)
-                {
-                    <li><label asp-for="ManageSocialAccount"></label></li>
-                }
-            </ul>
             <form asp-controller="OAuth" asp-action="TwoFAAuthorizeConfirm" method="post"
                   asp-route-appid="@Model.AppId"
                   asp-route-redirect_uri="@Model.RedirectUri"
@@ -67,20 +28,11 @@
                     </a>@Localizer["to switch to another account."]
                 </p>
                 <div class="row">
-                    
-                        <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
-                        <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]" tabindex="3">
-                    
+                    <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email">
+                    <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]">
                     <div class="col-md-4 mt-3">
-                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Allow"]</button>
+                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Submit"]</button>
                     </div>
-                    <div class="col-md-4 mt-3">
-                        <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">@Localizer["Deny"]</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="@Model.TermsUrl" target="_blank">@Localizer["View License"]</a> |
-                    <a href="@Model.PStatementUrl" target="_blank">@Localizer["View Privacy Statement"]</a>
                 </div>
             </form>
         </div>
