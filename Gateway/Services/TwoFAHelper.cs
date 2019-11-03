@@ -1,20 +1,17 @@
 ﻿using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models.API.UserAddressModels;
+using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class TwoFAHelper: IScopedDependency
+    public class TwoFAHelper : ITransientDependency
     {
         private readonly UserManager<GatewayUser> _userManager;
         private readonly UrlEncoder _urlEncoder;
-
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+        private const string _authenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public TwoFAHelper(
              UserManager<GatewayUser> userManager,
@@ -24,7 +21,7 @@ namespace Aiursoft.Gateway.Services
             _urlEncoder = urlEncoder;
         }
 
-        public async Task<List<Get2FAKeyAddressModel>> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user, Get2FAKeyAddressModel model)
+        public async Task<(string, string)> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
@@ -32,36 +29,16 @@ namespace Aiursoft.Gateway.Services
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
-            model.TwoFAKey = FormatKey(unformattedKey);
-            model.TwoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
+            var twoFAKey = string.Join(' ', unformattedKey.SplitInParts(4));
+            var twoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
 
-            var returnList = new List<Get2FAKeyAddressModel>();
-            returnList.Add(model);
-
-            return returnList;
+            return (twoFAKey, twoFAQRUri);
         }
 
-        public string FormatKey(string unformattedKey)
-        {
-            var result = new StringBuilder();
-            int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
-                currentPosition += 4;
-            }
-            if (currentPosition < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition));
-            }
-
-            return result.ToString().ToLowerInvariant();
-        }
-
-        public string GenerateQrCodeUri(string email, string unformattedKey)
+        private string GenerateQrCodeUri(string email, string unformattedKey)
         {
             return string.Format(
-                AuthenticatorUriFormat,
+                _authenticatorUriFormat,
                 _urlEncoder.Encode("Aiursoft.Nexus.Account"),
                 _urlEncoder.Encode(email),
                 unformattedKey);

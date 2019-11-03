@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -207,6 +208,22 @@ namespace Aiursoft.Pylon.Services
                 return null;
             }
             return path.Replace("/" + path.Split('/').Last(), "");
+        }
+
+        public static IEnumerable<string> SplitInParts(this string input, int partLength)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException("s");
+            }
+            if (partLength <= 0)
+            {
+                throw new ArgumentException("Part length has to be positive.", "partLength");
+            }
+            for (var i = 0; i < input.Length; i += partLength)
+            {
+                yield return input.Substring(i, Math.Min(partLength, input.Length - i));
+            }
         }
     }
 }

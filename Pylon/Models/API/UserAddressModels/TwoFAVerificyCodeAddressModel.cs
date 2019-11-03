@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Pylon.Models.API.UserAddressModels
 {
     public class TwoFAVerificyCodeAddressModel : UserOperationAddressModel
     {
-        public string Code { get; set; }        
+        [Required]
+        public string Code { get; set; }
     }
 }

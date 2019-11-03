@@ -6,14 +6,13 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
+using Aiursoft.Pylon.Models.API.UserViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
@@ -29,8 +28,6 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GrantChecker _grantChecker;
         private readonly UrlEncoder _urlEncoder;
         private readonly TwoFAHelper _twoFAHelper;
-        
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public UserController(
              UserManager<GatewayUser> userManager,
@@ -295,11 +292,12 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
         public async Task<JsonResult> ViewHas2FAkey(ViewHas2FAkeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            bool ReturnValue = user.Has2FAKey;
-            return Json(new AiurValue<bool>(ReturnValue)
+            bool key = user.Has2FAKey;
+            return Json(new AiurValue<bool>(key)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's Has2FAkey."
@@ -307,11 +305,12 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
         public async Task<JsonResult> ViewTwoFactorEnabled(ViewTwoFactorEnabledAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            bool ReturnValue = user.TwoFactorEnabled;
-            return Json(new AiurValue<bool>(ReturnValue)
+            bool enabled = user.TwoFactorEnabled;
+            return Json(new AiurValue<bool>(enabled)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's TwoFactorEnabled."
@@ -319,28 +318,32 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> View2FAKey(Get2FAKeyAddressModel model)
+        [APIProduces(typeof(View2FAKeyViewModel))]
+        public async Task<IActionResult> View2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            var returnList = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user, model);
-            return Json(new AiurCollection<Get2FAKeyAddressModel>(returnList)
+            var (twoFAKey, twoFAQRUri) = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user);
+            return Json(new View2FAKeyViewModel
             {
+                TwoFAKey = twoFAKey,
+                TwoFAQRUri = twoFAQRUri,
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
             });
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> SetTwoFAKey(Set2FAKeyAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            if (false == user.Has2FAKey)
+            if (!user.Has2FAKey)
             {
                 user.Has2FAKey = true;
                 await _userManager.UpdateAsync(user);
             }
-            var ReturnValue = user.Has2FAKey;
-            return Json(new AiurValue<bool>(ReturnValue)
+            var hasKey = user.Has2FAKey;
+            return Json(new AiurValue<bool>(hasKey)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
@@ -355,24 +358,11 @@ namespace Aiursoft.Gateway.Controllers
             // reset 2fa key
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
-
-            // check 2fa key
-            var ReturnValue = false;
-            var Rest2FAModel = new Get2FAKeyAddressModel();
-            var returnList = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user, Rest2FAModel);
-            if (null != returnList)
-            {
-                ReturnValue = true;
-            }
-
-            return Json(new AiurValue<bool>(ReturnValue)
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully reset the user's TwoFAKey!"
-            });
+            return this.Protocol(ErrorType.Success, "Successfully reset the user's TwoFAKey!");
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> TwoFAVerificyCode(TwoFAVerificyCodeAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -383,26 +373,25 @@ namespace Aiursoft.Gateway.Controllers
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            // change TwoFactorEnabled key
             if (is2faTokenValid)
             {
-                if (false == user.TwoFactorEnabled)
+                // enable 2fa.
+                if (!user.TwoFactorEnabled)
                 {
                     user.TwoFactorEnabled = true;
                     await _userManager.UpdateAsync(user);
                 }
             }
 
-            var ReturnValue = is2faTokenValid;
-
-            return Json(new AiurValue<bool>(ReturnValue)
+            return Json(new AiurValue<bool>(is2faTokenValid)
             {
                 Code = ErrorType.Success,
-                Message = "Sucess Verified code ."
+                Message = "Sucess Verified code."
             });
         }
 
         [HttpPost]
+        [APIProduces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> DisableTwoFA(DisableTwoFAAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -414,9 +403,9 @@ namespace Aiursoft.Gateway.Controllers
                 user.Has2FAKey = false;
                 await _userManager.UpdateAsync(user);
             }
-            bool ReturnValue = disable2faResult.Succeeded;
+            bool success = disable2faResult.Succeeded;
 
-            return Json(new AiurValue<bool>(ReturnValue)
+            return Json(new AiurValue<bool>(success)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully called DisableTwoFA method!"
@@ -424,20 +413,15 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesAddressModel model)
+        [APIProduces(typeof(AiurCollection<string>))]
+        public async Task<IActionResult> GetRecoveryCodes(UserOperationAddressModel model)
         {
-            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);           
+            var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            var recodeArray = recoveryCodes.ToArray();
 
-            model.RecoveryCodesKey = null;
-            foreach (var item in recodeArray)
-            {
-                model.RecoveryCodesKey += item;
-            }
-            return Json(new AiurValue<string>(model.RecoveryCodesKey)
+            return Json(new AiurCollection<string>(recoveryCodes.ToList())
             {
                 Code = ErrorType.Success,
                 Message = "Sucess regenerate recovery Codes!."
