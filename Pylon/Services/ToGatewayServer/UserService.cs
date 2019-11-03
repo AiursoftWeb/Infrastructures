@@ -3,6 +3,7 @@ using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
+using Aiursoft.Pylon.Models.API.UserViewModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -251,7 +252,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
         public async Task<AiurValue<bool>> ViewHas2FAkeyAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewHas2FAkey", new { });
-            var form = new AiurUrl(string.Empty, new ViewHas2FAkeyAddressModel
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -266,7 +267,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
         public async Task<AiurValue<bool>> ViewTwoFactorEnabledAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewTwoFactorEnabled", new { });
-            var form = new AiurUrl(string.Empty, new ViewTwoFactorEnabledAddressModel
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -278,16 +279,16 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
-        public async Task<AiurCollection<Get2FAKeyAddressModel>> View2FAKeyAsync(string openId, string accessToken)
+        public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "View2FAKey", new Get2FAKeyAddressModel { });
-            var form = new AiurUrl(string.Empty, new Get2FAKeyAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "View2FAKey", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<Get2FAKeyAddressModel>>(result);
+            var jresult = JsonConvert.DeserializeObject<View2FAKeyViewModel>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
@@ -296,7 +297,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
         public async Task<AiurValue<bool>> SetTwoFAKeyAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetTwoFAKey", new { });
-            var form = new AiurUrl(string.Empty, new Set2FAKeyAddressModel
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -308,16 +309,16 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
-        public async Task<AiurValue<bool>> ResetTwoFAKeyAsync(string openId, string accessToken)
+        public async Task<AiurProtocol> ResetTwoFAKeyAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new { });
-            var form = new AiurUrl(string.Empty, new Reset2FAKeyAddressModel
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
@@ -338,11 +339,11 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
-        
+
         public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new DisableTwoFAAddressModel { });
-            var form = new AiurUrl(string.Empty, new DisableTwoFAAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
                 AccessToken = accessToken
@@ -353,11 +354,11 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;
         }
-        
+
         public async Task<AiurValue<string>> GetRecoveryCodesAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new GetRecoveryCodesAddressModel { });
-            var form = new AiurUrl(string.Empty, new GetRecoveryCodesAddressModel
+            var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
+            var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
                 AccessToken = accessToken

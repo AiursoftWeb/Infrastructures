@@ -293,7 +293,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<JsonResult> ViewHas2FAkey(ViewHas2FAkeyAddressModel model)
+        public async Task<JsonResult> ViewHas2FAkey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool key = user.Has2FAKey;
@@ -306,7 +306,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<JsonResult> ViewTwoFactorEnabled(ViewTwoFactorEnabledAddressModel model)
+        public async Task<JsonResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool enabled = user.TwoFactorEnabled;
@@ -334,7 +334,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<IActionResult> SetTwoFAKey(Set2FAKeyAddressModel model)
+        public async Task<IActionResult> SetTwoFAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             if (!user.Has2FAKey)
@@ -351,7 +351,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ResetTwoFAKey(Reset2FAKeyAddressModel model)
+        public async Task<IActionResult> ResetTwoFAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 
@@ -392,7 +392,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<IActionResult> DisableTwoFA(DisableTwoFAAddressModel model)
+        public async Task<IActionResult> DisableTwoFA(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 

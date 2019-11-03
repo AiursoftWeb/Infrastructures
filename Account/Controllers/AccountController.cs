@@ -386,11 +386,11 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> ViewTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            var returnList = (await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessToken())).Items;
+            var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
             var model = new View2FAKeyViewModel(user)
             {
-                NewTwoFAKey = returnList.Select(t => t.TwoFAKey).FirstOrDefault().ToString(),
-                NewTwoFAQRUri = returnList.Select(t => t.TwoFAQRUri).FirstOrDefault().ToString()
+                NewTwoFAKey = key.TwoFAKey,
+                NewTwoFAQRUri = key.TwoFAQRUri
             };
             return View(model);
 
