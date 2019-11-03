@@ -399,58 +399,45 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> SetTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            var ReturnValue = (await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Value;
-            if (ReturnValue)
-            {
-                return RedirectToAction(nameof(ViewTwoFAKey));
-            }
-            else
-            {
-                return View();
-            }
+            await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            return RedirectToAction(nameof(ViewTwoFAKey));
         }
 
         public async Task<IActionResult> ResetTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            var ReturnValue = (await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken())).Value;
-            if (ReturnValue)
-            {
-                return RedirectToAction(nameof(ViewTwoFAKey));
-            }
-            else
-            {
-                return View();
-            }
+            await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            return RedirectToAction(nameof(ViewTwoFAKey));
         }
 
         public async Task<IActionResult> VerifyTwoFACode()
         {
             var user = await GetCurrentUserAsync();
-            return View();
+            var model = new VerifyTwoFACodeViewModel(user);
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var ReturnValue = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.NewCode)).Value;
-            if (ReturnValue)
+            var success = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.NewCode)).Value;
+            if (success)
             {
                 // go to recoverycodes page
                 return RedirectToAction(nameof(GetRecoveryCodes));
             }
             else
             {
-                return View();
+                return RedirectToAction(nameof(VerifyTwoFACode));
             }
         }
 
         public async Task<IActionResult> DisableTwoFA()
         {
-            // warning page
             var user = await GetCurrentUserAsync();
-            return View();
+            var model = new DisableTwoFAViewModel(user);
+            return View(model);
         }
 
         [HttpPost]
@@ -486,9 +473,9 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var ReturnValue = (await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken())).Value;
-
-            model.NewRecoveryCodesKey = ReturnValue;
+            var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
+            model.NewRecoveryCodesKey = newCodesKey.Value;
+            model.Recover(user, "Two-factor Authentication");
             return View(model);
         }
 
