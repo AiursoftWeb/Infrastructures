@@ -118,12 +118,12 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (result.RequiresTwoFactor)
             {
-                return RedirectToAction(nameof(TwoFAAuthorizeConfirm), new FinishAuthInfo
+                return Redirect(new AiurUrl($"/oauth/{nameof(TwoFAAuthorizeConfirm)}", new FinishAuthInfo
                 {
                     AppId = model.AppId,
                     RedirectUri = model.RedirectUri,
                     State = model.State
-                });
+                }).ToString());
             }
             if (result.IsLockedOut)
             {
