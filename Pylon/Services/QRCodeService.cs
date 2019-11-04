@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Aiursoft.Developer.Services
+namespace Aiursoft.Pylon.Services
 {
     public class QRCodeService : ITransientDependency
     {
@@ -15,7 +15,7 @@ namespace Aiursoft.Developer.Services
             var qrCodeData = qrGenerator.CreateQrCode(source, QRCodeGenerator.ECCLevel.Q);
             var qrCode = new QRCode(qrCodeData);
             string imagebase64 = string.Empty;
-            using (Bitmap qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, true))
+            using (var qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, true))
             {
                 imagebase64 = ToBase64String(qrCodeImage, ImageFormat.Png);
             }

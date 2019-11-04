@@ -18,43 +18,45 @@
                 @Localizer["Two-factor authentication"]
             </div>
             <div class="card-body">
-                @if (!Model.NewHas2FAKey)
+                @if (!Model.NewHas2FAKey || !Model.NewTwoFactorEnabled)
                 {
                     <p>
                         Click the button below, and follow the prompts to start to configure your Two Factor Authentication function.
                     </p>
                     <P>
-                        <a asp-controller="Account" asp-action="SetTwoFAKey" class="btn btn-success">@Localizer["Configure 2FA"]</a>
+                        <a asp-controller="Account" asp-action="SetTwoFAKey" class="btn btn-success">@Localizer["Configure two-factor authentication"]</a>
                     </P>
                 }
                 else
                 {
-                    <h6>Verify your 2FA app configuration.</h6>
-                    <a asp-controller="Account" asp-action="VerifyTwoFACode" class="btn btn-success">@Localizer["Verify authentication"]</a>
+                    <div class="container-fluid">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                            <strong>Two-factor authentication enabled!</strong> @Localizer["Your account is ready for two-factor authentication."]
+                        </div>
+                    </div>
+                    <hr />
+                    <h6>Disable two-factor authentication</h6>
+                    <p>Disable two-factor authentication allows others to log in your account with only your password.</p>
+                    <a asp-controller="Account" asp-action="DisableTwoFA" class="btn btn-outline-danger">@Localizer["Disable two-factor authentication"]</a>
                     <hr />
 
-                    if (Model.NewTwoFactorEnabled == true)
-                    {
-                        <h6>View recovery code</h6>
-                        <p>
-                            You can log in through recovery codes when you cannot use the Authentication App.
-                        </p>
-                        <p>
-                            Click the button below to generate a new Verify Codes.
-                        </p>
-                        <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-success">@Localizer["View Recovery codes"]</a>
-                        <hr />
-                    }
 
-                    <h6>Reset 2fa key.</h6>
-                    <p class="text-danger">
-                        Reset 2FA will delete your current key. And you have to re-enter the verify code in the authentication app to enable the 2FA authentication.
+                    <h6>Recovery code</h6>
+                    <p>
+                        You can log in through recovery codes when you can't use the authentication app.
                     </p>
-                    <a asp-controller="Account" asp-action="ResetTwoFAKey" class="btn btn-danger">@Localizer["Reset 2FA"]</a>
+                    <p class="text-danger">
+                        Click the button below will generate new verification codes. Your old code will be invalid.
+                    </p>
+                    <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-outline-danger">@Localizer["Reset and view recovery codes"]</a>
                     <hr />
 
-                    <h6>Disable 2fa</h6>
-                    <a asp-controller="Account" asp-action="DisableTwoFA" class="btn btn-danger">@Localizer["Disable 2fa"]</a>
+                    <h6>Reset two-factor authentication key.</h6>
+                    <p class="text-danger">
+                        Reset two-factor authentication will cause your current authticator app stop working. You need to re-setup your authenticator immediatly or you will lose access to your account. Only do this if your authenticator app was lost.
+                    </p>
+                    <a asp-controller="Account" asp-action="ResetTwoFAKey" class="btn btn-danger">@Localizer["Reset two-factor authentication key"]</a>
                 }
             </div>
         </div>

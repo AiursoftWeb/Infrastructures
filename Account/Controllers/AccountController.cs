@@ -32,6 +32,7 @@ namespace Aiursoft.Account.Controllers
         private readonly DeveloperApiService _developerApiService;
         private readonly AuthService<AccountUser> _authService;
         private readonly IEnumerable<IAuthProvider> _authProviders;
+        private readonly QRCodeService _qrCodeService;
         private readonly AiurCache _cache;
 
         public AccountController(
@@ -43,6 +44,7 @@ namespace Aiursoft.Account.Controllers
             DeveloperApiService developerApiSerivce,
             AuthService<AccountUser> authService,
             IEnumerable<IAuthProvider> authProviders,
+            QRCodeService qrCodeService,
             AiurCache cache)
         {
             _userManager = userManager;
@@ -53,6 +55,7 @@ namespace Aiursoft.Account.Controllers
             _developerApiService = developerApiSerivce;
             _authService = authService;
             _authProviders = authProviders;
+            _qrCodeService = qrCodeService;
             _cache = cache;
         }
 
@@ -390,7 +393,7 @@ namespace Aiursoft.Account.Controllers
             var model = new View2FAKeyViewModel(user)
             {
                 NewTwoFAKey = key.TwoFAKey,
-                NewTwoFAQRUri = key.TwoFAQRUri
+                QRCodeBase64 = _qrCodeService.ToQRCodeBase64(key.TwoFAQRUri)
             };
             return View(model);
 
@@ -426,7 +429,7 @@ namespace Aiursoft.Account.Controllers
             if (success)
             {
                 // go to recoverycodes page
-                return RedirectToAction(nameof(GetRecoveryCodes), new { success = true });
+                return RedirectToAction(nameof(TwoFactorAuthentication), new { success = true });
             }
             else
             {

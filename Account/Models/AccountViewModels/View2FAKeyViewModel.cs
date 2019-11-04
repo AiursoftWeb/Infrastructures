@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
@@ -14,6 +11,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public View2FAKeyViewModel(AccountUser user) : base(user, "Two-factor Authentication") { }
 
         public string NewTwoFAKey { get; set; }
-        public string NewTwoFAQRUri { get; set; }
+        public string QRCodeBase64 { get; set; }
     }
 }

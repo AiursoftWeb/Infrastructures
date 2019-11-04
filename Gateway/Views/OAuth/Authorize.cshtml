@@ -14,7 +14,7 @@
             <div class="text-center">
                 <img class="rounded" style="width:100px; height:100px;" src="@StorageService.GetProbeDownloadAddress(ServiceLocation, Model.AppImageUrl)?w=100&h=100">
             </div>
-            <form asp-controller="OAuth" asp-action="Authorize" method="post" 
+            <form asp-controller="OAuth" asp-action="Authorize" method="post"
                   asp-route-appid="@Model.AppId"
                   asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State">
@@ -30,7 +30,6 @@
                             @Localizer["Forgot Password?"]
                         </a>
                     </label>
-
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                 </div>
                 <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
@@ -51,7 +50,7 @@
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
            asp-route-appId="@Model.AppId"
-           asp-route-redirect_uri="@Model.RedirectUri" 
+           asp-route-redirect_uri="@Model.RedirectUri"
            asp-route-state="@Model.State">
             <span class="float-left">@Localizer["Sign up"]</span>
             <span class="float-right">
