@@ -19,24 +19,20 @@
                 @Localizer["TwoFactorAuthentication Settings"]
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <form asp-controller="Account" asp-action="VerifyTwoFACode" method="post">
-                                    <div class="form-group">
-                                        <label asp-for="NewCode" class="control-label">Verification Code</label>
-                                        <input asp-for="NewCode" class="form-control" autocomplete="off" />
-                                        <span asp-validation-for="NewCode" class="text-danger"></span>
-                                    </div>
-
-                                    <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-controller="Account" asp-action="VerifyTwoFACode" method="post">
+                            <div class="form-group">
+                                <label asp-for="NewCode" class="control-label">Verification Code</label>
+                                <input asp-for="NewCode" class="form-control" autocomplete="off" />
+                                <span asp-validation-for="NewCode" class="text-danger"></span>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+
+                            <button data-disable-with="Gatting..." class="btn btn-success" type="submit">@Localizer["Verify"]</button>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

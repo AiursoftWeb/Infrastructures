@@ -355,7 +355,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             return jresult;
         }
 
-        public async Task<AiurValue<string>> GetRecoveryCodesAsync(string openId, string accessToken)
+        public async Task<AiurCollection<string>> GetRecoveryCodesAsync(string openId, string accessToken)
         {
             var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
@@ -364,7 +364,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            var jresult = JsonConvert.DeserializeObject<AiurCollection<string>>(result);
             if (jresult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jresult);
             return jresult;

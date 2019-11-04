@@ -474,7 +474,7 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
-            model.NewRecoveryCodesKey = newCodesKey.Value;
+            model.NewRecoveryCodesKey = newCodesKey.Items;
             model.Recover(user, "Two-factor Authentication");
             return View(model);
         }

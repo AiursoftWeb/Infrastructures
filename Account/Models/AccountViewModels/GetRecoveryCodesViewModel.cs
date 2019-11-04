@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
@@ -13,6 +11,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public GetRecoveryCodesViewModel(AccountUser user) : base(user, "Two-factor Authentication") { }
 
-        public string NewRecoveryCodesKey { get; set; }
+        public List<string> NewRecoveryCodesKey { get; set; }
     }
 }

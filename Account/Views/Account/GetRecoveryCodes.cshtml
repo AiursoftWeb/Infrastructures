@@ -19,59 +19,45 @@
                 @Localizer["TwoFactorAuthentication Settings"]
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        @if (Model.NewRecoveryCodesKey == null)
-                        {
+                @if (!(Model.NewRecoveryCodesKey?.Any() ?? false))
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <p>
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            <strong>Generate recovery codes.</strong>
+                        </p>
+                        <p>
+                            If you lose your device and don't have the recovery codes, you will lose access to your account.
+                        </p>
+                    </div>
+                    <p class="text-muted">
+                        Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
+                        used in an authenticator app you should <a asp-action="GetRecoveryCodes">reset your authenticator keys.</a>
+                    </p>
+                    <div>
+                        <form asp-controller="Account" asp-action="GetRecoveryCodes" method="post" class="form-group">
+                            <button class="btn btn-danger" type="submit">Get Recovery Codes</button>
+                        </form>
+                    </div>
 
-                            <div class="alert alert-warning" role="alert">
-                                <p>
-                                    <span class="glyphicon glyphicon-warning-sign"></span>
-                                    <strong>This action generates new recovery codes.</strong>
-                                </p>
-                                <p>
-                                    If you lose your device and don't have the recovery codes you will lose access to your account.
-                                </p>
-                                <p>
-                                    Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
-                                    used in an authenticator app you should <a asp-action="GetRecoveryCodes">reset your authenticator keys.</a>
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
-                                    used in an authenticator app you should click this button to reset your authenticator keys.
-                                </p>
-                                <form asp-controller="Account" asp-action="GetRecoveryCodes" method="post" class="form-group">
-                                    <button class="btn btn-danger" type="submit">Get Recovery Codes</button>
-                                </form>
-                            </div>
-
-                        }
-                        else
-                        {
-                            <div>
-                                <p>
-                                    This is your recipe codes. If you can't log in to your account with Authentication App, you can log in with this recipe codes.
-                                </p>
-                                @{
-                                    int count = 0;
-                                    string RecoveryCodes = null;
-                                    foreach (var item in Model.NewRecoveryCodesKey)
-                                    {
-                                        count++;
-                                        RecoveryCodes += item;
-                                        if (0 == count % 15)
-                                        {
-                                            <p><kbd>@RecoveryCodes</kbd></p>
-                                            RecoveryCodes = null;
-                                        }
-                                    }
-                                }
-                            </div>
-                        }
-                    </li>
-                </ul>
+                }
+                else
+                {
+                    <div>
+                        <p>
+                            This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes.
+                        </p>
+                        <div class="row">
+                            @foreach (var item in Model.NewRecoveryCodesKey)
+                            {
+                                <div class="col-6">
+                                    <kbd>@item</kbd>
+                                </div>
+                            }
+                        </div>
+                        <p class="text-danger">Write those codes down on a paper which you never lose! You will lose access to your account if you don't have your authentication device and recover codes.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>
