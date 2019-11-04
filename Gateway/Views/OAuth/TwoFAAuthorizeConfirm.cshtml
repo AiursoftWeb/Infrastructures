@@ -27,14 +27,18 @@
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
                 </p>
-                <div class="row">
-                    <div class="form-group">
-                        <label asp-for="VerifyCode"></label>
-                        <input class="form-control" type="number" asp-for="VerifyCode" placeholder="@Localizer["Enter the code"]" tabindex="1">
-                    </div>
-                    <div class="col-md-4 mt-3">
-                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="VerifyCode"></label>
+                    <input class="form-control" type="number" asp-for="VerifyCode" placeholder="@Localizer["Enter the code"]" tabindex="1">
+                </div>
+                <div class="form-check col-12 pl-5">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" asp-for="DontAskMeOnIt" />
+                        <label asp-for="DontAskMeOnIt"></label>
+                    </label>
+                </div>
+                <div class="w-100 mt-3">
+                    <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
                 </div>
             </form>
         </div>
