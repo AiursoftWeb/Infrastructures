@@ -184,6 +184,7 @@ namespace Aiursoft.Gateway.Controllers
             return await _authManager.FinishAuth(user, model, false);
         }
 
+        [HttpGet]
         public async Task<IActionResult> TwoFAAuthorizeConfirm(FinishAuthInfo model)
         {
             if (!ModelState.IsValid)
@@ -194,12 +195,9 @@ namespace Aiursoft.Gateway.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var viewModel = new TwoFAAuthorizeConfirmViewModel
             {
-                AppName = app.AppName,
-                UserNickName = user.NickName,
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
-                State = model.State,
-                Email = user.Email
+                State = model.State
             };
             return View(viewModel);
         }
@@ -215,12 +213,10 @@ namespace Aiursoft.Gateway.Controllers
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-
             var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, false, false);
             if (result.Succeeded)
             {
-                await _authManager.GrantTargetApp(user, model.AppId);
                 return await _authManager.FinishAuth(user, model, false);
             }
             else if (result.IsLockedOut)
@@ -229,17 +225,13 @@ namespace Aiursoft.Gateway.Controllers
             }
             else
             {
-                // TODO: What the hell is that?
-                ModelState.AddModelError(string.Empty, "The password does not match our records.");
+                throw new NotImplementedException(result.ToString() + " is not implemented!");
             }
             var viewModel = new TwoFAAuthorizeConfirmViewModel
             {
-                AppName = app.AppName,
-                UserNickName = user.NickName,
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
                 State = model.State,
-                Email = user.Email,
             };
             return View(viewModel);
         }

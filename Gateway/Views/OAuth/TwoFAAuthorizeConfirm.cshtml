@@ -10,14 +10,14 @@
         </div>
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
-                <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
-                <p>@Localizer["Do you want to use your {0} identity to sign in", Values.ProjectName] </p>
-                <p><strong>@Html.DisplayFor(t => t.AppName)</strong>@Localizer["?"]</p>
+                <h4>Second Auth</h4>
+                <p>Please enter the authentication code on your authenticator app.</p>
             </div>
             <form asp-controller="OAuth" asp-action="TwoFAAuthorizeConfirm" method="post"
                   asp-route-appid="@Model.AppId"
                   asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
                        asp-route-appid="@Model.AppId"
@@ -28,10 +28,12 @@
                     </a>@Localizer["to switch to another account."]
                 </p>
                 <div class="row">
-                    <input class="form-control" asp-for="Email" type="hidden" value="@Model.Email">
-                    <input class="form-control" asp-for="VerifyCode" placeholder="@Localizer["Enter your Verify Code"]">
+                    <div class="form-group">
+                        <label asp-for="VerifyCode"></label>
+                        <input class="form-control" type="number" asp-for="VerifyCode" placeholder="@Localizer["Enter the code"]" tabindex="1">
+                    </div>
                     <div class="col-md-4 mt-3">
-                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Submit"]</button>
+                        <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
                     </div>
                 </div>
             </form>
