@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
@@ -13,6 +10,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public VerifyTwoFACodeViewModel(AccountUser user) : base(user, "Two-factor Authentication") { }
 
-        public string NewCode { get; set; }
+        public string Code { get; set; }
     }
 }

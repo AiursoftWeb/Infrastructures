@@ -19,6 +19,16 @@
                 @Localizer["Two-factor authentication"]
             </div>
             <div class="card-body">
+                @if (Model.Success)
+                {
+                    <div class="container-fluid">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                            <strong>Validation success!</strong> @Localizer["Your account is ready for two-factor authentication."]
+                        </div>
+                    </div>
+                }
+
                 @if (!(Model.NewRecoveryCodesKey?.Any() ?? false))
                 {
                     <div class="alert alert-warning" role="alert">
@@ -47,15 +57,15 @@
                         <p>
                             This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes.
                         </p>
-                        <div class="row">
-                            @foreach (var item in Model.NewRecoveryCodesKey)
-                            {
-                                <div class="col-6">
-                                    <kbd>@item</kbd>
-                                </div>
-                            }
-                        </div>
+                        @for (int i = 0; i < Model.NewRecoveryCodesKey.Count - 1; i += 2)
+                        {
+                            <p>
+                                <kbd>@Model.NewRecoveryCodesKey[i]</kbd>
+                                <kbd>@Model.NewRecoveryCodesKey[i + 1]</kbd>
+                            </p>
+                        }
                         <p class="text-danger">Write those codes down on a paper which you never lose! You will lose access to your account if you don't have your authentication device and recover codes.</p>
+                        <a class="btn btn-danger" asp-action="TwoFactorAuthentication">I have copy it down.</a>
                     </div>
                 }
             </div>

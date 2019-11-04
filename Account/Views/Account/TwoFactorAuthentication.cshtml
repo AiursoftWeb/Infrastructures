@@ -29,11 +29,22 @@
                 }
                 else
                 {
-                    <p>
-                        Verify your 2FA app configuration.
-                    </p>
+                    <h6>Verify your 2FA app configuration.</h6>
                     <a asp-controller="Account" asp-action="VerifyTwoFACode" class="btn btn-success">@Localizer["Verify authentication"]</a>
                     <hr />
+
+                    if (Model.NewTwoFactorEnabled == true)
+                    {
+                        <h6>View recovery code</h6>
+                        <p>
+                            You can log in through recovery codes when you cannot use the Authentication App.
+                        </p>
+                        <p>
+                            Click the button below to generate a new Verify Codes.
+                        </p>
+                        <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-success">@Localizer["View Recovery codes"]</a>
+                        <hr />
+                    }
 
                     <h6>Reset 2fa key.</h6>
                     <p class="text-danger">
@@ -41,17 +52,6 @@
                     </p>
                     <a asp-controller="Account" asp-action="ResetTwoFAKey" class="btn btn-danger">@Localizer["Reset 2FA"]</a>
                     <hr />
-
-                    if (Model.NewTwoFactorEnabled == true)
-                    {
-                        <p>
-                            You have enabled the 2fa function.
-                            <br />You can log in through recovery codes when you cannot use the Authentication App.
-                            <br />Click the button below to generate a new Verify Codes.
-                        </p>
-                        <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-danger">@Localizer["Reset Recovery codes"]</a>
-                        <hr />
-                    }
 
                     <h6>Disable 2fa</h6>
                     <a asp-controller="Account" asp-action="DisableTwoFA" class="btn btn-danger">@Localizer["Disable 2fa"]</a>

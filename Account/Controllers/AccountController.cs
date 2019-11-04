@@ -422,16 +422,17 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var success = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.NewCode)).Value;
+            var success = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code)).Value;
             if (success)
             {
                 // go to recoverycodes page
-                return RedirectToAction(nameof(GetRecoveryCodes));
+                return RedirectToAction(nameof(GetRecoveryCodes), new { success = true });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Invalid code!");
-                return RedirectToAction(nameof(VerifyTwoFACode));
+                model.Recover(user, "Two-factor Authentication");
+                return View(model);
             }
         }
 
@@ -444,7 +445,7 @@ namespace Aiursoft.Account.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel model)
+        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel _)
         {
             var user = await GetCurrentUserAsync();
             var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken());
@@ -454,23 +455,10 @@ namespace Aiursoft.Account.Controllers
             }
             else
             {
-                return View();
+                throw new InvalidOperationException("Disable two FA crashed!");
             }
         }
 
-        public async Task<IActionResult> GetRecoveryCodes()
-        {
-            // warning page
-            var user = await GetCurrentUserAsync();
-            var model = new GetRecoveryCodesViewModel(user)
-            {
-                NewRecoveryCodesKey = null
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();

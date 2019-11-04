@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Aiursoft.Account.Models.AccountViewModels
@@ -11,6 +12,8 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public GetRecoveryCodesViewModel(AccountUser user) : base(user, "Two-factor Authentication") { }
 
+        [FromQuery(Name = "success")]
+        public bool Success { get; set; }
         public List<string> NewRecoveryCodesKey { get; set; }
     }
 }
