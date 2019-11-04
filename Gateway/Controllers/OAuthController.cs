@@ -118,7 +118,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (result.RequiresTwoFactor)
             {
-                return Redirect(new AiurUrl($"/oauth/{nameof(TwoFAAuthorizeConfirm)}", new FinishAuthInfo
+                return Redirect(new AiurUrl($"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
                 {
                     AppId = model.AppId,
                     RedirectUri = model.RedirectUri,
@@ -185,13 +185,13 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpGet]
-        public IActionResult TwoFAAuthorizeConfirm(FinishAuthInfo model)
+        public IActionResult SecondAuth(FinishAuthInfo model)
         {
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
             }
-            var viewModel = new TwoFAAuthorizeConfirmViewModel
+            var viewModel = new SecondAuthViewModel
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
@@ -202,7 +202,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TwoFAAuthorizeConfirm(TwoFAAuthorizeConfirmViewModel model)
+        public async Task<IActionResult> SecondAuth(SecondAuthViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -225,7 +225,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
             }
-            var viewModel = new TwoFAAuthorizeConfirmViewModel
+            var viewModel = new SecondAuthViewModel
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,

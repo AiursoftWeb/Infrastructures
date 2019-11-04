@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Gateway.Models;
+using Aiursoft.Pylon;
 using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,7 @@ namespace Aiursoft.Gateway.Services
         {
             return string.Format(
                 _authenticatorUriFormat,
-                _urlEncoder.Encode("Aiursoft.Nexus.Account"),
+                _urlEncoder.Encode(Values.ProjectName),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

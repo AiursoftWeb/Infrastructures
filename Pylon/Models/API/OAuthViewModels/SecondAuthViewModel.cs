@@ -2,7 +2,7 @@
 
 namespace Aiursoft.Pylon.Models.API.OAuthViewModels
 {
-    public class TwoFAAuthorizeConfirmViewModel : FinishAuthInfo
+    public class SecondAuthViewModel : FinishAuthInfo
     {
         [Required]
         [MinLength(6)]
