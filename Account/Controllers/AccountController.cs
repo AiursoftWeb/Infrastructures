@@ -418,6 +418,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
@@ -429,6 +430,7 @@ namespace Aiursoft.Account.Controllers
             }
             else
             {
+                ModelState.AddModelError(string.Empty, "Invalid code!");
                 return RedirectToAction(nameof(VerifyTwoFACode));
             }
         }
@@ -441,19 +443,17 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var ReturnValue = (await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken())).Value;
-            if (ReturnValue)
+            var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken());
+            if (disableResult.Value)
             {
-                // go to TwoFactorAuthentication page
-
                 return RedirectToAction(nameof(TwoFactorAuthentication));
             }
             else
             {
-                //error page
                 return View();
             }
         }
@@ -470,6 +470,7 @@ namespace Aiursoft.Account.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();
