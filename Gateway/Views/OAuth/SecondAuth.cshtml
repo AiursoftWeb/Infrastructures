@@ -13,7 +13,7 @@
                 <h4>Second auth</h4>
                 <p>Please enter the authentication code on your authenticator app.</p>
             </div>
-            <form asp-controller="OAuth" asp-action="TwoFAAuthorizeConfirm" method="post"
+            <form asp-controller="OAuth" asp-action="SecondAuth" method="post"
                   asp-route-appid="@Model.AppId"
                   asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State">
