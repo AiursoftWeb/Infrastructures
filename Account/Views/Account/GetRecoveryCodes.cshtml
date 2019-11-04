@@ -14,14 +14,14 @@
     </ol>
     <div class="col-md-8 pl-0">
         <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-fw fa-address-card"></i>
+                @Localizer["TwoFactorAuthentication Settings"]
+            </div>
             <div class="card-body">
-                <div class="card-header">
-                    <i class="fa fa-fw fa-address-card"></i>
-                    @Localizer["TwoFactorAuthentication Settings"]
-                </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        @if (null == Model.NewRecoveryCodesKey)
+                        @if (Model.NewRecoveryCodesKey == null)
                         {
 
                             <div class="alert alert-warning" role="alert">
@@ -42,13 +42,13 @@
                                     Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
                                     used in an authenticator app you should click this button to reset your authenticator keys.
                                 </p>
-                                <form asp-action="GetRecoveryCodes" method="post" class="form-group">
-                                    <button class="btn btn-danger" type="submit">GetRecovery Codes</button>
+                                <form asp-controller="Account" asp-action="GetRecoveryCodes" method="post" class="form-group">
+                                    <button class="btn btn-danger" type="submit">Get Recovery Codes</button>
                                 </form>
                             </div>
 
                         }
-                        @if (null != Model.NewRecoveryCodesKey)
+                        else
                         {
                             <div>
                                 <p>

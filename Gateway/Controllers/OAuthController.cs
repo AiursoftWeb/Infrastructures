@@ -184,8 +184,6 @@ namespace Aiursoft.Gateway.Controllers
             return await _authManager.FinishAuth(user, model, false);
         }
 
-        [HttpGet]
-        [Authorize]
         public async Task<IActionResult> TwoFAAuthorizeConfirm(FinishAuthInfo model)
         {
             if (!ModelState.IsValid)
@@ -206,7 +204,6 @@ namespace Aiursoft.Gateway.Controllers
             return View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TwoFAAuthorizeConfirm(TwoFAAuthorizeConfirmViewModel model)
