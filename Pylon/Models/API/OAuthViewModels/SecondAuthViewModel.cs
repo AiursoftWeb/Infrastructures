@@ -7,7 +7,7 @@ namespace Aiursoft.Pylon.Models.API.OAuthViewModels
         [Required]
         [MinLength(6)]
         [MaxLength(6)]
-        [Display(Name = "Verify Code")]
+        [Display(Name = "Verification Code")]
         public string VerifyCode { get; set; }
 
         [Display(Name = "Don't ask me this again on this device.")]
