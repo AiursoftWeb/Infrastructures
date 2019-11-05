@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Aiursoft.Pylon;
+using Aiursoft.Pylon.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Pylon.Models.API.OAuthViewModels
+namespace Aiursoft.Gateway.Models.OAuthViewModels
 {
     public class AuthorizeConfirmViewModel : FinishAuthInfo
     {

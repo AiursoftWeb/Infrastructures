@@ -401,6 +401,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 user.TwoFactorEnabled = false;
                 user.Has2FAKey = false;
+                await _userManager.ResetAuthenticatorKeyAsync(user);
                 await _userManager.UpdateAsync(user);
             }
             bool success = disable2faResult.Succeeded;

@@ -6,7 +6,6 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
-using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;

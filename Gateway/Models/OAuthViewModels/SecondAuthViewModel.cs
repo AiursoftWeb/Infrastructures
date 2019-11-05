@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Aiursoft.Pylon.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Pylon.Models.API.OAuthViewModels
+namespace Aiursoft.Gateway.Models.OAuthViewModels
 {
     public class SecondAuthViewModel : FinishAuthInfo
     {
         [Required]
-        [MinLength(6)]
-        [MaxLength(6)]
+        [StringLength(6)]
         [Display(Name = "Verification Code")]
         public string VerifyCode { get; set; }
 

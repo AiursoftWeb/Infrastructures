@@ -23,12 +23,7 @@
                 <div class="alert alert-warning" role="alert">
                     <p>
                         <span class="glyphicon glyphicon-warning-sign"></span>
-                        <strong>This action only disables two-factor authentication.</strong>
-                    </p>
-                    <p>
-                        Disabling two-factor authentication does not change the keys used in authenticator apps. If you wish to change the key
-                        used in an authenticator app you should
-                        <a asp-action="TwoFactorAuthentication"> reset your authenticator keys.</a>
+                        <strong>This action disables two-factor authentication. And will delete your key, which means your current authenticator app will stop working until you re-config two-factor authentication.</strong>
                     </p>
                 </div>
 
