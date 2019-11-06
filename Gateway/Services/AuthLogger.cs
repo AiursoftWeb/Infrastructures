@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
+using Aiursoft.Pylon;
 using Aiursoft.Pylon.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -17,9 +18,7 @@ namespace Aiursoft.Gateway.Services
 
         public Task LogAuthRecord(string userId, HttpContext httpContext, bool success, string appId)
         {
-            var dntFlag = httpContext.Request.Headers.ContainsKey("DNT") ? httpContext.Request.Headers["DNT"].ToString() : string.Empty;
-            bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
-            if (!dnt)
+            if (httpContext.AllowTrack())
             {
                 var log = new AuditLogLocal
                 {

@@ -267,5 +267,14 @@ namespace Aiursoft.Pylon
             }
             return Task.WhenAll(taskList);
         }
+
+        public static bool AllowTrack(this HttpContext httpContext)
+        {
+            var dntFlag =
+                httpContext.Request.Headers.ContainsKey("dnt") ? httpContext.Request.Headers["dnt"].ToString() :
+                string.Empty;
+            bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
+            return !dnt;
+        }
     }
 }
