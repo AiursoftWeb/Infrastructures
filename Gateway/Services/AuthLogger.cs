@@ -18,7 +18,7 @@ namespace Aiursoft.Gateway.Services
 
         public Task LogAuthRecord(string userId, HttpContext httpContext, bool success, string appId)
         {
-            if (httpContext.AllowTrack())
+            if (httpContext.AllowTrack() || success == false)
             {
                 var log = new AuditLogLocal
                 {
