@@ -88,7 +88,7 @@ namespace Aiursoft.Gateway.Controllers
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
-                await _authLogger.LogAuthRecord(account.OwnerId, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                await _authLogger.LogAuthRecord(account.OwnerId, HttpContext, true, app.AppId);
                 await _signInManager.SignInAsync(account.Owner, true);
                 return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
             }
@@ -152,7 +152,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, model.AppId);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext, true, model.AppId);
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             else

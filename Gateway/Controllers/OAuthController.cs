@@ -76,7 +76,7 @@ namespace Aiursoft.Gateway.Controllers
             // Signed in. App is not in force input password mode. User did not specify force input.
             else if (user != null && app.ForceInputPassword != true && model.ForceConfirm != true)
             {
-                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext, true, app.AppId);
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
@@ -110,7 +110,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
-            await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), result.Succeeded, app.AppId);
+            await _authLogger.LogAuthRecord(user.Id, HttpContext, result.Succeeded, app.AppId);
             if (result.Succeeded)
             {
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
@@ -288,7 +288,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
                 // Send him an confirmation email here:
                 await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
-                await _authLogger.LogAuthRecord(user.Id, HttpContext.Connection.RemoteIpAddress.ToString(), true, app.AppId);
+                await _authLogger.LogAuthRecord(user.Id, HttpContext, true, app.AppId);
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
