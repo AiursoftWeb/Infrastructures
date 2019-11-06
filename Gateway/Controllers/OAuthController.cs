@@ -110,7 +110,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = mail.Owner;
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
-            await _authLogger.LogAuthRecord(user.Id, HttpContext, result.Succeeded, app.AppId);
+            await _authLogger.LogAuthRecord(user.Id, HttpContext, result.Succeeded || result.RequiresTwoFactor, app.AppId);
             if (result.Succeeded)
             {
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
