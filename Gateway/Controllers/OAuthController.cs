@@ -210,7 +210,7 @@ namespace Aiursoft.Gateway.Controllers
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var authenticatorCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DontAskMeOnIt);
             if (result.Succeeded)
             {

@@ -7,10 +7,12 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
     {
         [Required]
         [StringLength(6)]
-        [Display(Name = "Verification Code")]
-        public string VerifyCode { get; set; }
+        [Display(Name = "Code")]
+        public string Code { get; set; }
 
         [Display(Name = "Don't ask me this again on this device.")]
         public bool DontAskMeOnIt { get; set; }
+        [Display(Name = "Login with recovery code.")]
+        public bool AuthWay { get; set; }
     }
 }
