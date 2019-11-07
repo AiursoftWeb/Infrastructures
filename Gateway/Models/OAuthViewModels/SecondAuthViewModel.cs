@@ -6,7 +6,7 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
     public class SecondAuthViewModel : FinishAuthInfo
     {
         [Required]
-        [StringLength(6)]
+        [StringLength(8)]
         [Display(Name = "Code")]
         public string Code { get; set; }
 

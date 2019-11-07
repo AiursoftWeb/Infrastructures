@@ -211,12 +211,27 @@ namespace Aiursoft.Gateway.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var authenticatorCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DontAskMeOnIt);
-            if (result.Succeeded)
+
+            bool resultSucessed = false;
+            bool resultIsLockedOut = false;
+            if (!model.AuthWay)
+            {
+                var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DontAskMeOnIt);
+                resultSucessed = result.Succeeded;
+                resultIsLockedOut = result.IsLockedOut;
+            }
+            else
+            {
+                var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(authenticatorCode);
+                resultSucessed = result.Succeeded;
+                resultIsLockedOut = result.IsLockedOut;
+            }
+
+            if (resultSucessed)
             {
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
             }
-            else if (result.IsLockedOut)
+            else if (resultIsLockedOut)
             {
                 ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
             }
