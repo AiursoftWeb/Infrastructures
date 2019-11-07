@@ -234,6 +234,56 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpGet]
+        public IActionResult RecoveryCodeAuth(FinishAuthInfo model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AuthError");
+            }
+            var viewModel = new RecoveryCodeAuthViewModel
+            {
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RecoveryCodeAuth(RecoveryCodeAuthViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+            var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+            if (result.Succeeded)
+            {
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+            }
+            else if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
+            }
+            var viewModel = new RecoveryCodeAuthViewModel
+            {
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State,
+            };
+            return View(viewModel);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;

@@ -40,6 +40,17 @@
                 <div class="w-100 mt-3">
                     <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
                 </div>
+                <p>
+                    <br />
+                    Don't have access to your authenticator device? You can
+                    <a asp-action="RecoveryCodeAuth" asp-controller="OAuth"
+                       asp-route-appid="@Model.AppId"
+                       asp-route-redirect_uri="@Model.RedirectUri"
+                       asp-route-state="@Model.State" u
+                       asp-route-force-confirm="true">
+                        @Localizer["Click here"]
+                    </a>@Localizer["to use Recovery Code login."]
+                </p>
             </form>
         </div>
     </div>
