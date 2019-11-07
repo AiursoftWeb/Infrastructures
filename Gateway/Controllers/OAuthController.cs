@@ -234,6 +234,23 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpGet]
+        public IActionResult RecoveryCodeAuth(FinishAuthInfo model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AuthError");
+            }
+            var viewModel = new SecondAuthViewModel
+            {
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State
+            };
+            return View(viewModel);
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
