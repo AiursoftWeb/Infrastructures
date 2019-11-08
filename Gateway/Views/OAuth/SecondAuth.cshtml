@@ -22,7 +22,7 @@
                     <a asp-action="Authorize" asp-controller="OAuth"
                        asp-route-appid="@Model.AppId"
                        asp-route-redirect_uri="@Model.RedirectUri"
-                       asp-route-state="@Model.State" u
+                       asp-route-state="@Model.State"
                        asp-route-force-confirm="true">
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
@@ -41,16 +41,15 @@
                     <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
                 </div>
                 <p>
-                    <br />
-                    Don't have access to your authenticator device? You can
+                    Can't access your authenticator? Click
                     <a asp-action="RecoveryCodeAuth" asp-controller="OAuth"
                        asp-route-appid="@Model.AppId"
                        asp-route-redirect_uri="@Model.RedirectUri"
-                       asp-route-state="@Model.State" u
-                       asp-route-force-confirm="true">
-                        @Localizer["Click here"]
-                    </a>@Localizer["to use Recovery Code login."]
+                       asp-route-state="@Model.State">
+                        here
+                    </a> to sign in with your recovery code.
                 </p>
+                <p>Or <a href="mailto:service@aiursoft.com">contact support</a> to help recovery your account.</p>
             </form>
         </div>
     </div>

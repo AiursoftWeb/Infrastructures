@@ -257,7 +257,6 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return View(model);
             }
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty).Replace("-", string.Empty);

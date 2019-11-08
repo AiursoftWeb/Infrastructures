@@ -1,18 +1,18 @@
 ﻿@model Aiursoft.Gateway.Models.OAuthViewModels.RecoveryCodeAuthViewModel
 @{
-    ViewData["Title"] = "RecoveryCode Auth";
+    ViewData["Title"] = "Recovery code Auth";
 }
 
 <div class="container">
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">
             <i class="fa fa-shield"></i>
-            @Localizer["RecoveryCode Auth"]
+            @Localizer["Recovery code Auth"]
         </div>
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
-                <h4>RecoveryCode auth</h4>
-                <p>Please enter the recovery code.</p>
+                <h4>Recovery code sign in</h4>
+                <p>Please enter the recovery code to sign in your account.</p>
             </div>
             <form asp-controller="OAuth" asp-action="RecoveryCodeAuth" method="post"
                   asp-route-appid="@Model.AppId"
@@ -23,7 +23,7 @@
                     <a asp-action="Authorize" asp-controller="OAuth"
                        asp-route-appid="@Model.AppId"
                        asp-route-redirect_uri="@Model.RedirectUri"
-                       asp-route-state="@Model.State" u
+                       asp-route-state="@Model.State"
                        asp-route-force-confirm="true">
                         @Localizer["Click here"]
                     </a>@Localizer["to switch to another account."]
@@ -33,7 +33,7 @@
                     <input class="form-control" asp-for="RecoveryCode" placeholder="@Localizer["Enter the code"]" tabindex="1">
                 </div>
                 <div class="w-100 mt-3">
-                    <button class="btn btn-block btn-success" data-disable-with="Saving..." type="submit">@Localizer["Authenticate"]</button>
+                    <button class="btn btn-block btn-success" data-disable-with="Authenticating..." type="submit">@Localizer["Authenticate"]</button>
                 </div>
             </form>
         </div>
