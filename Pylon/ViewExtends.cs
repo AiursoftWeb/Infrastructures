@@ -21,7 +21,7 @@ namespace Aiursoft.Pylon
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
             var builder = new HtmlContentBuilder()
-                .AppendHtml($"<meta name='theme-color' content='##0082c9'>");
+                .AppendHtml($"<meta name=\"theme-color\" content=\"#0082c9\">");
             if (includeCore)
             {
                 return builder
