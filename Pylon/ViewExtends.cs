@@ -20,15 +20,17 @@ namespace Aiursoft.Pylon
         public static IHtmlContent UseAiurDashboardCss(this RazorPage page, bool includeCore = true)
         {
             var serviceLocation = page.Context.RequestServices.GetService<ServiceLocation>();
+            var builder = new HtmlContentBuilder()
+                .AppendHtml($"<meta name='theme-color' content='##0082c9'>");
             if (includeCore)
             {
-                return new HtmlContentBuilder()
+                return builder
                     .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurCore.min.css")
                     .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurDashboard.min.css");
             }
             else
             {
-                return new HtmlContentBuilder()
+                return builder
                     .AppendStyleSheet($"{serviceLocation.UI}/dist/AiurDashboard.min.css");
             }
         }
