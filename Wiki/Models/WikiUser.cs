@@ -27,7 +27,7 @@ namespace Aiursoft.Wiki.Models
         public int ArticleId { get; set; }
         public string ArticleTitle { get; set; }
         public string ArticleAddress { get; set; }
-
+        public bool BuiltByJson { get; set; }
         [JsonIgnore]
         public string ArticleContent { get; set; }
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;

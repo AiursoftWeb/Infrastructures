@@ -1,7 +1,9 @@
 ﻿using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.Status;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.ToStatusServer;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Microsoft.Extensions.Configuration;
@@ -20,18 +22,24 @@ namespace Aiursoft.Wiki.Services
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
-        private readonly MarkDownGenerator _markdown;
+        private readonly MarkDownGenerator _markDownGenerator;
+        private readonly EventService _eventService;
+        private readonly AppsContainer _appsContainer;
 
         public Seeder(
             WikiDbContext dbContext,
             IConfiguration configuration,
             HTTPService http,
-            MarkDownGenerator markdown)
+            MarkDownGenerator markDownGenerator,
+            EventService eventService,
+            AppsContainer appsContainer)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _http = http;
-            _markdown = markdown;
+            _markDownGenerator = markDownGenerator;
+            _eventService = eventService;
+            _appsContainer = appsContainer;
         }
 
         public Task AllClear()
@@ -62,9 +70,10 @@ namespace Aiursoft.Wiki.Services
                     _dbContext.Collections.Add(newCollection);
                     await _dbContext.SaveChangesAsync();
 
-                    // Get markdown from GitHub
+                    // Get markdown from existing documents.
                     foreach (var article in collection.Articles ?? new List<Article>())
                     {
+                        // markdown http url.
                         if (!string.IsNullOrEmpty(article.ArticleAddress))
                         {
                             var newarticle = new Article
@@ -77,6 +86,7 @@ namespace Aiursoft.Wiki.Services
                             _dbContext.Article.Add(newarticle);
                             await _dbContext.SaveChangesAsync();
                         }
+                        // GitHub repo.
                         else
                         {
                             var newarticle = new Article
@@ -90,32 +100,34 @@ namespace Aiursoft.Wiki.Services
                         }
                     }
 
-                    if (string.IsNullOrWhiteSpace(collection.DocAPIAddress))
+                    // Parse the appended doc.
+                    if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
-                        continue;
-                    }
-
-                    // Generate markdown from doc generator
-                    var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
-                    var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
-                    var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                    var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
-                    foreach (var docController in docGrouped)
-                    {
-                        var markdown = _markdown.GenerateMarkDownForAPI(docController, apiRoot);
-                        var newarticle = new Article
+                        // Generate markdown from doc generator
+                        var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
+                        var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                        var docGrouped = docModel.GroupBy(t => t.ControllerName);
+                        var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
+                        foreach (var docController in docGrouped)
                         {
-                            ArticleTitle = docController.Key.TrimController(),
-                            ArticleContent = markdown,
-                            CollectionId = newCollection.CollectionId
-                        };
-                        _dbContext.Article.Add(newarticle);
-                        await _dbContext.SaveChangesAsync();
+                            var markdown = _markDownGenerator.GenerateMarkDownForAPI(docController, apiRoot);
+                            var newarticle = new Article
+                            {
+                                ArticleTitle = docController.Key.TrimController(),
+                                ArticleContent = markdown,
+                                CollectionId = newCollection.CollectionId,
+                                BuiltByJson = true
+                            };
+                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.SaveChangesAsync();
+                        }
                     }
                 }
             }
             catch (Exception e)
             {
+                var accessToken = await _appsContainer.AccessToken();
+                await _eventService.LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
             }
