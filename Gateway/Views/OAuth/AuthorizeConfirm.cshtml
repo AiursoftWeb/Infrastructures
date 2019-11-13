@@ -78,8 +78,18 @@
                     </div>
                 </div>
                 <div>
-                    <a href="@Model.TermsUrl" target="_blank">@Localizer["View License"]</a> |
-                    <a href="@Model.PStatementUrl" target="_blank">@Localizer["View Privacy Statement"]</a>
+                    @if (!string.IsNullOrWhiteSpace(Model.TermsUrl))
+                    {
+                        <a href="@Model.TermsUrl" target="_blank">@Localizer["View License"]</a>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.TermsUrl) && !string.IsNullOrWhiteSpace(Model.PStatementUrl))
+                    {
+                        <label>|</label>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.PStatementUrl))
+                    {
+                        <a href="@Model.PStatementUrl" target="_blank">@Localizer["View Privacy Statement"]</a>
+                    }
                 </div>
             </form>
         </div>
