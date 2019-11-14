@@ -6,7 +6,7 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@Values.ProjectName - Document Center</title>
     @this.UseAiurDashboardCss()
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css">
+    <link href="@ServiceLocation.UI/node_modules/highlightjs/styles/vs.css" rel="stylesheet" />
     @RenderSection("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
@@ -80,7 +80,7 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         @this.UseAiurDashboardJs()
-        <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
+        <script src="@ServiceLocation.UI/node_modules/highlightjs/highlight.pack.min.js"></script>
         <script>
             asyncLayout('#render-part');
         </script>
