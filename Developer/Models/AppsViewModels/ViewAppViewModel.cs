@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Probe;
-using Aiursoft.Pylon.Models.Status;
+using Aiursoft.Pylon.Models.Status.EventViewModels;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToGatewayServer;
 using Aiursoft.Pylon.Services.ToProbeServer;
@@ -126,6 +126,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<Grant> Grants { get; set; }
-        public IEnumerable<ErrorLog> ErrorLogs { get; set; }
+        public IEnumerable<LogCollection> ErrorLogs { get; set; }
     }
 }

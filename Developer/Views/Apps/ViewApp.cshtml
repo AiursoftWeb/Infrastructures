@@ -378,28 +378,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var log in Model.ErrorLogs.GroupBy(t => t.Message))
+                                        @foreach (var log in Model.ErrorLogs)
                                         {
-                                            var first = log.OrderByDescending(t => t.LogTime).First();
                                             <tr>
-                                                <td>@log.Key.ToString()</td>
-                                                <td>@log.Count()</td>
-                                                <td data-order="@first.LogTime" data-utc-time="@first.LogTime"></td>
-                                                @switch (first.EventLevel)
+                                                <td>@log.Message</td>
+                                                <td>@log.Count</td>
+                                                <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime"></td>
+                                                @switch (log.First.EventLevel)
                                                 {
                                                     case EventLevel.Exception:
-                                                        <td><span class="badge badge-danger">@first.EventLevel</span></td>
+                                                        <td><span class="badge badge-danger">@log.First.EventLevel</span></td>
                                                         break;
                                                     case EventLevel.Info:
-                                                        <td><span class="badge badge-info">@first.EventLevel.ToString()</span></td>
+                                                        <td><span class="badge badge-info">@log.First.EventLevel.ToString()</span></td>
                                                         break;
                                                     case EventLevel.Warning:
-                                                        <td><span class="badge badge-warning">@first.EventLevel.ToString()</span></td>
+                                                        <td><span class="badge badge-warning">@log.First.EventLevel.ToString()</span></td>
                                                         break;
                                                     default:
                                                         break;
                                                 }
-                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@first.Message" data-stacktrace="@first.StackTrace">View stack trace</a></td>
+                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@log.First.Message" data-stacktrace="@log.First.StackTrace">View stack trace</a></td>
                                             </tr>
                                         }
                                     </tbody>
