@@ -70,9 +70,10 @@ namespace Aiursoft.Status.Controllers
                 await _dbContext.SaveChangesAsync();
             }
 
-            var logs = await _dbContext
+            var logs = _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
+                .AsEnumerable()
                 .GroupBy(t => t.Message)
                 .Select(t => new LogCollection
                 {
@@ -80,7 +81,7 @@ namespace Aiursoft.Status.Controllers
                     First = t.FirstOrDefault(),
                     Count = t.Count()
                 })
-                .ToListAsync();
+                .ToList();
             var viewModel = new ViewLogViewModel
             {
                 AppId = appLocal.AppId,
