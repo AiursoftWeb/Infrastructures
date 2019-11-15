@@ -73,8 +73,8 @@ namespace Aiursoft.Status.Controllers
             var logs = _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
-                .AsEnumerable()
                 .GroupBy(t => t.Message)
+                .AsEnumerable()
                 .Select(t => new LogCollection
                 {
                     Message = t.Key,
