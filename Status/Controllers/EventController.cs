@@ -70,11 +70,11 @@ namespace Aiursoft.Status.Controllers
                 await _dbContext.SaveChangesAsync();
             }
 
-            var logs = _dbContext
+            var logs = (await _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
+                .ToListAsync())
                 .GroupBy(t => t.Message)
-                .AsEnumerable()
                 .Select(t => new LogCollection
                 {
                     Message = t.Key,
