@@ -133,17 +133,15 @@ namespace Aiursoft.Gateway.Controllers
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
-                if (!model.UserDetail.Email.ToLower().Contains("@from."))
+                var primaryMail = new UserEmail
                 {
-                    var primaryMail = new UserEmail
-                    {
-                        EmailAddress = model.UserDetail.Email.ToLower(),
-                        OwnerId = user.Id,
-                        ValidateToken = Guid.NewGuid().ToString("N")
-                    };
-                    _dbContext.UserEmails.Add(primaryMail);
-                    await _dbContext.SaveChangesAsync();
-                }
+                    EmailAddress = model.UserDetail.Email.ToLower(),
+                    OwnerId = user.Id,
+                    ValidateToken = Guid.NewGuid().ToString("N")
+                };
+                _dbContext.UserEmails.Add(primaryMail);
+                await _dbContext.SaveChangesAsync();
+
                 var link = new ThirdPartyAccount
                 {
                     OwnerId = user.Id,
