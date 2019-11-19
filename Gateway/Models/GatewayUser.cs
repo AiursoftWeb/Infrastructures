@@ -37,7 +37,7 @@ namespace Aiursoft.Gateway.Models
         public override string Email => Emails?
             .OrderByDescending(t => t.Validated)
             .ThenByDescending(t => t.Priority)
-            .First()?
+            .FirstOrDefault()?
             .EmailAddress ?? string.Empty;
     }
 
