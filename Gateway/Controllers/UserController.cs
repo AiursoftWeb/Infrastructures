@@ -7,13 +7,15 @@ using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Aiursoft.Pylon.Models.API.UserViewModels;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Controllers
@@ -26,23 +28,26 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GatewayDbContext _dbContext;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
-        private readonly UrlEncoder _urlEncoder;
         private readonly TwoFAHelper _twoFAHelper;
+        private readonly IEnumerable<IAuthProvider> _authProviders;
+        private readonly ServiceLocation _serviceLocation;
 
         public UserController(
-             UserManager<GatewayUser> userManager,
-             GatewayDbContext context,
-             ConfirmationEmailSender emailSender,
-             GrantChecker grantChecker,
-              UrlEncoder urlEncoder,
-              TwoFAHelper twoFAHelper)
+            UserManager<GatewayUser> userManager,
+            GatewayDbContext context,
+            ConfirmationEmailSender emailSender,
+            GrantChecker grantChecker,
+            TwoFAHelper twoFAHelper,
+            IEnumerable<IAuthProvider> authProviders,
+            ServiceLocation serviceLocation)
         {
             _userManager = userManager;
             _dbContext = context;
             _emailSender = emailSender;
             _grantChecker = grantChecker;
-            _urlEncoder = urlEncoder;
             _twoFAHelper = twoFAHelper;
+            _authProviders = authProviders;
+            _serviceLocation = serviceLocation;
         }
 
         [HttpPost]
@@ -167,6 +172,11 @@ namespace Aiursoft.Gateway.Controllers
             if (useremail.Validated)
             {
                 return this.Protocol(ErrorType.HasDoneAlready, $"The email: {model.Email} was already validated!");
+            }
+            var byProvider = _authProviders.FirstOrDefault(t => user.Email.ToLower().Contains($"@from.{t.GetName().ToLower()}"));
+            if (byProvider != null)
+            {
+                return this.Protocol(ErrorType.HasDoneAlready, $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
             }
             // limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
