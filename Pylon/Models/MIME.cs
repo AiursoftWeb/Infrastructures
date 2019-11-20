@@ -59,7 +59,8 @@ namespace Aiursoft.Pylon.Models
             {"ttf","application/x-font-truetype"},
             {"otf","application/x-font-opentype"},
             {"eot","application/application/vnd.ms-fontobject"},
-            {"ts","application/x-typescript"}
+            {"ts","application/x-typescript"},
+            {"xml", "text/xml"}
         };
     }
 }
