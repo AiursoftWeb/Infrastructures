@@ -110,10 +110,6 @@ namespace Aiursoft.Gateway.Controllers
         [Route("create-account-and-bind/{providerName}")]
         public async Task<IActionResult> CreateAccountAndBind(SignInViewModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.UserDetail.Email))
-            {
-                model.UserDetail.Email = model.UserDetail.Name + $"@from.{model.ProviderName}.com";
-            }
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
             if (exists)
             {
