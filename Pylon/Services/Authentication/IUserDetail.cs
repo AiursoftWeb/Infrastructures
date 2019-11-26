@@ -8,8 +8,8 @@ namespace Aiursoft.Pylon.Services.Authentication
         public string AvatarUrl { get; set; }
 
         [StringLength(maximumLength: 25, MinimumLength = 1)]
-        [Required(ErrorMessage = "Name is required")]
-        [Display(Name = "Nick name")]
+        [Required(ErrorMessage = "Nickname is required")]
+        [Display(Name = "Nickname")]
         public string Name { get; set; }
         public string Bio { get; set; }
         [Required(ErrorMessage = "Email is required.")]

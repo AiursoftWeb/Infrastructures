@@ -26,8 +26,14 @@
                     Please link your @Values.ProjectName account with your @Model.ProviderName identity: <strong>@Model.UserDetail.Name</strong>.
                 </p>
                 <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
-                <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
-                <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
+                <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank">
+                    <i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>
+                    Sign in and link @Model.ProviderName with it
+                </a>
+                <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()">
+                    <i class="fa fa-fw fa-refresh"></i>
+                    Try sign in by @Model.ProviderName again
+                </a>
             }
             else
             {
@@ -46,8 +52,14 @@
                     <div class="col-md-6 pr-3" style="border-right: 1px solid rgba(0,0,0,.1)">
                         <h5>Yes. I already have an @Values.ProjectName account.</h5>
                         <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
-                        <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Link @Model.ProviderName with existing account</a>
-                        <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()"><i class="fa fa-fw fa-refresh"></i>Try sign in by @Model.ProviderName again</a>
+                        <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank">
+                            <i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>
+                            Sign in and link @Model.ProviderName with it
+                        </a>
+                        <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()">
+                            <i class="fa fa-fw fa-refresh"></i>
+                            Try sign in by @Model.ProviderName again
+                        </a>
                     </div>
                     <form asp-controller="ThirdParty" asp-action="CreateAccountAndBind" method="post" class="col-md-6 pl-3"
                           asp-route-providerName="@Model.ProviderName"
@@ -69,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="UserDetail.Name"></label>
-                            <input class="form-control" type="email" asp-for="UserDetail.Name" placeholder="@Localizer["Enter your user name"]" tabindex="1">
+                            <input class="form-control" type="text" asp-for="UserDetail.Name" placeholder="@Localizer["Enter your nickname"]" tabindex="1">
                         </div>
                         <button type="submit" class="btn btn-@Model.Provider.GetButtonColor() btn-block" href="#" data-disable-with="Creating account...">Create account and continue sign in</button>
                     </form>
