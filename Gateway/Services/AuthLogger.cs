@@ -32,7 +32,15 @@ namespace Aiursoft.Gateway.Services
             }
             else
             {
-                return Task.CompletedTask;
+                var log = new AuditLogLocal
+                {
+                    UserId = userId,
+                    IPAddress = "Unknown(because of `dnt` policy)",
+                    Success = success,
+                    AppId = appId
+                };
+                _dbContext.AuditLogs.Add(log);
+                return _dbContext.SaveChangesAsync();
             }
         }
     }
