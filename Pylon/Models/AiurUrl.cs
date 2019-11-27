@@ -1,6 +1,8 @@
 ﻿using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 
@@ -22,12 +24,21 @@ namespace Aiursoft.Pylon.Models
                 if (prop.GetValue(param) != null)
                 {
                     var propName = prop.Name;
+                    var propValue = prop.GetValue(param).ToString();
                     var fromQuery = prop.GetCustomAttributes(typeof(FromQueryAttribute), true).FirstOrDefault();
                     if (fromQuery != null)
                     {
                         propName = (fromQuery as FromQueryAttribute).Name;
                     }
-                    Params.Add(propName, prop.GetValue(param).ToString());
+                    if (prop == typeof(DateTime))
+                    {
+                        var nullableValue = prop.GetValue(param) as DateTime?;
+                        if (nullableValue != null)
+                        {
+                            propValue = nullableValue.Value.ToString("o", CultureInfo.InvariantCulture);
+                        }
+                    }
+                    Params.Add(propName, propValue);
                 }
             }
         }
