@@ -16,14 +16,14 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
             <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!Model.ModelStateValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
             <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
@@ -39,7 +39,7 @@
                     You have @Model.TotalCount log in attempt@(Model.Logs.Count() > 1 ? "s" : string.Empty) to your account.
                 </p>
                 <p class="text-muted">
-                    The audit log feature is for your account security. We respect your privacy and will never track your login activity by human or AI. Only the apps you granted to view the log can get these log.
+                    @Localizer["The audit log feature is for your account security. We respect your privacy and will never track your login activity by human or AI. Only the apps you granted to view the log can get these log."]
                 </p>
             </div>
             <ul class="list-group list-group-flush">
@@ -60,13 +60,13 @@
                                         @if (log.Success)
                                         {
                                             <lable class="text-muted">
-                                                <span class="badge badge-primary">Success</span>
+                                                <span class="badge badge-primary">@Localizer["Success"]</span>
                                             </lable>
                                         }
                                         else
                                         {
                                             <lable class="text-muted">
-                                                <span class="badge badge-danger">Failed</span>
+                                                <span class="badge badge-danger">@Localizer["Failed"]</span>
                                             </lable>
                                         }
                                         IP address:

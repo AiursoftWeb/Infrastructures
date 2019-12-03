@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.AccountViewModel
+@model Aiursoft.Account.Models.AccountViewModels.AccountViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,25 +27,25 @@
                         <li>
                             <a asp-controller="Account" asp-action="Index">
                                 <i class="fa fa-fw fa-sliders"></i>
-                                Profile
+                                @Localizer["Profile"]
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Account" asp-action="Avatar">
                                 <i class="fa fa-fw fa-user-circle-o"></i>
-                                Avatar
+                                @Localizer["Avatar"]
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Account" asp-action="Email">
                                 <i class="fa fa-fw fa-envelope"></i>
-                                Email
+                                @Localizer["Email"]
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Account" asp-action="Phone">
                                 <i class="fa fa-fw fa-phone"></i>
-                                Phone
+                                @Localizer["Phone"]
                             </a>
                         </li>
                     </ul>
@@ -60,7 +60,7 @@
                         <li>
                             <a asp-controller="Account" asp-action="Security">
                                 <i class="fa fa-fw fa-lock"></i>
-                                Password
+                                @Localizer["Password"]
                             </a>
                         </li>
                         <li>
@@ -72,7 +72,7 @@
                         <li>
                             <a asp-controller="Account" asp-action="Social">
                                 <i class="fa fa-fw fa-github-alt"></i>
-                                Social accounts
+                                @Localizer["Social accounts"]
                             </a>
                         </li>
                         <li>
@@ -158,7 +158,7 @@
         {
             <div class="container-fluid">
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
                     <strong>@Localizer["Your account email was not confirmed!"]</strong>
                     <div>@Localizer["Please"] <a asp-controller="Account" asp-action="Email">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]</div>
                     <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>

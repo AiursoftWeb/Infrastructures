@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.GetRecoveryCodesViewModel
+@model Aiursoft.Account.Models.AccountViewModels.GetRecoveryCodesViewModel
 @{
     ViewData["Title"] = "GetRecoveryCodes";
 }
@@ -23,14 +23,14 @@
                 {
                     <div class="container-fluid">
                         <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                            <strong>Validation success!</strong> @Localizer["Your account is ready for two-factor authentication."]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+                            <strong>@Localizer["Validation success!"]</strong> @Localizer["Your account is ready for two-factor authentication."]
                         </div>
                     </div>
                 }
                 <div>
                     <p>
-                        This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes. The code will never show again!
+                        @Localizer["This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes. The code will never show again!"]
                     </p>
                     @for (int i = 0; i < Model.NewRecoveryCodesKey.Count - 1; i += 2)
                     {
@@ -39,8 +39,8 @@
                             <kbd>@Model.NewRecoveryCodesKey[i + 1]</kbd>
                         </p>
                     }
-                    <p class="text-danger">Write those codes down on a paper which you never lose! You will lose access to your account if you don't have your authentication device and recover codes.</p>
-                    <a class="btn btn-outline-danger" asp-action="TwoFactorAuthentication">I have copy it down.</a>
+                    <p class="text-danger">@Localizer["Write those codes down on a paper which you never lose! You will lose access to your account if you don't have your authentication device and recover codes."]</p>
+                    <a class="btn btn-outline-danger" asp-action="TwoFactorAuthentication">@Localizer["I have copy it down."]</a>
                 </div>
             </div>
         </div>

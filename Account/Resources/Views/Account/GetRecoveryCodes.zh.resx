@@ -117,31 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Management Center" xml:space="preserve">
-    <value>管理中心</value>
+  <data name="Two-factor authentication" xml:space="preserve">
+    <value>双重身份验证</value>
   </data>
   <data name="x" xml:space="preserve">
     <value>x</value>
   </data>
-  <data name="Well done!" xml:space="preserve">
-    <value>干的好！</value>
+  <data name="Validation success!" xml:space="preserve">
+    <value>验证成功！</value>
   </data>
-  <data name="You have successfully updated your phone number." xml:space="preserve">
-    <value>您已成功更新电话号码。</value>
+  <data name="Your account is ready for two-factor authentication." xml:space="preserve">
+    <value>您的帐户已准备好进行双重身份验证。</value>
   </data>
-  <data name="Invalid Input!" xml:space="preserve">
-    <value>输入无效！</value>
+  <data name="This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes. The code will never show again!" xml:space="preserve">
+    <value>这是您的恢复代码。如果无法使用身份验证应用登录到帐户，可以使用这些恢复代码登录。代码永远不会再次显示！</value>
   </data>
-  <data name="Bind Phone" xml:space="preserve">
-    <value>绑定电话</value>
+  <data name="Write those codes down on a paper which you never lose! You will lose access to your account if you don't have your authentication device and recover codes." xml:space="preserve">
+    <value>把这些代码写在你的纸上！如果您没有身份验证设备并恢复代码，您将无法访问您的帐户。</value>
   </data>
-  <data name="You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below." xml:space="preserve">
-    <value>您没有绑定您的手机。目前，您无法通过短信访问您的帐户！请在下面输入您的电话号码。</value>
-  </data>
-  <data name="Change Phone number" xml:space="preserve">
-    <value>更改电话号码</value>
-  </data>
-  <data name="Send verification passcode" xml:space="preserve">
-    <value>发送验证密码</value>
+  <data name="I have copy it down." xml:space="preserve">
+    <value>我已经把它抄下来了。</value>
   </data>
 </root>

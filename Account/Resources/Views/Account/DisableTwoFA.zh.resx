@@ -58,34 +58,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account Management Center" xml:space="preserve"><value>账户管理中心</value></data>
-<data name="Aiursoft Account" xml:space="preserve"><value>Aiursoft 帐户</value></data>
-<data name="Basic info" xml:space="preserve"><value>基本信息</value></data>
-<data name="Profile" xml:space="preserve"><value>配置 文件</value></data>
-<data name="Avatar" xml:space="preserve"><value>化身</value></data>
-<data name="Email" xml:space="preserve"><value>电子邮件</value></data>
-<data name="Phone" xml:space="preserve"><value>电话</value></data>
-<data name="Security" xml:space="preserve"><value>安全</value></data>
-<data name="Password" xml:space="preserve"><value>密码</value></data>
-<data name="Two-factor Authentication" xml:space="preserve"><value>双重身份验证</value></data>
-<data name="Social accounts" xml:space="preserve"><value>社交账户</value></data>
-<data name="Audit log" xml:space="preserve"><value>审核日志</value></data>
-<data name="Applications" xml:space="preserve"><value>应用</value></data>
-<data name="Granted apps" xml:space="preserve"><value>授予的应用</value></data>
-<data name="Develope" xml:space="preserve"><value>开发</value></data>
-<data name="Messages" xml:space="preserve"><value>消息</value></data>
-<data name="New Messages:" xml:space="preserve"><value>新消息：</value></data>
-<data name="View all messages" xml:space="preserve"><value>查看所有消息</value></data>
-<data name="Alerts" xml:space="preserve"><value>警报</value></data>
-<data name="New Alerts:" xml:space="preserve"><value>新警报：</value></data>
-<data name="View all alerts" xml:space="preserve"><value>查看所有警报</value></data>
-<data name="Settings" xml:space="preserve"><value>设置</value></data>
-<data name="Logout" xml:space="preserve"><value>注销</value></data>
-<data name="x" xml:space="preserve"><value>Ⅹ</value></data>
-<data name="Your account email was not confirmed!" xml:space="preserve"><value>您的帐户电子邮件未被确认！</value></data>
-<data name="Please" xml:space="preserve"><value>请</value></data>
-<data name="confirm your email" xml:space="preserve"><value>确认您的电子邮件</value></data>
-<data name="as soon as possible! Or you may lose access to your account in a few days!" xml:space="preserve"><value>尽快！或者，您可能会在几天内失去对您的帐户的访问权限！</value></data>
-<data name="Without confirming your email, you won't receive any important notifications and cannot reset your password!" xml:space="preserve"><value>如果不确认您的电子邮件，您不会收到任何重要的通知，也无法重置您的密码！</value></data>
+  <data name="Two-factor authentication" xml:space="preserve"><value>双重身份验证</value></data>
+<data name="This action disables two-factor authentication. And will delete your key, which means your current authenticator app will stop working until you re-config two-factor authentication." xml:space="preserve"><value>此操作将禁用双重身份验证。并将删除密钥，这意味着您当前的身份验证器应用将停止工作，直到您重新配置双重身份验证。</value></data>
+<data name="Disable two-factor authentication" xml:space="preserve"><value>禁用双重身份验证</value></data>
 
 </root>

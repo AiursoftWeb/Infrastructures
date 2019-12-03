@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.View2FAKeyViewModel
+@model Aiursoft.Account.Models.AccountViewModels.View2FAKeyViewModel
 @{
     ViewData["Title"] = "ViewTwoFAKey";
 }
@@ -21,25 +21,23 @@
                 <ol class="list">
                     <li>
                         <p>
-                            Download a two-factor authenticator app like Microsoft Authenticator for
-                            <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
-                            <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
-                            <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
-                            Google Authenticator for
-                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
-                            <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+                            @Localizer["Download a two-factor authenticator app like Microsoft Authenticator for"]
+                            <a href="https://go.microsoft.com/fwlink/?Linkid=825071">@Localizer["Windows Phone"]</a>@Localizer[","]
+                            <a href="https://go.microsoft.com/fwlink/?Linkid=825072">@Localizer["Android"]</a> @Localizer["and"]
+                            <a href="https://go.microsoft.com/fwlink/?Linkid=825073">@Localizer["iOS"]</a> @Localizer["or Google Authenticator for"]
+                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">@Localizer["Android"]</a> @Localizer["and"]
+                            <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">@Localizer["iOS"]</a>@Localizer["."]
                         </p>
                     </li>
                     <li>
-                        <p>Scan the QR Code or enter this key <kbd>@Model.NewTwoFAKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                        <p>@Localizer["Scan the QR Code or enter this key"] <kbd>@Model.NewTwoFAKey</kbd> @Localizer["into your two factor authenticator app. Spaces and casing do not matter."]</p>
                         <div class="col-lg-6 col-md-8  col-sm-10 col-12">
                             <img class="img-fluid" src="@Html.Raw(Model.QRCodeBase64)">
                         </div>
                     </li>
                     <li>
                         <p>
-                            Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
-                            with a unique code. Enter the code in the confirmation box below.
+                            @Localizer["Once you have scanned the QR code or input the key above, your two factor authentication app will provide you with a unique code.Enter the code in the confirmation box below."]
                         </p>
                     </li>
                 </ol>
@@ -48,4 +46,3 @@
         </div>
     </div>
 </div>
-

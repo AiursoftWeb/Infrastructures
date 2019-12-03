@@ -126,22 +126,19 @@
   <data name="Well done!" xml:space="preserve">
     <value>干的好！</value>
   </data>
-  <data name="You have successfully updated your phone number." xml:space="preserve">
-    <value>您已成功更新电话号码。</value>
+  <data name="You have successfully updated your profile." xml:space="preserve">
+    <value>您已成功更新您的个人资料。</value>
   </data>
   <data name="Invalid Input!" xml:space="preserve">
     <value>输入无效！</value>
   </data>
-  <data name="Bind Phone" xml:space="preserve">
-    <value>绑定电话</value>
+  <data name="Social accounts" xml:space="preserve">
+    <value>社交账户</value>
   </data>
-  <data name="You did not bind your phone. Currently you can not access your account via SMS! Please enter your phone number below." xml:space="preserve">
-    <value>您没有绑定您的手机。目前，您无法通过短信访问您的帐户！请在下面输入您的电话号码。</value>
+  <data name="Unlink" xml:space="preserve">
+    <value>取消链接</value>
   </data>
-  <data name="Change Phone number" xml:space="preserve">
-    <value>更改电话号码</value>
-  </data>
-  <data name="Send verification passcode" xml:space="preserve">
-    <value>发送验证密码</value>
+  <data name="Bind now" xml:space="preserve">
+    <value>立即绑定</value>
   </data>
 </root>

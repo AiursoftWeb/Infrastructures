@@ -1,4 +1,4 @@
-﻿@model Aiursoft.Account.Models.AccountViewModels.TwoFactorAuthenticationViewModel
+@model Aiursoft.Account.Models.AccountViewModels.TwoFactorAuthenticationViewModel
 @{
     ViewData["Title"] = "Two-factor authentication";
 }
@@ -21,7 +21,7 @@
                 @if (!Model.NewHas2FAKey || !Model.NewTwoFactorEnabled)
                 {
                     <p>
-                        Click the button below, and follow the prompts to start to configure your Two Factor Authentication function.
+                        @Localizer["Click the button below, and follow the prompts to start to configure your Two Factor Authentication function."]
                     </p>
                     <P>
                         <a asp-controller="Account" asp-action="SetTwoFAKey" class="btn btn-success">@Localizer["Configure two-factor authentication"]</a>
@@ -31,30 +31,30 @@
                 {
                     <div class="container-fluid">
                         <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                            <strong>Two-factor authentication enabled!</strong> @Localizer["Your account is ready for two-factor authentication."]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+                            <strong>@Localizer["Two-factor authentication enabled!"]</strong> @Localizer["Your account is ready for two-factor authentication."]
                         </div>
                     </div>
                     <hr />
-                    <h6>Disable two-factor authentication</h6>
-                    <p>Disable two-factor authentication allows others to log in your account with only your password.</p>
+                    <h6>@Localizer["Disable two-factor authentication"]</h6>
+                    <p>@Localizer["Disable two-factor authentication allows others to log in your account with only your password."]</p>
                     <a asp-controller="Account" asp-action="DisableTwoFA" class="btn btn-outline-danger">@Localizer["Disable two-factor authentication"]</a>
                     <hr />
 
 
-                    <h6>Recovery code</h6>
+                    <h6>@Localizer["Recovery code"]</h6>
                     <p>
-                        You can log in through recovery codes when you can't use the authentication app.
+                        @Localizer["You can log in through recovery codes when you can't use the authentication app."]
                     </p>
                     <p class="text-danger">
-                        Click the button below will generate new verification codes. Your old code will be invalid.
+                        @Localizer["Click the button below will generate new verification codes. Your old code will be invalid."]
                     </p>
                     <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-outline-danger">@Localizer["Reset and view recovery codes"]</a>
                     <hr />
 
-                    <h6>Reset two-factor authentication key.</h6>
+                    <h6>@Localizer["Reset two-factor authentication key."]</h6>
                     <p class="text-danger">
-                        Reset two-factor authentication will cause your current authticator app stop working. You need to re-setup your authenticator immediatly or you will lose access to your account. Only do this if your authenticator app was lost.
+                        @Localizer["Reset two-factor authentication will cause your current authticator app stop working. You need to re-setup your authenticator immediatly or you will lose access to your account. Only do this if your authenticator app was lost."]
                     </p>
                     <a asp-controller="Account" asp-action="ResetTwoFAKey" class="btn btn-danger">@Localizer["Reset two-factor authentication key"]</a>
                 }
