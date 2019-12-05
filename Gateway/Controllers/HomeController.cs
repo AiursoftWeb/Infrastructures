@@ -74,7 +74,7 @@ namespace Aiursoft.Gateway.Controllers
                     .AsEnumerable()
                     .Count(t => t.TotalDays > 15),
                 SpamUsers = await _dbContext.Users
-                    .Where(t => !t.Emails.Any(t => t.Validated))
+                    .Where(t => !t.Emails.Any(p => p.Validated))
                     .Where(t => !t.AuditLogs.Any(p => p.HappenTime > oneYearBefore))
                     .CountAsync(),
                 TotalUsers = await _dbContext.Users.CountAsync(),
