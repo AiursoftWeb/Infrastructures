@@ -1,13 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <Version>0.9.1</Version>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>Aiursoft.Colossus</AssemblyName>
-    <PackageId>Aiursoft.Colossus</PackageId>
-    <Company>Aiursoft</Company>
-    <Product>AiursoftWeb</Product>
-    <Authors>Anduin</Authors>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device.</Description>
   </PropertyGroup>
 

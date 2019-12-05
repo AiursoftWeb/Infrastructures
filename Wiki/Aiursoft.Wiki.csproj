@@ -1,13 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <Version>0.9.1</Version>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>Aiursoft.Wiki</AssemblyName>
-    <PackageId>Aiursoft.Wiki</PackageId>
-    <Company>Aiursoft</Company>
-    <Product>AiursoftWeb</Product>
-    <Authors>Anduin</Authors>
     <Description>The wiki center for aiursoft.</Description>
   </PropertyGroup>
 
@@ -15,6 +9,6 @@
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.17.1" />
+    <PackageReference Include="Markdig" Version="0.18.0" />
   </ItemGroup>
 </Project>
