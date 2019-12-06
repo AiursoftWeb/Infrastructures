@@ -187,6 +187,29 @@ namespace Aiursoft.Pylon
             return services;
         }
 
+        public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toadd)
+        {
+            var list = input.ToList();
+            list.Add(toadd);
+            return list;
+        }
+
+        public static List<Type> AllAccessiableClass()
+        {
+            var entry = Assembly.GetEntryAssembly();
+            return entry
+                .GetReferencedAssemblies()
+                .ToList()
+                .Select(t => Assembly.Load(t))
+                .AddWith(entry)
+                .SelectMany(t => t.GetTypes())
+                .Where(t => !t.IsNestedPrivate)
+                .Where(t => !t.IsGenericType)
+                .Where(t => !t.IsInterface)
+                .Where(t => !(t.Namespace?.StartsWith("System") ?? true))
+                .ToList();
+        }
+
         public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
             services.AddScoped<UserImageGenerator<TUser>>();
@@ -200,9 +223,7 @@ namespace Aiursoft.Pylon
             AppsContainer.CurrentAppName = appName;
             services.AddHttpClient();
             services.AddMemoryCache();
-            var executingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
-            var entryTypes = Assembly.GetEntryAssembly().GetTypes().Where(t => !t.IsInterface).ToList();
-            executingTypes.AddRange(entryTypes);
+            var executingTypes = AllAccessiableClass();
             foreach (var item in executingTypes)
             {
                 if (item.GetInterfaces().Contains(typeof(ISingletonDependency)))
