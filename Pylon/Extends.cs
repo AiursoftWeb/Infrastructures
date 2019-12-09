@@ -203,6 +203,7 @@ namespace Aiursoft.Pylon
                 .Select(t => Assembly.Load(t))
                 .AddWith(entry)
                 .SelectMany(t => t.GetTypes())
+                .Where(t => !t.IsAbstract)
                 .Where(t => !t.IsNestedPrivate)
                 .Where(t => !t.IsGenericType)
                 .Where(t => !t.IsInterface)

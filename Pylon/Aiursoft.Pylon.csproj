@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Version>0.20.1</Version>
+    <Version>0.20.3</Version>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Title>Aiursoft.Pylon</Title>
     <AssemblyName>Aiursoft.Pylon</AssemblyName>
@@ -11,10 +11,10 @@
     <Description>The base class, interfaces and services for Aiursoft web apps.</Description>
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
     <PackageIcon>pylon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/Pylon</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/Pylon.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
