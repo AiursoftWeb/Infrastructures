@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <Version>0.20.1</Version>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Title>Aiursoft.Pylon</Title>
+    <AssemblyName>Aiursoft.Pylon</AssemblyName>
+    <PackageId>Aiursoft.Pylon</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>The base class, interfaces and services for Aiursoft web apps.</Description>
+    <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
+    <PackageIcon>pylon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Pylon</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Pylon.git</RepositoryUrl>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="pylon.png" Pack="true" PackagePath="\" />
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
+    <PackageReference Include="DnsClient" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Polly" Version="7.2.0" />
+  </ItemGroup>
+</Project>

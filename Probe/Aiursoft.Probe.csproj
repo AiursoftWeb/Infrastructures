@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
-    <PackageReference Include="Aiursoft.Pylon" Version="0.20.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,112 @@
+﻿@using Aiursoft.Pylon.Models
+@using Aiursoft.Pylon.Services
+@model Aiursoft.Pylon.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
+@inject ServiceLocation ServiceLocation
+@{
+    var url = new AiurUrl(ServiceLocation.Probe, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new
+    {
+        PBToken = Model.PBToken
+    });
+    string extension = " ";
+    if (!string.IsNullOrWhiteSpace(Model.AllowedExtensions))
+    {
+        extension += $"data-allowed-file-extensions=\"{Model.AllowedExtensions}\" ";
+    }
+    if (!string.IsNullOrWhiteSpace(Model.DefaultFile))
+    {
+        extension += $"data-default-file=\"{StorageService.GetProbeDownloadAddress(ServiceLocation, Model.DefaultFile)}\" ";
+    }
+    if (Model.SizeInMB > 0)
+    {
+        extension += $"data-max-file-size=\"{Model.SizeInMB}M\"";
+    }
+}
+<input style="width:0;height:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." data-internet-path="" />
+<input form="fakeForm" type="file" id="@Model.Name-file-input" class="dropify" @Html.Raw(extension) />
+
+<div id="progress-@Model.Name" class="progress mb-3 mt-3 d-none">
+    <div id="progressbar-@Model.Name" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+</div>
+
+<script>
+    window.addEventListener('load', function () {
+        var fileInput = $('#@Model.Name-file-input');
+        var progress = $('#progress-@Model.Name');
+        var progressbar = $('#progressbar-@Model.Name');
+        var addressInput = $('[name=@Model.Name]');
+        var uploadUrl = '@Html.Raw(url)';
+        var validExtensions = '@Html.Raw(Model.AllowedExtensions)'
+        var getExtension = function (filename) {
+            var parts = filename.split('.');
+            return (parts[parts.length - 1]).toLowerCase();
+        }
+        var reset = function () {
+            addressInput.val("");
+            addressInput.attr('data-internet-path', "");
+            progressbar.css('width', '0%');
+            window.onbeforeunload = function () { };
+        }
+        fileInput.unbind('change');
+        fileInput.on('change', function () {
+            var file = fileInput.prop("files")[0];
+            var ext = getExtension(file.name);
+
+            if (validExtensions.length > 0 && validExtensions.indexOf(ext) === -1) {
+                return;
+            }
+
+            if (file.size / 1024 / 1024 > @Model.SizeInMB) {
+                return;
+            }
+
+            window.onbeforeunload = function () {
+                return "Your file is still uploading. Are you sure to quit?";
+            };
+
+            var formData = new FormData();
+
+            progress.removeClass('d-none');
+            progressbar.css('width', '0%');
+            progressbar.removeClass('bg-success');
+            progressbar.addClass('progress-bar-animated');
+
+            formData.append("file", file);
+            formData.append("recursiveCreate", true);
+
+            $.ajax({
+                url: uploadUrl,
+                type: 'post',
+                enctype: 'multipart/form-data',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                xhr: function () {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) {
+                        myXhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                progressbar.css('width', 100 * e.loaded / e.total + '%');
+
+                            }
+                        }, false);
+                    }
+                    return myXhr;
+                },
+                success: function (data) {
+                    window.onbeforeunload = function () { };
+                    addressInput.val(data.filePath);
+                    addressInput.attr('data-internet-path', data.internetPath);
+                    progressbar.addClass('bg-success');
+                    progressbar.removeClass('progress-bar-animated');
+                    progressbar.css('width', '100%');
+                },
+                error: reset
+            });
+        });
+
+        var dropi = $('.dropify').dropify();
+        dropi.on('dropify.afterClear', reset);
+    })
+
+</script>

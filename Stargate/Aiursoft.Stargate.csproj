@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aiursoft.Pylon" Version="0.20.2" />
+    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
 
 </Project>
