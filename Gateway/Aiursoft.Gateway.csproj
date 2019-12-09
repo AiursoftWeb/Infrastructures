@@ -8,8 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Twilio" Version="5.36.0" />
     <PackageReference Include="Edi.Captcha" Version="2.2.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+    <PackageReference Include="Aiursoft.Pylon" Version="0.20.2" />
   </ItemGroup>
 </Project>
