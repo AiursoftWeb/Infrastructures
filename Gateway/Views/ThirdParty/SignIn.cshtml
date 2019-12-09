@@ -84,6 +84,12 @@
                             <input class="form-control" type="text" asp-for="UserDetail.Name" placeholder="@Localizer["Enter your nickname"]" tabindex="1">
                         </div>
                         <button type="submit" class="btn btn-@Model.Provider.GetButtonColor() btn-block" href="#" data-disable-with="Creating account...">Create account and continue sign in</button>
+                        <p class="w-100 mt-3 mb-0">
+                            @Localizer["If you continue, you agree to our "]
+                            <a href="@Values.Footer["Terms"]" target="_blank">
+                                @Localizer["Terms"].
+                            </a>
+                        </p>
                     </form>
                 </div>
             }
