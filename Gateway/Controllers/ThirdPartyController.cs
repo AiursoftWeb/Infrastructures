@@ -110,13 +110,16 @@ namespace Aiursoft.Gateway.Controllers
         [Route("create-account-and-bind/{providerName}")]
         public async Task<IActionResult> CreateAccountAndBind(SignInViewModel model)
         {
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
             if (exists)
             {
-                // TODO: Handle.
-                throw new AiurAPIModelException(ErrorType.HasDoneAlready, $"An user with email '{model.UserDetail.Email}' already exists!");
+                ModelState.AddModelError(string.Empty, $"An user with email '{model.UserDetail.Email}' already exists!");
+                model.AppImageUrl = app.IconPath;
+                model.CanFindAnAccountWithEmail = false;
+                model.Provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
+                return View(nameof(SignIn), model);
             }
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var user = new GatewayUser
             {
                 UserName = model.UserDetail.Email + $".from.{model.ProviderName}.com",
@@ -153,8 +156,11 @@ namespace Aiursoft.Gateway.Controllers
             }
             else
             {
-                // TODO: Handle
-                throw new AiurAPIModelException(ErrorType.HasDoneAlready, result.Errors.First().Description);
+                model.AppImageUrl = app.IconPath;
+                model.CanFindAnAccountWithEmail = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.UserDetail.Email.ToLower());
+                model.Provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
+                ModelState.AddModelError(string.Empty, result.Errors.First().Description);
+                return View(nameof(SignIn), model);
             }
         }
 
