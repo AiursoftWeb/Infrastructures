@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-md-2" style="border-right: 2px inset #eeeeee;">
             <form asp-action="ChangeIcon" asp-controller="Apps" asp-route-appId="@Model.AppId" id="ChangeIconForm" class="col-md-12 mb-3 icon-form" method="post" enctype="multipart/form-data">
-                <vc:aiur-uploader asp-for="iconFile" site-name="@Configuration["AppsIconSiteName"]" path="@Model.AppId" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="@Model.IconPath"></vc:aiur-uploader>
+                <vc:aiur-uploader asp-for="iconFile" site-name="@Configuration[" AppsIconSiteName"]" path="@Model.AppId" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="@Model.IconPath"></vc:aiur-uploader>
             </form>
             <div class="col-md-12 mb-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -336,7 +336,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped datatable">
+                                <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>@Localizer["User Open Id"]</th>
@@ -355,6 +355,11 @@
                                         }
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="pl-3">
+                                @Html.PagedListPager(new StaticPagedList<Grant>
+                                    (Model.Grants, Model.Grants.CurrentPage, 20, Model.Grants.TotalCount),
+                                    page => Url.Action("ViewApp", new { page, id = Model.AppId }))
                             </div>
                         </div>
                     </div>

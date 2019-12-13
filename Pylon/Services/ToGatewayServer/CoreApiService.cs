@@ -1,7 +1,8 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API.ApiViewModels;
+using Aiursoft.Pylon.Models.API;
+using Aiursoft.Pylon.Models.API.APIAddressModels;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -20,14 +21,23 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             _http = http;
         }
 
-        public async Task<AllUserGrantedViewModel> AllUserGrantedAsync(string accessToken)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="pageNumber">Starts from 1</param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<AiurPagedCollection<Grant>> AllUserGrantedAsync(string accessToken, int pageNumber, int pageSize)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "API", "AllUserGranted", new
+            var url = new AiurUrl(_serviceLocation.Gateway, "API", "AllUserGranted", new AllUserGrantedAddressModel
             {
-                accessToken
+                AccessToken = accessToken,
+                PageNumber = pageNumber - 1,
+                PageSize = pageSize
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AllUserGrantedViewModel>(result);
+            var JResult = JsonConvert.DeserializeObject<AiurPagedCollection<Grant>>(result);
 
             if (JResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(JResult);

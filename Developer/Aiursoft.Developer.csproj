@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.18.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="7.9.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />

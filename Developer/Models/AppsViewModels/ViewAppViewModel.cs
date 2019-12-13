@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Models.API;
+﻿using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.Developer;
 using Aiursoft.Pylon.Models.Probe;
 using Aiursoft.Pylon.Models.Status.EventViewModels;
@@ -23,10 +24,11 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
-            EventService eventService)
+            EventService eventService,
+            int pageNumber)
         {
             var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService);
+            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService, pageNumber);
             return model;
         }
 
@@ -36,14 +38,13 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
-            EventService eventService)
+            EventService eventService,
+            int pageNumber)
         {
             RootRecover(user);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
-
-            var grants = await coreApiService.AllUserGrantedAsync(token);
-            Grants = grants.Grants;
+            Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 20);
 
             var sites = await sitesService.ViewMySitesAsync(token);
             Sites = sites.Sites;
@@ -125,7 +126,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool ManageSocialAccount { get; set; }
 
         public IEnumerable<Site> Sites { get; set; }
-        public IEnumerable<Grant> Grants { get; set; }
         public IEnumerable<LogCollection> ErrorLogs { get; set; }
+        public AiurPagedCollection<Grant> Grants { get; set; }
     }
 }

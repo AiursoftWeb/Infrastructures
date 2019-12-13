@@ -90,7 +90,7 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [Route("Apps/{id}")]
-        public async Task<IActionResult> ViewApp([FromRoute]string id, bool justHaveUpdated = false)
+        public async Task<IActionResult> ViewApp([FromRoute]string id, int page = 1, bool justHaveUpdated = false)
         {
             var app = await _dbContext.Apps.FindAsync(id);
             if (app == null)
@@ -98,7 +98,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService, page);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -106,13 +106,13 @@ namespace Aiursoft.Developer.Controllers
         [Route("Apps/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ViewApp([FromRoute]string id, ViewAppViewModel model)
+        public async Task<IActionResult> ViewApp([FromRoute]string id, ViewAppViewModel model, int page = 1)
         {
             var cuser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, page);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);

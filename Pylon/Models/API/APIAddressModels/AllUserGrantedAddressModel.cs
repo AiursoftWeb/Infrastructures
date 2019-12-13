@@ -1,6 +1,8 @@
-﻿namespace Aiursoft.Pylon.Models.API.UserAddressModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Aiursoft.Pylon.Models.API.APIAddressModels
 {
-    public class ViewAuditLogAddressModel : UserOperationAddressModel
+    public class AllUserGrantedAddressModel
     {
         /// <summary>
         /// Default is 10
@@ -10,5 +12,8 @@
         /// Starts from 0.
         /// </summary>
         public int PageNumber { get; set; } = 0;
+
+        [Required]
+        public string AccessToken { get; set; }
     }
 }

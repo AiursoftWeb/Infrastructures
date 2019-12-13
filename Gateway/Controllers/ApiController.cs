@@ -4,8 +4,7 @@ using Aiursoft.Gateway.Models.ApiViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API;
-using Aiursoft.Pylon.Models.API.ApiViewModels;
+using Aiursoft.Pylon.Models.API.APIAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
@@ -92,20 +90,28 @@ namespace Aiursoft.Gateway.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [APIProduces(typeof(AllUserGrantedViewModel))]
-        public async Task<IActionResult> AllUserGranted([Required]string accessToken)
+        [APIProduces(typeof(AiurPagedCollection<AppGrant>))]
+        public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(accessToken);
-            var grants = await _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == appid).Take(400).ToListAsync();
-            var model = new AllUserGrantedViewModel
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var query = _dbContext
+                .LocalAppGrant
+                .Include(t => t.User)
+                .Where(t => t.AppID == appid)
+                .OrderBy(t => t.GrantTime);
+            var grants = await query
+                .Skip(model.PageNumber * model.PageSize)
+                .Take(model.PageSize)
+                .ToListAsync();
+            var counts = await query.CountAsync();
+            var result = new AiurPagedCollection<AppGrant>(grants)
             {
-                AppId = appid,
-                Grants = new List<Grant>(),
+                CurrentPage = model.PageNumber,
+                TotalCount = counts,
                 Code = ErrorType.Success,
                 Message = "Successfully get all your users"
             };
-            model.Grants.AddRange(grants);
-            return Json(model);
+            return Json(result);
         }
 
         [HttpPost]

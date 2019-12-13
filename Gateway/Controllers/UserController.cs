@@ -267,7 +267,8 @@ namespace Aiursoft.Gateway.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your audit log!",
-                TotalCount = logsCount
+                TotalCount = logsCount,
+                CurrentPage = model.PageNumber
             });
         }
 
