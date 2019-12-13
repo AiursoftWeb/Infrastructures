@@ -43,7 +43,7 @@ namespace Aiursoft.Pylon.Models
 
         public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 
-        public IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
     }
 
     public class AiurPagedCollection<T> : AiurCollection<T>
