@@ -4,6 +4,7 @@ using Aiursoft.Gateway.Models.ApiViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.APIAddressModels;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Http;
@@ -90,7 +91,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [APIProduces(typeof(AiurPagedCollection<AppGrant>))]
+        [APIProduces(typeof(AiurPagedCollection<Grant>))]
         public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -99,7 +100,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Include(t => t.User)
                 .Where(t => t.AppID == appid)
                 .OrderByDescending(t => t.GrantTime);
-            var result = await AiurPagedCollection<AppGrant>.Build(
+            var result = await AiurPagedCollection<Grant>.Build(
                 query,
                 model.PageNumber,
                 model.PageSize,
