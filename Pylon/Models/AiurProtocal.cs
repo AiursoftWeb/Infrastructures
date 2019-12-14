@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace Aiursoft.Pylon.Models
 
     public class AiurCollection<T> : AiurProtocol
     {
+        [Obsolete("This method is only for framework", true)]
+        public AiurCollection() { }
         public AiurCollection(List<T> items)
         {
             Items = items;
@@ -46,7 +49,9 @@ namespace Aiursoft.Pylon.Models
 
     public class AiurPagedCollection<T> : AiurCollection<T>
     {
-        public AiurPagedCollection(List<T> items) : base(items) { }
+        [Obsolete("This method is only for framework", true)]
+        public AiurPagedCollection() : base() { }
+        private AiurPagedCollection(List<T> items) : base(items) { }
         public static async Task<AiurPagedCollection<T>> Build(
             IOrderedQueryable<T> query,
             int pageNumber,
