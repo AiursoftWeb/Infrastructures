@@ -210,7 +210,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             {
                 AccessToken = accessToken,
                 OpenId = userId,
-                PageNumber = pageNumber - 1
+                PageNumber = pageNumber
             });
             var result = await _http.Get(url, true);
             var jresult = JsonConvert.DeserializeObject<AiurPagedCollection<AuditLog>>(result);
