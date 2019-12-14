@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Aiursoft.Pylon.Models
 {
@@ -33,17 +32,13 @@ namespace Aiursoft.Pylon.Models
         public T Value { get; set; }
     }
 
-    public class AiurCollection<T> : AiurProtocol, IEnumerable<T>
+    public class AiurCollection<T> : AiurProtocol
     {
         public AiurCollection(List<T> items)
         {
             Items = items;
         }
         public List<T> Items { get; set; }
-
-        public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
     }
 
     public class AiurPagedCollection<T> : AiurCollection<T>
