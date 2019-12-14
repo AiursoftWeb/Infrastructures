@@ -102,8 +102,7 @@ namespace Aiursoft.Gateway.Controllers
                 .OrderByDescending(t => t.GrantTime);
             var result = await AiurPagedCollection<Grant>.Build(
                 query,
-                model.PageNumber,
-                model.PageSize,
+                model,
                 ErrorType.Success,
                 "Successfully get all your users");
             return Json(result);

@@ -36,14 +36,14 @@
             </div>
             <div class="card-body">
                 <p>
-                    You have @Model.TotalCount log in attempt@(Model.Logs.Count() > 1 ? "s" : string.Empty) to your account.
+                    You have @Model.Logs.TotalCount log in attempt@(Model.Logs.TotalCount > 1 ? "s" : string.Empty) to your account.
                 </p>
                 <p class="text-muted">
                     @Localizer["The audit log feature is for your account security. We respect your privacy and will never track your login activity by human or AI. Only the apps you granted to view the log can get these log."]
                 </p>
             </div>
             <ul class="list-group list-group-flush">
-                @foreach (var log in Model.Logs)
+                @foreach (var log in Model.Logs.Items)
                 {
                     var app = Model.Apps.SingleOrDefault(t => t.AppId == log.AppId);
                     <li class="list-group-item">
@@ -81,7 +81,7 @@
                 }
             </ul>
             <div class="pl-3">
-                @Html.PagedListPager(new StaticPagedList<AuditLog>(Model.Logs, Model.PageIndex, 10, Model.TotalCount), page => Url.Action("AuditLog", new { page }))
+                @Html.PagedListPager(new StaticPagedList<AuditLog>(Model.Logs.Items, Model.Logs.CurrentPage, Model.Logs.CurrentPageSize, Model.Logs.TotalCount), page => Url.Action("AuditLog", new { page }))
             </div>
         </div>
     </div>

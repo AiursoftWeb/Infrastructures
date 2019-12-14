@@ -260,8 +260,7 @@ namespace Aiursoft.Gateway.Controllers
 
             return Json(AiurPagedCollection<AuditLogLocal>.Build(
                 query,
-                model.PageNumber,
-                model.PageSize,
+                model,
                 ErrorType.Success,
                 "Successfully get all your audit log!"));
         }

@@ -335,6 +335,9 @@
                             @Localizer["App Grant History"]
                         </div>
                         <div class="card-body">
+                            <p>
+                                You have @Model.Grants.TotalCount user@(Model.Grants.TotalCount > 1 ? "s" : string.Empty) granted your app.
+                            </p>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
@@ -358,7 +361,7 @@
                             </div>
                             <div class="pl-3">
                                 @Html.PagedListPager(new StaticPagedList<Grant>
-                                    (Model.Grants.Items, Model.Grants.CurrentPage, 15, Model.Grants.TotalCount),
+                                    (Model.Grants.Items, Model.Grants.CurrentPage, Model.Grants.CurrentPageSize, Model.Grants.TotalCount),
                                     page => Url.Action("ViewApp", new { page, id = Model.AppId }))
                             </div>
                         </div>

@@ -307,11 +307,11 @@ namespace Aiursoft.Pylon
         /// <param name="pageNumber">Starts from 1</param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, int pageNumber, int pageSize)
+        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPageable pager)
         {
             return query
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize);
+                .Skip((pager.PageNumber - 1) * pager.PageSize)
+                .Take(pager.PageSize);
         }
     }
 }
