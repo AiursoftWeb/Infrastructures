@@ -258,7 +258,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime);
 
-            return Json(AiurPagedCollection<AuditLog>.Build(
+            return Json(await AiurPagedCollection<AuditLog>.BuildAsync(
                 query,
                 model,
                 ErrorType.Success,

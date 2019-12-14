@@ -100,7 +100,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Include(t => t.User)
                 .Where(t => t.AppID == appid)
                 .OrderByDescending(t => t.GrantTime);
-            var result = await AiurPagedCollection<Grant>.Build(
+            var result = await AiurPagedCollection<Grant>.BuildAsync(
                 query,
                 model,
                 ErrorType.Success,

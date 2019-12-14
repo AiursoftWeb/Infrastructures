@@ -53,7 +53,7 @@ namespace Aiursoft.Pylon.Models
         [Obsolete("This method is only for framework", true)]
         public AiurPagedCollection() : base() { }
         private AiurPagedCollection(List<T> items) : base(items) { }
-        public static async Task<AiurPagedCollection<T>> Build(
+        public static async Task<AiurPagedCollection<T>> BuildAsync(
             IOrderedQueryable<T> query,
             IPageable pager,
             ErrorType code,

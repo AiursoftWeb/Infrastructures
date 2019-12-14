@@ -390,7 +390,7 @@
                                         @foreach (var log in Model.ErrorLogs)
                                         {
                                             <tr>
-                                                <td>@(new string(log.Message.Take(200).ToArray()))</td>
+                                                <td>@(new string(log.Message.Take(70).ToArray()))...</td>
                                                 <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
                                                 <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime"></td>
