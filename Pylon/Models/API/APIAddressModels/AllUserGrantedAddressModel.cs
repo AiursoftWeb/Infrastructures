@@ -9,7 +9,7 @@ namespace Aiursoft.Pylon.Models.API.APIAddressModels
         /// </summary>
         public int PageSize { get; set; } = 10;
         /// <summary>
-        /// Starts from 0.
+        /// Starts from 1.
         /// </summary>
         public int PageNumber { get; set; } = 0;
 

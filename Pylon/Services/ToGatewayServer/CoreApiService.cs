@@ -33,7 +33,7 @@ namespace Aiursoft.Pylon.Services.ToGatewayServer
             var url = new AiurUrl(_serviceLocation.Gateway, "API", "AllUserGranted", new AllUserGrantedAddressModel
             {
                 AccessToken = accessToken,
-                PageNumber = pageNumber - 1,
+                PageNumber = pageNumber,
                 PageSize = pageSize
             });
             var result = await _http.Get(url, true);

@@ -298,5 +298,20 @@ namespace Aiursoft.Pylon
             bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
             return !dnt;
         }
+
+        /// <summary>
+        /// Page the collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="pageNumber">Starts from 1</param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, int pageNumber, int pageSize)
+        {
+            return query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+        }
     }
 }

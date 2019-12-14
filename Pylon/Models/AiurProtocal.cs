@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Models
 {
@@ -44,9 +47,25 @@ namespace Aiursoft.Pylon.Models
     public class AiurPagedCollection<T> : AiurCollection<T>
     {
         public AiurPagedCollection(List<T> items) : base(items) { }
+        public static async Task<AiurPagedCollection<T>> Build(
+            IOrderedQueryable<T> query,
+            int pageNumber,
+            int pageSize,
+            ErrorType code,
+            string message)
+        {
+            var items = await query.Page(pageNumber, pageSize).ToListAsync();
+            return new AiurPagedCollection<T>(items)
+            {
+                TotalCount = await query.CountAsync(),
+                CurrentPage = pageNumber,
+                Code = code,
+                Message = message
+            };
+        }
         public int TotalCount { get; set; }
         /// <summary>
-        /// Starts from 0.
+        /// Starts from 1.
         /// </summary>
         public int CurrentPage { get; set; }
     }

@@ -363,7 +363,7 @@ namespace Aiursoft.Account.Controllers
             {
                 Logs = logs.Items,
                 TotalCount = logs.TotalCount,
-                PageIndex = logs.CurrentPage - 1,
+                PageIndex = logs.CurrentPage,
             };
             await model.Logs.Select(t => t.AppId).Distinct().ForEachParallel(async (id) =>
             {

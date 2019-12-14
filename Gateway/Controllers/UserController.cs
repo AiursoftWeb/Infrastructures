@@ -253,23 +253,17 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewAuditLog(ViewAuditLogAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
-            var logsQuery = _dbContext
+            var query = _dbContext
                 .AuditLogs
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime);
-            var logs = await logsQuery
-                .Skip(model.PageNumber * model.PageSize)
-                .Take(model.PageSize)
-                .ToListAsync();
-            var logsCount = await logsQuery
-                .CountAsync();
-            return Json(new AiurPagedCollection<AuditLogLocal>(logs)
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully get all your audit log!",
-                TotalCount = logsCount,
-                CurrentPage = model.PageNumber
-            });
+
+            return Json(AiurPagedCollection<AuditLogLocal>.Build(
+                query,
+                model.PageNumber,
+                model.PageSize,
+                ErrorType.Success,
+                "Successfully get all your audit log!"));
         }
 
         [APIProduces(typeof(AiurCollection<AiurThirdPartyAccount>))]

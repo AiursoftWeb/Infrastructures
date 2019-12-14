@@ -98,19 +98,13 @@ namespace Aiursoft.Gateway.Controllers
                 .LocalAppGrant
                 .Include(t => t.User)
                 .Where(t => t.AppID == appid)
-                .OrderBy(t => t.GrantTime);
-            var grants = await query
-                .Skip(model.PageNumber * model.PageSize)
-                .Take(model.PageSize)
-                .ToListAsync();
-            var counts = await query.CountAsync();
-            var result = new AiurPagedCollection<AppGrant>(grants)
-            {
-                CurrentPage = model.PageNumber,
-                TotalCount = counts,
-                Code = ErrorType.Success,
-                Message = "Successfully get all your users"
-            };
+                .OrderByDescending(t => t.GrantTime);
+            var result = await AiurPagedCollection<AppGrant>.Build(
+                query,
+                model.PageNumber,
+                model.PageSize,
+                ErrorType.Success,
+                "Successfully get all your users");
             return Json(result);
         }
 

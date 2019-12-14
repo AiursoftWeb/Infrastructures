@@ -44,7 +44,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             RootRecover(user);
             var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
 
-            Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 20);
+            Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);
 
             var sites = await sitesService.ViewMySitesAsync(token);
             Sites = sites.Sites;
