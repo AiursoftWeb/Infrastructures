@@ -78,7 +78,7 @@ namespace Aiursoft.Status.Controllers
                 .Select(t => new LogCollection
                 {
                     Message = t.Key,
-                    First = t.FirstOrDefault(),
+                    First = t.OrderByDescending(p => p.LogTime).FirstOrDefault(),
                     Count = t.Count()
                 })
                 .ToList();
