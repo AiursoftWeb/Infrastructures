@@ -358,7 +358,7 @@
                             </div>
                             <div class="pl-3">
                                 @Html.PagedListPager(new StaticPagedList<Grant>
-                                    (Model.Grants.Items, Model.Grants.CurrentPage, 20, Model.Grants.TotalCount),
+                                    (Model.Grants.Items, Model.Grants.CurrentPage + 1, 20, Model.Grants.TotalCount),
                                     page => Url.Action("ViewApp", new { page, id = Model.AppId }))
                             </div>
                         </div>
