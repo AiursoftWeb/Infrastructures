@@ -379,6 +379,7 @@
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Message"]</th>
+                                            <th>@Localizer["Path"]</th>
                                             <th>@Localizer["Happend times"]</th>
                                             <th>@Localizer["Last happen time"]</th>
                                             <th>@Localizer["Security level"]</th>
@@ -389,7 +390,8 @@
                                         @foreach (var log in Model.ErrorLogs)
                                         {
                                             <tr>
-                                                <td>@log.Message</td>
+                                                <td>@(new string(log.Message.Take(200).ToArray()))</td>
+                                                <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
                                                 <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime"></td>
                                                 @switch (log.First.EventLevel)

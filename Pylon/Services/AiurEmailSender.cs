@@ -62,7 +62,7 @@ namespace Aiursoft.Pylon.Services
                 {
                     _logger.LogError(e, e.Message);
                     var accessToken = _appsContainer.AccessToken();
-                    await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception);
+                    await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, string.Empty);
                 }
                 catch { }
             }

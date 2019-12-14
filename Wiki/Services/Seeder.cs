@@ -127,7 +127,7 @@ namespace Aiursoft.Wiki.Services
             catch (Exception e)
             {
                 var accessToken = await _appsContainer.AccessToken();
-                await _eventService.LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception);
+                await _eventService.LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception, string.Empty);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
             }

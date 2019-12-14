@@ -48,7 +48,8 @@ namespace Aiursoft.Status.Controllers
                 AppId = appid,
                 Message = model.Message,
                 StackTrace = model.StackTrace,
-                EventLevel = model.EventLevel
+                EventLevel = model.EventLevel,
+                Path = model.Path
             };
             _dbContext.ErrorLogs.Add(newEvent);
             await _dbContext.SaveChangesAsync();

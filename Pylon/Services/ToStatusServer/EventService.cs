@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services.ToStatusServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel)
+        public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel, string path)
         {
             var url = new AiurUrl(_serviceLocation.Status, "Event", "Log", new { });
             var form = new AiurUrl(string.Empty, new LogAddressModel
@@ -30,7 +30,8 @@ namespace Aiursoft.Pylon.Services.ToStatusServer
                 AccessToken = accessToken,
                 Message = message,
                 StackTrace = stackTrace,
-                EventLevel = eventLevel
+                EventLevel = eventLevel,
+                Path = path
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);

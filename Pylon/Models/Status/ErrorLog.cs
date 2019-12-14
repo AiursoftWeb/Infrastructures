@@ -24,6 +24,7 @@ namespace Aiursoft.Pylon.Models.Status
         public string Message { get; set; }
         public string StackTrace { get; set; }
         public EventLevel EventLevel { get; set; }
+        public string Path { get; set; }
 
         public DateTime LogTime { get; set; } = DateTime.UtcNow;
     }
