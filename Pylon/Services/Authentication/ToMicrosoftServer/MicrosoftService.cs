@@ -44,13 +44,28 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         public string GetButtonIcon() => "microsoft";
 
-        //	https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+        // Line breaks for legibility only
+
+       //https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?
+       //client_id=6731de76-14a6-49ae-97bc-6eba6914391e
+       //&response_type=id_token
+       //&redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
+       //&scope=openid
+       //&response_mode=fragment
+       //&state=12345
+       //&nonce=678910
         public string GetBindRedirectLink()
         {
             return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                ResponseType = "id_token",
+                //RedirectUri = "https://www.baidu.com",
+                RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                Scope = "openid", //_scope
+                ResponseMode = "fragment",
+                State = "12345",
+                Nonce= "678910"
             }).ToString();
         }
 
@@ -59,8 +74,13 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
-                State = state.ToString()
+                ResponseType = "id_token",
+                //RedirectUri = "http://localhost:41066/third-party/sign-in/microsoft",
+                RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                Scope = "openid", //_scope
+                ResponseMode = "fragment",
+                State = state.ToString(),
+                Nonce = "678910"
             }).ToString();
         }
 
