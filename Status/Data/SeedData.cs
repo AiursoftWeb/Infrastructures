@@ -67,7 +67,7 @@ namespace Aiursoft.Status.Data
                 {
                     ProjectName = "Aiursoft Kahla",
                     CheckAddress = "https://server.kahla.app",
-                    ExpectedContent = "Welcome to Aiursoft Kahla server!"
+                    ExpectedContent = "Welcome"
                 },
                 new MonitorRule
                 {
