@@ -74,7 +74,8 @@ namespace Aiursoft.Probe.Controllers
             var newFile = new Pylon.Models.Probe.File
             {
                 FileName = Path.GetFileName(file.FileName),
-                ContextId = folder.Id
+                ContextId = folder.Id,
+                FileSize = file.Length
             };
 
             //Ensure there not exists file with the same file name.

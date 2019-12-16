@@ -15,6 +15,7 @@ namespace Aiursoft.Pylon.Models.Probe
         public Folder Context { get; set; }
 
         public string FileName { get; set; }
+        public long FileSize { get; set; }
         public DateTime UploadTime { get; set; } = DateTime.UtcNow;
     }
 }

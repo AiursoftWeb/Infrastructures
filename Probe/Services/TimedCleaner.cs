@@ -67,8 +67,12 @@ namespace Aiursoft.Probe.Services
                     _logger.LogInformation($"Cleaner message: File with Id: {file.Id} was found in database but not found on disk! Deleting record in database...");
                     // delete file in db.
                     dbContext.Files.Remove(file);
-                    await dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    file.FileSize = new FileInfo(path).Length;
+                }
+                await dbContext.SaveChangesAsync();
             }
             var storageFiles = Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
             foreach (var file in storageFiles)
