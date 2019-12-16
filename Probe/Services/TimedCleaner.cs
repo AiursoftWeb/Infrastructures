@@ -1,9 +1,13 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Pylon.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,13 +18,17 @@ namespace Aiursoft.Probe.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IConfiguration _configuration;
+        private readonly char _ = Path.DirectorySeparatorChar;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            IConfiguration configuration)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _configuration = configuration;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -48,9 +56,29 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        private Task AllClean(ProbeDbContext dbContext)
+        private async Task AllClean(ProbeDbContext dbContext)
         {
-            return Task.CompletedTask;
+            var files = await dbContext.Files.ToListAsync();
+            foreach (var file in files)
+            {
+                var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
+                if (!File.Exists(path))
+                {
+                    _logger.LogInformation($"Cleaner message: File with Id: {file.Id} was found in database but not found on disk! Deleting record in database...");
+                    // delete file in db.
+                }
+            }
+            var storageFiles = Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
+            foreach (var file in storageFiles)
+            {
+                var fileName = Convert.ToInt32(Path.GetFileNameWithoutExtension(file));
+                if (!files.Any(t => t.Id == fileName))
+                {
+                    _logger.LogInformation($"Cleaner message: File with Id: {fileName} was found on disk but not found in database! Deleting file in disk...");
+                    // delete file in db.
+                }
+            }
+            return;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
