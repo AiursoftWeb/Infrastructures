@@ -66,6 +66,8 @@ namespace Aiursoft.Probe.Services
                 {
                     _logger.LogInformation($"Cleaner message: File with Id: {file.Id} was found in database but not found on disk! Deleting record in database...");
                     // delete file in db.
+                    dbContext.Files.Remove(file);
+                    await dbContext.SaveChangesAsync();
                 }
             }
             var storageFiles = Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
@@ -74,8 +76,9 @@ namespace Aiursoft.Probe.Services
                 var fileName = Convert.ToInt32(Path.GetFileNameWithoutExtension(file));
                 if (!files.Any(t => t.Id == fileName))
                 {
-                    _logger.LogInformation($"Cleaner message: File with Id: {fileName} was found on disk but not found in database! Deleting file in disk...");
-                    // delete file in db.
+                    _logger.LogInformation($"Cleaner message: File with Id: {fileName} was found on disk but not found in database! Deleting file on disk...");
+                    // delete file on disk.
+                    File.Delete(file);
                 }
             }
             return;
