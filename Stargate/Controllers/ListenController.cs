@@ -57,8 +57,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             await _pusher.Accept(HttpContext);
             int sleepTime = 0;
-            var deadLine = channel.CreateTime + TimeSpan.FromSeconds(channel.LifeTime);
-            while (_pusher.Connected && DateTime.UtcNow < deadLine)
+            while (_pusher.Connected && channel.IsAlive())
             {
                 try
                 {

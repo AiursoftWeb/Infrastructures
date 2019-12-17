@@ -71,6 +71,14 @@ namespace Aiursoft.Stargate.Controllers
                     Message = "Can not find your channel!"
                 });
             }
+            if (!channel.IsAlive())
+            {
+                return Json(new AiurProtocol
+                {
+                    Code = ErrorType.Pending,
+                    Message = "Your channel is out dated and about to be deleted!"
+                });
+            }
             if (channel.ConnectKey != model.Key)
             {
                 return Json(new AiurProtocol
