@@ -49,9 +49,17 @@ namespace Aiursoft.Stargate.Services
         {
             try
             {
-                var middleMessage = _memoryContext.Messages.Average(t => t.Id);
-                _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
-                dbContext.Channels.RemoveRange(dbContext.Channels.Where(t => DateTime.UtcNow > t.CreateTime + TimeSpan.FromSeconds(t.LifeTime)));
+                if (_memoryContext.Messages.Any())
+                {
+                    var middleMessage = _memoryContext.Messages.Average(t => t.Id);
+                    _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
+                }
+                var tobeDeleted = dbContext
+                    .Channels
+                    .AsEnumerable()
+                    .Where(t => !t.IsAlive())
+                    .ToList();
+                dbContext.Channels.RemoveRange(tobeDeleted);
                 await dbContext.SaveChangesAsync();
             }
             catch (Exception e)
