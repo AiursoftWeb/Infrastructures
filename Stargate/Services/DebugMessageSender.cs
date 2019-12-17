@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Services
 {
-    public class Debugger : IScopedDependency
+    public class DebugMessageSender : IScopedDependency
     {
         private readonly PushMessageService _messageService;
-        public Debugger(PushMessageService messageService)
+        public DebugMessageSender(PushMessageService messageService)
         {
             _messageService = messageService;
         }

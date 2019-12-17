@@ -7,6 +7,7 @@ using Aiursoft.Pylon.Services.ToStargateServer;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
@@ -16,7 +17,7 @@ namespace Aiursoft.Stargate.Controllers
     public class HomeController : Controller
     {
         private StargateDbContext _dbContext;
-        private Debugger _debugger;
+        private DebugMessageSender _debugger;
         private readonly AppsContainer _appsContainer;
         private readonly ChannelService _channelService;
         private readonly Counter _counter;
@@ -24,7 +25,7 @@ namespace Aiursoft.Stargate.Controllers
 
         public HomeController(
             StargateDbContext dbContext,
-            Debugger debugger,
+            DebugMessageSender debugger,
             AppsContainer appsContainer,
             ChannelService channelService,
             Counter counter,
@@ -44,6 +45,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = _memory.Messages.Count,
+                Threads = Process.GetCurrentProcess().Threads.Count,
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
             });
