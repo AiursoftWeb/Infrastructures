@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -78,11 +77,11 @@ namespace Aiursoft.Probe.Services
             foreach (var file in storageFiles)
             {
                 var fileName = Convert.ToInt32(Path.GetFileNameWithoutExtension(file));
-                if (!files.Any(t => t.Id == fileName))
+                if (!await dbContext.Files.AnyAsync(t => t.Id == fileName))
                 {
                     _logger.LogInformation($"Cleaner message: File with Id: {fileName} was found on disk but not found in database! Deleting file on disk...");
                     // delete file on disk.
-                    File.Delete(file);
+                    //File.Delete(file);
                 }
             }
             return;
