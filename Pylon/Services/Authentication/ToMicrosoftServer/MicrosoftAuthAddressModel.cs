@@ -23,7 +23,5 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         public string Scope { get; set; }
         [FromQuery(Name = "state")]
         public string State { get; set; }
-        [FromQuery(Name = "nonce")]
-        public string Nonce { get; set; }
     }
 }
