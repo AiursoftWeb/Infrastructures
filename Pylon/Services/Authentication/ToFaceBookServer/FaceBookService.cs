@@ -90,13 +90,13 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {
-                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid faceook crenditial");
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
                 }
                 return response.AccessToken;
             }
             catch (WebException)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid faceook crenditial");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
             }
         }
 
