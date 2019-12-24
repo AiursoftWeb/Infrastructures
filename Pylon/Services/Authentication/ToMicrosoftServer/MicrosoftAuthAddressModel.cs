@@ -21,8 +21,6 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         public string RedirectUri { get; set; }
         [FromQuery(Name = "scope")]
         public string Scope { get; set; }
-        [FromQuery(Name = "response_mode")]
-        public string ResponseMode { get; set; }
         [FromQuery(Name = "state")]
         public string State { get; set; }
         [FromQuery(Name = "nonce")]

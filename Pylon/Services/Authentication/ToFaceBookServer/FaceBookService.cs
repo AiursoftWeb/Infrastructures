@@ -47,8 +47,9 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
             return new AiurUrl("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
             {
                 ClientId = _clientId,
+                
                 //Debug RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 State = "a",
                 ResponseType = "code"
             }).ToString();
@@ -89,13 +90,13 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {
-                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid google crenditial");
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid faceook crenditial");
                 }
                 return response.AccessToken;
             }
             catch (WebException)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid google crenditial");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid faceook crenditial");
             }
         }
 
@@ -103,7 +104,6 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
         //"https://graph.facebook.com/{your-user-id}
         //?fields=id,name
         //&access_token={your-user-access-token}"
-
         private async Task<FaceBookUserDetail> GetUserInfo(string accessToken)
         {
             var apiAddress = "https://graph.facebook.com/v5.0/me";

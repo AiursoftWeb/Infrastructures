@@ -18,5 +18,9 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         public string Scope { get; set; }
         [FromQuery(Name = "state")]
         public string State { get; set; }
+        [FromQuery(Name = "code")]
+        public string Code { get; set; }
+        [FromQuery(Name = "grant_type")]
+        public string GranType { get; set; }
     }
 }
