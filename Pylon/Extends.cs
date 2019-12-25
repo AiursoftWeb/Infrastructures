@@ -198,7 +198,7 @@ namespace Aiursoft.Pylon
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             return services;
         }
