@@ -197,8 +197,7 @@ namespace Aiursoft.Pylon
                     opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+                .AddDataAnnotationsLocalization();
 
             return services;
         }
