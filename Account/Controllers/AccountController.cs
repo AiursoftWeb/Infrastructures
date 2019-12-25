@@ -328,8 +328,12 @@ namespace Aiursoft.Account.Controllers
             {
                 async Task AddApp()
                 {
-                    var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
-                    model.Apps.Add(appInfo.App);
+                    try
+                    {
+                        var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
+                        model.Apps.Add(appInfo.App);
+                    }
+                    catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound) { }
                 }
                 taskList.Add(AddApp());
             }
