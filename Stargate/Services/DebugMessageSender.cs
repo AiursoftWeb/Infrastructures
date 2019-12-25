@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Services.ToStargateServer;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -18,7 +19,13 @@ namespace Aiursoft.Stargate.Services
             var random = new Random();
             for (int i = 0; i < 1000; i++)
             {
-                await _messageService.PushMessageAsync(accessToken, channelId, Guid.NewGuid().ToString("N"));
+                var json = JsonConvert.SerializeObject(new
+                {
+                    Guid = Guid.NewGuid().ToString("N"),
+                    Time = DateTime.UtcNow,
+                    Id = i
+                });
+                await _messageService.PushMessageAsync(accessToken, channelId, json);
                 await Task.Delay(10);
             }
         }
