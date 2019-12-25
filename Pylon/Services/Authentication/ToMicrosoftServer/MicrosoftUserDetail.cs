@@ -8,9 +8,9 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         public string Id { get; set; }
         [JsonProperty("avatar_url")]
         public string AvatarUrl { get; set; } = "";
-        [JsonProperty("login")]
+        [JsonProperty("displayName")]
         public string Name { get; set; }
-        [JsonProperty("email")]
+        [JsonProperty("userPrincipalName")]
         public string Email { get; set; }
         [JsonProperty("bio")]
         public string Bio { get; set; } = "";

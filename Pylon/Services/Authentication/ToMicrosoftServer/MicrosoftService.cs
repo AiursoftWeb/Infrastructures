@@ -28,8 +28,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             _http = http;
             _serviceLocation = serviceLocation;
             _client = clientFactory.CreateClient();
-            _clientId = configuration["AzureAd:ClientId"];
-            _clientSecret = configuration["AzureAd:ClientSecret"];
+            _clientId = configuration["Microsoft:ClientId"];
+            _clientSecret = configuration["Microsoft:ClientSecret"];
             if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
             {
                 logger.LogWarning("Did not set correct Microsoft credential! You can only access the service property but can execute OAuth process!");
@@ -96,6 +96,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         //&grant_type=authorization_code
         //&client_secret=JqQX2PNo9bpM0uEihUPzyrh    // NOTE: Only required for web apps
 
+        // https://login.microsoftonline.com/common/oauth2/v2.0/token
+
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
         {
             var apiAddress = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
@@ -105,10 +107,18 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             {
                 ClientId = clientId,
                 Scope = "user.read mail.read",
-                Code = code,                
+                Code = code,
                 RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GranType = "authorization_code",
                 ClientSecret = clientSecret
+
+                //Code =code,
+                //ClientId = clientId,
+                //Scope = "https://graph.microsoft.com/.default",
+                //RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                //GranType = "client_credentials",
+                //ClientSecret = clientSecret
+
             });
 
             try
@@ -138,7 +148,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             var apiAddress = "https://graph.microsoft.com/v1.0/me";
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
-            request.Headers.Add("Authorization", $"token {accessToken}");
+            request.Headers.Add("Authorization", $"Bearer {accessToken}");
             request.Headers.Add("User-Agent", $"curl/7.65.3");
 
             var response = await _client.SendAsync(request);
