@@ -65,6 +65,7 @@ namespace Aiursoft.Pylon
             }
             else
             {
+                app.UseForwardedHeaders();
                 app.UseMiddleware<HandleRobotsMiddleware>();
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
