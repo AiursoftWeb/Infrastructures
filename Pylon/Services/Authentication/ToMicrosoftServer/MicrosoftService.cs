@@ -111,14 +111,6 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
                 RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GranType = "authorization_code",
                 ClientSecret = clientSecret
-
-                //Code =code,
-                //ClientId = clientId,
-                //Scope = "https://graph.microsoft.com/.default",
-                //RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/{action}/{GetName()}", new { }).ToString(),
-                //GranType = "client_credentials",
-                //ClientSecret = clientSecret
-
             });
 
             try
@@ -143,6 +135,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         //Authorization: Bearer eyJ0eXAiO ... 0X2tnSQLEANnSPHY0gKcgw
         //Host: graph.microsoft.com
 
+        //  This api only can get false response. ??
         private async Task<MicrosoftUserDetail> GetUserInfo(string accessToken)
         {
             var apiAddress = "https://graph.microsoft.com/v1.0/me";
