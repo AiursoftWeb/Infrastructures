@@ -7,6 +7,7 @@ using Aiursoft.Pylon.Services.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -47,6 +48,7 @@ namespace Aiursoft.Pylon
             }
             else
             {
+                app.UseForwardedHeaders();
                 app.UseMiddleware<HandleRobotsMiddleware>();
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
@@ -176,8 +178,9 @@ namespace Aiursoft.Pylon
         public static IServiceCollection AddAiurMvc(this IServiceCollection services)
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-
             services
+                .Configure<ForwardedHeadersOptions>(options =>
+                    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto)
                 .AddControllersWithViews()
                 .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
