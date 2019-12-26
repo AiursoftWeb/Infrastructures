@@ -42,6 +42,35 @@ namespace Aiursoft.Pylon
             return supportedCultures;
         }
 
+        public static IServiceCollection AddAiurMvc(this IServiceCollection services)
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            };
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services
+                .Configure<ForwardedHeadersOptions>(options =>
+                {
+                    options.KnownProxies.Add(IPAddress.Loopback);
+                    options.KnownProxies.Add(IPAddress.IPv6Loopback);
+                    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                })
+                .AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+
+            return services;
+        }
+
+
         public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
         {
             if (isDevelopment)
@@ -96,15 +125,10 @@ namespace Aiursoft.Pylon
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<SwitchLanguageMiddleware>();
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
-            app.UseDocGenerator();
+            app.UseMiddleware<SwitchLanguageMiddleware>();
+            app.UseMiddleware<APIDocGeneratorMiddleware>();
             return app;
-        }
-
-        public static IApplicationBuilder UseDocGenerator(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<APIDocGeneratorMiddleware>();
         }
 
         public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
@@ -179,33 +203,6 @@ namespace Aiursoft.Pylon
             }
 
             return host;
-        }
-
-        public static IServiceCollection AddAiurMvc(this IServiceCollection services)
-        {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            };
-
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services
-                .Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.KnownProxies.Add(IPAddress.Any);
-                    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                })
-                .AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
-
-            return services;
         }
 
         public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toadd)
