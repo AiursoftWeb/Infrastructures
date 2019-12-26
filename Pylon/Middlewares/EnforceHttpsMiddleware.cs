@@ -33,7 +33,8 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 context.Response.Headers.Add("Strict-Transport-Security", "max-age=15552001; includeSubDomains; preload");
             }
-            if (context.Request.Headers.ContainsKey("X-Forwarded-Proto") && context.Request.Headers["X-Forwarded-Proto"] == "https")
+            if (context.Request.Headers.ContainsKey("X-Forwarded-Proto") &&
+                context.Request.Headers["X-Forwarded-Proto"] == "https")
             {
                 _logger.LogInformation("Forwarded HTTP Request Handled.");
                 await _next.Invoke(context);
