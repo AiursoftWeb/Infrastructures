@@ -32,7 +32,7 @@ namespace Aiursoft.Pylon.Services
                 Content = new FormUrlEncodedContent(new Dictionary<string, string>())
             };
 
-            request.Headers.Add("x-forward-proto", "https");
+            request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
             var response = await _client.SendAsync(request);
@@ -58,7 +58,7 @@ namespace Aiursoft.Pylon.Services
                 Content = new FormUrlEncodedContent(postDataStr.Params)
             };
 
-            request.Headers.Add("x-forward-proto", "https");
+            request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
             var response = await _client.SendAsync(request);
