@@ -7,7 +7,6 @@ using Aiursoft.Pylon.Services.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -23,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -52,12 +50,6 @@ namespace Aiursoft.Pylon
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services
-                .Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.KnownProxies.Add(IPAddress.Loopback);
-                    options.KnownProxies.Add(IPAddress.IPv6Loopback);
-                    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                })
                 .AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 {
@@ -70,7 +62,6 @@ namespace Aiursoft.Pylon
             return services;
         }
 
-
         public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
         {
             if (isDevelopment)
@@ -80,10 +71,8 @@ namespace Aiursoft.Pylon
             }
             else
             {
-                app.UseForwardedHeaders();
-                app.UseHsts();
-                app.UseHttpsRedirection();
                 app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
             }
             return app;
@@ -98,10 +87,7 @@ namespace Aiursoft.Pylon
             }
             else
             {
-                app.UseForwardedHeaders();
-                app.UseHsts();
-                app.UseHttpsRedirection();
-                app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
                 app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
             }
