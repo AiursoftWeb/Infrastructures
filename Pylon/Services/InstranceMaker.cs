@@ -35,7 +35,7 @@ namespace Aiursoft.Pylon.Services
             {
                 return Assembly.GetAssembly(type).CreateInstance(type.FullName);
             }
-            else if (type.GetConstructors().Count() > 0 && !type.IsAbstract)
+            else if (type.GetConstructors().Where(t => t.IsPublic).Any() && !type.IsAbstract)
             {
                 // Has a constructor, and constructor has some arguments.
                 var constructor = type.GetConstructors()[0];
@@ -52,7 +52,7 @@ namespace Aiursoft.Pylon.Services
             {
                 return null;
             }
-            else if (type.GetConstructors().All(t => t.IsPrivate))
+            else if (!type.GetConstructors().Any(t => t.IsPublic))
             {
                 return null;
             }
@@ -95,15 +95,15 @@ namespace Aiursoft.Pylon.Services
             // List
             else if (type.IsGenericType && type.GetGenericTypeDefinition().GetInterfaces().Any(t => t.IsAssignableFrom(typeof(IEnumerable))))
             {
-                Type itemType = type.GetGenericArguments()[0];
+                var itemType = type.GetGenericArguments()[0];
                 return GetArrayWithInstanceInherts(itemType);
             }
             // Array
             else if (type.GetInterface(typeof(IEnumerable<>).FullName) != null)
             {
-                Type itemType = type.GetElementType();
+                var itemType = type.GetElementType();
                 var list = GetArrayWithInstanceInherts(itemType);
-                Array array = Array.CreateInstance(itemType, list.Count);
+                var array = Array.CreateInstance(itemType, list.Count);
                 list.CopyTo(array, 0);
                 return array;
             }
