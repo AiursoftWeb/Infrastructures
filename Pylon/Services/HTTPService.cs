@@ -32,7 +32,9 @@ namespace Aiursoft.Pylon.Services
                 Content = new FormUrlEncodedContent(new Dictionary<string, string>())
             };
 
+            // pass https redirection and use http inside.
             request.Headers.Add("x-request-origin", Values.ProjectName);
+            request.Headers.Add("x-forward-proto", "https");
             request.Headers.Add("accept", "application/json");
 
             var response = await _client.SendAsync(request);
@@ -59,6 +61,7 @@ namespace Aiursoft.Pylon.Services
             };
 
             request.Headers.Add("x-request-origin", Values.ProjectName);
+            request.Headers.Add("x-forward-proto", "https");
             request.Headers.Add("accept", "application/json");
 
             var response = await _client.SendAsync(request);
