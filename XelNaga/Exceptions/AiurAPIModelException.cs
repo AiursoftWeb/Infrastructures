@@ -1,7 +1,7 @@
-using Aiursoft.Pylon.Models;
+using Aiursoft.XelNaga.Models;
 using System;
 
-namespace Aiursoft.Pylon.Exceptions
+namespace Aiursoft.XelNaga.Exceptions
 {
     /// <summary>
     /// Throw this exception in any methods called from API. This will stop the controller logic.

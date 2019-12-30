@@ -1,11 +1,12 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Models
+namespace Aiursoft.XelNaga.Models
 {
     public enum ErrorType
     {

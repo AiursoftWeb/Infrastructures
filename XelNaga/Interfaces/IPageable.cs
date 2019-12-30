@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Pylon.Interfaces
+namespace Aiursoft.XelNaga.Interfaces
 {
     public interface IPageable
     {

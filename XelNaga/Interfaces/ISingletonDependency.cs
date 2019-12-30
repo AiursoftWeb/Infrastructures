@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Pylon.Interfaces
+﻿namespace Aiursoft.XelNaga.Interfaces
 {
     public interface ISingletonDependency
     {

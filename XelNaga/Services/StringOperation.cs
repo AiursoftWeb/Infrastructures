@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public static class StringOperation
     {

@@ -3,7 +3,7 @@ using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 
-namespace Aiursoft.Pylon.Models
+namespace Aiursoft.XelNaga.Models
 {
     public class AiurKeyPair : ISingletonDependency
     {

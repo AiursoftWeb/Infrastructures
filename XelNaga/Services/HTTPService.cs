@@ -1,12 +1,12 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class HTTPService : IScopedDependency
     {

@@ -1,11 +1,11 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.XelNaga.Exceptions;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class ACToken
     {

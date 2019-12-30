@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Services;
+﻿using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 
-namespace Aiursoft.Pylon.Models
+namespace Aiursoft.XelNaga.Models
 {
     public class AiurUrl
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.Pylon.Attributes
+namespace Aiursoft.XelNaga.Attributes
 {
     public class InstanceMakerIgnore : Attribute
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.Pylon.Models
+namespace Aiursoft.XelNaga.Models
 {
     public class MIME
     {
