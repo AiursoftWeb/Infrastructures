@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.Stargate.ChannelViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.Stargate.ChannelViewModels
 {
     public class CreateChannelViewModel : AiurProtocol
     {

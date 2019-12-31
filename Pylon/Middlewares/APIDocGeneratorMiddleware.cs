@@ -3,7 +3,6 @@ using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,12 +15,10 @@ namespace Aiursoft.Pylon.Middlewares
 {
     public class APIDocGeneratorMiddleware
     {
-        private IConfiguration _configuration { get; }
-        private RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
-        public APIDocGeneratorMiddleware(RequestDelegate next, IConfiguration configuration)
+        public APIDocGeneratorMiddleware(RequestDelegate next)
         {
-            _configuration = configuration;
             _next = next;
         }
 

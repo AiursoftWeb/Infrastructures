@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Services.ToArchonServer;
+﻿using Aiursoft.Pylon.Services.ToArchonServer;
+using Aiursoft.XelNaga.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -76,13 +76,11 @@ namespace Aiursoft.Pylon.Services
         {
             if (DateTime.UtcNow > _accessTokenDeadTime)
             {
-                using (var scope = scopeFactory.CreateScope())
-                {
-                    var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
-                    var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
-                    _latestAccessToken = serverResult.AccessToken;
-                    _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
-                }
+                using IServiceScope scope = scopeFactory.CreateScope();
+                var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
+                var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
+                _latestAccessToken = serverResult.AccessToken;
+                _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
             }
             return _latestAccessToken;
         }

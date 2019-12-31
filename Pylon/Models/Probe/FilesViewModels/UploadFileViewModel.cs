@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.Probe.FilesViewModels
 {
     public class UploadFileViewModel : AiurProtocol
     {

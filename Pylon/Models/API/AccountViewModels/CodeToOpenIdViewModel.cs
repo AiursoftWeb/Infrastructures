@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.API.AccountViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.API.AccountViewModels
 {
     public class CodeToOpenIdViewModel : AiurProtocol
     {

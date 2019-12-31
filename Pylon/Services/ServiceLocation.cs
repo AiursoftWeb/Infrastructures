@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
 using DnsClient;
 using Microsoft.Extensions.Configuration;
 using System.Linq;

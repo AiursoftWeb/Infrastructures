@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aiursoft.XelNaga.Models;
+using System;
 
 namespace Aiursoft.Pylon.Models.Archon
 {

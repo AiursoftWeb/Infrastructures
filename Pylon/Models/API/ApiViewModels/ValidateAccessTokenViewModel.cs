@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.API.ApiViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.API.ApiViewModels
 {
     public class ValidateAccessTokenViewModel : AiurProtocol
     {

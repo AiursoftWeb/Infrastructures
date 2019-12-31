@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.API.UserViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.API.UserViewModels
 {
     public class View2FAKeyViewModel : AiurProtocol
     {

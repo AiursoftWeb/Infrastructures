@@ -64,12 +64,10 @@ namespace Aiursoft.XelNaga.Tools
 
         public static string GetMD5(this byte[] data)
         {
-            using (var md5 = MD5.Create())
-            {
-                var hash = md5.ComputeHash(data);
-                string hex = BitConverter.ToString(hash);
-                return hex.Replace("-", "");
-            }
+            using MD5 md5 = MD5.Create();
+            var hash = md5.ComputeHash(data);
+            string hex = BitConverter.ToString(hash);
+            return hex.Replace("-", "");
         }
 
         public static string OTake(this string source, int count)
@@ -122,7 +120,7 @@ namespace Aiursoft.XelNaga.Tools
             }
             while (content.Contains(">"))
             {
-                s = s + content.Substring(0, content.IndexOf("<"));
+                s += content.Substring(0, content.IndexOf("<"));
                 content = content.Substring(content.IndexOf(">") + 1);
             }
             return s + content;
@@ -137,7 +135,7 @@ namespace Aiursoft.XelNaga.Tools
             for (int i = 0; i < count; i++)
             {
                 number = random.Next();
-                number = number % 36;
+                number %= 36;
                 if (number < 10)
                 {
                     number += 48;
@@ -233,7 +231,7 @@ namespace Aiursoft.XelNaga.Tools
             while (size >= 1024 && order < sizes.Length - 1)
             {
                 order++;
-                size = size / 1024;
+                size /= 1024;
             }
             return string.Format("{0:0.##} {1}", size, sizes[order]);
         }

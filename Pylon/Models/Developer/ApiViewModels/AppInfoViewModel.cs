@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.Developer.ApiViewModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.Developer.ApiViewModels
 {
     public class AppInfoViewModel : AiurProtocol
     {

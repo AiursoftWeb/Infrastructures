@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Attributes;
+﻿using Aiursoft.XelNaga.Attributes;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

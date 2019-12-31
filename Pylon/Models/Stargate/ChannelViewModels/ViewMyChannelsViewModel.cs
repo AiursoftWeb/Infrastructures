@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Aiursoft.XelNaga.Models;
+using System.Collections.Generic;
 
 namespace Aiursoft.Pylon.Models.Stargate.ChannelViewModels
 {

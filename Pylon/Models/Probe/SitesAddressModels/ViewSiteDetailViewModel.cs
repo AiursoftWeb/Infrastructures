@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
+﻿using Aiursoft.XelNaga.Models;
+
+namespace Aiursoft.Pylon.Models.Probe.SitesAddressModels
 {
     public class ViewSiteDetailViewModel : AiurProtocol
     {
