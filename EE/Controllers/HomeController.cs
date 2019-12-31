@@ -2,8 +2,8 @@
 using Aiursoft.EE.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +49,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Search(string word)
         {
-            var results = await _dbContext.Courses.Where(t=>t.Name.Contains(word)).ToListAsync();
+            var results = await _dbContext.Courses.Where(t => t.Name.Contains(word)).ToListAsync();
             return View();
         }
     }

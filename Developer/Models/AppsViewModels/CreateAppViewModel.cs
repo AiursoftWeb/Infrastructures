@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Developer;
+﻿using Aiursoft.SDK.Models;
+using Aiursoft.SDK.Models.Developer;
 using System;
 using System.ComponentModel.DataAnnotations;
 

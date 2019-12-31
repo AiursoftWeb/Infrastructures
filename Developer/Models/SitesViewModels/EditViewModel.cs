@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.SDK.Attributes;
+using Aiursoft.SDK.Models.Developer;
 using System;
 using System.ComponentModel.DataAnnotations;
 

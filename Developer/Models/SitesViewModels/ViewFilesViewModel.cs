@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Models.Probe;
+using Aiursoft.SDK.Models.Developer;
+using Aiursoft.SDK.Models.Probe;
 using System;
 
 namespace Aiursoft.Developer.Models.SitesViewModels

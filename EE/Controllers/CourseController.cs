@@ -3,8 +3,9 @@ using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -72,7 +73,7 @@ namespace Aiursoft.EE.Controllers
         [AiurForceAuth]
         public IActionResult DetailAuth(int id)// Course id
         {
-            return RedirectToAction(nameof(Detail), new { id = id });
+            return RedirectToAction(nameof(Detail), new { id });
         }
 
         [HttpGet]

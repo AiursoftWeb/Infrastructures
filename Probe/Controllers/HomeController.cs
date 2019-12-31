@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Probe.Controllers

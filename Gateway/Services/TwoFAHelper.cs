@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Services;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;

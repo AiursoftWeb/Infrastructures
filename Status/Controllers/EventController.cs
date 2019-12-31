@@ -1,11 +1,11 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Status;
-using Aiursoft.Pylon.Models.Status.EventAddressModels;
-using Aiursoft.Pylon.Models.Status.EventViewModels;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Status;
+using Aiursoft.SDK.Models.Status.EventAddressModels;
+using Aiursoft.SDK.Models.Status.EventViewModels;
 using Aiursoft.Status.Data;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

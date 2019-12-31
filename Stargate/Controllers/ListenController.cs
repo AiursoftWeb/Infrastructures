@@ -1,6 +1,6 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Models;

@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models.Stargate;
-using Aiursoft.Pylon.Models.Stargate.MessageAddressModels;
+using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.SDK.Models.Stargate.MessageAddressModels;
 using Aiursoft.Stargate.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

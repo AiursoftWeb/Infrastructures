@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.Pylon.Models.Developer;
+using Aiursoft.SDK.Models.Developer;
 using System;
 
 namespace Aiursoft.Developer.Models.SitesViewModels

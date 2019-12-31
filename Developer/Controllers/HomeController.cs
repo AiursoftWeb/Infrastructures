@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Developer;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

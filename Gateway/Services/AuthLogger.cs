@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Interfaces;
+using Aiursoft.XelNaga.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 

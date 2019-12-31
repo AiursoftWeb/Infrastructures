@@ -1,9 +1,9 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models.Stargate;
-using Aiursoft.Pylon.Models.Stargate.ChannelAddressModels;
-using Aiursoft.Pylon.Models.Stargate.ChannelViewModels;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
+using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
+using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
+using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

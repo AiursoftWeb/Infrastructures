@@ -1,8 +1,9 @@
 ﻿using Aiursoft.Gateway.Controllers;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
