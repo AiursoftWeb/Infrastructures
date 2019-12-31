@@ -1,5 +1,4 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.XelNaga.Exceptions;
+﻿using Aiursoft.XelNaga.Exceptions;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

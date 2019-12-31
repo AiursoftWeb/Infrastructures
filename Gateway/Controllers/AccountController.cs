@@ -1,14 +1,12 @@
 ﻿using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.AccountAddressModels;
 using Aiursoft.Pylon.Models.API.AccountViewModels;
-using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToDeveloperServer;
-using Microsoft.AspNetCore.Identity;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

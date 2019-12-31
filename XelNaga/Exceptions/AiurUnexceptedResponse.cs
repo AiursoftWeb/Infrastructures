@@ -1,7 +1,7 @@
 ﻿using Aiursoft.XelNaga.Models;
 using System;
 
-namespace Aiursoft.Pylon.Exceptions
+namespace Aiursoft.XelNaga.Exceptions
 {
     /// <summary>
     /// Throw this exception if the json responed by the Aiursoft Server was not with code = 0.
