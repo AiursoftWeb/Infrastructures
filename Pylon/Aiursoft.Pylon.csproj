@@ -8,7 +8,7 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>The base class, interfaces and services for Aiursoft web apps.</Description>
+    <Description>The base class, tools and extends for Aiursoft web apps.</Description>
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
     <PackageIcon>pylon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
@@ -25,13 +25,11 @@
      <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
-    <PackageReference Include="DnsClient" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
     <PackageReference Include="Polly" Version="7.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
+    <ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
   </ItemGroup>
 </Project>

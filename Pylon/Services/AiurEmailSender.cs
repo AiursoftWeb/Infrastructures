@@ -1,5 +1,6 @@
-﻿using Aiursoft.Pylon.Models.Status;
-using Aiursoft.Pylon.Services.ToStatusServer;
+﻿using Aiursoft.SDK.Models.Status;
+using Aiursoft.SDK.Services;
+using Aiursoft.SDK.Services.ToStatusServer;
 using Aiursoft.XelNaga.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

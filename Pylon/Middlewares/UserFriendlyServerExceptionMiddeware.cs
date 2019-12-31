@@ -1,6 +1,6 @@
-﻿using Aiursoft.Pylon.Models.Status;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToStatusServer;
+﻿using Aiursoft.SDK.Models.Status;
+using Aiursoft.SDK.Services;
+using Aiursoft.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;

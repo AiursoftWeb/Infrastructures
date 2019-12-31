@@ -9,14 +9,11 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>The base tools for Aiursoft apps.</Description>
+    <Description>Some basic csharp tools for all apps.</Description>
     <PackageTags>base-class tools aiursoft xelnaga</PackageTags>
-    <PackageIcon>pylon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
 
   <ItemGroup>

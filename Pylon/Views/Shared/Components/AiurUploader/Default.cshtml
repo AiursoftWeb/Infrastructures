@@ -1,6 +1,8 @@
 ﻿@using Aiursoft.XelNaga.Models
 @using Aiursoft.XelNaga.Tools
+@using Aiursoft.SDK.Services
 @using Aiursoft.Pylon.Services
+
 @model Aiursoft.Pylon.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
 @inject ServiceLocation ServiceLocation
 @{
@@ -109,5 +111,4 @@
         var dropi = $('.dropify').dropify();
         dropi.on('dropify.afterClear', reset);
     })
-
 </script>
