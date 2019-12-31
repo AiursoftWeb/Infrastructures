@@ -1,6 +1,6 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class Counter : ISingletonDependency
     {

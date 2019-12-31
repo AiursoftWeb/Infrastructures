@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -71,7 +71,7 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 var possibleList = action.GetCustomAttributes(typeof(APIProduces))
                     .Select(t => (t as APIProduces).PossibleType)
-                    .Select(t => InstanceMaker.Make(t))
+                    .Select(t => t.Make())
                     .Select(t => JsonConvert.SerializeObject(t)).ToList();
                 possibleList.Add(JsonConvert.SerializeObject(new AiurProtocol
                 {

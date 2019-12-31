@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public static class InstanceMaker
     {
@@ -62,7 +62,7 @@ namespace Aiursoft.Pylon.Services
             }
         }
 
-        public static object Make(Type type)
+        public static object Make(this Type type)
         {
             if (type == typeof(string))
             {

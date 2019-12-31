@@ -1,7 +1,9 @@
 ﻿using Aiursoft.XelNaga.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.XelNaga.Tools
 {
     public static class EFExtends
     {
@@ -18,6 +20,11 @@ namespace Aiursoft.XelNaga.Services
             return query
                 .Skip((pager.PageNumber - 1) * pager.PageSize)
                 .Take(pager.PageSize);
+        }
+
+        public static void Delete<T>(this DbSet<T> dbSet, Func<T, bool> predicate) where T : class
+        {
+            dbSet.RemoveRange(dbSet.Where(predicate));
         }
     }
 }

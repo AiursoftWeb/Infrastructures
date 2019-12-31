@@ -1,9 +1,10 @@
-using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

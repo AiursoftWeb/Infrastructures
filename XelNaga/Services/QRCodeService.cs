@@ -1,11 +1,11 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
 using QRCoder;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class QRCodeService : ITransientDependency
     {

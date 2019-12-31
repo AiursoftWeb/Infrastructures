@@ -1,7 +1,7 @@
-﻿using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Status;
+﻿using Aiursoft.Pylon.Models.Status;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.ToStatusServer;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

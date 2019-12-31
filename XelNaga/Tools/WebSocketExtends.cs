@@ -4,9 +4,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.Pylon.Tools
 {
-    public static class WebSocketService
+    public static class WebSocketExtends
     {
         public static async Task SendMessage(this WebSocket ws, string message)
         {
