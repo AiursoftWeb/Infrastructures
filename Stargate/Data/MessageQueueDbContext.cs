@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Models.Stargate;
+﻿using Aiursoft.SDK.Models.Stargate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Stargate.Data

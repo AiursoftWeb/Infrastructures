@@ -1,9 +1,11 @@
-using Aiursoft.Pylon.Interfaces;
 using Aiursoft.Pylon.Middlewares;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
+using Aiursoft.SDK.Models;
+using Aiursoft.SDK.Models.API.OAuthAddressModels;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -301,21 +303,6 @@ namespace Aiursoft.Pylon
                 string.Empty;
             bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
             return !dnt;
-        }
-
-        /// <summary>
-        /// Page the collection
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="pageNumber">Starts from 1</param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPageable pager)
-        {
-            return query
-                .Skip((pager.PageNumber - 1) * pager.PageSize)
-                .Take(pager.PageSize);
         }
     }
 }

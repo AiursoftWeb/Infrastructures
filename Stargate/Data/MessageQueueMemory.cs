@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models.Stargate;
+﻿using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.XelNaga.Interfaces;
 using System.Collections.Generic;
 
 namespace Aiursoft.Stargate.Data

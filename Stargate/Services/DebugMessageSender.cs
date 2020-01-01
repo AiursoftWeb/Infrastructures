@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Services.ToStargateServer;
+﻿using Aiursoft.SDK.Services.ToStargateServer;
+using Aiursoft.XelNaga.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +16,6 @@ namespace Aiursoft.Stargate.Services
 
         public async Task SendDebuggingMessages(string accessToken, int channelId)
         {
-            var random = new Random();
             for (int i = 0; i < 1000; i++)
             {
                 var json = JsonConvert.SerializeObject(new

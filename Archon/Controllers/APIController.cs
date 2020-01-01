@@ -1,9 +1,10 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Archon;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Aiursoft.SDK.Models.Archon;
+using Aiursoft.SDK.Services.ToDeveloperServer;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

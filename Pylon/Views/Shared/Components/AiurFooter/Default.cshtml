@@ -1,7 +1,8 @@
-﻿@using Aiursoft.Pylon
-@using Aiursoft.Pylon.Models
+﻿@using Aiursoft.XelNaga.Models
+@using Aiursoft.SDK.Services
+@using Aiursoft.Pylon
 @model Aiursoft.Pylon.Views.Shared.Components.AiurFooter.AiurFooterViewModel
-@inject Aiursoft.Pylon.Services.ServiceLocation ServiceLocation
+@inject ServiceLocation ServiceLocation
 @{
     var classText = "";
     if (!string.IsNullOrWhiteSpace(Model.Class))

@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Gateway.Data;
-using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Services;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -36,11 +36,9 @@ namespace Aiursoft.Gateway.Services
             try
             {
                 _logger.LogInformation("Cleaner task started!");
-                using (var scope = _scopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<GatewayDbContext>();
-                    await AllClean(dbContext);
-                }
+                using var scope = _scopeFactory.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<GatewayDbContext>();
+                await AllClean(dbContext);
             }
             catch (Exception ex)
             {

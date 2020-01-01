@@ -1,9 +1,8 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models.ForApps.AddressModels;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.ForApps.AddressModels;
+using Aiursoft.SDK.Services;
 using Aiursoft.WWW.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,14 +12,11 @@ namespace Aiursoft.WWW.Controllers
     public class AuthController : Controller
     {
         private readonly AuthService<WWWUser> _authService;
-        private readonly UserManager<WWWUser> _userManager;
 
         public AuthController(
-            AuthService<WWWUser> authService,
-            UserManager<WWWUser> userManager)
+            AuthService<WWWUser> authService)
         {
             _authService = authService;
-            _userManager = userManager;
         }
 
         [AiurForceAuth(preferController: "", preferAction: "", justTry: false, register: false)]

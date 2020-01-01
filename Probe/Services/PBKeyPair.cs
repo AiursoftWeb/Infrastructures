@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Services;
+﻿using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 

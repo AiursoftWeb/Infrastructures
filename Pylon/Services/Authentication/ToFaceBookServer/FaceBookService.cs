@@ -1,5 +1,7 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Exceptions;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -47,7 +49,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
             return new AiurUrl("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
             {
                 ClientId = _clientId,
-                
+
                 //Debug RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 State = "a",

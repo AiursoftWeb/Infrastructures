@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Models;
+﻿using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

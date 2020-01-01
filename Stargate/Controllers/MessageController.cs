@@ -1,9 +1,9 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Stargate;
-using Aiursoft.Pylon.Models.Stargate.MessageAddressModels;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.SDK.Models.Stargate.MessageAddressModels;
 using Aiursoft.Stargate.Data;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace Aiursoft.Stargate.Controllers
     public class MessageController : Controller
     {
         private readonly StargateDbContext _dbContext;
-        private StargateMemory _memoryContext;
+        private readonly StargateMemory _memoryContext;
         private readonly Counter _counter;
         private readonly ACTokenManager _tokenManager;
 

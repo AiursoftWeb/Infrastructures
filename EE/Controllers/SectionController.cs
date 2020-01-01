@@ -3,7 +3,7 @@ using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.SectionViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

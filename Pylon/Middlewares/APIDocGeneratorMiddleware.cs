@@ -1,9 +1,8 @@
 ﻿using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,12 +15,10 @@ namespace Aiursoft.Pylon.Middlewares
 {
     public class APIDocGeneratorMiddleware
     {
-        private IConfiguration _configuration { get; }
-        private RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
-        public APIDocGeneratorMiddleware(RequestDelegate next, IConfiguration configuration)
+        public APIDocGeneratorMiddleware(RequestDelegate next)
         {
-            _configuration = configuration;
             _next = next;
         }
 
@@ -71,7 +68,7 @@ namespace Aiursoft.Pylon.Middlewares
             {
                 var possibleList = action.GetCustomAttributes(typeof(APIProduces))
                     .Select(t => (t as APIProduces).PossibleType)
-                    .Select(t => InstanceMaker.Make(t))
+                    .Select(t => t.Make())
                     .Select(t => JsonConvert.SerializeObject(t)).ToList();
                 possibleList.Add(JsonConvert.SerializeObject(new AiurProtocol
                 {

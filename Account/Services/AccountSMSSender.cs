@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;

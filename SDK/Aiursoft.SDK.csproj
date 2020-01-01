@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Aiursoft.SDK</Title>
+    <AssemblyName>Aiursoft.SDK</AssemblyName>
+    <PackageId>Aiursoft.SDK</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>All Aiursoft API implementations for all apps which need to integrate with Aiursoft.</Description>
+    <PackageTags>SDK Aiursoft Nexus</PackageTags>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="DnsClient" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Middlewares;
-using Aiursoft.Pylon.Services;
+﻿using Aiursoft.Pylon.Middlewares;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ namespace Aiursoft.Wiki.Services
 {
     public class MarkDownGenerator : ITransientDependency
     {
-        private string _post = "<span class=\"badge badge-pill badge-warning text-white\">POST</span>";
-        private string _get = "<span class=\"badge badge-pill badge-success\">GET</span>";
-        private string _authorized = "<span class=\"badge badge-pill badge-danger\"><i class=\"fa fa-shield\"></i> Authorize</span>";
+        private const string _post = "<span class=\"badge badge-pill badge-warning text-white\">POST</span>";
+        private const string _get = "<span class=\"badge badge-pill badge-success\">GET</span>";
+        private const string _authorized = "<span class=\"badge badge-pill badge-danger\"><i class=\"fa fa-shield\"></i> Authorize</span>";
 
         private string ArgTypeConverter(ArgumentType type)
         {
@@ -30,6 +30,8 @@ namespace Aiursoft.Wiki.Services
                     return "Text Collection";
                 case ArgumentType.unknown:
                     return "A magic type!";
+                default:
+                    break;
             }
             throw new InvalidOperationException(type.ToString());
         }

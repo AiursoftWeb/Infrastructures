@@ -3,7 +3,7 @@ using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -168,7 +168,7 @@ namespace Aiursoft.EE.Controllers
             }
             return this.Protocol(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
         }
-        
+
         [AiurForceAuth]
         public async Task<IActionResult> EditDes()
         {

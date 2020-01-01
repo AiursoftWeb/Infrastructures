@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon.Services.Authentication

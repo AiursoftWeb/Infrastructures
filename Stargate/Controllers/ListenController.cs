@@ -1,10 +1,10 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,9 +18,9 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class ListenController : Controller
     {
-        private StargateDbContext _dbContext;
-        private StargateMemory _memoryContext;
-        private WebSocketPusher _pusher;
+        private readonly StargateDbContext _dbContext;
+        private readonly StargateMemory _memoryContext;
+        private readonly WebSocketPusher _pusher;
         private readonly ILogger<ListenController> _logger;
         private readonly Counter _counter;
 

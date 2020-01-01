@@ -1,5 +1,15 @@
 echo start building...
 
+dotnet restore
+
+cd XelNaga
+dotnet build
+cd ..
+
+cd SDK
+dotnet build
+cd ..
+
 cd Pylon
 dotnet build
 cd ..

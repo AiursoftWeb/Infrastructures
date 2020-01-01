@@ -1,6 +1,6 @@
-﻿using Aiursoft.Pylon.Exceptions;
-using Aiursoft.Pylon.Interfaces;
-using Aiursoft.Pylon.Models;
+﻿using Aiursoft.XelNaga.Exceptions;
+using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.XelNaga.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace Aiursoft.Probe.Services
 {
     public class FolderRefactor : ITransientDependency
     {
-        private FolderLocator _folderLocator;
+        private readonly FolderLocator _folderLocator;
 
         public FolderRefactor(FolderLocator folderLocator)
         {

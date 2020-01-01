@@ -1,11 +1,12 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
-using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.ToStargateServer;
+using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
+using Aiursoft.SDK.Services;
+using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -16,22 +17,19 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class HomeController : Controller
     {
-        private StargateDbContext _dbContext;
-        private DebugMessageSender _debugger;
+        private readonly DebugMessageSender _debugger;
         private readonly AppsContainer _appsContainer;
         private readonly ChannelService _channelService;
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
 
         public HomeController(
-            StargateDbContext dbContext,
             DebugMessageSender debugger,
             AppsContainer appsContainer,
             ChannelService channelService,
             Counter counter,
             StargateMemory memory)
         {
-            _dbContext = dbContext;
             _debugger = debugger;
             _appsContainer = appsContainer;
             _channelService = channelService;

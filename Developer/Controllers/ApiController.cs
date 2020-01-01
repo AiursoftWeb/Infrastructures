@@ -1,14 +1,11 @@
 using Aiursoft.Developer.Data;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Developer;
-using Aiursoft.Pylon.Models.Developer.ApiAddressModels;
-using Aiursoft.Pylon.Models.Developer.ApiViewModels;
 using Aiursoft.Pylon.Services;
-using Microsoft.AspNetCore.Identity;
+using Aiursoft.SDK.Models.Developer.ApiAddressModels;
+using Aiursoft.SDK.Models.Developer.ApiViewModels;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -17,22 +14,13 @@ namespace Aiursoft.Developer.Controllers
     [APIModelStateChecker]
     public class ApiController : Controller
     {
-        private readonly UserManager<DeveloperUser> _userManager;
-        private readonly SignInManager<DeveloperUser> _signInManager;
-        private readonly ILogger _logger;
         private readonly DeveloperDbContext _dbContext;
         private readonly AiurCache _cache;
 
         public ApiController(
-        UserManager<DeveloperUser> userManager,
-        SignInManager<DeveloperUser> signInManager,
-        ILoggerFactory loggerFactory,
-        DeveloperDbContext context,
-        AiurCache cache)
+            DeveloperDbContext context,
+            AiurCache cache)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = context;
             _cache = cache;
         }

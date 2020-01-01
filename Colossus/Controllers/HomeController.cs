@@ -2,8 +2,8 @@
 using Aiursoft.Colossus.Models.HomeViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

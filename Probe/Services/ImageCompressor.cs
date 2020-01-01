@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Interfaces;
+﻿using Aiursoft.XelNaga.Interfaces;
 using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;

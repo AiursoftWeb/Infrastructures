@@ -1,12 +1,12 @@
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Models;
-using Aiursoft.Pylon.Models.Stargate;
-using Aiursoft.Pylon.Models.Stargate.ChannelAddressModels;
-using Aiursoft.Pylon.Models.Stargate.ChannelViewModels;
-using Aiursoft.Pylon.Models.Stargate.ListenAddressModels;
-using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
+using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
+using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -60,6 +60,7 @@ namespace Aiursoft.Stargate.Controllers
             return Json(viewModel);
         }
 
+        [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> ValidateChannel(ChannelAddressModel model)
         {
             var channel = await _dbContext.Channels.FindAsync(model.Id);
@@ -89,7 +90,11 @@ namespace Aiursoft.Stargate.Controllers
             }
             else
             {
-                return this.Protocol(ErrorType.Success, "Current Info.");
+                return Json(new AiurValue<string>(channel.AppId)
+                {
+                    Code = ErrorType.Success,
+                    Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
+                });
             }
         }
 

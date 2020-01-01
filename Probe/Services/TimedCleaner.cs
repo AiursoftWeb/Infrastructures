@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
-using Aiursoft.Pylon.Interfaces;
+using Aiursoft.XelNaga.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

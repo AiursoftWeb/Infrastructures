@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Models.Probe;
+﻿using Aiursoft.SDK.Models.Probe;
 using System;
 
 namespace Aiursoft.Colossus.Models.DashboardViewModels
