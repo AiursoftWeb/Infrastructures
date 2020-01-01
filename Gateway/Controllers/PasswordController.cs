@@ -3,7 +3,7 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.PasswordViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.Pylon.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
