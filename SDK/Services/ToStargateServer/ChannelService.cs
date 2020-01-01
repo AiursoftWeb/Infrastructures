@@ -38,7 +38,7 @@ namespace Aiursoft.SDK.Services.ToStargateServer
             return jResult;
         }
 
-        public async Task<AiurProtocol> ValidateChannelAsync(int id, string key)
+        public async Task<AiurValue<string>> ValidateChannelAsync(int id, string key)
         {
             var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ValidateChannel", new ChannelAddressModel
             {
@@ -46,7 +46,7 @@ namespace Aiursoft.SDK.Services.ToStargateServer
                 Key = key
             });
             var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
             return jResult;
         }
     }

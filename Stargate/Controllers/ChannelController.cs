@@ -1,4 +1,3 @@
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Stargate;
 using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
@@ -61,6 +60,7 @@ namespace Aiursoft.Stargate.Controllers
             return Json(viewModel);
         }
 
+        [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> ValidateChannel(ChannelAddressModel model)
         {
             var channel = await _dbContext.Channels.FindAsync(model.Id);
@@ -90,7 +90,11 @@ namespace Aiursoft.Stargate.Controllers
             }
             else
             {
-                return this.Protocol(ErrorType.Success, "Current Info.");
+                return Json(new AiurValue<string>(channel.AppId)
+                {
+                    Code = ErrorType.Success,
+                    Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
+                });
             }
         }
 
