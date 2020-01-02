@@ -1,5 +1,5 @@
-﻿using Aiursoft.Pylon.Services.Authentication;
-using Aiursoft.SDK.Models.API;
+﻿using Aiursoft.SDK.Models.API;
+using Aiursoft.XelNaga.Services.Authentication;
 using System;
 using System.Collections.Generic;
 

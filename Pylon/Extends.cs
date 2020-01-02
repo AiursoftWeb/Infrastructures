@@ -1,10 +1,8 @@
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +22,6 @@ using Polly;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -204,41 +201,7 @@ namespace Aiursoft.Pylon
         public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
         {
             AppsContainer.CurrentAppName = appName;
-            services.AddHttpClient();
-            services.AddMemoryCache();
-            var executingTypes = ListExtends.AllAccessiableClass();
-            foreach (var item in executingTypes)
-            {
-                if (item.GetInterfaces().Contains(typeof(ISingletonDependency)))
-                {
-                    if (item.GetInterfaces().Contains(typeof(IHostedService)))
-                    {
-                        services.AddSingleton(typeof(IHostedService), item);
-                    }
-                    else
-                    {
-                        services.AddSingleton(item);
-                    }
-                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a singleton service.");
-                }
-                else if (item.GetInterfaces().Contains(typeof(IScopedDependency)))
-                {
-                    if (item.GetInterfaces().Contains(typeof(IAuthProvider)))
-                    {
-                        services.AddScoped(typeof(IAuthProvider), item);
-                    }
-                    else
-                    {
-                        services.AddScoped(item);
-                    }
-                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a scoped service.");
-                }
-                else if (item.GetInterfaces().Contains(typeof(ITransientDependency)))
-                {
-                    services.AddTransient(item);
-                    Console.WriteLine($"Service: {item.Name} - was successfully registered as a transient service.");
-                }
-            }
+            services.AddAccessiableDependencies();
             return services;
         }
 

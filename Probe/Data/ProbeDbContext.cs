@@ -1,6 +1,5 @@
 ﻿using Aiursoft.SDK.Models.Probe;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Aiursoft.Probe.Data
 {
@@ -14,10 +13,5 @@ namespace Aiursoft.Probe.Data
         public DbSet<Site> Sites { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<File> Files { get; set; }
-
-        public void Seed(IServiceProvider services)
-        {
-
-        }
     }
 }
