@@ -113,7 +113,7 @@ namespace Aiursoft.Pylon
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            if (beforeMVC == null)
+            if (beforeMVC != null)
             {
                 beforeMVC(app);
             }
