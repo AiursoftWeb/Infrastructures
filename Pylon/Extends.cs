@@ -22,6 +22,7 @@ using Polly;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -242,6 +243,12 @@ namespace Aiursoft.Pylon
                 string.Empty;
             bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
             return !dnt;
+        }
+
+        public static string GetUserId(this ClaimsPrincipal user)
+        {
+            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            return userId;
         }
     }
 }
