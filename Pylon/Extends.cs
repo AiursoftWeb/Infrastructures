@@ -99,7 +99,9 @@ namespace Aiursoft.Pylon
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseAiursoftDefault(this IApplicationBuilder app)
+        public static IApplicationBuilder UseAiursoftDefault(
+            this IApplicationBuilder app,
+            Func<IApplicationBuilder, IApplicationBuilder> beforeMVC = null)
         {
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
@@ -111,6 +113,10 @@ namespace Aiursoft.Pylon
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            if (beforeMVC == null)
+            {
+                beforeMVC(app);
+            }
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseMiddleware<SwitchLanguageMiddleware>();
             app.UseMiddleware<APIDocGeneratorMiddleware>();
