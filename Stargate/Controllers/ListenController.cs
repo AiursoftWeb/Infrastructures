@@ -1,6 +1,9 @@
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
+using Aiursoft.SDK.Models.Status;
+using Aiursoft.SDK.Services;
+using Aiursoft.SDK.Services.ToStatusServer;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Models;
@@ -18,24 +21,32 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class ListenController : Controller
     {
+        private readonly Counter _counter;
         private readonly StargateDbContext _dbContext;
         private readonly StargateMemory _memoryContext;
         private readonly WebSocketPusher _pusher;
         private readonly ILogger<ListenController> _logger;
-        private readonly Counter _counter;
+        private readonly AppsContainer _appsContainer;
+        private readonly EventService _eventService;
+
+        public static int ConnectedCount = 0;
 
         public ListenController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
             WebSocketPusher pusher,
             ILogger<ListenController> logger,
-            Counter counter)
+            Counter counter,
+            AppsContainer appsContainer,
+            EventService eventService)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
             _pusher = pusher;
             _logger = logger;
             _counter = counter;
+            _appsContainer = appsContainer;
+            _eventService = eventService;
         }
 
         [AiurForceWebSocket]
@@ -57,9 +68,11 @@ namespace Aiursoft.Stargate.Controllers
             }
             await _pusher.Accept(HttpContext);
             int sleepTime = 0;
-            while (_pusher.Connected && channel.IsAlive())
+            try
             {
-                try
+                ConnectedCount++;
+                await Task.Factory.StartNew(_pusher.PendingClose);
+                while (_pusher.Connected && channel.IsAlive())
                 {
                     var nextMessages = _memoryContext
                         .Messages
@@ -82,11 +95,18 @@ namespace Aiursoft.Stargate.Controllers
                             sleepTime = 0;
                         }
                     }
+
                 }
-                catch (InvalidOperationException e)
-                {
-                    _logger.LogError(e, e.Message);
-                }
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError(e, e.Message);
+                var accessToken = _appsContainer.AccessToken();
+                await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, Request.Path);
+            }
+            finally
+            {
+                ConnectedCount--;
             }
             return Json(new { });
         }

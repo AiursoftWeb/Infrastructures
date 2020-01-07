@@ -8,7 +8,6 @@ using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
@@ -43,7 +42,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = _memory.Messages.Count,
-                Threads = Process.GetCurrentProcess().Threads.Count,
+                Connected = ListenController.ConnectedCount,
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
             });
