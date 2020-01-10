@@ -26,19 +26,22 @@ namespace Aiursoft.Stargate.Controllers
         private readonly StargateMemory _stargateMemory;
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
+        private readonly ChannelLiveJudger _channelLiveJudger;
 
         public ChannelController(
             StargateDbContext dbContext,
             ACTokenManager tokenManager,
             StargateMemory stargateMemory,
             ConnectedCountService connectedCountService,
-            LastAccessService lastAccessService)
+            LastAccessService lastAccessService,
+            ChannelLiveJudger channelLiveJudger)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
             _stargateMemory = stargateMemory;
             _connectedCountService = connectedCountService;
             _lastAccessService = lastAccessService;
+            _channelLiveJudger = channelLiveJudger;
         }
 
         [APIProduces(typeof(ViewMyChannelsViewModel))]
@@ -86,7 +89,7 @@ namespace Aiursoft.Stargate.Controllers
                     Message = "Can not find your channel!"
                 });
             }
-            if (!channel.IsAlive)
+            if (!_channelLiveJudger.IsAlive(channel.Id))
             {
                 return Json(new AiurProtocol
                 {

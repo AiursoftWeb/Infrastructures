@@ -8,6 +8,7 @@ using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
@@ -21,27 +22,31 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ChannelService _channelService;
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
+        private readonly StargateDbContext _dbContext;
 
         public HomeController(
             DebugMessageSender debugger,
             AppsContainer appsContainer,
             ChannelService channelService,
             Counter counter,
-            StargateMemory memory)
+            StargateMemory memory,
+            StargateDbContext dbContext)
         {
             _debugger = debugger;
             _appsContainer = appsContainer;
             _channelService = channelService;
             _counter = counter;
             _memory = memory;
+            _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return Json(new
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = _memory.Messages.Count,
+                Channels = await _dbContext.Channels.CountAsync(),
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
             });

@@ -30,6 +30,7 @@ namespace Aiursoft.Stargate.Controllers
         private readonly EventService _eventService;
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
+        private readonly ChannelLiveJudger _channelLiveJudger;
 
         public ListenController(
             StargateDbContext dbContext,
@@ -40,7 +41,8 @@ namespace Aiursoft.Stargate.Controllers
             AppsContainer appsContainer,
             EventService eventService,
             ConnectedCountService connectedCountService,
-            LastAccessService lastAccessService)
+            LastAccessService lastAccessService,
+            ChannelLiveJudger channelLiveJudger)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
@@ -51,6 +53,7 @@ namespace Aiursoft.Stargate.Controllers
             _eventService = eventService;
             _connectedCountService = connectedCountService;
             _lastAccessService = lastAccessService;
+            _channelLiveJudger = channelLiveJudger;
         }
 
         [AiurForceWebSocket]
@@ -76,7 +79,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
-                while (_pusher.Connected && channel.IsAlive)
+                while (_pusher.Connected && _channelLiveJudger.IsAlive(channel.Id))
                 {
                     _lastAccessService.RecordLastConnectTime(channel.Id);
                     var nextMessages = _memoryContext
