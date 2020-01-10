@@ -56,7 +56,9 @@ namespace Aiursoft.Stargate.Controllers
             var viewModel = new ViewMyChannelsViewModel
             {
                 AppId = appLocal.Id,
-                Channel = channels,
+                Channel = channels
+                    .Select(t => new ChannelDetail(t, _stargateMemory.GetConnectedCount(t.Id)))
+                    .ToList(),
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };
@@ -75,7 +77,7 @@ namespace Aiursoft.Stargate.Controllers
                     Message = "Can not find your channel!"
                 });
             }
-            if (!channel.IsAlive())
+            if (!channel.IsAlive)
             {
                 return Json(new AiurProtocol
                 {

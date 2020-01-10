@@ -13,10 +13,7 @@ namespace Aiursoft.SDK.Models.Stargate
         public string ConnectKey { get; set; }
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public double LifeTime { get; set; } = new TimeSpan(days: 10, hours: 0, minutes: 0, seconds: 0).TotalSeconds;
-        public bool IsAlive()
-        {
-            return DateTime.UtcNow < CreateTime + TimeSpan.FromSeconds(LifeTime);
-        }
+        public bool IsAlive => DateTime.UtcNow < CreateTime + TimeSpan.FromSeconds(LifeTime);
         public string AppId { get; set; }
         [ForeignKey(nameof(AppId))]
         [JsonIgnore]

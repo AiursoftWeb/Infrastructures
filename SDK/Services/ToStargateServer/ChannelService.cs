@@ -23,18 +23,14 @@ namespace Aiursoft.SDK.Services.ToStargateServer
             _http = http;
         }
 
-        public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
+        public async Task<ViewMyChannelsViewModel> ViewMyChannelsAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "CreateChannel", new { });
-            var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
+            var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "ViewMyChannels", new ViewMyChannelsAddressModel
             {
-                AccessToken = accessToken,
-                Description = description
+                AccessToken = accessToken
             });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
-            if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+            var result = await _http.Get(url, true);
+            var jResult = JsonConvert.DeserializeObject<ViewMyChannelsViewModel>(result);
             return jResult;
         }
 
@@ -47,6 +43,21 @@ namespace Aiursoft.SDK.Services.ToStargateServer
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            return jResult;
+        }
+
+        public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
+        {
+            var url = new AiurUrl(_serviceLocation.Stargate, "Channel", "CreateChannel", new { });
+            var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
+            {
+                AccessToken = accessToken,
+                Description = description
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
             return jResult;
         }
     }
