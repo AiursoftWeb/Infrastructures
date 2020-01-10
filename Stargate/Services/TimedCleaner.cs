@@ -57,7 +57,7 @@ namespace Aiursoft.Stargate.Services
                 var tobeDeleted = dbContext
                     .Channels
                     .AsEnumerable()
-                    .Where(t => !t.IsAlive())
+                    .Where(t => !t.IsAlive)
                     .ToList();
                 dbContext.Channels.RemoveRange(tobeDeleted);
                 await dbContext.SaveChangesAsync();
