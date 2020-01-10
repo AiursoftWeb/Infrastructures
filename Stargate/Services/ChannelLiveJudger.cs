@@ -19,7 +19,7 @@ namespace Aiursoft.Stargate.Services
 
         public bool IsAlive(int channelId)
         {
-            return IsDead(channelId);
+            return !IsDead(channelId);
         }
 
         public bool IsDead(int channelId)

@@ -79,9 +79,9 @@ namespace Aiursoft.Stargate.Controllers
             {
                 _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
+                _lastAccessService.RecordLastConnectTime(channel.Id);
                 while (_pusher.Connected && _channelLiveJudger.IsAlive(channel.Id))
                 {
-                    _lastAccessService.RecordLastConnectTime(channel.Id);
                     var nextMessages = _memoryContext
                         .Messages
                         .Where(t => t.ChannelId == model.Id)
