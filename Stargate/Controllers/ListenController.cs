@@ -102,7 +102,7 @@ namespace Aiursoft.Stargate.Controllers
                     }
                 }
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 var accessToken = _appsContainer.AccessToken();
