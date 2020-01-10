@@ -29,8 +29,6 @@ namespace Aiursoft.Stargate.Controllers
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
 
-        public static int ConnectedCount = 0;
-
         public ListenController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
@@ -70,7 +68,7 @@ namespace Aiursoft.Stargate.Controllers
             int sleepTime = 0;
             try
             {
-                ConnectedCount++;
+                _memoryContext.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
                 while (_pusher.Connected && channel.IsAlive())
                 {
@@ -106,7 +104,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             finally
             {
-                ConnectedCount--;
+                _memoryContext.ReduceConnectedCount(channel.Id);
             }
             return Json(new { });
         }

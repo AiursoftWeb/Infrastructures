@@ -22,13 +22,16 @@ namespace Aiursoft.Stargate.Controllers
     {
         private readonly StargateDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
+        private readonly StargateMemory _stargateMemory;
 
         public ChannelController(
             StargateDbContext dbContext,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            StargateMemory stargateMemory)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
+            _stargateMemory = stargateMemory;
         }
 
         [APIProduces(typeof(ViewMyChannelsViewModel))]
