@@ -1,5 +1,6 @@
 ﻿using Aiursoft.SDK.Models.Stargate;
 using Aiursoft.XelNaga.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace Aiursoft.Stargate.Data
 {
     public class StargateMemory : ISingletonDependency
     {
+        private Dictionary<int, DateTime> LastAccessTime { get; set; } = new Dictionary<int, DateTime>();
         private Dictionary<int, int> ConnectedCount { get; set; } = new Dictionary<int, int>();
         public List<Message> Messages { get; set; } = new List<Message>();
 
@@ -47,6 +49,20 @@ namespace Aiursoft.Stargate.Data
                 // Shouldn't happen. But don't throw exception.
                 ConnectedCount[channelId] = 0;
             }
+        }
+
+        public void RecordLastConnectTime(int channelId)
+        {
+            LastAccessTime[channelId] = DateTime.UtcNow;
+        }
+
+        public DateTime GetLastAccessTime(int channelId)
+        {
+            if (LastAccessTime.ContainsKey(channelId))
+            {
+                return LastAccessTime[channelId];
+            }
+            return DateTime.MinValue;
         }
     }
 }

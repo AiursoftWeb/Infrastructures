@@ -57,7 +57,9 @@ namespace Aiursoft.Stargate.Controllers
             {
                 AppId = appLocal.Id,
                 Channel = channels
-                    .Select(t => new ChannelDetail(t, _stargateMemory.GetConnectedCount(t.Id)))
+                    .Select(t => new ChannelDetail(t,
+                    _stargateMemory.GetConnectedCount(t.Id),
+                    _stargateMemory.GetLastAccessTime(t.Id)))
                     .ToList(),
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
