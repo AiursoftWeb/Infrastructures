@@ -4,6 +4,7 @@ using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
 using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
 using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
@@ -23,15 +24,21 @@ namespace Aiursoft.Stargate.Controllers
         private readonly StargateDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
         private readonly StargateMemory _stargateMemory;
+        private readonly ConnectedCountService _connectedCountService;
+        private readonly LastAccessService _lastAccessService;
 
         public ChannelController(
             StargateDbContext dbContext,
             ACTokenManager tokenManager,
-            StargateMemory stargateMemory)
+            StargateMemory stargateMemory,
+            ConnectedCountService connectedCountService,
+            LastAccessService lastAccessService)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
             _stargateMemory = stargateMemory;
+            _connectedCountService = connectedCountService;
+            _lastAccessService = lastAccessService;
         }
 
         [APIProduces(typeof(ViewMyChannelsViewModel))]
@@ -58,8 +65,8 @@ namespace Aiursoft.Stargate.Controllers
                 AppId = appLocal.Id,
                 Channel = channels
                     .Select(t => new ChannelDetail(t,
-                    _stargateMemory.GetConnectedCount(t.Id),
-                    _stargateMemory.GetLastAccessTime(t.Id)))
+                    _connectedCountService.GetConnectedCount(t.Id),
+                    _lastAccessService.GetLastAccessTime(t.Id)))
                     .ToList(),
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"

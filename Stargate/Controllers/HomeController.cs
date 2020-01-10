@@ -42,7 +42,6 @@ namespace Aiursoft.Stargate.Controllers
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = _memory.Messages.Count,
-                Connected = _memory.GetAllConnectedCount(),
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Message queue server!"
             });

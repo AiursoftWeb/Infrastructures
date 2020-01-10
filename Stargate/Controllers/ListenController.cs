@@ -28,6 +28,8 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ILogger<ListenController> _logger;
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
+        private readonly ConnectedCountService _connectedCountService;
+        private readonly LastAccessService _lastAccessService;
 
         public ListenController(
             StargateDbContext dbContext,
@@ -36,7 +38,9 @@ namespace Aiursoft.Stargate.Controllers
             ILogger<ListenController> logger,
             Counter counter,
             AppsContainer appsContainer,
-            EventService eventService)
+            EventService eventService,
+            ConnectedCountService connectedCountService,
+            LastAccessService lastAccessService)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
@@ -45,6 +49,8 @@ namespace Aiursoft.Stargate.Controllers
             _counter = counter;
             _appsContainer = appsContainer;
             _eventService = eventService;
+            _connectedCountService = connectedCountService;
+            _lastAccessService = lastAccessService;
         }
 
         [AiurForceWebSocket]
@@ -68,11 +74,11 @@ namespace Aiursoft.Stargate.Controllers
             int sleepTime = 0;
             try
             {
-                _memoryContext.AddConnectedCount(channel.Id);
+                _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
                 while (_pusher.Connected && channel.IsAlive)
                 {
-                    _memoryContext.RecordLastConnectTime(channel.Id);
+                    _lastAccessService.RecordLastConnectTime(channel.Id);
                     var nextMessages = _memoryContext
                         .Messages
                         .Where(t => t.ChannelId == model.Id)
@@ -94,7 +100,6 @@ namespace Aiursoft.Stargate.Controllers
                             sleepTime = 0;
                         }
                     }
-
                 }
             }
             catch (InvalidOperationException e)
@@ -105,7 +110,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             finally
             {
-                _memoryContext.ReduceConnectedCount(channel.Id);
+                _connectedCountService.ReduceConnectedCount(channel.Id);
             }
             return Json(new { });
         }
