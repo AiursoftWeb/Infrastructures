@@ -153,6 +153,7 @@ namespace Aiursoft.Gateway.Controllers
                 UserNickName = user.NickName,
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
+                FailBackUrl = app.AppFailCallbackUrl,
                 State = model.State,
                 // Permissions
                 ViewOpenId = app.ViewOpenId,

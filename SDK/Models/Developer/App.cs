@@ -36,21 +36,22 @@ namespace Aiursoft.SDK.Models.Developer
         /// sitename/filepath/filename.extension
         /// </summary>
         public string IconPath { get; set; }
-        public virtual string AppDescription { get; set; }
+        public string AppDescription { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}")]
-        public virtual DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
+        public DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
 
-        public virtual Category AppCategory { get; set; }
-        public virtual Platform AppPlatform { get; set; }
+        public Category AppCategory { get; set; }
+        public Platform AppPlatform { get; set; }
 
-        public virtual bool EnableOAuth { get; set; } = true;
+        public bool EnableOAuth { get; set; } = true;
         /// <summary>
         /// Force the user to input his password even when he is already signed in.
         /// </summary>
-        public virtual bool ForceInputPassword { get; set; }
-        public virtual bool ForceConfirmation { get; set; } = true;
-        public virtual bool DebugMode { get; set; }
-        public virtual string AppDomain { get; set; }
+        public bool ForceInputPassword { get; set; }
+        public bool ForceConfirmation { get; set; } = true;
+        public bool DebugMode { get; set; }
+        public string AppDomain { get; set; }
+        public string AppFailCallbackUrl { get; set; }
 
         public bool ViewOpenId { get; set; } = true;
         public bool ViewPhoneNumber { get; set; }

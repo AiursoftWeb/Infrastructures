@@ -199,9 +199,9 @@ namespace Aiursoft.Pylon
 
         public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
-            services.AddScoped<UserImageGenerator<TUser>>();
-            services.AddTransient<AuthService<TUser>>();
             services.AddAiurDependencies(appName);
+            services.AddScoped<UserImageGenerator<TUser>>();
+            services.AddScoped<AuthService<TUser>>();
             return services;
         }
 

@@ -1,4 +1,5 @@
-﻿using Aiursoft.SDK.Models.API;
+﻿using Aiursoft.SDK.Attributes;
+using Aiursoft.SDK.Models.API;
 using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Models.Probe;
 using Aiursoft.SDK.Models.Status.EventViewModels;
@@ -73,6 +74,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             LicenseUrl = thisApp.LicenseUrl;
             IconPath = thisApp.IconPath;
             AppDomain = thisApp.AppDomain;
+            AppFailCallbackUrl = thisApp.AppFailCallbackUrl;
 
             ViewOpenId = thisApp.ViewOpenId;
             ViewPhoneNumber = thisApp.ViewPhoneNumber;
@@ -104,7 +106,12 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         [Display(Name = "Debug Mode")]
         public bool DebugMode { get; set; }
         [Display(Name = "App Domain")]
+        [ValidDomainName]
         public string AppDomain { get; set; }
+        [Url]
+        [Display(Name = "App fail OAuth callback URL")]
+        public string AppFailCallbackUrl { get; set; }
+
         // Permissions
         [Display(Name = "View user's basic identity info")]
         public bool ViewOpenId { get; set; } = true;

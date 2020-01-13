@@ -133,6 +133,7 @@ namespace Aiursoft.Developer.Controllers
             target.PrivacyStatementUrl = model.PrivacyStatementUrl;
             target.LicenseUrl = model.LicenseUrl;
             target.AppDomain = model.AppDomain;
+            target.AppFailCallbackUrl = model.AppFailCallbackUrl;
             //Permissions
             bool permissionAdded = false;
             target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionAdded);

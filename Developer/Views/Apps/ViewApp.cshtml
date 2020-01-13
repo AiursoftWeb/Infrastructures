@@ -254,6 +254,11 @@
                                 <input asp-for="AppDomain" type="text" class="form-control" placeholder="Enter your valid app domain. For example: google.com">
                                 <span asp-validation-for="AppDomain" class="text-danger"></span>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="AppFailCallbackUrl"></label>
+                                <input asp-for="AppFailCallbackUrl" type="text" class="form-control" placeholder="Enter the url you want to redirect to when the user reject to grant your app.">
+                                <span asp-validation-for="AppFailCallbackUrl" class="text-danger"></span>
+                            </div>
                             <button type="submit" data-disable-with="Saving..." class="btn btn-primary">@Localizer["Save OAuth Settings"]</button>
                             <a class="btn btn-info" asp-controller="Apps" asp-action="AllApps">@Localizer["Back to list"]</a>
                         </div>
