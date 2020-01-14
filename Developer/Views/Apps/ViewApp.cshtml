@@ -1,5 +1,6 @@
 @model Aiursoft.Developer.Models.AppsViewModels.ViewAppViewModel
 @using Microsoft.Extensions.Configuration
+@using Aiursoft.SDK.Models.Stargate.ListenAddressModels
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = Model.AppName;
@@ -39,8 +40,9 @@
                     <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
                     <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
                     <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth Settings</a>
-                    <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
                     <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
+                    <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
+                    <a class="nav-link" id="v-pills-channels-tab" data-toggle="pill" href="#v-pills-channels" role="tab" aria-controls="v-pills-channels" aria-selected="false">Stargate Channels</a>
                     <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-logs" role="tab" aria-controls="v-pills-logs" aria-selected="false">Error logs</a>
                 </div>
             </div>
@@ -367,6 +369,48 @@
                                 @Html.PagedListPager(new StaticPagedList<Grant>
                                     (Model.Grants.Items, Model.Grants.CurrentPage, Model.Grants.CurrentPageSize, Model.Grants.TotalCount),
                                     page => Url.Action("ViewApp", new { page, id = Model.AppId }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-logs" role="tabpanel" aria-labelledby="v-pills-logs-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["Stargate Channels"]
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped datatable-exception">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["Channel Id"]</th>
+                                            <th>@Localizer["Channel Creation time"]</th>
+                                            <th>@Localizer["Last access time"]</th>
+                                            <th>@Localizer["Connected Users"]</th>
+                                            <th>@Localizer["Connect"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var channel in Model.Channels)
+                                        {
+                                            <tr>
+                                                <td>@channel.Channel.Id</td>
+                                                <td data-utc-time="@channel.Channel.CreateTime"></td>
+                                                <td data-utc-time="@channel.LastAccessTime"></td>
+                                                <td>@channel.ConnectedCount</td>
+                                                @{
+                                                    var path = new AiurUrl(ServiceLocation.StargateListenAddress, "Listen", "Channel", new ChannelAddressModel
+                                                    {
+                                                        Id = channel.Channel.Id,
+                                                        Key = channel.Channel.ConnectKey
+                                                    }).ToString();
+                                                }
+                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="Connect path" data-stacktrace="@path">View connect path</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
