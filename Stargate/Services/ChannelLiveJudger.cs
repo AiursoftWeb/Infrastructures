@@ -7,7 +7,7 @@ namespace Aiursoft.Stargate.Services
     {
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
-        private TimeSpan _maxIdleLife = TimeSpan.FromDays(10);
+        private readonly TimeSpan _maxIdleLife = TimeSpan.FromDays(10);
 
         public ChannelLiveJudger(
             ConnectedCountService connectedCountService,

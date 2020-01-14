@@ -104,6 +104,7 @@ namespace Aiursoft.Stargate.Controllers
                         }
                     }
                 }
+                _lastAccessService.RecordLastConnectTime(channel.Id);
             }
             catch (Exception e)
             {
