@@ -1,3 +1,6 @@
+using Aiursoft.DocGenerator.Attribute;
+using Aiursoft.DocGenerator.Services;
+using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Aiursoft.SDK.Models;
@@ -22,6 +25,7 @@ using Polly;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -113,13 +117,39 @@ namespace Aiursoft.Pylon
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            if (beforeMVC != null)
-            {
-                beforeMVC(app);
-            }
+            beforeMVC?.Invoke(app);
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseMiddleware<SwitchLanguageMiddleware>();
-            app.UseMiddleware<APIDocGeneratorMiddleware>();
+            app.UseAiursoftDocGenerator(options =>
+            {
+                options.IsAPIAction = (action, controller) =>
+                {
+                    return
+                        action.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
+                        controller.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
+                        action.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
+                        controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
+                        action.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker)) ||
+                        controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker));
+                };
+                options.JudgeAuthorized = (action, controller) =>
+                {
+                    return
+                        action.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth)) ||
+                        controller.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth));
+                };
+                options.Format = DocFormat.Json;
+                options.GlobalPossibleResponse.Add(new AiurProtocol
+                {
+                    Code = ErrorType.WrongKey,
+                    Message = "Some error."
+                });
+                options.GlobalPossibleResponse.Add(new AiurCollection<string>(new List<string> { "Some item is invalid!" })
+                {
+                    Code = ErrorType.InvalidInput,
+                    Message = "Your input contains several errors!"
+                });
+            });
             return app;
         }
 

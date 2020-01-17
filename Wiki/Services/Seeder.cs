@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Middlewares;
+﻿using Aiursoft.DocGenerator.Middlewares;
+using Aiursoft.DocGenerator.Services;
 using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToStatusServer;
@@ -24,7 +25,7 @@ namespace Aiursoft.Wiki.Services
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
-        private readonly MarkDownGenerator _markDownGenerator;
+        private readonly MarkDownDocGenerator _markDownGenerator;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
 
@@ -32,7 +33,7 @@ namespace Aiursoft.Wiki.Services
             WikiDbContext dbContext,
             IConfiguration configuration,
             HTTPService http,
-            MarkDownGenerator markDownGenerator,
+            MarkDownDocGenerator markDownGenerator,
             EventService eventService,
             AppsContainer appsContainer)
         {
