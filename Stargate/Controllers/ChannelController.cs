@@ -66,7 +66,7 @@ namespace Aiursoft.Stargate.Controllers
             var viewModel = new ViewMyChannelsViewModel
             {
                 AppId = appLocal.Id,
-                Channel = channels
+                Channels = channels
                     .Select(t => new ChannelDetail(t,
                     _connectedCountService.GetConnectedCount(t.Id),
                     _lastAccessService.GetLastAccessTime(t.Id)))

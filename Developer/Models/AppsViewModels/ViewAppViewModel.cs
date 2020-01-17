@@ -2,10 +2,12 @@
 using Aiursoft.SDK.Models.API;
 using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Models.Probe;
+using Aiursoft.SDK.Models.Stargate;
 using Aiursoft.SDK.Models.Status.EventViewModels;
 using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDK.Services.ToProbeServer;
+using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.SDK.Services.ToStatusServer;
 using Aiursoft.XelNaga.Models;
 using System;
@@ -26,10 +28,11 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             AppsContainer appsContainer,
             SitesService sitesService,
             EventService eventService,
+            ChannelService channelService,
             int pageNumber)
         {
             var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService, pageNumber);
+            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService, channelService, pageNumber);
             return model;
         }
 
@@ -40,6 +43,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             AppsContainer appsContainer,
             SitesService sitesService,
             EventService eventService,
+            ChannelService channelService,
             int pageNumber)
         {
             RootRecover(user);
@@ -52,6 +56,9 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
             var errorLogs = await eventService.ViewAsync(token);
             ErrorLogs = errorLogs.Logs;
+
+            var channels = await channelService.ViewMyChannelsAsync(token);
+            Channels = channels.Channels;
         }
 
         private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
@@ -134,6 +141,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<LogCollection> ErrorLogs { get; set; }
+        public IEnumerable<ChannelDetail> Channels { get; set; }
         public AiurPagedCollection<Grant> Grants { get; set; }
     }
 }

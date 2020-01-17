@@ -33,7 +33,9 @@ namespace Aiursoft.Stargate.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Background Service is starting.");
-            _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(3), TimeSpan.FromMinutes(10));
+            // Start cleaner after one day.
+            // Because when stargate starts, all channels are treated dead.
+            _timer = new Timer(DoWork, null, TimeSpan.FromDays(1), TimeSpan.FromMinutes(10));
             return Task.CompletedTask;
         }
 
