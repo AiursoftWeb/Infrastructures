@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Gateway.Data;
-using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

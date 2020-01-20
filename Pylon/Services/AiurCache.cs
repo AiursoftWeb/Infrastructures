@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;

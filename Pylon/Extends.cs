@@ -3,11 +3,12 @@ using Aiursoft.DocGenerator.Services;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Scanner;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.XelNaga.Services.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -238,7 +239,9 @@ namespace Aiursoft.Pylon
         public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
         {
             AppsContainer.CurrentAppName = appName;
-            services.AddAccessiableDependencies();
+            services.AddHttpClient();
+            services.AddMemoryCache();
+            services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
             return services;
         }
 
