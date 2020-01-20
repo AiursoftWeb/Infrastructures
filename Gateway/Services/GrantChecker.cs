@@ -1,9 +1,9 @@
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services.ToDeveloperServer;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;

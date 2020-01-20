@@ -1,9 +1,9 @@
 ﻿using Aiursoft.Gateway.Controllers;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.ForApps.AddressModels;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

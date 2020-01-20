@@ -1,5 +1,5 @@
-﻿using Aiursoft.SDK.Services.ToStargateServer;
-using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Services.ToStargateServer;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;

@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
-using Aiursoft.XelNaga.Interfaces;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Encodings.Web;

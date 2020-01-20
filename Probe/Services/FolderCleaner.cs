@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Probe;
-using Aiursoft.XelNaga.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;

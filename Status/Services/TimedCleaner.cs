@@ -1,5 +1,5 @@
-﻿using Aiursoft.Status.Data;
-using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Status.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,5 +1,5 @@
-﻿using Aiursoft.Status.Data;
-using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;

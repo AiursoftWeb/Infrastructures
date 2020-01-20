@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Gateway.Controllers;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using System.Threading.Tasks;
 

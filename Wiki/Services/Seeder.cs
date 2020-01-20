@@ -1,11 +1,11 @@
 ﻿using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToStatusServer;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
