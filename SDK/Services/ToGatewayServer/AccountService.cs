@@ -1,7 +1,7 @@
-﻿using Aiursoft.SDK.Models.API.AccountAddressModels;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Models.API.AccountAddressModels;
 using Aiursoft.SDK.Models.API.AccountViewModels;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

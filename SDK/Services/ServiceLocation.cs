@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Services;
 using DnsClient;
 using Microsoft.Extensions.Configuration;

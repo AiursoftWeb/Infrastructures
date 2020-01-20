@@ -1,8 +1,8 @@
-﻿using Aiursoft.SDK.Models.Status;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Models.Status.EventAddressModels;
 using Aiursoft.SDK.Models.Status.EventViewModels;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

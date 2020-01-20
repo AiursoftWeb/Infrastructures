@@ -1,7 +1,7 @@
-﻿using Aiursoft.SDK.Models.Developer.ApiAddressModels;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Models.Developer.ApiAddressModels;
 using Aiursoft.SDK.Models.Developer.ApiViewModels;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

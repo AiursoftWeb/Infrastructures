@@ -1,8 +1,8 @@
-﻿using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
 using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
 using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

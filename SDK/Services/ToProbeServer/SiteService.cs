@@ -1,7 +1,7 @@
-﻿using Aiursoft.SDK.Models.Probe.SitesAddressModels;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Models.Probe.SitesAddressModels;
 using Aiursoft.SDK.Models.Probe.SitesViewModels;
 using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

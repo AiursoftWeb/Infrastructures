@@ -1,5 +1,5 @@
-﻿using Aiursoft.SDK.Services.ToArchonServer;
-using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Services.ToArchonServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
