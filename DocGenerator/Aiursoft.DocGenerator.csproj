@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>3.1.1.2</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Aiursoft.DocGenerator</Title>
+    <AssemblyName>Aiursoft.DocGenerator</AssemblyName>
+    <PackageId>Aiursoft.DocGenerator</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin, One</Authors>
+    <Description>A basic API document generator for ASP.NET Core applications</Description>
+    <PackageTags>doc-generator api</PackageTags>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/DocGenerator</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/DocGenerator.git</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup> 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup> 
+  <ItemGroup>
+    <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>3.1.1.3</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Aiursoft.Scanner</Title>
+    <AssemblyName>Aiursoft.Scanner</AssemblyName>
+    <PackageId>Aiursoft.Scanner</PackageId>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>Automatic dependencies management system which powers Aiursoft</Description>
+    <PackageTags>dependency-injection reflection</PackageTags>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Scanner</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Scanner.git</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.1" />
+  </ItemGroup>  
+</Project>

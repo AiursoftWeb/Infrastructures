@@ -1,4 +1,5 @@
-﻿using Aiursoft.Gateway.Data;
+﻿using Aiursoft.DocGenerator.Attribute;
+using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;

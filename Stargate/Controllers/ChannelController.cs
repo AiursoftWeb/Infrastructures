@@ -1,3 +1,4 @@
+using Aiursoft.DocGenerator.Attribute;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Stargate;
 using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;

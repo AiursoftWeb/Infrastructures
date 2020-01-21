@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon;
+﻿using Aiursoft.DocGenerator.Attribute;
+using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Models.Status.EventAddressModels;
