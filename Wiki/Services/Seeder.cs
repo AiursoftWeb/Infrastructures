@@ -1,5 +1,6 @@
 ﻿using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
+using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Services;

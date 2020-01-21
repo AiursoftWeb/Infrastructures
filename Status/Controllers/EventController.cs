@@ -1,4 +1,4 @@
-﻿using Aiursoft.DocGenerator.Attribute;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Status;

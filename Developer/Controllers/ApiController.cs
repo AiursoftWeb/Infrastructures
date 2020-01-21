@@ -1,5 +1,5 @@
 using Aiursoft.Developer.Data;
-using Aiursoft.DocGenerator.Attribute;
+using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Aiursoft.SDK.Models.Developer.ApiAddressModels;
