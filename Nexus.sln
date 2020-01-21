@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstracts", "Abstracts", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Scanner.Abstract", "Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj", "{B9687EBA-6767-47F5-9CAD-3448F995EB87}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure SDK", "Infrastructure SDK", "{12274B29-5390-4BD1-A3A2-9EFA35D6C82C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
