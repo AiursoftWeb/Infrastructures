@@ -15,6 +15,10 @@ Nexus architect has three layers:
 * Infrastructures
 * Applications
 
+```
+
+```
+
 ### Basic Services
 
 The basic services are used to support the operation of the entire platform. It is the basis for the expansion of the subsequent infrastructure and user services throughout the platform. The basic services mainly include the user's authentication, authorization, application authentication, authorization, and allow the user's self-registration and self-registration of the application. At the same time, the underlying service is also responsible for the user's underlying data and the underlying data of the application, as well as the user's set of credentials and the set of credentials for the application.
