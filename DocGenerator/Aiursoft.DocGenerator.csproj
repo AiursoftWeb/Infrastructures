@@ -9,7 +9,6 @@
     <Description>A basic API document generator for ASP.NET Core applications</Description>
     <PackageTags>doc-generator api</PackageTags>
     <PackageProjectUrl>https://github.com/AiursoftWeb/DocGenerator</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/DocGenerator.git</RepositoryUrl>
   </PropertyGroup> 

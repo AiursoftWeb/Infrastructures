@@ -11,12 +11,10 @@
     <PackageProjectUrl>https://github.com/AiursoftWeb/XelNaga</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/XelNaga.git</RepositoryUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>xelnaga.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Include="xelnaga.png" Pack="true" PackagePath="\" />
-    <None Include="LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
