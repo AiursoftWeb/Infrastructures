@@ -1,4 +1,4 @@
-using Aiursoft.DocGenerator.Attribute;
+using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Middlewares;

@@ -1,6 +1,5 @@
-﻿using Aiursoft.DocGenerator.Attribute;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

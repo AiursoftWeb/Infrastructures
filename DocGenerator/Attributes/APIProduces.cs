@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
-namespace Aiursoft.DocGenerator.Attribute
+namespace Aiursoft.DocGenerator.Attributes
 {
     public class APIProduces : ActionFilterAttribute
     {

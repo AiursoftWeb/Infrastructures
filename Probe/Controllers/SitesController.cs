@@ -1,4 +1,4 @@
-﻿using Aiursoft.DocGenerator.Attribute;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;

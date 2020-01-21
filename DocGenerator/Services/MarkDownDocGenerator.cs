@@ -1,6 +1,6 @@
 ﻿using Aiursoft.DocGenerator.Middlewares;
+using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

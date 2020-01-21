@@ -1,4 +1,4 @@
-﻿using Aiursoft.DocGenerator.Attribute;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.XelNaga.Attributes
+namespace Aiursoft.DocGenerator.Attributes
 {
     public class InstanceMakerIgnore : Attribute
     {

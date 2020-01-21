@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Attributes;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.DocGenerator.Services
 {
     public static class InstanceMaker
     {
