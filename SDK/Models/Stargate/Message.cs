@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Aiursoft.SDK.Models.Stargate
+﻿namespace Aiursoft.SDK.Models.Stargate
 {
     public class Message
     {

@@ -43,9 +43,9 @@ namespace Aiursoft.Scanner
             var executingTypes = new ClassScanner().AllAccessiableClass(false, false);
             foreach (var item in executingTypes)
             {
-                AddScanned(item, typeof(ISingletonDependency), (@abstract, implement) => services.AddSingleton(@abstract, implement), (implement) => services.AddSingleton(implement), abstracts);
-                AddScanned(item, typeof(IScopedDependency), (@abstract, implement) => services.AddScoped(@abstract, implement), (implement) => services.AddScoped(implement), abstracts);
-                AddScanned(item, typeof(ITransientDependency), (@abstract, implement) => services.AddTransient(@abstract, implement), (implement) => services.AddTransient(implement), abstracts);
+                AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), abstracts);
+                AddScanned(item, typeof(IScopedDependency), (i, e) => services.AddScoped(i, e), (i) => services.AddScoped(i), abstracts);
+                AddScanned(item, typeof(ITransientDependency), (i, e) => services.AddTransient(i, e), (i) => services.AddTransient(i), abstracts);
             }
             return services;
         }
