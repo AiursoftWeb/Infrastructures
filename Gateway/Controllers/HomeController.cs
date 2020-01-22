@@ -2,7 +2,7 @@
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.HomeViewModels;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

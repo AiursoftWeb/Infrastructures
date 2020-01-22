@@ -9,7 +9,7 @@ using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDK.Services.ToProbeServer;
 using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.SDK.Services.ToStatusServer;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

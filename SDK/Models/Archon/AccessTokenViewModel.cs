@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Models;
+﻿using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using System;
 
 namespace Aiursoft.SDK.Models.Archon

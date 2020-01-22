@@ -7,7 +7,7 @@ using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToStatusServer;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Configuration;

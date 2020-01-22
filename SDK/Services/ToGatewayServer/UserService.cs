@@ -1,8 +1,9 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.API;
 using Aiursoft.SDK.Models.API.UserAddressModels;
 using Aiursoft.SDK.Models.API.UserViewModels;
-using Aiursoft.XelNaga.Exceptions;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Interfaces;
+﻿using Aiursoft.Handler.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.SDK.Models.API.UserAddressModels

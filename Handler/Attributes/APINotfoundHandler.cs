@@ -1,9 +1,9 @@
-﻿using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Models;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Aiursoft.Pylon.Attributes
+namespace Aiursoft.Handler.Attributes
 {
     /// <summary>
     /// Adding this will handle `AiurAPIModelException` and return the result as JSON directly.

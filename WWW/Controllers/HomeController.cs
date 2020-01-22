@@ -2,7 +2,7 @@
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Services;
 using Aiursoft.WWW.Models;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

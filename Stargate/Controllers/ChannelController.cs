@@ -1,13 +1,13 @@
 using Aiursoft.DocGenerator.Attributes;
-using Aiursoft.Pylon.Attributes;
+using Aiursoft.Handler.Attributes;
+using Aiursoft.Handler.Models;
 using Aiursoft.SDK.Models.Stargate;
 using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
 using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
 using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
+using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.Services;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,6 @@ namespace Aiursoft.Stargate.Controllers
     {
         private readonly StargateDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
-        private readonly StargateMemory _stargateMemory;
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
         private readonly ChannelLiveJudger _channelLiveJudger;
@@ -32,14 +31,12 @@ namespace Aiursoft.Stargate.Controllers
         public ChannelController(
             StargateDbContext dbContext,
             ACTokenManager tokenManager,
-            StargateMemory stargateMemory,
             ConnectedCountService connectedCountService,
             LastAccessService lastAccessService,
             ChannelLiveJudger channelLiveJudger)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
-            _stargateMemory = stargateMemory;
             _connectedCountService = connectedCountService;
             _lastAccessService = lastAccessService;
             _channelLiveJudger = channelLiveJudger;

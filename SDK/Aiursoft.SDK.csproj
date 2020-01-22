@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
     <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
     <ProjectReference Include="..\DocGenerator\Aiursoft.DocGenerator.csproj" />
     <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />

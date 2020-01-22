@@ -1,7 +1,7 @@
-using Aiursoft.XelNaga.Models;
+using Aiursoft.Handler.Models;
 using System;
 
-namespace Aiursoft.XelNaga.Exceptions
+namespace Aiursoft.Handler.Exceptions
 {
     /// <summary>
     /// Throw this exception in any methods called from API. This will stop the controller logic.

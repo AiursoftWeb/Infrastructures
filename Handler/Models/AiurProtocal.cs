@@ -1,12 +1,12 @@
-﻿using Aiursoft.XelNaga.Interfaces;
-using Aiursoft.XelNaga.Tools;
+﻿using Aiursoft.Handler.Interfaces;
+using Aiursoft.Handler.Tools;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.XelNaga.Models
+namespace Aiursoft.Handler.Models
 {
     public enum ErrorType
     {

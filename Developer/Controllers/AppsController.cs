@@ -1,5 +1,7 @@
 ﻿using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models.AppsViewModels;
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services;
@@ -7,8 +9,6 @@ using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDK.Services.ToProbeServer;
 using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.SDK.Services.ToStatusServer;
-using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

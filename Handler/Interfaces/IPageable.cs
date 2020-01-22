@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.XelNaga.Interfaces
+namespace Aiursoft.Handler.Interfaces
 {
     public interface IPageable
     {

@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Archon.Controllers

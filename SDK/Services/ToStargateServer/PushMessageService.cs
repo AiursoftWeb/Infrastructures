@@ -1,6 +1,7 @@
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Stargate.MessageAddressModels;
-using Aiursoft.XelNaga.Exceptions;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

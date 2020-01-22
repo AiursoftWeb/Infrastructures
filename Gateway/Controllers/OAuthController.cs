@@ -3,6 +3,8 @@ using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.OAuthViewModels;
 using Aiursoft.Gateway.Services;
+using Aiursoft.Handler.Attributes;
+using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models;
@@ -356,7 +358,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
-            return Json(new AiurProtocol { Message = "Successfully signed out!", Code = ErrorType.Success });
+            return this.Protocol(ErrorType.Success, "Successfully signed out!");
         }
 
         public async Task<IActionResult> UserSignout(UserSignoutAddressModel model)

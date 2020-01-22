@@ -1,6 +1,6 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Exceptions;
-using Aiursoft.XelNaga.Models;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
+using Aiursoft.Scanner.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 

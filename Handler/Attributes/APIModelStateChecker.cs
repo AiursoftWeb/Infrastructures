@@ -1,10 +1,10 @@
-﻿using Aiursoft.XelNaga.Models;
+﻿using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 
-namespace Aiursoft.Pylon.Attributes
+namespace Aiursoft.Handler.Attributes
 {
     /// <summary>
     /// This attribute will not throw any exception but will reject any invalid request directly with AiurCollection with error messages.
