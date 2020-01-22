@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -241,7 +242,10 @@ namespace Aiursoft.Pylon
             AppsContainer.CurrentAppName = appName;
             services.AddHttpClient();
             services.AddMemoryCache();
-            services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
+            if (!Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
+            {
+                services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
+            }
             return services;
         }
 
