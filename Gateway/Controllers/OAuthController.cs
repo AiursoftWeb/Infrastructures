@@ -25,7 +25,7 @@ namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
     [GenerateDoc]
-    [APINotfoundHandler]
+    [ProtocolNotfoundHandler]
     public class OAuthController : Controller
     {
         private readonly UserManager<GatewayUser> _userManager;

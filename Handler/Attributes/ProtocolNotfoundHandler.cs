@@ -9,7 +9,7 @@ namespace Aiursoft.Handler.Attributes
     /// Adding this will handle `AiurAPIModelException` when the code is not found and return 404.
     /// Adding this will handle `AiurUnexceptedResponse` when the code is not found and return 404.
     /// </summary>
-    public class APINotfoundHandler : ExceptionFilterAttribute
+    public class ProtocolNotfoundHandler : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
         {
