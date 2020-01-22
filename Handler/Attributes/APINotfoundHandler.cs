@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Aiursoft.Handler.Attributes
 {
     /// <summary>
-    /// Adding this will handle `AiurAPIModelException` and return the result as JSON directly.
-    /// Adding this will handle `AiurUnexceptedResponse` and return the result as JSON directly.
+    /// Adding this will handle `AiurAPIModelException` when the code is not found and return 404.
+    /// Adding this will handle `AiurUnexceptedResponse` when the code is not found and return 404.
     /// </summary>
     public class APINotfoundHandler : ExceptionFilterAttribute
     {
