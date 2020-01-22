@@ -1,8 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
-
+using Aiursoft.XelNaga.Models;
 namespace Aiursoft.Pylon.Services
 {
     public class UrlConverter : ITransientDependency

@@ -1,6 +1,6 @@
-﻿using Aiursoft.SDK.Models.API;
+﻿using Aiursoft.Handler.Models;
+using Aiursoft.SDK.Models.API;
 using Aiursoft.SDK.Models.Developer;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using System;
 using System.Collections.Generic;
 

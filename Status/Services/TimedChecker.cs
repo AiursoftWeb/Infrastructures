@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Status.Data;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

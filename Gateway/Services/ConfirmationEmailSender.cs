@@ -3,7 +3,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Models;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services

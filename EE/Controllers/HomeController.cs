@@ -3,7 +3,7 @@ using Aiursoft.EE.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

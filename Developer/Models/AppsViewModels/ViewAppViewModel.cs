@@ -1,4 +1,5 @@
-﻿using Aiursoft.SDK.Attributes;
+﻿using Aiursoft.Handler.Models;
+using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Models.API;
 using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Models.Probe;
@@ -9,7 +10,6 @@ using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDK.Services.ToProbeServer;
 using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.SDK.Services.ToStatusServer;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

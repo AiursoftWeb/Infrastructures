@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Pylon.Services;
-using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;

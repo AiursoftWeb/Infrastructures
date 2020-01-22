@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+﻿using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;

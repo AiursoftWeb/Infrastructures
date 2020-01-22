@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Models; using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Models;
 
 namespace Aiursoft.SDK.Models.Probe.SitesAddressModels
 {
