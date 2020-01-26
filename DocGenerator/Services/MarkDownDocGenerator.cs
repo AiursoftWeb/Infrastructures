@@ -71,6 +71,26 @@ namespace Aiursoft.DocGenerator.Services
             return path.Trim('&');
         }
 
+        private bool RouteContainsArg(string routeTemplate, Argument arg)
+        {
+            return
+                routeTemplate.ToLower().Contains("{" + arg.Name.ToLower() + "}") ||
+                routeTemplate.ToLower().Contains("{**" + arg.Name.ToLower() + "}");
+        }
+
+        private string GenerateRequestPathExample(string routeTemplate, List<Argument> args)
+        {
+            foreach (var arg in args)
+            {
+                if (RouteContainsArg(routeTemplate, arg))
+                {
+                    routeTemplate = routeTemplate.ToLower().Replace("{" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
+                    routeTemplate = routeTemplate.ToLower().Replace("{**" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
+                }
+            }
+            return routeTemplate;
+        }
+
         public string GenerateMarkDownForAPI(IGrouping<string, API> docController, string apiRoot)
         {
             var content = $"# {docController.Key.TrimController()}\r\n\r\n";
@@ -82,6 +102,7 @@ namespace Aiursoft.DocGenerator.Services
             content += $"\r\n";
             foreach (var docAction in docController)
             {
+                var queryParams = docAction.Arguments.Where(t => !docAction.Routes.Any(r => RouteContainsArg(r, t))).ToList();
                 content += $"---------\r\n\r\n";
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 // Request path.
@@ -92,24 +113,17 @@ namespace Aiursoft.DocGenerator.Services
                     content += $"<kbd>{path}</kbd>";
                     content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
                     content += $"\r\n\r\n";
-                    // Try button.
                     if (docAction.IsPost)
                     {
                         continue;
                     }
-                    var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
+                    var pathWithArgs = $"{apiRoot}/{GenerateRequestPathExample(route, docAction.Arguments)}?{GenerateParams(queryParams)}".TrimEnd('?');
+                    // Add the try button.
                     content += $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</a>";
                     content += "\r\n\r\n";
-                }
-                if (docAction.IsPost == false)
-                {
-                    foreach (var route in docAction.Routes)
-                    {
-                        // GET Example.
-                        var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
-                        content += $"Request example:\r\n\r\n";
-                        content += $"\t{pathWithArgs}\r\n\r\n";
-                    }
+                    // GET Example.
+                    content += $"Request example:\r\n\r\n";
+                    content += $"\t{pathWithArgs}\r\n\r\n";
                 }
                 if (docAction.IsPost)
                 {
@@ -120,7 +134,7 @@ namespace Aiursoft.DocGenerator.Services
 
                     content += $"Form content example:\r\n\r\n";
                     content += $"```\r\n";
-                    content += $"{GenerateParams(docAction.Arguments)} \r\n";
+                    content += $"{GenerateParams(queryParams)} \r\n";
                     content += $"```\r\n\r\n";
                 }
                 if (docAction.Arguments.Count > 0)

@@ -142,7 +142,7 @@ namespace Aiursoft.Pylon
                         action.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth)) ||
                         controller.CustomAttributes.Any(t => t.AttributeType == typeof(AiurForceAuth));
                 };
-                options.Format = DocFormat.Json;
+                options.Format = DocFormat.Markdown;
                 options.GlobalPossibleResponse.Add(new AiurProtocol
                 {
                     Code = ErrorType.WrongKey,
