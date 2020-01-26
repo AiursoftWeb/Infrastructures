@@ -85,40 +85,36 @@ namespace Aiursoft.DocGenerator.Services
                 content += $"---------\r\n\r\n";
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 // Request path.
-                if (docAction.Routes.Any())
+                foreach (var route in docAction.Routes)
                 {
-                    foreach (var route in docAction.Routes)
-                    {
-                        var path = $"{apiRoot}/{route}";
-                        content += $"Request path:\r\n\r\n";
-                        content += $"<kbd>{path}</kbd>";
-                        content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
-                        content += $"\r\n\r\n";
-                    }
-                }
-                else
-                {
-                    var path = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}";
+                    var path = $"{apiRoot}/{route}";
                     content += $"Request path:\r\n\r\n";
                     content += $"<kbd>{path}</kbd>";
                     content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
-                }
-                var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
-                if (docAction.IsPost == false)
-                {
+                    content += $"\r\n\r\n";
                     // Try button.
+                    if (docAction.IsPost)
+                    {
+                        continue;
+                    }
+                    var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
                     content += $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</a>";
+                    content += "\r\n\r\n";
                 }
-                content += "\r\n\r\n";
                 if (docAction.IsPost == false)
                 {
-                    // GET Example.
-                    content += $"Request example:\r\n\r\n";
-                    content += $"\t{pathWithArgs}\r\n\r\n";
+                    foreach (var route in docAction.Routes)
+                    {
+                        // GET Example.
+                        var pathWithArgs = $"{apiRoot}/{docAction.ControllerName.TrimController()}/{docAction.ActionName}?{GenerateParams(docAction.Arguments)}".TrimEnd('?');
+                        content += $"Request example:\r\n\r\n";
+                        content += $"\t{pathWithArgs}\r\n\r\n";
+                    }
                 }
                 if (docAction.IsPost)
                 {
                     // POST Eample
+                    content += "\r\n\r\n";
                     content += $"Request content type:\r\n\r\n";
                     content += "\tapplication/x-www-form-urlencoded\r\n\r\n";
 

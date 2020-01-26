@@ -1,5 +1,6 @@
 ﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
+using Aiursoft.DocGenerator.Tools;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -85,11 +86,15 @@ namespace Aiursoft.DocGenerator.Middlewares
                             .Select(t => t as RouteAttribute)
                             .Select(t => t.Template)
                             .Select(t => $"{controllerRoute}/{t}")
-                            .ToArray(),
+                            .ToList(),
                         Arguments = args,
                         AuthRequired = _judgeAuthorized(method, controller),
                         PossibleResponses = possibleResponses
                     };
+                    if (!api.Routes.Any())
+                    {
+                        api.Routes.Add($"{api.ControllerName.TrimController()}/{api.ActionName}");
+                    }
                     actionsMatches.Add(api);
                 }
             }
@@ -219,7 +224,7 @@ namespace Aiursoft.DocGenerator.Middlewares
         public bool IsPost { get; set; }
         public List<Argument> Arguments { get; set; }
         public string[] PossibleResponses { get; set; }
-        public string[] Routes { get; set; }
+        public List<string> Routes { get; set; }
     }
 
     public class Argument
