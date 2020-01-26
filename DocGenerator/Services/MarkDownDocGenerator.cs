@@ -93,6 +93,7 @@ namespace Aiursoft.DocGenerator.Services
                         content += $"Request path:\r\n\r\n";
                         content += $"<kbd>{path}</kbd>";
                         content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
+                        content += $"\r\n\r\n";
                     }
                 }
                 else
