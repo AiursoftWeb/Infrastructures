@@ -77,6 +77,10 @@ namespace Aiursoft.DocGenerator.Middlewares
                         ControllerName = controller.Name,
                         ActionName = method.Name,
                         IsPost = method.CustomAttributes.Any(t => t.AttributeType == typeof(HttpPostAttribute)),
+                        Routes = method.GetCustomAttributes(typeof(RouteAttribute), true)
+                            .Select(t => t as RouteAttribute)
+                            .Select(t => t.Template)
+                            .ToArray(),
                         Arguments = args,
                         AuthRequired = _judgeAuthorized(method, controller),
                         PossibleResponses = possibleResponses
@@ -210,6 +214,7 @@ namespace Aiursoft.DocGenerator.Middlewares
         public bool IsPost { get; set; }
         public List<Argument> Arguments { get; set; }
         public string[] PossibleResponses { get; set; }
+        public string[] Routes { get; set; }
     }
 
     public class Argument
