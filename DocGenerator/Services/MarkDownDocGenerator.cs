@@ -54,7 +54,7 @@ namespace Aiursoft.DocGenerator.Services
             }
         }
 
-        private string GenerateParams(List<Argument> args)
+        private string GenerateQueryParams(List<Argument> args)
         {
             var path = "";
             foreach (var arg in args)
@@ -113,17 +113,18 @@ namespace Aiursoft.DocGenerator.Services
                     content += $"<kbd>{path}</kbd>";
                     content += $"<button class=\"btn btn-sm btn-secondary ml-1\" href=\"#\" data-toggle=\"tooltip\" data-trigger=\"click\" title=\"copied!\" data-clipboard-text=\"{path}\">Copy</button>";
                     content += $"\r\n\r\n";
+
+                    var pathWithArgs = $"{apiRoot}/{GenerateRequestPathExample(route, docAction.Arguments)}?{GenerateQueryParams(queryParams)}".TrimEnd('?');
+                    // Path Example.
+                    content += $"Request example:\r\n\r\n";
+                    content += $"\t{pathWithArgs}\r\n\r\n";
                     if (docAction.IsPost)
                     {
                         continue;
                     }
-                    var pathWithArgs = $"{apiRoot}/{GenerateRequestPathExample(route, docAction.Arguments)}?{GenerateParams(queryParams)}".TrimEnd('?');
                     // Add the try button.
                     content += $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</a>";
                     content += "\r\n\r\n";
-                    // GET Example.
-                    content += $"Request example:\r\n\r\n";
-                    content += $"\t{pathWithArgs}\r\n\r\n";
                 }
                 if (docAction.IsPost)
                 {
@@ -134,7 +135,7 @@ namespace Aiursoft.DocGenerator.Services
 
                     content += $"Form content example:\r\n\r\n";
                     content += $"```\r\n";
-                    content += $"{GenerateParams(queryParams)} \r\n";
+                    content += $"{GenerateQueryParams(queryParams)} \r\n";
                     content += $"```\r\n\r\n";
                 }
                 if (docAction.Arguments.Count > 0)
