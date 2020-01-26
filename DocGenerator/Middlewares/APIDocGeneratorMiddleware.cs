@@ -64,6 +64,10 @@ namespace Aiursoft.DocGenerator.Middlewares
                 {
                     continue;
                 }
+                var controllerRoute = controller.GetCustomAttributes(typeof(RouteAttribute), true)
+                            .Select(t => t as RouteAttribute)
+                            .Select(t => t.Template)
+                            .FirstOrDefault();
                 foreach (var method in controller.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
                 {
                     if (!IsAction(method) || !_isAPIAction(method, controller))
@@ -80,6 +84,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                         Routes = method.GetCustomAttributes(typeof(RouteAttribute), true)
                             .Select(t => t as RouteAttribute)
                             .Select(t => t.Template)
+                            .Select(t => $"{controllerRoute}/{t}")
                             .ToArray(),
                         Arguments = args,
                         AuthRequired = _judgeAuthorized(method, controller),
