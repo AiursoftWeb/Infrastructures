@@ -61,7 +61,23 @@ namespace Aiursoft.Wiki.Controllers
                 return NotFound();
             }
             var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
+                .UseAbbreviations()
+                .UseAutoIdentifiers()
+                .UseCitations()
+                .UseCustomContainers()
+                .UseDefinitionLists()
+                .UseEmphasisExtras()
+                .UseFigures()
+                .UseFooters()
+                .UseFootnotes()
+                .UseGridTables()
+                .UseMathematics()
+                .UseMediaLinks()
+                .UsePipeTables()
+                .UseListExtras()
+                .UseTaskLists()
+                .UseDiagrams()
+                .UseAutoLinks()
                 .Build();
             var model = new WikiViewModel
             {
