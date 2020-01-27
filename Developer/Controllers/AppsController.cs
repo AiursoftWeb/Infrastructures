@@ -182,15 +182,19 @@ namespace Aiursoft.Developer.Controllers
         public async Task<IActionResult> DeleteApp([FromRoute]string id)
         {
             var cuser = await GetCurrentUserAsync();
-            var _target = await _dbContext.Apps.FindAsync(id);
-            if (_target.CreatorId != cuser.Id)
+            var target = await _dbContext.Apps.FindAsync(id);
+            if (target == null)
+            {
+                return NotFound();
+            }
+            if (target.CreatorId != cuser.Id)
             {
                 return new UnauthorizedResult();
             }
             var model = new DeleteAppViewModel(cuser)
             {
-                AppId = _target.AppId,
-                AppName = _target.AppName
+                AppId = target.AppId,
+                AppName = target.AppName
             };
             return View(model);
         }
