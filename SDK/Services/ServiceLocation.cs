@@ -87,9 +87,9 @@ namespace Aiursoft.SDK.Services
         {
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, path);
+                var request = new HttpRequestMessage(HttpMethod.Head, path);
                 var response = await _client.SendAsync(request);
-                return response.IsSuccessStatusCode;
+                return true;
             }
             catch (HttpRequestException)
             {
