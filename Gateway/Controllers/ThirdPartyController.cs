@@ -87,7 +87,8 @@ namespace Aiursoft.Gateway.Controllers
                 .ThirdPartyAccounts
                 .Include(t => t.Owner)
                 .ThenInclude(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.OpenId == info.Id);
+                .Where(t => t.Owner != null)
+                .FirstOrDefaultAsync(t => t.OpenId == info.Id);
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
             {
