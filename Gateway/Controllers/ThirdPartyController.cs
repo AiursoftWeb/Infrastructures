@@ -88,6 +88,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Include(t => t.Owner)
                 .ThenInclude(t => t.Emails)
                 .Where(t => t.Owner != null)
+                .Where(t => t.OpenId != null)
                 .FirstOrDefaultAsync(t => t.OpenId == info.Id);
             var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
             if (account != null)
