@@ -5,7 +5,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 {
     public class FaceBookUserDetail : IUserDetail
     {
-        [JsonProperty("sub")]
+        [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("picture")]
