@@ -8,7 +8,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        [JsonProperty("picture")]
+        [JsonProperty("avatar_url")]
         public string AvatarUrl { get; set; }
 
         [JsonProperty("name")]
