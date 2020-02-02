@@ -48,7 +48,7 @@
                                 <div class="d-block ml-3">
                                     @if (main != null)
                                     {
-                                        <h5>@provider.GetName()</h5>
+                                        <h5>@provider.GetName() - @main.Name</h5>
                                         <p class="mb-1">
                                             <label>You have bound your Aiursoft account with @provider.GetName(). Bind time:</label>
                                             <lable class="text-muted" data-utc-time="@main.BindTime"></lable>
@@ -56,7 +56,7 @@
                                     }
                                     else
                                     {
-                                        <h5>@provider.GetName() - @main.Name</h5>
+                                        <h5>@provider.GetName()</h5>
                                         <p class="text-muted mb-1">
                                             You did not bind your account with @provider.GetName().
                                         </p>
