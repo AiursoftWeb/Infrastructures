@@ -150,7 +150,8 @@ namespace Aiursoft.Gateway.Controllers
                 {
                     OwnerId = user.Id,
                     ProviderName = model.ProviderName,
-                    OpenId = model.UserDetail.Id
+                    OpenId = model.UserDetail.Id,
+                    Name = model.UserDetail.Name,
                 };
                 _dbContext.ThirdPartyAccounts.Add(link);
                 await _dbContext.SaveChangesAsync();
@@ -203,7 +204,8 @@ namespace Aiursoft.Gateway.Controllers
             {
                 OwnerId = user.Id,
                 OpenId = info.Id,
-                ProviderName = provider.GetName()
+                ProviderName = provider.GetName(),
+                Name = info.Name
             };
             _dbContext.ThirdPartyAccounts.Add(link);
             await _dbContext.SaveChangesAsync();

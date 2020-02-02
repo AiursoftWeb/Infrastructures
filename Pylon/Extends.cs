@@ -233,6 +233,11 @@ namespace Aiursoft.Pylon
 
         public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
+            if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
+            {
+                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
+                return services;
+            }
             services.AddAiurDependencies(appName);
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
@@ -244,10 +249,12 @@ namespace Aiursoft.Pylon
             AppsContainer.CurrentAppName = appName;
             services.AddHttpClient();
             services.AddMemoryCache();
-            if (!Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
+            if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
-                services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
+                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
+                return services;
             }
+            services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
             return services;
         }
 
