@@ -8,10 +8,10 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        public string AvatarUrl { get => Picture.Data.Url; set => Picture.Data.Url = value; }
+        public string AvatarUrl { get => Picture?.Data?.Url; set => Picture.Data.Url = value; }
 
         [JsonProperty("picture")]
-        public FaceBookPicture Picture { get; set; }
+        public FaceBookPicture Picture { get; set; } = new FaceBookPicture();
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -26,7 +26,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
     public class FaceBookPicture
     {
         [JsonProperty("data")]
-        public FaceBookPictureData Data { get; set; }
+        public FaceBookPictureData Data { get; set; } = new FaceBookPictureData();
     }
 
     public class FaceBookPictureData
