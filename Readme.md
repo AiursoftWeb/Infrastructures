@@ -9,15 +9,24 @@ Aiursoft micro-services platform. Powered by ASP.NET Core.
 
 Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
 
+## Features
+
+* Integrated user authentication https://gateway.aiursoft.com (OAuth, Social authenticate, password reset)
+* Integrated app authentication https://archon.aiursoft.com (Token assign, token validation, app authorization)
+* Account management center https://account.aiursoft.com (Profile edittion, Two-FA, social account, switch email)
+* Developer center https://developer.aiursoft.com (App creation and permission management)
+* File storage system https://probe.aiursoft.com (Compress, Clear EXIF, customize domain-name)
+* Message queue https://stargate.aiursoft.com (Auto message clear, websocket push, channel authentication)
+* Home web page https://www.aiursoft.com (Terms, privacy)
+* Wiki center https://wiki.aiursoft.com (Read document)
+
+## Layers
+
 Nexus architect has three layers:
 
 * Basic Services
 * Infrastructures
 * Applications
-
-```
-
-```
 
 ### Basic Services
 
@@ -55,7 +64,6 @@ If you wanna try the platform, all independent services are deployed under the f
 * [Colossus](https://colossus.aiursoft.com)
 * [Developer](https://developer.aiursoft.com)
 * [EE](https://ee.aiursoft.com)
-* [OSS](https://oss.aiursoft.com)
 * [Stargate](https://stargate.aiursoft.com)
 * [Wiki](https://wiki.aiursoft.com)
 * [WWW](https://www.aiursoft.com)
