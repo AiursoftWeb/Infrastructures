@@ -5,20 +5,28 @@
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
+![logo](./Nexus_SC2.jpg)
+
 ## What is Nexus
 
 Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+
+Nexus provides many useful services and simplifies web application development.
+
+Nexus provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
 
 ## Features
 
 * Integrated user authentication https://gateway.aiursoft.com (OAuth, Social authenticate, password reset)
 * Integrated app authentication https://archon.aiursoft.com (Token assign, token validation, app authorization)
-* Account management center https://account.aiursoft.com (Profile edittion, Two-FA, social account, switch email)
-* Developer center https://developer.aiursoft.com (App creation and permission management)
+* Account management center https://account.aiursoft.com (Profile editting, Two-FA, social account, switch email)
+* Developer center https://developer.aiursoft.com (App creation and permission management, basic debugging tools)
 * File storage system https://probe.aiursoft.com (Compress, Clear EXIF, customize domain-name)
-* Message queue https://stargate.aiursoft.com (Auto message clear, websocket push, channel authentication)
+* Message queue https://stargate.aiursoft.com (Auto message clear, WebSocket push, channel authentication)
 * Home web page https://www.aiursoft.com (Terms, privacy)
 * Wiki center https://wiki.aiursoft.com (Read document)
+* Cross-platform deployment (Supports Windows, Linux, and docker)
+* 
 
 ## Layers
 
