@@ -1,30 +1,55 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Tools
 {
+    public interface ISyncable
+    {
+        bool EqualsInDb(ISyncable obj);
+    }
     public static class EFExtends
     {
+        public static IEnumerable<T> DistinctBySync<T>(this IEnumerable<T> query) where T : ISyncable
+        {
+            var knownKeys = new HashSet<T>();
+            foreach (T element in query)
+            {
+                if (!knownKeys.Any(k => k.EqualsInDb(element)))
+                {
+                    knownKeys.Add(element);
+                    yield return element;
+                }
+            }
+        }
+
         public static void Delete<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
         {
             dbSet.RemoveRange(dbSet.Where(predicate));
         }
 
-        public static async Task Sync<T>(this DbSet<T> dbSet,
-            Expression<Func<T, bool>> filter,
-            T[] collection) where T : class
+        public static void Sync<T>(this DbSet<T> dbSet,
+            T[] collection) where T : class, ISyncable
         {
-            foreach (var item in collection)
+            dbSet.Sync(t => true, collection);
+        }
+
+        public static void Sync<T>(this DbSet<T> dbSet,
+            Expression<Func<T, bool>> filter,
+            T[] collection) where T : class, ISyncable
+        {
+            foreach (var item in collection.DistinctBySync())
             {
-                var itemCountShallBe = collection.Count(t => t.Equals(item));
+                var itemCountShallBe = collection.Count(t => t.EqualsInDb(item));
                 var itemQuery = dbSet
+                    .IgnoreQueryFilters()
                     .Where(filter)
-                    .Where(t => t.Equals(item));
-                var itemCount = await itemQuery
-                    .CountAsync();
+                    .AsEnumerable()
+                    .Where(t => item.EqualsInDb(t));
+                var itemCount = itemQuery
+                    .Count();
 
                 if (itemCount > itemCountShallBe)
                 {
@@ -32,26 +57,19 @@ namespace Aiursoft.XelNaga.Tools
                 }
                 else if (itemCount < itemCountShallBe)
                 {
-                    for (int i = 0; i < itemCountShallBe - itemCount; i++)
+                    int times = 0;
+                    foreach (var toAdd in collection.Where(t => t.EqualsInDb(item)))
                     {
-                        dbSet.Add(item);
+                        dbSet.Add(toAdd);
+                        if (++times >= itemCountShallBe - itemCount)
+                        {
+                            break;
+                        }
                     }
                 }
             }
-
-            dbSet.Delete(t => collection.Any(p => p.Equals(t)));
+            var toDelete = dbSet.AsEnumerable().Where(t => !collection.Any(p => p.EqualsInDb(t)));
+            dbSet.RemoveRange(toDelete);
         }
     }
 }
-
-// DB: 1 1
-// CD: 1 1 2 2 3 3 
-
-// DB: 1 1 1
-// CD: 1 1 2
-
-// DB: 1 1 2
-// CD: 1 1 1
-
-// DB: 1 1
-// CD: 1 1 2 2 3 3
