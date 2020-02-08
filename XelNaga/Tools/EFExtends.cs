@@ -10,12 +10,8 @@ namespace Aiursoft.XelNaga.Tools
     {
         bool EqualsInDb(T obj);
         T Map();
-
-        public bool EqualsInMemory(ISyncable<T> obj)
-        {
-            return EqualsInDb(obj.Map());
-        }
     }
+
     public static class EFExtends
     {
         public static IEnumerable<M> DistinctBySync<T, M>(this IEnumerable<M> query) where M : ISyncable<T>
@@ -23,7 +19,7 @@ namespace Aiursoft.XelNaga.Tools
             var knownKeys = new HashSet<M>();
             foreach (M element in query)
             {
-                if (!knownKeys.Any(k => k.EqualsInMemory(element)))
+                if (!knownKeys.Any(k => k.EqualsInDb(element.Map())))
                 {
                     knownKeys.Add(element);
                     yield return element;
@@ -45,14 +41,14 @@ namespace Aiursoft.XelNaga.Tools
         }
 
         public static void Sync<T, M>(this DbSet<T> dbSet,
-            Expression<Func<T, bool>> filter,
+            Func<T, bool> filter,
             M[] collection)
             where T : class
             where M : ISyncable<T>
         {
             foreach (var item in collection.DistinctBySync<T, M>())
             {
-                var itemCountShallBe = collection.Count(t => t.EqualsInMemory(item));
+                var itemCountShallBe = collection.Count(t => t.EqualsInDb(item.Map()));
                 var itemQuery = dbSet
                     .IgnoreQueryFilters()
                     .Where(filter)
@@ -73,7 +69,10 @@ namespace Aiursoft.XelNaga.Tools
                     }
                 }
             }
-            var toDelete = dbSet.AsEnumerable().Where(t => !collection.Any(p => p.EqualsInDb(t)));
+            var toDelete = dbSet
+                .AsEnumerable()
+                .Where(filter)
+                .Where(t => !collection.Any(p => p.EqualsInDb(t)));
             dbSet.RemoveRange(toDelete);
         }
     }
