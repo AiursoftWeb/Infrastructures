@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models.AppsViewModels;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon.Attributes;

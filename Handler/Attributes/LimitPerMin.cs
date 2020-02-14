@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Aiursoft.Pylon.Attributes
+namespace Aiursoft.Handler.Attributes
 {
     public class LimitPerMin : ActionFilterAttribute
     {

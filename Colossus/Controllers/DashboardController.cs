@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Colossus.Models;
 using Aiursoft.Colossus.Models.DashboardViewModels;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon.Attributes;
