@@ -1,7 +1,7 @@
 # Aiursoft Nexus
 
 [![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
- [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
+[![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 

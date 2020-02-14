@@ -1,6 +1,7 @@
 # Aiursoft XelNaga
 
 [![NuGet version (Aiursoft.XelNaga)](https://img.shields.io/nuget/v/Aiursoft.XelNaga.svg?style=flat-square)](https://www.nuget.org/packages/Aiursoft.XelNaga/)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
 
 ## Features
 
