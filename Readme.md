@@ -29,7 +29,33 @@ Nexus provides a central platform for an entire enterprise. So the enterprise ca
 
 ## Layers
 
-Nexus architect has three layers:
+Nexus code structure has 4 layers:
+
+* Abstract layer - Contains basic interfaces and code style abstracts.
+* Basic tools layer - Contains basic tools for C#.
+    * Handler - An error handle framework for ASP.NET Core
+        * API exception handler
+        * API breaker
+        * ModelState checker
+        * IP request limit tool
+    * DocGenerator - A basic API document generator for ASP.NET Core applications.
+    * Scanner - An Automatic dependencies management system for ASP.NET Core.
+    * XelNaga - Some other C# tools.
+        * CSV Generator
+        * String extend tools
+        * Websocket tools
+        * EF Core tools
+            * EF Sync extends
+        * HTTP request framework
+        * C# async tools
+        * C# counter
+        * RSA tools
+* SDK layer
+    * SDK - Contains Aiursoft interface defination and abstract.
+    * Pylon - ASP.NET Core toolset. Contains tools for building web apps for Aiursoft.
+* Web apps layer
+
+Nexus architect has three layers for web applications:
 
 * Basic Services
 * Infrastructures
