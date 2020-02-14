@@ -42,6 +42,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
 
         public string GetName() => "Google";
 
+        public string GetSettingsPage() => $"https://myaccount.google.com/permissions";
+
         public string GetButtonColor() => "primary";
 
         public string GetButtonIcon() => "google";

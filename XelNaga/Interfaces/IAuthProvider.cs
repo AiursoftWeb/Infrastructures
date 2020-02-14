@@ -7,6 +7,7 @@ namespace Aiursoft.XelNaga.Services.Authentication
     public interface IAuthProvider : IScopedDependency
     {
         string GetName();
+        string GetSettingsPage();
         string GetButtonColor();
         string GetButtonIcon();
         string GetSignInRedirectLink(AiurUrl state);

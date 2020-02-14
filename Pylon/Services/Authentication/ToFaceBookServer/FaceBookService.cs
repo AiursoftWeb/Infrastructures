@@ -42,6 +42,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 
         public string GetName() => "FaceBook";
 
+        public string GetSettingsPage() => "https://www.facebook.com/settings?tab=applications";
+
         public string GetButtonColor() => "primary";
 
         public string GetButtonIcon() => "facebook";
