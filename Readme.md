@@ -26,7 +26,6 @@ Nexus provides a central platform for an entire enterprise. So the enterprise ca
 * Home web page https://www.aiursoft.com (Terms, privacy)
 * Wiki center https://wiki.aiursoft.com (Read document)
 * Cross-platform deployment (Supports Windows, Linux, and docker)
-* 
 
 ## Layers
 
