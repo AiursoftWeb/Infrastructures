@@ -54,6 +54,10 @@ namespace Aiursoft.Pylon.Attributes
             var tempDictionary = Copy();
             var path = context.HttpContext.Request.Path.ToString().ToLower();
             var ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (context.HttpContext.Connection.RemoteIpAddress.ToString() == "::1")
+            {
+                return;
+            }
             if (tempDictionary.ContainsKey(ip + path))
             {
                 WriteMemory(ip + path, tempDictionary[ip + path] + 1);
