@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Scanner";
+    ViewData["Des"] = "An Automatic dependencies management system for ASP.NET Core and powers Aiursoft.";
+    Layout = "../Home/_Layout";
+}
+@section css{
+    @this.UseAiurDashboardCss(false)
+}
+@section js{
+    @this.UseAiurDashboardJs(false);
+}
+<div class="jumbotron">
+    <div class="container">
+        <h3>Aiursoft Scanner</h3>
+        <p>@ViewBag.Des</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="//github.com/AiursoftWeb/Nexus/tree/master/Scanner" target="_blank" role="button">
+                <i class="fa fa-github"></i>
+                View it on github
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <vc:git-hub-renderer org="AiursoftWeb" repo="Nexus" path="Scanner.Abstract/Readme.md"></vc:git-hub-renderer>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <vc:git-hub-renderer org="AiursoftWeb" repo="Nexus" path="Scanner/Readme.md"></vc:git-hub-renderer>
+        </div>
+    </div>
+</div>
