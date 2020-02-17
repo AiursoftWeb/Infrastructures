@@ -33,7 +33,8 @@ namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
             {
                 Org = org,
                 Repo = repo,
-                HTML = html
+                HTML = html,
+                Path = path
             };
             return View(model);
         }

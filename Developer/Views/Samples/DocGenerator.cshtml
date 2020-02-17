@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "DocGenerator";
+    ViewData["Des"] = "A basic API document generator for ASP.NET Core applications. Open source, offline and free.";
+    Layout = "../Home/_Layout";
+}
+@section css{
+    @this.UseAiurDashboardCss(false)
+}
+@section js{
+    @this.UseAiurDashboardJs(false);
+}
+<div class="jumbotron">
+    <div class="container">
+        <h3>Aiursoft DocGenerator</h3>
+        <p>@ViewBag.Des</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="//github.com/AiursoftWeb/Nexus/tree/master/DocGenerator" target="_blank" role="button">
+                <i class="fa fa-github"></i>
+                View it on github
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <vc:git-hub-renderer org="AiursoftWeb" repo="Nexus" path="DocGenerator/Readme.md"></vc:git-hub-renderer>
+        </div>
+    </div>
+</div>

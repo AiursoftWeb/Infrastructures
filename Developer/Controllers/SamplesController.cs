@@ -31,5 +31,10 @@ namespace Aiursoft.Developer.Controllers
         {
             return View();
         }
+
+        public IActionResult DocGenerator()
+        {
+            return View();
+        }
     }
 }
