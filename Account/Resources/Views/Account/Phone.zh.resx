@@ -142,6 +142,6 @@
     <value>更改电话号码</value>
   </data>
   <data name="Send verification passcode" xml:space="preserve">
-    <value>发送验证密码</value>
+    <value>发送验证码</value>
   </data>
 </root>
