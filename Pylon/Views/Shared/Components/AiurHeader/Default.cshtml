@@ -15,12 +15,18 @@
 }
 
 <!--Aiur Header-->
-@if (!string.IsNullOrEmpty(descriptionAttribute))
+@if (!string.IsNullOrWhiteSpace(ViewBag.Des))
 {
+    // View set des. Do nothing.
+}
+else if (!string.IsNullOrEmpty(descriptionAttribute))
+{
+    // View not set des. Set to project description.
     ViewBag.Des = descriptionAttribute;
 }
 else if (!string.IsNullOrWhiteSpace(Values.ProjectValue))
 {
+    // No description. Set to our core value.
     ViewBag.Des = Values.ProjectValue;
 }
 <meta charset="utf-8">

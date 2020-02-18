@@ -20,10 +20,10 @@ namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
             _cache = cache;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string org, string repo)
+        public async Task<IViewComponentResult> InvokeAsync(string org, string repo, string path)
         {
-            var markdownUrl = $"https://raw.githubusercontent.com/{org}/{repo}/master/README.md";
-            var markdown = await _cache.GetAndCache($"github.{org}.{repo}.cache",
+            var markdownUrl = $"https://raw.githubusercontent.com/{org}/{repo}/master/{path}";
+            var markdown = await _cache.GetAndCache($"github.{org}.{repo}.{path}.cache",
                 async () => await _http.Get(new AiurUrl(markdownUrl), false));
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
@@ -33,7 +33,8 @@ namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
             {
                 Org = org,
                 Repo = repo,
-                HTML = html
+                HTML = html,
+                Path = path
             };
             return View(model);
         }

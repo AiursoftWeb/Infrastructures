@@ -26,5 +26,15 @@ namespace Aiursoft.Developer.Controllers
         {
             return View();
         }
+
+        public IActionResult Scanner()
+        {
+            return View();
+        }
+
+        public IActionResult DocGenerator()
+        {
+            return View();
+        }
     }
 }
