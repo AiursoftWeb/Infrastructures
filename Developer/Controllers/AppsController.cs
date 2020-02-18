@@ -131,6 +131,8 @@ namespace Aiursoft.Developer.Controllers
             }
             target.AppName = model.AppName;
             target.AppDescription = model.AppDescription;
+            target.AppCategory = model.AppCategory;
+            target.AppPlatform = model.AppPlatform;
             target.EnableOAuth = model.EnableOAuth;
             target.ForceInputPassword = model.ForceInputPassword;
             target.ForceConfirmation = model.ForceConfirmation;

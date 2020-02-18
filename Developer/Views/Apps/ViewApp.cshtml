@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="AppPlatform"></label>
-                                        <select class="form-control" disabled="disabled" asp-for="AppPlatform">
+                                        <select class="form-control" asp-for="AppPlatform">
                                             <option value="0">@Localizer["Cross Platform"]</option>
                                             <option value="1">@Localizer["Android"]</option>
                                             <option value="2">@Localizer["iOS"]</option>
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="AppCategory"></label>
-                                        <select class="form-control" disabled="disabled" asp-for="AppCategory">
+                                        <select class="form-control" asp-for="AppCategory">
                                             <option value="0">@Localizer["Development"]</option>
                                             <option value="1">App for @Values.ProjectName</option>
                                             <option value="2">@Localizer["App for pages"]</option>
