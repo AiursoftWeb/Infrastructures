@@ -5,7 +5,7 @@ namespace Aiursoft.SDK.Attributes
 {
     public class ValidDomainName : ValidationAttribute
     {
-        private readonly string _domainRegex = @"^[-a-z0-9_]+$";
+        private readonly string _domainRegex = @"^[-a-z0-9_.]+$";
 
         public override bool IsValid(object value)
         {
