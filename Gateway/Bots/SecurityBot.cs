@@ -11,8 +11,9 @@ namespace Aiursoft.Gateway.Bots
         {
         }
 
-        public override async Task OnFriendRequest(NewFriendRequestEvent arg)
+        public override Task OnFriendRequest(NewFriendRequestEvent arg)
         {
+            return CompleteRequest(arg.RequestId, true);
         }
 
         public override async Task OnGroupConnected(SearchedGroup group)

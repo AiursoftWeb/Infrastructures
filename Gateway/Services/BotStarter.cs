@@ -22,10 +22,11 @@ namespace Aiursoft.Gateway.Services
             _scopeFactory = scopeFactory;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("BotStarter Background Service is starting.");
-            await DoWork();
+            DoWork();
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -33,7 +34,7 @@ namespace Aiursoft.Gateway.Services
             return Task.CompletedTask;
         }
 
-        private async Task DoWork()
+        private void DoWork()
         {
             try
             {
