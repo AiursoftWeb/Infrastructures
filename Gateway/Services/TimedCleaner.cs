@@ -61,8 +61,10 @@ namespace Aiursoft.Gateway.Services
 
         public Task ClearTimeOutOAuthPack(GatewayDbContext dbContext)
         {
-            dbContext.OAuthPack.Delete(t => t.UseTime + new TimeSpan(1, 0, 0, 0) < DateTime.UtcNow);
-            dbContext.OAuthPack.Delete(t => !t.IsAlive);
+            var outDateTime = DateTime.UtcNow - TimeSpan.FromDays(1);
+            var outDateTime2 = DateTime.UtcNow - TimeSpan.FromMinutes(20);
+            dbContext.OAuthPack.Delete(t => t.UseTime < outDateTime);
+            dbContext.OAuthPack.Delete(t => t.CreateTime < outDateTime2);
             return dbContext.SaveChangesAsync();
         }
 
