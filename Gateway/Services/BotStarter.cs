@@ -1,4 +1,5 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using Aiursoft.Gateway.Bots;
+using Aiursoft.Scanner.Interfaces;
 using Kahla.SDK.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,11 +41,9 @@ namespace Aiursoft.Gateway.Services
             {
                 _logger.LogInformation("bot starter task started!");
                 using var scope = _scopeFactory.CreateScope();
-                foreach (var bot in scope.ServiceProvider.GetServices<BotBase>())
-                {
-                    scope.ServiceProvider.GetService<BotFactory>().BuildBotProperties(bot);
-                    var _ = bot.Start().ConfigureAwait(false);
-                }
+                var bot = scope.ServiceProvider.GetService<SecurityBot>();
+                scope.ServiceProvider.GetService<BotFactory>().BuildBotProperties(bot);
+                var _ = bot.Start().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
