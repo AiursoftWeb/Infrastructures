@@ -26,6 +26,10 @@ namespace Aiursoft.Gateway.Bots
 
         public override async Task OnMessage(string inputMessage, NewMessageEvent eventContext)
         {
+            if (eventContext.Message.SenderId != Profile.Id)
+            {
+                await SendMessage("Copy.", eventContext.ConversationId, eventContext.AESKey);
+            }
         }
     }
 }
