@@ -30,7 +30,7 @@ namespace Aiursoft.XelNaga.Models
                     {
                         propName = (fromQuery as FromQueryAttribute).Name;
                     }
-                    if (prop == typeof(DateTime))
+                    if (prop.PropertyType == typeof(DateTime))
                     {
                         var nullableValue = prop.GetValue(param) as DateTime?;
                         if (nullableValue != null)

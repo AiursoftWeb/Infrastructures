@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-    public class BotStarter : IHostedService, ISingletonDependency
+    public class BotStarter : IHostedService, IDisposable, ISingletonDependency
     {
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -23,11 +23,12 @@ namespace Aiursoft.Gateway.Services
             _scopeFactory = scopeFactory;
         }
 
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("BotStarter Background Service is starting.");
-            DoWork();
-            return Task.CompletedTask;
+            return DoWork();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -35,7 +36,7 @@ namespace Aiursoft.Gateway.Services
             return Task.CompletedTask;
         }
 
-        private void DoWork()
+        private async Task DoWork()
         {
             try
             {
@@ -43,12 +44,17 @@ namespace Aiursoft.Gateway.Services
                 using var scope = _scopeFactory.CreateScope();
                 var bot = scope.ServiceProvider.GetService<SecurityBot>();
                 scope.ServiceProvider.GetService<BotFactory>().BuildBotProperties(bot);
-                var _ = bot.Start().ConfigureAwait(false);
+                var _ = Task.Run(() => bot.Start());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred.");
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
