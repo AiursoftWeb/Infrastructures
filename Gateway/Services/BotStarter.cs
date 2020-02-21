@@ -44,7 +44,7 @@ namespace Aiursoft.Gateway.Services
                 using var scope = _scopeFactory.CreateScope();
                 var bot = scope.ServiceProvider.GetService<SecurityBot>();
                 scope.ServiceProvider.GetService<BotFactory>().BuildBotProperties(bot);
-                var _ = Task.Run(() => bot.Start());
+                var _ = bot.Start().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
