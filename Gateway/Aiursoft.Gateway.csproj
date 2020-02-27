@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kahla.SDK" Version="3.9.1" />
+    <PackageReference Include="Kahla.SDK" Version="3.9.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2" />
     <PackageReference Include="Twilio" Version="5.37.5" />
     <PackageReference Include="Edi.Captcha" Version="2.2.0" />
