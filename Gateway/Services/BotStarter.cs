@@ -15,6 +15,7 @@ namespace Aiursoft.Gateway.Services
         private readonly ILogger _logger;
         private readonly SecurityBot _bot;
         private readonly BotFactory _botFactory;
+        private Timer _timer;
 
         public BotStarter(
             ILogger<TimedCleaner> logger,
@@ -29,22 +30,17 @@ namespace Aiursoft.Gateway.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("BotStarter Background Service is starting.");
-            DoWork();
+            _timer = new Timer(DoWork, null, 5, Timeout.Infinite‬);
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
-
-        private void DoWork()
+        private async void DoWork(object state)
         {
             try
             {
                 _logger.LogInformation("bot starter task started!");
                 _botFactory.BuildBotProperties(_bot);
-                var _ = _bot.Start(false).ConfigureAwait(false);
+                await _bot.Start(false);
             }
             catch (Exception ex)
             {
@@ -52,8 +48,16 @@ namespace Aiursoft.Gateway.Services
             }
         }
 
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Timed Background Service is stopping.");
+            _timer?.Change(Timeout.Infinite, 0);
+            return Task.CompletedTask;
+        }
+
         public void Dispose()
         {
+            _timer?.Dispose();
         }
     }
 }
