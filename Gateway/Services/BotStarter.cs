@@ -13,14 +13,17 @@ namespace Aiursoft.Gateway.Services
     public class BotStarter : IHostedService, IDisposable, ISingletonDependency
     {
         private readonly ILogger _logger;
-        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly SecurityBot _bot;
+        private readonly BotFactory _botFactory;
 
         public BotStarter(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
-            _scopeFactory = scopeFactory;
+            using var scope = scopeFactory.CreateScope();
+            _bot = scope.ServiceProvider.GetService<SecurityBot>();
+            _botFactory = scope.ServiceProvider.GetService<BotFactory>();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -40,10 +43,8 @@ namespace Aiursoft.Gateway.Services
             try
             {
                 _logger.LogInformation("bot starter task started!");
-                using var scope = _scopeFactory.CreateScope();
-                var bot = scope.ServiceProvider.GetService<SecurityBot>();
-                scope.ServiceProvider.GetService<BotFactory>().BuildBotProperties(bot);
-                var _ = bot.Start(false).ConfigureAwait(false);
+                _botFactory.BuildBotProperties(_bot);
+                var _ = _bot.Start(false).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
