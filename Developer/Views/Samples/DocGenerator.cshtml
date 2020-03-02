@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "DocGenerator";
     ViewData["Des"] = "A basic API document generator for ASP.NET Core applications. Open source, offline and free.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 @section css{
     @this.UseAiurDashboardCss(false)

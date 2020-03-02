@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Html Encode";
     ViewData["Des"] = "Html encode your string online.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 
 <div class="jumbotron">

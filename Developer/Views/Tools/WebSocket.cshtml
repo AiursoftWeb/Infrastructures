@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "WebSocket Tester";
     ViewData["Des"] = "Test your WebSocket server and connection online.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 
 <div class="jumbotron">

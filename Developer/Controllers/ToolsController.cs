@@ -93,7 +93,7 @@ namespace Aiursoft.Developer.Controllers
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .Build();
-            model.RenderedHTML = Markdig.Markdown.ToHtml(model.SourceMarkdown, pipeline);
+            model.RenderedHTML = Markdig.Markdown.ToHtml(model.SourceMarkdown ?? string.Empty, pipeline);
             return View(model);
         }
 

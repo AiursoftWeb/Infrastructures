@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Markdown Compiler Online";
     ViewData["Des"] = "Compile your markdown to HTML online.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 @section css{
     @this.UseAiurDashboardCss(false)

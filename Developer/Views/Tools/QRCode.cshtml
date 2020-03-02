@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "QRCode Generator";
     ViewData["Des"] = "Generate your QR Code by your input.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 
 <div class="jumbotron">

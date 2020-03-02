@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "jquery UTC Time";
     ViewData["Des"] = "jquery-disable-with is a jQuery plugin which converts UTC time to local time easily.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 @section css{
     @this.UseAiurDashboardCss(false)

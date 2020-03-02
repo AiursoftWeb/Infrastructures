@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Base64 Converter";
     ViewData["Des"] = "Encrypt or decrypt your base64 string online.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 
 <div class="jumbotron">

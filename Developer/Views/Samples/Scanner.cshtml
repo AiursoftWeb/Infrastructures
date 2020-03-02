@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Scanner";
     ViewData["Des"] = "An Automatic dependencies management system for ASP.NET Core and powers Aiursoft.";
-    Layout = "../Home/_Layout";
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
 }
 @section css{
     @this.UseAiurDashboardCss(false)
