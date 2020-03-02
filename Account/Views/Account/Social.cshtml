@@ -26,7 +26,7 @@
             <div asp-validation-summary="All"></div>
         </div>
     }
-    <div class="col-md-8 pl-0">
+    <div class="col-md-10 pl-0">
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-fw fa-lock"></i>
@@ -43,7 +43,7 @@
                     var main = Model.Accounts.FirstOrDefault(t => t.ProviderName == provider.GetName());
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-10 d-flex">
+                            <div class="col-8 d-flex">
                                 <i class="fa fa-fw fa-3x fa-@provider.GetButtonIcon() text-@provider.GetButtonColor()" style="width:40px; height:40px;"></i>
                                 <div class="d-block ml-3">
                                     @if (main != null)
@@ -65,15 +65,15 @@
 
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-4">
                                 @if (main != null)
                                 {
-                                    <button class="btn-sm btn btn-outline-danger float-right mr-1 text-danger" onclick="UnbindAccount('@provider.GetName()')">@Localizer["Unlink"]</button>
-                                    <a class="btn-sm btn btn-secondary float-right mr-1 text-white" href="@provider.GetSettingsPage()" target="_blank">@Localizer["View in"] @provider.GetName()</a>
+                                    <button class="btn btn-sm btn-outline-danger float-right mr-1 mt-3 text-danger" onclick="UnbindAccount('@provider.GetName()')">@Localizer["Unlink"]</button>
+                                    <a class="btn btn-sm btn-secondary float-right mr-1 mt-3 text-white" href="@provider.GetSettingsPage()" target="_blank">@Localizer["View in"] @provider.GetName()</a>
                                 }
                                 else
                                 {
-                                    <a class="btn-sm btn btn-outline-success float-right mr-1 text-success" href="@provider.GetBindRedirectLink()">@Localizer["Bind now"]</a>
+                                    <a class="btn btn-sm btn-outline-success float-right mr-1 mt-3 text-success" href="@provider.GetBindRedirectLink()">@Localizer["Bind now"]</a>
                                 }
                             </div>
                         </div>
