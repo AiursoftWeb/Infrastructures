@@ -29,7 +29,7 @@
                 Enter your string
             </div>
             <div class="card-body">
-                <form method="post">
+                <form method="post" asp-controller="Tools" asp-action="UrlEncode">
                     <h4>Enter the string you wanna encode or decode.</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>

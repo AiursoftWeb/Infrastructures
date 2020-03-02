@@ -29,7 +29,7 @@
                 Enter your json
             </div>
             <div class="card-body">
-                <form method="post">
+                <form method="post" asp-controller="Tools" asp-action="JsonFormat">
                     <h4>Enter the json you wanna format or compress.</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>
