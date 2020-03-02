@@ -3,7 +3,8 @@
 <head>
     <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName</title>
-    @this.UseAiurMarketCss()
+    <vc:aiur-core-css></vc:aiur-core-css>
+    <vc:aiur-market-css></vc:aiur-market-css>
     <link rel="stylesheet" href="~/css/site.css">
 </head>
 <body>
@@ -61,7 +62,8 @@
     </footer>
     <vc:scroll-to-top></vc:scroll-to-top>
     <vc:aiur-logout></vc:aiur-logout>
-    @this.UseAiurMarketJs()
+    <vc:aiur-core-js></vc:aiur-core-js>
+    <vc:aiur-market-js></vc:aiur-market-js>
     @RenderSection("js", required: false)
 </body>
 </html>

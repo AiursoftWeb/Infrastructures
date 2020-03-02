@@ -3,11 +3,13 @@
 <head>
     <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName</title>
-    @this.UseAiurDashboardCss()
+    <vc:aiur-core-css></vc:aiur-core-css>
+    <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
 </head>
 <body class="bg-light lines" style="background-color: #f9f9f9;">
     @RenderBody()
-    @this.UseAiurDashboardJs()
+    <vc:aiur-core-js></vc:aiur-core-js>
+    <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
     @RenderSection("scripts", required: false)
 </body>
 </html>

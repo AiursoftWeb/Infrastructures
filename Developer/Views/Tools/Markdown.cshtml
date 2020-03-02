@@ -8,15 +8,10 @@
     }
 }
 @section css{
-    @this.UseAiurDashboardCss(false)
+    <vc:aiur-core-css></vc:aiur-core-css>
+    <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
 }
-@section js{
-    @this.UseAiurDashboardJs(false)
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-    <script>
-        autosize($('textarea'));
-    </script>
-}
+
 <div class="jumbotron">
     <div class="container">
         <h3>@ViewData["Title"]</h3>
@@ -97,3 +92,12 @@
         </div>
     </div>
 </div>
+
+@section js{
+    <vc:aiur-core-js></vc:aiur-core-js>
+    <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
+    <script src="@ServiceLocation.UI/node_modules/autosize/dist/autosize.min.js"></script>
+    <script>
+        autosize($('textarea'));
+    </script>
+}

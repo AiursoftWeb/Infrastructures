@@ -4,7 +4,8 @@
 <head>
     <vc:aiur-header></vc:aiur-header>
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Account Management Center"]</title>
-    @this.UseAiurDashboardCss()
+    <vc:aiur-core-css></vc:aiur-core-css>
+    <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
     @RenderSection("css", required: false)
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
@@ -175,7 +176,8 @@
         </footer>
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
-        @this.UseAiurDashboardJs()
+        <vc:aiur-core-js></vc:aiur-core-js>
+        <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
         <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
         <script src="@ServiceLocation.UI/node_modules/qrcodejs/qrcode.min.js"></script>
         <script src="~/js/site.js"></script>
