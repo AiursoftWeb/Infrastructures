@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace Aiursoft.XelNaga.Attributes
 {
-    public class CSVProperty : ValidationAttribute
+    public class CSVProperty : Attribute
     {
         public string Name;
         public CSVProperty(string name)

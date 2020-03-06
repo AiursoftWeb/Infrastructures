@@ -11,23 +11,16 @@ namespace Aiursoft.XelNaga.Tools
         {
             var csv = "";
             var type = typeof(T);
-            foreach (var prop in type.GetProperties())
+            foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
             {
                 var attribute = prop.GetCustomAttributes(typeof(CSVProperty), true).FirstOrDefault();
-                if (attribute != null)
-                {
-                    csv += $@"""{(attribute as CSVProperty).Name}"",";
-                }
-                else
-                {
-                    csv += $@"""{prop.Name}"",";
-                }
+                csv += $@"""{(attribute as CSVProperty).Name}"",";
             }
             csv = csv.Trim(',') + "\r\n";
             foreach (var item in items)
             {
                 string newLine = "";
-                foreach (var prop in type.GetProperties())
+                foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
                 {
                     var propValue = prop.GetValue(item)?.ToString() ?? "null";
                     propValue = propValue.Replace("\r", "").Replace("\n", "").Replace("\\", "");
