@@ -3,7 +3,6 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Services;
-using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
 using Aiursoft.SDK.Models.Probe.DownloadAddressModels;
 using Aiursoft.XelNaga.Tools;

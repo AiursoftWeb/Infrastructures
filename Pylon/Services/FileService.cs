@@ -20,9 +20,12 @@ namespace Aiursoft.Pylon.Services
             var (etag, length) = GetFileHTTPProperties(path);
             // Handle etag
             controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
-            if (controller.Request.Headers.Keys.Contains("If-None-Match") && controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
+            if (controller.Request.Headers.Keys.Contains("If-None-Match"))
             {
-                return new StatusCodeResult(304);
+                if (controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
+                {
+                    return new StatusCodeResult(304);
+                }
             }
             // Return file result.
             controller.Response.Headers.Add("Content-Length", length.ToString());
