@@ -531,21 +531,12 @@
             "pageLength": 15
         });
 
-        // Init errors table.
         $('.datatable-exception').DataTable({
             "order": [[2, "desc"]]
         });
 
         $('.datatable-stargate').DataTable({
             "order": [[0, "desc"]]
-        });
-
-        // Activate tooltip tool
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="tooltip"]').on('click', function () {
-            setTimeout(function () {
-                $('[data-toggle="tooltip"]').tooltip('hide');
-            }, 2000);
         });
     });
 </script>
