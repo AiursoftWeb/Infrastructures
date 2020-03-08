@@ -274,7 +274,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped datatable">
+                                <table class="table table-striped datatable-sites">
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Site Name"]</th>
@@ -381,7 +381,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped datatable-exception">
+                                <table class="table table-striped datatable-stargate">
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Channel Id"]</th>
@@ -527,15 +527,17 @@
             modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
         });
 
-        $('.datatable').DataTable().destroy();
-        $('.datatable').dataTable({
+        $('.datatable-sites').DataTable({
             "pageLength": 15
         });
 
         // Init errors table.
-        $('.datatable-exception').DataTable().destroy();
         $('.datatable-exception').DataTable({
             "order": [[2, "desc"]]
+        });
+
+        $('.datatable-stargate').DataTable({
+            "order": [[0, "desc"]]
         });
 
         // Activate tooltip tool
