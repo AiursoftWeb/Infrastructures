@@ -54,7 +54,7 @@
 
                 }
                 <div class="table-responsive">
-                    <table class="table my-datatable">
+                    <table class="table files-datatable">
                         <thead>
                             <tr>
                                 <th>@Localizer["Name"]</th>
@@ -147,8 +147,8 @@
 <script>
     window.addEventListener('load', function () {
         var sortData = function () {
-            $('.my-datatable').DataTable().destroy();
-            $('.my-datatable').dataTable({
+            $('.files-datatable').DataTable().destroy();
+            $('.files-datatable').DataTable({
                 "order": [[0, "asc"]],
                 "pageLength": 30
             });
