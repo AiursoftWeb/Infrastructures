@@ -527,14 +527,17 @@
             modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
         });
 
+        $('.datatable-sites').DataTable().destroy();
         $('.datatable-sites').DataTable({
             "pageLength": 15
         });
 
+        $('.datatable-exception').DataTable().destroy();
         $('.datatable-exception').DataTable({
             "order": [[2, "desc"]]
         });
 
+        $('.datatable-stargate').DataTable().destroy();
         $('.datatable-stargate').DataTable({
             "order": [[0, "desc"]]
         });
