@@ -5,7 +5,8 @@
     <title>@ViewData["Title"] - @Values.ProjectName Developer Center</title>
     <vc:aiur-core-css></vc:aiur-core-css>
     <vc:aiur-market-css></vc:aiur-market-css>
-    @RenderSection("css", required: false)
+    <link href="@ServiceLocation.UI/node_modules/primer-markdown/build/build.css" rel="stylesheet">
+    <link href="@ServiceLocation.UI/node_modules/github-syntax-light/lib/github-light.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
@@ -126,6 +127,5 @@
     <script>
         asyncLayout('#render-part');
     </script>
-    @RenderSection("js", required: false)
 </body>
 </html>

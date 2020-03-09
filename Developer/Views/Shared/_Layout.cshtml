@@ -6,7 +6,6 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
     <vc:aiur-core-css></vc:aiur-core-css>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
-    @RenderSection("css", required: false)
     <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
@@ -205,7 +204,6 @@
         <script>
             asyncLayout('#render-part');
         </script>
-        @RenderSection("js", required: false)
     </div>
 </body>
 </html>
