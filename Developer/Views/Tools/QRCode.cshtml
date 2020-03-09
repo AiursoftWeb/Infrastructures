@@ -2,10 +2,6 @@
 @{
     ViewData["Title"] = "QRCode Generator";
     ViewData["Des"] = "Generate your QR Code by your input.";
-    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
-    {
-        Layout = "../Home/_Layout";
-    }
 }
 
 <div class="jumbotron">
@@ -39,8 +35,7 @@
                             <textarea asp-for="SourceString" placeholder="Any string" class="form-control" rows="5"></textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success" name="Decrypt" value="false" type="submit">Encrypt</button>
-                            <button class="btn btn-secondary" name="Decrypt" value="true" type="submit">Decrypt</button>
+                            <button class="btn btn-success" type="submit">Get QR Code</button>
                         </div>
                     </div>
                     <div class="col-md-6">

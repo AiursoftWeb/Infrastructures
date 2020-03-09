@@ -1,10 +1,6 @@
 ﻿@{
     ViewData["Title"] = "DocGenerator";
     ViewData["Des"] = "A basic API document generator for ASP.NET Core applications. Open source, offline and free.";
-    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
-    {
-        Layout = "../Home/_Layout";
-    }
 }
 
 <div class="jumbotron">

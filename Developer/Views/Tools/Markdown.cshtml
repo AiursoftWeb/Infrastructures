@@ -2,10 +2,6 @@
 @{
     ViewData["Title"] = "Markdown Compiler Online";
     ViewData["Des"] = "Compile your markdown to HTML online.";
-    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
-    {
-        Layout = "../Home/_Layout";
-    }
 }
 
 <div class="jumbotron">
