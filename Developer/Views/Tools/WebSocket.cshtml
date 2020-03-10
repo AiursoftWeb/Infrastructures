@@ -44,26 +44,24 @@
     </div>
 </div>
 
-@section js{
-    <script>
-        var connect = function (address) {
-            var target = address;
-            var webSocket = new WebSocket(target);
-            webSocket.onopen = function () {
-                $("#spanStatus").text("Connected to " + target);
-            };
-            webSocket.onmessage = function (evt) {
-                $("#message").append('<p>' + evt.data + '</p>');
-            };
-            webSocket.onerror = function (evt) {
-                alert('Can not connect！');
-            };
-            webSocket.onclose = function () {
-                $("#spanStatus").text("Disconnected!");
-            };
+<script>
+    var connect = function (address) {
+        var target = address;
+        var webSocket = new WebSocket(target);
+        webSocket.onopen = function () {
+            $("#spanStatus").text("Connected to " + target);
         };
-        var trigger = function () {
-            connect($('#id').val(), $('#key').val());
-        }
-    </script>
-}
+        webSocket.onmessage = function (evt) {
+            $("#message").append('<p>' + evt.data + '</p>');
+        };
+        webSocket.onerror = function (evt) {
+            alert('Can not connect！');
+        };
+        webSocket.onclose = function () {
+            $("#spanStatus").text("Disconnected!");
+        };
+    };
+    var trigger = function () {
+        connect($('#id').val(), $('#key').val());
+    }
+</script>

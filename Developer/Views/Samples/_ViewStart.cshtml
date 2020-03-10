@@ -1,0 +1,6 @@
+﻿@{
+    if (!Context.Request.Headers.ContainsKey("X-No-Layout"))
+    {
+        Layout = "../Home/_Layout";
+    }
+}
