@@ -29,6 +29,8 @@ namespace Aiursoft.Pylon.Services
             }
             // Return file result.
             controller.Response.Headers.Add("Content-Length", length.ToString());
+            // Allow cache
+            controller.Response.Headers.Add("Cache-Control", $"public, max-age={TimeSpan.FromDays(7).TotalSeconds}");
             return controller.PhysicalFile(path, MIME.GetContentType(extension), true);
         }
     }
