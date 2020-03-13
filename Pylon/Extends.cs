@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Pylon
 {
@@ -255,16 +254,6 @@ namespace Aiursoft.Pylon
             }
             services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
             return services;
-        }
-
-        public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
-        {
-            var taskList = new List<Task>();
-            foreach (var item in items)
-            {
-                taskList.Add(function(item));
-            }
-            return Task.WhenAll(taskList);
         }
     }
 }
