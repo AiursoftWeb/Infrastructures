@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,13 +29,7 @@ namespace Aiursoft.XelNaga.Services
                 .GetResult();
 
         public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
-        {
-            var taskList = new List<Task>();
-            foreach (var item in items)
-            {
-                taskList.Add(function(item));
-            }
-            return Task.WhenAll(taskList);
-        }
+            => Task.WhenAll(items
+                .Select(t => function(t)));
     }
 }
