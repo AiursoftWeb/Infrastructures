@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>3.1.2.0</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Company>Aiursoft</Company>
+    <Product>AiursoftWeb</Product>
+    <Authors>Anduin</Authors>
+    <Description>Basic tools and extends for all ASP.NET Core web apps</Description>
+    <PackageTags>extends tools</PackageTags>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.2" />
+  </ItemGroup>
+
+</Project>

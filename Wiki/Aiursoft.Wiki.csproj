@@ -9,6 +9,6 @@
     <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.18.1" />
+    <PackageReference Include="Markdig" Version="0.18.3" />
   </ItemGroup>
 </Project>
