@@ -21,10 +21,17 @@ namespace Aiursoft.WebTools
             return false;
         }
 
-        public static string UserAgent(this HttpRequest request)
-        {
-            return request.Headers["User-Agent"];
-        }
+        public static bool IsWeChat(this HttpRequest request) =>
+            request.UserAgent().ToLower().Contains("micromessenger");
+
+        public static bool IsIOS(this HttpRequest request) =>
+            request.UserAgent().ToLower().Contains("iphone");
+
+        public static bool IsAndroid(this HttpRequest request) =>
+            request.UserAgent().ToLower().Contains("android");
+
+        public static string UserAgent(this HttpRequest request) =>
+            request.Headers["User-Agent"];
 
         public static bool AllowTrack(this HttpContext httpContext)
         {
@@ -35,10 +42,7 @@ namespace Aiursoft.WebTools
             return !dnt;
         }
 
-        public static string GetUserId(this ClaimsPrincipal user)
-        {
-            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
-            return userId;
-        }
+        public static string GetUserId(this ClaimsPrincipal user) =>
+            user.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }
