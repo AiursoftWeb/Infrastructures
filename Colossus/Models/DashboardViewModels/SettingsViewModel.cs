@@ -24,6 +24,7 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
         [MaxLength(50)]
         [MinLength(5)]
         [ValidDomainName]
+        [Display(Name = "Name of your new site")]
         public string NewSiteName { get; set; }
 
         [Required]
