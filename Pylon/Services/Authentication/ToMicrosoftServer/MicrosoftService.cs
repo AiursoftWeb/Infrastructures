@@ -110,10 +110,10 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         private async Task<MicrosoftUserDetail> GetUserInfo(string accessToken)
         {
-            var apiAddress = "https://apis.live.net/v5.0/me";
+            var apiAddress = "https://apis.live.net" + $"/v5.0/me?access_token={WebUtility.UrlEncode(accessToken)}";
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
-            request.Headers.Add("Authorization", $"Bearer {accessToken}");
+            //request.Headers.Add("Authorization", $"Bearer {accessToken}");
             request.Headers.Add("User-Agent", $"curl/7.65.3");
 
             var response = await _client.SendAsync(request);
