@@ -21,6 +21,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private readonly string _tenant;
 
         public MicrosoftService(
             HTTPService http,
@@ -34,6 +35,8 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             _client = clientFactory.CreateClient();
             _clientId = configuration["Microsoft:ClientId"];
             _clientSecret = configuration["Microsoft:ClientSecret"];
+            _tenant = string.IsNullOrWhiteSpace(configuration["Microsoft:TenantId"]) ?
+                "common" : configuration["Microsoft:TenantId"];
             if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
             {
                 logger.LogWarning("Did not set correct Microsoft credential! You can only access the service property but can execute OAuth process!");
@@ -50,7 +53,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         public string GetBindRedirectLink()
         {
-            return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
@@ -62,7 +65,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         public string GetSignInRedirectLink(AiurUrl state)
         {
-            return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
@@ -80,7 +83,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
         {
-            var apiAddress = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+            var apiAddress = "https://login.microsoftonline.com" + $"/{_tenant}/oauth2/v2.0/token";
             var url = new AiurUrl(apiAddress, new { });
             var action = isBinding ? "bind-account" : "sign-in";
             var form = new AiurUrl(string.Empty, new MicrosoftAccessTokenAddressModel
