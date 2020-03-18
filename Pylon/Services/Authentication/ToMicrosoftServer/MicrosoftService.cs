@@ -50,24 +50,24 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         public string GetBindRedirectLink()
         {
-            return new AiurUrl("https://login.live.com", "/oauth20_authorize.srf", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 ResponseType = "code",
-                Scope = "bingads.manage",
+                Scope = "user.read",
                 State = ""
             }).ToString();
         }
 
         public string GetSignInRedirectLink(AiurUrl state)
         {
-            return new AiurUrl("https://login.live.com", "/oauth20_authorize.srf", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://login.microsoftonline.com", "/common/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
                 ResponseType = "code",
-                Scope = "bingads.manage",
+                Scope = "user.read%20Fmail.read",
                 State = state.ToString()
             }).ToString();
         }
@@ -80,7 +80,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
         {
-            var apiAddress = "https://login.live.com/oauth20_token.srf";
+            var apiAddress = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
             var url = new AiurUrl(apiAddress, new { });
             var action = isBinding ? "bind-account" : "sign-in";
             var form = new AiurUrl(string.Empty, new MicrosoftAccessTokenAddressModel
@@ -88,7 +88,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                Scope = "bingads.manage",
+                Scope = "user.read%20Fmail.read",
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GrantType = "authorization_code"
             });
