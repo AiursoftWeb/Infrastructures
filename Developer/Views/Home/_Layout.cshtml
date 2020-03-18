@@ -124,11 +124,10 @@
     <vc:aiur-logout></vc:aiur-logout>
     <vc:aiur-core-js></vc:aiur-core-js>
     <vc:aiur-market-js></vc:aiur-market-js>
+    <script src="@ServiceLocation.UI/node_modules/autosize/dist/autosize.min.js"></script>
     <script>
         asyncLayout('#render-part');
-    </script>
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-    <script>
+
         window.addEventListener('load', function () {
             autosize($('textarea'));
         });
