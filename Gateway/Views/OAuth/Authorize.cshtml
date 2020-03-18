@@ -37,20 +37,20 @@
                 <hr class="mb-1" />
                 <p class="text-muted mb-2">Sign in by</p>
                 <div class="row">
-                    <div class="col-lg-6 pb-3">
-                        @{
-                            var oauthInfo = new FinishAuthInfo
-                            {
-                                AppId = Model.AppId,
-                                RedirectUri = Model.RedirectUri,
-                                State = Model.State,
-                            };
-                            @foreach (var provider in AuthProviders)
-                            {
+                    @{
+                        var oauthInfo = new FinishAuthInfo
+                        {
+                            AppId = Model.AppId,
+                            RedirectUri = Model.RedirectUri,
+                            State = Model.State,
+                        };
+                        @foreach (var provider in AuthProviders)
+                        {
+                            <div class="col-lg-6 pb-3">
                                 <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))"><i class="fa fa-fw fa-@provider.GetButtonIcon()"></i>Sign in by @provider.GetName()</a>
-                            }
+                            </div>
                         }
-                    </div>
+                    }
                 </div>
             </form>
         </div>
