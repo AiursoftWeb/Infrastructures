@@ -67,7 +67,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
                 ResponseType = "code",
-                Scope = "user.read%20Fmail.read",
+                Scope = "user.read",
                 State = state.ToString()
             }).ToString();
         }
@@ -88,7 +88,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                Scope = "user.read%20Fmail.read",
+                Scope = "user.read",
                 RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GrantType = "authorization_code"
             });
