@@ -44,7 +44,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 
         public string GetSettingsPage() => $"https://github.com/settings/connections/applications/{_clientId}";
 
-        public string GetButtonColor() => "dark";
+        public string GetButtonColor() => "light btn-outline-secondary";
 
         public string GetButtonIcon() => "github";
 
