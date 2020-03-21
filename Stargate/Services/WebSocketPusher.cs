@@ -46,17 +46,12 @@ namespace Aiursoft.Stargate.Services
                 while (true)
                 {
                     var received = await _ws.ReceiveAsync(buffer, CancellationToken.None);
+                    if (_ws.State != WebSocketState.Open)
+                    {
+                        _dropped = true;
+                        return;
+                    }
                 }
-            }
-            catch (WebSocketException e) when (e.WebSocketErrorCode == WebSocketError.ConnectionClosedPrematurely)
-            {
-                _dropped = true;
-            }
-            catch (WebSocketException e) when (e.WebSocketErrorCode == WebSocketError.InvalidState)
-            {
-                _dropped = true;
-                var accessToken = _appsContainer.AccessToken();
-                await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Warning, "InPusher");
             }
             catch (Exception e)
             {
