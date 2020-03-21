@@ -5,8 +5,6 @@
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
-![logo](./Nexus_SC2.jpg)
-
 ## What is Nexus
 
 Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
