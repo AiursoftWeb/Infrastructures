@@ -24,8 +24,14 @@ namespace Aiursoft.Gateway.Services
 
         public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant, bool trusted)
         {
-            var noAuthRequired = await HasAuthorizedApp(user, model.AppId) || trusted == true;
-            if (noAuthRequired && forceGrant != true)
+            var authorized = await HasAuthorizedApp(user, model.AppId);
+            if (!authorized && trusted)
+            {
+                // Unauthorized. But viewing a trusted app. Just auto auth him.
+                await GrantTargetApp(user, model.AppId);
+                authorized = true;
+            }
+            if (authorized && forceGrant != true)
             {
                 // Dont need to auth, and the user don't force to auth.
                 var pack = await GeneratePack(user, model.AppId);
