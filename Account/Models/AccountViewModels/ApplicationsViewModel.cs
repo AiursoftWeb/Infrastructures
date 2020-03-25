@@ -13,7 +13,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public ApplicationsViewModel(AccountUser user) : base(user, "Applications") { }
 
-        public ICollection<App> Apps { get; set; } = new List<App>();
+        public IEnumerable<App> Apps { get; set; }
 
         public IEnumerable<Grant> Grants { get; set; } = new List<Grant>();
     }

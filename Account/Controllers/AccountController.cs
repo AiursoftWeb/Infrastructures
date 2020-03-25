@@ -8,6 +8,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Data;
 using Aiursoft.Pylon.Services;
+using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToDeveloperServer;
 using Aiursoft.SDK.Services.ToGatewayServer;
@@ -17,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -328,21 +330,17 @@ namespace Aiursoft.Account.Controllers
                 Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
             };
             var taskList = new List<Task>();
-            foreach (var app in model.Grants)
+            var appsBag = new ConcurrentBag<App>();
+            await model.Grants.ForEachParallel(async grant =>
             {
-                async Task AddApp()
+                try
                 {
-                    try
-                    {
-                        var appInfo = await _developerApiService.AppInfoAsync(app.AppID);
-                        model.Apps.Add(appInfo.App);
-                    }
-                    catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound) { }
+                    var appInfo = await _developerApiService.AppInfoAsync(grant.AppID);
+                    appsBag.Add(appInfo.App);
                 }
-                taskList.Add(AddApp());
-            }
-            await Task.WhenAll(taskList);
-            model.Apps = model.Apps.OrderBy(app =>
+                catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound) { }
+            });
+            model.Apps = appsBag.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime).ToList();
             return View(model);
         }
