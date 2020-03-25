@@ -7,7 +7,6 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToDeveloperServer;
@@ -95,7 +94,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 await _authLogger.LogAuthRecord(account.OwnerId, HttpContext, true, app.AppId);
                 await _signInManager.SignInAsync(account.Owner, true);
-                return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation);
+                return await _authManager.FinishAuth(account.Owner, oauthModel, app.ForceConfirmation, app.TrustedApp);
             }
             var viewModel = new SignInViewModel
             {
@@ -158,7 +157,7 @@ namespace Aiursoft.Gateway.Controllers
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext, true, model.AppId);
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             else
             {

@@ -8,6 +8,7 @@ using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
@@ -21,10 +22,12 @@ namespace Aiursoft.Gateway.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant)
+        public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant, bool trusted)
         {
-            if (await HasAuthorizedApp(user, model.AppId) && forceGrant == false)
+            var noAuthRequired = await HasAuthorizedApp(user, model.AppId) || trusted == true;
+            if (noAuthRequired && forceGrant != true)
             {
+                // Dont need to auth, and the user don't force to auth.
                 var pack = await GeneratePack(user, model.AppId);
                 var url = new AiurUrl(GetRegexRedirectUri(model.RedirectUri), new AuthResultAddressModel
                 {
@@ -35,7 +38,8 @@ namespace Aiursoft.Gateway.Services
             }
             else
             {
-                var url = new AiurUrl("", "OAuth", nameof(OAuthController.AuthorizeConfirm), new FinishAuthInfo
+                // Need to do the auth logic.
+                var url = new AiurUrl(string.Empty, "OAuth", nameof(OAuthController.AuthorizeConfirm), new FinishAuthInfo
                 {
                     AppId = model.AppId,
                     RedirectUri = model.RedirectUri,
@@ -72,9 +76,12 @@ namespace Aiursoft.Gateway.Services
             return pack;
         }
 
-        public async Task<bool> HasAuthorizedApp(GatewayUser user, string appId)
+        public Task<bool> HasAuthorizedApp(GatewayUser user, string appId)
         {
-            return await _dbContext.LocalAppGrant.AnyAsync(t => t.AppID == appId && t.GatewayUserId == user.Id);
+            return _dbContext
+                .LocalAppGrant
+                .Where(t => t.AppID == appId)
+                .AnyAsync(t => t.GatewayUserId == user.Id);
         }
 
         private string GetRegexRedirectUri(string sourceUrl)

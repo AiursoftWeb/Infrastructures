@@ -6,7 +6,6 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Attributes;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services.ToDeveloperServer;
@@ -81,7 +80,7 @@ namespace Aiursoft.Gateway.Controllers
             else if (user != null && app.ForceInputPassword != true && model.ForceConfirm != true)
             {
                 await _authLogger.LogAuthRecord(user.Id, HttpContext, true, app.AppId);
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             // Not signed in but we don't want his info
             else if (model.TryAutho == true)
@@ -117,7 +116,7 @@ namespace Aiursoft.Gateway.Controllers
             await _authLogger.LogAuthRecord(user.Id, HttpContext, result.Succeeded || result.RequiresTwoFactor, app.AppId);
             if (result.Succeeded)
             {
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             if (result.RequiresTwoFactor)
             {
@@ -185,7 +184,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             var user = await GetCurrentUserAsync();
             await _authManager.GrantTargetApp(user, model.AppId);
-            return await _authManager.FinishAuth(user, model, false);
+            return await _authManager.FinishAuth(user, model, false, false);
         }
 
         [HttpGet]
@@ -219,7 +218,7 @@ namespace Aiursoft.Gateway.Controllers
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DontAskMeOnIt);
             if (result.Succeeded)
             {
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             else if (result.IsLockedOut)
             {
@@ -268,7 +267,7 @@ namespace Aiursoft.Gateway.Controllers
             var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
             if (result.Succeeded)
             {
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             else if (result.IsLockedOut)
             {
@@ -344,7 +343,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
                 await _authLogger.LogAuthRecord(user.Id, HttpContext, true, app.AppId);
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                return await _authManager.FinishAuth(user, model, app.ForceConfirmation);
+                return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
             }
             AddErrors(result);
             model.Recover(app.AppName, app.IconPath);
