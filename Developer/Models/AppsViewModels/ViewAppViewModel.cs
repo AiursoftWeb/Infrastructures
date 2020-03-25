@@ -23,7 +23,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public ViewAppViewModel() { }
         public static async Task<ViewAppViewModel> SelfCreateAsync(
             DeveloperUser user,
-            App thisApp,
+            App appInDb,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
@@ -31,14 +31,14 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             ChannelService channelService,
             int pageNumber)
         {
-            var model = new ViewAppViewModel(user, thisApp);
-            await model.Recover(user, thisApp, coreApiService, appsContainer, sitesService, eventService, channelService, pageNumber);
+            var model = new ViewAppViewModel(user, appInDb);
+            await model.Recover(user, appInDb, coreApiService, appsContainer, sitesService, eventService, channelService, pageNumber);
             return model;
         }
 
         public async Task Recover(
             DeveloperUser user,
-            App thisApp,
+            App appInDb,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
@@ -47,7 +47,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             int pageNumber)
         {
             RootRecover(user);
-            var token = await appsContainer.AccessToken(thisApp.AppId, thisApp.AppSecret);
+            var token = await appsContainer.AccessToken(appInDb.AppId, appInDb.AppSecret);
 
             Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);
 
@@ -59,6 +59,8 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
             var channels = await channelService.ViewMyChannelsAsync(token);
             Channels = channels.Channels;
+
+            Trusted = appInDb.TrustedApp;
         }
 
         private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
@@ -142,6 +144,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<LogCollection> ErrorLogs { get; set; }
         public IEnumerable<ChannelDetail> Channels { get; set; }
+        public bool Trusted { get; internal set; }
         public AiurPagedCollection<Grant> Grants { get; set; }
     }
 }
