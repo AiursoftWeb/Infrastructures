@@ -27,10 +27,10 @@ namespace Aiursoft.SDK.Models.Developer
             this.AppPlatform = platform;
             this.IconPath = iconPath;
         }
-        public virtual string AppId { get; set; }
+        public string AppId { get; set; }
         [JsonIgnore]
-        public virtual string AppSecret { get; set; }
-        public virtual string AppName { get; set; }
+        public string AppSecret { get; set; }
+        public string AppName { get; set; }
 
         /// <summary>
         /// sitename/filepath/filename.extension
@@ -62,17 +62,18 @@ namespace Aiursoft.SDK.Models.Developer
         public bool ChangeGrantInfo { get; set; }
         public bool ViewAuditLog { get; set; }
         public bool ManageSocialAccount { get; set; }
+        public bool TrustedApp { get; set; }
 
-        public virtual string CreatorId { get; set; }
+        public string CreatorId { get; set; }
         [ForeignKey(nameof(CreatorId))]
         [JsonIgnore]
-        public virtual DeveloperUser Creator { get; set; }
+        public DeveloperUser Creator { get; set; }
 
         [Url]
         [Display(Name = "Privacy Statement Url")]
-        public virtual string PrivacyStatementUrl { get; set; }
+        public string PrivacyStatementUrl { get; set; }
         [Url]
         [Display(Name = "License Url")]
-        public virtual string LicenseUrl { get; set; }
+        public string LicenseUrl { get; set; }
     }
 }
