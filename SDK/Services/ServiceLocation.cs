@@ -47,7 +47,7 @@ namespace Aiursoft.SDK.Services
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
             Probe = TrySet(section["ProbePath"], "https://probe.aiursoft.com");
             ProbeOpenCDN = TrySet(section["ProbeOpenCDNPath"], "https://probe.cdn.aiursoft.com/{0}");
-            ProbeDownloadCDN = TrySet(section["ProbeDownloadCDNPath"], "https://probe.cdn.aiursoft.com/{0}");
+            ProbeDownloadCDN = TrySet(section["ProbeDownloadCDNPath"], "https://probe.download.cdn.aiursoft.com/{0}");
             ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiur.site");
             Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
 
