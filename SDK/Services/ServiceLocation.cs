@@ -44,7 +44,7 @@ namespace Aiursoft.SDK.Services
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
             Probe = TrySet(section["ProbePath"], "https://probe.aiursoft.com");
-            ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiur.site");
+            ProbeIO = TrySet(section["ProbeIOPath"], "https://probe.cdn.aiursoft.com/{0}");
             Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
 
             StargateListenAddress = Stargate
