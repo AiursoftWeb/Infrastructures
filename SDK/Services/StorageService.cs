@@ -25,7 +25,7 @@ namespace Aiursoft.Pylon.Services
         public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
-            var domain = string.Format(serviceLocation.ProbeIO, siteName);
+            var domain = string.Format(serviceLocation.ProbeOpenCDN, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
