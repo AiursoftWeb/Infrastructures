@@ -9,10 +9,10 @@ namespace Aiursoft.Pylon.Services
 {
     public static class StorageService
     {
-        public static string GetProbeDownloadAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
+        public static string GetProbeOpenAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
         {
             var fullPath = GetProbeFullPath(siteName, path, fileName);
-            return GetProbeDownloadAddress(serviceLocation, fullPath);
+            return GetProbeOpenAddress(serviceLocation, fullPath);
         }
 
         public static string GetProbeFullPath(string siteName, string path, string fileName)
@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
             return fullPath;
         }
 
-        public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
+        public static string GetProbeOpenAddress(ServiceLocation serviceLocation, string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
             var domain = string.Format(serviceLocation.ProbeOpenCDN, siteName);

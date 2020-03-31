@@ -31,7 +31,7 @@ namespace Aiursoft.Pylon.Services
         public async Task<string> GetUserImageUrl(ClaimsPrincipal userClaims)
         {
             var user = await _userManager.GetUserAsync(userClaims);
-            return StorageService.GetProbeDownloadAddress(_serviceLocation, user.IconFilePath);
+            return StorageService.GetProbeOpenAddress(_serviceLocation, user.IconFilePath);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace Aiursoft.Probe.Controllers
                 fileStream.Close();
             }
             var filePath = StorageService.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
-            var path = StorageService.GetProbeDownloadAddress(_serviceLocation, filePath);
+            var path = StorageService.GetProbeOpenAddress(_serviceLocation, filePath);
             return Json(new UploadFileViewModel
             {
                 InternetPath = path,
