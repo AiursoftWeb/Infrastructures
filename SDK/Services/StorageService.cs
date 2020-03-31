@@ -15,6 +15,12 @@ namespace Aiursoft.Pylon.Services
             return GetProbeOpenAddress(serviceLocation, fullPath);
         }
 
+        public static string GetProbeDownloadAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
+        {
+            var fullPath = GetProbeFullPath(siteName, path, fileName);
+            return GetProbeDownloadAddress(serviceLocation, fullPath);
+        }
+
         public static string GetProbeFullPath(string siteName, string path, string fileName)
         {
             var filePath = $"{path}/{fileName}".TrimStart('/');
@@ -26,6 +32,14 @@ namespace Aiursoft.Pylon.Services
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
             var domain = string.Format(serviceLocation.ProbeOpenCDN, siteName);
+            var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
+            return $"{domain}/{path}{fileName.ToUrlEncoded()}";
+        }
+
+        public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
+        {
+            var (siteName, folders, fileName) = SplitToPath(fullpath);
+            var domain = string.Format(serviceLocation.ProbeDownloadCDN, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
