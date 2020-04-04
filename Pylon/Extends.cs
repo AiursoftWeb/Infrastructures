@@ -1,3 +1,5 @@
+using Aiursoft.Archon.SDK;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.Handler.Attributes;
@@ -248,6 +250,7 @@ namespace Aiursoft.Pylon
             AppsContainer.CurrentAppName = appName;
             // Use status server to report bugs.
             services.AddStatusServer();
+            services.AddArchonServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))

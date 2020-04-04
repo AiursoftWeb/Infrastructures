@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Handler.Models;
 using System;
 
-namespace Aiursoft.SDK.Models.Archon
+namespace Aiursoft.Archon.SDK.Models
 {
     public class AccessTokenViewModel : AiurProtocol
     {

@@ -1,10 +1,10 @@
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Developer;
-using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToDeveloperServer;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Gateway.Services
 {
-
     public class GrantChecker : IScopedDependency
     {
         private readonly GatewayDbContext _dbContext;
@@ -30,6 +29,7 @@ namespace Aiursoft.Gateway.Services
             _tokenManager = tokenManager;
         }
 
+#warning consider cache here.
         public async Task<GatewayUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);

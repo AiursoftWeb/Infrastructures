@@ -1,5 +1,5 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Status.SDK.Models;
 using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.Extensions.Configuration;

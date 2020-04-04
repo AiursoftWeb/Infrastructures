@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.SDK.Models.Archon
+namespace Aiursoft.Archon.SDK.Models
 {
     public class IndexViewModel : AiurProtocol
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Archon.SDK.Services
 {
     /// <summary>
     /// For storaging other apps with appid and appsecret for current app.

@@ -1,9 +1,9 @@
-﻿using Aiursoft.SDK.Services.ToArchonServer;
+﻿using Aiursoft.Archon.SDK.Services.ToArchonServer;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Archon.SDK.Services
 {
     public class AppContainer
     {

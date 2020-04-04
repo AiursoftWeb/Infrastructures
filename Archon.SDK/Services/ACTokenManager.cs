@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Archon.SDK.Services
 {
     public class ACToken
     {

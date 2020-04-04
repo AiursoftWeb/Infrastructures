@@ -1,8 +1,8 @@
-﻿using Aiursoft.DocGenerator.Middlewares;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Aiursoft.Status.SDK.Models;
 using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Aiursoft.Wiki.Data;

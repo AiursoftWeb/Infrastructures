@@ -1,4 +1,5 @@
-﻿using Aiursoft.SDK.Models;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.ForApps.AddressModels;
 using Aiursoft.SDK.Services.ToGatewayServer;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +7,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Pylon.Services
 {
     public class AuthService<T> where T : AiurUserBase, new()
     {

@@ -1,31 +1,30 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Archon;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.ToArchonServer
+namespace Aiursoft.Archon.SDK.Services.ToArchonServer
 {
     public class ArchonApiService : IScopedDependency
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly ArchonLocator _archonLocator;
         private readonly HTTPService _http;
 
         public ArchonApiService(
-            ServiceLocation serviceLocation,
+            ArchonLocator serviceLocation,
             HTTPService http)
         {
-            _serviceLocation = serviceLocation;
+            _archonLocator = serviceLocation;
             _http = http;
         }
 
-
         public async Task<IndexViewModel> GetKey()
         {
-            var url = new AiurUrl(_serviceLocation.Archon, "Home", "Index", new { });
+            var url = new AiurUrl(_archonLocator.Endpoint, "Home", "Index", new { });
             var result = await _http.Get(url, true);
             var JResult = JsonConvert.DeserializeObject<IndexViewModel>(result);
 
@@ -36,7 +35,7 @@ namespace Aiursoft.SDK.Services.ToArchonServer
 
         public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
         {
-            var url = new AiurUrl(_serviceLocation.Archon, "API", "AccessToken", new AccessTokenAddressModel
+            var url = new AiurUrl(_archonLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
             {
                 AppId = appId,
                 AppSecret = appSecret
