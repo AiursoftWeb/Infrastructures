@@ -20,10 +20,5 @@ namespace Aiursoft.Archon.Controllers
         {
             return this.Protocol(ErrorType.Success, "Welcome to Archon server! View our wiki at: " + _serviceLocation.Wiki);
         }
-
-        public IActionResult Error()
-        {
-            return this.Protocol(ErrorType.UnknownError, "Archon server was crashed! Please tell us!");
-        }
     }
 }
