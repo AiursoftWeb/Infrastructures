@@ -29,7 +29,7 @@ namespace Aiursoft.WWW
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<WWWUser>("WWW");
+            services.AddAiurDependenciesWithIdentity<WWWUser>("WWW");
 
         }
 

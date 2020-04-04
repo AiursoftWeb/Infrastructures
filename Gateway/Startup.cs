@@ -41,7 +41,7 @@ namespace Aiursoft.Gateway
             services.AddAiurMvc();
 
             services
-                .AddAiurDependencies<GatewayUser>("Gateway")
+                .AddAiurDependenciesWithIdentity<GatewayUser>("Gateway")
                 .AddBots();
             services.AddSessionBasedCaptcha();
         }

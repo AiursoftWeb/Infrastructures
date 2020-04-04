@@ -31,7 +31,7 @@ namespace Aiursoft.Wiki
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies<WikiUser>("Wiki");
+            services.AddAiurDependenciesWithIdentity<WikiUser>("Wiki");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

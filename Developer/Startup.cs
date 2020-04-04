@@ -30,7 +30,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<DeveloperUser>("Developer");
+            services.AddAiurDependenciesWithIdentity<DeveloperUser>("Developer");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

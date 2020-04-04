@@ -31,7 +31,7 @@ namespace Aiursoft.Colossus
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies<ColossusUser>("Colossus");
+            services.AddAiurDependenciesWithIdentity<ColossusUser>("Colossus");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

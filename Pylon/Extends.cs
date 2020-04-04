@@ -9,6 +9,7 @@ using Aiursoft.Scanner;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services;
+using Aiursoft.Status.SDK;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -229,7 +230,7 @@ namespace Aiursoft.Pylon
             return host;
         }
 
-        public static IServiceCollection AddAiurDependencies<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
         {
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
@@ -245,6 +246,8 @@ namespace Aiursoft.Pylon
         public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
         {
             AppsContainer.CurrentAppName = appName;
+            // Use status server to report bugs.
+            services.AddStatusServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))

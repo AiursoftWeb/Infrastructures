@@ -29,7 +29,7 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependencies<EEUser>("EE");
+            services.AddAiurDependenciesWithIdentity<EEUser>("EE");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

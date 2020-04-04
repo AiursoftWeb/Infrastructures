@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services.ToArchonServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,34 +17,15 @@ namespace Aiursoft.SDK.Services
         private readonly string _currentAppSecret;
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly ILogger<AppsContainer> _logger;
 
         public AppsContainer(
             IServiceScopeFactory scopeFactory,
-            IConfiguration configuration,
-            ILogger<AppsContainer> logger)
+            IConfiguration configuration)
         {
             _allApps = new List<AppContainer>();
             _scopeFactory = scopeFactory;
-            _logger = logger;
             _currentAppId = configuration[$"{CurrentAppName}AppId"];
             _currentAppSecret = configuration[$"{CurrentAppName}AppSecret"];
-            if (string.IsNullOrWhiteSpace(_currentAppId) || string.IsNullOrWhiteSpace(_currentAppSecret))
-            {
-                _logger.LogError("Did not get appId and appSecret from configuration!");
-            }
-        }
-
-        private AppContainer GetApp(string appId, string appSecret)
-        {
-            var exists = _allApps.FirstOrDefault(t => t.AppId == appId);
-            if (exists == null)
-            {
-                var newContainer = new AppContainer(appId, appSecret);
-                _allApps.Add(newContainer);
-                exists = newContainer;
-            }
-            return exists;
         }
 
         public async Task<string> AccessToken()
@@ -60,31 +38,17 @@ namespace Aiursoft.SDK.Services
             var app = GetApp(appId, appSecret);
             return await app.AccessToken(_scopeFactory);
         }
-    }
 
-    public class AppContainer
-    {
-        public readonly string AppId;
-        private readonly string _appSecret;
-        public AppContainer(string appId, string appSecret)
+        private AppContainer GetApp(string appId, string appSecret)
         {
-            AppId = appId;
-            _appSecret = appSecret;
-        }
-
-        public async Task<string> AccessToken(IServiceScopeFactory scopeFactory)
-        {
-            if (DateTime.UtcNow > _accessTokenDeadTime)
+            var exists = _allApps.FirstOrDefault(t => t._appId == appId);
+            if (exists == null)
             {
-                using IServiceScope scope = scopeFactory.CreateScope();
-                var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
-                var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
-                _latestAccessToken = serverResult.AccessToken;
-                _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
+                var newContainer = new AppContainer(appId, appSecret);
+                _allApps.Add(newContainer);
+                exists = newContainer;
             }
-            return _latestAccessToken;
+            return exists;
         }
-        private string _latestAccessToken { get; set; } = string.Empty;
-        private DateTime _accessTokenDeadTime { get; set; } = DateTime.MinValue;
     }
 }
