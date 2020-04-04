@@ -1,8 +1,9 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon;
+using Aiursoft.SDK.Models.Archon;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Archon.Controllers
 {
@@ -10,15 +11,26 @@ namespace Aiursoft.Archon.Controllers
     public class HomeController : Controller
     {
         private readonly ServiceLocation _serviceLocation;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ServiceLocation serviceLocation)
+        public HomeController(
+            ServiceLocation serviceLocation,
+            IConfiguration configuration)
         {
             _serviceLocation = serviceLocation;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
         {
-            return this.Protocol(ErrorType.Success, "Welcome to Archon server! View our wiki at: " + _serviceLocation.Wiki);
+            var keyConfig = _configuration.GetSection("Key");
+            return Json(new IndexViewModel
+            {
+                Code = ErrorType.Success,
+                Message = "Welcome to Archon server! View our wiki at: " + _serviceLocation.Wiki,
+                Exponent = keyConfig["Exponent"],
+                Modulus = keyConfig["Modulus"]
+            });
         }
     }
 }
