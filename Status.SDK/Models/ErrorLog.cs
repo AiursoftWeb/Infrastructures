@@ -2,15 +2,8 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.SDK.Models.Status
+namespace Aiursoft.Status.SDK.Models
 {
-    public enum EventLevel
-    {
-        Exception = 1,
-        Warning = 2,
-        Info = 3
-    }
-
     public class ErrorLog
     {
         [JsonIgnore]

@@ -1,32 +1,32 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Status;
-using Aiursoft.SDK.Models.Status.EventAddressModels;
-using Aiursoft.SDK.Models.Status.EventViewModels;
+using Aiursoft.Status.SDK.Models;
+using Aiursoft.Status.SDK.Models.EventAddressModels;
+using Aiursoft.Status.SDK.Models.EventViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.ToStatusServer
+namespace Aiursoft.Status.SDK.Services.ToStatusServer
 {
     public class EventService : IScopedDependency
     {
         private readonly HTTPService _http;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly StatusLocator _statusLocation;
 
         public EventService(
             HTTPService http,
-            ServiceLocation serviceLocation)
+            StatusLocator serviceLocation)
         {
             _http = http;
-            _serviceLocation = serviceLocation;
+            _statusLocation = serviceLocation;
         }
 
         public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel, string path)
         {
-            var url = new AiurUrl(_serviceLocation.Status, "Event", "Log", new { });
+            var url = new AiurUrl(_statusLocation.Endpoint, "Event", "Log", new { });
             var form = new AiurUrl(string.Empty, new LogAddressModel
             {
                 AccessToken = accessToken,
@@ -44,7 +44,7 @@ namespace Aiursoft.SDK.Services.ToStatusServer
 
         public async Task<ViewLogViewModel> ViewAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Status, "Event", "View", new ViewAddressModel
+            var url = new AiurUrl(_statusLocation.Endpoint, "Event", "View", new ViewAddressModel
             {
                 AccessToken = accessToken
             });

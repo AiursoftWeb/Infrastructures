@@ -9,7 +9,7 @@ using Aiursoft.SDK.Services;
 using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDK.Services.ToProbeServer;
 using Aiursoft.SDK.Services.ToStargateServer;
-using Aiursoft.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

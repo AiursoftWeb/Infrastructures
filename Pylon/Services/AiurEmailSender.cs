@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Services;
-using Aiursoft.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Models;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;

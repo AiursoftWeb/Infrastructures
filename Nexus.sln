@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Handler", "Handler
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WebTools", "WebTools\Aiursoft.WebTools.csproj", "{0CCF02B0-24C5-495F-B421-F0D5675FE437}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status.SDK", "Status.SDK\Aiursoft.Status.SDK.csproj", "{6E75A1BA-889F-4557-B011-77160CA21B11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{0CCF02B0-24C5-495F-B421-F0D5675FE437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CCF02B0-24C5-495F-B421-F0D5675FE437}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CCF02B0-24C5-495F-B421-F0D5675FE437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E75A1BA-889F-4557-B011-77160CA21B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E75A1BA-889F-4557-B011-77160CA21B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E75A1BA-889F-4557-B011-77160CA21B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E75A1BA-889F-4557-B011-77160CA21B11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{B9687EBA-6767-47F5-9CAD-3448F995EB87} = {528F9F3C-6EED-48D2-B14B-52091AF7FA69}
 		{88EF000E-1858-4613-8ED5-AFD14F3BD10E} = {DC83ABF9-E8AB-4495-8596-557657A372C1}
 		{0CCF02B0-24C5-495F-B421-F0D5675FE437} = {DC83ABF9-E8AB-4495-8596-557657A372C1}
+		{6E75A1BA-889F-4557-B011-77160CA21B11} = {12274B29-5390-4BD1-A3A2-9EFA35D6C82C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {409FF7E6-F857-4AB5-A12A-731997AB4B56}

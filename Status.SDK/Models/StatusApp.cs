@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.SDK.Models.Status
+namespace Aiursoft.Status.SDK.Models
 {
     public class StatusApp
     {

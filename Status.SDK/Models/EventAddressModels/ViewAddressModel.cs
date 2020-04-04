@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.SDK.Models.Status.EventAddressModels
+﻿namespace Aiursoft.Status.SDK.Models.EventAddressModels
 {
     public class ViewAddressModel
     {

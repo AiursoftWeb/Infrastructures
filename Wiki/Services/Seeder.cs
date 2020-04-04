@@ -2,9 +2,9 @@
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Status;
 using Aiursoft.SDK.Services;
-using Aiursoft.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Models;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;

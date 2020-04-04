@@ -1,5 +1,5 @@
-using Aiursoft.SDK.Models.Status;
 using Aiursoft.Status.Models;
+using Aiursoft.Status.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

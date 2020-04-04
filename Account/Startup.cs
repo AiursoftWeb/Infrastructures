@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
 using Aiursoft.Pylon;
+using Aiursoft.Status.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,8 @@ namespace Aiursoft.Account
         {
             services.AddDbContext<AccountDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddStatusServer();
 
             services.AddIdentity<AccountUser, IdentityRole>()
                 .AddEntityFrameworkStores<AccountDbContext>()
