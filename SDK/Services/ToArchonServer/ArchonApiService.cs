@@ -22,6 +22,18 @@ namespace Aiursoft.SDK.Services.ToArchonServer
             _http = http;
         }
 
+
+        public async Task<IndexViewModel> GetKey()
+        {
+            var url = new AiurUrl(_serviceLocation.Archon, "Home", "Index", new { });
+            var result = await _http.Get(url, true);
+            var JResult = JsonConvert.DeserializeObject<IndexViewModel>(result);
+
+            if (JResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(JResult);
+            return JResult;
+        }
+
         public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
         {
             var url = new AiurUrl(_serviceLocation.Archon, "API", "AccessToken", new AccessTokenAddressModel
