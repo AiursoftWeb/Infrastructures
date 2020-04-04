@@ -38,7 +38,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
@@ -78,7 +78,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(ViewMySitesViewModel))]
         public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
@@ -108,7 +108,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(ViewSiteDetailViewModel))]
         public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
@@ -143,7 +143,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateSiteInfo(UpdateSiteInfoAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)
@@ -173,7 +173,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteSite(DeleteSiteAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)
@@ -195,7 +195,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)
             {
                 return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

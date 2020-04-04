@@ -33,7 +33,7 @@ namespace Aiursoft.Status.Controllers
         [HttpPost]
         public async Task<IActionResult> Log(LogAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.StatusApps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
@@ -60,7 +60,7 @@ namespace Aiursoft.Status.Controllers
         [APIProduces(typeof(ViewLogViewModel))]
         public async Task<IActionResult> View(ViewAddressModel model)
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.StatusApps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {

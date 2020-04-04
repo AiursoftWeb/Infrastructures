@@ -39,7 +39,7 @@ namespace Aiursoft.Gateway.Controllers
         [APIProduces(typeof(CodeToOpenIdViewModel))]
         public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
         {
-            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appId = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var targetPack = await _dbContext
                 .OAuthPack
                 .SingleOrDefaultAsync(t => t.Code == model.Code);
@@ -77,7 +77,7 @@ namespace Aiursoft.Gateway.Controllers
         [APIProduces(typeof(UserInfoViewModel))]
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
-            var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appId = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
             if (user == null)
             {

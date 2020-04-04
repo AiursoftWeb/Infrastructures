@@ -42,7 +42,7 @@ namespace Aiursoft.Probe.Services
 
         public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames = null, bool recursiveCreate = false)
         {
-            var appid = _tokenManager.ValidateAccessToken(accessToken);
+            var appid = await _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)

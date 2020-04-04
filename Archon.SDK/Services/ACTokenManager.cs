@@ -1,11 +1,11 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Archon.SDK.Services
 {
@@ -43,7 +43,7 @@ namespace Aiursoft.Archon.SDK.Services
             return ($"{tokenBase64}.{tokenSign}", token.Expires);
         }
 
-        public string ValidateAccessToken(string value)
+        public async Task<string> ValidateAccessToken(string value)
         {
             ACToken token;
             try
@@ -55,7 +55,7 @@ namespace Aiursoft.Archon.SDK.Services
                 {
                     throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
                 }
-                if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+                if (!await _rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
                 {
                     throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid signature! Token could not be authorized!");
                 }
