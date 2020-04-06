@@ -411,7 +411,7 @@
                                                 <td data-utc-time="@channel.LastAccessTime"></td>
                                                 <td>@channel.ConnectedCount</td>
                                                 @{
-                                                    var path = new AiurUrl(ServiceLocation.StargateListenAddress, "Listen", "Channel", new ChannelAddressModel
+                                                    var path = new AiurUrl(StargateLocator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
                                                     {
                                                         Id = channel.Channel.Id,
                                                         Key = channel.Channel.ConnectKey

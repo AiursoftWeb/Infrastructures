@@ -18,8 +18,6 @@ namespace Aiursoft.SDK.Services
         public string Colossus { get; private set; }
         public string Developer { get; private set; }
         public string EE { get; private set; }
-        public string Stargate { get; private set; }
-        public string StargateListenAddress { get; private set; }
         public string Wiki { get; private set; }
         public string WWW { get; private set; }
         public string Probe { get; private set; }
@@ -39,17 +37,12 @@ namespace Aiursoft.SDK.Services
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
-            Stargate = TrySet(section["StargatePath"], "https://stargate.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
             Probe = TrySet(section["ProbePath"], "https://probe.aiursoft.com");
             ProbeOpenCDN = TrySet(section["ProbeOpenCDNPath"], "https://probe.cdn.aiursoft.com/{0}");
             ProbeDownloadCDN = TrySet(section["ProbeDownloadCDNPath"], "https://probe.download.cdn.aiursoft.com/{0}");
             ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiur.site");
-
-            StargateListenAddress = Stargate
-                .Replace("https://", "wss://")
-                .Replace("http://", "ws://");
 
             AsyncHelper.RunSync(async () =>
             {

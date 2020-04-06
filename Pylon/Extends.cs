@@ -10,7 +10,7 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Scanner;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Models.API.OAuthAddressModels;
-using Aiursoft.SDK.Services;
+using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.SDK;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services.Authentication;
@@ -251,6 +251,7 @@ namespace Aiursoft.Pylon
             // Use status server to report bugs.
             services.AddStatusServer();
             services.AddArchonServer();
+            services.AddStargateServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
