@@ -2,6 +2,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Models.Stargate.MessageAddressModels;
+using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
@@ -12,18 +13,18 @@ namespace Aiursoft.SDK.Services.ToStargateServer
     public class PushMessageService : IScopedDependency
     {
         private readonly HTTPService _httpService;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly StargateLocator _stargateLocator;
         public PushMessageService(
             HTTPService httpService,
-            ServiceLocation serviceLocation)
+            StargateLocator serviceLocation)
         {
             _httpService = httpService;
-            _serviceLocation = serviceLocation;
+            _stargateLocator = serviceLocation;
         }
 
         public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, string messageContent, bool noexception = false)
         {
-            var url = new AiurUrl(_serviceLocation.Stargate, "Message", "PushMessage", new { });
+            var url = new AiurUrl(_stargateLocator.Endpoint, "Message", "PushMessage", new { });
             var form = new AiurUrl(string.Empty, new PushMessageAddressModel
             {
                 AccessToken = accessToken,
