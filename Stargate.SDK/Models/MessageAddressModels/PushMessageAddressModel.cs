@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.SDK.Models.Stargate.MessageAddressModels
+namespace Aiursoft.Stargate.SDK.Models.MessageAddressModels
 {
     public class PushMessageAddressModel
     {

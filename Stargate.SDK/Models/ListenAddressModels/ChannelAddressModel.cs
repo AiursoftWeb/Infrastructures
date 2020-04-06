@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.SDK.Models.Stargate.ListenAddressModels
+﻿namespace Aiursoft.Stargate.SDK.Models.ListenAddressModels
 {
     public class ChannelAddressModel
     {

@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.SDK.Models.Stargate
+﻿namespace Aiursoft.Stargate.SDK.Models
 {
     public class Message
     {

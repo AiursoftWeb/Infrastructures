@@ -1,14 +1,13 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Stargate.MessageAddressModels;
-using Aiursoft.Stargate.SDK.Services;
+using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.ToStargateServer
+namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
 {
     public class PushMessageService : IScopedDependency
     {

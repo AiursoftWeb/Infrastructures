@@ -2,9 +2,9 @@
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
-using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
-using Aiursoft.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
+using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;

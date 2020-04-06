@@ -1,16 +1,15 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Stargate.ChannelAddressModels;
-using Aiursoft.SDK.Models.Stargate.ChannelViewModels;
-using Aiursoft.SDK.Models.Stargate.ListenAddressModels;
-using Aiursoft.Stargate.SDK.Services;
+using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
+using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
+using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.ToStargateServer
+namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
 {
     public class ChannelService : IScopedDependency
     {

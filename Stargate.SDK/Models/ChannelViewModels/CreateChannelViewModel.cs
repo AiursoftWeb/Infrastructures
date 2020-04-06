@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.SDK.Models.Stargate.ChannelViewModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
 {
     public class CreateChannelViewModel : AiurProtocol
     {

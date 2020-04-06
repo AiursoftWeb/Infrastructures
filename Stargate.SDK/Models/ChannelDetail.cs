@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.SDK.Models.Stargate
+namespace Aiursoft.Stargate.SDK.Models
 {
     public class ChannelDetail
     {

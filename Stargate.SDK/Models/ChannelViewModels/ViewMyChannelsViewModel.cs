@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Handler.Models;
 using System.Collections.Generic;
 
-namespace Aiursoft.SDK.Models.Stargate.ChannelViewModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
 {
     public class ViewMyChannelsViewModel : AiurProtocol
     {

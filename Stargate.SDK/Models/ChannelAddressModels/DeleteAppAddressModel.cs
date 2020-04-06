@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.SDK.Models.Stargate.ChannelAddressModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelAddressModels
 {
     public class DeleteAppAddressModel
     {

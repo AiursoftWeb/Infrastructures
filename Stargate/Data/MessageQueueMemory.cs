@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Stargate;
+using Aiursoft.Stargate.SDK.Models;
 using System.Collections.Generic;
 
 namespace Aiursoft.Stargate.Data
