@@ -14,7 +14,6 @@ namespace Aiursoft.SDK.Services
         private readonly HttpClient _client;
         public string Account { get; private set; }
         public string Gateway { get; private set; }
-        public string Archon { get; private set; }
         public string UI { get; private set; }
         public string Colossus { get; private set; }
         public string Developer { get; private set; }
@@ -27,7 +26,6 @@ namespace Aiursoft.SDK.Services
         public string ProbeOpenCDN { get; private set; }
         public string ProbeDownloadCDN { get; private set; }
         public string ProbeIO { get; private set; }
-        public string Status { get; private set; }
 
         public ServiceLocation(
             IConfiguration configuration,
@@ -37,7 +35,6 @@ namespace Aiursoft.SDK.Services
             var section = configuration.GetSection("Dependencies");
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
             Gateway = TrySet(section["GatewayPath"], "https://gateway.aiursoft.com");
-            Archon = TrySet(section["ArchonPath"], "https://archon.aiursoft.com");
             UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
@@ -49,7 +46,6 @@ namespace Aiursoft.SDK.Services
             ProbeOpenCDN = TrySet(section["ProbeOpenCDNPath"], "https://probe.cdn.aiursoft.com/{0}");
             ProbeDownloadCDN = TrySet(section["ProbeDownloadCDNPath"], "https://probe.download.cdn.aiursoft.com/{0}");
             ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiur.site");
-            Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
 
             StargateListenAddress = Stargate
                 .Replace("https://", "wss://")
