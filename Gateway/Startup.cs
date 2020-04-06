@@ -2,7 +2,6 @@
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
 using Edi.Captcha;
-using Kahla.SDK.Abstract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -41,8 +40,7 @@ namespace Aiursoft.Gateway
             services.AddAiurMvc();
 
             services
-                .AddAiurDependenciesWithIdentity<GatewayUser>("Gateway")
-                .AddBots();
+                .AddAiurDependenciesWithIdentity<GatewayUser>("Gateway");
             services.AddSessionBasedCaptcha();
         }
 
