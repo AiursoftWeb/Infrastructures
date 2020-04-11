@@ -2,8 +2,8 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
-using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Probe.SDK.Models;
+using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
