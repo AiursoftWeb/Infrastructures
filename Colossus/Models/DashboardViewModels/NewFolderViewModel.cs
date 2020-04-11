@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Attributes;
+﻿using Aiursoft.WebTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

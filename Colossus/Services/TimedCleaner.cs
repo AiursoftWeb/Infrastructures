@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services.ToProbeServer;
+using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

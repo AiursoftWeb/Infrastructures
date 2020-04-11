@@ -29,5 +29,6 @@
     <ProjectReference Include="..\Status.SDK\Aiursoft.Status.SDK.csproj" />
     <ProjectReference Include="..\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
     <ProjectReference Include="..\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
+    <ProjectReference Include="..\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
   </ItemGroup>
 </Project>

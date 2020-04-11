@@ -1,13 +1,13 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Probe;
+using Aiursoft.Probe.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using File = Aiursoft.SDK.Models.Probe.File;
+using File = Aiursoft.Probe.SDK.Models.File;
 
 namespace Aiursoft.Probe.Services
 {

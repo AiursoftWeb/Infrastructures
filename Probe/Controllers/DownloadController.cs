@@ -2,10 +2,10 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.SDK.Models;
+using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon.Services;
-using Aiursoft.SDK.Models.Probe;
-using Aiursoft.SDK.Models.Probe.DownloadAddressModels;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -98,9 +98,9 @@ namespace Aiursoft.Probe.Controllers
                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName));
         }
 
-        public Task<SDK.Models.Probe.File> GetFileWithCache(string[] folders, string fileName, Folder root)
+        public Task<SDK.Models.File> GetFileWithCache(string[] folders, string fileName, Folder root)
         {
-            return _cache.GetAndCache($"file.info.{folders}.{fileName}", async () =>
+            return _cache.GetAndCache($"file.info.{string.Join(".", folders)}.{fileName}", async () =>
             {
                 var folder = await _folderLocator.LocateAsync(folders, root, false);
                 var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);

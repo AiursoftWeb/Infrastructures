@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Models.Probe;
+﻿using Aiursoft.Probe.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Data

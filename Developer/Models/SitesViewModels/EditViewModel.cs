@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Models.Developer;
+using Aiursoft.WebTools.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
