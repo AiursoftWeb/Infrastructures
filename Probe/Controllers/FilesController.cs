@@ -107,8 +107,8 @@ namespace Aiursoft.Probe.Controllers
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
-            var filePath = StorageService.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
-            var path = StorageService.GetProbeOpenAddress(_probeLocator, filePath);
+            var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
+            var path = _probeLocator.GetProbeOpenAddress(filePath);
             return Json(new UploadFileViewModel
             {
                 InternetPath = path,
