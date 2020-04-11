@@ -4,6 +4,7 @@ using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
@@ -252,6 +253,7 @@ namespace Aiursoft.Pylon
             services.AddStatusServer();
             services.AddArchonServer();
             services.AddStargateServer();
+            services.AddProbeServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
