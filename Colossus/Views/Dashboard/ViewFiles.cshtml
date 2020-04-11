@@ -102,7 +102,7 @@
                                                 <i class="fa fa-fw fa-2x fa-file-text text-azure"></i>
                                             </div>
                                             <div class="ml-3 pt-1">
-                                                <a href="@ServiceLocation.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                                <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                                     @file.FileName
                                                 </a>
                                             </div>
@@ -115,7 +115,7 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="@ServiceLocation.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
                                                     <i class="fa fa-fw fa-download"></i>
                                                     Download
                                                 </a>

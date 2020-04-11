@@ -1,24 +1,23 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using System;
 using System.Linq;
 
-namespace Aiursoft.Pylon.Services
+namespace Aiursoft.Probe.SDK.Services
 {
     public static class StorageService
     {
-        public static string GetProbeOpenAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
+        public static string GetProbeOpenAddress(this ProbeLocator probeLocator, string siteName, string path, string fileName)
         {
             var fullPath = GetProbeFullPath(siteName, path, fileName);
-            return GetProbeOpenAddress(serviceLocation, fullPath);
+            return GetProbeOpenAddress(probeLocator, fullPath);
         }
 
-        public static string GetProbeDownloadAddress(this ServiceLocation serviceLocation, string siteName, string path, string fileName)
+        public static string GetProbeDownloadAddress(this ProbeLocator probeLocator, string siteName, string path, string fileName)
         {
             var fullPath = GetProbeFullPath(siteName, path, fileName);
-            return GetProbeDownloadAddress(serviceLocation, fullPath);
+            return GetProbeDownloadAddress(probeLocator, fullPath);
         }
 
         public static string GetProbeFullPath(string siteName, string path, string fileName)
@@ -28,18 +27,18 @@ namespace Aiursoft.Pylon.Services
             return fullPath;
         }
 
-        public static string GetProbeOpenAddress(ServiceLocation serviceLocation, string fullpath)
+        public static string GetProbeOpenAddress(ProbeLocator probeLocator, string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
-            var domain = string.Format(serviceLocation.ProbeOpenCDN, siteName);
+            var domain = string.Format(probeLocator.ProbeOpenCDN, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
 
-        public static string GetProbeDownloadAddress(ServiceLocation serviceLocation, string fullpath)
+        public static string GetProbeDownloadAddress(ProbeLocator probeLocator, string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
-            var domain = string.Format(serviceLocation.ProbeDownloadCDN, siteName);
+            var domain = string.Format(probeLocator.ProbeDownloadCDN, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
@@ -57,8 +56,10 @@ namespace Aiursoft.Pylon.Services
             return (siteName, folders, fileName);
         }
 
-        private static string[] SplitStrings(string folderNames) =>
-            folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+        private static string[] SplitStrings(string folderNames)
+        {
+            return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+        }
     }
 
     public enum SaveFileOptions

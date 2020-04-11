@@ -4,6 +4,7 @@
 @using Aiursoft.Pylon
 @using Aiursoft.Pylon.Services;
 @using Aiursoft.SDK.Services;
+@using Aiursoft.Probe.SDK.Services;
 @using Aiursoft.XelNaga.Tools;
 @using Aiursoft.XelNaga.Models;
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -11,6 +12,7 @@
 @inject SignInManager<ColossusUser> SignInManager
 @inject UserManager<ColossusUser> UserManager
 @inject ServiceLocation ServiceLocation
+@inject ProbeLocator ProbeLocator
 @inject IViewLocalizer Localizer
 @inject UserImageGenerator<ColossusUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

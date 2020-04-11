@@ -51,7 +51,7 @@
                                     <div class="input-group-append">
                                         @{
                                             var httpRegex = new Regex("^https://", RegexOptions.Compiled);
-                                            var ioPath = ServiceLocation.ProbeIO;
+                                            var ioPath = ProbeLocator.ProbeIO;
                                             ioPath = httpRegex.Replace(ioPath, string.Empty);
                                         }
                                         <span class="input-group-text" id="basic-addon2">@string.Format(ioPath, string.Empty)</span>

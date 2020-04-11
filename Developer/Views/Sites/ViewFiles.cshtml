@@ -93,7 +93,7 @@
                                 <tr>
                                     <td data-order="Z@(file.FileName)">
                                         <i class="fa fa-file-o text-primary"></i>
-                                        <a href="@ServiceLocation.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                        <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
                                         </a>
                                     </td>
@@ -104,7 +104,7 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="@ServiceLocation.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
                                                     <i class="fa fa-fw fa-download"></i>
                                                     Download
                                                 </a>

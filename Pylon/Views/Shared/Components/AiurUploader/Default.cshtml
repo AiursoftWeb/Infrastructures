@@ -1,12 +1,11 @@
-﻿@using Aiursoft.XelNaga.Models
+﻿@model Aiursoft.Pylon.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
+@using Aiursoft.XelNaga.Models
 @using Aiursoft.XelNaga.Tools
-@using Aiursoft.SDK.Services
-@using Aiursoft.Pylon.Services
+@using Aiursoft.Probe.SDK.Services
 
-@model Aiursoft.Pylon.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
-@inject ServiceLocation ServiceLocation
+@inject ProbeLocator ProbeLocator
 @{
-    var url = new AiurUrl(ServiceLocation.Probe, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new
+    var url = new AiurUrl(ProbeLocator.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new
     {
         PBToken = Model.PBToken
     });
@@ -17,7 +16,7 @@
     }
     if (!string.IsNullOrWhiteSpace(Model.DefaultFile))
     {
-        extension += $"data-default-file=\"{StorageService.GetProbeOpenAddress(ServiceLocation, Model.DefaultFile)}\" ";
+        extension += $"data-default-file=\"{StorageService.GetProbeOpenAddress(ProbeLocator, Model.DefaultFile)}\" ";
     }
     if (Model.SizeInMB > 0)
     {

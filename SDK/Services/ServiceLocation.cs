@@ -20,10 +20,6 @@ namespace Aiursoft.SDK.Services
         public string EE { get; private set; }
         public string Wiki { get; private set; }
         public string WWW { get; private set; }
-        public string Probe { get; private set; }
-        public string ProbeOpenCDN { get; private set; }
-        public string ProbeDownloadCDN { get; private set; }
-        public string ProbeIO { get; private set; }
 
         public ServiceLocation(
             IConfiguration configuration,
@@ -39,11 +35,6 @@ namespace Aiursoft.SDK.Services
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
-            Probe = TrySet(section["ProbePath"], "https://probe.aiursoft.com");
-            ProbeOpenCDN = TrySet(section["ProbeOpenCDNPath"], "https://probe.cdn.aiursoft.com/{0}");
-            ProbeDownloadCDN = TrySet(section["ProbeDownloadCDNPath"], "https://probe.download.cdn.aiursoft.com/{0}");
-            ProbeIO = TrySet(section["ProbeIOPath"], "https://{0}.aiur.site");
-
             AsyncHelper.RunSync(async () =>
             {
                 UI = await TryGetCDNDomain(UI);

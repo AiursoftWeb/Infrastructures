@@ -4,10 +4,9 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
+using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
-using Aiursoft.SDK.Services;
 using Aiursoft.WebTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,22 +28,22 @@ namespace Aiursoft.Probe.Controllers
         private readonly FolderLocator _folderLocator;
         private readonly IConfiguration _configuration;
         private readonly FolderOperator _folderCleaner;
-        private readonly ServiceLocation _serviceLocation;
         private readonly TokenEnsurer _tokenEnsurer;
+        private readonly ProbeLocator _probeLocator;
 
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
             FolderOperator folderCleaner,
             IConfiguration configuration,
-            ServiceLocation serviceLocation,
-            TokenEnsurer tokenEnsurer)
+            TokenEnsurer tokenEnsurer,
+            ProbeLocator probeLocator)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _configuration = configuration;
-            _serviceLocation = serviceLocation;
             _tokenEnsurer = tokenEnsurer;
+            _probeLocator = probeLocator;
             _folderCleaner = folderCleaner;
         }
 
@@ -109,7 +108,7 @@ namespace Aiursoft.Probe.Controllers
                 fileStream.Close();
             }
             var filePath = StorageService.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
-            var path = StorageService.GetProbeOpenAddress(_serviceLocation, filePath);
+            var path = StorageService.GetProbeOpenAddress(_probeLocator, filePath);
             return Json(new UploadFileViewModel
             {
                 InternetPath = path,

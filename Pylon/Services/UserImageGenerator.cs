@@ -1,5 +1,5 @@
-﻿using Aiursoft.SDK.Models;
-using Aiursoft.SDK.Services;
+﻿using Aiursoft.Probe.SDK.Services;
+using Aiursoft.SDK.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -9,14 +9,14 @@ namespace Aiursoft.Pylon.Services
 {
     public class UserImageGenerator<T> where T : AiurUserBase
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly ProbeLocator _probeLocator;
         private readonly UserManager<T> _userManager;
 
         public UserImageGenerator(
-            ServiceLocation serviceLocation,
+            ProbeLocator probeLocator,
             UserManager<T> userManager)
         {
-            _serviceLocation = serviceLocation;
+            _probeLocator = probeLocator;
             _userManager = userManager;
         }
 
@@ -31,7 +31,7 @@ namespace Aiursoft.Pylon.Services
         public async Task<string> GetUserImageUrl(ClaimsPrincipal userClaims)
         {
             var user = await _userManager.GetUserAsync(userClaims);
-            return StorageService.GetProbeOpenAddress(_serviceLocation, user.IconFilePath);
+            return StorageService.GetProbeOpenAddress(_probeLocator, user.IconFilePath);
         }
     }
 }

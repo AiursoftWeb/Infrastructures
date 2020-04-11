@@ -1,13 +1,15 @@
 ﻿@using Aiursoft.Pylon.Services
 @using Aiursoft.Pylon
 @using Aiursoft.SDK.Services
+@using Aiursoft.Probe.SDK.Services
 @using System.Reflection
 
 @inject ServiceLocation ServiceLocation
+@inject ProbeLocator ProbeLocator
 @{
     string[] domains = {
         ServiceLocation.Gateway,
-        ServiceLocation.Probe,
+        ProbeLocator.ProbeOpenCDN,
         ServiceLocation.UI,
         ServiceLocation.Account
     };
