@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.WebTools.Attributes
+namespace Aiursoft.SDKTools.Attributes
 {
     public class NoSpace : ValidationAttribute
     {

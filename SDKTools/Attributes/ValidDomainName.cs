@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Aiursoft.WebTools.Attributes
+namespace Aiursoft.SDKTools.Attributes
 {
     public class ValidDomainName : ValidationAttribute
     {

@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Handler.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Aiursoft.Handler.Attributes
@@ -12,9 +11,9 @@ namespace Aiursoft.Handler.Attributes
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.Controller is Controller controller && !controller.ModelState.IsValid)
+            if (!context.ModelState.IsValid)
             {
-                context.Result = ResultGenerator.GetInvalidModelStateErrorResponse(controller.ModelState);
+                context.Result = ResultGenerator.GetInvalidModelStateErrorResponse(context.ModelState);
             }
             base.OnActionExecuting(context);
         }

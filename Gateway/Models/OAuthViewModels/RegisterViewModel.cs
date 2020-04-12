@@ -1,5 +1,5 @@
 ﻿using Aiursoft.SDK.Models;
-using Aiursoft.WebTools.Attributes;
+using Aiursoft.SDKTools.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 

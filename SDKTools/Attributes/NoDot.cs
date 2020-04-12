@@ -1,19 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.WebTools.Attributes
+namespace Aiursoft.SDKTools.Attributes
 {
-    public class IsGuidOrEmpty : ValidationAttribute
+    public class NoDot : ValidationAttribute
     {
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
-                if (string.IsNullOrWhiteSpace(val))
-                {
-                    return true;
-                }
-                return Guid.TryParse(val, out _);
+                return !val.Contains(".");
             }
             return true;
         }
@@ -26,7 +21,7 @@ namespace Aiursoft.WebTools.Attributes
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} is not a valid GUID value!");
+                return new ValidationResult($"The {validationContext.DisplayName} can not contain dot!");
             }
         }
     }

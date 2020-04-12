@@ -1,4 +1,4 @@
-using Aiursoft.WebTools.Attributes;
+using Aiursoft.SDKTools.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.SDK.Models.API.AccountAddressModels
