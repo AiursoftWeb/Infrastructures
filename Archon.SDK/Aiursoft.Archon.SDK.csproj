@@ -7,10 +7,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
     <ProjectReference Include="..\SDKTools\Aiursoft.SDKTools.csproj" />
     <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
-    <ProjectReference Include="..\DocGenerator\Aiursoft.DocGenerator.csproj" />
-    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>3.1.2.2</Version>
@@ -7,10 +7,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
     <ProjectReference Include="..\SDKTools\Aiursoft.SDKTools.csproj" />
     <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
-    <ProjectReference Include="..\DocGenerator\Aiursoft.DocGenerator.csproj" />
-    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
   </ItemGroup>
 
 </Project>
