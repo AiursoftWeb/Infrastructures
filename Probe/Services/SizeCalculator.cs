@@ -9,7 +9,7 @@ namespace Aiursoft.Probe.Services
         public IEnumerable<int> TwoPows()
         {
             yield return 0;
-            for (int i = 1; true; i *= 2)
+            for (int i = 1; i <= 8192; i *= 2)
             {
                 yield return i;
             }
@@ -17,9 +17,9 @@ namespace Aiursoft.Probe.Services
 
         public int Ceiling(int input)
         {
-            if (input >= 10000)
+            if (input >= 8192)
             {
-                return 10000;
+                return 8192;
             }
             foreach (var optional in TwoPows())
             {
