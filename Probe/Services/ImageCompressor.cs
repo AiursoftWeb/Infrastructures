@@ -11,11 +11,14 @@ namespace Aiursoft.Probe.Services
     public class ImageCompressor : ITransientDependency
     {
         private readonly IConfiguration _configuration;
+        private readonly SizeCalculator _sizeCalculator;
 
         public ImageCompressor(
-            IConfiguration configuration)
+            IConfiguration configuration,
+            SizeCalculator sizeCalculator)
         {
             _configuration = configuration;
+            _sizeCalculator = sizeCalculator;
         }
 
         public async Task<string> ClearExif(string path)
@@ -67,8 +70,9 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        public async Task<string> Compress(string path, int width, int height)
+        public async Task<string> Compress(string path, int width)
         {
+            width = _sizeCalculator.Ceiling(width);
             try
             {
                 var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
@@ -76,8 +80,8 @@ namespace Aiursoft.Probe.Services
                 {
                     Directory.CreateDirectory(compressedFolder);
                 }
-                var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await SaveReducedImage(path, compressedImagePath, width, height);
+                var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
+                await SaveReducedImage(path, compressedImagePath, width, 0);
                 return compressedImagePath;
             }
             catch (ImageFormatException)
