@@ -72,16 +72,8 @@ namespace Aiursoft.Probe.Services
 
         public async Task<string> Compress(string path, int width, int height)
         {
-            if (height == width)
-            {
-                width = _sizeCalculator.Ceiling(width);
-                height = _sizeCalculator.Ceiling(height);
-            }
-            if (height != width)
-            {
-                width = _sizeCalculator.Ceiling(width);
-                height = 0;
-            }
+            width = _sizeCalculator.Ceiling(width);
+            height = _sizeCalculator.Ceiling(height);
             try
             {
                 var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
