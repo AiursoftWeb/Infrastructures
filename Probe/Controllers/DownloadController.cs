@@ -112,7 +112,7 @@ namespace Aiursoft.Probe.Controllers
         {
             int.TryParse(Request.Query["w"], out int width);
             int.TryParse(Request.Query["h"], out int height);
-            if (width >= 0 && height >= 0)
+            if (width >= 0 && height >= 0 && width + height > 0)
             {
                 return this.WebFile(await _imageCompressor.Compress(path, width, height), extension);
             }
