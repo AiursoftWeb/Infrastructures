@@ -22,7 +22,7 @@ namespace Aiursoft.Pylon.Services
 
         public async Task<IHtmlContent> RenderUserImageAsync(ClaimsPrincipal user, int width = 20, int height = 20, string @class = "rounded")
         {
-            var url = await GetUserImageUrl(user) + $"?w={width}&h={height}";
+            var url = await GetUserImageUrl(user) + $"?w={width}&square=true";
             var content = new HtmlContentBuilder();
             content.SetHtmlContent($"<img class='{@class}' src='{url}' style='width: {width}px; height: {height}px;' />");
             return content;

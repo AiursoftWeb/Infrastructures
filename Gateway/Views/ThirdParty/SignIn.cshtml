@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <div class="text-center">
-                <img class="rounded" style="width:100px;height:100px;" src="@ProbeLocator.GetProbeOpenAddress(Model.AppImageUrl)?w=100&h=100">
+                <img class="rounded" style="width:100px;height:100px;" src="@ProbeLocator.GetProbeOpenAddress(Model.AppImageUrl)?w=128&square=true">
                 @if (!string.IsNullOrWhiteSpace(Model.UserDetail.AvatarUrl))
                 {
                     <img class="rounded ml-3" style="width:100px;height:100px;" src="@Model.UserDetail.AvatarUrl">
