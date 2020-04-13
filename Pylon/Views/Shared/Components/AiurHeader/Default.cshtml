@@ -39,7 +39,7 @@ else if (!string.IsNullOrWhiteSpace(Values.ProjectValue))
 
 @foreach (var domain in domains)
 {
-    <link rel="dns-prefetch" href="@domain" />
+    <link rel="dns-prefetch" href="@string.Format(domain, string.Empty)" />
 }
 
 <link rel="icon" type="image/x-icon" href="@ServiceLocation.UI/favicon.ico">
