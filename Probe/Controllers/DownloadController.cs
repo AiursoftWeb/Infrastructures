@@ -111,9 +111,10 @@ namespace Aiursoft.Probe.Controllers
         private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
         {
             int.TryParse(Request.Query["w"], out int width);
-            if (width >= 0)
+            int.TryParse(Request.Query["h"], out int height);
+            if (width >= 0 && height >= 0)
             {
-                return this.WebFile(await _imageCompressor.Compress(path, width), extension);
+                return this.WebFile(await _imageCompressor.Compress(path, width, height), extension);
             }
             else
             {

@@ -70,9 +70,18 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        public async Task<string> Compress(string path, int width)
+        public async Task<string> Compress(string path, int width, int height)
         {
-            width = _sizeCalculator.Ceiling(width);
+            if (height == width)
+            {
+                width = _sizeCalculator.Ceiling(width);
+                height = _sizeCalculator.Ceiling(height);
+            }
+            if (height != width)
+            {
+                width = _sizeCalculator.Ceiling(width);
+                height = 0;
+            }
             try
             {
                 var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
@@ -80,8 +89,8 @@ namespace Aiursoft.Probe.Services
                 {
                     Directory.CreateDirectory(compressedFolder);
                 }
-                var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await SaveReducedImage(path, compressedImagePath, width, 0);
+                var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
+                await SaveReducedImage(path, compressedImagePath, width, height);
                 return compressedImagePath;
             }
             catch (ImageFormatException)
