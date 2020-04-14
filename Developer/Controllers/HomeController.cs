@@ -1,7 +1,7 @@
-﻿using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.Developer.Models;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;

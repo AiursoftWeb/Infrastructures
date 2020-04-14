@@ -1,9 +1,11 @@
-﻿using Aiursoft.SDK.Models.Developer;
+﻿using Aiursoft.Developer.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Developer.Data
 {
+
+
     public class DeveloperDbContext : IdentityDbContext<DeveloperUser>
     {
         public DeveloperDbContext(DbContextOptions<DeveloperDbContext> options)
@@ -11,6 +13,6 @@ namespace Aiursoft.Developer.Data
         {
         }
 
-        public DbSet<App> Apps { get; set; }
+        public DbSet<DeveloperApp> Apps { get; set; }
     }
 }

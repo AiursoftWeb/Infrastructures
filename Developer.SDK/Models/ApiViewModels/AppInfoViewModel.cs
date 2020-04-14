@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.SDK.Models.Developer.ApiViewModels
+namespace Aiursoft.Developer.SDK.Models.ApiViewModels
 {
     public class AppInfoViewModel : AiurProtocol
     {

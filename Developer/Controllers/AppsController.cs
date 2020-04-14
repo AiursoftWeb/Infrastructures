@@ -1,12 +1,12 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Developer.Data;
+using Aiursoft.Developer.Models;
 using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Status.SDK.Services.ToStatusServer;
@@ -85,7 +85,7 @@ namespace Aiursoft.Developer.Controllers
                 model.RootRecover(cuser);
                 return View(model);
             }
-            var newApp = new App(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform, model.IconPath)
+            var newApp = new DeveloperApp(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform, model.IconPath)
             {
                 CreatorId = cuser.Id
             };

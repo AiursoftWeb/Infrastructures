@@ -1,21 +1,21 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Developer.SDK.Models.ApiAddressModels;
+using Aiursoft.Developer.SDK.Models.ApiViewModels;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.Developer.ApiAddressModels;
-using Aiursoft.SDK.Models.Developer.ApiViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.ToDeveloperServer
+namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
 {
     public class DeveloperApiService : IScopedDependency
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly DeveloperLocator _serviceLocation;
         private readonly HTTPService _http;
         public DeveloperApiService(
-            ServiceLocation serviceLocation,
+            DeveloperLocator serviceLocation,
             HTTPService http)
         {
             _serviceLocation = serviceLocation;
@@ -24,7 +24,7 @@ namespace Aiursoft.SDK.Services.ToDeveloperServer
 
         public async Task<bool> IsValidAppAsync(string appId, string appSecret)
         {
-            var url = new AiurUrl(_serviceLocation.Developer, "api", "IsValidApp", new IsValidateAppAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "api", "IsValidApp", new IsValidateAppAddressModel
             {
                 AppId = appId,
                 AppSecret = appSecret
@@ -36,7 +36,7 @@ namespace Aiursoft.SDK.Services.ToDeveloperServer
 
         public async Task<AppInfoViewModel> AppInfoAsync(string appId)
         {
-            var url = new AiurUrl(_serviceLocation.Developer, "api", "AppInfo", new AppInfoAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "api", "AppInfo", new AppInfoAddressModel
             {
                 AppId = appId
             });

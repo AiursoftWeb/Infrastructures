@@ -1,5 +1,5 @@
-﻿using Aiursoft.SDK.Models.API;
-using Aiursoft.SDK.Models.Developer;
+﻿using Aiursoft.Developer.SDK.Models;
+using Aiursoft.SDK.Models.API;
 using System;
 using System.Collections.Generic;
 

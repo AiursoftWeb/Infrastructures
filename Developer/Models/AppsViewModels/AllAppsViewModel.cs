@@ -1,5 +1,4 @@
-﻿using Aiursoft.SDK.Models.Developer;
-using System;
+﻿using System;
 
 namespace Aiursoft.Developer.Models.AppsViewModels
 {

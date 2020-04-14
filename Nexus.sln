@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.SDK", "Probe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.SDKTools", "SDKTools\Aiursoft.SDKTools.csproj", "{7EC7BDAB-C2AE-45F9-AB1A-E4E55D3926B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Developer.SDK", "Developer.SDK\Aiursoft.Developer.SDK.csproj", "{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +171,10 @@ Global
 		{7EC7BDAB-C2AE-45F9-AB1A-E4E55D3926B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EC7BDAB-C2AE-45F9-AB1A-E4E55D3926B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EC7BDAB-C2AE-45F9-AB1A-E4E55D3926B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,6 +207,7 @@ Global
 		{96A23BD0-F040-41EA-AB66-E2DCFBE284A1} = {12274B29-5390-4BD1-A3A2-9EFA35D6C82C}
 		{25401A0D-0510-4E2C-BFEB-2C6520DF65C5} = {12274B29-5390-4BD1-A3A2-9EFA35D6C82C}
 		{7EC7BDAB-C2AE-45F9-AB1A-E4E55D3926B9} = {DC83ABF9-E8AB-4495-8596-557657A372C1}
+		{E0FAC65F-4BB9-4060-BB11-1ED4B6D23E0D} = {12274B29-5390-4BD1-A3A2-9EFA35D6C82C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {409FF7E6-F857-4AB5-A12A-731997AB4B56}

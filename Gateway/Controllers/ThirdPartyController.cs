@@ -1,4 +1,5 @@
-﻿using Aiursoft.DocGenerator.Attributes;
+﻿using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
+using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
@@ -9,7 +10,6 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Pylon;
 using Aiursoft.SDK.Models;
 using Aiursoft.SDK.Services;
-using Aiursoft.SDK.Services.ToDeveloperServer;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services.Authentication;
 using Microsoft.AspNetCore.Authorization;

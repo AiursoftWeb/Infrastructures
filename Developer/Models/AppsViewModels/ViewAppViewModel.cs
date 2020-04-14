@@ -3,7 +3,6 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.SDK.Models.API;
-using Aiursoft.SDK.Models.Developer;
 using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Stargate.SDK.Models;
@@ -23,7 +22,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public ViewAppViewModel() { }
         public static async Task<ViewAppViewModel> SelfCreateAsync(
             DeveloperUser user,
-            App appInDb,
+            DeveloperApp appInDb,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
@@ -38,7 +37,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
 
         public async Task Recover(
             DeveloperUser user,
-            App appInDb,
+            DeveloperApp appInDb,
             CoreApiService coreApiService,
             AppsContainer appsContainer,
             SitesService sitesService,
@@ -63,7 +62,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             Trusted = appInDb.TrustedApp;
         }
 
-        private ViewAppViewModel(DeveloperUser user, App thisApp) : base(user)
+        private ViewAppViewModel(DeveloperUser user, DeveloperApp thisApp) : base(user)
         {
             if (thisApp.CreatorId != user.Id)
             {

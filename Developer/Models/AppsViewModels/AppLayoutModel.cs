@@ -1,5 +1,4 @@
-﻿using Aiursoft.SDK.Models.Developer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +22,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public bool EmailConfirmed { get; set; }
         public string NickName { get; set; }
         public int AppCount { get; set; }
-        public IEnumerable<App> AllApps { get; set; }
+        public IEnumerable<DeveloperApp> AllApps { get; set; }
     }
 }

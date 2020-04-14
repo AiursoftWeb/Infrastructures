@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Developer.Data;
+using Aiursoft.Developer.Models;
 using Aiursoft.Pylon;
-using Aiursoft.SDK.Models.Developer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

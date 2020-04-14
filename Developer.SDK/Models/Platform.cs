@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.SDK.Models
+﻿namespace Aiursoft.Developer.SDK.Models
 {
     public enum Platform : int
     {

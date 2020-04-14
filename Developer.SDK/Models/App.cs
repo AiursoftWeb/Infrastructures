@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.SDK.Models.Developer
+namespace Aiursoft.Developer.SDK.Models
 {
     public class App
     {
@@ -63,11 +62,6 @@ namespace Aiursoft.SDK.Models.Developer
         public bool ViewAuditLog { get; set; }
         public bool ManageSocialAccount { get; set; }
         public bool TrustedApp { get; set; }
-
-        public string CreatorId { get; set; }
-        [ForeignKey(nameof(CreatorId))]
-        [JsonIgnore]
-        public DeveloperUser Creator { get; set; }
 
         [Url]
         [Display(Name = "Privacy Statement Url")]

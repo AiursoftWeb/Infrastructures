@@ -1,5 +1,6 @@
 using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.SDK;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.Handler.Attributes;
@@ -254,6 +255,7 @@ namespace Aiursoft.Pylon
             services.AddArchonServer();
             services.AddStargateServer();
             services.AddProbeServer();
+            services.AddDeveloperServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))

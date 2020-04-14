@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.SDK.Models.Developer;
 using System;
 using System.ComponentModel.DataAnnotations;
 
