@@ -26,6 +26,7 @@ namespace Aiursoft.Developer.SDK.Models
             this.AppPlatform = platform;
             this.IconPath = iconPath;
         }
+        [Key]
         public string AppId { get; set; }
         [JsonIgnore]
         public string AppSecret { get; set; }
