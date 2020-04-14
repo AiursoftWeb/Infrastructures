@@ -5,6 +5,7 @@
 @using Aiursoft.Pylon.Services;
 @using Aiursoft.SDK.Services;
 @using Aiursoft.Probe.SDK.Services;
+@using Aiursoft.Developer.SDK.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
@@ -14,6 +15,7 @@
 @inject UserManager<AccountUser> UserManager
 @inject ServiceLocation ServiceLocation
 @inject ProbeLocator ProbeLocator
+@inject DeveloperLocator DeveloperLocator
 @inject UserImageGenerator<AccountUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Aiursoft.Pylon
