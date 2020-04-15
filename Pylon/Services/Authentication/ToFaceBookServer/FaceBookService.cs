@@ -1,6 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Services.Authentication;
@@ -17,7 +17,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
     public class FaceBookService : IAuthProvider
     {
         private readonly HTTPService _http;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
@@ -26,7 +26,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
             HTTPService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             ILogger<FaceBookService> logger)
         {
             _http = http;
@@ -55,7 +55,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
                 ClientId = _clientId,
 
                 //Debug RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 State = "a",
                 ResponseType = "code"
             }).ToString();
@@ -66,7 +66,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
             return new AiurUrl("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
                 State = state.ToString(),
                 ResponseType = "code"
             }).ToString();
@@ -88,7 +88,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString()
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString()
             });
             try
             {

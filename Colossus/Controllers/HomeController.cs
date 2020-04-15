@@ -1,9 +1,9 @@
 ﻿using Aiursoft.Colossus.Models;
 using Aiursoft.Colossus.Models.HomeViewModels;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +17,17 @@ namespace Aiursoft.Colossus.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly SignInManager<ColossusUser> _signInManager;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _gatewayLocator;
         private const int _defaultSize = 30 * 1024 * 1024;
 
         public HomeController(
             IConfiguration configuration,
             SignInManager<ColossusUser> signInManager,
-            ServiceLocation serviceLocation)
+            GatewayLocator gatewayLocator)
         {
             _configuration = configuration;
             _signInManager = signInManager;
-            _serviceLocation = serviceLocation;
+            _gatewayLocator = gatewayLocator;
         }
 
         [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
@@ -44,7 +44,7 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return this.SignOutRootServer(_serviceLocation.Gateway, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            return this.SignOutRootServer(_gatewayLocator.Endpoint, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Services.Authentication;
@@ -17,7 +17,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
     public class GoogleService : IAuthProvider
     {
         private readonly HTTPService _http;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
@@ -26,7 +26,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             HTTPService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             ILogger<GoogleService> logger)
         {
             _http = http;
@@ -53,7 +53,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             return new AiurUrl("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 State = "a",
                 Scope = "profile",
                 ResponseType = "code"
@@ -65,7 +65,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
             return new AiurUrl("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
                 State = state.ToString(),
                 Scope = "profile",
                 ResponseType = "code"
@@ -88,7 +88,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GrantType = "authorization_code"
             });
             try

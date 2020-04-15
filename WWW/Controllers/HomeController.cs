@@ -1,7 +1,7 @@
-﻿using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Services;
 using Aiursoft.WWW.Models;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
@@ -17,13 +17,13 @@ namespace Aiursoft.WWW.Controllers
     {
         public readonly SignInManager<WWWUser> _signInManager;
         public readonly ILogger _logger;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(
             SignInManager<WWWUser> signInManager,
             ILoggerFactory loggerFactory,
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             IStringLocalizer<HomeController> localizer)
         {
             _signInManager = signInManager;
@@ -43,7 +43,7 @@ namespace Aiursoft.WWW.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignOutRootServer(_serviceLocation.Gateway, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.Endpoint, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
     }
 }
