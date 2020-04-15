@@ -1,4 +1,5 @@
-﻿using Aiursoft.EE.Data;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +18,8 @@ namespace Aiursoft.EE
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["EEAppId"];
+            AppsContainer.CurrentAppSecret = configuration["EEAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -29,7 +32,7 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<EEUser>("EE");
+            services.AddAiurDependenciesWithIdentity<EEUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Pylon;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ namespace Aiursoft.Wiki
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["WikiAppId"];
+            AppsContainer.CurrentAppSecret = configuration["WikiAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -31,7 +34,7 @@ namespace Aiursoft.Wiki
 
             services.AddAiurMvc();
 
-            services.AddAiurDependenciesWithIdentity<WikiUser>("Wiki");
+            services.AddAiurDependenciesWithIdentity<WikiUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

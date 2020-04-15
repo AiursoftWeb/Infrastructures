@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Pylon;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +18,8 @@ namespace Aiursoft.WWW
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["WWWAppId"];
+            AppsContainer.CurrentAppSecret = configuration["WWWAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -29,7 +32,7 @@ namespace Aiursoft.WWW
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<WWWUser>("WWW");
+            services.AddAiurDependenciesWithIdentity<WWWUser>();
 
         }
 

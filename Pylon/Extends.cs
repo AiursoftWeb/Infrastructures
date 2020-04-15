@@ -1,5 +1,4 @@
 using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
@@ -235,22 +234,21 @@ namespace Aiursoft.Pylon
             return host;
         }
 
-        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services, string appName) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
         {
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            services.AddAiurDependencies(appName);
+            services.AddAiurDependencies();
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
             return services;
         }
 
-        public static IServiceCollection AddAiurDependencies(this IServiceCollection services, string appName)
+        public static IServiceCollection AddAiurDependencies(this IServiceCollection services)
         {
-            AppsContainer.CurrentAppName = appName;
             // Use status server to report bugs.
             services.AddStatusServer();
             services.AddArchonServer();

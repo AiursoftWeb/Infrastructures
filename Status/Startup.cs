@@ -1,3 +1,4 @@
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon;
 using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +17,8 @@ namespace Aiursoft.Status
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["StatusAppId"];
+            AppsContainer.CurrentAppSecret = configuration["StatusAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,7 +28,7 @@ namespace Aiursoft.Status
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies("Status");
+            services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

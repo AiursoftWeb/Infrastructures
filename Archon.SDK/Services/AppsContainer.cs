@@ -12,9 +12,8 @@ namespace Aiursoft.Archon.SDK.Services
     /// </summary>
     public class AppsContainer : ISingletonDependency
     {
-        public static string CurrentAppName { get; set; }
-        public readonly string _currentAppId;
-        private readonly string _currentAppSecret;
+        public static string CurrentAppId;
+        public static string CurrentAppSecret;
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;
 
@@ -24,13 +23,11 @@ namespace Aiursoft.Archon.SDK.Services
         {
             _allApps = new List<AppContainer>();
             _scopeFactory = scopeFactory;
-            _currentAppId = configuration[$"{CurrentAppName}AppId"];
-            _currentAppSecret = configuration[$"{CurrentAppName}AppSecret"];
         }
 
         public async Task<string> AccessToken()
         {
-            return await AccessToken(_currentAppId, _currentAppSecret);
+            return await AccessToken(CurrentAppId, CurrentAppSecret);
         }
 
         public async Task<string> AccessToken(string appId, string appSecret)

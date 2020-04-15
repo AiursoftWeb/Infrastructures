@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,8 @@ namespace Aiursoft.Account
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["AccountAppId"];
+            AppsContainer.CurrentAppSecret = configuration["AccountAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -31,7 +34,7 @@ namespace Aiursoft.Account
 
             services.AddAiurMvc();
 
-            services.AddAiurDependenciesWithIdentity<AccountUser>("Account");
+            services.AddAiurDependenciesWithIdentity<AccountUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

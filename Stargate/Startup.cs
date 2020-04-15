@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Pylon;
 using Aiursoft.Stargate.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,8 @@ namespace Aiursoft.Stargate
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["TestAppId"];
+            AppsContainer.CurrentAppSecret = configuration["TestAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,7 +28,7 @@ namespace Aiursoft.Stargate
 
             services.AddAiurMvc();
 
-            services.AddAiurDependencies("Test");
+            services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
