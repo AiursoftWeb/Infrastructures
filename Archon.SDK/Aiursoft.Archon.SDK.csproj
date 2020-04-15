@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
     <ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
     <ProjectReference Include="..\SDKTools\Aiursoft.SDKTools.csproj" />
     <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />

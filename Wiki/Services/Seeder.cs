@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
@@ -9,7 +10,6 @@ using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;

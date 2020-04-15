@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API;
-using Aiursoft.Handler.Models;
+using Aiursoft.Handler.Abstract.Models;
 using System;
 using System.Collections.Generic;
 

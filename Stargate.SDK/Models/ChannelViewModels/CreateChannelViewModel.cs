@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Abstract.Models;
 
 namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
 {

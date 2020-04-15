@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.DocGenerator.Attributes;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Probe.Services;

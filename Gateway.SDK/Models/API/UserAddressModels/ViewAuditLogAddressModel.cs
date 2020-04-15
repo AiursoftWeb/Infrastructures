@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Interfaces;
+﻿using Aiursoft.Handler.Abstract.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels

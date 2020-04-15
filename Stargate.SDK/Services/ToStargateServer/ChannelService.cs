@@ -1,5 +1,5 @@
-﻿using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Abstract.Exceptions;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;

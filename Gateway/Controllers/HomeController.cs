@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.HomeViewModels;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Pylon.Attributes;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;

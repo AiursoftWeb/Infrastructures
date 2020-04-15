@@ -1,3 +1,4 @@
+using Aiursoft.DBTools.Models;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
@@ -5,8 +6,8 @@ using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
 using Aiursoft.Gateway.Services;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.XelNaga.Services.Authentication;
@@ -259,7 +260,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime);
 
-            return Json(await AiurPagedCollection<AuditLog>.BuildAsync(
+            return Json(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
                 query,
                 model,
                 ErrorType.Success,

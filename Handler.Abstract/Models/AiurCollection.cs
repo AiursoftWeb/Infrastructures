@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aiursoft.Handler.Models
+namespace Aiursoft.Handler.Abstract.Models
 {
     public class AiurCollection<T> : AiurProtocol
     {

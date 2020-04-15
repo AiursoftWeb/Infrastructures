@@ -29,12 +29,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
-    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
     <ProjectReference Include="..\Status.SDK\Aiursoft.Status.SDK.csproj" />
     <ProjectReference Include="..\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
     <ProjectReference Include="..\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
     <ProjectReference Include="..\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
     <ProjectReference Include="..\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
     <ProjectReference Include="..\WebTools\Aiursoft.WebTools.csproj" />
+    <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
+    <ProjectReference Include="..\DBTools\Aiursoft.DBTools.csproj" />
   </ItemGroup>
 </Project>

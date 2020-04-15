@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Abstract.Models;
 using System;
 
 namespace Aiursoft.Archon.SDK.Models

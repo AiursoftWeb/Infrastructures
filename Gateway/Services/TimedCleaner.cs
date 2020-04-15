@@ -1,6 +1,6 @@
-﻿using Aiursoft.Gateway.Data;
+﻿using Aiursoft.DBTools;
+using Aiursoft.Gateway.Data;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

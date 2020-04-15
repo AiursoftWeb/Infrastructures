@@ -1,15 +1,16 @@
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
+using Aiursoft.DBTools.Models;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ApiViewModels;
 using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -103,7 +104,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Include(t => t.User)
                 .Where(t => t.AppID == appid)
                 .OrderByDescending(t => t.GrantTime);
-            var result = await AiurPagedCollection<Grant>.BuildAsync(
+            var result = await AiurPagedCollectionBuilder.BuildAsync<Grant>(
                 query,
                 model,
                 ErrorType.Success,

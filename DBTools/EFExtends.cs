@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Aiursoft.Handler.Abstract.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aiursoft.XelNaga.Tools
+namespace Aiursoft.DBTools
 {
     public interface ISyncable<T>
     {
@@ -74,6 +75,13 @@ namespace Aiursoft.XelNaga.Tools
                 .Where(filter)
                 .Where(t => !collection.Any(p => p.EqualsInDb(t)));
             dbSet.RemoveRange(toDelete);
+        }
+
+        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPageable pager)
+        {
+            return query
+                .Skip((pager.PageNumber - 1) * pager.PageSize)
+                .Take(pager.PageSize);
         }
     }
 }

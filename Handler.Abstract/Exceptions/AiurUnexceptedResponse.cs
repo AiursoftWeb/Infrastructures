@@ -1,7 +1,7 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Abstract.Models;
 using System;
 
-namespace Aiursoft.Handler.Exceptions
+namespace Aiursoft.Handler.Abstract.Exceptions
 {
     /// <summary>
     /// Throw this exception if the json responed by the Aiursoft Server was not with code = 0.

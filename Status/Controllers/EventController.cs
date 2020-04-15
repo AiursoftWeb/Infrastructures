@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.DocGenerator.Attributes;
+using Aiursoft.Handler.Abstract.Models;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Status.Data;
 using Aiursoft.Status.SDK.Models;
