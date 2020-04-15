@@ -38,5 +38,6 @@
     <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
     <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
     <ProjectReference Include="..\DBTools\Aiursoft.DBTools.csproj" />
+    <ProjectReference Include="..\DocGenerator\Aiursoft.DocGenerator.csproj" />
   </ItemGroup>
 </Project>

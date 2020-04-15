@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+﻿using System;
 
 namespace Aiursoft.DocGenerator.Attributes
 {
-    public class APIProduces : ActionFilterAttribute
+    public class APIProduces : Attribute
     {
         public Type PossibleType;
         public APIProduces(Type type)
