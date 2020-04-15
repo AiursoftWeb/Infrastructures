@@ -2,13 +2,15 @@
 @using Aiursoft.Pylon
 @using Aiursoft.SDK.Services
 @using Aiursoft.Probe.SDK.Services
+@using Aiursoft.Gateway.SDK.Services
 @using System.Reflection
 
 @inject ServiceLocation ServiceLocation
 @inject ProbeLocator ProbeLocator
+@inject GatewayLocator GatewayLocator
 @{
     string[] domains = {
-        ServiceLocation.Gateway,
+        GatewayLocator.Endpoint,
         ProbeLocator.ProbeOpenCDN,
         ServiceLocation.UI,
         ServiceLocation.Account
