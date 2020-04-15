@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Pylon.Services
 {
     public class ServiceLocation : ISingletonDependency
     {

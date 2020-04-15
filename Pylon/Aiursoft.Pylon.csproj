@@ -22,11 +22,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="DnsClient" Version="1.3.0" />
     <PackageReference Include="Polly" Version="7.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
     <ProjectReference Include="..\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
     <ProjectReference Include="..\Status.SDK\Aiursoft.Status.SDK.csproj" />
     <ProjectReference Include="..\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
     <ProjectReference Include="..\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />

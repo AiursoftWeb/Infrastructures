@@ -9,7 +9,7 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Pylon;
-using Aiursoft.SDK.Services;
+using Aiursoft.Pylon.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services.Authentication;
 using Microsoft.AspNetCore.Authorization;
