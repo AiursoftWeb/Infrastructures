@@ -1,5 +1,5 @@
-﻿using Aiursoft.Probe.SDK.Services;
-using Aiursoft.SDK.Models;
+﻿using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Probe.SDK.Services;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;

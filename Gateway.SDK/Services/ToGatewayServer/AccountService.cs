@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
+using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
@@ -12,11 +12,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 {
     public class AccountService : IScopedDependency
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HTTPService _http;
 
         public AccountService(
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             HTTPService http)
         {
             _serviceLocation = serviceLocation;
@@ -25,7 +25,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
             {
                 AccessToken = accessToken,
                 Code = code
@@ -40,7 +40,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "Account", "UserInfo", new UserInfoAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "UserInfo", new UserInfoAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openid

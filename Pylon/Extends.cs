@@ -3,6 +3,9 @@ using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
+using Aiursoft.Gateway.SDK;
+using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK;
@@ -10,8 +13,6 @@ using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Scanner;
-using Aiursoft.SDK.Models;
-using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.SDK;
 using Aiursoft.XelNaga.Models;
@@ -256,6 +257,7 @@ namespace Aiursoft.Pylon
             services.AddStargateServer();
             services.AddProbeServer();
             services.AddDeveloperServer();
+            services.AddGatewayServer();
             services.AddHttpClient();
             services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))

@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.SDK.Models;
-using Aiursoft.SDK.Models.ForApps.AddressModels;
-using Aiursoft.SDK.Services.ToGatewayServer;
+using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
+using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Text;

@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Models.API;
+using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Gateway.SDK.Models.API;
-using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
@@ -12,11 +12,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 {
     public class CoreApiService : IScopedDependency
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HTTPService _http;
 
         public CoreApiService(
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             HTTPService http)
         {
             _serviceLocation = serviceLocation;
@@ -32,7 +32,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
         /// <returns></returns>
         public async Task<AiurPagedCollection<Grant>> AllUserGrantedAsync(string accessToken, int pageNumber, int pageSize)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "API", "AllUserGranted", new AllUserGrantedAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "API", "AllUserGranted", new AllUserGrantedAddressModel
             {
                 AccessToken = accessToken,
                 PageNumber = pageNumber,
@@ -48,7 +48,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> DropGrantsAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "API", "DropGrants", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "API", "DropGrants", new { });
             var form = new AiurUrl(string.Empty, new
             {
                 AccessToken = accessToken

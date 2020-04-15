@@ -1,9 +1,9 @@
-﻿using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Gateway.SDK.Models.API;
+﻿using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
@@ -13,11 +13,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 {
     public class UserService : IScopedDependency
     {
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HTTPService _http;
 
         public UserService(
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             HTTPService http)
         {
             _serviceLocation = serviceLocation;
@@ -26,7 +26,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> ChangeProfileAsync(string openId, string accessToken, string newNickName, string newIconFilePathName, string newBio)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangeProfile", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ChangeProfile", new { });
             var form = new AiurUrl(string.Empty, new ChangeProfileAddressModel
             {
                 AccessToken = accessToken,
@@ -45,7 +45,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ChangePassword", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ChangePassword", new { });
             var form = new AiurUrl(string.Empty, new ChangePasswordAddressModel
             {
                 AccessToken = accessToken,
@@ -63,7 +63,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewPhoneNumber", new ViewPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -77,7 +77,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPhoneNumber", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "SetPhoneNumber", new { });
             var form = new AiurUrl(string.Empty, new SetPhoneNumberAddressModel
             {
                 AccessToken = accessToken,
@@ -93,7 +93,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurCollection<AiurUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewAllEmails", new ViewAllEmailsAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
@@ -107,7 +107,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> BindNewEmailAsync(string openId, string newEmail, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "BindNewEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "BindNewEmail", new { });
             var form = new AiurUrl(string.Empty, new BindNewEmailAddressModel
             {
                 OpenId = openId,
@@ -123,7 +123,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DeleteEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "DeleteEmail", new { });
             var form = new AiurUrl(string.Empty, new DeleteEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -139,7 +139,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> SendConfirmationEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SendConfirmationEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "SendConfirmationEmail", new { });
             var form = new AiurUrl(string.Empty, new SendConfirmationEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -155,7 +155,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> SetPrimaryEmailAsync(string accessToken, string userId, string email)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetPrimaryEmail", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "SetPrimaryEmail", new { });
             var form = new AiurUrl(string.Empty, new SetPrimaryEmailAddressModel
             {
                 AccessToken = accessToken,
@@ -171,7 +171,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewGrantedApps", new UserOperationAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewGrantedApps", new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId
@@ -185,7 +185,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> DropGrantedAppsAsync(string accessToken, string userId, string appId)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DropGrantedApps", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "DropGrantedApps", new { });
             var form = new AiurUrl(string.Empty, new DropGrantedAppsAddressModel
             {
                 AccessToken = accessToken,
@@ -208,7 +208,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
         /// <returns></returns>
         public async Task<AiurPagedCollection<AuditLog>> ViewAuditLogAsync(string accessToken, string userId, int pageNumber)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewAuditLog", new ViewAuditLogAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewAuditLog", new ViewAuditLogAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId,
@@ -223,7 +223,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurCollection<AiurThirdPartyAccount>> ViewSocialAccountsAsync(string accessToken, string userId)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewSocialAccounts", new UserOperationAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewSocialAccounts", new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = userId
@@ -237,7 +237,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> UnBindSocialAccountAsync(string accessToken, string userId, string providerName)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "UnBindSocialAccount", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "UnBindSocialAccount", new { });
             var form = new AiurUrl(string.Empty, new UnBindSocialAccountAddressModel
             {
                 AccessToken = accessToken,
@@ -253,7 +253,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<bool>> ViewHas2FAkeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewHas2FAkey", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewHas2FAkey", new { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
@@ -268,7 +268,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<bool>> ViewTwoFactorEnabledAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ViewTwoFactorEnabled", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewTwoFactorEnabled", new { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
@@ -283,7 +283,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "View2FAKey", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "View2FAKey", new UserOperationAddressModel { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
@@ -298,7 +298,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<bool>> SetTwoFAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "SetTwoFAKey", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "SetTwoFAKey", new { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
@@ -313,7 +313,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurProtocol> ResetTwoFAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "ResetTwoFAKey", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ResetTwoFAKey", new { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
@@ -328,7 +328,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<bool>> TwoFAVerificyCodeAsync(string openId, string accessToken, string code)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "TwoFAVerificyCode", new TwoFAVerificyCodeAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "TwoFAVerificyCode", new TwoFAVerificyCodeAddressModel { });
             var form = new AiurUrl(string.Empty, new TwoFAVerificyCodeAddressModel
             {
                 OpenId = openId,
@@ -344,7 +344,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "DisableTwoFA", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "DisableTwoFA", new UserOperationAddressModel { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
@@ -359,7 +359,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurCollection<string>> GetRecoveryCodesAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Gateway, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,

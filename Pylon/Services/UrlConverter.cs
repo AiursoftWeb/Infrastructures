@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 namespace Aiursoft.Pylon.Services
