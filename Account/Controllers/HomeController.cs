@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Account.Models;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +16,16 @@ namespace Aiursoft.Account.Controllers
     {
         private readonly SignInManager<AccountUser> _signInManager;
         private readonly ILogger _logger;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _gatewayLocator;
 
         public HomeController(
             SignInManager<AccountUser> signInManager,
             ILoggerFactory loggerFactory,
-            ServiceLocation serviceLocation)
+            GatewayLocator gatewayLocator)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
-            _serviceLocation = serviceLocation;
+            _gatewayLocator = gatewayLocator;
         }
 
         [AiurForceAuth(preferController: "Account", preferAction: "Index", justTry: true)]
@@ -39,7 +39,7 @@ namespace Aiursoft.Account.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignOutRootServer(_serviceLocation.Gateway, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            return this.SignOutRootServer(_gatewayLocator.Endpoint, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
         }
     }
 }

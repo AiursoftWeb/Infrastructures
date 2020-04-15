@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Models;
+﻿using Aiursoft.Gateway.SDK.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

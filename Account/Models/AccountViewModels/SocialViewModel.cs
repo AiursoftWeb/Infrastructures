@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Models.API;
+﻿using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.XelNaga.Services.Authentication;
 using System;
 using System.Collections.Generic;

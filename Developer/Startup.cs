@@ -1,4 +1,5 @@
-﻿using Aiursoft.Developer.Data;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ namespace Aiursoft.Developer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["DeveloperAppId"];
+            AppsContainer.CurrentAppSecret = configuration["DeveloperAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -30,7 +33,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<DeveloperUser>("Developer");
+            services.AddAiurDependenciesWithIdentity<DeveloperUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

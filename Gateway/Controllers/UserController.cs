@@ -1,13 +1,13 @@
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
+using Aiursoft.Gateway.SDK.Models.API;
+using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
+using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
-using Aiursoft.SDK.Models.API;
-using Aiursoft.SDK.Models.API.UserAddressModels;
-using Aiursoft.SDK.Models.API.UserViewModels;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services.Authentication;
 using Microsoft.AspNetCore.Identity;

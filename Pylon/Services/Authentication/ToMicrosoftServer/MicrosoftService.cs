@@ -1,6 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Services.Authentication;
@@ -17,7 +17,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
     public class MicrosoftService : IAuthProvider
     {
         private readonly HTTPService _http;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
@@ -27,7 +27,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             HTTPService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             ILogger<MicrosoftService> logger)
         {
             _http = http;
@@ -56,7 +56,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
                 State = ""
@@ -68,7 +68,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
             return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
                 State = state.ToString()
@@ -92,7 +92,7 @@ namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
                 ClientSecret = clientSecret,
                 Code = code,
                 Scope = "user.read",
-                RedirectUri = new AiurUrl(_serviceLocation.Gateway, $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString(),
                 GrantType = "authorization_code"
             });
             try

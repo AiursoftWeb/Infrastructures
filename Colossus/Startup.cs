@@ -1,4 +1,5 @@
-﻿using Aiursoft.Colossus.Data;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Colossus.Data;
 using Aiursoft.Colossus.Models;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ namespace Aiursoft.Colossus
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["ColossusAppId"];
+            AppsContainer.CurrentAppSecret = configuration["ColossusAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -31,7 +34,7 @@ namespace Aiursoft.Colossus
 
             services.AddAiurMvc();
 
-            services.AddAiurDependenciesWithIdentity<ColossusUser>("Colossus");
+            services.AddAiurDependenciesWithIdentity<ColossusUser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

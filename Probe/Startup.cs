@@ -1,4 +1,5 @@
-﻿using Aiursoft.Probe.Data;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Probe.Data;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,8 @@ namespace Aiursoft.Probe
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["ProbeAppId"];
+            AppsContainer.CurrentAppSecret = configuration["ProbeAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -27,7 +30,7 @@ namespace Aiursoft.Probe
 
             services.AddCors();
             services.AddAiurMvc();
-            services.AddAiurDependencies("Probe");
+            services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

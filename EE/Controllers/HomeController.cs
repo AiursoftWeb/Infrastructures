@@ -1,9 +1,9 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +20,13 @@ namespace Aiursoft.EE.Controllers
         public readonly SignInManager<EEUser> _signInManager;
         public readonly ILogger _logger;
         public readonly EEDbContext _dbContext;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
 
         public HomeController(
             SignInManager<EEUser> signInManager,
             ILoggerFactory loggerFactory,
             EEDbContext dbContext,
-            ServiceLocation serviceLocation)
+            GatewayLocator serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
@@ -45,7 +45,7 @@ namespace Aiursoft.EE.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return this.SignOutRootServer(_serviceLocation.Gateway, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.Endpoint, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public async Task<IActionResult> Search(string word)

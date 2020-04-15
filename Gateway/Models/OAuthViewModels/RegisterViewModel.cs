@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Models;
+﻿using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.SDKTools.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;

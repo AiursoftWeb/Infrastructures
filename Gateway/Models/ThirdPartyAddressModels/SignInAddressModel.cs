@@ -1,6 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDK.Models;
+﻿using Aiursoft.Gateway.SDK.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.Models.OAuthViewModels

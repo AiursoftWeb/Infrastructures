@@ -1,4 +1,5 @@
-﻿using Aiursoft.Pylon.Services;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -97,7 +98,7 @@ namespace Aiursoft.Pylon.Attributes
         {
             var urlConverter = context.HttpContext.RequestServices.GetService<UrlConverter>();
             string serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
-            string url = urlConverter.UrlWithAuth(serverPosition, page, justTry, register);
+            string url = urlConverter.UrlWithAuth(serverPosition, AppsContainer.CurrentAppId, page, justTry, register);
             return new RedirectResult(url);
         }
     }

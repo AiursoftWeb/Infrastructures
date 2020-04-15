@@ -1,4 +1,5 @@
-﻿using Aiursoft.Gateway.Data;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
 using Edi.Captcha;
@@ -20,6 +21,8 @@ namespace Aiursoft.Gateway
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["GatewayAppId"];
+            AppsContainer.CurrentAppSecret = configuration["GatewayAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -40,7 +43,7 @@ namespace Aiursoft.Gateway
             services.AddAiurMvc();
 
             services
-                .AddAiurDependenciesWithIdentity<GatewayUser>("Gateway");
+                .AddAiurDependenciesWithIdentity<GatewayUser>();
             services.AddSessionBasedCaptcha();
         }
 

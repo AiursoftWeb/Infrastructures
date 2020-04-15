@@ -1,9 +1,9 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Models.API;
+using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
-using Aiursoft.SDK.Models.API;
-using Aiursoft.SDK.Services.ToGatewayServer;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;

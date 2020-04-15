@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
-using Aiursoft.SDK.Services;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.Wiki.Services;
@@ -23,14 +23,14 @@ namespace Aiursoft.Wiki.Controllers
         private readonly SignInManager<WikiUser> _signInManager;
         private readonly WikiDbContext _dbContext;
         private readonly Seeder _seeder;
-        private readonly ServiceLocation _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
         private readonly IConfiguration _configuration;
 
         public HomeController(
             SignInManager<WikiUser> signInManager,
             WikiDbContext context,
             Seeder seeder,
-            ServiceLocation serviceLocation,
+            GatewayLocator serviceLocation,
             IConfiguration configuration)
         {
             _signInManager = signInManager;
@@ -116,7 +116,7 @@ namespace Aiursoft.Wiki.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return this.SignOutRootServer(_serviceLocation.Gateway, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
+            return this.SignOutRootServer(_serviceLocation.Endpoint, new AiurUrl(string.Empty, "Home", nameof(HomeController.Index), new { }));
         }
 
         public IActionResult Error()
