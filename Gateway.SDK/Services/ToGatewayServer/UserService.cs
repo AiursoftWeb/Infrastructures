@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
-using Aiursoft.Handler.Abstract.Exceptions;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

@@ -5,7 +5,7 @@ using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
 using Aiursoft.Gateway.Services;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Mvc;

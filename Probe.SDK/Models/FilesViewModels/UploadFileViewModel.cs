@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Abstract.Models;
+﻿using Aiursoft.Handler.Models;
 
 namespace Aiursoft.Probe.SDK.Models.FilesViewModels
 {

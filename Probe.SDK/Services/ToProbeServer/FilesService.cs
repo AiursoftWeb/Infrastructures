@@ -1,5 +1,5 @@
-﻿using Aiursoft.Handler.Abstract.Exceptions;
-using Aiursoft.Handler.Abstract.Models;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;

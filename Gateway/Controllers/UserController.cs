@@ -6,7 +6,7 @@ using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
 using Aiursoft.Gateway.Services;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;

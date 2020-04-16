@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Handler.Abstract.Interfaces
+namespace Aiursoft.Handler.Interfaces
 {
     public interface IPageable
     {

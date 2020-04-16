@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Abstract.Interfaces;
+﻿using Aiursoft.Handler.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

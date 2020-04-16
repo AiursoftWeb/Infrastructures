@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Stargate.Data;

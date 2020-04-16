@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Handler.Abstract.Models
+﻿namespace Aiursoft.Handler.Models
 {
     public class AiurValue<T> : AiurProtocol
     {

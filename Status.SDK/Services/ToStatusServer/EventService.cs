@@ -1,5 +1,5 @@
-﻿using Aiursoft.Handler.Abstract.Exceptions;
-using Aiursoft.Handler.Abstract.Models;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Status.SDK.Models;
 using Aiursoft.Status.SDK.Models.EventAddressModels;

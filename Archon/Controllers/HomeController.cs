@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Models;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Abstract.Models;
+﻿using Aiursoft.Handler.Models;
 
 namespace Aiursoft.Gateway.SDK.Models.API.UserViewModels
 {

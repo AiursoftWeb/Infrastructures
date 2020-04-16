@@ -5,7 +5,7 @@ using Aiursoft.DocGenerator.Services;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon.Attributes;

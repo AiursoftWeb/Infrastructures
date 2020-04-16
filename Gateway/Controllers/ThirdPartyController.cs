@@ -6,7 +6,7 @@ using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
 using Aiursoft.Gateway.Models.ThirdyPartyViewModels;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.Services;
-using Aiursoft.Handler.Abstract.Exceptions;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;

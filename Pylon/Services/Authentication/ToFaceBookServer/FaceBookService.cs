@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Gateway.SDK.Services;
-using Aiursoft.Handler.Abstract.Exceptions;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Services.Authentication;

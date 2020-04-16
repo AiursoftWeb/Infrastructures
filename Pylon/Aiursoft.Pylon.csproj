@@ -34,6 +34,8 @@
     <ProjectReference Include="..\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
     <ProjectReference Include="..\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
     <ProjectReference Include="..\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\WebTools\Aiursoft.WebTools.csproj" />
     <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
     <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />

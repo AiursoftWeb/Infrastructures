@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Status.SDK.Models;
 using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Http;

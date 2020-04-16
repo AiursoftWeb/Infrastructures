@@ -1,7 +1,7 @@
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using System;
 
-namespace Aiursoft.Handler.Abstract.Exceptions
+namespace Aiursoft.Handler.Exceptions
 {
     /// <summary>
     /// Throw this exception in any methods called from API. This will stop the controller logic.

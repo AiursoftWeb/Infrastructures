@@ -7,7 +7,7 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ApiViewModels;
 using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
-using Aiursoft.Handler.Abstract.Models;
+using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.XelNaga.Models;

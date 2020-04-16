@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Abstract.Models;
+﻿using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
