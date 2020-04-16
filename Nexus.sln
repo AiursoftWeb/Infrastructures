@@ -41,8 +41,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.XelNaga", "XelNaga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Scanner", "Scanner\Aiursoft.Scanner.csproj", "{07102E00-6E90-44DB-8B90-9E078667B350}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic Tools", "Basic Tools", "{DC83ABF9-E8AB-4495-8596-557657A372C1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.DocGenerator", "DocGenerator\Aiursoft.DocGenerator.csproj", "{CBDC173E-8039-413E-981A-31D463AC77CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstracts", "Abstracts", "{528F9F3C-6EED-48D2-B14B-52091AF7FA69}"
