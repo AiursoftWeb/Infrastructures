@@ -61,7 +61,7 @@ namespace Aiursoft.Probe.Controllers
             var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
             try
             {
-                var file = await GetFileWithCache(folders, fileName, site.Root);
+                var file = await GetFileWithCache(site.SiteName, folders, fileName, site.Root);
                 if (file == null)
                 {
                     return NotFound();
@@ -98,9 +98,9 @@ namespace Aiursoft.Probe.Controllers
                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName));
         }
 
-        public Task<SDK.Models.File> GetFileWithCache(string[] folders, string fileName, Folder root)
+        private Task<SDK.Models.File> GetFileWithCache(string siteName, string[] folders, string fileName, Folder root)
         {
-            return _cache.GetAndCache($"file.info.{string.Join(".", folders)}.{fileName}", async () =>
+            return _cache.GetAndCache($"file.info.{siteName}.{string.Join(".", folders)}.{fileName}", async () =>
             {
                 var folder = await _folderLocator.LocateAsync(folders, root, false);
                 var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
