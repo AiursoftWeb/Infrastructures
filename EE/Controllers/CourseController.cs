@@ -1,8 +1,8 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
-using Aiursoft.Handler.Models;
 using Aiursoft.Handler.Attributes;
+using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon.Services;
