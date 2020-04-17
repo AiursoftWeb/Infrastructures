@@ -1,5 +1,4 @@
-﻿using Aiursoft.XelNaga.Services.Authentication;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 {

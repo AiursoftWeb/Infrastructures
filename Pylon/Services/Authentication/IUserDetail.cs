@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.XelNaga.Services.Authentication
+namespace Aiursoft.Pylon.Services.Authentication
 {
     public interface IUserDetail
     {

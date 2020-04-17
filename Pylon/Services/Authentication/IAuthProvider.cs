@@ -2,7 +2,7 @@
 using Aiursoft.XelNaga.Models;
 using System.Threading.Tasks;
 
-namespace Aiursoft.XelNaga.Services.Authentication
+namespace Aiursoft.Pylon.Services.Authentication
 {
     public interface IAuthProvider : IScopedDependency
     {

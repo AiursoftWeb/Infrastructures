@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Services.Authentication;
+﻿using Aiursoft.Pylon.Services.Authentication;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {
