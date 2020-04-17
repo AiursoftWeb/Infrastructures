@@ -1,0 +1,137 @@
+[
+    {
+        "collectionTitle": "Welcome",
+        "articles": [
+            {
+                "articleTitle": "Home"
+            },
+            {
+                "articleTitle": "About Aiursoft"
+            },
+            {
+                "articleTitle": "Before starting"
+            },
+            {
+                "articleTitle": "How to ask questions about our API",
+                "articleAddress": "https://raw.githubusercontent.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/master/README-zh_CN.md"
+            },
+            {
+                "articleTitle": "What is Aiursoft Platform",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Nexus/master/Readme.md"
+            },
+            {
+                "articleTitle": "What is Microservice",
+                "articleAddress": "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/service-fabric/service-fabric-overview-microservices.md"
+            }
+        ]
+    },
+    {
+        "collectionTitle": "Getting Involed",
+        "articles": [
+            {
+                "articleTitle": "How to contribute"
+            },
+            {
+                "articleTitle": "What is Agile"
+            },
+            {
+                "articleTitle": "What is Scrum"
+            },
+            {
+                "articleTitle": "Commit Regulation"
+            }
+        ]
+    },
+    {
+        "collectionTitle": "Deployment",
+        "articles": [
+            {
+                "articleTitle": "Getting Started"
+            },
+            {
+                "articleTitle": "Requirements"
+            },
+            {
+                "articleTitle": "Preparation"
+            }
+        ]
+    },
+    {
+        "collectionTitle": "User Authentication",
+        "articles": [
+            {
+                "articleTitle": "Aiursoft authentication"
+            }
+        ],
+        "docAPIAddress": "https://gateway.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "App Authentication",
+        "articles": [],
+        "docAPIAddress": "https://archon.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "Development",
+        "articles": [],
+        "docAPIAddress": "https://developer.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "Integrated Website",
+        "articles": [
+            {
+                "articleTitle": "Getting Started"
+            },
+            {
+                "articleTitle": "Advanced API"
+            }
+        ],
+        "docAPIAddress": "https://probe.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "Stargate",
+        "articles": [
+            {
+                "articleTitle": "What is Stargate"
+            }
+        ],
+        "docAPIAddress": "https://stargate.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "Error tracking",
+        "articles": [],
+        "docAPIAddress": "https://status.aiursoft.com/doc"
+    },
+    {
+        "collectionTitle": "Pylon",
+        "articles": [
+            {
+                "articleTitle": "What is Pylon",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Pylon/master/Readme.md"
+            }
+        ]
+    },
+    {
+        "collectionTitle": "Kahla",
+        "articles": [
+            {
+                "articleTitle": "What is Kahla"
+            },
+            {
+                "articleTitle": "How to build Kahla server",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Readme.md"
+            },
+            {
+                "articleTitle": "How to build Kahla.App",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla.App/dev/README.md"
+            },
+            {
+                "articleTitle": "How to write a bot for Kahla",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.SDK/Readme.md"
+            },
+            {
+                "articleTitle": "Before connecting"
+            }
+        ],
+        "docAPIAddress": "https://staging.server.kahla.app/doc"
+    }
+]
