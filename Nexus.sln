@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Stargate", "src\We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "src\Web Services\Infrastructure\Status\Aiursoft.Status.csproj", "{AE6F0404-7805-4878-95CD-AF1B42ED0EC2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.EE", "src\Web Services\Business\EE\Aiursoft.EE.csproj", "{F1610CD8-C907-4AFC-A91D-03123B7459F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,10 @@ Global
 		{AE6F0404-7805-4878-95CD-AF1B42ED0EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE6F0404-7805-4878-95CD-AF1B42ED0EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE6F0404-7805-4878-95CD-AF1B42ED0EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -222,6 +228,7 @@ Global
 		{DFEAE0D9-5A32-4B63-A5B5-974709A5882E} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
 		{7DF1C53D-F9B7-4DF1-AE88-A8625E647D9B} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
 		{AE6F0404-7805-4878-95CD-AF1B42ED0EC2} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
+		{F1610CD8-C907-4AFC-A91D-03123B7459F0} = {0BA5235B-1F50-48BD-9024-43260AB7C926}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A55376D-2CE7-4C61-8D33-16C3FFEC02DE}
