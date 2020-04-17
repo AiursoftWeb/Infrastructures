@@ -14,6 +14,6 @@
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pylon\Aiursoft.Pylon.csproj" />
+    <ProjectReference Include="..\..\..\SDK\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
 </Project>

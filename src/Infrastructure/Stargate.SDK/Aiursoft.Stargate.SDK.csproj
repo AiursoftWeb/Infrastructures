@@ -6,10 +6,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
-    <ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
-    <ProjectReference Include="..\SDKTools\Aiursoft.SDKTools.csproj" />
-    <ProjectReference Include="..\XelNaga\Aiursoft.XelNaga.csproj" />
+    <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
+    <ProjectReference Include="..\..\Abstracts\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
+    <ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
+    <ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
   </ItemGroup>
   
 </Project>

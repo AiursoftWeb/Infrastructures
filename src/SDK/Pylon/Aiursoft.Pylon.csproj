@@ -19,6 +19,7 @@
   <ItemGroup>
      <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
@@ -27,19 +28,21 @@
     <PackageReference Include="DnsClient" Version="1.3.1" />
     <PackageReference Include="Polly" Version="7.2.0" />
   </ItemGroup>
+  
   <ItemGroup>
-    <ProjectReference Include="..\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
-    <ProjectReference Include="..\Status.SDK\Aiursoft.Status.SDK.csproj" />
-    <ProjectReference Include="..\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
-    <ProjectReference Include="..\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
-    <ProjectReference Include="..\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
-    <ProjectReference Include="..\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Status.SDK\Aiursoft.Status.SDK.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
-    <ProjectReference Include="..\WebTools\Aiursoft.WebTools.csproj" />
-    <ProjectReference Include="..\Handler\Aiursoft.Handler.csproj" />
-    <ProjectReference Include="..\Scanner\Aiursoft.Scanner.csproj" />
-    <ProjectReference Include="..\DBTools\Aiursoft.DBTools.csproj" />
-    <ProjectReference Include="..\DocGenerator\Aiursoft.DocGenerator.csproj" />
+    <ProjectReference Include="..\..\Web Extends\DBTools\Aiursoft.DBTools.csproj" />
+    <ProjectReference Include="..\..\Web Extends\DocGenerator\Aiursoft.DocGenerator.csproj" />
+    <ProjectReference Include="..\..\Web Extends\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\..\Web Extends\Scanner\Aiursoft.Scanner.csproj" />
+    <ProjectReference Include="..\..\Web Extends\WebTools\Aiursoft.WebTools.csproj" />
   </ItemGroup>
 </Project>

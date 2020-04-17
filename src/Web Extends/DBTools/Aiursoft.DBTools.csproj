@@ -10,7 +10,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
+    <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
   </ItemGroup>
   
 </Project>
