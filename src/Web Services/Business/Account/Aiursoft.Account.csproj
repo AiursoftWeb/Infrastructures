@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>Account management center for Aiursoft.</Description>
+    <UserSecretsId>39478183-ccad-4746-aa5e-26c25f2d4ad7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
