@@ -1,4 +1,5 @@
-﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse
+﻿@using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
+@model SearchResponse
 @{
     ViewData["Title"] = Model.QueryContext.OriginalQuery;
     ViewData["No Nav"] = "true";
@@ -53,7 +54,7 @@
 </nav>
 
 <div class="container">
-    <div class="row pt-3">
+    <div class="row pt-4">
         <div class="col-md-8">
             @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
             {
@@ -68,7 +69,10 @@
                         @webPage.Name
                     </a>
                 </h3>
-                <p class="text-muted mb-0">@webPage.DisplayUrl</p>
+                <p class="text-muted mb-0">
+                    @webPage.DisplayUrl
+                    <label class="ml-3" data-utc-time="@webPage.DateLastCrawled"></label>
+                </p>
                 <span>
                     @webPage.Snippet
                 </span>
@@ -112,5 +116,8 @@
                 </div>
             </div>
         }
+    </div>
+    <div class="pl-1 mt-4">
+        @Html.PagedListPager(new StaticPagedList<WebPage>(Model.WebPages.Value, (int)ViewBag.CurrentPage, 10, Convert.ToInt32(Model.WebPages.TotalEstimatedMatches ?? 0)), page => Url.Action("DoSearch", new { q = Model.QueryContext.OriginalQuery, page }))
     </div>
 </div>

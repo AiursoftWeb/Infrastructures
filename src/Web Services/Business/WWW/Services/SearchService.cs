@@ -23,9 +23,13 @@ namespace Aiursoft.WWW.Services
                 new Microsoft.Azure.CognitiveServices.Language.SpellCheck.ApiKeyServiceClientCredentials(_searchAPIKey));
         }
 
-        public async Task<SearchResponse> DoSearch(string question)
+        public async Task<SearchResponse> DoSearch(string question, int page = 1)
         {
-            var webData = await _client.Web.SearchAsync(query: question);
+            var webData = await _client.Web.SearchAsync(
+                query: question,
+                //responseFilter: new string[] { "Webpages" },
+                answerCount: 10,
+                offset: (page - 1) * 10);
             return webData;
         }
 
