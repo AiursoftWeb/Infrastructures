@@ -1,9 +1,64 @@
 ﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse
 @{
     ViewData["Title"] = Model.QueryContext.OriginalQuery;
+    ViewData["No Nav"] = "true";
 }
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            @Values.ProjectName
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#aiursoft-navbar" aria-controls="aiursoft-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="aiursoft-navbar">
+            <div class="navbar-nav mr-auto">
+                <form class="form-row" asp-controller="Search" asp-action="DoSearch" method="get" style="min-width:400px;">
+                    <div class="col-12 col-md-9 mb-2 mb-md-0">
+                        <input type="text" name="q" class="form-control form-control-lg" required value="@Model.QueryContext.OriginalQuery">
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="form-inline">
+                <ul class="navbar-nav mr-auto">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @await UserImageGenerator.RenderUserImageAsync(User)
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">@Localizer["Sign out"]</a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                @Localizer["Sign in"]
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                @Localizer["Sign up"]
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
-    <div class="row">
+    <div class="row pt-3">
         <div class="col-md-8">
             @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
             {
@@ -46,7 +101,21 @@
                 }
             }
         </div>
-        <div class="col-md-4">
-        </div>
+        @if (Model.RelatedSearches != null && Model.RelatedSearches.Value.Any())
+        {
+            <div class="col-md-4">
+                <h4 class="mb-3">
+                    Search related to @Model.QueryContext.OriginalQuery
+                </h4>
+                <div class="row">
+                    @foreach (var related in Model.RelatedSearches.Value)
+                    {
+                        <div class="col-6 mt-3">
+                            <a asp-route-q="@related.Text">@related.DisplayText</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
     </div>
 </div>
