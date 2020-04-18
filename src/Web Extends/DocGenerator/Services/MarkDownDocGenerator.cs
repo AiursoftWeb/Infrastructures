@@ -102,7 +102,7 @@ namespace Aiursoft.DocGenerator.Services
             content += $"\r\n";
             foreach (var docAction in docController)
             {
-                var queryParams = docAction.Arguments.Where(t => !docAction.Routes.Any(r => RouteContainsArg(r, t))).ToList();
+                var queryParams = docAction.Arguments.Where(argument => !docAction.Routes.Any(route => RouteContainsArg(route, argument))).ToList();
                 content += $"---------\r\n\r\n";
                 content += $"<h3 id='{docAction.ActionName}'>{(docAction.IsPost ? _post : _get)} {(docAction.AuthRequired ? _authorized : string.Empty)} {docAction.ActionName.SplitStringUpperCase()}</h3>\r\n\r\n";
                 // Request path.

@@ -172,7 +172,11 @@ namespace Aiursoft.DocGenerator.Middlewares
             var fromQuery = property.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
             if (fromQuery != null)
             {
-                propName = (fromQuery as IModelNameProvider).Name;
+                var queriedName = (fromQuery as IModelNameProvider).Name;
+                if (!string.IsNullOrWhiteSpace(queriedName))
+                {
+                    propName = queriedName;
+                }
             }
             return propName;
         }
