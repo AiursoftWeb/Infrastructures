@@ -1,96 +1,98 @@
 ﻿@{
-    ViewData["Title"] = Localizer["Home"];
+    ViewData["Title"] = null;
 }
 <header class="masthead text-white text-center www-back" style="background: url('/img/back.svg') #184685 no-repeat center center; background-size: cover;">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
-            <div class="col-xl-9 mx-auto">
-                <h1 class="mb-5 www-shadow">@Localizer["Free training, tools, and community to help you grow your skills, career, or business."]</h1>
-            </div>
-            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <div class="form-row">
+            @*<div class="col-xl-9 mx-auto">
+                    <h1 class="mb-5 www-shadow">@Localizer["Free training, tools, and community to help you grow your skills, career, or business."]</h1>
+                </div>*@
+            <div class="col-lg-9 col-md-10 col-xl-11 mx-auto">
+                <form class="form-row" asp-controller="Search" asp-action="DoSearch" method="get">
                     <div class="col-12 col-md-9 mb-2 mb-md-0">
-                        <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+                        <input type="text" name="q" class="form-control form-control-lg" required placeholder="Search the web...">
                     </div>
                     <div class="col-12 col-md-3">
-                        <a asp-controller="Auth" asp-action="GoRegister" class="btn btn-block btn-lg btn-primary">@Localizer["Sign up!"]</a>
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </header>
-<section class="features-icons bg-light text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="fa fa-book m-auto text-warning"></i>
+@*<section class="features-icons bg-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-book m-auto text-warning"></i>
+                        </div>
+                        <h3>@Localizer["Learn"]</h3>
+                        <p class="lead mb-0">@Localizer["Aiursoft produces the basic tools and courses for beginners to learn basic knowledge!"]</p>
                     </div>
-                    <h3>@Localizer["Learn"]</h3>
-                    <p class="lead mb-0">@Localizer["Aiursoft produces the basic tools and courses for beginners to learn basic knowledge!"]</p>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="fa fa-wrench m-auto text-primary"></i>
+                <div class="col-lg-3">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-wrench m-auto text-primary"></i>
+                        </div>
+                        <h3>@Localizer["Build"]</h3>
+                        <p class="lead mb-0">@Localizer["Get best ideas from the open community or users feedback and continuously make your idea real."]</p>
                     </div>
-                    <h3>@Localizer["Build"]</h3>
-                    <p class="lead mb-0">@Localizer["Get best ideas from the open community or users feedback and continuously make your idea real."]</p>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="fa fa-share-alt m-auto text-secondary"></i>
+                <div class="col-lg-3">
+                    <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-share-alt m-auto text-secondary"></i>
+                        </div>
+                        <h3>@Localizer["Share"]</h3>
+                        <p class="lead mb-0">@Localizer["Share your work with community or friends, or even tell them how you built it!"]</p>
                     </div>
-                    <h3>@Localizer["Share"]</h3>
-                    <p class="lead mb-0">@Localizer["Share your work with community or friends, or even tell them how you built it!"]</p>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="fa fa-line-chart m-auto text-danger"></i>
+                <div class="col-lg-3">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-line-chart m-auto text-danger"></i>
+                        </div>
+                        <h3>@Localizer["Grow"]</h3>
+                        <p class="lead mb-0">@Localizer["Get users' feedback and get business value form your data or just monitor your app to produce a better experience."]</p>
                     </div>
-                    <h3>@Localizer["Grow"]</h3>
-                    <p class="lead mb-0">@Localizer["Get users' feedback and get business value form your data or just monitor your app to produce a better experience."]</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="showcase">
-    <div class="container-fluid p-0">
-        <div class="row no-gutters">
-            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
-            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                <h2>@Localizer["Focussing on open community"]</h2>
-                <p class="lead mb-0">@Localizer["To create a more open world. Aiursoft is focusing on open platform and open communication."]</p>
-                <a class="btn btn-secondary mt-3" href="//www.kahla.app">@Localizer["Start communicating"]</a>
+    </section>
+    <section class="showcase">
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>@Localizer["Focussing on open community"]</h2>
+                    <p class="lead mb-0">@Localizer["To create a more open world. Aiursoft is focusing on open platform and open communication."]</p>
+                    <a class="btn btn-secondary mt-3" href="//www.kahla.app">@Localizer["Start communicating"]</a>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
+                <div class="col-lg-6 my-auto showcase-text">
+                    <h2>@Localizer["Free platform for all developers"]</h2>
+                    <p class="lead mb-0">@Localizer["Access Aiursoft OAuth, object storage service or message queue powers your application, and also allows you to develop and grow will us."]</p>
+                    <a class="btn btn-success mt-3" href="@DeveloperLocator.Endpoint">@Localizer["Start Developing"]</a>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>@Localizer["Your storage, simple and easy"]</h2>
+                    <p class="lead mb-0">@Localizer["Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."]</p>
+                    <a class="btn btn-primary mt-3" href="@ServiceLocation.Colossus">@Localizer["Try Colossus"]</a>
+                </div>
             </div>
         </div>
-        <div class="row no-gutters">
-            <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
-            <div class="col-lg-6 my-auto showcase-text">
-                <h2>@Localizer["Free platform for all developers"]</h2>
-                <p class="lead mb-0">@Localizer["Access Aiursoft OAuth, object storage service or message queue powers your application, and also allows you to develop and grow will us."]</p>
-                <a class="btn btn-success mt-3" href="@DeveloperLocator.Endpoint">@Localizer["Start Developing"]</a>
-            </div>
-        </div>
-        <div class="row no-gutters">
-            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
-            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                <h2>@Localizer["Your storage, simple and easy"]</h2>
-                <p class="lead mb-0">@Localizer["Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."]</p>
-                <a class="btn btn-primary mt-3" href="@ServiceLocation.Colossus">@Localizer["Try Colossus"]</a>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>*@
 
 @*<section class="testimonials text-center bg-light">
         <div class="container">
@@ -127,4 +129,4 @@
         </div>
     </section>*@
 
-<partial name="_signup" />
+@*<partial name="_signup" />*@

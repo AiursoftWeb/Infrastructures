@@ -16,4 +16,9 @@
 header.www-back {
     background: url('/img/back.svg') #184685 no-repeat center center;
     background-size: cover;
+    min-height: calc(100vh - 200px);
+}
+
+header.masthead {
+    padding-top: 35vh;
 }

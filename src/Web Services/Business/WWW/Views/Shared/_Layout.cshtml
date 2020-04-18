@@ -2,7 +2,14 @@
 <html>
 <head>
     <vc:aiur-header></vc:aiur-header>
-    <title>@ViewData["Title"] - @Values.ProjectName</title>
+    @if (string.IsNullOrWhiteSpace(ViewData["Title"] as string))
+    {
+        <title>@Values.ProjectName</title>
+    }
+    else
+    {
+        <title>@ViewData["Title"] - @Values.ProjectName</title>
+    }
     <vc:aiur-core-css></vc:aiur-core-css>
     <vc:aiur-market-css></vc:aiur-market-css>
     <link rel="stylesheet" href="~/css/site.css">
@@ -16,33 +23,34 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <div class="collapse navbar-collapse" id="aiursoft-navbar">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @Localizer["Products"]
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="@ServiceLocation.Colossus">
-                                @Localizer["Colossus"]
+                    <li class="nav-item"><a class="nav-link" href="//www.kahla.app">@Localizer["Kahla"]</a></li>
+                    @*<li class="nav-item active">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Localizer["Products"]
                             </a>
-                            <a class="dropdown-item" href="@ServiceLocation.EE">
-                                @Localizer["EE"]
-                            </a>
-                            <a class="dropdown-item" href="//www.kahla.app">
-                                @Localizer["Kahla"]
-                            </a>
-                            <a class="dropdown-item" href="//tracer.aiursoft.com">
-                                @Localizer["Tracer"]
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Account">@Localizer["Account"]</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@DeveloperLocator.Endpoint">@Localizer["Development"]</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@StatusLocator.Endpoint">@Localizer["Status"]</a></li>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="@ServiceLocation.Colossus">
+                                    @Localizer["Colossus"]
+                                </a>
+                                <a class="dropdown-item" href="@ServiceLocation.EE">
+                                    @Localizer["EE"]
+                                </a>
+                                <a class="dropdown-item" href="//www.kahla.app">
+                                    @Localizer["Kahla"]
+                                </a>
+                                <a class="dropdown-item" href="//tracer.aiursoft.com">
+                                    @Localizer["Tracer"]
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Account">@Localizer["Account"]</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@DeveloperLocator.Endpoint">@Localizer["Development"]</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@StatusLocator.Endpoint">@Localizer["Status"]</a></li>*@
                 </ul>
                 <div class="form-inline">
                     <ul class="navbar-nav mr-auto">
