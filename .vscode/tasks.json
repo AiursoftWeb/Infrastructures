@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Account/Aiursoft.Account.csproj"
+                "${workspaceFolder}/src/Web Services/Business/Account/Aiursoft.Account.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -17,7 +17,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Gateway/Aiursoft.Gateway.csproj"
+                "${workspaceFolder}/src/Web Services/Basic/Gateway/Aiursoft.Gateway.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -27,17 +27,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/EE/Aiursoft.EE.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "buildKahla",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Kahla.Server/Kahla.Server.csproj"
+                "${workspaceFolder}/src/Web Services/Business/EE/Aiursoft.EE.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -47,7 +37,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Developer/Aiursoft.Developer.csproj"
+                "${workspaceFolder}/src/Web Services/Basic/Developer/Aiursoft.Developer.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -57,7 +47,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/WWW/Aiursoft.WWW.csproj"
+                "${workspaceFolder}/src/Web Services/Business/WWW/Aiursoft.WWW.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -67,17 +57,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Colossus/Aiursoft.Colossus.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "buildKahlaHome",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Kahla.Home/Kahla.Home.csproj"
+                "${workspaceFolder}/src/Web Services/Business/Colossus/Aiursoft.Colossus.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -87,7 +67,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Aiursoft.Colossus/Aiursoft.Colossus.csproj"
+                "${workspaceFolder}/src/Web Services/Business/Aiursoft.Colossus/Aiursoft.Colossus.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

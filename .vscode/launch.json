@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildAccount",
-            "program": "${workspaceFolder}/Account/bin/Debug/netcoreapp3.0/Aiursoft.Account.dll",
+            "program": "${workspaceFolder}/src/Web Services/Business/Account/bin/Debug/netcoreapp3.1/Aiursoft.Account.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Account",
             "stopAtEntry": false,
@@ -37,7 +37,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildGateway",
-            "program": "${workspaceFolder}/Gateway/bin/Debug/netcoreapp3.0/Aiursoft.Gateway.dll",
+            "program": "${workspaceFolder}/src/Web Services/Basic/Gateway/bin/Debug/netcoreapp3.1/Aiursoft.Gateway.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Gateway",
             "stopAtEntry": false,
@@ -68,40 +68,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildee",
-            "program": "${workspaceFolder}/EE/bin/Debug/netcoreapp3.0/Aiursoft.EE.dll",
+            "program": "${workspaceFolder}/src/Web Services/Business/EE/bin/Debug/netcoreapp3.1/Aiursoft.EE.dll",
             "args": [],
             "cwd": "${workspaceFolder}/EE",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "Kahla Server",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "buildKahla",
-            "program": "${workspaceFolder}/Kahla.Server/bin/Debug/netcoreapp3.0/Kahla.Server.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Kahla.Server",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -130,9 +99,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildDeveloper",
-            "program": "${workspaceFolder}/Developer/bin/Debug/netcoreapp3.0/Aiursoft.Developer.dll",
+            "program": "${workspaceFolder}/src/Web Services/Basic/Developer/bin/Debug/netcoreapp3.1/Aiursoft.Developer.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Developer",
+            "cwd": "${workspaceFolder}/src/Web Services/Basic/Developer",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -161,7 +130,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildWWW",
-            "program": "${workspaceFolder}/WWW/bin/Debug/netcoreapp3.0/Aiursoft.WWW.dll",
+            "program": "${workspaceFolder}/src/Web Services/Business/WWW/bin/Debug/netcoreapp3.1/Aiursoft.WWW.dll",
             "args": [],
             "cwd": "${workspaceFolder}/WWW",
             "stopAtEntry": false,
@@ -192,71 +161,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildColossus",
-            "program": "${workspaceFolder}/Colossus/bin/Debug/netcoreapp3.0/Aiursoft.Colossus.dll",
+            "program": "${workspaceFolder}/src/Web Services/Business/Colossus/bin/Debug/netcoreapp3.1/Aiursoft.Colossus.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Colossus",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "KahlaHome",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "buildKahlaHome",
-            "program": "${workspaceFolder}/Kahla.Home/bin/Debug/netcoreapp3.0/Kahla.Home.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Kahla.Home",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "Colossus",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "buildColossus",
-            "program": "${workspaceFolder}/Colossus/bin/Debug/netcoreapp3.0/Aiursoft.Colossus.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Aiursoft.Colossus",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
