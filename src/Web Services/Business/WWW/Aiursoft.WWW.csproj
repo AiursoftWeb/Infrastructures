@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
     <ProjectReference Include="..\..\..\SDK\Pylon\Aiursoft.Pylon.csproj" />
   </ItemGroup>
 </Project>

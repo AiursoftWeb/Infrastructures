@@ -1,0 +1,52 @@
+﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse
+@{
+    ViewData["Title"] = Model.QueryContext.OriginalQuery;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
+            {
+                <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a></h5>
+                <p>Search instead for <a asp-route-q="@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a></p>
+            }
+
+            @foreach (var webPage in Model.WebPages.Value)
+            {
+                <h3 class="mb-0 mt-3" style="font-size: 20px;line-height: 1.3;font-weight:normal">
+                    <a href="@webPage.Url">
+                        @webPage.Name
+                    </a>
+                </h3>
+                <p class="text-muted mb-0">@webPage.DisplayUrl</p>
+                <span>
+                    @webPage.Snippet
+                </span>
+                @if (webPage.DeepLinks != null && webPage.DeepLinks.Any())
+                {
+                    <div class="row ml-5">
+                        @foreach (var deepLink in webPage.DeepLinks.Take(4))
+                        {
+                            <div class="col-6">
+                                <h4 class="mb-0 mt-3" style="font-size: 17px;line-height: 1.3;font-weight:normal">
+                                    <a href="@deepLink.Url">
+                                        @deepLink.Name
+                                    </a>
+                                </h4>
+                                <span style=" overflow: hidden;
+                                   text-overflow: ellipsis;
+                                   display: -webkit-box;
+                                   -webkit-line-clamp: 3;
+                                   -webkit-box-orient: vertical;">
+                                    @deepLink.Snippet
+                                </span>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>

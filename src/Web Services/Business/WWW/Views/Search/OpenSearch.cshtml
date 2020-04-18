@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+    <ShortName>@Values.ProjectName</ShortName>
+    <Description>@Values.ProjectValue</Description>
+    <Image height="16" width="16" type="image/vnd.microsoft.icon">@ServiceLocation.UI/favicon.ico</Image>
+    <Url type="text/html" template="https://@Context.Request.Host/search?q={searchTerms}" />
+</OpenSearchDescription>
