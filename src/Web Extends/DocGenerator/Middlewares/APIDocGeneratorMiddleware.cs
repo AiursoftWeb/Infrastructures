@@ -3,6 +3,7 @@ using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -146,7 +147,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                     {
                         args.Add(new Argument
                         {
-                            Name = prop.Name,
+                            Name = GetArgumentName(prop, prop.Name),
                             Required = JudgeRequired(prop.PropertyType, prop.CustomAttributes),
                             Type = ConvertTypeToArgumentType(prop.PropertyType)
                         });
@@ -156,13 +157,24 @@ namespace Aiursoft.DocGenerator.Middlewares
                 {
                     args.Add(new Argument
                     {
-                        Name = param.Name,
+                        Name = GetArgumentName(param, param.Name),
                         Required = param.HasDefaultValue ? false : JudgeRequired(param.ParameterType, param.CustomAttributes),
                         Type = ConvertTypeToArgumentType(param.ParameterType)
                     });
                 }
             }
             return args;
+        }
+
+        private string GetArgumentName(ICustomAttributeProvider property, string defaultName)
+        {
+            var propName = defaultName;
+            var fromQuery = property.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
+            if (fromQuery != null)
+            {
+                propName = (fromQuery as IModelNameProvider).Name;
+            }
+            return propName;
         }
 
         private bool IsController(Type type)

@@ -1,5 +1,5 @@
 ﻿using Aiursoft.XelNaga.Tools;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,10 +25,10 @@ namespace Aiursoft.XelNaga.Models
                 {
                     var propName = prop.Name;
                     var propValue = prop.GetValue(param).ToString();
-                    var fromQuery = prop.GetCustomAttributes(typeof(FromQueryAttribute), true).FirstOrDefault();
+                    var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
                     if (fromQuery != null)
                     {
-                        propName = (fromQuery as FromQueryAttribute).Name;
+                        propName = (fromQuery as IModelNameProvider).Name;
                     }
                     if (prop.PropertyType == typeof(DateTime))
                     {
