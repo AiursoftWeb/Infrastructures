@@ -31,6 +31,10 @@ namespace Aiursoft.WWW.Controllers
         [Route("search")]
         public async Task<IActionResult> DoSearch([FromQuery(Name = "q")]string question, int page = 1)
         {
+            if (string.IsNullOrWhiteSpace(question))
+            {
+                return Redirect("/");
+            }
             ViewBag.CurrentPage = page;
             var result = await _cahce.GetAndCache($"search-content-{page}-" + question, () => _searchService.DoSearch(question, page));
             if (result.RankingResponse.Sidebar != null &&
