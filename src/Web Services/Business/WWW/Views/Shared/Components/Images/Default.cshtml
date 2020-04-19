@@ -1,0 +1,27 @@
+﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.Images
+
+@if (Model != null && Model.Value.Any())
+{
+    <h3 class="mb-0 mt-3" style="font-size: 17px;line-height: 1.3;font-weight:normal">
+        Images
+    </h3>
+    <div class="row">
+        @foreach (var image in Model.Value.Take(4))
+        {
+            <div class="col-3 mt-3">
+                <a href="@image.HostPageUrl">
+                    <img class="img-fluid" src="@image.ThumbnailUrl" />
+                    <p class="text-muted" style="
+                                    width: 100%;
+                                    overflow: hidden;
+                                   text-overflow: ellipsis;
+                                   display: -webkit-box;
+                                   -webkit-line-clamp: 1;
+                                   -webkit-box-orient: vertical;">
+                        @image.ContentUrl.Replace("https://", "")
+                    </p>
+                </a>
+            </div>
+        }
+    </div>
+}

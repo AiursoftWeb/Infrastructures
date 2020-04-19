@@ -71,6 +71,14 @@
                 {
                     <vc:related related="@Model.RelatedSearches"></vc:related>
                 }
+                else if (response.AnswerType == "Videos")
+                {
+                    <vc:videos videos="@Model.Videos"></vc:videos>
+                }
+                else if (response.AnswerType == "Images")
+                {
+                    <vc:images images="@Model.Images"></vc:images>
+                }
             }
         </div>
     </div>
