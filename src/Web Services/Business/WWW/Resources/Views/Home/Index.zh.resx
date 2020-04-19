@@ -177,4 +177,10 @@
   <data name="Grow" xml:space="preserve">
     <value>成就</value>
   </data>
+  <data name="Aiursoft Search" xml:space="preserve">
+    <value>Aiursoft 搜索</value>
+  </data>
+  <data name="Search the web..." xml:space="preserve">
+    <value>搜点儿什么？</value>
+  </data>
 </root>

@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
+  <data name="Aiursoft Search" xml:space="preserve">
+    <value>Aiursoft 搜索</value>
+  </data>
   <data name="Colossus" xml:space="preserve">
     <value>巨像</value>
   </data>
@@ -152,5 +155,8 @@
   </data>
   <data name="Support" xml:space="preserve">
     <value>支持</value>
+  </data>
+  <data name="Tracer" xml:space="preserve">
+    <value>闪光</value>
   </data>
 </root>
