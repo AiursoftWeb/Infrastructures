@@ -59,63 +59,20 @@
             @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
             {
                 <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a></h5>
-                <p>Search instead for <a asp-route-q="@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a></p>
+                <p>Search instead for <a asp-route-q="+@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a></p>
             }
-
-            @foreach (var webPage in Model.WebPages.Value)
+            @foreach (var response in Model.RankingResponse.Mainline.Items)
             {
-                <h3 class="mb-0 mt-3" style="font-size: 20px;line-height: 1.3;font-weight:normal">
-                    <a href="@webPage.Url">
-                        @webPage.Name
-                    </a>
-                </h3>
-                <p class="text-muted mb-0">
-                    @webPage.DisplayUrl
-                    <label class="ml-3" data-utc-time="@webPage.DateLastCrawled"></label>
-                </p>
-                <span>
-                    @webPage.Snippet
-                </span>
-                @if (webPage.DeepLinks != null && webPage.DeepLinks.Any())
+                @if (response.AnswerType == "WebPages")
                 {
-                    <div class="row ml-5">
-                        @foreach (var deepLink in webPage.DeepLinks.Take(4))
-                        {
-                            <div class="col-6">
-                                <h4 class="mb-0 mt-3" style="font-size: 17px;line-height: 1.3;font-weight:normal">
-                                    <a href="@deepLink.Url">
-                                        @deepLink.Name
-                                    </a>
-                                </h4>
-                                <span style=" overflow: hidden;
-                                   text-overflow: ellipsis;
-                                   display: -webkit-box;
-                                   -webkit-line-clamp: 3;
-                                   -webkit-box-orient: vertical;">
-                                    @deepLink.Snippet
-                                </span>
-                            </div>
-                        }
-                    </div>
+                    <vc:web-page page="@Model.WebPages.Value[response.ResultIndex ?? 0]"></vc:web-page>
+                }
+                else if (response.AnswerType == "RelatedSearches")
+                {
+                    <vc:related related="@Model.RelatedSearches"></vc:related>
                 }
             }
         </div>
-        @if (Model.RelatedSearches != null && Model.RelatedSearches.Value.Any())
-        {
-            <div class="col-md-4">
-                <h4 class="mb-3 mt-3">
-                    Search related to @Model.QueryContext.OriginalQuery
-                </h4>
-                <div class="row">
-                    @foreach (var related in Model.RelatedSearches.Value)
-                    {
-                        <div class="col-6 mt-3">
-                            <a asp-route-q="@related.Text">@related.DisplayText</a>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
     </div>
     <div class="pl-1 mt-4">
         @Html.PagedListPager(new StaticPagedList<WebPage>(Model.WebPages.Value, (int)ViewBag.CurrentPage, 10, Convert.ToInt32(Model.WebPages.TotalEstimatedMatches ?? 0)), page => Url.Action("DoSearch", new { q = Model.QueryContext.OriginalQuery, page }))

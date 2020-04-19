@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Microsoft.Azure.CognitiveServices.Language.SpellCheck;
+using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ namespace Aiursoft.WWW.Services
     {
         private readonly string _searchAPIKey;
         private readonly WebSearchClient _client;
+        private readonly EntitySearchClient _entiyClient;
         private readonly SpellCheckClient _spellCheckClient;
 
         public SearchService(IConfiguration configuration)
@@ -19,6 +21,8 @@ namespace Aiursoft.WWW.Services
             _searchAPIKey = configuration["BingSearchAPIKey"];
             _client = new WebSearchClient(
                 new Microsoft.Azure.CognitiveServices.Search.WebSearch.ApiKeyServiceClientCredentials(_searchAPIKey));
+            _entiyClient = new EntitySearchClient(
+                new Microsoft.Azure.CognitiveServices.Search.EntitySearch.ApiKeyServiceClientCredentials(_searchAPIKey));
             _spellCheckClient = new SpellCheckClient(
                 new Microsoft.Azure.CognitiveServices.Language.SpellCheck.ApiKeyServiceClientCredentials(_searchAPIKey));
         }
@@ -28,14 +32,17 @@ namespace Aiursoft.WWW.Services
             var webData = await _client.Web.SearchAsync(
                 query: question,
                 //responseFilter: new string[] { "Webpages" },
-                answerCount: 10,
-                offset: (page - 1) * 10);
+                count: 10,
+                offset: (page - 1) * 10,
+                safeSearch: "Off"
+                );
+            var entity = await _entiyClient.Entities.SearchAsync(question);
             return webData;
         }
 
-        public async Task<HttpOperationResponse> SpellCheck(string input)
+        public async Task<HttpOperationResponse> SpellCheck(string question)
         {
-            var data = await _spellCheckClient.SpellCheckerWithHttpMessagesAsync(text: input);
+            var data = await _spellCheckClient.SpellCheckerWithHttpMessagesAsync(text: question);
             return data;
         }
     }

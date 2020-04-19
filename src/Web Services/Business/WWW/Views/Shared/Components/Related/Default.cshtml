@@ -1,0 +1,18 @@
+﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.RelatedSearchesRelatedSearchAnswer
+
+@if (Model != null && Model.Value.Any())
+{
+    <div class="col-md-7 mt-3">
+        <h4 class="mb-3 mt-3">
+            Search related
+        </h4>
+        <div class="row">
+            @foreach (var related in Model.Value)
+            {
+                <div class="col-6 mt-3">
+                    <a asp-route-q="@related.Text">@related.DisplayText</a>
+                </div>
+            }
+        </div>
+    </div>
+}
