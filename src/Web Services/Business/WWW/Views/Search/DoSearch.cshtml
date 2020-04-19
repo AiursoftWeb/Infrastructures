@@ -94,11 +94,14 @@
             <div class="col-md-4">
                 @foreach (var sidebar in Model.RankingResponse.Sidebar.Items)
                 {
-                    @if (sidebar.AnswerType == "Entities")
+                    if (sidebar.AnswerType == "Entities")
                     {
-                        @if (entities.Entities?.Value != null)
+                        if (entities.Entities?.Value != null)
                         {
-                            <vc:entity entity="@entities.Entities.Value[sidebar.ResultIndex ?? 0]"></vc:entity>
+                            if (entities.Entities.Value.Count > sidebar.ResultIndex)
+                            {
+                                <vc:entity entity="@entities.Entities.Value[sidebar.ResultIndex ?? 0]"></vc:entity>
+                            }
                         }
                     }
                 }
