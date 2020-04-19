@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = Model.QueryContext.OriginalQuery;
     ViewData["No Nav"] = "true";
+    Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse entities = ViewBag.Entities;
 }
 <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
     <div class="container">
@@ -81,6 +82,21 @@
                 }
             }
         </div>
+        @if (Model.RankingResponse.Sidebar?.Items != null && Model.RankingResponse.Sidebar.Items.Any())
+        {
+            <div class="col-md-4">
+                @foreach (var sidebar in Model.RankingResponse.Sidebar.Items)
+                {
+                    @if (sidebar.AnswerType == "Entities")
+                    {
+                        @if (entities.Entities?.Value != null)
+                        {
+                            <vc:entity entity="@entities.Entities.Value[sidebar.ResultIndex ?? 0]"></vc:entity>
+                        }
+                    }
+                }
+            </div>
+        }
     </div>
     <div class="pl-1 mt-4">
         @Html.PagedListPager(new StaticPagedList<WebPage>(Model.WebPages.Value, (int)ViewBag.CurrentPage, 10, Convert.ToInt32(Model.WebPages.TotalEstimatedMatches ?? 0)), page => Url.Action("DoSearch", new { q = Model.QueryContext.OriginalQuery, page }))

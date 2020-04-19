@@ -36,8 +36,13 @@ namespace Aiursoft.WWW.Services
                 offset: (page - 1) * 10,
                 safeSearch: "Off"
                 );
-            var entity = await _entiyClient.Entities.SearchAsync(question);
             return webData;
+        }
+
+        public async Task<Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse> EntitySearch(string question)
+        {
+            var entity = await _entiyClient.Entities.SearchAsync(question);
+            return entity;
         }
 
         public async Task<HttpOperationResponse> SpellCheck(string question)

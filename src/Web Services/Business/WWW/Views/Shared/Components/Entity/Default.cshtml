@@ -1,0 +1,23 @@
+﻿@model Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.Thing
+@if (Model.Image != null && Model.Image.ThumbnailUrl != null)
+{
+    <img class="img-fluid mt-3 mb-2" src="@Model.Image.ThumbnailUrl" />
+}
+@{
+    var url = Model.Url;
+    if (string.IsNullOrWhiteSpace(url))
+    {
+        url = $"https://en.wikipedia.org/wiki/{Model.Name}";
+    }
+}
+<a href="@url">
+    <h3>@Model.Name</h3>
+    <p class="text-muted">@url</p>
+</a>
+<p style="overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;">
+    @Model.Description
+</p>
