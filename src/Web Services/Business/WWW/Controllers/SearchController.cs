@@ -39,13 +39,16 @@ namespace Aiursoft.WWW.Controllers
             {
                 ViewBag.Entities = await _cahce.GetAndCache($"search-entity-" + question, () => _searchService.EntitySearch(question));
             }
-            _dbContext.SearchHistories.Add(new SearchHistory
+            if (HttpContext.AllowTrack())
             {
-                Question = question,
-                TriggerUserId = User.GetUserId(),
-                Page = page
-            });
-            await _dbContext.SaveChangesAsync();
+                _dbContext.SearchHistories.Add(new SearchHistory
+                {
+                    Question = question,
+                    TriggerUserId = User.GetUserId(),
+                    Page = page
+                });
+                await _dbContext.SaveChangesAsync();
+            }
             return View(result);
         }
 
