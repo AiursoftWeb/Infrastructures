@@ -9,5 +9,7 @@ namespace Aiursoft.WWW.Data
         public WWWDbContext(DbContextOptions<WWWDbContext> options) : base(options)
         {
         }
+
+        public DbSet<SearchHistory> SearchHistories { get; set; }
     }
 }

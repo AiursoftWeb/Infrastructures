@@ -4,14 +4,16 @@ using Aiursoft.WWW.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.WWW.Migrations
 {
     [DbContext(typeof(WWWDbContext))]
-    partial class WWWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200419064033_SaveHistory")]
+    partial class SaveHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

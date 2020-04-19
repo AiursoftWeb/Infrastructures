@@ -1,5 +1,8 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Pylon.Services;
+using Aiursoft.WebTools;
+using Aiursoft.WWW.Data;
+using Aiursoft.WWW.Models;
 using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -11,13 +14,16 @@ namespace Aiursoft.WWW.Controllers
     public class SearchController : Controller
     {
         private readonly SearchService _searchService;
+        private readonly WWWDbContext _dbContext;
         private readonly AiurCache _cahce;
 
         public SearchController(
             SearchService searchService,
+            WWWDbContext dbContext,
             AiurCache cahce)
         {
             _searchService = searchService;
+            _dbContext = dbContext;
             _cahce = cahce;
         }
 
@@ -33,6 +39,13 @@ namespace Aiursoft.WWW.Controllers
             {
                 ViewBag.Entities = await _cahce.GetAndCache($"search-entity-" + question, () => _searchService.EntitySearch(question));
             }
+            _dbContext.SearchHistories.Add(new SearchHistory
+            {
+                Question = question,
+                TriggerUserId = User.GetUserId(),
+                Page = page
+            });
+            await _dbContext.SaveChangesAsync();
             return View(result);
         }
 
