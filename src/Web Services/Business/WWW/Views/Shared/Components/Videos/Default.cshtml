@@ -8,9 +8,11 @@
     <div class="row">
         @foreach (var video in Model.Value.Take(4))
         {
-            <div class="col-3 mt-3">
+            <div class="col-3 mt-3" data-hover-video="@video.MotionThumbnailUrl">
                 <a href="@video.HostPageUrl">
-                    <img class="img-fluid" src="@video.ThumbnailUrl" />
+                    <div class="img-fluid" data-place>
+                        <img class="w-100" src="@video.ThumbnailUrl" />
+                    </div>
                     <p class="text-muted" style="
                                     width: 100%;
                                     overflow: hidden;
