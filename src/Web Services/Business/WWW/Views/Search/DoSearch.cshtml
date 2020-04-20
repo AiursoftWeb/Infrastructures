@@ -87,7 +87,7 @@
             }
             else
             {
-                <h3>There are no results for <b>dulpnav</b>.</h3>
+                <h3>There are no results for <b>@Model.QueryContext.OriginalQuery</b>.</h3>
             }
         </div>
         @if (Model.RankingResponse.Sidebar?.Items != null && Model.RankingResponse.Sidebar.Items.Any())

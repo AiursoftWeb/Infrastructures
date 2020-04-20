@@ -44,8 +44,8 @@ namespace Aiursoft.Pylon
         {
             var supportedCultures = new[]
             {
-                new CultureInfo("en"),
-                new CultureInfo("zh")
+                new CultureInfo("en-US"),
+                new CultureInfo("zh-CN")
             };
             return supportedCultures;
         }

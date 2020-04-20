@@ -33,7 +33,6 @@ namespace Aiursoft.WWW
 
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<WWWUser>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

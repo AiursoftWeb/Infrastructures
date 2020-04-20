@@ -5,6 +5,7 @@ using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
 using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,12 +37,13 @@ namespace Aiursoft.WWW.Controllers
                 return Redirect("/");
             }
             ViewBag.CurrentPage = page;
-            var result = await _cahce.GetAndCache($"search-content-{page}-" + question, () => _searchService.DoSearch(question, page));
+            var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+            var result = await _cahce.GetAndCache($"search-content-{lang}-{page}-" + question, () => _searchService.DoSearch(question, lang, page));
             if (result.RankingResponse.Sidebar != null &&
                 result.RankingResponse.Sidebar.Items != null &&
                 result.RankingResponse.Sidebar.Items.Any())
             {
-                ViewBag.Entities = await _cahce.GetAndCache($"search-entity-" + question, () => _searchService.EntitySearch(question));
+                ViewBag.Entities = await _cahce.GetAndCache($"search-entity-{lang}-" + question, () => _searchService.EntitySearch(question, lang));
             }
             if (HttpContext.AllowTrack())
             {
@@ -59,7 +61,8 @@ namespace Aiursoft.WWW.Controllers
         [Route("searchraw")]
         public async Task<IActionResult> SearchRaw([FromQuery(Name = "q")]string question, int page = 1)
         {
-            var result = await _searchService.DoSearch(question, page);
+            var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+            var result = await _searchService.DoSearch(question, lang, page);
             return Json(result);
         }
 

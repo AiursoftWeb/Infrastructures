@@ -21,21 +21,22 @@ namespace Aiursoft.WWW.Services
                 new Microsoft.Azure.CognitiveServices.Search.EntitySearch.ApiKeyServiceClientCredentials(_searchAPIKey));
         }
 
-        public async Task<Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse> DoSearch(string question, int page = 1)
+        public async Task<Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse> DoSearch(string question, string lang, int page = 1)
         {
             var webData = await _client.Web.SearchAsync(
                 query: question,
-                //responseFilter: new string[] { "Webpages" },
                 count: 10,
                 offset: (page - 1) * 10,
-                safeSearch: "Off"
-                );
+                market: lang,
+                setLang: lang);
             return webData;
         }
 
-        public async Task<Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse> EntitySearch(string question)
+        public async Task<Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse> EntitySearch(string question, string lang)
         {
-            var entity = await _entiyClient.Entities.SearchAsync(question);
+            var entity = await _entiyClient.Entities.SearchAsync(
+                query: question,
+                setLang: lang);
             return entity;
         }
     }
