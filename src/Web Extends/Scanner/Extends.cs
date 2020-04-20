@@ -2,6 +2,7 @@
 using Aiursoft.Scanner.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -50,28 +51,40 @@ namespace Aiursoft.Scanner
             }
         }
 
-        public static IServiceCollection AddScannedDependencies(this IServiceCollection services, params Type[] abstracts)
+        private static void Register(List<Type> types, IServiceCollection services, params Type[] abstracts)
         {
-            var executingTypes = new ClassScanner().AllAccessiableClass(false, false);
-            foreach (var item in executingTypes)
+            foreach (var item in types)
             {
                 AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), services, abstracts);
                 AddScanned(item, typeof(IScopedDependency), (i, e) => services.AddScoped(i, e), (i) => services.AddScoped(i), services, abstracts);
                 AddScanned(item, typeof(ITransientDependency), (i, e) => services.AddTransient(i, e), (i) => services.AddTransient(i), services, abstracts);
             }
+        }
+
+        /// <summary>
+        /// Scan all dependencies from the highest level. Very useful when you are building a project.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="abstracts"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddScannedDependencies(this IServiceCollection services, params Type[] abstracts)
+        {
+            var executingTypes = new ClassScanner().AllAccessiableClass(false, false);
+            Register(executingTypes, services, abstracts);
             return services;
         }
 
+        /// <summary>
+        /// Scan all class from the calling assembly. Very useful when you are building a library.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="abstracts"></param>
+        /// <returns></returns>
         public static IServiceCollection AddLibraryDependencies(this IServiceCollection services, params Type[] abstracts)
         {
             var calling = Assembly.GetCallingAssembly();
             var executingTypes = new ClassScanner().AllLibraryClass(calling, false, false);
-            foreach (var item in executingTypes)
-            {
-                AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), services, abstracts);
-                AddScanned(item, typeof(IScopedDependency), (i, e) => services.AddScoped(i, e), (i) => services.AddScoped(i), services, abstracts);
-                AddScanned(item, typeof(ITransientDependency), (i, e) => services.AddTransient(i, e), (i) => services.AddTransient(i), services, abstracts);
-            }
+            Register(executingTypes, services, abstracts);
             return services;
         }
     }

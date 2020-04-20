@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -10,14 +9,11 @@ namespace Aiursoft.Archon.Controllers
     [LimitPerMin]
     public class HomeController : Controller
     {
-        private readonly ServiceLocation _serviceLocation;
         private readonly IConfiguration _configuration;
 
         public HomeController(
-            ServiceLocation serviceLocation,
             IConfiguration configuration)
         {
-            _serviceLocation = serviceLocation;
             _configuration = configuration;
         }
 
@@ -27,7 +23,7 @@ namespace Aiursoft.Archon.Controllers
             return Json(new IndexViewModel
             {
                 Code = ErrorType.Success,
-                Message = "Welcome to Archon server! View our wiki at: " + _serviceLocation.Wiki,
+                Message = "Welcome to Archon server!",
                 Exponent = keyConfig["Exponent"],
                 Modulus = keyConfig["Modulus"]
             });

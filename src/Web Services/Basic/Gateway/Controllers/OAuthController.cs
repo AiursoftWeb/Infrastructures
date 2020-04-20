@@ -9,6 +9,7 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Models;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;

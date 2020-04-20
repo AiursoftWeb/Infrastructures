@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Aiursoft.Handler.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -44,5 +46,14 @@ namespace Aiursoft.WebTools
 
         public static string GetUserId(this ClaimsPrincipal user) =>
             user.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        public static JsonResult Protocol(this Controller controller, ErrorType errorType, string errorMessage)
+        {
+            return controller.Json(new AiurProtocol
+            {
+                Code = errorType,
+                Message = errorMessage
+            });
+        }
     }
 }

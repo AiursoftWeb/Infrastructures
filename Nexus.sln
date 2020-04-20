@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "src\Web 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.EE", "src\Web Services\Business\EE\Aiursoft.EE.csproj", "{F1610CD8-C907-4AFC-A91D-03123B7459F0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.SDK", "src\SDK\SDK\Aiursoft.SDK.csproj", "{BFD266DD-8056-4B57-9B25-4575E1473C2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,6 +195,10 @@ Global
 		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1610CD8-C907-4AFC-A91D-03123B7459F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD266DD-8056-4B57-9B25-4575E1473C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD266DD-8056-4B57-9B25-4575E1473C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD266DD-8056-4B57-9B25-4575E1473C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD266DD-8056-4B57-9B25-4575E1473C2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -229,6 +235,7 @@ Global
 		{7DF1C53D-F9B7-4DF1-AE88-A8625E647D9B} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
 		{AE6F0404-7805-4878-95CD-AF1B42ED0EC2} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
 		{F1610CD8-C907-4AFC-A91D-03123B7459F0} = {0BA5235B-1F50-48BD-9024-43260AB7C926}
+		{BFD266DD-8056-4B57-9B25-4575E1473C2D} = {07F3718A-6DC5-4A11-A836-80124AF47482}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A55376D-2CE7-4C61-8D33-16C3FFEC02DE}
