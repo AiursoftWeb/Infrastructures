@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +26,7 @@ namespace Aiursoft.Stargate
             services.AddDbContext<StargateDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddAiurMvc();
-
+            services.AddAiurAPIMvc();
             services.AddAiurDependencies();
         }
 
@@ -36,7 +34,7 @@ namespace Aiursoft.Stargate
         {
             app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseWebSockets();
-            app.UseAiursoftDefault();
+            app.UseAiursoftAPIDefault();
         }
     }
 }
