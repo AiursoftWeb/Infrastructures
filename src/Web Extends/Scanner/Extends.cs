@@ -3,6 +3,7 @@ using Aiursoft.Scanner.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Aiursoft.Scanner
 {
@@ -27,7 +28,7 @@ namespace Aiursoft.Scanner
                     if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface))
                     {
                         abstractImplementation(inputInterface, service);
-                        Console.WriteLine($"Service: {service.Name} - was successfully registered as a {inputInterface.Name} service.");
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
                     }
                 }
             }
@@ -38,14 +39,14 @@ namespace Aiursoft.Scanner
                     if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
                     {
                         abstractImplementation(inputAbstractClass, service);
-                        Console.WriteLine($"Service: {service.Name} - was successfully registered as a {inputAbstractClass.Name} service.");
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
                     }
                 }
             }
             if (!services.Any(t => t.ServiceType == service && t.ImplementationType == service))
             {
                 realisticImplementation(service);
-                Console.WriteLine($"Service: {service.Name} - was successfully registered as a service.");
+                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess");
             }
         }
 
@@ -63,7 +64,8 @@ namespace Aiursoft.Scanner
 
         public static IServiceCollection AddLibraryDependencies(this IServiceCollection services, params Type[] abstracts)
         {
-            var executingTypes = new ClassScanner().AllLibraryClass(false, false);
+            var calling = Assembly.GetCallingAssembly();
+            var executingTypes = new ClassScanner().AllLibraryClass(calling, false, false);
             foreach (var item in executingTypes)
             {
                 AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), services, abstracts);
