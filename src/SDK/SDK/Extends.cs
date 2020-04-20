@@ -53,7 +53,6 @@ namespace Aiursoft.SDK
             if (isDevelopment)
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

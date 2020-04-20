@@ -44,10 +44,10 @@ namespace Aiursoft.Pylon
             if (isDevelopment)
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
+                app.UseMiddleware<HandleRobotsMiddleware>();
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
                 app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
