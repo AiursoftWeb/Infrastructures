@@ -72,6 +72,7 @@ namespace Aiursoft.Pylon
                 SupportedUICultures = GetSupportedLanguages()
             });
             app.UseStaticFiles();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAiursoftAPIDefault(beforeMVC);
