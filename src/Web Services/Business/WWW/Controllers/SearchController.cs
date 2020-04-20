@@ -6,7 +6,6 @@ using Aiursoft.WWW.Models;
 using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Controllers
@@ -37,14 +36,9 @@ namespace Aiursoft.WWW.Controllers
                 return Redirect("/");
             }
             ViewBag.CurrentPage = page;
-            var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
-            var result = await _cahce.GetAndCache($"search-content-{lang}-{page}-" + question, () => _searchService.DoSearch(question, lang, page));
-            if (result.RankingResponse.Sidebar != null &&
-                result.RankingResponse.Sidebar.Items != null &&
-                result.RankingResponse.Sidebar.Items.Any())
-            {
-                ViewBag.Entities = await _cahce.GetAndCache($"search-entity-{lang}-" + question, () => _searchService.EntitySearch(question, lang));
-            }
+            var market = CultureInfo.CurrentCulture.Name;
+            var result = await _cahce.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
+            ViewBag.Entities = await _cahce.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
             if (HttpContext.AllowTrack())
             {
                 _dbContext.SearchHistories.Add(new SearchHistory

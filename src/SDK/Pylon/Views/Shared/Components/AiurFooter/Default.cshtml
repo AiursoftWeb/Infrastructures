@@ -24,6 +24,6 @@
     @Html.Raw(GetRenderedFooter(foot.Value, foot.Key))
 }
 @{
-    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path });
+    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path + Context.Request.QueryString });
 }
 @Html.Raw(GetRenderedFooter(langLink.ToString(), "Language"))
