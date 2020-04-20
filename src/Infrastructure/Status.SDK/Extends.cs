@@ -1,4 +1,5 @@
-﻿using Aiursoft.Status.SDK.Services;
+﻿using Aiursoft.Scanner;
+using Aiursoft.Status.SDK.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Status.SDK
@@ -13,6 +14,7 @@ namespace Aiursoft.Status.SDK
                 serverEndpoint = "https://status.aiursoft.com";
             }
             services.AddSingleton(new StatusLocator(serverEndpoint));
+            services.AddLibraryDependencies();
             return services;
         }
     }

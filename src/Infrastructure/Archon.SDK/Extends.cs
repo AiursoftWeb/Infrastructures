@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Archon.SDK
@@ -13,6 +14,7 @@ namespace Aiursoft.Archon.SDK
                 serverEndpoint = "https://archon.aiursoft.com";
             }
             services.AddSingleton(new ArchonLocator(serverEndpoint));
+            services.AddLibraryDependencies();
             return services;
         }
     }

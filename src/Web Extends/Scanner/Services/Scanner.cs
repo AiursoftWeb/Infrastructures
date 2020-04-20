@@ -36,5 +36,18 @@ namespace Aiursoft.Scanner.Services
                 .Where(t => !t.IsInterface)
                 .ToList();
         }
+
+        public List<Type> AllLibraryClass(bool includeSystem, bool includeMicrosoft)
+        {
+            var entry = Assembly.GetExecutingAssembly();
+            return ScanAssemblies(entry, !includeSystem, !includeMicrosoft)
+                .Distinct()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => !t.IsAbstract)
+                .Where(t => !t.IsNestedPrivate)
+                .Where(t => !t.IsGenericType)
+                .Where(t => !t.IsInterface)
+                .ToList();
+        }
     }
 }

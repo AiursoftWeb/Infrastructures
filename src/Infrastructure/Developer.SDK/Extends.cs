@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Developer.SDK.Services;
+using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Developer.SDK
@@ -13,6 +14,7 @@ namespace Aiursoft.Developer.SDK
                 serverEndpoint = "https://developer.aiursoft.com";
             }
             services.AddSingleton(new DeveloperLocator(serverEndpoint));
+            services.AddLibraryDependencies();
             return services;
         }
     }

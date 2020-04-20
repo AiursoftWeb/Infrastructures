@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Gateway.SDK
@@ -13,6 +14,7 @@ namespace Aiursoft.Gateway.SDK
                 serverEndpoint = "https://gateway.aiursoft.com";
             }
             services.AddSingleton(new GatewayLocator(serverEndpoint));
+            services.AddLibraryDependencies();
             return services;
         }
     }

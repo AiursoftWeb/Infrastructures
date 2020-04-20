@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Probe.SDK.Services;
+using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Probe.SDK
@@ -29,6 +30,7 @@ namespace Aiursoft.Probe.SDK
                 probeIO = "https://{0}.aiur.site";
             }
             services.AddSingleton(new ProbeLocator(serverEndpoint, openCDN, downloadCDN, probeIO));
+            services.AddLibraryDependencies();
             return services;
         }
     }
