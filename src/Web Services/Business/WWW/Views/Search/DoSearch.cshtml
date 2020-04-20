@@ -57,10 +57,11 @@
 <div class="container">
     <div class="row pt-5">
         <div class="col-md-8">
+            <p class="text-muted float-right">About @(Model.WebPages?.TotalEstimatedMatches ?? 0) results.</p>
             @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
             {
-                <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a></h5>
-                <p>Search instead for <a asp-route-q="+@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a></p>
+                <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a>.</h5>
+                <p>Search instead for <a asp-route-q="+@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a>.</p>
             }
             @if (Model.RankingResponse.Mainline != null)
             {
@@ -86,7 +87,7 @@
             }
             else
             {
-                <h3>There are no results for <b>dulpnav</b></h3>
+                <h3>There are no results for <b>dulpnav</b>.</h3>
             }
         </div>
         @if (Model.RankingResponse.Sidebar?.Items != null && Model.RankingResponse.Sidebar.Items.Any())
@@ -111,7 +112,14 @@
     @if (Model.WebPages?.Value?.Count > 0)
     {
         <div class="pl-1 mt-4">
-            @Html.PagedListPager(new StaticPagedList<WebPage>(Model.WebPages?.Value ?? new List<WebPage>(), (int)ViewBag.CurrentPage, 10, Convert.ToInt32(Model.WebPages?.TotalEstimatedMatches ?? 0)), page => Url.Action("DoSearch", new { q = Model.QueryContext.OriginalQuery, page }))
+            @{
+                var count = int.MaxValue;
+                if ((Model.WebPages?.TotalEstimatedMatches ?? 0) < int.MaxValue)
+                {
+                    count = (int)(Model.WebPages?.TotalEstimatedMatches ?? 0);
+                }
+            }
+            @Html.PagedListPager(new StaticPagedList<WebPage>(Model.WebPages?.Value ?? new List<WebPage>(), (int)ViewBag.CurrentPage, 10, count), page => Url.Action("DoSearch", new { q = Model.QueryContext.OriginalQuery, page }))
         </div>
     }
 </div>
