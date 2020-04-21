@@ -70,9 +70,14 @@ namespace Aiursoft.SDK
         /// <returns></returns>
         public static IApplicationBuilder UseAiursoftAPIDefault(
             this IApplicationBuilder app,
+            bool addRouting = true,
             Func<IApplicationBuilder, IApplicationBuilder> beforeMVC = null)
         {
             beforeMVC?.Invoke(app);
+            if (addRouting)
+            {
+                app.UseRouting();
+            }
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             app.UseAiursoftDocGenerator(options =>
             {

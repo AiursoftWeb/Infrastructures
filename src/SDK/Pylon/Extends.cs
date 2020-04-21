@@ -75,7 +75,7 @@ namespace Aiursoft.Pylon
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAiursoftAPIDefault(beforeMVC);
+            app.UseAiursoftAPIDefault(false, beforeMVC);
             app.UseMiddleware<SwitchLanguageMiddleware>();
 
             return app;
