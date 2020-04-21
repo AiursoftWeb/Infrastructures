@@ -11,7 +11,11 @@
 @using Aiursoft.Status.SDK.Services
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
+@using Aiursoft.XelNaga.Models
+@using Aiursoft.Gateway.SDK.Services
+@using Aiursoft.Pylon
 
+@inject GatewayLocator GatewayLocator
 @inject SignInManager<WWWUser> SignInManager
 @inject UserManager<WWWUser> UserManager
 @inject IConfiguration Configuration

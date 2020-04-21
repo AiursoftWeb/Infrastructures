@@ -8,18 +8,15 @@
         <div class="card-header">@Localizer["Change Language"]</div>
         <div class="card-body">
             <p>@Localizer["Click the language you are speaking:"]</p>
-            <form asp-controller="api" asp-action="setlang" method="post">
-                <input type="hidden" asp-for="Culture" value="zh-CN" />
-                <input type="hidden" asp-for="Host" value="@Model.Host" />
-                <input type="hidden" asp-for="Path" value="@Model.Path" />
-                <input class="btn btn-block btn-primary" data-disable-with="Applying..." type="submit" value="中文 - 新加坡" />
-            </form>
-            <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
-                <input type="hidden" asp-for="Culture" value="en-US" />
-                <input type="hidden" asp-for="Host" value="@Model.Host" />
-                <input type="hidden" asp-for="Path" value="@Model.Path" />
-                <input class="btn btn-block btn-primary" data-disable-with="Applying..." type="submit" value="English - United States" />
-            </form>
+            @foreach (var lang in Extends.GetSupportedLanguages())
+            {
+                <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
+                    <input type="hidden" asp-for="Culture" value="@lang.Name" />
+                    <input type="hidden" asp-for="Host" value="@Model.Host" />
+                    <input type="hidden" asp-for="Path" value="@Model.Path" />
+                    <input class="btn btn-block btn-primary" data-disable-with="Applying..." type="submit" value="@lang.DisplayName" />
+                </form>
+            }
         </div>
     </div>
 </div>

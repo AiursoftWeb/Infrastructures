@@ -57,7 +57,18 @@
 <div class="container">
     <div class="row pt-5">
         <div class="col-md-8">
-            <p class="text-muted float-right">About @(Model.WebPages?.TotalEstimatedMatches ?? 0) results.</p>
+            <div class="text-muted">
+                @{
+                    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path + Context.Request.QueryString });
+                }
+                @Localizer["Current search language:"]
+                <a href="@langLink">
+                    @System.Globalization.CultureInfo.CurrentCulture.NativeName
+                </a>
+                <div class=" float-right">
+                    @Localizer["Results: About"] @(Model.WebPages?.TotalEstimatedMatches ?? 0).
+                </div>
+            </div>
             @if (!string.IsNullOrWhiteSpace(Model.QueryContext.AlteredQuery))
             {
                 <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a>.</h5>

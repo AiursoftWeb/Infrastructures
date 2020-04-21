@@ -19,7 +19,7 @@ namespace Aiursoft.Pylon
 {
     public static class Extends
     {
-        private static CultureInfo[] GetSupportedLanguages()
+        public static CultureInfo[] GetSupportedLanguages()
         {
             var supportedCultures = new[]
             {
