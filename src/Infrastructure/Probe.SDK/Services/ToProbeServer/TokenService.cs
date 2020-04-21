@@ -22,14 +22,22 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<string> GetUploadTokenAsync(string accessToken, string siteName, string permissions, string underPath)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="siteName"></param>
+        /// <param name="permissions">Upload, Download</param>
+        /// <param name="underPath"></param>
+        /// <returns></returns>
+        public async Task<string> GetTokenAsync(string accessToken, string siteName, string[] permissions, string underPath)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetUploadToken", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetToken", new { });
             var form = new AiurUrl(string.Empty, new GetUploadTokenAddressModel
             {
                 AccessToken = accessToken,
                 SiteName = siteName,
-                Permissions = permissions,
+                Permissions = string.Join(",", permissions),
                 UnderPath = underPath
             });
             var result = await _http.Post(url, form, true);
