@@ -1,4 +1,4 @@
-﻿using Aiursoft.Pylon.Services.Authentication;
+﻿using Aiursoft.SDK.Services.Authentication;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {

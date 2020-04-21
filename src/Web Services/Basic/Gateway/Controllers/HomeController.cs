@@ -3,7 +3,7 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.HomeViewModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon.Attributes;
+using Aiursoft.SDK.Attributes;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

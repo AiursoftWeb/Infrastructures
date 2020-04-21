@@ -1,4 +1,5 @@
-﻿using Aiursoft.Stargate.SDK.Services;
+﻿using Aiursoft.Scanner;
+using Aiursoft.Stargate.SDK.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Stargate.SDK
@@ -13,6 +14,7 @@ namespace Aiursoft.Stargate.SDK
                 serverEndpoint = "https://stargate.aiursoft.com";
             }
             services.AddSingleton(new StargateLocator(serverEndpoint));
+            services.AddLibraryDependencies();
             return services;
         }
     }

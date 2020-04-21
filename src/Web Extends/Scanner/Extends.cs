@@ -2,7 +2,9 @@
 using Aiursoft.Scanner.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Aiursoft.Scanner
 {
@@ -13,6 +15,7 @@ namespace Aiursoft.Scanner
             Type condition,
             Action<Type, Type> abstractImplementation,
             Action<Type> realisticImplementation,
+            IServiceCollection services,
             params Type[] abstracts)
         {
             if (!service.GetInterfaces().Contains(condition))
@@ -23,30 +26,65 @@ namespace Aiursoft.Scanner
             {
                 if (service.GetInterfaces().Any(t => t == inputInterface))
                 {
-                    abstractImplementation(inputInterface, service);
-                    Console.WriteLine($"Service: {service.Name} - was successfully registered as a {inputInterface.Name} service.");
+                    if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface))
+                    {
+                        abstractImplementation(inputInterface, service);
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
+                    }
                 }
             }
             foreach (var inputAbstractClass in abstracts.Where(t => t.IsAbstract))
             {
                 if (service.IsSubclassOf(inputAbstractClass))
                 {
-                    abstractImplementation(inputAbstractClass, service);
+                    if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
+                    {
+                        abstractImplementation(inputAbstractClass, service);
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
+                    }
                 }
             }
-            realisticImplementation(service);
-            Console.WriteLine($"Service: {service.Name} - was successfully registered as a service.");
+            if (!services.Any(t => t.ServiceType == service && t.ImplementationType == service))
+            {
+                realisticImplementation(service);
+                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess");
+            }
         }
 
+        private static void Register(List<Type> types, IServiceCollection services, params Type[] abstracts)
+        {
+            foreach (var item in types)
+            {
+                AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), services, abstracts);
+                AddScanned(item, typeof(IScopedDependency), (i, e) => services.AddScoped(i, e), (i) => services.AddScoped(i), services, abstracts);
+                AddScanned(item, typeof(ITransientDependency), (i, e) => services.AddTransient(i, e), (i) => services.AddTransient(i), services, abstracts);
+            }
+        }
+
+        /// <summary>
+        /// Scan all dependencies from the highest level. Very useful when you are building a project.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="abstracts"></param>
+        /// <returns></returns>
         public static IServiceCollection AddScannedDependencies(this IServiceCollection services, params Type[] abstracts)
         {
             var executingTypes = new ClassScanner().AllAccessiableClass(false, false);
-            foreach (var item in executingTypes)
-            {
-                AddScanned(item, typeof(ISingletonDependency), (i, e) => services.AddSingleton(i, e), (i) => services.AddSingleton(i), abstracts);
-                AddScanned(item, typeof(IScopedDependency), (i, e) => services.AddScoped(i, e), (i) => services.AddScoped(i), abstracts);
-                AddScanned(item, typeof(ITransientDependency), (i, e) => services.AddTransient(i, e), (i) => services.AddTransient(i), abstracts);
-            }
+            Register(executingTypes, services, abstracts);
+            return services;
+        }
+
+        /// <summary>
+        /// Scan all class from the calling assembly. Very useful when you are building a library.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="abstracts"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddLibraryDependencies(this IServiceCollection services, params Type[] abstracts)
+        {
+            var calling = Assembly.GetCallingAssembly();
+            var executingTypes = new ClassScanner().AllLibraryClass(calling, false, false);
+            Register(executingTypes, services, abstracts);
             return services;
         }
     }

@@ -1,7 +1,4 @@
 ﻿@model Aiursoft.Stargate.SDK.Models.ListenAddressModels.ChannelAddressModel
-@using Aiursoft.Pylon.Services;
-@using Aiursoft.Pylon
-@inject ServiceLocation ServiceLocation
 @{
     Layout = null;
 }
@@ -12,7 +9,7 @@
 </head>
 <body>
     WebSocket Connection Test - Channel @Model.Id
-    <script src="@ServiceLocation.UI/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://ui.aiursoft.com/node_modules/jquery/dist/jquery.min.js"></script>
     <script>
     function GetWSAddress(){
         var ishttps = 'https:' == document.location.protocol ? true: false;

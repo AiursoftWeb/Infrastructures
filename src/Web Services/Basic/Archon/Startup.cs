@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,14 +18,14 @@ namespace Aiursoft.Archon
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAiurMvc();
+            services.AddAiurAPIMvc();
             services.AddAiurDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAiurAPIHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
+            app.UseAiursoftAPIDefault();
         }
     }
 }

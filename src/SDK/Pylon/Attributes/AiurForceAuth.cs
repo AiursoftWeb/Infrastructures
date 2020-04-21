@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.SDK.Attributes;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -11,7 +12,7 @@ namespace Aiursoft.Pylon.Attributes
     /// <summary>
     /// Request the signed in token or throw a NotAiurSignedInException
     /// </summary>
-    public class AiurForceAuth : ActionFilterAttribute
+    public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
     {
         private string _preferController { get; }
         private string _preferAction { get; }

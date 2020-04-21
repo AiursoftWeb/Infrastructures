@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Probe.Data;
-using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -29,7 +29,7 @@ namespace Aiursoft.Probe
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddCors();
-            services.AddAiurMvc();
+            services.AddAiurAPIMvc();
             services.AddAiurDependencies();
         }
 
@@ -37,7 +37,7 @@ namespace Aiursoft.Probe
         {
             app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseCors(builder => builder.AllowAnyOrigin());
-            app.UseAiursoftDefault();
+            app.UseAiursoftAPIDefault();
         }
     }
 }
