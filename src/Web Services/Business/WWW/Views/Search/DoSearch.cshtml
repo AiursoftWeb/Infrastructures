@@ -63,7 +63,7 @@
                 <h5>Showing results for <a asp-route-q="@Model.QueryContext.AlteredQuery">@Model.QueryContext.AlteredQuery</a>.</h5>
                 <p>Search instead for <a asp-route-q="+@Model.QueryContext.OriginalQuery">@Model.QueryContext.OriginalQuery</a>.</p>
             }
-            @if (Model.RankingResponse.Mainline != null)
+            @if (Model.RankingResponse?.Mainline != null)
             {
                 @foreach (var response in Model.RankingResponse.Mainline.Items)
                 {
@@ -90,7 +90,7 @@
                 <h3>There are no results for <b>@Model.QueryContext.OriginalQuery</b>.</h3>
             }
         </div>
-        @if (Model.RankingResponse.Sidebar?.Items != null && Model.RankingResponse.Sidebar.Items.Any())
+        @if (Model.RankingResponse?.Sidebar?.Items != null && Model.RankingResponse.Sidebar.Items.Any())
         {
             <div class="col-md-4">
                 @foreach (var sidebar in Model.RankingResponse.Sidebar.Items)
