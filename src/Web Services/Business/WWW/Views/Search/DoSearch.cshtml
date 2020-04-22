@@ -59,10 +59,10 @@
         <div class="col-md-8">
             <div class="text-muted">
                 @{
-                    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { Host = $"{Context.Request.Scheme}://{Context.Request.Host}", Path = Context.Request.Path + Context.Request.QueryString });
+                    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { });
                 }
                 @Localizer["Current search language:"]
-                <a href="@langLink">
+                <a href="@langLink" data-language-change-link>
                     @System.Globalization.CultureInfo.CurrentCulture.NativeName
                 </a>
                 <div class=" float-right">
