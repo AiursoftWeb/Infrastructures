@@ -6,7 +6,6 @@ using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -88,32 +87,60 @@ namespace Aiursoft.Probe.Services
 
         public async Task<Folder> LocateAsync(string[] folderNames, Folder root, bool recursiveCreate)
         {
-            var currentFolder = root;
-            foreach (var folder in folderNames)
+            if (!folderNames.Any())
             {
-                var folderObject = await _dbContext
-                    .Folders
-                    .Include(t => t.SubFolders)
-                    .Include(t => t.Files)
-                    .Include(t => t.Context)
-                    .Where(t => t.ContextId == currentFolder.Id)
-                    .SingleOrDefaultAsync(t => t.FolderName == folder.ToLower());
-                if (recursiveCreate && folderObject == null && !string.IsNullOrWhiteSpace(folder))
-                {
-                    folderObject = new Folder
-                    {
-                        ContextId = currentFolder.Id,
-                        FolderName = folder,
-                        Files = new List<File>(),
-                        SubFolders = new List<Folder>()
-                    };
-                    _dbContext.Folders.Add(folderObject);
-                    await _dbContext.SaveChangesAsync();
-                }
-                currentFolder = folderObject
-                    ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
+                return root;
             }
-            return currentFolder;
+            await _dbContext.Entry(root)
+                .Collection(t => t.SubFolders)
+                .LoadAsync();
+            var subFolderName = folderNames.First();
+            var subFolder = root
+                .SubFolders
+                .SingleOrDefault(t => t.FolderName == subFolderName);
+            if (recursiveCreate && subFolder == null && !string.IsNullOrWhiteSpace(subFolderName))
+            {
+                subFolder = new Folder
+                {
+                    ContextId = root.Id,
+                    FolderName = subFolderName
+                };
+                _dbContext.Folders.Add(subFolder);
+                await _dbContext.SaveChangesAsync();
+            }
+            return await LocateAsync(
+                folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+        }
+
+        public async Task<Folder> LocateAsyncOBS(string[] folderNames, Folder root, bool recursiveCreate)
+        {
+            return null;
+            //var currentFolder = root;
+            //foreach (var folder in folderNames)
+            //{
+            //    var folderObject = await _dbContext
+            //        .Folders
+            //        .Include(t => t.SubFolders)
+            //        .Include(t => t.Files)
+            //        .Include(t => t.Context)
+            //        .Where(t => t.ContextId == currentFolder.Id)
+            //        .SingleOrDefaultAsync(t => t.FolderName == folder.ToLower());
+            //    if (recursiveCreate && folderObject == null && !string.IsNullOrWhiteSpace(folder))
+            //    {
+            //        folderObject = new Folder
+            //        {
+            //            ContextId = currentFolder.Id,
+            //            FolderName = folder,
+            //            Files = new List<File>(),
+            //            SubFolders = new List<Folder>()
+            //        };
+            //        _dbContext.Folders.Add(folderObject);
+            //        await _dbContext.SaveChangesAsync();
+            //    }
+            //    currentFolder = folderObject
+            //        ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
+            //}
+            //return currentFolder;
         }
     }
 }
