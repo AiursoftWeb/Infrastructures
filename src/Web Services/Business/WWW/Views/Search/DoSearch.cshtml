@@ -17,7 +17,7 @@
             <div class="navbar-nav mr-auto w-100">
                 <form class="form-row w-100" asp-controller="Search" asp-action="DoSearch" method="get">
                     <div class="col-12 col-md-9 mb-2 mb-md-0">
-                        <input type="text" name="q" class="form-control form-control-lg" autofocus required pattern=".*\S+.*" title="This field is required" value="@Model.QueryContext.OriginalQuery">
+                        <input type="search" results="7" autosave="www-search-input" name="q" class="form-control form-control-lg" autofocus required pattern=".*\S+.*" title="This field is required" value="@Model.QueryContext.OriginalQuery">
                     </div>
                 </form>
             </div>
