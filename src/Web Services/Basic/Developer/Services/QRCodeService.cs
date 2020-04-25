@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.Developer.Services
 {
     public class QRCodeService : ITransientDependency
     {
