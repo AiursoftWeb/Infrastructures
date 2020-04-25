@@ -93,8 +93,6 @@ namespace Aiursoft.Probe.Controllers
                _dbContext
                .Sites
                .Include(t => t.Root)
-               .Include(t => t.Root.SubFolders)
-               .Include(t => t.Root.Files)
                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName));
         }
 
