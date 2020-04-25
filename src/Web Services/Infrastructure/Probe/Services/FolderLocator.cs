@@ -39,14 +39,12 @@ namespace Aiursoft.Probe.Services
             return (folders, fileName);
         }
 
-        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames = null, bool recursiveCreate = false)
+        public async Task<Folder> LocateSiteAndFolder(string accessToken, string siteName, string[] folderNames, bool recursiveCreate = false)
         {
             var appid = await _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
                 .Sites
                 .Include(t => t.Root)
-                .Include(t => t.Root.SubFolders)
-                .Include(t => t.Root.Files)
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
             if (site == null)
             {
@@ -55,31 +53,6 @@ namespace Aiursoft.Probe.Services
             if (site.AppId != appid)
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
-            }
-
-            if (folderNames == null || folderNames.Length == 0)
-            {
-                return site.Root;
-            }
-            var folder = await LocateAsync(folderNames, site.Root, recursiveCreate);
-            return folder;
-        }
-
-        public async Task<Folder> LocateSiteAndFolder(string siteName, string[] folderNames = null, bool recursiveCreate = false)
-        {
-            var site = await _dbContext
-                .Sites
-                .Include(t => t.Root)
-                .Include(t => t.Root.SubFolders)
-                .Include(t => t.Root.Files)
-                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
-            if (site == null)
-            {
-                throw new AiurAPIModelException(ErrorType.NotFound, "Not found target site!");
-            }
-            if (folderNames == null || folderNames.Length == 0)
-            {
-                return site.Root;
             }
             var folder = await LocateAsync(folderNames, site.Root, recursiveCreate);
             return folder;

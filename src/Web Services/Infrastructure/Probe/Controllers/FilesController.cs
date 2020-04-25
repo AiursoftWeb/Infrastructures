@@ -55,13 +55,18 @@ namespace Aiursoft.Probe.Controllers
         {
             var site = await _dbContext
                 .Sites
+                .Include(t => t.Root)
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
+            if (site == null)
+            {
+
+            }
             if (!site.OpenToUpload)
             {
                 _tokenEnsurer.Ensure(model.PBToken, "Upload", model.SiteName, model.FolderNames);
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.SiteName, folders, model.RecursiveCreate);
+            var folder = await _folderLocator.LocateAsync(folders, site.Root, model.RecursiveCreate);
 
             // Executing here will let the browser upload the file.
             if (HttpContext.Request.Form.Files.Count < 1)

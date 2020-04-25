@@ -26,22 +26,19 @@ namespace Aiursoft.Probe.Controllers
         private readonly IConfiguration _configuration;
         private readonly ImageCompressor _imageCompressor;
         private readonly TokenEnsurer _tokenEnsurer;
-        private readonly AiurCache _cache;
 
         public DownloadController(
             FolderLocator folderLocator,
             ProbeDbContext dbContext,
             IConfiguration configuration,
             ImageCompressor imageCompressor,
-            TokenEnsurer tokenEnsurer,
-            AiurCache cache)
+            TokenEnsurer tokenEnsurer)
         {
             _folderLocator = folderLocator;
             _dbContext = dbContext;
             _configuration = configuration;
             _imageCompressor = imageCompressor;
             _tokenEnsurer = tokenEnsurer;
-            _cache = cache;
         }
 
         [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
