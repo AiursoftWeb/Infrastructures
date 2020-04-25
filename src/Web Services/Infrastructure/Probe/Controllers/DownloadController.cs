@@ -2,7 +2,6 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
-using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK.Services;
@@ -49,7 +48,10 @@ namespace Aiursoft.Probe.Controllers
         [Route(template: "Open/{SiteName}/{**FolderNames}", Name = "Open")]
         public async Task<IActionResult> Open(OpenAddressModel model)
         {
-            var site = await GetSiteWithCache(model.SiteName);
+            var site = await _dbContext
+               .Sites
+               .Include(t => t.Root)
+               .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName);
             if (site == null)
             {
                 return NotFound();
@@ -61,7 +63,8 @@ namespace Aiursoft.Probe.Controllers
             var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
             try
             {
-                var file = await GetFileWithCache(site.SiteName, folders, fileName, site.Root);
+                var folder = await _folderLocator.LocateAsync(folders, site.Root, false);
+                var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
                 if (file == null)
                 {
                     return NotFound();
@@ -85,25 +88,6 @@ namespace Aiursoft.Probe.Controllers
             {
                 return NotFound();
             }
-        }
-
-        private Task<Site> GetSiteWithCache(string siteName)
-        {
-            return _cache.GetAndCache($"site.info.{siteName}", () =>
-               _dbContext
-               .Sites
-               .Include(t => t.Root)
-               .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName));
-        }
-
-        private Task<SDK.Models.File> GetFileWithCache(string siteName, string[] folders, string fileName, Folder root)
-        {
-            return _cache.GetAndCache($"file.info.{siteName}.{string.Join(".", folders)}.{fileName}", async () =>
-            {
-                var folder = await _folderLocator.LocateAsync(folders, root, false);
-                var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
-                return file;
-            });
         }
 
         private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
