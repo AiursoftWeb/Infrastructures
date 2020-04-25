@@ -111,36 +111,5 @@ namespace Aiursoft.Probe.Services
             return await LocateAsync(
                 folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
         }
-
-        public async Task<Folder> LocateAsyncOBS(string[] folderNames, Folder root, bool recursiveCreate)
-        {
-            return null;
-            //var currentFolder = root;
-            //foreach (var folder in folderNames)
-            //{
-            //    var folderObject = await _dbContext
-            //        .Folders
-            //        .Include(t => t.SubFolders)
-            //        .Include(t => t.Files)
-            //        .Include(t => t.Context)
-            //        .Where(t => t.ContextId == currentFolder.Id)
-            //        .SingleOrDefaultAsync(t => t.FolderName == folder.ToLower());
-            //    if (recursiveCreate && folderObject == null && !string.IsNullOrWhiteSpace(folder))
-            //    {
-            //        folderObject = new Folder
-            //        {
-            //            ContextId = currentFolder.Id,
-            //            FolderName = folder,
-            //            Files = new List<File>(),
-            //            SubFolders = new List<Folder>()
-            //        };
-            //        _dbContext.Folders.Add(folderObject);
-            //        await _dbContext.SaveChangesAsync();
-            //    }
-            //    currentFolder = folderObject
-            //        ?? throw new AiurAPIModelException(ErrorType.NotFound, $"Not found folder '{folder}' under folder '{currentFolder.FolderName}'!");
-            //}
-            //return currentFolder;
-        }
     }
 }
