@@ -94,7 +94,7 @@ namespace Aiursoft.Probe.Services
             await _dbContext.Entry(root)
                 .Collection(t => t.SubFolders)
                 .LoadAsync();
-            var subFolderName = folderNames.First();
+            var subFolderName = folderNames[0];
             var subFolder = root
                 .SubFolders
                 .SingleOrDefault(t => t.FolderName == subFolderName);
