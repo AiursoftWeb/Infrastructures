@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Aiursoft.Developer.Services
+namespace Aiursoft.WebTools.Services
 {
     public class QRCodeService : ITransientDependency
     {

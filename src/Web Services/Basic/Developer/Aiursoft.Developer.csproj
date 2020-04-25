@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.18.3" />
-    <PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
   </ItemGroup>
   <ItemGroup>
