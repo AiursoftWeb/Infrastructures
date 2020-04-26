@@ -20,4 +20,17 @@
                 innerPlace.html(tempHtmlStorage);
             });
     });
+
+    $('[type=search]').on('input', () => {
+        var searchTerm = $('[type=search]').val();
+        if (!searchTerm) {
+            $('#auto-complete').html('');
+        }
+        $.get(`/suggestion/${searchTerm}`, data => {
+            $('#auto-complete').html('');
+            data.forEach(suggestion => {
+                $('#auto-complete').append(`<option value="${suggestion}" />`);
+            });
+        });
+    });
 });

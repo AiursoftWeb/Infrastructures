@@ -6,6 +6,7 @@ using Aiursoft.WWW.Models;
 using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Controllers
@@ -52,12 +53,20 @@ namespace Aiursoft.WWW.Controllers
             return View(result);
         }
 
-        [Route("searchraw")]
-        public async Task<IActionResult> SearchRaw([FromQuery(Name = "q")]string question, int page = 1)
+        [Route("suggestion/{question}")]
+
+        public async Task<IActionResult> Suggestion([FromRoute]string question)
         {
-            var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
-            var result = await _searchService.DoSearch(question, lang, page);
-            return Json(result);
+            var market = CultureInfo.CurrentCulture.Name;
+            var suggestions = await _cahce.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
+            var strings = suggestions
+                ?.SuggestionGroups
+                ?.FirstOrDefault(t => t.Name == "Web")
+                ?.SearchSuggestions
+                ?.Select(t => t.Query)
+                ?.Take(10)
+                ?.ToList();
+            return Json(strings);
         }
 
         [Route("opensearch")]
