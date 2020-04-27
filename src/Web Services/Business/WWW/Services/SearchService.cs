@@ -45,8 +45,7 @@ namespace Aiursoft.WWW.Services
         {
             var entity = await _entiyClient.Entities.SearchAsync(
                 query: question,
-                setLang: lang,
-                market: lang);
+                setLang: lang);
             return entity;
         }
 
