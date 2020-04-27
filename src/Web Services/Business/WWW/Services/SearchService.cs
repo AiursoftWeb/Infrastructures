@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ApiKeyServiceClientCredentials = Microsoft.Azure.CognitiveServices.Search.WebSearch.ApiKeyServiceClientCredentials;
 
 namespace Aiursoft.WWW.Services
 {
@@ -24,10 +25,9 @@ namespace Aiursoft.WWW.Services
         {
             _httpClient = clientFactory.CreateClient();
             _searchAPIKey = configuration["BingSearchAPIKey"];
-            _client = new WebSearchClient(
-                new Microsoft.Azure.CognitiveServices.Search.WebSearch.ApiKeyServiceClientCredentials(_searchAPIKey));
-            _entiyClient = new EntitySearchClient(
-                new Microsoft.Azure.CognitiveServices.Search.EntitySearch.ApiKeyServiceClientCredentials(_searchAPIKey));
+            var credential = new ApiKeyServiceClientCredentials(_searchAPIKey);
+            _client = new WebSearchClient(credential);
+            _entiyClient = new EntitySearchClient(credential);
         }
 
         public async Task<Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse> DoSearch(string question, string lang, int page = 1)
@@ -45,7 +45,8 @@ namespace Aiursoft.WWW.Services
         {
             var entity = await _entiyClient.Entities.SearchAsync(
                 query: question,
-                setLang: lang);
+                setLang: lang,
+                market: lang);
             return entity;
         }
 
