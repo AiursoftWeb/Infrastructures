@@ -46,6 +46,10 @@ namespace Aiursoft.Handler.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
+            if (IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress))
+            {
+                return;
+            }
             if (DateTime.UtcNow - LastClearTime > TimeSpan.FromMinutes(1))
             {
                 ClearMemory();
@@ -54,10 +58,6 @@ namespace Aiursoft.Handler.Attributes
             var tempDictionary = Copy();
             var path = context.HttpContext.Request.Path.ToString().ToLower();
             var ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
-            if (IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress))
-            {
-                return;
-            }
             if (tempDictionary.ContainsKey(ip + path))
             {
                 WriteMemory(ip + path, tempDictionary[ip + path] + 1);
