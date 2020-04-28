@@ -61,6 +61,10 @@ namespace Aiursoft.Probe.Controllers
             try
             {
                 var folder = await _folderLocator.LocateAsync(folders, site.Root, false);
+                if (folder == null)
+                {
+                    return NotFound();
+                }
                 var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
                 if (file == null)
                 {

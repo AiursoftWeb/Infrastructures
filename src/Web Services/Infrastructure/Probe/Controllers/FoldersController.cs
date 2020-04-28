@@ -38,6 +38,10 @@ namespace Aiursoft.Probe.Controllers
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            if (folder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            }
             return Json(new AiurValue<Folder>(folder)
             {
                 Code = ErrorType.Success,
@@ -51,6 +55,10 @@ namespace Aiursoft.Probe.Controllers
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
+            if (folder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            }
             var conflict = await _dbContext
                 .Folders
                 .Where(t => t.ContextId == folder.Id)
@@ -75,6 +83,10 @@ namespace Aiursoft.Probe.Controllers
         {
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            if (folder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            }
             if (folder.ContextId == null)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");

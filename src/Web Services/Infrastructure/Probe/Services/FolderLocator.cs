@@ -54,8 +54,7 @@ namespace Aiursoft.Probe.Services
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
             }
-            var folder = await LocateAsync(folderNames, site.Root, recursiveCreate);
-            return folder;
+            return await LocateAsync(folderNames, site.Root, recursiveCreate);
         }
 
         public async Task<Folder> LocateAsync(string[] folderNames, Folder root, bool recursiveCreate)

@@ -67,7 +67,10 @@ namespace Aiursoft.Probe.Controllers
             }
             var folders = _folderLocator.SplitStrings(model.FolderNames);
             var folder = await _folderLocator.LocateAsync(folders, site.Root, model.RecursiveCreate);
-
+            if (folder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, $"Can't locate your folder!");
+            }
             // Executing here will let the browser upload the file.
             if (HttpContext.Request.Form.Files.Count < 1)
             {
@@ -132,6 +135,10 @@ namespace Aiursoft.Probe.Controllers
         {
             var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            if (folder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            }
             var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
             if (file == null)
             {
