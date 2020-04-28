@@ -7,7 +7,7 @@ namespace Aiursoft.XelNaga.Tools
 {
     public class CSVGenerator : ITransientDependency
     {
-        public byte[] BuildFromList<T>(IEnumerable<T> items)
+        public byte[] BuildFromList<T>(IEnumerable<T> items) where T : new()
         {
             var csv = "";
             var type = typeof(T);

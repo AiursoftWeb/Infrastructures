@@ -59,7 +59,7 @@ namespace Aiursoft.Probe.Controllers
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName.ToLower());
             if (site == null)
             {
-
+                return this.Protocol(ErrorType.NotFound, $"Can't find a site with name: '{model.SiteName}'!");
             }
             if (!site.OpenToUpload)
             {
