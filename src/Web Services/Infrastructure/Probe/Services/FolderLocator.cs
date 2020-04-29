@@ -61,6 +61,7 @@ namespace Aiursoft.Probe.Services
         {
             if (!folderNames.Any())
             {
+                if (root == null) return null;
                 await _dbContext.Entry(root).Collection(t => t.SubFolders).LoadAsync();
                 await _dbContext.Entry(root).Collection(t => t.Files).LoadAsync();
                 return root;
