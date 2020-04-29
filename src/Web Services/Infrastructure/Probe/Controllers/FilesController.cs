@@ -11,6 +11,7 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,6 +71,14 @@ namespace Aiursoft.Probe.Controllers
             if (folder == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can't locate your folder!");
+            }
+            try
+            {
+                var _ = HttpContext.Request.Form.Files.FirstOrDefault()?.ContentType;
+            }
+            catch (InvalidOperationException e)
+            {
+                return this.Protocol(ErrorType.InvalidInput, e.Message);
             }
             // Executing here will let the browser upload the file.
             if (HttpContext.Request.Form.Files.Count < 1)
