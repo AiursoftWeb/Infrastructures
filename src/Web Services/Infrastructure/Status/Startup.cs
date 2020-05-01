@@ -1,4 +1,5 @@
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +27,7 @@ namespace Aiursoft.Status
             services.AddDbContext<StatusDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddAiurAPIMvc();
+            services.AddAiurMvc();
             services.AddAiurDependencies();
         }
 
@@ -34,7 +35,7 @@ namespace Aiursoft.Status
         {
             app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseStaticFiles();
-            app.UseAiursoftAPIDefault();
+            app.UseAiursoftDefault();
         }
     }
 }
