@@ -242,7 +242,7 @@ namespace Aiursoft.Colossus.Controllers
         public async Task<IActionResult> CloneFile([FromRoute]string path)
         {
             var user = await GetCurrentUserAsync();
-            await _filesService.CopyFileAsync(await _accesstoken, user.SiteName, path, user.SiteName, path);
+            await _filesService.CopyFileAsync(await _accesstoken, user.SiteName, path, user.SiteName, path.DetachPath());
             return RedirectToAction(nameof(ViewFiles), new { path = path.DetachPath() });
         }
 

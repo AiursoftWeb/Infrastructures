@@ -39,6 +39,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<UploadFileViewModel> CopyFileAsync(string accessToken, string siteName, string folderNames, string targetSiteName, string targetFolderNames)
         {
+            if (string.IsNullOrWhiteSpace(targetFolderNames))
+            {
+                targetFolderNames = "/";
+            }
             var url = new AiurUrl(_serviceLocation.Endpoint, $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
             var form = new AiurUrl(string.Empty, new CopyFileAddressModel
             {

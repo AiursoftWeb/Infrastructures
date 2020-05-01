@@ -90,7 +90,7 @@ namespace Aiursoft.Probe.Services
         {
             while (existingFileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
             {
-                expectedFileName = "copied_" + existingFileNames;
+                expectedFileName = "copied_" + expectedFileName;
             }
             return expectedFileName;
         }
