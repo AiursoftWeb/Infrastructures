@@ -10,6 +10,8 @@ namespace Aiursoft.Probe.Migrations
                 name: "HardwareId",
                 table: "Files",
                 nullable: true);
+
+            migrationBuilder.Sql("update Files set HardwareId = Files.Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
