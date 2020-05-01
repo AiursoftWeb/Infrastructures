@@ -16,6 +16,9 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
         public string FolderNames { get; set; }
         [Required]
         [FromQuery]
+        public string TargetSiteName { get; set; }
+        [Required]
+        [FromQuery]
         public string TargetFolderNames { get; set; }
     }
 }

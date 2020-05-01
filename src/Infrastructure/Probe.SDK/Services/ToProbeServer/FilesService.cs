@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
+using Aiursoft.Probe.SDK.Models.FilesViewModels;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
@@ -31,6 +32,22 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
+        }
+
+        public async Task<UploadFileViewModel> CopyFileAsync(string accessToken, string siteName, string folderNames, string targetSiteName, string targetFolderNames)
+        {
+            var url = new AiurUrl(_serviceLocation.Endpoint, $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
+            var form = new AiurUrl(string.Empty, new CopyFileAddressModel
+            {
+                AccessToken = accessToken,
+                TargetFolderNames = targetFolderNames,
+                TargetSiteName = targetSiteName
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
                 throw new AiurUnexceptedResponse(jResult);
             return jResult;

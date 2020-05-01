@@ -142,7 +142,7 @@ namespace Aiursoft.Probe.Controllers
             var (sourceFolders, sourceFileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
             var targetFolders = _folderLocator.SplitToFolders(model.TargetFolderNames);
             var sourceFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, sourceFolders);
-            var targetFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, targetFolders);
+            var targetFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.TargetSiteName, targetFolders);
             if (sourceFolder == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
@@ -165,7 +165,17 @@ namespace Aiursoft.Probe.Controllers
             };
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, $"Successfully copied the file '{file.FileName}' to '{model.TargetFolderNames}'.");
+            var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), newFile.FileName);
+            var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
+            return Json(new UploadFileViewModel
+            {
+                InternetPath = internetPath,
+                SiteName = model.TargetSiteName,
+                FilePath = filePath,
+                FileSize = newFile.FileSize,
+                Code = ErrorType.Success,
+                Message = "Successfully copied your file."
+            });
         }
     }
 }
