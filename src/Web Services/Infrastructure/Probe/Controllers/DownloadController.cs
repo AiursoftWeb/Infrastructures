@@ -8,9 +8,7 @@ using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,25 +18,24 @@ namespace Aiursoft.Probe.Controllers
     [APIExpHandler]
     public class DownloadController : Controller
     {
-        private readonly char _ = Path.DirectorySeparatorChar;
         private readonly FolderLocator _folderLocator;
         private readonly ProbeDbContext _dbContext;
-        private readonly IConfiguration _configuration;
         private readonly ImageCompressor _imageCompressor;
         private readonly TokenEnsurer _tokenEnsurer;
+        private readonly IStorageProvider _storageProvider;
 
         public DownloadController(
             FolderLocator folderLocator,
             ProbeDbContext dbContext,
-            IConfiguration configuration,
             ImageCompressor imageCompressor,
-            TokenEnsurer tokenEnsurer)
+            TokenEnsurer tokenEnsurer,
+            IStorageProvider storageProvider)
         {
             _folderLocator = folderLocator;
             _dbContext = dbContext;
-            _configuration = configuration;
             _imageCompressor = imageCompressor;
             _tokenEnsurer = tokenEnsurer;
+            _storageProvider = storageProvider;
         }
 
         [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
@@ -70,8 +67,8 @@ namespace Aiursoft.Probe.Controllers
                 {
                     return NotFound();
                 }
-                var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.Id}.dat";
-                var extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();
+                var path = _storageProvider.GetFilePath(file.Id);
+                var extension = _storageProvider.GetExtension(file.FileName);
                 if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "File")
                 {
                     return this.WebFile(path, "do-not-open");

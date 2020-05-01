@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Services;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace Aiursoft.Probe
             services.AddCors();
             services.AddAiurAPIMvc();
             services.AddAiurDependencies();
+            services.AddScoped<IStorageProvider, DiskAccess>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

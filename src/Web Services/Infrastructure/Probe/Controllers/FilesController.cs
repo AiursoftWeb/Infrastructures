@@ -10,9 +10,7 @@ using Aiursoft.SDKTools.Attributes;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,27 +22,26 @@ namespace Aiursoft.Probe.Controllers
     [DisableRequestSizeLimit]
     public class FilesController : Controller
     {
-        private readonly char _ = Path.DirectorySeparatorChar;
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
-        private readonly IConfiguration _configuration;
         private readonly FolderOperator _folderCleaner;
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly ProbeLocator _probeLocator;
+        private readonly IStorageProvider _storageProvider;
 
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
             FolderOperator folderCleaner,
-            IConfiguration configuration,
             TokenEnsurer tokenEnsurer,
-            ProbeLocator probeLocator)
+            ProbeLocator probeLocator,
+            IStorageProvider storageProvider)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
-            _configuration = configuration;
             _tokenEnsurer = tokenEnsurer;
             _probeLocator = probeLocator;
+            _storageProvider = storageProvider;
             _folderCleaner = folderCleaner;
         }
 
@@ -92,7 +89,7 @@ namespace Aiursoft.Probe.Controllers
             }
             var newFile = new SDK.Models.File
             {
-                FileName = Path.GetFileName(file.FileName),
+                FileName = file.FileName,
                 ContextId = folder.Id,
                 FileSize = file.Length
             };
@@ -113,17 +110,7 @@ namespace Aiursoft.Probe.Controllers
                     break;
                 }
             }
-            //Try saving file.
-            var directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
-            if (Directory.Exists(directoryPath) == false)
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-            using (var fileStream = new FileStream(directoryPath + newFile.Id + ".dat", FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-                fileStream.Close();
-            }
+            await _storageProvider.Save(newFile.Id, file);
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
             var path = _probeLocator.GetProbeOpenAddress(filePath);
             return Json(new UploadFileViewModel
