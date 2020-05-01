@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Scanner.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,16 +18,19 @@ namespace Aiursoft.Probe.Services
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _configuration;
+        private readonly IStorageProvider _storageProvider;
         private readonly char _ = Path.DirectorySeparatorChar;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IStorageProvider storageProvider)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
             _configuration = configuration;
+            _storageProvider = storageProvider;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -54,38 +58,28 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-#warning Re-enable this!
-        private Task AllClean(ProbeDbContext dbContext)
+        private async Task AllClean(ProbeDbContext dbContext)
         {
-            //var files = await dbContext.Files.ToListAsync();
-            //foreach (var file in files)
-            //{
-            //    var path = _configuration["StoragePath"] + $"{_}Storage{_}{file.HardwareId}.dat";
-            //    if (!File.Exists(path))
-            //    {
-            //        _logger.LogInformation($"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
-            //        // delete file in db.
-            //        dbContext.Files.Remove(file);
-            //    }
-            //    else
-            //    {
-            //        file.FileSize = new FileInfo(path).Length;
-            //    }
-            //    await dbContext.SaveChangesAsync();
-            //}
-            //var storageFiles = Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
-            //foreach (var file in storageFiles)
-            //{
-            //    var fileName = Convert.ToInt32(Path.GetFileNameWithoutExtension(file));
-            //    if (!await dbContext.Files.AnyAsync(t => t.Id == fileName))
-            //    {
-            //        _logger.LogInformation($"Cleaner message: File with Id: {fileName} was found on disk but not found in database! Deleting file on disk...");
-            //        // delete file on disk.
-            //        //File.Delete(file);
-            //    }
-            //}
-            //return;
-            return Task.CompletedTask;
+            var files = await dbContext.Files.ToListAsync();
+            foreach (var file in files)
+            {
+                if (!_storageProvider.ExistInHardware(file.HardwareId))
+                {
+                    _logger.LogInformation($"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
+                    // delete file in db.
+                    dbContext.Files.Remove(file);
+                }
+                await dbContext.SaveChangesAsync();
+            }
+            var storageFiles = _storageProvider.GetAllFileNamesInHardware();
+            foreach (var file in storageFiles)
+            {
+                if (!await dbContext.Files.AnyAsync(t => t.HardwareId == file))
+                {
+                    _logger.LogCritical($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delet file on disk!");
+                }
+            }
+            return;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

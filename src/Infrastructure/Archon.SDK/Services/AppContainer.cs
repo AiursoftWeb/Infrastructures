@@ -7,8 +7,8 @@ namespace Aiursoft.Archon.SDK.Services
 {
     public class AppContainer
     {
-        public string _appId;
-        private string _appSecret;
+        public readonly string _appId;
+        private readonly string _appSecret;
         private string _latestAccessToken;
         private DateTime _accessTokenDeadTime;
 

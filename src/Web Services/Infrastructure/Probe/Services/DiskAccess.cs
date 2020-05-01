@@ -29,6 +29,17 @@ namespace Aiursoft.Probe.Services
             }
         }
 
+        public bool ExistInHardware(string hardwareUuid)
+        {
+            var path = _configuration["StoragePath"] + $"{_}Storage{_}{hardwareUuid}.dat";
+            return File.Exists(path);
+        }
+
+        public string[] GetAllFileNamesInHardware()
+        {
+            return Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
+        }
+
         public string GetExtension(string fileName)
         {
             return Path.GetExtension(fileName).TrimStart('.').ToLower();
@@ -53,11 +64,9 @@ namespace Aiursoft.Probe.Services
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            using (var fileStream = new FileStream(directoryPath + hardwareUuid + ".dat", FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-                fileStream.Close();
-            }
+            using var fileStream = new FileStream(directoryPath + hardwareUuid + ".dat", FileMode.Create);
+            await file.CopyToAsync(fileStream);
+            fileStream.Close();
         }
 
         private long GetFileSize(string hardwareUuid)

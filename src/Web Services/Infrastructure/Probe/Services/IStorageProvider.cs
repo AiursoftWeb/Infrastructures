@@ -10,5 +10,7 @@ namespace Aiursoft.Probe.Services
         Task Save(string hardwareUuid, IFormFile file);
         string GetFilePath(string hardwareUuid);
         string GetExtension(string fileName);
+        bool ExistInHardware(string hardwareUuid);
+        string[] GetAllFileNamesInHardware();
     }
 }

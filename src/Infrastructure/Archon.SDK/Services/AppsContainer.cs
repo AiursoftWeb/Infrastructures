@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +17,7 @@ namespace Aiursoft.Archon.SDK.Services
         private readonly IServiceScopeFactory _scopeFactory;
 
         public AppsContainer(
-            IServiceScopeFactory scopeFactory,
-            IConfiguration configuration)
+            IServiceScopeFactory scopeFactory)
         {
             _allApps = new List<AppContainer>();
             _scopeFactory = scopeFactory;
