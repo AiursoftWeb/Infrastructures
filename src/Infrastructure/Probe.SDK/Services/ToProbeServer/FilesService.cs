@@ -43,8 +43,8 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var form = new AiurUrl(string.Empty, new CopyFileAddressModel
             {
                 AccessToken = accessToken,
-                TargetFolderNames = targetFolderNames,
-                TargetSiteName = targetSiteName
+                TargetSiteName = targetSiteName,
+                TargetFolderNames = targetFolderNames
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);

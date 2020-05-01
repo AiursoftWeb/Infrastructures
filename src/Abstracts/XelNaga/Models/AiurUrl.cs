@@ -26,9 +26,9 @@ namespace Aiursoft.XelNaga.Models
                     var propName = prop.Name;
                     var propValue = prop.GetValue(param).ToString();
                     var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-                    if (fromQuery != null)
+                    if (fromQuery is IModelNameProvider namer && namer.Name != null)
                     {
-                        propName = (fromQuery as IModelNameProvider).Name;
+                        propName = namer.Name;
                     }
                     if (prop.PropertyType == typeof(DateTime))
                     {

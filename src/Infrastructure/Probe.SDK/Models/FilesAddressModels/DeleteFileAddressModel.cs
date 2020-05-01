@@ -8,6 +8,7 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
         [Required]
         public string AccessToken { get; set; }
         [Required]
+        [FromRoute]
         public string SiteName { get; set; }
         [Required]
         [FromRoute]

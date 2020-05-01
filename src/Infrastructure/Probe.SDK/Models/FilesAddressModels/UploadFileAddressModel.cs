@@ -8,6 +8,7 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
 #warning Rename this to token in the next Kahla release!
         public string PBToken { get; set; }
         [Required]
+        [FromRoute]
         public string SiteName { get; set; }
         [FromRoute]
         public string FolderNames { get; set; }

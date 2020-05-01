@@ -238,7 +238,6 @@ namespace Aiursoft.Colossus.Controllers
             }
         }
 
-
         [Route("CloneFile/{**path}")]
         public async Task<IActionResult> CloneFile([FromRoute]string path)
         {
