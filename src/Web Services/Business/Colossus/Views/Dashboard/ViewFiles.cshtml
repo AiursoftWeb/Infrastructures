@@ -123,6 +123,10 @@
                                                     <i class="fa fa-fw fa-trash"></i>
                                                     Delete
                                                 </a>
+                                                <a class="dropdown-item" asp-controller="Dashboard" asp-action="CloneFile" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                    <i class="fa fa-fw fa-copy"></i>
+                                                    Copy
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
