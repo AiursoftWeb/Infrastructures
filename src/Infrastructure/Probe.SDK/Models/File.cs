@@ -18,7 +18,6 @@ namespace Aiursoft.Probe.SDK.Models
         public long FileSize { get; set; }
         public DateTime UploadTime { get; set; } = DateTime.UtcNow;
         [JsonIgnore]
-        [NotMapped]
-        public string HardwareId => Id.ToString();
+        public string HardwareId { get; set; } = Guid.NewGuid().ToString();
     }
 }
