@@ -140,7 +140,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
-            _folderCleaner.DeleteFile(file);
+            await _folderCleaner.DeleteFile(file);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
         }

@@ -40,15 +40,19 @@ namespace Aiursoft.Probe.Services
                 .ToListAsync();
             foreach (var file in localFiles)
             {
-                DeleteFile(file);
+                await DeleteFile(file);
             }
             _dbContext.Folders.Remove(folder);
         }
 
-        public void DeleteFile(File file)
+        public async Task DeleteFile(File file)
         {
             _dbContext.Files.Remove(file);
-            _storageProvider.Delete(file.HardwareId);
+            var haveDaemon = await _dbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
+            if (!haveDaemon)
+            {
+                _storageProvider.Delete(file.HardwareId);
+            }
         }
 
         public async Task<long> GetFolderSite(Folder folder)
