@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 _tokenEnsurer.Ensure(model.PBToken, "Download", model.SiteName, model.FolderNames);
             }
-            var (folders, fileName) = _folderLocator.SplitToPath(model.FolderNames);
+            var (folders, fileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
             try
             {
                 var folder = await _folderLocator.LocateAsync(folders, site.Root, false);

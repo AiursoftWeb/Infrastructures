@@ -6,12 +6,13 @@ using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderLocator : ITransientDependency
+    public class FolderLocator : IScopedDependency
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
@@ -24,16 +25,16 @@ namespace Aiursoft.Probe.Services
             _tokenManager = tokenManager;
         }
 
-        public string[] SplitStrings(string folderNames) =>
+        public string[] SplitToFolders(string folderNames) =>
             folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
 
-        public (string[] folders, string fileName) SplitToPath(string folderNames)
+        public (string[] folders, string fileName) SplitToFoldersAndFile(string folderNames)
         {
             if (folderNames == null || folderNames.Length == 0)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, "The root folder isn't a file!");
             }
-            var foldersWithFileName = SplitStrings(folderNames);
+            var foldersWithFileName = SplitToFolders(folderNames);
             var fileName = foldersWithFileName.Last();
             var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
             return (folders, fileName);
@@ -83,6 +84,15 @@ namespace Aiursoft.Probe.Services
             }
             return await LocateAsync(
                 folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+        }
+
+        public string GetValidFileName(IEnumerable<string> existingFileNames, string expectedFileName)
+        {
+            while (existingFileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
+            {
+                expectedFileName = "copied_" + existingFileNames;
+            }
+            return expectedFileName;
         }
     }
 }

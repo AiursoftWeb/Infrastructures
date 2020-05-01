@@ -1,23 +1,19 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderOperator : ITransientDependency
+    public class FolderOperator : IScopedDependency
     {
         private readonly ProbeDbContext _dbContext;
         private readonly IStorageProvider _storageProvider;
 
         public FolderOperator(
             ProbeDbContext dbContext,
-            IConfiguration configuration,
-            AiurCache cache,
             IStorageProvider storageProvider)
         {
             _dbContext = dbContext;

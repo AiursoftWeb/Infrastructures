@@ -36,7 +36,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(AiurValue<Folder>))]
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
-            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folders = _folderLocator.SplitToFolders(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {
@@ -53,7 +53,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("CreateNewFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
-            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folders = _folderLocator.SplitToFolders(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             if (folder == null)
             {
@@ -81,7 +81,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("DeleteFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model)
         {
-            var folders = _folderLocator.SplitStrings(model.FolderNames);
+            var folders = _folderLocator.SplitToFolders(model.FolderNames);
             var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {

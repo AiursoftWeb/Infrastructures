@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
 {
@@ -9,6 +10,7 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
         [Required]
         public string SiteName { get; set; }
         [Required]
+        [FromRoute]
         public string FolderNames { get; set; }
     }
 }
