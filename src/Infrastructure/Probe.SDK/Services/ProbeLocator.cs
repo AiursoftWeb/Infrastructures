@@ -10,20 +10,17 @@ namespace Aiursoft.Probe.SDK.Services
     {
         public ProbeLocator(
             string endpoint,
-            string openCDN,
-            string downloadCDN,
-            string probeIO)
+            string openFormat,
+            string downloadFormat)
         {
             Endpoint = endpoint;
-            ProbeOpenCDN = openCDN;
-            ProbeDownloadCDN = downloadCDN;
-            ProbeIO = probeIO;
+            OpenFormat = openFormat;
+            DownloadFormat = downloadFormat;
         }
 
         public string Endpoint { get; private set; }
-        public string ProbeOpenCDN { get; private set; }
-        public string ProbeDownloadCDN { get; private set; }
-        public string ProbeIO { get; private set; }
+        public string OpenFormat { get; private set; }
+        public string DownloadFormat { get; private set; }
 
         public string GetProbeOpenAddress(string siteName, string path, string fileName)
         {
@@ -47,7 +44,7 @@ namespace Aiursoft.Probe.SDK.Services
         public string GetProbeOpenAddress(string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
-            var domain = string.Format(ProbeOpenCDN, siteName);
+            var domain = string.Format(OpenFormat, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
@@ -55,7 +52,7 @@ namespace Aiursoft.Probe.SDK.Services
         public string GetProbeDownloadAddress(string fullpath)
         {
             var (siteName, folders, fileName) = SplitToPath(fullpath);
-            var domain = string.Format(ProbeDownloadCDN, siteName);
+            var domain = string.Format(DownloadFormat, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }

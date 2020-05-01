@@ -9,27 +9,22 @@ namespace Aiursoft.Probe.SDK
         public static IServiceCollection AddProbeServer(
             this IServiceCollection services,
             string serverEndpoint = null,
-            string openCDN = null,
-            string downloadCDN = null,
-            string probeIO = null)
+            string openFormat = null,
+            string downloadFormat = null)
         {
             if (string.IsNullOrWhiteSpace(serverEndpoint))
             {
                 serverEndpoint = "https://probe.aiursoft.com";
             }
-            if (string.IsNullOrWhiteSpace(openCDN))
+            if (string.IsNullOrWhiteSpace(openFormat))
             {
-                openCDN = "https://probe.cdn.aiursoft.com/{0}";
+                openFormat = "https://{0}.aiur.site";
             }
-            if (string.IsNullOrWhiteSpace(downloadCDN))
+            if (string.IsNullOrWhiteSpace(downloadFormat))
             {
-                downloadCDN = "https://probe.download.cdn.aiursoft.com/{0}";
+                downloadFormat = "https://{0}.download.aiur.site";
             }
-            if (string.IsNullOrWhiteSpace(probeIO))
-            {
-                probeIO = "https://{0}.aiur.site";
-            }
-            services.AddSingleton(new ProbeLocator(serverEndpoint, openCDN, downloadCDN, probeIO));
+            services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
             services.AddLibraryDependencies();
             return services;
         }
