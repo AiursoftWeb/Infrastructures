@@ -51,12 +51,16 @@ namespace Aiursoft.Probe.SDK
                 var tokenProvider = services.GetService(typeof(TokenProvider)) as TokenProvider;
                 AsyncHelper.RunSync(async () =>
                 {
-                    var token = await getToken(tokenProvider);
-                    var sites = await sitesService.ViewMySitesAsync(token);
-                    if (!sites.Sites.Any(s => s.SiteName == siteName))
+                    try
                     {
-                        await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
+                        var token = await getToken(tokenProvider);
+                        var sites = await sitesService.ViewMySitesAsync(token);
+                        if (!sites.Sites.Any(s => s.SiteName == siteName))
+                        {
+                            await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
+                        }
                     }
+                    catch { }
                 });
             }
 
