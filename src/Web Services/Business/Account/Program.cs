@@ -1,4 +1,6 @@
 ﻿using Aiursoft.Account.Data;
+using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +14,7 @@ namespace Aiursoft.Account
             CreateHostBuilder(args)
                 .Build()
                 .MigrateDbContext<AccountDbContext>()
+                .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessToken())
                 .Run();
         }
 
