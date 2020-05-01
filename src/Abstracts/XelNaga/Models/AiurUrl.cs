@@ -38,7 +38,10 @@ namespace Aiursoft.XelNaga.Models
                             propValue = nullableValue.Value.ToString("o", CultureInfo.InvariantCulture);
                         }
                     }
-                    Params.Add(propName, propValue);
+                    if (!string.IsNullOrWhiteSpace(propValue))
+                    {
+                        Params.Add(propName, propValue);
+                    }
                 }
             }
         }

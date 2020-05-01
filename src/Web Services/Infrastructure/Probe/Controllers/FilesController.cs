@@ -100,10 +100,10 @@ namespace Aiursoft.Probe.Controllers
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
-            var path = _probeLocator.GetProbeOpenAddress(filePath);
             return Json(new UploadFileViewModel
             {
-                InternetPath = path,
+                InternetPath = _probeLocator.GetProbeOpenAddress(filePath),
+                DownloadPath = _probeLocator.GetProbeDownloadAddress(filePath),
                 SiteName = model.SiteName,
                 FilePath = filePath,
                 FileSize = file.Length,

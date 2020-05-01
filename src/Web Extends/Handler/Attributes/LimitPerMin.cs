@@ -12,7 +12,7 @@ namespace Aiursoft.Handler.Attributes
         public static DateTime LastClearTime = DateTime.UtcNow;
 
         private readonly int _limit;
-        private static object _obj = new object();
+        private static readonly object _obj = new object();
 
         public LimitPerMin(int limit = 30)
         {

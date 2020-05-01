@@ -1,12 +1,10 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,19 +15,15 @@ namespace Aiursoft.Probe.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly IConfiguration _configuration;
         private readonly IStorageProvider _storageProvider;
-        private readonly char _ = Path.DirectorySeparatorChar;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            IConfiguration configuration,
             IStorageProvider storageProvider)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _configuration = configuration;
             _storageProvider = storageProvider;
         }
 
