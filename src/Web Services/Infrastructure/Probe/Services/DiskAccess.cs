@@ -20,9 +20,9 @@ namespace Aiursoft.Probe.Services
             _cache = aiurCache;
         }
 
-        public void Delete(int id)
+        public void Delete(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{id}.dat";
+            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{hardwareUuid}.dat";
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -34,18 +34,18 @@ namespace Aiursoft.Probe.Services
             return Path.GetExtension(fileName).TrimStart('.').ToLower();
         }
 
-        public string GetFilePath(int fileId)
+        public string GetFilePath(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $"{_}Storage{_}{fileId}.dat";
+            var path = _configuration["StoragePath"] + $"{_}Storage{_}{hardwareUuid}.dat";
             return path;
         }
 
-        public long GetSize(int id)
+        public long GetSize(string hardwareUuid)
         {
-            return _cache.GetAndCache($"file-size-cache-id-{id}", () => GetFileSize(id));
+            return _cache.GetAndCache($"file-size-cache-id-{hardwareUuid}", () => GetFileSize(hardwareUuid));
         }
 
-        public async Task Save(int id, IFormFile file)
+        public async Task Save(string hardwareUuid, IFormFile file)
         {
             //Try saving file.
             var directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
@@ -53,16 +53,16 @@ namespace Aiursoft.Probe.Services
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            using (var fileStream = new FileStream(directoryPath + id + ".dat", FileMode.Create))
+            using (var fileStream = new FileStream(directoryPath + hardwareUuid + ".dat", FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
                 fileStream.Close();
             }
         }
 
-        private long GetFileSize(int id)
+        private long GetFileSize(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{id}.dat";
+            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{hardwareUuid}.dat";
             if (File.Exists(path))
             {
                 return new FileInfo(path).Length;

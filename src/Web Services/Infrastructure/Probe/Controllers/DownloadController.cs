@@ -67,7 +67,7 @@ namespace Aiursoft.Probe.Controllers
                 {
                     return NotFound();
                 }
-                var path = _storageProvider.GetFilePath(file.Id);
+                var path = _storageProvider.GetFilePath(file.HardwareId);
                 var extension = _storageProvider.GetExtension(file.FileName);
                 if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "File")
                 {

@@ -110,7 +110,7 @@ namespace Aiursoft.Probe.Controllers
                     break;
                 }
             }
-            await _storageProvider.Save(newFile.Id, file);
+            await _storageProvider.Save(newFile.HardwareId, file);
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), newFile.FileName);
             var path = _probeLocator.GetProbeOpenAddress(filePath);
             return Json(new UploadFileViewModel

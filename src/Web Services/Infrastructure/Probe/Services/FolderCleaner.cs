@@ -48,7 +48,7 @@ namespace Aiursoft.Probe.Services
         public void DeleteFile(File file)
         {
             _dbContext.Files.Remove(file);
-            _storageProvider.Delete(file.Id);
+            _storageProvider.Delete(file.HardwareId);
         }
 
         public async Task<long> GetFolderSite(Folder folder)
@@ -66,7 +66,7 @@ namespace Aiursoft.Probe.Services
                 .Files
                 .Where(t => t.ContextId == folder.Id)
                 .ToListAsync();
-            size += localFiles.Sum(t => _storageProvider.GetSize(t.Id));
+            size += localFiles.Sum(t => _storageProvider.GetSize(t.HardwareId));
             return size;
         }
     }
