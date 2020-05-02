@@ -70,16 +70,16 @@ namespace Aiursoft.Probe.Services
                     .ToListAsync();
                 root.Files = await _dbContext
                     .Files
+                    .AsNoTracking()
                     .Where(t => t.ContextId == root.Id)
                     .ToListAsync();
                 return root;
             }
             var subFolderName = folderNames[0];
-            var subFolders = await _dbContext.Folders
+            var subFolder = await _dbContext.Folders
                 .AsNoTracking()
                 .Where(t => t.ContextId == root.Id)
-                .ToListAsync();
-            var subFolder = subFolders.SingleOrDefault(t => t.FolderName == subFolderName);
+                .SingleOrDefaultAsync(t => t.FolderName == subFolderName);
             if (recursiveCreate && subFolder == null && !string.IsNullOrWhiteSpace(subFolderName))
             {
                 subFolder = new Folder
