@@ -2,7 +2,7 @@
 
 namespace Aiursoft.Probe.SDK.Models.TokenAddressModels
 {
-    public class GetUploadTokenAddressModel
+    public class GetTokenAddressModel
     {
         [Required]
         public string AccessToken { get; set; }

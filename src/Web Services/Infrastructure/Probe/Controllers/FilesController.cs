@@ -62,7 +62,7 @@ namespace Aiursoft.Probe.Controllers
             }
             if (!site.OpenToUpload)
             {
-                _tokenEnsurer.Ensure(model.PBToken, "Upload", model.SiteName, model.FolderNames);
+                _tokenEnsurer.Ensure(model.Token, "Upload", model.SiteName, model.FolderNames);
             }
             var folders = _folderLocator.SplitToFolders(model.FolderNames);
             var folder = await _folderLocator.LocateAsync(folders, site.Root, model.RecursiveCreate);

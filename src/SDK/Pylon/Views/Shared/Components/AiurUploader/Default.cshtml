@@ -7,7 +7,7 @@
 @{
     var url = new AiurUrl(ProbeLocator.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new
     {
-        PBToken = Model.PBToken
+        token = Model.PBToken
     });
     string extension = " ";
     if (!string.IsNullOrWhiteSpace(Model.AllowedExtensions))

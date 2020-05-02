@@ -33,7 +33,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
         public async Task<string> GetTokenAsync(string accessToken, string siteName, string[] permissions, string underPath)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetToken", new { });
-            var form = new AiurUrl(string.Empty, new GetUploadTokenAddressModel
+            var form = new AiurUrl(string.Empty, new GetTokenAddressModel
             {
                 AccessToken = accessToken,
                 SiteName = siteName,

@@ -14,8 +14,6 @@ namespace Aiursoft.Probe.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    [Route("Token")]
-#warning Delete this in the next Kahla production release!
     public class TokenController : Controller
     {
         private readonly ACTokenManager _tokenManager;
@@ -34,10 +32,8 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<string>))]
-        [Route("GetUploadToken")]
         [Route("GetToken")]
-#warning Delete this in the next Kahla production release!
-        public async Task<IActionResult> GetToken(GetUploadTokenAddressModel model)
+        public async Task<IActionResult> GetToken(GetTokenAddressModel model)
         {
             var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
