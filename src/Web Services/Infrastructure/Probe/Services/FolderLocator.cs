@@ -60,9 +60,9 @@ namespace Aiursoft.Probe.Services
 
         public async Task<Folder> LocateAsync(string[] folderNames, Folder root, bool recursiveCreate)
         {
+            if (root == null) return null;
             if (!folderNames.Any())
             {
-                if (root == null) return null;
                 root.SubFolders = await _dbContext
                     .Folders
                     .AsNoTracking()
