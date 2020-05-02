@@ -142,7 +142,7 @@ namespace Aiursoft.Probe.Controllers
             var (sourceFolders, sourceFileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
             var targetFolders = _folderLocator.SplitToFolders(model.TargetFolderNames);
             var sourceFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, sourceFolders);
-            var targetFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.TargetSiteName, targetFolders);
+            var targetFolder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.TargetSiteName, targetFolders, true);
             if (sourceFolder == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
