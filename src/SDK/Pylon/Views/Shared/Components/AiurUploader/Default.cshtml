@@ -2,12 +2,14 @@
 @using Aiursoft.XelNaga.Models
 @using Aiursoft.XelNaga.Tools
 @using Aiursoft.Probe.SDK.Services
+@using Aiursoft.Probe.SDK.Models.FilesAddressModels
 
 @inject ProbeLocator ProbeLocator
 @{
-    var url = new AiurUrl(ProbeLocator.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new
+    var url = new AiurUrl(ProbeLocator.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
     {
-        token = Model.PBToken
+        Token = Model.PBToken,
+        RecursiveCreate = true
     });
     string extension = " ";
     if (!string.IsNullOrWhiteSpace(Model.AllowedExtensions))

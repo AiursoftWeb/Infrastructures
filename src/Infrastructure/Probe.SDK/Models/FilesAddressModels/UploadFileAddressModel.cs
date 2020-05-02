@@ -11,6 +11,7 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels
         public string SiteName { get; set; }
         [FromRoute]
         public string FolderNames { get; set; }
+        [FromQuery(Name = "recursiveCreate")]
         public bool RecursiveCreate { get; set; } = false;
     }
 }
