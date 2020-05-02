@@ -147,14 +147,14 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
             }
+            if (targetFolder == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "Locate target folder failed!");
+            }
             var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
             if (file == null)
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
-            }
-            if (targetFolder == null)
-            {
-                return this.Protocol(ErrorType.NotFound, "Locate target folder failed!");
             }
             var newFile = new File
             {

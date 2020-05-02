@@ -63,12 +63,20 @@ namespace Aiursoft.Probe.Services
             if (!folderNames.Any())
             {
                 if (root == null) return null;
-                await _dbContext.Entry(root).Collection(t => t.SubFolders).LoadAsync();
-                await _dbContext.Entry(root).Collection(t => t.Files).LoadAsync();
+                root.SubFolders = await _dbContext
+                    .Folders
+                    .AsNoTracking()
+                    .Where(t => t.ContextId == root.Id)
+                    .ToListAsync();
+                root.Files = await _dbContext
+                    .Files
+                    .Where(t => t.ContextId == root.Id)
+                    .ToListAsync();
                 return root;
             }
             var subFolderName = folderNames[0];
             var subFolders = await _dbContext.Folders
+                .AsNoTracking()
                 .Where(t => t.ContextId == root.Id)
                 .ToListAsync();
             var subFolder = subFolders.SingleOrDefault(t => t.FolderName == subFolderName);
