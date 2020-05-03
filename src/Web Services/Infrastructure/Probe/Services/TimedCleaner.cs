@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Scanner.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,20 +16,25 @@ namespace Aiursoft.Probe.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly IStorageProvider _storageProvider;
+        private readonly IWebHostEnvironment _env;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            IStorageProvider storageProvider)
+            IWebHostEnvironment env)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _storageProvider = storageProvider;
+            _env = env;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (_env.IsDevelopment())
+            {
+                _logger.LogInformation("Skip cleaner in development environment.");
+                return Task.CompletedTask;
+            }
             _logger.LogInformation("Timed Background Service is starting.");
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(5), TimeSpan.FromMinutes(10));
             return Task.CompletedTask;
@@ -42,7 +48,8 @@ namespace Aiursoft.Probe.Services
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<ProbeDbContext>();
-                    await AllClean(dbContext);
+                    var storageProvider = scope.ServiceProvider.GetRequiredService<IStorageProvider>();
+                    await AllClean(dbContext, storageProvider);
                 }
                 _logger.LogInformation("Cleaner task finished!");
             }
@@ -52,12 +59,12 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        private async Task AllClean(ProbeDbContext dbContext)
+        private async Task AllClean(ProbeDbContext dbContext, IStorageProvider storageProvider)
         {
             var files = await dbContext.Files.ToListAsync();
             foreach (var file in files)
             {
-                if (!_storageProvider.ExistInHardware(file.HardwareId))
+                if (!storageProvider.ExistInHardware(file.HardwareId))
                 {
                     _logger.LogInformation($"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
                     // delete file in db.
@@ -65,7 +72,7 @@ namespace Aiursoft.Probe.Services
                 }
                 await dbContext.SaveChangesAsync();
             }
-            var storageFiles = _storageProvider.GetAllFileNamesInHardware();
+            var storageFiles = storageProvider.GetAllFileNamesInHardware();
             foreach (var file in storageFiles)
             {
                 if (!await dbContext.Files.AnyAsync(t => t.HardwareId == file))

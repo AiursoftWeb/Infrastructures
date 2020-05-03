@@ -5,6 +5,7 @@ using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,56 @@ namespace Aiursoft.Probe.Services
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
+        private readonly IMemoryCache _cache;
 
         public FolderLocator(
             ProbeDbContext dbContext,
-            ACTokenManager tokenManager)
+            ACTokenManager tokenManager,
+            IMemoryCache cache)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
+            _cache = cache;
+        }
+
+        private async Task<Folder> GetFolderFromDB(int folderId)
+        {
+            var folder = await _dbContext
+                .Folders
+                .AsNoTracking()
+                .Include(t => t.Files)
+                .Include(t => t.SubFolders)
+                .SingleOrDefaultAsync(t => t.Id == folderId);
+            _cache.Set($"folder_object_{folderId}", folder);
+            return folder;
+        }
+
+        private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName, bool tructCache = false)
+        {
+            if (!_cache.TryGetValue($"folder_object_{rootFolderId}", out Folder folderInCache))
+            {
+                // Folder not in cache.
+                folderInCache = await GetFolderFromDB(rootFolderId);
+                return folderInCache
+                    .SubFolders
+                    .SingleOrDefault(t => t.FolderName == subFolderName);
+            }
+            else
+            {
+                // Folder in cache.
+                var subFolder = folderInCache.SubFolders.SingleOrDefault(t => t.FolderName == subFolderName);
+                if (subFolder == null && !tructCache)
+                {
+                    // Subfolder is not in cache. Might because cache is out dated!
+                    await GetFolderFromDB(rootFolderId);
+                    return await GetSubFolder(rootFolderId, subFolderName, true);
+                }
+                else
+                {
+                    // Subfolder is not in cache. And cache refreshed. Return null.
+                    return subFolder;
+                }
+            }
         }
 
         public string[] SplitToFolders(string folderNames) =>
@@ -76,10 +120,7 @@ namespace Aiursoft.Probe.Services
                 return root;
             }
             var subFolderName = folderNames[0];
-            var subFolder = await _dbContext.Folders
-                .AsNoTracking()
-                .Where(t => t.ContextId == root.Id)
-                .SingleOrDefaultAsync(t => t.FolderName == subFolderName);
+            var subFolder = await GetSubFolder(root.Id, subFolderName);
             if (recursiveCreate && subFolder == null && !string.IsNullOrWhiteSpace(subFolderName))
             {
                 subFolder = new Folder
