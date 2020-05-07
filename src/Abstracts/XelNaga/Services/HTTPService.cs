@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -56,6 +57,33 @@ namespace Aiursoft.XelNaga.Services
             var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
             {
                 Content = new FormUrlEncodedContent(postDataStr.Params)
+            };
+
+            request.Headers.Add("X-Forwarded-Proto", "https");
+            request.Headers.Add("accept", "application/json");
+
+            var response = await _client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
+            }
+        }
+
+        public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool internalRequest)
+        {
+            if (internalRequest)
+            {
+                url.Address = _regex.Replace(url.Address, "http://");
+            }
+            var formData = new MultipartFormDataContent();
+            formData.Add(new StreamContent(fileStream), "file", "file");
+            var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
+            {
+                Content = formData
             };
 
             request.Headers.Add("X-Forwarded-Proto", "https");

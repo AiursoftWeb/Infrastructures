@@ -7,6 +7,7 @@ using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer
@@ -21,6 +22,20 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
         {
             _http = http;
             _serviceLocation = serviceLocation;
+        }
+
+        public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames, Stream file, bool recursiveCreate = false)
+        {
+            var url = new AiurUrl(_serviceLocation.Endpoint, $"/Files/UploadFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new UploadFileAddressModel
+            {
+                Token = accessToken,
+                RecursiveCreate = recursiveCreate
+            });
+            var result = await _http.PostWithFile(url, file, true);
+            var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> DeleteFileAsync(string accessToken, string siteName, string folderNames)
