@@ -42,7 +42,7 @@ Website: [www.aiursoft.com](https://www.aiursoft.com)
 
 * Email: [edgeneko@aiusoft.com](mailto:edgeneko@aiursoft.com) 
 * GitHub: [hv0905](https://github.com/hv0905)
-* Blog: [https://edgeneko.tk/](https://edgeneko.tk/)
+* Blog: [https://edgeneko.tk/](https://edgeneko.aiursoft.com/)
 
 ### Xiangrui
 
