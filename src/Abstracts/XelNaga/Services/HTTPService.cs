@@ -79,11 +79,12 @@ namespace Aiursoft.XelNaga.Services
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
-            var formData = new MultipartFormDataContent();
-            formData.Add(new StreamContent(fileStream), "file", "file");
             var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
             {
-                Content = formData
+                Content = new MultipartFormDataContent
+                {
+                    { new StreamContent(fileStream), "file", "file" }
+                }
             };
 
             request.Headers.Add("X-Forwarded-Proto", "https");

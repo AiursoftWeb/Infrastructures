@@ -84,6 +84,7 @@ namespace Aiursoft.Probe.Repositories
             if (folder != null)
             {
                 await DeleteFolderObject(folder);
+                await _dbContext.SaveChangesAsync();
             }
         }
     }
