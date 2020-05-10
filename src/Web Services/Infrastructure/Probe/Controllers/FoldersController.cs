@@ -21,18 +21,15 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
-        private readonly FolderOperator _folderOperator;
         private readonly FolderRepo _folderRepo;
 
         public FoldersController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            FolderOperator folderCleaner,
             FolderRepo folderRepo)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
-            _folderOperator = folderCleaner;
             _folderRepo = folderRepo;
         }
 

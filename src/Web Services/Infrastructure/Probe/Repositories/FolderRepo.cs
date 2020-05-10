@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
+using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FileRepo _fileRepo;
+        private readonly IStorageProvider _storageProvider;
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
-            FileRepo fileRepo)
+            FileRepo fileRepo,
+            IStorageProvider storageProvider)
         {
             _dbContext = probeDbContext;
             _fileRepo = fileRepo;
+            _storageProvider = storageProvider;
         }
 
         private async Task DeleteFolderObject(Folder folder)
@@ -39,6 +43,37 @@ namespace Aiursoft.Probe.Repositories
                 await _fileRepo.DeleteFileObject(file);
             }
             _dbContext.Folders.Remove(folder);
+        }
+
+        private async Task<long> GetFolderObjectSize(Folder folder)
+        {
+            long size = 0;
+            var subfolders = await _dbContext
+                .Folders
+                .Where(t => t.ContextId == folder.Id)
+                .ToListAsync();
+            foreach (var subfolder in subfolders)
+            {
+                size += await GetFolderObjectSize(subfolder);
+            }
+            var localFiles = await _dbContext
+                .Files
+                .Where(t => t.ContextId == folder.Id)
+                .ToListAsync();
+            size += localFiles.Sum(t => _storageProvider.GetSize(t.HardwareId));
+            return size;
+        }
+
+        public async Task<long> GetFolderSize(int folderId)
+        {
+            var folder = await _dbContext
+                .Folders
+                .SingleOrDefaultAsync(t => t.Id == folderId);
+            if (folder != null)
+            {
+                return await GetFolderObjectSize(folder);
+            }
+            return 0;
         }
 
         public async Task DeleteFolder(int folderId)

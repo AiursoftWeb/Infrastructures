@@ -26,7 +26,6 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
-        private readonly FolderOperator _folderCleaner;
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly ProbeLocator _probeLocator;
         private readonly IStorageProvider _storageProvider;
@@ -35,7 +34,6 @@ namespace Aiursoft.Probe.Controllers
         public FilesController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            FolderOperator folderCleaner,
             TokenEnsurer tokenEnsurer,
             ProbeLocator probeLocator,
             IStorageProvider storageProvider,
@@ -47,7 +45,6 @@ namespace Aiursoft.Probe.Controllers
             _probeLocator = probeLocator;
             _storageProvider = storageProvider;
             _fileRepo = fileRepo;
-            _folderCleaner = folderCleaner;
         }
 
         [HttpPost]

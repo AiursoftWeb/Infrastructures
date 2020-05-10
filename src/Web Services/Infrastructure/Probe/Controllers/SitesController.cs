@@ -8,7 +8,6 @@ using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
-using Aiursoft.Probe.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,18 +24,15 @@ namespace Aiursoft.Probe.Controllers
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
         private readonly FolderRepo _folderRepo;
-        private readonly FolderOperator _folderCleaner;
 
         public SitesController(
             ProbeDbContext dbContext,
             ACTokenManager tokenManager,
-            FolderRepo folderRepo,
-            FolderOperator folderOperator)
+            FolderRepo folderRepo)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
             _folderRepo = folderRepo;
-            _folderCleaner = folderOperator;
         }
 
         [HttpPost]
@@ -137,7 +133,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 AppId = appLocal.AppId,
                 Site = site,
-                Size = await _folderCleaner.GetFolderSize(site.Root),
+                Size = await _folderRepo.GetFolderSize(site.RootFolderId),
                 Code = ErrorType.Success,
                 Message = "Successfully get your buckets!"
             };
