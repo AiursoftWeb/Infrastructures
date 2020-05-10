@@ -2,6 +2,7 @@
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
+using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
 {
-    public class SiteRepo
+    public class SiteRepo : IScopedDependency
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderRepo _folderRepo;
