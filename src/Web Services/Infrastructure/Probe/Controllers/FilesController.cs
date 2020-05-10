@@ -2,6 +2,7 @@
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
@@ -29,6 +30,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly ProbeLocator _probeLocator;
         private readonly IStorageProvider _storageProvider;
+        private readonly FileRepo _fileRepo;
 
         public FilesController(
             ProbeDbContext dbContext,
@@ -36,13 +38,15 @@ namespace Aiursoft.Probe.Controllers
             FolderOperator folderCleaner,
             TokenEnsurer tokenEnsurer,
             ProbeLocator probeLocator,
-            IStorageProvider storageProvider)
+            IStorageProvider storageProvider,
+            FileRepo fileRepo)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _tokenEnsurer = tokenEnsurer;
             _probeLocator = probeLocator;
             _storageProvider = storageProvider;
+            _fileRepo = fileRepo;
             _folderCleaner = folderCleaner;
         }
 
@@ -128,7 +132,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
-            await _folderCleaner.DeleteFile(file);
+            await _fileRepo.DeleteFile(file.Id);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
         }

@@ -4,6 +4,7 @@ using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
@@ -23,15 +24,18 @@ namespace Aiursoft.Probe.Controllers
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
+        private readonly FolderRepo _folderRepo;
         private readonly FolderOperator _folderCleaner;
 
         public SitesController(
             ProbeDbContext dbContext,
             ACTokenManager tokenManager,
+            FolderRepo folderRepo,
             FolderOperator folderOperator)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
+            _folderRepo = folderRepo;
             _folderCleaner = folderOperator;
         }
 
@@ -66,7 +70,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 AppId = appid,
                 SiteName = model.NewSiteName.ToLower(),
-                FolderId = newRootFolder.Id,
+                RootFolderId = newRootFolder.Id,
                 OpenToUpload = model.OpenToUpload,
                 OpenToDownload = model.OpenToDownload
             };
@@ -133,7 +137,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 AppId = appLocal.AppId,
                 Site = site,
-                Size = await _folderCleaner.GetFolderSite(site.Root),
+                Size = await _folderCleaner.GetFolderSize(site.Root),
                 Code = ErrorType.Success,
                 Message = "Successfully get your buckets!"
             };
@@ -176,7 +180,6 @@ namespace Aiursoft.Probe.Controllers
             var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
                 .Sites
-                .Include(t => t.Root)
                 .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
             if (site == null)
             {
@@ -186,7 +189,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The site you tried to delete is not your app's site.");
             }
-            await _folderCleaner.DeleteFolder(site.Root);
+            await _folderRepo.DeleteFolder(site.RootFolderId);
             _dbContext.Sites.Remove(site);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your site!");
@@ -206,7 +209,7 @@ namespace Aiursoft.Probe.Controllers
                 .SingleOrDefaultAsync(t => t.AppId == appid);
             if (target != null)
             {
-                _dbContext.Folders.Delete(t => target.Sites.Select(p => p.FolderId).Contains(t.Id));
+                _dbContext.Folders.Delete(t => target.Sites.Select(p => p.RootFolderId).Contains(t.Id));
                 _dbContext.Sites.Delete(t => t.AppId == appid);
                 _dbContext.Apps.Remove(target);
                 await _dbContext.SaveChangesAsync();

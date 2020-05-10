@@ -15,8 +15,8 @@ namespace Aiursoft.Probe.SDK.Models
         public ProbeApp Context { get; set; }
 
         [JsonIgnore]
-        public int FolderId { get; set; }
-        [ForeignKey(nameof(FolderId))]
+        public int RootFolderId { get; set; }
+        [ForeignKey(nameof(RootFolderId))]
         [JsonIgnore]
         public Folder Root { get; set; }
 

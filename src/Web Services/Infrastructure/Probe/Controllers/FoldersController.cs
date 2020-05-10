@@ -2,6 +2,7 @@
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
 using Aiursoft.Probe.Services;
@@ -21,15 +22,18 @@ namespace Aiursoft.Probe.Controllers
         private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
         private readonly FolderOperator _folderOperator;
+        private readonly FolderRepo _folderRepo;
 
         public FoldersController(
             ProbeDbContext dbContext,
             FolderLocator folderLocator,
-            FolderOperator folderCleaner)
+            FolderOperator folderCleaner,
+            FolderRepo folderRepo)
         {
             _dbContext = dbContext;
             _folderLocator = folderLocator;
             _folderOperator = folderCleaner;
+            _folderRepo = folderRepo;
         }
 
         [Route("ViewContent/{SiteName}/{**FolderNames}")]
@@ -91,7 +95,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
             }
-            await _folderOperator.DeleteFolder(folder);
+            await _folderRepo.DeleteFolder(folder.Id);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");
         }

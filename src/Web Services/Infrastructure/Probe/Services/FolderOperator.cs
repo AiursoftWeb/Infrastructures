@@ -2,11 +2,13 @@
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
 {
+    [Obsolete]
     public class FolderOperator : IScopedDependency
     {
         private readonly ProbeDbContext _dbContext;
@@ -20,38 +22,7 @@ namespace Aiursoft.Probe.Services
             _storageProvider = storageProvider;
         }
 
-        public async Task DeleteFolder(Folder folder)
-        {
-            var subfolders = await _dbContext
-                .Folders
-                .Where(t => t.ContextId == folder.Id)
-                .ToListAsync();
-            foreach (var subfolder in subfolders)
-            {
-                await DeleteFolder(subfolder);
-            }
-            var localFiles = await _dbContext
-                .Files
-                .Where(t => t.ContextId == folder.Id)
-                .ToListAsync();
-            foreach (var file in localFiles)
-            {
-                await DeleteFile(file);
-            }
-            _dbContext.Folders.Remove(folder);
-        }
-
-        public async Task DeleteFile(File file)
-        {
-            _dbContext.Files.Remove(file);
-            var haveDaemon = await _dbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
-            if (!haveDaemon)
-            {
-                _storageProvider.Delete(file.HardwareId);
-            }
-        }
-
-        public async Task<long> GetFolderSite(Folder folder)
+        public async Task<long> GetFolderSize(Folder folder)
         {
             long size = 0;
             var subfolders = await _dbContext
@@ -60,7 +31,7 @@ namespace Aiursoft.Probe.Services
                 .ToListAsync();
             foreach (var subfolder in subfolders)
             {
-                size += await GetFolderSite(subfolder);
+                size += await GetFolderSize(subfolder);
             }
             var localFiles = await _dbContext
                 .Files
