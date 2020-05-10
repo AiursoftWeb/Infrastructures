@@ -76,7 +76,7 @@ namespace Aiursoft.Probe.Repositories
             return 0;
         }
 
-        public async Task DeleteFolder(int folderId)
+        public async Task DeleteFolder(int folderId, bool saveChanges = true)
         {
             var folder = await _dbContext
                 .Folders
@@ -84,7 +84,10 @@ namespace Aiursoft.Probe.Repositories
             if (folder != null)
             {
                 await DeleteFolderObject(folder);
-                await _dbContext.SaveChangesAsync();
+                if (saveChanges)
+                {
+                    await _dbContext.SaveChangesAsync();
+                }
             }
         }
     }

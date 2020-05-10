@@ -78,7 +78,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task DeleteSite(Site site)
         {
-            await _folderRepo.DeleteFolder(site.RootFolderId);
+            await _folderRepo.DeleteFolder(site.RootFolderId, false);
             _dbContext.Sites.Remove(site);
             await _dbContext.SaveChangesAsync();
         }
