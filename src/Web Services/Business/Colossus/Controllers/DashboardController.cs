@@ -6,6 +6,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace Aiursoft.Colossus.Controllers
         private readonly UserManager<ColossusUser> _userManager;
         private readonly FoldersService _foldersService;
         private readonly FilesService _filesService;
+        private readonly AiurCache _cache;
 
         private Task<string> _accesstoken => _appsContainer.AccessToken();
 
@@ -32,13 +34,15 @@ namespace Aiursoft.Colossus.Controllers
             AppsContainer appsContainer,
             UserManager<ColossusUser> userManager,
             FoldersService foldersService,
-            FilesService filesService)
+            FilesService filesService,
+            AiurCache cache)
         {
             _sitesService = sitesService;
             _appsContainer = appsContainer;
             _userManager = userManager;
             _foldersService = foldersService;
             _filesService = filesService;
+            _cache = cache;
         }
 
         [Route("Index")]
@@ -335,6 +339,8 @@ namespace Aiursoft.Colossus.Controllers
                 await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload, model.OpenToDownload);
                 user.SiteName = model.NewSiteName;
                 await _userManager.UpdateAsync(user);
+                _cache.Clear($"site-public-status-{model.OldSiteName}");
+                _cache.Clear($"site-public-status-{model.NewSiteName}");
                 return RedirectToAction(nameof(DashboardController.Settings), "Dashboard", new { JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)

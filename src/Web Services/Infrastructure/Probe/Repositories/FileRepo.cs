@@ -2,6 +2,7 @@
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +13,16 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly IStorageProvider _storageProvider;
+        private readonly AiurCache _cache;
 
         public FileRepo(
             ProbeDbContext dbContext,
-            IStorageProvider storageProvider)
+            IStorageProvider storageProvider,
+            AiurCache cache)
         {
             _dbContext = dbContext;
             _storageProvider = storageProvider;
+            _cache = cache;
         }
 
         public async Task DeleteFileObject(File file)
@@ -51,6 +55,7 @@ namespace Aiursoft.Probe.Repositories
             };
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
+            _cache.Clear($"folder_object_{folderId}");
             return newFile.HardwareId;
         }
 

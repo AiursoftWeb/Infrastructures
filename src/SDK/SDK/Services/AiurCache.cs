@@ -56,6 +56,11 @@ namespace Aiursoft.SDK.Services
             return resultValue;
         }
 
+        public void Clear(string key)
+        {
+            _cache.Remove(key);
+        }
+
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
             if (!_cache.TryGetValue(cacheKey, out T resultValue))
