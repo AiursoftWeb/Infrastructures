@@ -46,7 +46,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task DeleteApp(ProbeApp app)
         {
-            var sites = await _siteRepo.GetSitesUnderApp(app.AppId);
+            var sites = await _siteRepo.GetAllSitesUnderApp(app.AppId);
             foreach (var site in sites)
             {
                 await _siteRepo.DeleteSite(site);

@@ -38,6 +38,33 @@ namespace Aiursoft.Probe.Repositories
             {
                 await DeleteFileObject(file);
             }
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<string> SaveFileToDb(string fileName, int folderId, long size)
+        {
+            var newFile = new File
+            {
+                FileName = fileName, //file.FileName,
+                ContextId = folderId,
+                FileSize = size
+            };
+            _dbContext.Files.Add(newFile);
+            await _dbContext.SaveChangesAsync();
+            return newFile.HardwareId;
+        }
+
+        public async Task CopyFile(string fileName, long fileSize, int contextId, string hardwareId)
+        {
+            var newFile = new File
+            {
+                FileName = fileName,
+                FileSize = fileSize,
+                ContextId = contextId,
+                HardwareId = hardwareId
+            };
+            _dbContext.Files.Add(newFile);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

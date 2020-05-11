@@ -1,13 +1,12 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,33 +18,33 @@ namespace Aiursoft.Probe.Controllers
     public class DownloadController : Controller
     {
         private readonly FolderLocator _folderLocator;
-        private readonly ProbeDbContext _dbContext;
         private readonly ImageCompressor _imageCompressor;
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly IStorageProvider _storageProvider;
+        private readonly FolderRepo _folderRepo;
+        private readonly SiteRepo _siteRepo;
 
         public DownloadController(
             FolderLocator folderLocator,
-            ProbeDbContext dbContext,
             ImageCompressor imageCompressor,
             TokenEnsurer tokenEnsurer,
-            IStorageProvider storageProvider)
+            IStorageProvider storageProvider,
+            FolderRepo folderRepo,
+            SiteRepo siteRepo)
         {
             _folderLocator = folderLocator;
-            _dbContext = dbContext;
             _imageCompressor = imageCompressor;
             _tokenEnsurer = tokenEnsurer;
             _storageProvider = storageProvider;
+            _folderRepo = folderRepo;
+            _siteRepo = siteRepo;
         }
 
         [Route(template: "File/{SiteName}/{**FolderNames}", Name = "File")]
         [Route(template: "Open/{SiteName}/{**FolderNames}", Name = "Open")]
         public async Task<IActionResult> Open(OpenAddressModel model)
         {
-            var site = await _dbContext
-               .Sites
-               .Include(t => t.Root)
-               .SingleOrDefaultAsync(t => t.SiteName.ToLower() == model.SiteName);
+            var site = await _siteRepo.GetSiteByNameWithCache(model.SiteName);
             if (site == null)
             {
                 return NotFound();
@@ -57,7 +56,8 @@ namespace Aiursoft.Probe.Controllers
             var (folders, fileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
             try
             {
-                var folder = await _folderLocator.LocateAsync(folders, site.Root, false);
+                var siteRoot = await _folderRepo.GetFolderFromId(site.RootFolderId);
+                var folder = await _folderRepo.GetFolderFromPath(folders, siteRoot, false);
                 if (folder == null)
                 {
                     return NotFound();

@@ -45,7 +45,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var sites = await _siteRepo.GetSitesUnderApp(appid);
+            var sites = await _siteRepo.GetAllSitesUnderApp(appid);
             var viewModel = new ViewMySitesViewModel
             {
                 AppId = appid,
@@ -60,7 +60,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var site = await _siteRepo.GetYourSite(model.SiteName, appid);
+            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid);
             var viewModel = new ViewSiteDetailViewModel
             {
                 AppId = appid,
@@ -76,7 +76,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> UpdateSiteInfo(UpdateSiteInfoAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var site = await _siteRepo.GetYourSite(model.OldSiteName, appid);
+            var site = await _siteRepo.GetSiteByNameUnderApp(model.OldSiteName, appid);
             // Conflict = Name changed, and new name already exists.
             var conflict = model.NewSiteName.ToLower() != model.OldSiteName.ToLower() &&
                 await _siteRepo.GetSiteByName(model.NewSiteName) != null;
@@ -95,7 +95,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> DeleteSite(DeleteSiteAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var site = await _siteRepo.GetYourSite(model.SiteName, appid);
+            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid);
             await _siteRepo.DeleteSite(site);
             return this.Protocol(ErrorType.Success, "Successfully deleted your site!");
         }

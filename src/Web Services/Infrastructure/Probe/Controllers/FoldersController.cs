@@ -1,15 +1,12 @@
 ﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
@@ -19,16 +16,13 @@ namespace Aiursoft.Probe.Controllers
     [Route("Folders")]
     public class FoldersController : Controller
     {
-        private readonly ProbeDbContext _dbContext;
         private readonly FolderLocator _folderLocator;
         private readonly FolderRepo _folderRepo;
 
         public FoldersController(
-            ProbeDbContext dbContext,
             FolderLocator folderLocator,
             FolderRepo folderRepo)
         {
-            _dbContext = dbContext;
             _folderLocator = folderLocator;
             _folderRepo = folderRepo;
         }
@@ -38,7 +32,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
             var folders = _folderLocator.SplitToFolders(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
@@ -55,26 +49,17 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
             var folders = _folderLocator.SplitToFolders(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
+            var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             if (folder == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
             }
-            var conflict = await _dbContext
-                .Folders
-                .Where(t => t.ContextId == folder.Id)
-                .AnyAsync(t => t.FolderName == model.NewFolderName.ToLower());
+            var conflict = await _folderRepo.FolderExists(folder.Id, model.NewFolderName);
             if (conflict)
             {
                 return this.Protocol(ErrorType.HasDoneAlready, $"Folder name: '{model.NewFolderName}' conflict!");
             }
-            var newFolder = new Folder
-            {
-                ContextId = folder.Id,
-                FolderName = model.NewFolderName.ToLower(),
-            };
-            _dbContext.Folders.Add(newFolder);
-            await _dbContext.SaveChangesAsync();
+            await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
             return this.Protocol(ErrorType.Success, "Successfully created your new folder!");
         }
 
@@ -83,7 +68,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model)
         {
             var folders = _folderLocator.SplitToFolders(model.FolderNames);
-            var folder = await _folderLocator.LocateSiteAndFolder(model.AccessToken, model.SiteName, folders);
+            var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
@@ -93,7 +78,6 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
             }
             await _folderRepo.DeleteFolder(folder.Id);
-            await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");
         }
     }
