@@ -60,7 +60,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid, true);
+            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid, allowCache: true);
             var viewModel = new ViewSiteDetailViewModel
             {
                 AppId = appid,

@@ -95,6 +95,7 @@ namespace Aiursoft.Probe.Repositories
         {
             _dbContext.Sites.Update(site);
             await _dbContext.SaveChangesAsync();
+            _aiurCache.Clear($"site_object_{site.SiteName}");
         }
     }
 }

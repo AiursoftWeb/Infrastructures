@@ -183,6 +183,7 @@ namespace Aiursoft.Probe.Repositories
                 {
                     await _dbContext.SaveChangesAsync();
                 }
+                _cache.Clear($"folder_object_{folder.ContextId}");
             }
         }
     }
