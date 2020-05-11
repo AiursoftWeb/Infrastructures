@@ -7,6 +7,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,19 +25,22 @@ namespace Aiursoft.Developer.Controllers
         private readonly SitesService _sitesService;
         private readonly FoldersService _foldersService;
         private readonly FilesService _filesService;
+        private readonly AiurCache _cache;
 
         public SitesController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
             SitesService sitesService,
             FoldersService foldersService,
-            FilesService filesService)
+            FilesService filesService,
+            AiurCache cache)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _sitesService = sitesService;
             _foldersService = foldersService;
             _filesService = filesService;
+            _cache = cache;
         }
 
         [Route("Sites")]
@@ -368,6 +372,8 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload, model.OpenToDownload);
+                _cache.Clear($"site-public-status-{model.OldSiteName}");
+                _cache.Clear($"site-public-status-{model.NewSiteName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
