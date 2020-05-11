@@ -43,9 +43,9 @@ namespace Aiursoft.Probe.Repositories
             return folder.SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
         }
 
-        public Task<Folder> GetFolderFromId(int folderId, bool withCache = true)
+        public Task<Folder> GetFolderFromId(int folderId, bool allowCache = true)
         {
-            if (withCache)
+            if (allowCache)
             {
                 return _cache.GetAndCache($"folder_object_{folderId}", () => GetFolderFromId(folderId, false));
             }

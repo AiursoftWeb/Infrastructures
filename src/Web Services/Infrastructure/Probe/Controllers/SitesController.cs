@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var conflict = await _siteRepo.GetSiteByNameWithCache(model.NewSiteName) != null;
+            var conflict = await _siteRepo.GetSiteByName(model.NewSiteName, allowCache: true) != null;
             if (conflict)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
@@ -79,7 +79,7 @@ namespace Aiursoft.Probe.Controllers
             var site = await _siteRepo.GetSiteByNameUnderApp(model.OldSiteName, appid);
             // Conflict = Name changed, and new name already exists.
             var conflict = model.NewSiteName.ToLower() != model.OldSiteName.ToLower() &&
-                await _siteRepo.GetSiteByName(model.NewSiteName) != null;
+                await _siteRepo.GetSiteByName(model.NewSiteName, allowCache: false) != null;
             if (conflict)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");

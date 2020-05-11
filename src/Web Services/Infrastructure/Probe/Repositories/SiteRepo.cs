@@ -27,17 +27,9 @@ namespace Aiursoft.Probe.Repositories
             _aiurCache = aiurCache;
         }
 
-        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid, bool fromCache = false)
+        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid, bool allowCache = false)
         {
-            Site site = null;
-            if (fromCache)
-            {
-                site = await GetSiteByNameWithCache(siteName);
-            }
-            else
-            {
-                site = await GetSiteByName(siteName);
-            }
+            var site = await GetSiteByName(siteName, allowCache);
             if (site == null)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a site with name: '{siteName}'");
@@ -49,17 +41,17 @@ namespace Aiursoft.Probe.Repositories
             return site;
         }
 
-        public Task<Site> GetSiteByName(string siteName)
+        public Task<Site> GetSiteByName(string siteName, bool allowCache)
         {
             var lowerSiteName = siteName.ToLower();
-            return _dbContext
-                .Sites
-                .SingleOrDefaultAsync(t => t.SiteName.ToLower() == lowerSiteName);
-        }
-
-        public Task<Site> GetSiteByNameWithCache(string siteName)
-        {
-            return _aiurCache.GetAndCache($"site_object_{siteName}", () => GetSiteByName(siteName));
+            if (allowCache)
+            {
+                return _aiurCache.GetAndCache($"site_object_{siteName}", () => GetSiteByName(siteName, false));
+            }
+            else
+            {
+                return _dbContext.Sites.SingleOrDefaultAsync(t => t.SiteName.ToLower() == lowerSiteName);
+            }
         }
 
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)

@@ -44,7 +44,7 @@ namespace Aiursoft.Probe.Controllers
         [Route(template: "Open/{SiteName}/{**FolderNames}", Name = "Open")]
         public async Task<IActionResult> Open(OpenAddressModel model)
         {
-            var site = await _siteRepo.GetSiteByNameWithCache(model.SiteName);
+            var site = await _siteRepo.GetSiteByName(model.SiteName, allowCache: true);
             if (site == null)
             {
                 return NotFound();
