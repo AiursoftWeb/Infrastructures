@@ -34,28 +34,30 @@ namespace Aiursoft.Probe.Repositories
             _tokenManager = tokenManager;
         }
 
-        private Task<Folder> GetFolderFromIdWithoutCache(int folderId)
-        {
-            return _dbContext
-                .Folders
-                .AsNoTracking()
-                .Include(t => t.Files)
-                .Include(t => t.SubFolders)
-                .SingleOrDefaultAsync(t => t.Id == folderId);
-        }
-
         private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
         {
             var folder = await _cache.GetAndCacheWhen(
                 cacheKey: $"folder_object_{rootFolderId}",
-                backup: () => GetFolderFromIdWithoutCache(rootFolderId),
+                backup: () => GetFolderFromId(rootFolderId, false),
                 when: (folder) => folder.SubFolders.Any(f => f.FolderName == subFolderName));
             return folder.SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
         }
 
-        public Task<Folder> GetFolderFromId(int folderId)
+        public Task<Folder> GetFolderFromId(int folderId, bool withCache = true)
         {
-            return _cache.GetAndCache($"folder_object_{folderId}", () => GetFolderFromIdWithoutCache(folderId));
+            if (withCache)
+            {
+                return _cache.GetAndCache($"folder_object_{folderId}", () => GetFolderFromId(folderId, false));
+            }
+            else
+            {
+                return _dbContext
+                    .Folders
+                    .AsNoTracking()
+                    .Include(t => t.Files)
+                    .Include(t => t.SubFolders)
+                    .SingleOrDefaultAsync(t => t.Id == folderId);
+            }
         }
 
         public async Task<Folder> GetFolderAsOwner(string accessToken, string siteName, string[] folderNames, bool recursiveCreate = false)
@@ -63,7 +65,6 @@ namespace Aiursoft.Probe.Repositories
             var appid = await _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
                 .Sites
-                .Include(t => t.Root)
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
             if (site == null)
             {
@@ -73,7 +74,8 @@ namespace Aiursoft.Probe.Repositories
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
             }
-            return await GetFolderFromPath(folderNames, site.Root, recursiveCreate);
+            var rootFolder = await GetFolderFromId(site.RootFolderId);
+            return await GetFolderFromPath(folderNames, rootFolder, recursiveCreate);
         }
 
         public Task<bool> FolderExists(int contextId, string newFolderName)

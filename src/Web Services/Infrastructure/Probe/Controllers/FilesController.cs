@@ -21,7 +21,7 @@ namespace Aiursoft.Probe.Controllers
     [DisableRequestSizeLimit]
     public class FilesController : Controller
     {
-        private readonly FolderLocator _folderLocator;
+        private readonly FolderSpliter _folderSpliter;
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly ProbeLocator _probeLocator;
         private readonly IStorageProvider _storageProvider;
@@ -30,7 +30,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly FileRepo _fileRepo;
 
         public FilesController(
-            FolderLocator folderLocator,
+            FolderSpliter folderLocator,
             TokenEnsurer tokenEnsurer,
             ProbeLocator probeLocator,
             IStorageProvider storageProvider,
@@ -38,7 +38,7 @@ namespace Aiursoft.Probe.Controllers
             FolderRepo folderRepo,
             FileRepo fileRepo)
         {
-            _folderLocator = folderLocator;
+            _folderSpliter = folderLocator;
             _tokenEnsurer = tokenEnsurer;
             _probeLocator = probeLocator;
             _storageProvider = storageProvider;
@@ -62,7 +62,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 _tokenEnsurer.Ensure(model.Token, "Upload", model.SiteName, model.FolderNames);
             }
-            var folders = _folderLocator.SplitToFolders(model.FolderNames);
+            var folders = _folderSpliter.SplitToFolders(model.FolderNames);
             var rootFolder = await _folderRepo.GetFolderFromId(site.RootFolderId);
             var folder = await _folderRepo.GetFolderFromPath(folders, rootFolder, model.RecursiveCreate);
             if (folder == null)
@@ -87,7 +87,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.InvalidInput, $"Invalid file name: '{file.FileName}'!");
             }
-            var fileName = _folderLocator.GetValidFileName(folder.Files.Select(t => t.FileName), file.FileName);
+            var fileName = _folderSpliter.GetValidFileName(folder.Files.Select(t => t.FileName), file.FileName);
             var newFileHardwareId = await _fileRepo.SaveFileToDb(fileName, folder.Id, file.Length);
             await _storageProvider.Save(newFileHardwareId, file);
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), fileName);
@@ -108,7 +108,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("DeleteFile/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
         {
-            var (folders, fileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
+            var (folders, fileName) = _folderSpliter.SplitToFoldersAndFile(model.FolderNames);
             var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {
@@ -129,8 +129,8 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> CopyFile(CopyFileAddressModel model)
         {
-            var (sourceFolders, sourceFileName) = _folderLocator.SplitToFoldersAndFile(model.FolderNames);
-            var targetFolders = _folderLocator.SplitToFolders(model.TargetFolderNames);
+            var (sourceFolders, sourceFileName) = _folderSpliter.SplitToFoldersAndFile(model.FolderNames);
+            var targetFolders = _folderSpliter.SplitToFolders(model.TargetFolderNames);
             var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
             var targetFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.TargetSiteName, targetFolders, true);
             if (sourceFolder == null)
@@ -146,7 +146,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
-            var fileName = _folderLocator.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
+            var fileName = _folderSpliter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
             await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId); ;
             var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
             var internetPath = _probeLocator.GetProbeOpenAddress(filePath);

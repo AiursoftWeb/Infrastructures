@@ -27,9 +27,17 @@ namespace Aiursoft.Probe.Repositories
             _aiurCache = aiurCache;
         }
 
-        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid)
+        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid, bool fromCache = false)
         {
-            var site = await GetSiteByName(siteName);
+            Site site = null;
+            if (fromCache)
+            {
+                site = await GetSiteByNameWithCache(siteName);
+            }
+            else
+            {
+                site = await GetSiteByName(siteName);
+            }
             if (site == null)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a site with name: '{siteName}'");
