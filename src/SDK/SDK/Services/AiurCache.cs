@@ -44,7 +44,7 @@ namespace Aiursoft.SDK.Services
 
         public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue))
+            if (!_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
             {
                 resultValue = await backup();
 
@@ -63,7 +63,7 @@ namespace Aiursoft.SDK.Services
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue))
+            if (!_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
             {
                 resultValue = backup();
 
