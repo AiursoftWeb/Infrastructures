@@ -4,8 +4,8 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,56 +17,40 @@ namespace Aiursoft.Probe.Services
     {
         private readonly ProbeDbContext _dbContext;
         private readonly ACTokenManager _tokenManager;
-        private readonly IMemoryCache _cache;
+        private readonly AiurCache _aiurCache;
 
         public FolderLocator(
             ProbeDbContext dbContext,
             ACTokenManager tokenManager,
-            IMemoryCache cache)
+            AiurCache aiurCache)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
-            _cache = cache;
+            _aiurCache = aiurCache;
         }
 
-        private async Task<Folder> GetFolderFromDB(int folderId)
+        private Task<Folder> GetFolderFromDB(int folderId)
         {
-            var folder = await _dbContext
+            return _dbContext
                 .Folders
                 .AsNoTracking()
                 .Include(t => t.Files)
                 .Include(t => t.SubFolders)
                 .SingleOrDefaultAsync(t => t.Id == folderId);
-            _cache.Set($"folder_object_{folderId}", folder);
-            return folder;
         }
 
-        private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName, bool tructCache = false)
+        private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
         {
-            if (!_cache.TryGetValue($"folder_object_{rootFolderId}", out Folder folderInCache))
-            {
-                // Folder not in cache.
-                folderInCache = await GetFolderFromDB(rootFolderId);
-                return folderInCache
-                    .SubFolders
-                    .SingleOrDefault(t => t.FolderName == subFolderName);
-            }
-            else
-            {
-                // Folder in cache.
-                var subFolder = folderInCache.SubFolders.SingleOrDefault(t => t.FolderName == subFolderName);
-                if (subFolder == null && !tructCache)
-                {
-                    // Subfolder is not in cache. Might because cache is out dated!
-                    await GetFolderFromDB(rootFolderId);
-                    return await GetSubFolder(rootFolderId, subFolderName, true);
-                }
-                else
-                {
-                    // Subfolder is not in cache. And cache refreshed. Return null.
-                    return subFolder;
-                }
-            }
+            var folder = await _aiurCache.GetAndCacheWhen(
+                cacheKey: $"folder_object_{rootFolderId}",
+                backup: () => GetFolderFromDB(rootFolderId),
+                when: (folder) => folder.SubFolders.Any(f => f.FolderName == subFolderName));
+            return folder.SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
+        }
+
+        public Task<Folder> GetFolderWithFiles(int folderId)
+        {
+            return _aiurCache.GetAndCache($"folder_object_{folderId}", () => GetFolderFromDB(folderId));
         }
 
         public string[] SplitToFolders(string folderNames) =>
@@ -107,17 +91,7 @@ namespace Aiursoft.Probe.Services
             if (root == null) return null;
             if (!folderNames.Any())
             {
-                root.SubFolders = await _dbContext
-                    .Folders
-                    .AsNoTracking()
-                    .Where(t => t.ContextId == root.Id)
-                    .ToListAsync();
-                root.Files = await _dbContext
-                    .Files
-                    .AsNoTracking()
-                    .Where(t => t.ContextId == root.Id)
-                    .ToListAsync();
-                return root;
+                return await GetFolderWithFiles(root.Id);
             }
             var subFolderName = folderNames[0];
             var subFolder = await GetSubFolder(root.Id, subFolderName);
@@ -131,8 +105,7 @@ namespace Aiursoft.Probe.Services
                 _dbContext.Folders.Add(subFolder);
                 await _dbContext.SaveChangesAsync();
             }
-            return await LocateAsync(
-                folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+            return await LocateAsync(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
         }
 
         public string GetValidFileName(IEnumerable<string> existingFileNames, string expectedFileName)
