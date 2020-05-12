@@ -25,6 +25,23 @@ namespace Aiursoft.Probe.Repositories
             _cache = cache;
         }
 
+        public async Task<File> GetFileInFolder(Folder context, string fileName)
+        {
+            var file = context.Files?.SingleOrDefault(t => t.FileName == fileName);
+            if (file == null)
+            {
+                file = await _dbContext
+                    .Files
+                    .Where(t => t.ContextId == context.Id)
+                    .SingleOrDefaultAsync(t => t.FileName == fileName);
+                if (file != null)
+                {
+                    _cache.Clear($"folder_object_{context.Id}");
+                }
+            }
+            return file;
+        }
+
         public async Task DeleteFileObject(File file)
         {
             _dbContext.Files.Remove(file);

@@ -22,6 +22,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly IStorageProvider _storageProvider;
         private readonly FolderRepo _folderRepo;
+        private readonly FileRepo _fileRepo;
         private readonly SiteRepo _siteRepo;
 
         public DownloadController(
@@ -30,6 +31,7 @@ namespace Aiursoft.Probe.Controllers
             TokenEnsurer tokenEnsurer,
             IStorageProvider storageProvider,
             FolderRepo folderRepo,
+            FileRepo fileRepo,
             SiteRepo siteRepo)
         {
             _folderSpliter = folderLocator;
@@ -37,6 +39,7 @@ namespace Aiursoft.Probe.Controllers
             _tokenEnsurer = tokenEnsurer;
             _storageProvider = storageProvider;
             _folderRepo = folderRepo;
+            _fileRepo = fileRepo;
             _siteRepo = siteRepo;
         }
 
@@ -62,7 +65,7 @@ namespace Aiursoft.Probe.Controllers
                 {
                     return NotFound();
                 }
-                var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
+                var file = await _fileRepo.GetFileInFolder(folder, fileName);
                 if (file == null)
                 {
                     return NotFound();
