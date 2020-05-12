@@ -88,6 +88,7 @@ namespace Aiursoft.Probe.Repositories
 
         public Task CreateNewFolder(int contextId, string name)
         {
+            _cache.Clear($"folder_object_{contextId}");
             var newFolder = new Folder
             {
                 ContextId = contextId,
