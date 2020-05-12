@@ -88,6 +88,7 @@ namespace Aiursoft.Probe.Repositories
             };
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
+            _cache.Clear($"folder_object_{contextId}");
         }
     }
 }
