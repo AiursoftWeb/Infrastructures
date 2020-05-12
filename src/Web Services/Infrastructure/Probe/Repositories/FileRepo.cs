@@ -58,6 +58,7 @@ namespace Aiursoft.Probe.Repositories
             if (file != null)
             {
                 await DeleteFileObject(file);
+                _cache.Clear($"folder_object_{file.ContextId}");
             }
             await _dbContext.SaveChangesAsync();
         }

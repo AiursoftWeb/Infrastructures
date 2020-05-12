@@ -114,7 +114,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
             }
-            var file = folder.Files.SingleOrDefault(t => t.FileName == fileName);
+            var file = await _fileRepo.GetFileInFolder(folder, fileName);
             if (file == null)
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
