@@ -16,7 +16,6 @@
   <ItemGroup>
     <None Include="pylon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-
   
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
