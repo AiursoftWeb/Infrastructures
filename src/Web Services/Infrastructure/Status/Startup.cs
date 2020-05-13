@@ -4,7 +4,6 @@ using Aiursoft.SDK;
 using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,8 +23,7 @@ namespace Aiursoft.Status
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<StatusDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurMvc();
             services.AddAiurDependencies();

@@ -5,7 +5,6 @@ using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,8 +25,7 @@ namespace Aiursoft.Probe
         {
             services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 
-            services.AddDbContext<ProbeDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddCors();
             services.AddAiurAPIMvc();

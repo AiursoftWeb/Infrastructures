@@ -2,10 +2,10 @@
 using Aiursoft.Account.Models;
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +25,7 @@ namespace Aiursoft.Account
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AccountDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<AccountDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddIdentity<AccountUser, IdentityRole>()
                 .AddEntityFrameworkStores<AccountDbContext>()

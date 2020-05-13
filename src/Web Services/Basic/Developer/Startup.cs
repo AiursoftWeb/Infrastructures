@@ -2,10 +2,10 @@
 using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +25,7 @@ namespace Aiursoft.Developer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DeveloperDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<DeveloperDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddIdentity<DeveloperUser, IdentityRole>()
                 .AddEntityFrameworkStores<DeveloperDbContext>()

@@ -1,11 +1,11 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +25,7 @@ namespace Aiursoft.Wiki
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WikiDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<WikiDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddIdentity<WikiUser, IdentityRole>()
                 .AddEntityFrameworkStores<WikiDbContext>()

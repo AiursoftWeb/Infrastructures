@@ -2,10 +2,10 @@
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,8 +24,7 @@ namespace Aiursoft.EE
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EEDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddIdentity<EEUser, IdentityRole>()
                 .AddEntityFrameworkStores<EEDbContext>()

@@ -12,6 +12,7 @@ using Aiursoft.SDK.Middlewares;
 using Aiursoft.SDK.Services.Authentication;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.SDK;
+using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -176,6 +177,20 @@ namespace Aiursoft.SDK
             }
 
             return host;
+        }
+
+        public static IServiceCollection AddDbContextWithCache<T>(this IServiceCollection services, string connectionString) where T : DbContext
+        {
+            services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
+                    optionsBuilder
+                        .UseSqlServer(connectionString)
+                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            services.AddEFSecondLevelCache(options =>
+            {
+                options.UseMemoryCacheProvider().DisableLogging(true);
+                options.CacheAllQueries(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(30));
+            });
+            return services;
         }
     }
 }

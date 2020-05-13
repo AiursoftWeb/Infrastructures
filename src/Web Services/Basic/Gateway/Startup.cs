@@ -2,11 +2,11 @@
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
+using Aiursoft.SDK;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,8 +27,7 @@ namespace Aiursoft.Gateway
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GatewayDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<GatewayDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddSession(options =>
             {

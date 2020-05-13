@@ -3,7 +3,6 @@ using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,8 +22,7 @@ namespace Aiursoft.Stargate
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<StargateDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
             services.AddAiurDependencies();
