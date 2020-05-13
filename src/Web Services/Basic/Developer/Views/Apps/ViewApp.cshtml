@@ -452,7 +452,7 @@
                                                 <td>@(new string(log.Message.Take(70).ToArray()))...</td>
                                                 <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
-                                                <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime.Ticks"></td>
+                                                <td data-utc-time="@log.First.LogTime" data-order="@log.First.LogTime.Ticks"></td>
                                                 @switch (log.First.EventLevel)
                                                 {
                                                     case EventLevel.Exception:
