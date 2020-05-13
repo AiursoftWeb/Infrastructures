@@ -58,6 +58,7 @@
                             <tr>
                                 <th class="pl-4">@Localizer["Name"]</th>
                                 <th>@Localizer["Size"]</th>
+                                <th>@Localizer["Upload Time"]</th>
                                 <th>Operations</th>
                             </tr>
                         </thead>
@@ -77,6 +78,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td data-order="0"></td>
                                     <td data-order="0"></td>
                                     <td>
                                         <div class="dropdown">
@@ -109,6 +111,7 @@
                                         </div>
                                     </td>
                                     <td data-order="@file.FileSize">@file.FileSize.HumanReadableSize()</td>
+                                    <td data-order="@file.UploadTime.Ticks" data-utc-time="@file.UploadTime">@file.FileSize.HumanReadableSize()</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

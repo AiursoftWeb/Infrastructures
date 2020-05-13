@@ -407,8 +407,8 @@
                                         {
                                             <tr>
                                                 <td>@channel.Channel.Id</td>
-                                                <td data-utc-time="@channel.Channel.CreateTime"></td>
-                                                <td data-utc-time="@channel.LastAccessTime"></td>
+                                                <td data-utc-time="@channel.Channel.CreateTime" data-order="@channel.Channel.CreateTime.Ticks"></td>
+                                                <td data-utc-time="@channel.LastAccessTime" data-order="@channel.LastAccessTime.Ticks"></td>
                                                 <td>@channel.ConnectedCount</td>
                                                 @{
                                                     var path = new AiurUrl(StargateLocator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
@@ -452,7 +452,7 @@
                                                 <td>@(new string(log.Message.Take(70).ToArray()))...</td>
                                                 <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
-                                                <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime"></td>
+                                                <td data-order="@log.First.LogTime" data-utc-time="@log.First.LogTime.Ticks"></td>
                                                 @switch (log.First.EventLevel)
                                                 {
                                                     case EventLevel.Exception:
