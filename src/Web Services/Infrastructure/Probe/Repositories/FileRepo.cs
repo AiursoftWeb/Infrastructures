@@ -2,7 +2,6 @@
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +12,13 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly IStorageProvider _storageProvider;
-        private readonly AiurCache _cache;
 
         public FileRepo(
             ProbeDbContext dbContext,
-            IStorageProvider storageProvider,
-            AiurCache cache)
+            IStorageProvider storageProvider)
         {
             _dbContext = dbContext;
             _storageProvider = storageProvider;
-            _cache = cache;
         }
 
         public async Task<File> GetFileInFolder(Folder context, string fileName)
@@ -34,10 +30,6 @@ namespace Aiursoft.Probe.Repositories
                     .Files
                     .Where(t => t.ContextId == context.Id)
                     .SingleOrDefaultAsync(t => t.FileName == fileName);
-                if (file != null)
-                {
-                    _cache.Clear($"folder_object_{context.Id}");
-                }
             }
             return file;
         }
@@ -58,7 +50,6 @@ namespace Aiursoft.Probe.Repositories
             if (file != null)
             {
                 await DeleteFileObject(file);
-                _cache.Clear($"folder_object_{file.ContextId}");
             }
             await _dbContext.SaveChangesAsync();
         }
@@ -73,7 +64,6 @@ namespace Aiursoft.Probe.Repositories
             };
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
-            _cache.Clear($"folder_object_{folderId}");
             return newFile.HardwareId;
         }
 
@@ -88,7 +78,6 @@ namespace Aiursoft.Probe.Repositories
             };
             _dbContext.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
-            _cache.Clear($"folder_object_{contextId}");
         }
     }
 }

@@ -3,7 +3,6 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,21 +14,18 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderRepo _folderRepo;
-        private readonly AiurCache _aiurCache;
 
         public SiteRepo(
             ProbeDbContext dbContext,
-            FolderRepo folderRepo,
-            AiurCache aiurCache)
+            FolderRepo folderRepo)
         {
             _dbContext = dbContext;
             _folderRepo = folderRepo;
-            _aiurCache = aiurCache;
         }
 
-        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid, bool allowCache = false)
+        public async Task<Site> GetSiteByNameUnderApp(string siteName, string appid)
         {
-            var site = await GetSiteByName(siteName, allowCache);
+            var site = await GetSiteByName(siteName);
             if (site == null)
             {
                 throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a site with name: '{siteName}'");
@@ -41,17 +37,10 @@ namespace Aiursoft.Probe.Repositories
             return site;
         }
 
-        public Task<Site> GetSiteByName(string siteName, bool allowCache)
+        public Task<Site> GetSiteByName(string siteName)
         {
             var lowerSiteName = siteName.ToLower();
-            if (allowCache)
-            {
-                return _aiurCache.GetAndCache($"site_object_{siteName}", () => GetSiteByName(siteName, false));
-            }
-            else
-            {
-                return _dbContext.Sites.SingleOrDefaultAsync(t => t.SiteName.ToLower() == lowerSiteName);
-            }
+            return _dbContext.Sites.SingleOrDefaultAsync(t => t.SiteName.ToLower() == lowerSiteName);
         }
 
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)
@@ -95,7 +84,6 @@ namespace Aiursoft.Probe.Repositories
         {
             _dbContext.Sites.Update(site);
             await _dbContext.SaveChangesAsync();
-            _aiurCache.Clear($"site_object_{site.SiteName}");
         }
     }
 }

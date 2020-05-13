@@ -2,7 +2,6 @@
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -13,18 +12,15 @@ namespace Aiursoft.Probe.Repositories
         private readonly ACTokenManager _acTokenManager;
         private readonly ProbeDbContext _dbContext;
         private readonly SiteRepo _siteRepo;
-        private readonly AiurCache _cache;
 
         public AppRepo(
             ACTokenManager acTokenManager,
             ProbeDbContext dbContext,
-            SiteRepo siteRepo,
-            AiurCache cache)
+            SiteRepo siteRepo)
         {
             _acTokenManager = acTokenManager;
             _dbContext = dbContext;
             _siteRepo = siteRepo;
-            _cache = cache;
         }
 
         public async Task<string> GetAppId(string accessToken)
@@ -32,18 +28,10 @@ namespace Aiursoft.Probe.Repositories
             return (await GetApp(accessToken)).AppId;
         }
 
-        public async Task<ProbeApp> GetApp(string accessToken, bool fromCache = true)
+        public async Task<ProbeApp> GetApp(string accessToken)
         {
             var appid = await _acTokenManager.ValidateAccessToken(accessToken);
-            ProbeApp appLocal = null;
-            if (fromCache)
-            {
-                appLocal = await _cache.GetAndCache($"app_object_{appid}", () => _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid));
-            }
-            else
-            {
-                appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
-            }
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
                 appLocal = new ProbeApp

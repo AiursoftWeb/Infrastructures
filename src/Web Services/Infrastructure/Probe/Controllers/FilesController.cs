@@ -53,7 +53,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
-            var site = await _siteRepo.GetSiteByName(model.SiteName, allowCache: true);
+            var site = await _siteRepo.GetSiteByName(model.SiteName);
             if (site == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can't find a site with name: '{model.SiteName}'!");

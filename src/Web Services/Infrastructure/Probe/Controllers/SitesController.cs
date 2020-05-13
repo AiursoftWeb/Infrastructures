@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var conflict = await _siteRepo.GetSiteByName(model.NewSiteName, allowCache: true) != null;
+            var conflict = await _siteRepo.GetSiteByName(model.NewSiteName) != null;
             if (conflict)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
@@ -60,7 +60,7 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid, allowCache: true);
+            var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid);
             var viewModel = new ViewSiteDetailViewModel
             {
                 AppId = appid,
@@ -79,7 +79,7 @@ namespace Aiursoft.Probe.Controllers
             var site = await _siteRepo.GetSiteByNameUnderApp(model.OldSiteName, appid);
             // Conflict = Name changed, and new name already exists.
             var conflict = model.NewSiteName.ToLower() != model.OldSiteName.ToLower() &&
-                await _siteRepo.GetSiteByName(model.NewSiteName, allowCache: false) != null;
+                await _siteRepo.GetSiteByName(model.NewSiteName) != null;
             if (conflict)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
@@ -103,7 +103,7 @@ namespace Aiursoft.Probe.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
         {
-            var app = await _appRepo.GetApp(model.AccessToken, fromCache: false);
+            var app = await _appRepo.GetApp(model.AccessToken);
             if (app.AppId != model.AppId)
             {
                 return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");

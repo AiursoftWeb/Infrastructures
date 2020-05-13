@@ -5,7 +5,6 @@ using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,47 +16,33 @@ namespace Aiursoft.Probe.Repositories
         private readonly ProbeDbContext _dbContext;
         private readonly FileRepo _fileRepo;
         private readonly IStorageProvider _storageProvider;
-        private readonly AiurCache _cache;
         private readonly ACTokenManager _tokenManager;
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
             FileRepo fileRepo,
             IStorageProvider storageProvider,
-            AiurCache cache,
             ACTokenManager tokenManager)
         {
             _dbContext = probeDbContext;
             _fileRepo = fileRepo;
             _storageProvider = storageProvider;
-            _cache = cache;
             _tokenManager = tokenManager;
         }
 
         private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
         {
-            var folder = await _cache.GetAndCacheWhen(
-                cacheKey: $"folder_object_{rootFolderId}",
-                backup: () => GetFolderFromId(rootFolderId, false),
-                when: (folder) => folder.SubFolders.Any(f => f.FolderName == subFolderName));
-            return folder.SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
+            return (await GetFolderFromId(rootFolderId)).SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
         }
 
-        public Task<Folder> GetFolderFromId(int folderId, bool allowCache = true)
+        public Task<Folder> GetFolderFromId(int folderId)
         {
-            if (allowCache)
-            {
-                return _cache.GetAndCache($"folder_object_{folderId}", () => GetFolderFromId(folderId, false));
-            }
-            else
-            {
-                return _dbContext
-                    .Folders
-                    .AsNoTracking()
-                    .Include(t => t.Files)
-                    .Include(t => t.SubFolders)
-                    .SingleOrDefaultAsync(t => t.Id == folderId);
-            }
+            return _dbContext
+                .Folders
+                .AsNoTracking()
+                .Include(t => t.Files)
+                .Include(t => t.SubFolders)
+                .SingleOrDefaultAsync(t => t.Id == folderId);
         }
 
         public async Task<Folder> GetFolderAsOwner(string accessToken, string siteName, string[] folderNames, bool recursiveCreate = false)
@@ -88,7 +73,6 @@ namespace Aiursoft.Probe.Repositories
 
         public Task CreateNewFolder(int contextId, string name)
         {
-            _cache.Clear($"folder_object_{contextId}");
             var newFolder = new Folder
             {
                 ContextId = contextId,
@@ -184,7 +168,6 @@ namespace Aiursoft.Probe.Repositories
                 {
                     await _dbContext.SaveChangesAsync();
                 }
-                _cache.Clear($"folder_object_{folder.ContextId}");
             }
         }
     }

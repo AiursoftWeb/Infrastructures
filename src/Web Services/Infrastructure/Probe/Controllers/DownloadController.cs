@@ -8,7 +8,6 @@ using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
@@ -47,7 +46,7 @@ namespace Aiursoft.Probe.Controllers
         [Route(template: "Open/{SiteName}/{**FolderNames}", Name = "Open")]
         public async Task<IActionResult> Open(OpenAddressModel model)
         {
-            var site = await _siteRepo.GetSiteByName(model.SiteName, allowCache: true);
+            var site = await _siteRepo.GetSiteByName(model.SiteName);
             if (site == null)
             {
                 return NotFound();
