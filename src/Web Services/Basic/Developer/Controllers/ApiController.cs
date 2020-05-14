@@ -4,7 +4,6 @@ using Aiursoft.Developer.SDK.Models.ApiViewModels;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -16,19 +15,16 @@ namespace Aiursoft.Developer.Controllers
     public class ApiController : Controller
     {
         private readonly DeveloperDbContext _dbContext;
-        private readonly AiurCache _cache;
 
         public ApiController(
-            DeveloperDbContext context,
-            AiurCache cache)
+            DeveloperDbContext context)
         {
             _dbContext = context;
-            _cache = cache;
         }
 
         public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
         {
-            var target = await _cache.GetAndCache(model.AppId, async () => await _dbContext.Apps.FindAsync(model.AppId));
+            var target = await _dbContext.Apps.FindAsync(model.AppId);
             if (target == null)
             {
                 return Json(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
