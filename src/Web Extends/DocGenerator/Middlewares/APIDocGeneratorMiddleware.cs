@@ -120,20 +120,13 @@ namespace Aiursoft.DocGenerator.Middlewares
 
         private string[] GetPossibleResponses(MethodInfo action)
         {
-            try
-            {
-                var possibleList = action.GetCustomAttributes(typeof(APIProduces))
-                    .Select(t => (t as APIProduces).PossibleType)
-                    .Select(t => t.Make())
-                    .Select(t => JsonConvert.SerializeObject(t)).ToList();
-                possibleList.AddRange(
-                    _globalPossibleResponse.Select(t => JsonConvert.SerializeObject(t)));
-                return possibleList.ToArray();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            var possibleList = action.GetCustomAttributes(typeof(APIProduces))
+                .Select(t => (t as APIProduces).PossibleType)
+                .Select(t => t.Make())
+                .Select(t => JsonConvert.SerializeObject(t)).ToList();
+            possibleList.AddRange(
+                _globalPossibleResponse.Select(t => JsonConvert.SerializeObject(t)));
+            return possibleList.ToArray();
         }
 
         private List<Argument> GenerateArguments(MethodInfo method)
