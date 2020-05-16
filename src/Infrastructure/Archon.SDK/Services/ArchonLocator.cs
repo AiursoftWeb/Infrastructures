@@ -10,6 +10,11 @@ namespace Aiursoft.Archon.SDK.Services
             PublickKey = publickKey;
         }
 
+        public ArchonLocator(string endpoint)
+        {
+            Endpoint = endpoint;
+        }
+
         public string Endpoint { get; }
         public RSAParameters PublickKey { get; }
     }
