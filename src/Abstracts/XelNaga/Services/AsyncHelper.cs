@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Polly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,6 +9,31 @@ namespace Aiursoft.XelNaga.Services
 {
     public static class AsyncHelper
     {
+        public static void TryThreeTimes(Action steps)
+        {
+            var retry = Policy.Handle<Exception>().WaitAndRetry(new[]
+            {
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(15),
+            });
+
+            retry.Execute(steps);
+        }
+
+        public static void TryAsyncThreeTimes(Func<Task> steps)
+        {
+            var retry = Policy.Handle<Exception>().WaitAndRetry(new[]
+            {
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(15),
+            });
+
+            var task = retry.Execute(steps);
+            RunSync(async () => await task);
+        }
+
         private static readonly TaskFactory _taskFactory = new
             TaskFactory(CancellationToken.None,
                         TaskCreationOptions.None,

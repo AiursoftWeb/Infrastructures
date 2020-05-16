@@ -28,14 +28,17 @@ namespace Aiursoft.Archon.SDK
             }
             else
             {
-                var response = AsyncHelper.RunSync(() => new WebClient().DownloadStringTaskAsync(serverEndpoint));
-                var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
-                var publickKey = new RSAParameters
+                AsyncHelper.TryAsyncThreeTimes(async () =>
                 {
-                    Modulus = serverModel.Modulus.Base64ToBytes(),
-                    Exponent = serverModel.Exponent.Base64ToBytes()
-                };
-                services.AddSingleton(new ArchonLocator(serverEndpoint, publickKey));
+                    var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
+                    var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
+                    var publickKey = new RSAParameters
+                    {
+                        Modulus = serverModel.Modulus.Base64ToBytes(),
+                        Exponent = serverModel.Exponent.Base64ToBytes()
+                    };
+                    services.AddSingleton(new ArchonLocator(serverEndpoint, publickKey));
+                });
             }
             services.AddLibraryDependencies();
             return services;

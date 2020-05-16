@@ -12,6 +12,7 @@ using Aiursoft.SDK.Middlewares;
 using Aiursoft.SDK.Services.Authentication;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.SDK;
+using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +23,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Polly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,25 +148,10 @@ namespace Aiursoft.SDK
                 {
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
                     logger.LogInformation($"Connection string is {connectionString}");
-                    var retry = Policy.Handle<Exception>().WaitAndRetry(new[]
+                    AsyncHelper.TryAsyncThreeTimes(async () =>
                     {
-                        TimeSpan.FromSeconds(5),
-                        TimeSpan.FromSeconds(10),
-                        TimeSpan.FromSeconds(15),
-                    });
-
-                    retry.Execute(() =>
-                    {
-                        // Migrate even in production level.
-                        context.Database.Migrate();
-                        try
-                        {
-                            seeder?.Invoke(context, services);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.LogError(ex, $"An error occurred while seeding the database used on context {typeof(TContext).Name}");
-                        }
+                        await context.Database.MigrateAsync();
+                        seeder?.Invoke(context, services);
                     });
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
                 }
