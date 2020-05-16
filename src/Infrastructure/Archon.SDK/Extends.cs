@@ -1,7 +1,12 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Scanner;
+using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+using Newtonsoft.Json;
+using System.Net;
+using System.Security.Cryptography;
 
 namespace Aiursoft.Archon.SDK
 {
@@ -14,7 +19,14 @@ namespace Aiursoft.Archon.SDK
                 // Default Aiursoft archon server.
                 serverEndpoint = "https://archon.aiursoft.com";
             }
-            services.AddSingleton(new ArchonLocator(serverEndpoint));
+            var response = AsyncHelper.RunSync(() => new WebClient().DownloadStringTaskAsync(serverEndpoint));
+            var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
+            var publickKey = new RSAParameters
+            {
+                Modulus = serverModel.Modulus.Base64ToBytes(),
+                Exponent = serverModel.Exponent.Base64ToBytes()
+            };
+            services.AddSingleton(new ArchonLocator(serverEndpoint, publickKey));
             services.AddLibraryDependencies();
             return services;
         }

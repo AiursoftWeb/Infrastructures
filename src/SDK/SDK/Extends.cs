@@ -115,6 +115,8 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection AddAiurDependencies(this IServiceCollection services)
         {
+            services.AddHttpClient();
+            services.AddMemoryCache();
             // Use status server to report bugs.
             services.AddStatusServer();
             services.AddArchonServer();
@@ -122,8 +124,6 @@ namespace Aiursoft.SDK
             services.AddProbeServer();
             services.AddDeveloperServer();
             services.AddGatewayServer();
-            services.AddHttpClient();
-            services.AddMemoryCache();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");

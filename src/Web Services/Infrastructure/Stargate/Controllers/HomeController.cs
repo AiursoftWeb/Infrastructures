@@ -23,6 +23,7 @@ namespace Aiursoft.Stargate.Controllers
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
         private readonly StargateDbContext _dbContext;
+        private readonly ACTokenManager _tokenManager;
 
         public HomeController(
             DebugMessageSender debugger,
@@ -30,7 +31,8 @@ namespace Aiursoft.Stargate.Controllers
             ChannelService channelService,
             Counter counter,
             StargateMemory memory,
-            StargateDbContext dbContext)
+            StargateDbContext dbContext,
+            ACTokenManager tokenManager)
         {
             _debugger = debugger;
             _appsContainer = appsContainer;
@@ -38,6 +40,7 @@ namespace Aiursoft.Stargate.Controllers
             _counter = counter;
             _memory = memory;
             _dbContext = dbContext;
+            _tokenManager = tokenManager;
         }
 
         public async Task<IActionResult> Index()

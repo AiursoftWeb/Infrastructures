@@ -36,7 +36,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
         {
             //Ensure app
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             //Ensure channel
             var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
             if (channel == null)

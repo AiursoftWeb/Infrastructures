@@ -47,7 +47,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<Folder> GetFolderAsOwner(string accessToken, string siteName, string[] folderNames, bool recursiveCreate = false)
         {
-            var appid = await _tokenManager.ValidateAccessToken(accessToken);
+            var appid = _tokenManager.ValidateAccessToken(accessToken);
             var site = await _dbContext
                 .Sites
                 .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());

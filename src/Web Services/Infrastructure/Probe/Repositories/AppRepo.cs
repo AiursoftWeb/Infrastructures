@@ -30,7 +30,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<ProbeApp> GetApp(string accessToken)
         {
-            var appid = await _acTokenManager.ValidateAccessToken(accessToken);
+            var appid = _acTokenManager.ValidateAccessToken(accessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {

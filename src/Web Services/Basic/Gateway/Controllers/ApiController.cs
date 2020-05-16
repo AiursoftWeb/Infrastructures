@@ -98,7 +98,7 @@ namespace Aiursoft.Gateway.Controllers
         [APIProduces(typeof(AiurPagedCollection<Grant>))]
         public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
         {
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var query = _dbContext
                 .LocalAppGrant
                 .Include(t => t.User)
@@ -117,7 +117,7 @@ namespace Aiursoft.Gateway.Controllers
         [APIModelStateChecker]
         public async Task<IActionResult> DropGrants([Required]string accessToken)
         {
-            var appid = await _tokenManager.ValidateAccessToken(accessToken);
+            var appid = _tokenManager.ValidateAccessToken(accessToken);
             _dbContext.LocalAppGrant.Delete(t => t.AppID == appid);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully droped all users granted!");

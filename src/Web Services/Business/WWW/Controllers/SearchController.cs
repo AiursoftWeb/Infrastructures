@@ -28,7 +28,6 @@ namespace Aiursoft.WWW.Controllers
             _cahce = cahce;
         }
 
-
         [Route("search")]
         public async Task<IActionResult> DoSearch([FromQuery(Name = "q")]string question, int page = 1)
         {

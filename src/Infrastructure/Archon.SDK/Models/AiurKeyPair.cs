@@ -1,43 +1,19 @@
-﻿using Aiursoft.Archon.SDK.Services.ToArchonServer;
-using Aiursoft.Scanner.Interfaces;
+﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Archon.SDK.Models
 {
-    public class AiurKeyPair : ISingletonDependency
+    public class PrivateKeyStore : ISingletonDependency
     {
-        private RSAParameters? _publicKey;
         private RSAParameters? _privateKey;
         private readonly IConfiguration _configuration;
-        private readonly IServiceScopeFactory _serviceScope;
 
-        public AiurKeyPair(
-            IConfiguration configuration,
-            IServiceScopeFactory serviceScope)
+        public PrivateKeyStore(
+            IConfiguration configuration)
         {
             _configuration = configuration;
-            _serviceScope = serviceScope;
-        }
-
-        public async Task<RSAParameters> GetPublicKey()
-        {
-            if (_publicKey == null)
-            {
-                var scope = _serviceScope.CreateScope();
-                var archonAPI = scope.ServiceProvider.GetService<ArchonApiService>();
-                // Public key is from Archon API.
-                var key = await archonAPI.GetKey();
-                _publicKey = new RSAParameters
-                {
-                    Modulus = key.Modulus.Base64ToBytes(),
-                    Exponent = key.Exponent.Base64ToBytes()
-                };
-            }
-            return _publicKey.Value;
         }
 
         public RSAParameters GetPrivateKey()

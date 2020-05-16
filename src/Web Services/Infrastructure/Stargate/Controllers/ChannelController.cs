@@ -45,7 +45,7 @@ namespace Aiursoft.Stargate.Controllers
         [APIProduces(typeof(ViewMyChannelsViewModel))]
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
@@ -118,7 +118,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> CreateChannel(CreateChannelAddressModel model)
         {
             //Update app info
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var appLocal = await _dbContext.Apps.Include(t => t.Channels).SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
@@ -151,7 +151,7 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteChannel(DeleteChannelAddressModel model)
         {
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var channel = await _dbContext.Channels.FindAsync(model);
             if (channel.AppId != appid)
             {
@@ -170,7 +170,7 @@ namespace Aiursoft.Stargate.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
         {
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)
             {
                 return Json(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });

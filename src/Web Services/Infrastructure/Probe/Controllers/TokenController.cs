@@ -34,7 +34,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(AiurValue<string>))]
         public async Task<IActionResult> GetToken(GetTokenAddressModel model)
         {
-            var appid = await _tokenManager.ValidateAccessToken(model.AccessToken);
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             var site = await _dbContext
                 .Sites
                 .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
