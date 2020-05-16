@@ -19,7 +19,7 @@ namespace Aiursoft.Archon
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAiurAPIMvc();
-            services.AddAiurDependencies();
+            services.AddAiurDependencies(addProbe: false, addArchon: false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

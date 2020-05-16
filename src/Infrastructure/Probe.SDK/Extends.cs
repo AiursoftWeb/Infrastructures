@@ -20,6 +20,7 @@ namespace Aiursoft.Probe.SDK
     {
         public static IServiceCollection AddProbeServer(
             this IServiceCollection services,
+            bool loadProbeConfig = true,
             string serverEndpoint = null)
         {
             if (string.IsNullOrWhiteSpace(serverEndpoint))
@@ -28,18 +29,21 @@ namespace Aiursoft.Probe.SDK
             }
             var entryName = Assembly.GetEntryAssembly().GetName().Name;
             var exectName = Assembly.GetExecutingAssembly().GetName().Name;
-            if (exectName.StartsWith(entryName))
+            if (exectName.StartsWith(entryName) || !loadProbeConfig)
             {
                 // Probe is trying to add Probe Server.
                 services.AddSingleton(new ProbeLocator(serverEndpoint, "", ""));
             }
             else
             {
-                var serverConfigString = AsyncHelper.RunSync(() => new WebClient().DownloadStringTaskAsync(serverEndpoint));
-                var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
-                var openFormat = serverConfig.OpenPattern;
-                var downloadFormat = serverConfig.DownloadPattern;
-                services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
+                AsyncHelper.TryAsyncThreeTimes(async () =>
+                {
+                    var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
+                    var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
+                    var openFormat = serverConfig.OpenPattern;
+                    var downloadFormat = serverConfig.DownloadPattern;
+                    services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
+                });
             }
             services.AddLibraryDependencies();
             return services;

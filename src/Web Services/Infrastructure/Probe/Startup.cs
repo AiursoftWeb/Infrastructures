@@ -29,7 +29,7 @@ namespace Aiursoft.Probe
 
             services.AddCors();
             services.AddAiurAPIMvc();
-            services.AddAiurDependencies();
+            services.AddAiurDependencies(addProbe: false);
             services.AddScoped<IStorageProvider, DiskAccess>();
         }
 

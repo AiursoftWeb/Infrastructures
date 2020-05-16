@@ -13,7 +13,7 @@ namespace Aiursoft.Archon.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddArchonServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddArchonServer(this IServiceCollection services, bool loadArchonConfig, string serverEndpoint = null)
         {
             if (string.IsNullOrWhiteSpace(serverEndpoint))
             {
@@ -22,7 +22,7 @@ namespace Aiursoft.Archon.SDK
             }
             var entryName = Assembly.GetEntryAssembly().GetName().Name;
             var exectName = Assembly.GetExecutingAssembly().GetName().Name;
-            if (exectName.StartsWith(entryName))
+            if (exectName.StartsWith(entryName) || !loadArchonConfig)
             {
                 services.AddSingleton(new ArchonLocator(serverEndpoint));
             }

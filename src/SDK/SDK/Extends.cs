@@ -113,15 +113,17 @@ namespace Aiursoft.SDK
             return app;
         }
 
-        public static IServiceCollection AddAiurDependencies(this IServiceCollection services)
+        public static IServiceCollection AddAiurDependencies(this IServiceCollection services,
+            bool addProbe = true,
+            bool addArchon = true)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
             // Use status server to report bugs.
             services.AddStatusServer();
-            services.AddArchonServer();
             services.AddStargateServer();
-            services.AddProbeServer();
+            services.AddArchonServer(loadArchonConfig: addArchon);
+            services.AddProbeServer(loadProbeConfig: addProbe);
             services.AddDeveloperServer();
             services.AddGatewayServer();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
