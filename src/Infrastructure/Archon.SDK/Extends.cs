@@ -20,7 +20,9 @@ namespace Aiursoft.Archon.SDK
                 // Default Aiursoft archon server.
                 serverEndpoint = "https://archon.aiursoft.com";
             }
-            if (Assembly.GetEntryAssembly().FullName.StartsWith("Aiursoft.Archon"))
+            var entryName = Assembly.GetEntryAssembly().GetName().Name;
+            var exectName = Assembly.GetExecutingAssembly().GetName().Name;
+            if (exectName.StartsWith(entryName))
             {
                 services.AddSingleton(new ArchonLocator(serverEndpoint));
             }
