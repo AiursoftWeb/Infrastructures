@@ -23,14 +23,14 @@ namespace Aiursoft.Stargate.Controllers
     public class ChannelController : Controller
     {
         private readonly StargateDbContext _dbContext;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
         private readonly ChannelLiveJudger _channelLiveJudger;
 
         public ChannelController(
             StargateDbContext dbContext,
-            ACTokenManager tokenManager,
+            ACTokenValidator tokenManager,
             ConnectedCountService connectedCountService,
             LastAccessService lastAccessService,
             ChannelLiveJudger channelLiveJudger)

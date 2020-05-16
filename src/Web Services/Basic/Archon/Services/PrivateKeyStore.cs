@@ -3,7 +3,7 @@ using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 
-namespace Aiursoft.Archon.SDK.Models
+namespace Aiursoft.Archon.Services
 {
     public class PrivateKeyStore : ISingletonDependency
     {

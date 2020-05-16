@@ -18,13 +18,13 @@ namespace Aiursoft.Gateway.Services
     {
         private readonly GatewayDbContext _dbContext;
         private readonly DeveloperApiService _developerApiService;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
         private readonly AiurCache _aiurCache;
 
         public GrantChecker(
             GatewayDbContext context,
             DeveloperApiService developerApiService,
-            ACTokenManager tokenManager,
+            ACTokenValidator tokenManager,
             AiurCache aiurCache)
         {
             _dbContext = context;

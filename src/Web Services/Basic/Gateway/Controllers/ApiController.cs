@@ -28,12 +28,12 @@ namespace Aiursoft.Gateway.Controllers
     {
         private readonly UserManager<GatewayUser> _userManager;
         private readonly GatewayDbContext _dbContext;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
 
         public ApiController(
             UserManager<GatewayUser> userManager,
             GatewayDbContext context,
-            ACTokenManager tokenManager)
+            ACTokenValidator tokenManager)
         {
             _userManager = userManager;
             _dbContext = context;

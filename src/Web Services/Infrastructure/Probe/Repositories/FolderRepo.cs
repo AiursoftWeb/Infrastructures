@@ -16,13 +16,13 @@ namespace Aiursoft.Probe.Repositories
         private readonly ProbeDbContext _dbContext;
         private readonly FileRepo _fileRepo;
         private readonly IStorageProvider _storageProvider;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
             FileRepo fileRepo,
             IStorageProvider storageProvider,
-            ACTokenManager tokenManager)
+            ACTokenValidator tokenManager)
         {
             _dbContext = probeDbContext;
             _fileRepo = fileRepo;

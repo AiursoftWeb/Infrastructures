@@ -19,13 +19,13 @@ namespace Aiursoft.Gateway.Controllers
     [APIModelStateChecker]
     public class AccountController : Controller
     {
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
         private readonly DeveloperApiService _apiService;
         private readonly GatewayDbContext _dbContext;
         private readonly UserAppAuthManager _authManager;
 
         public AccountController(
-            ACTokenManager tokenManager,
+            ACTokenValidator tokenManager,
             DeveloperApiService apiService,
             GatewayDbContext dbContext,
             UserAppAuthManager authManager)

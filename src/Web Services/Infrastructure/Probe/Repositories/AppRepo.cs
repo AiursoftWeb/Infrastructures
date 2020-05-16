@@ -9,12 +9,12 @@ namespace Aiursoft.Probe.Repositories
 {
     public class AppRepo : IScopedDependency
     {
-        private readonly ACTokenManager _acTokenManager;
+        private readonly ACTokenValidator _acTokenManager;
         private readonly ProbeDbContext _dbContext;
         private readonly SiteRepo _siteRepo;
 
         public AppRepo(
-            ACTokenManager acTokenManager,
+            ACTokenValidator acTokenManager,
             ProbeDbContext dbContext,
             SiteRepo siteRepo)
         {

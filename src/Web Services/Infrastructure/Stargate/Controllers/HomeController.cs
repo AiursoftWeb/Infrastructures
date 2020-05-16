@@ -23,7 +23,7 @@ namespace Aiursoft.Stargate.Controllers
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
         private readonly StargateDbContext _dbContext;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
 
         public HomeController(
             DebugMessageSender debugger,
@@ -32,7 +32,7 @@ namespace Aiursoft.Stargate.Controllers
             Counter counter,
             StargateMemory memory,
             StargateDbContext dbContext,
-            ACTokenManager tokenManager)
+            ACTokenValidator tokenManager)
         {
             _debugger = debugger;
             _appsContainer = appsContainer;

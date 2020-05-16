@@ -18,13 +18,13 @@ namespace Aiursoft.Stargate.Controllers
         private readonly StargateDbContext _dbContext;
         private readonly StargateMemory _memoryContext;
         private readonly Counter _counter;
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
 
         public MessageController(
             StargateDbContext dbContext,
             StargateMemory memoryContext,
             Counter counter,
-            ACTokenManager tokenManager)
+            ACTokenValidator tokenManager)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;

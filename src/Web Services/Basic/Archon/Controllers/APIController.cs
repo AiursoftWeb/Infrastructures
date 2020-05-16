@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Models;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Archon.Services;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
@@ -14,12 +14,12 @@ namespace Aiursoft.Archon.Controllers
     [LimitPerMin]
     public class APIController : Controller
     {
-        private readonly ACTokenManager _tokenManager;
+        private readonly TokenGenerator _tokenManager;
         private readonly DeveloperApiService _developerApiService;
         private readonly AiurCache _cache;
 
         public APIController(
-            ACTokenManager tokenManager,
+            TokenGenerator tokenManager,
             DeveloperApiService developerApiService,
             AiurCache cache)
         {

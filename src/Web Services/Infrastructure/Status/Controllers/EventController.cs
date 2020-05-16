@@ -19,11 +19,11 @@ namespace Aiursoft.Status.Controllers
     [APIExpHandler]
     public class EventController : Controller
     {
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
         private readonly StatusDbContext _dbContext;
 
         public EventController(
-            ACTokenManager tokenManager,
+            ACTokenValidator tokenManager,
             StatusDbContext dbContext)
         {
             _tokenManager = tokenManager;

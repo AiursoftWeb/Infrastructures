@@ -16,12 +16,12 @@ namespace Aiursoft.Probe.Controllers
     [APIModelStateChecker]
     public class TokenController : Controller
     {
-        private readonly ACTokenManager _tokenManager;
+        private readonly ACTokenValidator _tokenManager;
         private readonly ProbeDbContext _dbContext;
         private readonly PBTokenManager _pbTokenManager;
 
         public TokenController(
-            ACTokenManager tokenManager,
+            ACTokenValidator tokenManager,
             ProbeDbContext dbContext,
             PBTokenManager pbTokenManager)
         {
