@@ -6,7 +6,7 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDK.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

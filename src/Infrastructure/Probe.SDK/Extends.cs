@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.SDK
                 {
                     // Wait 20 seconds. Dependencies might not be started yet.
                     await Task.Delay(20000);
-                    logger.LogInformation("Starting creat Probe resources...");
+                    logger.LogInformation("Starting create Probe resources...");
                     var token = await getToken(tokenProvider);
                     var sites = await sitesService.ViewMySitesAsync(token);
                     if (!sites.Sites.Any(s => s.SiteName == siteName))

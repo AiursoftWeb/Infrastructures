@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class AiurCache : ITransientDependency
     {
