@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -6,7 +7,7 @@ using System;
 
 namespace Aiursoft.Archon.Services
 {
-    public class TokenGenerator
+    public class TokenGenerator : IScopedDependency
     {
         private readonly RSASignService _rsa;
         public TokenGenerator(RSASignService rsa)

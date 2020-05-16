@@ -1,9 +1,10 @@
-﻿using Aiursoft.XelNaga.Tools;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Archon.Services
 {
-    public class RSASignService
+    public class RSASignService : IScopedDependency
     {
         private readonly PrivateKeyStore _privateKeyStore;
         private readonly RSA _rsa;
