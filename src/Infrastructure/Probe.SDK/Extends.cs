@@ -1,12 +1,17 @@
-﻿using Aiursoft.Probe.SDK.Services;
+﻿using Aiursoft.Probe.SDK.Models.HomeViewModels;
+using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
+using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.SDK
@@ -15,23 +20,27 @@ namespace Aiursoft.Probe.SDK
     {
         public static IServiceCollection AddProbeServer(
             this IServiceCollection services,
-            string serverEndpoint = null,
-            string openFormat = null,
-            string downloadFormat = null)
+            string serverEndpoint = null)
         {
             if (string.IsNullOrWhiteSpace(serverEndpoint))
             {
                 serverEndpoint = "https://probe.aiursoft.com";
             }
-            if (string.IsNullOrWhiteSpace(openFormat))
+            var entryName = Assembly.GetEntryAssembly().GetName().Name;
+            var exectName = Assembly.GetExecutingAssembly().GetName().Name;
+            if (exectName.StartsWith(entryName))
             {
-                openFormat = "https://{0}.aiur.site";
+                // Probe is trying to add Probe Server.
+                services.AddSingleton(new ProbeLocator(serverEndpoint, "", ""));
             }
-            if (string.IsNullOrWhiteSpace(downloadFormat))
+            else
             {
-                downloadFormat = "https://{0}.download.aiur.site";
+                var serverConfigString = AsyncHelper.RunSync(() => new WebClient().DownloadStringTaskAsync(serverEndpoint));
+                var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
+                var openFormat = serverConfig.OpenPattern;
+                var downloadFormat = serverConfig.DownloadPattern;
+                services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
             }
-            services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
             services.AddLibraryDependencies();
             return services;
         }
