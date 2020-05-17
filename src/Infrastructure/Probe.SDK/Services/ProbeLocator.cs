@@ -19,7 +19,7 @@ namespace Aiursoft.Probe.SDK.Services
                 openFormat = endpoint + "/download/open/{0}";
             }
             OpenFormat = openFormat;
-            if (string.IsNullOrWhiteSpace(DownloadFormat))
+            if (string.IsNullOrWhiteSpace(downloadFormat))
             {
                 downloadFormat = endpoint + "/download/file/{0}";
             }
