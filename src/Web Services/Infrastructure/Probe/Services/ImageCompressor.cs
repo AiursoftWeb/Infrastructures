@@ -12,6 +12,8 @@ namespace Aiursoft.Probe.Services
     {
         private readonly IConfiguration _configuration;
         private readonly SizeCalculator _sizeCalculator;
+        private static object _objCompreLock;
+        private static object _objClearLock;
 
         public ImageCompressor(
             IConfiguration configuration,
@@ -42,13 +44,13 @@ namespace Aiursoft.Probe.Services
 
         private async Task ClearImage(string sourceImage, string saveTarget)
         {
-            var fileIsLatest = File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileExists = File.Exists(saveTarget);
             var fileCanRead = FileCanBeRead(saveTarget);
-            if (fileIsLatest && fileCanRead)
+            if (fileExists && fileCanRead)
             {
                 return;
             }
-            else if (fileIsLatest && !fileCanRead)
+            else if (fileExists && !fileCanRead)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
@@ -57,16 +59,15 @@ namespace Aiursoft.Probe.Services
             }
             else
             {
-                File.OpenWrite(saveTarget).Close();
-                await Task.Run(() =>
+                lock (_objClearLock)
                 {
+                    using var stream = File.OpenWrite(saveTarget);
                     var image = Image.Load(sourceImage, out IImageFormat format);
                     image.Mutate(x => x.AutoOrient());
                     image.Metadata.ExifProfile = null;
-                    using var stream = File.OpenWrite(saveTarget);
                     image.Save(stream, format);
                     stream.Close();
-                });
+                }
             }
         }
 
@@ -82,7 +83,7 @@ namespace Aiursoft.Probe.Services
                     Directory.CreateDirectory(compressedFolder);
                 }
                 var compressedImagePath = $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await SaveReducedImage(path, compressedImagePath, width, height);
+                await SaveCompressedImage(path, compressedImagePath, width, height);
                 return compressedImagePath;
             }
             catch (ImageFormatException)
@@ -91,15 +92,15 @@ namespace Aiursoft.Probe.Services
             }
         }
 
-        private async Task SaveReducedImage(string sourceImage, string saveTarget, int width, int height)
+        private async Task SaveCompressedImage(string sourceImage, string saveTarget, int width, int height)
         {
-            var fileIsLatest = File.Exists(saveTarget) && new FileInfo(saveTarget).LastWriteTime > new FileInfo(sourceImage).LastWriteTime;
+            var fileExists = File.Exists(saveTarget);
             var fileCanRead = FileCanBeRead(saveTarget);
-            if (fileIsLatest && fileCanRead)
+            if (fileExists && fileCanRead)
             {
                 return;
             }
-            else if (fileIsLatest && !fileCanRead)
+            else if (fileExists && !fileCanRead)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
@@ -108,18 +109,19 @@ namespace Aiursoft.Probe.Services
             }
             else
             {
-                File.OpenWrite(saveTarget).Close();
-                await Task.Run(() =>
+                lock (_objCompreLock)
                 {
+                    // Create file
+                    using var stream = File.OpenWrite(saveTarget);
+                    // Load and compress file
                     var image = Image.Load(sourceImage, out IImageFormat format);
                     image.Mutate(x => x.AutoOrient());
                     image.Metadata.ExifProfile = null;
                     image.Mutate(x => x
                         .Resize(width, height));
-                    using var stream = File.OpenWrite(saveTarget);
                     image.Save(stream, format);
                     stream.Close();
-                });
+                }
             }
         }
 
