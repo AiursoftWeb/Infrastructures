@@ -6,7 +6,6 @@
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
     @RenderSection("css", required: false)
-    <link href="@ServiceLocation.UI/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -152,7 +151,6 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-        <script src="@ServiceLocation.UI/node_modules/dropify/dist/js/dropify.min.js"></script>
         <script>
             asyncLayout('#render-part');
         </script>
