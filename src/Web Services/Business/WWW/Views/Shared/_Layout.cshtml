@@ -10,9 +10,7 @@
     {
         <title>@ViewData["Title"] - @Values.ProjectName</title>
     }
-    <vc:aiur-core-css></vc:aiur-core-css>
     <vc:aiur-market-css></vc:aiur-market-css>
-    <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
     <link type="application/opensearchdescription+xml" rel="search" title="@Values.ProjectName" href="/opensearch" />
     <link rel="stylesheet" href="~/css/site.css">
 </head>
@@ -93,7 +91,6 @@
     </footer>
     <vc:scroll-to-top></vc:scroll-to-top>
     <vc:aiur-logout></vc:aiur-logout>
-    <vc:aiur-core-js></vc:aiur-core-js>
     <vc:aiur-market-js></vc:aiur-market-js>
     @RenderSection("js", required: false)
     <script src="~/js/site.js"></script>
