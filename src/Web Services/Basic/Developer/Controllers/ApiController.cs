@@ -12,6 +12,7 @@ namespace Aiursoft.Developer.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
+    [LimitPerMin]
     public class ApiController : Controller
     {
         private readonly DeveloperDbContext _dbContext;

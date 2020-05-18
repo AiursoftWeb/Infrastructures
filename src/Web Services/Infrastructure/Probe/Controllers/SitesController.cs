@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class SitesController : Controller
