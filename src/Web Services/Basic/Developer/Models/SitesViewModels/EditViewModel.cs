@@ -28,12 +28,14 @@ namespace Aiursoft.Developer.Models.SitesViewModels
         [MaxLength(50)]
         [MinLength(5)]
         [ValidDomainName]
+        [Display(Name = "Old site name")]
         public string OldSiteName { get; set; }
 
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
         [ValidDomainName]
+        [Display(Name = "New site name")]
         public string NewSiteName { get; set; }
 
         public string AppName { get; set; }
