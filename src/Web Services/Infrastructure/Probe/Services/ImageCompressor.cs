@@ -12,6 +12,7 @@ namespace Aiursoft.Probe.Services
     {
         private readonly IConfiguration _configuration;
         private readonly SizeCalculator _sizeCalculator;
+        private readonly string _tempFilePath;
         private static object _objCompreLock;
         private static object _objClearLock;
 
@@ -21,13 +22,19 @@ namespace Aiursoft.Probe.Services
         {
             _configuration = configuration;
             _sizeCalculator = sizeCalculator;
+            var tempFilePath = _configuration["TempFileStoragePath"];
+            if (string.IsNullOrWhiteSpace(tempFilePath))
+            {
+                tempFilePath = _configuration["StoragePath"];
+            }
+            _tempFilePath = tempFilePath;
         }
 
         public async Task<string> ClearExif(string path)
         {
             try
             {
-                var clearedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
+                var clearedFolder = _tempFilePath + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
                 if (Directory.Exists(clearedFolder) == false)
                 {
                     Directory.CreateDirectory(clearedFolder);
@@ -77,7 +84,7 @@ namespace Aiursoft.Probe.Services
             height = _sizeCalculator.Ceiling(height);
             try
             {
-                var compressedFolder = _configuration["StoragePath"] + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
+                var compressedFolder = _tempFilePath + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
                 if (Directory.Exists(compressedFolder) == false)
                 {
                     Directory.CreateDirectory(compressedFolder);
