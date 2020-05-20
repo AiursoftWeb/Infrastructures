@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurCoreJS
+namespace Aiursoft.Pylon.Views.Shared.Components.AiurMarketJS
 {
     public class AiurMarketJS : ViewComponent
     {
