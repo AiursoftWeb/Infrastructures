@@ -91,7 +91,7 @@ namespace Aiursoft.EE.Controllers
                 .Where(t => t.Context.CourseId == course.Id)
                 .ToListAsync();
             var user = await GetCurrentUserAsync();
-            var Subscribed = user == null ? false : await _dbContext
+            var Subscribed = user != null && await _dbContext
                 .Subscriptions
                 .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id) != null;
 
