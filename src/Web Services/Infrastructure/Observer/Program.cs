@@ -11,7 +11,7 @@ namespace Aiursoft.Observer
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed())
+                .MigrateDbContext<ObserverDbContext>((context, service) => context.Seed())
                 .Run();
         }
 

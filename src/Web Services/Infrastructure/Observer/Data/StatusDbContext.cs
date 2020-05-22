@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Aiursoft.Observer.Data
 {
-    public class StatusDbContext : DbContext
+    public class ObserverDbContext : DbContext
     {
-        public StatusDbContext(DbContextOptions<StatusDbContext> options) : base(options)
+        public ObserverDbContext(DbContextOptions<ObserverDbContext> options) : base(options)
         {
         }
 

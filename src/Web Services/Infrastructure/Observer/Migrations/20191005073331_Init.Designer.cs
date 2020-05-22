@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aiursoft.Observer.Migrations
 {
-    [DbContext(typeof(StatusDbContext))]
+    [DbContext(typeof(ObserverDbContext))]
     [Migration("20191005073331_Init")]
     partial class Init
     {

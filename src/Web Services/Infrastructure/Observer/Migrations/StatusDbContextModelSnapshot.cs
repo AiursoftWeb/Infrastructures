@@ -7,7 +7,7 @@ using System;
 
 namespace Aiursoft.Observer.Migrations
 {
-    [DbContext(typeof(StatusDbContext))]
+    [DbContext(typeof(ObserverDbContext))]
     partial class StatusDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

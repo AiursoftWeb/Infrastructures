@@ -1,7 +1,6 @@
 using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Pylon;
-using Aiursoft.SDK;
 using Aiursoft.Observer.Data;
+using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,15 +16,15 @@ namespace Aiursoft.Observer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["StatusAppId"];
-            AppsContainer.CurrentAppSecret = configuration["StatusAppSecret"];
+            AppsContainer.CurrentAppId = configuration["ObserverAppId"];
+            AppsContainer.CurrentAppSecret = configuration["ObserverAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+            services.AddDbContextWithCache<ObserverDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-            services.AddAiurMvc();
+            services.AddAiurAPIMvc();
             services.AddAiurDependencies();
         }
 
@@ -33,7 +32,7 @@ namespace Aiursoft.Observer
         {
             app.UseAiurAPIHandler(env.IsDevelopment());
             app.UseStaticFiles();
-            app.UseAiursoftDefault();
+            app.UseAiursoftAPIDefault();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Aiursoft.Observer.Services
                 _logger.LogInformation("Cleaner task started!");
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<StatusDbContext>();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<ObserverDbContext>();
                     await AllClean(dbContext);
                 }
                 _logger.LogInformation("Cleaner task finished!");
@@ -50,7 +50,7 @@ namespace Aiursoft.Observer.Services
             }
         }
 
-        private async Task AllClean(StatusDbContext dbContext)
+        private async Task AllClean(ObserverDbContext dbContext)
         {
             var oldestRecordTime = DateTime.UtcNow - TimeSpan.FromDays(7);
             var items = await dbContext.ErrorLogs.Where(t => t.LogTime < oldestRecordTime).ToListAsync();

@@ -8,9 +8,9 @@ namespace Aiursoft.Observer.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly StatusDbContext _dbContext;
+        private readonly ObserverDbContext _dbContext;
 
-        public HomeController(StatusDbContext dbContext)
+        public HomeController(ObserverDbContext dbContext)
         {
             _dbContext = dbContext;
         }

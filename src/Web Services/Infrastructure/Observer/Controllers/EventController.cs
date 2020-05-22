@@ -20,11 +20,11 @@ namespace Aiursoft.Observer.Controllers
     public class EventController : Controller
     {
         private readonly ACTokenValidator _tokenManager;
-        private readonly StatusDbContext _dbContext;
+        private readonly ObserverDbContext _dbContext;
 
         public EventController(
             ACTokenValidator tokenManager,
-            StatusDbContext dbContext)
+            ObserverDbContext dbContext)
         {
             _tokenManager = tokenManager;
             _dbContext = dbContext;

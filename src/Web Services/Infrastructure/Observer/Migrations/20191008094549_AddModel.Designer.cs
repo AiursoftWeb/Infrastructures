@@ -8,7 +8,7 @@ using System;
 
 namespace Aiursoft.Observer.Migrations
 {
-    [DbContext(typeof(StatusDbContext))]
+    [DbContext(typeof(ObserverDbContext))]
     [Migration("20191008094549_AddModel")]
     partial class AddModel
     {
