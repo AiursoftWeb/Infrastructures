@@ -1,0 +1,67 @@
+@model Aiursoft.Observer.Models.HomeViewModels.IndexViewModel
+@{
+    ViewData["Title"] = Localizer["Status center"];
+}
+<header class="masthead text-white text-center status-back" style="background: url('/img/statusbg.jpg') #184685 no-repeat center center; background-size: cover;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5 status-shadow">@Localizer["Aiursoft health status center"]</h1>
+                <h3 class="status-shadow">@Localizer["Monitor Aiursoft service status, submit service request, review source code."]</h3>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="bg-light pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                @if (Model.Data.All(t => t.LastHealthStatus) && Model.Data.Min(t => t.LastCheckTime) > DateTime.UtcNow - TimeSpan.FromMinutes(12))
+                {
+                    <div class="w-100">
+                        <div class="alert alert-success bg-success text-white w-100" role="alert">
+                            <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-up"></i>@Localizer["All Systems Operational"]</h4>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-1">@Localizer["Aww yeah, Aiursoft is woking just fine."]</p>
+                }
+                else
+                {
+                    <div class="w-100">
+                        <div class="alert alert-danger w-100" role="alert">
+                            <h4 class="alert-heading"><i class="fa fa-fw fa-thumbs-down"></i>@Localizer["System down."]</h4>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-1">@Localizer["Aiursoft is with some issue. We will repair this soon."]</p>
+                }
+                <p class="text-muted">@Localizer["If you found something bad happened, please"] <a style="color:#002bff" href="https://github.com/AiursoftWeb/Nexus/issues">@Localizer["submit an issue"]</a>@Localizer["."]</p>
+
+                <div class="w-100">
+                    <h2 class="mt-4">@Localizer["Current status"]</h2>
+                    <div class="card w-100">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.Data)
+                            {
+                                <li class="list-group-item bg-light">
+                                    <label style="font-size:16px; font-weight:500">@item.ProjectName</label>
+                                    @if (item.LastHealthStatus)
+                                    {
+                                        <p class="pull-right text-success"><i class="fa fa-fw fa-check"></i>@Localizer["Operational"]</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="pull-right text-danger"><i class="fa fa-fw fa-times"></i>@Localizer["Issue"]</p>
+                                    }
+                                    <p class="mb-0 text-muted">@Localizer["Update:"] <label data-utc-time="@item.LastCheckTime"></label></p>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</section>

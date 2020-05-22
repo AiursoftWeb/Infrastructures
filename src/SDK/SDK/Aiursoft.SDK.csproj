@@ -19,7 +19,7 @@
     <ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Status.SDK\Aiursoft.Status.SDK.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>

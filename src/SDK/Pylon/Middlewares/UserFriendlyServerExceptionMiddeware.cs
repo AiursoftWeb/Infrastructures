@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Status.SDK.Models;
-using Aiursoft.Status.SDK.Services;
-using Aiursoft.Status.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Models;
+using Aiursoft.Observer.SDK.Services;
+using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
