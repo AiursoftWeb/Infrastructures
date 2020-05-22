@@ -1,9 +1,9 @@
-using Aiursoft.Observer.Data;
 using Aiursoft.SDK;
+using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Observer
+namespace Aiursoft.Status
 {
     public class Program
     {
@@ -11,7 +11,7 @@ namespace Aiursoft.Observer
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<ObserverDbContext>()
+                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed())
                 .Run();
         }
 

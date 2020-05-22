@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Observer.Data;
+using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Observer.Services
+namespace Aiursoft.Status.Services
 {
     public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
     {
@@ -40,7 +40,7 @@ namespace Aiursoft.Observer.Services
                 _logger.LogInformation("Cleaner task started!");
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<ObserverDbContext>();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<StatusDbContext>();
                     var http = scope.ServiceProvider.GetRequiredService<HTTPService>();
                     await AllCheck(dbContext, http);
                 }
@@ -52,7 +52,7 @@ namespace Aiursoft.Observer.Services
             }
         }
 
-        private async Task AllCheck(ObserverDbContext dbContext, HTTPService http)
+        private async Task AllCheck(StatusDbContext dbContext, HTTPService http)
         {
             var items = await dbContext.MonitorRules.ToListAsync();
             foreach (var item in items)

@@ -1,8 +1,7 @@
-﻿using Aiursoft.Observer.Data;
-using Aiursoft.Observer.Models.HomeViewModels;
+﻿using Aiursoft.Handler.Models;
+using Aiursoft.Observer.Data;
+using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Observer.Controllers
 {
@@ -15,14 +14,9 @@ namespace Aiursoft.Observer.Controllers
             _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var data = await _dbContext.MonitorRules.ToListAsync();
-            var model = new IndexViewModel
-            {
-                Data = data
-            };
-            return View(model);
+            return this.Protocol(ErrorType.Success, "Welcome to Aiursoft Observer!");
         }
     }
 }
