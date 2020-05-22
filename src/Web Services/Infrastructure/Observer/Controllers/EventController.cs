@@ -34,14 +34,14 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.StatusApps.SingleOrDefaultAsync(t => t.AppId == appid);
+            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
-                appLocal = new StatusApp
+                appLocal = new ObserverApp
                 {
                     AppId = appid
                 };
-                _dbContext.StatusApps.Add(appLocal);
+                _dbContext.ObserverApps.Add(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
             var newEvent = new ErrorLog
@@ -61,14 +61,14 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> View(ViewAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.StatusApps.SingleOrDefaultAsync(t => t.AppId == appid);
+            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
             if (appLocal == null)
             {
-                appLocal = new StatusApp
+                appLocal = new ObserverApp
                 {
                     AppId = appid
                 };
-                _dbContext.StatusApps.Add(appLocal);
+                _dbContext.ObserverApps.Add(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
 

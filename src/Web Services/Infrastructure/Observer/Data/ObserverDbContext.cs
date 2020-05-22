@@ -18,7 +18,7 @@ namespace Aiursoft.Observer.Data
 
         public DbSet<MonitorRule> MonitorRules { get; set; }
         public DbSet<ErrorLog> ErrorLogs { get; set; }
-        public DbSet<StatusApp> StatusApps { get; set; }
+        public DbSet<ObserverApp> ObserverApps { get; set; }
 
         public void Seed()
         {

@@ -14,19 +14,19 @@ namespace Aiursoft.Observer.SDK.Services.ToStatusServer
     public class EventService : IScopedDependency
     {
         private readonly HTTPService _http;
-        private readonly StatusLocator _statusLocation;
+        private readonly ObserverLocator _observerLocator;
 
         public EventService(
             HTTPService http,
-            StatusLocator serviceLocation)
+            ObserverLocator observerLocator)
         {
             _http = http;
-            _statusLocation = serviceLocation;
+            _observerLocator = observerLocator;
         }
 
         public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel, string path)
         {
-            var url = new AiurUrl(_statusLocation.Endpoint, "Event", "Log", new { });
+            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "Log", new { });
             var form = new AiurUrl(string.Empty, new LogAddressModel
             {
                 AccessToken = accessToken,
@@ -44,7 +44,7 @@ namespace Aiursoft.Observer.SDK.Services.ToStatusServer
 
         public async Task<ViewLogViewModel> ViewAsync(string accessToken)
         {
-            var url = new AiurUrl(_statusLocation.Endpoint, "Event", "View", new ViewAddressModel
+            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "View", new ViewAddressModel
             {
                 AccessToken = accessToken
             });

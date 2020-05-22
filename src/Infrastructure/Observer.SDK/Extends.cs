@@ -1,5 +1,5 @@
-﻿using Aiursoft.Scanner;
-using Aiursoft.Observer.SDK.Services;
+﻿using Aiursoft.Observer.SDK.Services;
+using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Observer.SDK
@@ -11,9 +11,9 @@ namespace Aiursoft.Observer.SDK
             if (string.IsNullOrWhiteSpace(serverEndpoint))
             {
                 // Default Aiursoft obverver server.
-                serverEndpoint = "https://status.aiursoft.com";
+                serverEndpoint = "https://observer.aiursoft.com";
             }
-            services.AddSingleton(new StatusLocator(serverEndpoint));
+            services.AddSingleton(new ObserverLocator(serverEndpoint));
             services.AddLibraryDependencies();
             return services;
         }

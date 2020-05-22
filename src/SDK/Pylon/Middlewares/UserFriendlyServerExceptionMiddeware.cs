@@ -16,7 +16,7 @@ namespace Aiursoft.Pylon.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ServiceLocation _serviceLocation;
-        private readonly StatusLocator _statusLocator;
+        private readonly ObserverLocator _statusLocator;
         private readonly ILogger<UserFriendlyServerExceptionMiddeware> _logger;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Middlewares
         public UserFriendlyServerExceptionMiddeware(
             RequestDelegate next,
             ServiceLocation serviceLocation,
-            StatusLocator statusLocator,
+            ObserverLocator statusLocator,
             ILogger<UserFriendlyServerExceptionMiddeware> logger,
             EventService eventService,
             AppsContainer appsContainer)

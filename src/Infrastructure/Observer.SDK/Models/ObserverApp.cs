@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Observer.SDK.Models
 {
-    public class StatusApp
+    public class ObserverApp
     {
         [Key]
         public string AppId { get; set; }

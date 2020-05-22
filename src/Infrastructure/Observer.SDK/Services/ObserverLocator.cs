@@ -1,8 +1,8 @@
 ﻿namespace Aiursoft.Observer.SDK.Services
 {
-    public class StatusLocator
+    public class ObserverLocator
     {
-        public StatusLocator(string endpoint)
+        public ObserverLocator(string endpoint)
         {
             Endpoint = endpoint;
         }
