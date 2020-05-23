@@ -9,7 +9,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

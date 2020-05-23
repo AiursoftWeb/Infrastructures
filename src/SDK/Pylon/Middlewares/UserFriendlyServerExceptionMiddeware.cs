@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Pylon.Services;
-using Aiursoft.Observer.SDK.Models;
-using Aiursoft.Observer.SDK.Services;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Models;
+using Aiursoft.Status.SDK.Services;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,7 +16,7 @@ namespace Aiursoft.Pylon.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ServiceLocation _serviceLocation;
-        private readonly ObserverLocator _statusLocator;
+        private readonly StatusLocator _statusLocator;
         private readonly ILogger<UserFriendlyServerExceptionMiddeware> _logger;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
@@ -24,7 +24,7 @@ namespace Aiursoft.Pylon.Middlewares
         public UserFriendlyServerExceptionMiddeware(
             RequestDelegate next,
             ServiceLocation serviceLocation,
-            ObserverLocator statusLocator,
+            StatusLocator statusLocator,
             ILogger<UserFriendlyServerExceptionMiddeware> logger,
             EventService eventService,
             AppsContainer appsContainer)

@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Observer.SDK.Models;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Status.SDK.Models;
+using Aiursoft.Status.SDK.Services.ToStatusServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
