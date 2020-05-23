@@ -11,7 +11,7 @@ using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
 using Aiursoft.SDK.Services.Authentication;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Status.SDK;
+using Aiursoft.Observer.SDK;
 using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
@@ -120,7 +120,7 @@ namespace Aiursoft.SDK
             services.AddHttpClient();
             services.AddMemoryCache();
             // Use status server to report bugs.
-            services.AddStatusServer();
+            services.AddObserverServer();
             services.AddStargateServer();
             services.AddArchonServer(loadArchonConfig: addArchon);
             services.AddProbeServer(loadProbeConfig: addProbe);
