@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
+namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 {
     public class AccessTokenResponse
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 {
-    public class MicrosoftAuthAddressModel
+    public class GitHubAuthAddressModel
     {
         [FromQuery(Name = "client_id")]
         public string ClientId { get; set; }
@@ -10,9 +10,5 @@ namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
         public string RedirectUri { get; set; }
         [FromQuery(Name = "state")]
         public string State { get; set; }
-        [FromQuery(Name = "scope")]
-        public string Scope { get; set; }
-        [FromQuery(Name = "response_type")]
-        public string ResponseType { get; set; }
     }
 }

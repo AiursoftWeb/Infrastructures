@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
+namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 {
     public class MicrosoftAccessTokenAddressModel
     {

@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGitHubServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 {
     public class GitHubService : IAuthProvider
     {

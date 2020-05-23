@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGoogerServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
 {
     public class GoogleAccessTokenAddressModel
     {

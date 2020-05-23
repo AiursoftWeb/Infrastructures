@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGitHubServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 {
     public class AccessTokenResponse
     {

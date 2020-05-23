@@ -11,66 +11,63 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
+namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 {
-    public class MicrosoftService : IAuthProvider
+    public class FaceBookService : IAuthProvider
     {
         private readonly HTTPService _http;
         private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
-        private readonly string _tenant;
 
-        public MicrosoftService(
+        public FaceBookService(
             HTTPService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
             GatewayLocator serviceLocation,
-            ILogger<MicrosoftService> logger)
+            ILogger<FaceBookService> logger)
         {
             _http = http;
             _serviceLocation = serviceLocation;
             _client = clientFactory.CreateClient();
-            _clientId = configuration["Microsoft:ClientId"];
-            _clientSecret = configuration["Microsoft:ClientSecret"];
-            _tenant = string.IsNullOrWhiteSpace(configuration["Microsoft:TenantId"]) ?
-                "common" : configuration["Microsoft:TenantId"];
+            _clientId = configuration["FaceBook:ClientId"];
+            _clientSecret = configuration["FaceBook:ClientSecret"];
             if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
             {
-                logger.LogWarning("Did not set correct Microsoft credential! You can only access the service property but can execute OAuth process!");
+                logger.LogWarning("Did not set correct FaceBook credential! You can only access the service property but can execute OAuth process!");
             }
         }
 
-        public string GetName() => "Microsoft";
+        public string GetName() => "FaceBook";
 
-        public string GetSettingsPage() => $"https://account.microsoft.com/";
+        public string GetSettingsPage() => "https://www.facebook.com/settings?tab=applications";
 
-        public string GetButtonColor() => "warning";
+        public string GetButtonColor() => "secondary";
 
-        public string GetButtonIcon() => "windows";
+        public string GetButtonIcon() => "facebook";
 
         public string GetBindRedirectLink()
         {
-            return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
             {
                 ClientId = _clientId,
+
+                //Debug RedirectUri = new AiurUrl("http://localhost:41066", $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
                 RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { }).ToString(),
-                ResponseType = "code",
-                Scope = "user.read",
-                State = ""
+                State = "a",
+                ResponseType = "code"
             }).ToString();
         }
 
         public string GetSignInRedirectLink(AiurUrl state)
         {
-            return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize", new MicrosoftAuthAddressModel
+            return new AiurUrl("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
             {
                 ClientId = _clientId,
                 RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
-                ResponseType = "code",
-                Scope = "user.read",
-                State = state.ToString()
+                State = state.ToString(),
+                ResponseType = "code"
             }).ToString();
         }
 
@@ -82,17 +79,15 @@ namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
 
         private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
         {
-            var apiAddress = "https://login.microsoftonline.com" + $"/{_tenant}/oauth2/v2.0/token";
+            var apiAddress = "https://graph.facebook.com/v5.0/oauth/access_token?";
             var url = new AiurUrl(apiAddress, new { });
             var action = isBinding ? "bind-account" : "sign-in";
-            var form = new AiurUrl(string.Empty, new MicrosoftAccessTokenAddressModel
+            var form = new AiurUrl(string.Empty, new FaceBookAccessTokenAddressModel
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 Code = code,
-                Scope = "user.read",
-                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString(),
-                GrantType = "authorization_code"
+                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString()
             });
             try
             {
@@ -100,36 +95,41 @@ namespace Aiursoft.SDK.Services.Authentication.ToMicrosoftServer
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {
-                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid Microsoft crenditial");
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
                 }
                 return response.AccessToken;
             }
             catch (WebException)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid Microsoft crenditial");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
             }
         }
 
-        private async Task<MicrosoftUserDetail> GetUserInfo(string accessToken)
+
+        //"https://graph.facebook.com/{your-user-id}
+        //?fields=id,name
+        //&access_token={your-user-access-token}"
+        private async Task<FaceBookUserDetail> GetUserInfo(string accessToken)
         {
-            var apiAddress = "https://graph.microsoft.com/v1.0/me";
+            var apiAddress = "https://graph.facebook.com/v5.0/me";
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
             request.Headers.Add("Authorization", $"Bearer {accessToken}");
             request.Headers.Add("User-Agent", $"curl/7.65.3");
+            request.Headers.Add("fields", "id,picture,name,email,");
 
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var user = JsonConvert.DeserializeObject<MicrosoftUserDetail>(json);
+                var user = JsonConvert.DeserializeObject<FaceBookUserDetail>(json);
                 if (string.IsNullOrWhiteSpace(user.Name))
                 {
                     user.Name = Guid.NewGuid().ToString();
                 }
                 if (string.IsNullOrWhiteSpace(user.Email))
                 {
-                    user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
+                    user.Email = user.Name.Replace(' ', '_') + $"@from.{GetName().ToLower()}.com";
                 }
                 return user;
             }

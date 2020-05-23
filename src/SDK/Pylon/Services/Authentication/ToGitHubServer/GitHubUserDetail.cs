@@ -1,21 +1,17 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGoogerServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGitHubServer
 {
-    public class GoogleUserDetail : IUserDetail
+    public class GitHubUserDetail : IUserDetail
     {
-        [JsonProperty("sub")]
+        [JsonProperty("id")]
         public string Id { get; set; }
-
-        [JsonProperty("picture")]
+        [JsonProperty("avatar_url")]
         public string AvatarUrl { get; set; }
-
-        [JsonProperty("name")]
+        [JsonProperty("login")]
         public string Name { get; set; }
-
         [JsonProperty("email")]
         public string Email { get; set; }
-
         [JsonProperty("bio")]
         public string Bio { get; set; }
     }

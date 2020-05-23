@@ -9,7 +9,7 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Pylon.Services;
-using Aiursoft.SDK.Services.Authentication;
+using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

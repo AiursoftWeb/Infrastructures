@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.SDK.Services.Authentication.ToFaceBookServer
+namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 {
     public class FaceBookUserDetail : IUserDetail
     {

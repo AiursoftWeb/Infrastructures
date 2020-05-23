@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Services.Authentication.ToFaceBookServer
+namespace Aiursoft.Pylon.Services.Authentication.ToFaceBookServer
 {
     public class FaceBookAccessTokenAddressModel
     {

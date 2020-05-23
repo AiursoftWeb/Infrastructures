@@ -10,7 +10,7 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
-using Aiursoft.SDK.Services.Authentication;
+using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

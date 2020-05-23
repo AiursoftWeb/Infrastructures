@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.SDK.Services.Authentication.ToFaceBookServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
 {
     public class AccessTokenResponse
     {

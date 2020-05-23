@@ -2,6 +2,7 @@ using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.SDK;
 using Aiursoft.SDK.Middlewares;
 using Aiursoft.XelNaga.Models;
@@ -107,7 +108,7 @@ namespace Aiursoft.Pylon
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            services.AddAiurDependencies();
+            services.AddAiurDependencies(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
             return services;

@@ -5,13 +5,12 @@ using Aiursoft.DocGenerator.Services;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Scanner;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
-using Aiursoft.SDK.Services.Authentication;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Observer.SDK;
 using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
@@ -115,7 +114,8 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection AddAiurDependencies(this IServiceCollection services,
             bool addProbe = true,
-            bool addArchon = true)
+            bool addArchon = true,
+            params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
@@ -131,7 +131,9 @@ namespace Aiursoft.SDK
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            services.AddScannedDependencies(typeof(IHostedService), typeof(IAuthProvider));
+            var abstractsList = abstracts.ToList();
+            abstractsList.Add(typeof(IHostedService));
+            services.AddScannedDependencies(abstractsList.ToArray());
             return services;
         }
 

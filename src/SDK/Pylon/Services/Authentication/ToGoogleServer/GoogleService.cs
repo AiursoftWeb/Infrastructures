@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGoogerServer
+namespace Aiursoft.Pylon.Services.Authentication.ToGoogerServer
 {
     public class GoogleService : IAuthProvider
     {

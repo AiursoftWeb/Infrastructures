@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Services.Authentication.ToGoogerServer
+namespace Aiursoft.Pylon.Services.Authentication.ToMicrosoftServer
 {
-    public class GoogleAuthAddressModel
+    public class MicrosoftAuthAddressModel
     {
         [FromQuery(Name = "client_id")]
         public string ClientId { get; set; }
