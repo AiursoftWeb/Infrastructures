@@ -4,6 +4,7 @@ using Aiursoft.Developer.Models;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Pylon;
 using Aiursoft.SDK;
+using Aiursoft.Stargate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
             services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
             services.AddAiurMvc();
+            services.AddStargateServer();
             services.AddAiurDependenciesWithIdentity<DeveloperUser>();
         }
 

@@ -1,8 +1,12 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Archon.SDK;
+using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.SDK;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
+using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Observer.SDK;
+using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon;
-using Aiursoft.Developer.SDK;
 using Aiursoft.SDK;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
@@ -41,8 +45,12 @@ namespace Aiursoft.Gateway
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
+            services.AddSingleton(new GatewayLocator(Configuration["GatewayEndpoint"]));
             services.AddDeveloperServer();
-            services.AddAiurDependenciesWithIdentity<GatewayUser>();
+            services.AddArchonServer();
+            services.AddObserverServer();
+            services.AddProbeServer();
+            services.AddBasic();
             services.AddSessionBasedCaptcha();
         }
 

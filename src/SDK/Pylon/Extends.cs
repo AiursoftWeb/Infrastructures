@@ -9,7 +9,6 @@ using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.SDK;
 using Aiursoft.SDK.Middlewares;
-using Aiursoft.Stargate.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -115,7 +114,6 @@ namespace Aiursoft.Pylon
             }
             services.AddObserverServer(); // For error reporting.
             services.AddArchonServer(); // For token exchanging.
-            services.AddStargateServer(); // For message pushing.
             services.AddProbeServer(); // For file storaging.
             services.AddGatewayServer(); // For authentication.
             services.AddBasic(abstracts: typeof(IAuthProvider));
