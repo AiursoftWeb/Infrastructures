@@ -1,5 +1,8 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Archon.SDK;
+using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -29,8 +32,14 @@ namespace Aiursoft.Probe
 
             services.AddCors();
             services.AddAiurAPIMvc();
-            services.AddAiurDependencies(addProbe: false);
+            services.AddArchonServer();
+            services.AddObserverServer();
+            services.AddBasic();
             services.AddScoped<IStorageProvider, DiskAccess>();
+            services.AddSingleton(new ProbeLocator(
+                endpoint: Configuration["ProbeEndpoint"],
+                openFormat: Configuration["OpenPattern"],
+                downloadFormat: Configuration["DownloadPattern"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

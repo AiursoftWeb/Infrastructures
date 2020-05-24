@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
+using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +31,7 @@ namespace Aiursoft.Developer
             services.AddIdentity<DeveloperUser, IdentityRole>()
                 .AddEntityFrameworkStores<DeveloperDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<DeveloperUser>();
         }

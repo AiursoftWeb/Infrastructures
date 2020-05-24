@@ -1,16 +1,10 @@
-﻿using Aiursoft.Archon.SDK;
-using Aiursoft.Developer.SDK;
-using Aiursoft.DocGenerator.Attributes;
+﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
-using Aiursoft.Gateway.SDK;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Observer.SDK;
-using Aiursoft.Probe.SDK;
 using Aiursoft.Scanner;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
-using Aiursoft.Stargate.SDK;
 using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
@@ -112,20 +106,10 @@ namespace Aiursoft.SDK
             return app;
         }
 
-        public static IServiceCollection AddAiurDependencies(this IServiceCollection services,
-            bool addProbe = true,
-            bool addArchon = true,
-            params Type[] abstracts)
+        public static IServiceCollection AddBasic(this IServiceCollection services, params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
-            // Use status server to report bugs.
-            services.AddObserverServer();
-            services.AddStargateServer();
-            services.AddArchonServer(loadArchonConfig: addArchon);
-            services.AddProbeServer(loadProbeConfig: addProbe);
-            services.AddDeveloperServer();
-            services.AddGatewayServer();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");

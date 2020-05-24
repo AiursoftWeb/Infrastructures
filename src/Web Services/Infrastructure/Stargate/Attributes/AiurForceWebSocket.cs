@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Aiursoft.SDK.Attributes
+namespace Aiursoft.Stargate.Attributes
 {
     public class AiurForceWebSocket : ActionFilterAttribute
     {

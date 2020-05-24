@@ -1,11 +1,15 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Archon.SDK;
+using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.SDK.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace Aiursoft.Stargate
 {
@@ -25,7 +29,11 @@ namespace Aiursoft.Stargate
             services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
-            services.AddAiurDependencies();
+            services.AddArchonServer();
+            services.AddObserverServer();
+            services.AddBasic();
+            services.AddSingleton(new StargateLocator(
+                endpoint: Configuration["StargateEndpoint"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
