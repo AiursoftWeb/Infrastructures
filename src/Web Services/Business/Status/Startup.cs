@@ -31,10 +31,11 @@ namespace Aiursoft.Status
 
             services.AddAiurMvc();
             services.AddArchonServer();
-            services.AddGatewayServer();
             services.AddObserverServer();
-            services.AddProbeServer();
             services.AddBasic();
+#warning useless
+            services.AddGatewayServer();
+            services.AddProbeServer(); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
