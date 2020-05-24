@@ -1,4 +1,8 @@
+using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK;
+using Aiursoft.Observer.SDK;
+using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Aiursoft.Status.Data;
@@ -26,6 +30,10 @@ namespace Aiursoft.Status
             services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurMvc();
+            services.AddArchonServer();
+            services.AddGatewayServer();
+            services.AddObserverServer();
+            services.AddProbeServer();
             services.AddBasic();
         }
 
