@@ -26,7 +26,7 @@ namespace Aiursoft.Status
             services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurMvc();
-            services.AddAiurDependencies();
+            services.AddBasic();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -33,7 +33,7 @@ namespace Aiursoft.Archon
                 Exponent = Configuration["Key:Exponent"].Base64ToBytes()
             }));
             services.AddObserverServer();
-            services.AddAiurDependencies();
+            services.AddBasic();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

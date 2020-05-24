@@ -106,17 +106,10 @@ namespace Aiursoft.SDK
             return app;
         }
 
-        public static IServiceCollection AddAiurDependencies(this IServiceCollection services, params Type[] abstracts)
+        public static IServiceCollection AddBasic(this IServiceCollection services, params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
-            // Use status server to report bugs.
-            //services.AddObserverServer();
-            //services.AddArchonServer(loadArchonConfig: addArchon);
-            //services.AddStargateServer();
-            //services.AddProbeServer(loadProbeConfig: addProbe);
-            //services.AddDeveloperServer();
-            //services.AddGatewayServer();
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");

@@ -1,10 +1,15 @@
+using Aiursoft.Archon.SDK;
+using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+using Aiursoft.Observer.SDK;
+using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon.Middlewares;
 using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.SDK;
 using Aiursoft.SDK.Middlewares;
+using Aiursoft.Stargate.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -108,7 +113,12 @@ namespace Aiursoft.Pylon
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            services.AddAiurDependencies(abstracts: typeof(IAuthProvider));
+            services.AddObserverServer(); // For error reporting.
+            services.AddArchonServer(); // For token exchanging.
+            services.AddStargateServer(); // For message pushing.
+            services.AddProbeServer(); // For file storaging.
+            services.AddGatewayServer(); // For authentication.
+            services.AddBasic(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
             return services;

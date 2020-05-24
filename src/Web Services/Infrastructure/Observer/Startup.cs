@@ -29,7 +29,7 @@ namespace Aiursoft.Observer
             services.AddAiurAPIMvc();
             services.AddArchonServer();
             services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
-            services.AddAiurDependencies();
+            services.AddBasic();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
