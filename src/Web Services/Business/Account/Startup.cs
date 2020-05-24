@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.SDK;
 using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,7 @@ namespace Aiursoft.Account
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-
+            services.AddDeveloperServer();
             services.AddAiurDependenciesWithIdentity<AccountUser>();
         }
 
