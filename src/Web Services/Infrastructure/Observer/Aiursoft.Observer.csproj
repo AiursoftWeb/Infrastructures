@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
     <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
   </ItemGroup>
 </Project>

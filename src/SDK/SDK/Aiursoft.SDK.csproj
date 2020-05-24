@@ -15,10 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
   </ItemGroup>
 

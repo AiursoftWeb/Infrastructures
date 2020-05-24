@@ -1,5 +1,7 @@
+using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Observer.Data;
+using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +27,8 @@ namespace Aiursoft.Observer
             services.AddDbContextWithCache<ObserverDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
+            services.AddArchonServer();
+            services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
             services.AddAiurDependencies();
         }
 
