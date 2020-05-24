@@ -27,9 +27,9 @@ namespace Aiursoft.Observer
             services.AddDbContextWithCache<ObserverDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
+            services.AddBasic();
             services.AddArchonServer();
             services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
-            services.AddBasic();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

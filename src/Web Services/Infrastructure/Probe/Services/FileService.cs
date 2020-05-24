@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 
-namespace Aiursoft.SDK.Services
+namespace Aiursoft.Probe.Services
 {
     public static class FileService
     {
