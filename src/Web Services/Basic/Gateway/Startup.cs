@@ -2,6 +2,7 @@
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Pylon;
+using Aiursoft.Developer.SDK;
 using Aiursoft.SDK;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
@@ -40,9 +41,8 @@ namespace Aiursoft.Gateway
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-
-            services
-                .AddAiurDependenciesWithIdentity<GatewayUser>();
+            services.AddDeveloperServer();
+            services.AddAiurDependenciesWithIdentity<GatewayUser>();
             services.AddSessionBasedCaptcha();
         }
 

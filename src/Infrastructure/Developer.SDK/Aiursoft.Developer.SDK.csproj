@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <ProjectReference Include="..\..\Abstracts\Developer.Abstract\Aiursoft.Developer.Abstract.csproj" />
     <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
     <ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
     <ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
