@@ -5,7 +5,7 @@
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
-    <Description>The base class, tools and extends for Aiursoft web apps.</Description>
+    <Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
     <PackageTags>base-class shared-component aiursoft pylon</PackageTags>
     <PackageIcon>pylon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>

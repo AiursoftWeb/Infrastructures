@@ -154,7 +154,7 @@
     <value>一切正常</value>
   </data>
   <data name="Issue" xml:space="preserve">
-    <value>工单</value>
+    <value>故障</value>
   </data>
   <data name="Update:" xml:space="preserve">
     <value>检查时间：</value>
