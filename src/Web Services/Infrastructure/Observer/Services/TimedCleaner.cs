@@ -1,5 +1,5 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Observer.Data;
+﻿using Aiursoft.Observer.Data;
+using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
