@@ -40,6 +40,14 @@ namespace Aiursoft.SDK
             return supportedCultures;
         }
 
+        public static void SetClientLang(this Controller controller, string culture)
+        {
+            controller.HttpContext.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+        }
+
         public static IServiceCollection AddAiurMvc(this IServiceCollection services)
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -48,6 +56,23 @@ namespace Aiursoft.SDK
                 .AddDataAnnotationsLocalization();
 
             return services;
+        }
+
+        public static IMvcBuilder AddAiurAPIMvc(this IServiceCollection services)
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            };
+
+            return services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
         }
 
         public static IApplicationBuilder UseAiurUserHandler(this IApplicationBuilder app, bool isDevelopment)
@@ -62,6 +87,21 @@ namespace Aiursoft.SDK
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
                 app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
+            }
+            return app;
+        }
+
+        public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
+        {
+            if (isDevelopment)
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseMiddleware<EnforceHttpsMiddleware>();
+                app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
             }
             return app;
         }
@@ -89,48 +129,6 @@ namespace Aiursoft.SDK
             app.UseAiursoftAPIDefault(false, beforeMVC);
             app.UseMiddleware<SwitchLanguageMiddleware>();
 
-            return app;
-        }
-
-
-
-        public static void SetClientLang(this Controller controller, string culture)
-        {
-            controller.HttpContext.Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
-        }
-
-        public static IMvcBuilder AddAiurAPIMvc(this IServiceCollection services)
-        {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            };
-
-            return services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
-        }
-
-        public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
-        {
-            if (isDevelopment)
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseMiddleware<HandleRobotsMiddleware>();
-                app.UseMiddleware<EnforceHttpsMiddleware>();
-                app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
-            }
             return app;
         }
 
