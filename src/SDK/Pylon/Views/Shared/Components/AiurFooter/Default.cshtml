@@ -1,6 +1,5 @@
 ﻿@using Aiursoft.XelNaga.Models
 @using Aiursoft.Gateway.SDK.Services
-@using Aiursoft.Pylon
 @model Aiursoft.Pylon.Views.Shared.Components.AiurFooter.AiurFooterViewModel
 @inject GatewayLocator GatewayLocator
 @{
@@ -19,7 +18,7 @@
     }
 }
 
-@foreach (var foot in Values.Footer)
+@foreach (var foot in Aiursoft.SDK.Values.Footer)
 {
     @Html.Raw(GetRenderedFooter(foot.Value, foot.Key))
 }

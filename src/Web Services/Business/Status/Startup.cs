@@ -1,9 +1,6 @@
 using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
-using Aiursoft.Probe.SDK;
-using Aiursoft.Pylon;
 using Aiursoft.SDK;
 using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Builder;
@@ -33,9 +30,6 @@ namespace Aiursoft.Status
             services.AddArchonServer();
             services.AddObserverServer();
             services.AddBasic();
-#warning useless
-            services.AddGatewayServer();
-            services.AddProbeServer(); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

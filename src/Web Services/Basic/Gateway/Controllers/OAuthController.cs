@@ -86,7 +86,7 @@ namespace Aiursoft.Gateway.Controllers
             // Not signed in but we don't want his info
             else if (model.TryAutho == true)
             {
-                return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}");
+                return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}");
             }
             var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
             return View(viewModel);
@@ -326,7 +326,7 @@ namespace Aiursoft.Gateway.Controllers
                 Email = model.Email,
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = model.PreferedLanguage,
-                IconFilePath = Values.DefaultImagePath,
+                IconFilePath = AuthValues.DefaultImagePath,
                 RegisterIPAddress = HttpContext.Connection.RemoteIpAddress.ToString()
             };
             var result = await _userManager.CreateAsync(user, model.Password);

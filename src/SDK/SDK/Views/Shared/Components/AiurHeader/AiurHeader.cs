@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurHeader
+namespace Aiursoft.SDK.Views.Shared.Components.AiurHeader
 {
     public class AiurHeader : ViewComponent
     {

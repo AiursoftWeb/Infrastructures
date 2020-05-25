@@ -1,22 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Aiursoft.Pylon
+namespace Aiursoft.SDK
 {
     public static class Values
     {
         public static string ProjectName = "Aiursoft";
         public static string ProjectValue = "Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.";
-        public static string DefaultImagePath = "usericon/default.png";
-        public static KeyValuePair<string, string> DirectShowString => new KeyValuePair<string, string>("show", "direct");
-        public static PasswordOptions PasswordOptions => new PasswordOptions
-        {
-            RequireDigit = false,
-            RequiredLength = 6,
-            RequireLowercase = false,
-            RequireUppercase = false,
-            RequireNonAlphanumeric = false
-        };
 
         public static readonly Dictionary<string, string> Footer = new Dictionary<string, string>
         {

@@ -42,7 +42,7 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
                 return FailBackUrl;
             }
             var url = new Uri(RedirectUri);
-            return $@"{url.Scheme}://{url.Host}/?{Values.DirectShowString.Key}={Values.DirectShowString.Value}";
+            return $@"{url.Scheme}://{url.Host}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}";
         }
     }
 }

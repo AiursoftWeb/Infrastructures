@@ -59,14 +59,14 @@ namespace Aiursoft.Pylon.Attributes
                 // If goes here, it seems we are not using it on a controller.
                 throw new InvalidOperationException();
             }
-            var show = context.HttpContext.Request.Query[Values.DirectShowString.Key];
+            var show = context.HttpContext.Request.Query[AuthValues.DirectShowString.Key];
             //Not signed in
             if (!controller.User.Identity.IsAuthenticated)
             {
                 if (_hasAPreferPage)
                 {
                     // Just redirected back, leave him here.
-                    if (show == Values.DirectShowString.Value && _justTry == true)
+                    if (show == AuthValues.DirectShowString.Value && _justTry == true)
                     {
                         return;
                     }

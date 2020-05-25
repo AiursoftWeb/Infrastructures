@@ -6,7 +6,6 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
-using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Aiursoft.SDK;
 using Edi.Captcha;
@@ -41,7 +40,7 @@ namespace Aiursoft.Gateway
                 options.Cookie.HttpOnly = true;
             });
 
-            services.AddIdentity<GatewayUser, IdentityRole>(options => options.Password = Values.PasswordOptions)
+            services.AddIdentity<GatewayUser, IdentityRole>(options => options.Password = Aiursoft.Pylon.AuthValues.PasswordOptions)
                 .AddEntityFrameworkStores<GatewayDbContext>()
                 .AddDefaultTokenProviders();
 

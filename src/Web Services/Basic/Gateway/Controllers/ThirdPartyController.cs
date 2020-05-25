@@ -9,8 +9,8 @@ using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Pylon;
-using Aiursoft.Pylon.Services;
 using Aiursoft.Pylon.Services.Authentication;
+using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -130,7 +130,7 @@ namespace Aiursoft.Gateway.Controllers
                 Email = model.UserDetail.Email,
                 NickName = model.UserDetail.Name,
                 PreferedLanguage = model.PreferedLanguage,
-                IconFilePath = Values.DefaultImagePath,
+                IconFilePath = AuthValues.DefaultImagePath,
                 RegisterIPAddress = HttpContext.Connection.RemoteIpAddress.ToString()
             };
             var result = await _userManager.CreateAsync(user);

@@ -1,8 +1,8 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Pylon.Services;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Middlewares
+namespace Aiursoft.SDK.Middlewares
 {
     public class UserFriendlyServerExceptionMiddeware
     {

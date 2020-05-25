@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurDashboardJS
+namespace Aiursoft.SDK.Views.Shared.Components.AiurDashboardJS
 {
     public class AiurDashboardJS : ViewComponent
     {

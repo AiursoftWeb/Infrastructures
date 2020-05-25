@@ -8,7 +8,7 @@
         <div class="card-header">@Localizer["Change Language"]</div>
         <div class="card-body">
             <p>@Localizer["Click the language you are speaking:"]</p>
-            @foreach (var lang in Extends.GetSupportedLanguages())
+            @foreach (var lang in Aiursoft.SDK.Extends.GetSupportedLanguages())
             {
                 <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
                     <input type="hidden" asp-for="Culture" value="@lang.Name" />

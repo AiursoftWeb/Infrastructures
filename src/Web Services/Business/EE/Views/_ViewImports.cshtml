@@ -1,8 +1,10 @@
 @using Microsoft.AspNetCore.Identity
 @using Aiursoft.EE.Models
+@using Aiursoft.SDK
 @using Aiursoft.Pylon
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Aiursoft.Pylon.Services;
+@using Aiursoft.SDK.Services;
 @using Aiursoft.Probe.SDK.Services;
 @using static Aiursoft.XelNaga.Tools.StringOperation
 
@@ -14,3 +16,4 @@
 @inject UserImageGenerator<EEUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Aiursoft.Pylon
+@addTagHelper *, Aiursoft.SDK

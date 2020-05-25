@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Localization;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Pylon.Middlewares
+namespace Aiursoft.SDK.Middlewares
 {
     public class SwitchLanguageMiddleware
     {
