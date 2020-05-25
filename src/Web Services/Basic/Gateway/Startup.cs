@@ -7,6 +7,7 @@ using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Services.Authentication;
 using Aiursoft.SDK;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
@@ -50,7 +51,7 @@ namespace Aiursoft.Gateway
             services.AddArchonServer();
             services.AddObserverServer();
             services.AddProbeServer();
-            services.AddBasic();
+            services.AddBasic(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<GatewayUser>>();
             services.AddSessionBasedCaptcha();
         }
