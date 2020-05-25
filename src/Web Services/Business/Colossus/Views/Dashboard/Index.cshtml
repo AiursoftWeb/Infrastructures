@@ -50,13 +50,5 @@
             }
         };
         loopRenderJobs();
-
-        // Activate tooltip tool
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="tooltip"]').on('click', function () {
-            setTimeout(function () {
-                $('[data-toggle="tooltip"]').tooltip('hide');
-            }, 2000);
-        });
     });
 </script>

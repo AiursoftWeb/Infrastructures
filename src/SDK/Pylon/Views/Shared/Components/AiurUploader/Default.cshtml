@@ -25,7 +25,7 @@
         extension += $"data-max-file-size=\"{Model.SizeInMB}M\"";
     }
 }
-<input style="width:0;height:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." data-internet-path="" />
+<input style="width:0;height:0;padding:0;border:none;" name="@Model.Name" value="@Model.DefaultFile" data-val="true" data-val-required="The @Model.Name is required." data-internet-path="" />
 <input form="fakeForm" type="file" id="@Model.Name-file-input" class="dropify" @Html.Raw(extension) />
 
 <div id="progress-@Model.Name" class="progress mb-3 mt-3 d-none">
