@@ -320,6 +320,17 @@ namespace Aiursoft.Gateway.Controllers
                 model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
+            var countStart = DateTime.UtcNow - TimeSpan.FromDays(1);
+            var requestIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            if (await _dbContext.Users
+                .Where(t => t.RegisterIPAddress == requestIp)
+                .Where(t => t.AccountCreateTime > countStart)
+                .CountAsync() > 5)
+            {
+                ModelState.AddModelError(string.Empty, $"You can't create more than 5 accounts in one day!");
+                model.Recover(app.AppName, app.IconPath);
+                return View(model);
+            }
             var user = new GatewayUser
             {
                 UserName = model.Email,
@@ -327,7 +338,7 @@ namespace Aiursoft.Gateway.Controllers
                 NickName = model.Email.Split('@')[0],
                 PreferedLanguage = model.PreferedLanguage,
                 IconFilePath = AuthValues.DefaultImagePath,
-                RegisterIPAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+                RegisterIPAddress = requestIp
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
