@@ -69,7 +69,7 @@ namespace Aiursoft.Gateway.Services
             }
         }
 
-        public async Task<OAuthPack> GeneratePack(GatewayUser user, string appId)
+        private async Task<OAuthPack> GeneratePack(GatewayUser user, string appId)
         {
             var pack = new OAuthPack
             {
