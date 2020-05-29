@@ -27,7 +27,7 @@ namespace Aiursoft.Status
             services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurMvc();
-            services.AddArchonServer();
+            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer();
             services.AddBasic();
         }

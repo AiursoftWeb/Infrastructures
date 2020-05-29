@@ -34,7 +34,8 @@ namespace Aiursoft.Account
 
             services.AddAiurMvc();
             services.AddDeveloperServer();
-            services.AddAiurDependenciesWithIdentity<AccountUser>();
+            services.AddAiurDependenciesWithIdentity<AccountUser>(
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

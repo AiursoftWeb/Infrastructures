@@ -29,7 +29,7 @@ namespace Aiursoft.Stargate
             services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
-            services.AddArchonServer();
+            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer();
             services.AddBasic();
             services.AddSingleton(new StargateLocator(

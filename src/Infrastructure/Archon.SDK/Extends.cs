@@ -12,13 +12,8 @@ namespace Aiursoft.Archon.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddArchonServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddArchonServer(this IServiceCollection services, string serverEndpoint)
         {
-            if (string.IsNullOrWhiteSpace(serverEndpoint))
-            {
-                // Default Aiursoft archon server.
-                serverEndpoint = "https://archon.aiursoft.com";
-            }
             AsyncHelper.TryAsyncThreeTimes(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);

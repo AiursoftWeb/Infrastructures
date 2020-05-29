@@ -32,7 +32,7 @@ namespace Aiursoft.Probe
 
             services.AddCors();
             services.AddAiurAPIMvc();
-            services.AddArchonServer();
+            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer();
             services.AddBasic();
             services.AddScoped<IStorageProvider, DiskAccess>();

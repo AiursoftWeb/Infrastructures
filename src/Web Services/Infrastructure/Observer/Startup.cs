@@ -28,7 +28,7 @@ namespace Aiursoft.Observer
 
             services.AddAiurAPIMvc();
             services.AddBasic();
-            services.AddArchonServer();
+            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
         }
 

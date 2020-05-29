@@ -28,7 +28,8 @@ namespace Aiursoft.Pylon
             return controller.Redirect(toRedirect.ToString());
         }
 
-        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services) where TUser : AiurUserBase, new()
+        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services,
+            string archonEndpoint) where TUser : AiurUserBase, new()
         {
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
@@ -36,7 +37,7 @@ namespace Aiursoft.Pylon
                 return services;
             }
             services.AddObserverServer(); // For error reporting.
-            services.AddArchonServer(); // For token exchanging.
+            services.AddArchonServer(archonEndpoint); // For token exchanging.
             services.AddProbeServer(); // For file storaging.
             services.AddGatewayServer(); // For authentication.
             services.AddBasic(abstracts: typeof(IAuthProvider));

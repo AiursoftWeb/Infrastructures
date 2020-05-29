@@ -31,7 +31,8 @@ namespace Aiursoft.WWW
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<WWWUser>();
+            services.AddAiurDependenciesWithIdentity<WWWUser>(
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

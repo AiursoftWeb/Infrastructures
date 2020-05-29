@@ -35,7 +35,8 @@ namespace Aiursoft.Developer
             services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
             services.AddAiurMvc();
             services.AddStargateServer();
-            services.AddAiurDependenciesWithIdentity<DeveloperUser>();
+            services.AddAiurDependenciesWithIdentity<DeveloperUser>(
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
