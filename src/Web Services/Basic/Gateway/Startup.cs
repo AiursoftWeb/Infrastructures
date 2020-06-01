@@ -47,7 +47,7 @@ namespace Aiursoft.Gateway
 
             services.AddAiurMvc();
             services.AddSingleton(new GatewayLocator(Configuration["GatewayEndpoint"]));
-            services.AddDeveloperServer();
+            services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer();
             services.AddProbeServer();

@@ -6,13 +6,8 @@ namespace Aiursoft.Developer.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddDeveloperServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddDeveloperServer(this IServiceCollection services, string serverEndpoint)
         {
-            if (string.IsNullOrWhiteSpace(serverEndpoint))
-            {
-                // Default Aiursoft developer server.
-                serverEndpoint = "https://developer.aiursoft.com";
-            }
             services.AddSingleton(new DeveloperLocator(serverEndpoint));
             services.AddLibraryDependencies();
             return services;

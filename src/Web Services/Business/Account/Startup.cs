@@ -33,7 +33,7 @@ namespace Aiursoft.Account
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddDeveloperServer();
+            services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddAiurDependenciesWithIdentity<AccountUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
         }
