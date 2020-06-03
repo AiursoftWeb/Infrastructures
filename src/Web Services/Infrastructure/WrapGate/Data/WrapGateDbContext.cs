@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Aiursoft.WrapGate.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.WrapGate.Data
 {
     public class WrapGateDbContext : DbContext
     {
-        public WrapGate(DbContextOptions<WrapGate> options): base(options)
+        public WrapGateDbContext(DbContextOptions<WrapGateDbContext> options) : base(options)
         {
         }
+
+        public DbSet<WrapApp> WrapApps { get; set; }
     }
 }
