@@ -30,7 +30,8 @@ namespace Aiursoft.Pylon
 
         public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services,
             string archonEndpoint,
-            string observerEndpoint) where TUser : AiurUserBase, new()
+            string observerEndpoint,
+            string probeEndpoint) where TUser : AiurUserBase, new()
         {
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
@@ -39,7 +40,7 @@ namespace Aiursoft.Pylon
             }
             services.AddObserverServer(observerEndpoint); // For error reporting.
             services.AddArchonServer(archonEndpoint); // For token exchanging.
-            services.AddProbeServer(); // For file storaging.
+            services.AddProbeServer(probeEndpoint); // For file storaging.
             services.AddGatewayServer(); // For authentication.
             services.AddBasic(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
