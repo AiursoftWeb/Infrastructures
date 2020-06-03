@@ -32,7 +32,8 @@ namespace Aiursoft.EE
 
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<EEUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
+                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

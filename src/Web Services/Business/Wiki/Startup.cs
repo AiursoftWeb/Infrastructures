@@ -34,7 +34,8 @@ namespace Aiursoft.Wiki
             services.AddAiurMvc();
 
             services.AddAiurDependenciesWithIdentity<WikiUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
+                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

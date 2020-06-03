@@ -30,7 +30,7 @@ namespace Aiursoft.Stargate
 
             services.AddAiurAPIMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer();
+            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddBasic();
             services.AddSingleton(new StargateLocator(
                 endpoint: Configuration["StargateEndpoint"]));

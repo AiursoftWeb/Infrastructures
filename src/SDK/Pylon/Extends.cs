@@ -29,14 +29,15 @@ namespace Aiursoft.Pylon
         }
 
         public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services,
-            string archonEndpoint) where TUser : AiurUserBase, new()
+            string archonEndpoint,
+            string observerEndpoint) where TUser : AiurUserBase, new()
         {
             if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            services.AddObserverServer(); // For error reporting.
+            services.AddObserverServer(observerEndpoint); // For error reporting.
             services.AddArchonServer(archonEndpoint); // For token exchanging.
             services.AddProbeServer(); // For file storaging.
             services.AddGatewayServer(); // For authentication.

@@ -6,13 +6,8 @@ namespace Aiursoft.Observer.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddObserverServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddObserverServer(this IServiceCollection services, string serverEndpoint)
         {
-            if (string.IsNullOrWhiteSpace(serverEndpoint))
-            {
-                // Default Aiursoft obverver server.
-                serverEndpoint = "https://observer.aiursoft.com";
-            }
             services.AddSingleton(new ObserverLocator(serverEndpoint));
             services.AddLibraryDependencies();
             return services;

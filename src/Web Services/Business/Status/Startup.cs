@@ -28,7 +28,7 @@ namespace Aiursoft.Status
 
             services.AddAiurMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer();
+            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddBasic();
         }
 

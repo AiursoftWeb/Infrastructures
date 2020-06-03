@@ -49,7 +49,7 @@ namespace Aiursoft.Gateway
             services.AddSingleton(new GatewayLocator(Configuration["GatewayEndpoint"]));
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer();
+            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddProbeServer();
             services.AddBasic(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<GatewayUser>>();

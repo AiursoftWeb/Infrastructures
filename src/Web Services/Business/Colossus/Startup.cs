@@ -34,7 +34,8 @@ namespace Aiursoft.Colossus
             services.AddAiurMvc();
 
             services.AddAiurDependenciesWithIdentity<ColossusUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
+                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
+                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

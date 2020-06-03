@@ -26,13 +26,13 @@ namespace Aiursoft.Archon
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAiurAPIMvc();
+            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddSingleton(new ArchonLocator(Configuration["ArchonEndpoint"], new RSAParameters
             {
                 Modulus = Configuration["Key:Modulus"].Base64ToBytes(),
                 Exponent = Configuration["Key:Exponent"].Base64ToBytes()
             }));
-            services.AddObserverServer();
             services.AddBasic();
         }
 
