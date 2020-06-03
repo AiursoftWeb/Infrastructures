@@ -79,6 +79,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Observer.SDK", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "src\Web Services\Business\Status\Aiursoft.Status.csproj", "{08B3F8D4-DD14-42D4-B276-4155D3E116A1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WrapGate", "src\Web Services\Infrastructure\WrapGate\Aiursoft.WrapGate.csproj", "{DAD46BA5-09C8-49AE-9119-5179AAD718F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -205,6 +207,10 @@ Global
 		{08B3F8D4-DD14-42D4-B276-4155D3E116A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B3F8D4-DD14-42D4-B276-4155D3E116A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08B3F8D4-DD14-42D4-B276-4155D3E116A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD46BA5-09C8-49AE-9119-5179AAD718F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD46BA5-09C8-49AE-9119-5179AAD718F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD46BA5-09C8-49AE-9119-5179AAD718F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD46BA5-09C8-49AE-9119-5179AAD718F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,6 +249,7 @@ Global
 		{BFD266DD-8056-4B57-9B25-4575E1473C2D} = {07F3718A-6DC5-4A11-A836-80124AF47482}
 		{E05603EB-C40E-4F21-8C63-8BE90DA9A7CF} = {094B06AA-B42B-48F3-AC11-825928553517}
 		{08B3F8D4-DD14-42D4-B276-4155D3E116A1} = {0BA5235B-1F50-48BD-9024-43260AB7C926}
+		{DAD46BA5-09C8-49AE-9119-5179AAD718F9} = {DB0578A6-C5EB-483F-AC52-232EC1C490AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A55376D-2CE7-4C61-8D33-16C3FFEC02DE}
