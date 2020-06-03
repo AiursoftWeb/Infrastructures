@@ -6,13 +6,8 @@ namespace Aiursoft.Stargate.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddStargateServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddStargateServer(this IServiceCollection services, string serverEndpoint)
         {
-            if (string.IsNullOrWhiteSpace(serverEndpoint))
-            {
-                // Default Aiursoft stargate server.
-                serverEndpoint = "https://stargate.aiursoft.com";
-            }
             services.AddSingleton(new StargateLocator(serverEndpoint));
             services.AddLibraryDependencies();
             return services;

@@ -34,7 +34,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
             services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
             services.AddAiurMvc();
-            services.AddStargateServer();
+            services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
             services.AddAiurDependenciesWithIdentity<DeveloperUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"));
         }
