@@ -24,7 +24,6 @@ namespace Aiursoft.WrapGate
             Configuration = configuration;
         }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<WrapGateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
