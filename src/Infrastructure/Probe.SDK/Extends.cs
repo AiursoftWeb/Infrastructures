@@ -19,13 +19,8 @@ namespace Aiursoft.Probe.SDK
     {
         public static IServiceCollection AddProbeServer(
             this IServiceCollection services,
-            string serverEndpoint = null)
+            string serverEndpoint)
         {
-            if (string.IsNullOrWhiteSpace(serverEndpoint))
-            {
-                serverEndpoint = "https://probe.aiursoft.com";
-            }
-
             AsyncHelper.TryAsyncThreeTimes(async () =>
             {
                 var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);

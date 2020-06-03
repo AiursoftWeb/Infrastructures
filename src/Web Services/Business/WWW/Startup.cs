@@ -33,7 +33,8 @@ namespace Aiursoft.WWW
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<WWWUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"));
+                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
+                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
