@@ -36,7 +36,8 @@ namespace Aiursoft.Wiki
             services.AddAiurDependenciesWithIdentity<WikiUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"));
+                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
+                gateyEndpoint: Configuration.GetConnectionString("GatewayConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -6,7 +6,7 @@ namespace Aiursoft.Gateway.SDK
 {
     public static class Extends
     {
-        public static IServiceCollection AddGatewayServer(this IServiceCollection services, string serverEndpoint = null)
+        public static IServiceCollection AddGatewayServer(this IServiceCollection services, string serverEndpoint)
         {
             if (string.IsNullOrWhiteSpace(serverEndpoint))
             {
