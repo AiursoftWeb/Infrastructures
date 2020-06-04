@@ -80,6 +80,12 @@ namespace Aiursoft.Status.Data
                     ProjectName = "Aiursoft Observer",
                     CheckAddress = "https://observer.aiursoft.com",
                     ExpectedContent = "Welcome"
+                },
+                new MonitorRule
+                {
+                    ProjectName = "Aiursoft Wrapgate",
+                    CheckAddress = "https://wrapgate.aiursoft.com",
+                    ExpectedContent = "Welcome"
                 }
             };
         }

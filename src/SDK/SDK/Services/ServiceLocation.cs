@@ -18,6 +18,8 @@ namespace Aiursoft.SDK.Services
         public string EE { get; private set; }
         public string Wiki { get; private set; }
         public string WWW { get; private set; }
+        public string Kahla { get; private set; }
+        public string Status { get; private set; }
 
         public ServiceLocation(
             IConfiguration configuration,
@@ -31,6 +33,8 @@ namespace Aiursoft.SDK.Services
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
+            Kahla = TrySet(section["KahlaPath"], "https://www.kahla.app");
+            Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
             AsyncHelper.RunSync(async () =>
             {
                 UI = await TryGetCDNDomain(UI);
