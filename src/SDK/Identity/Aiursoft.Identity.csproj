@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Version>3.1.14</Version>
+    <Version>3.2</Version>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
