@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Pylon.Services.Authentication;
-using Aiursoft.Pylon.Services.Authentication.ToGoogerServer;
+using Aiursoft.Identity.Services.Authentication;
+using Aiursoft.Identity.Services.Authentication.ToGoogerServer;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {

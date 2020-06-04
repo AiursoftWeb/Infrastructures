@@ -3,7 +3,7 @@ using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon.Attributes;
+using Aiursoft.Identity.Attributes;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

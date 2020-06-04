@@ -102,11 +102,11 @@
         "docAPIAddress": "https://status.aiursoft.com/doc"
     },
     {
-        "collectionTitle": "Pylon",
+        "collectionTitle": "Identity",
         "articles": [
             {
-                "articleTitle": "What is Pylon",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Pylon/master/Readme.md"
+                "articleTitle": "What is Identity",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Identity/master/Readme.md"
             }
         ]
     },

@@ -20,7 +20,7 @@ namespace Aiursoft.Observer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Status.ErrorLog", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Status.ErrorLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace Aiursoft.Observer.Migrations
                     b.ToTable("ErrorLogs");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Status.StatusApp", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Status.StatusApp", b =>
                 {
                     b.Property<string>("AppId")
                         .HasColumnType("nvarchar(450)");
@@ -83,9 +83,9 @@ namespace Aiursoft.Observer.Migrations
                     b.ToTable("MonitorRules");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Status.ErrorLog", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Status.ErrorLog", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Status.StatusApp", "Context")
+                    b.HasOne("Aiursoft.Identity.Models.Status.StatusApp", "Context")
                         .WithMany("ErrorLogs")
                         .HasForeignKey("AppId");
                 });

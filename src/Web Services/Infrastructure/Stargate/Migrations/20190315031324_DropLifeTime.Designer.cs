@@ -20,7 +20,7 @@ namespace Aiursoft.Stargate.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Stargate.Channel", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Stargate.Channel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace Aiursoft.Stargate.Migrations
                     b.ToTable("Channels");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Stargate.StargateApp", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Stargate.StargateApp", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -51,9 +51,9 @@ namespace Aiursoft.Stargate.Migrations
                     b.ToTable("Apps");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Stargate.Channel", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Stargate.Channel", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Stargate.StargateApp", "App")
+                    b.HasOne("Aiursoft.Identity.Models.Stargate.StargateApp", "App")
                         .WithMany("Channels")
                         .HasForeignKey("AppId");
                 });

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Pylon.Views.Shared.Components.AiurFooter
+namespace Aiursoft.Identity.Views.Shared.Components.AiurFooter
 {
     public class Entity : ViewComponent
     {

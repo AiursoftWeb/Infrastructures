@@ -1,8 +1,8 @@
 ﻿@using Aiursoft.Account.Models
 @using Aiursoft.Account.Models.AccountViewModels
 @using Microsoft.AspNetCore.Identity
-@using Aiursoft.Pylon
-@using Aiursoft.Pylon.Services;
+@using Aiursoft.Identity
+@using Aiursoft.Identity.Services;
 @using Aiursoft.SDK
 @using Aiursoft.SDK.Services;
 @using Aiursoft.Probe.SDK.Services;
@@ -19,5 +19,5 @@
 @inject DeveloperLocator DeveloperLocator
 @inject UserImageGenerator<AccountUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, Aiursoft.Pylon
+@addTagHelper *, Aiursoft.Identity
 @addTagHelper *, Aiursoft.SDK

@@ -1,8 +1,8 @@
 @using Microsoft.AspNetCore.Identity
 @using Aiursoft.Colossus
 @using Aiursoft.Colossus.Models
-@using Aiursoft.Pylon
-@using Aiursoft.Pylon.Services;
+@using Aiursoft.Identity
+@using Aiursoft.Identity.Services;
 @using Aiursoft.SDK
 @using Aiursoft.SDK.Services;
 @using Aiursoft.Probe.SDK.Services;
@@ -17,5 +17,5 @@
 @inject IViewLocalizer Localizer
 @inject UserImageGenerator<ColossusUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, Aiursoft.Pylon
+@addTagHelper *, Aiursoft.Identity
 @addTagHelper *, Aiursoft.SDK

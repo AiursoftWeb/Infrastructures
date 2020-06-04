@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.SDK", "src\I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Stargate.SDK", "src\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj", "{502806E8-E9B2-4C19-9549-604C1BA57AF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Pylon", "src\SDK\Pylon\Aiursoft.Pylon.csproj", "{D7D89ECE-C00A-4269-8A28-F05490B5B1B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Identity", "src\SDK\Identity\Aiursoft.Identity.csproj", "{D7D89ECE-C00A-4269-8A28-F05490B5B1B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.DBTools", "src\Web Extends\DBTools\Aiursoft.DBTools.csproj", "{2FAB11D0-1E0A-43AC-89FC-5A13A24FD5D9}"
 EndProject

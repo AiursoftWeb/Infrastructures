@@ -8,7 +8,7 @@ using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon.Services.Authentication;
+using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;

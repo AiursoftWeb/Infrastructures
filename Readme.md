@@ -38,7 +38,7 @@ Nexus code structure has 4 layers:
   * [XelNaga](./XelNaga/Readme.md) - Some other C# tools.
 * SDK layer
   * SDK - Contains Aiursoft interface defination and abstract.
-  * Pylon - ASP.NET Core toolset. Contains tools for building web apps for Aiursoft.
+  * Identity - ASP.NET Core toolset. Contains tools for building web apps for Aiursoft.
 * Web apps layer
 
 Nexus architect has three layers for web applications:

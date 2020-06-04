@@ -3,7 +3,7 @@ using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Pylon.Attributes;
+using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;

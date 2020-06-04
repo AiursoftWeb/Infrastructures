@@ -2,10 +2,10 @@
 @using Aiursoft.Developer.Models
 @using Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
 @using Microsoft.AspNetCore.Identity
-@using Aiursoft.Pylon
+@using Aiursoft.Identity
 @using Aiursoft.SDK
 @using Aiursoft.SDK.Services
-@using Aiursoft.Pylon.Services
+@using Aiursoft.Identity.Services
 @using Aiursoft.Gateway.SDK.Models.API
 @using Aiursoft.Observer.SDK.Models
 @using Aiursoft.Stargate.SDK.Services
@@ -24,6 +24,6 @@
 @inject StargateLocator StargateLocator
 @inject UserImageGenerator<DeveloperUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, Aiursoft.Pylon
+@addTagHelper *, Aiursoft.Identity
 @addTagHelper *, Aiursoft.Developer
 @addTagHelper *, Aiursoft.SDK

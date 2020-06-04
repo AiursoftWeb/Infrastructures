@@ -20,7 +20,7 @@ namespace Aiursoft.Developer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Developer.App", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Developer.App", b =>
                 {
                     b.Property<string>("AppId")
                         .HasColumnType("nvarchar(450)");
@@ -104,7 +104,7 @@ namespace Aiursoft.Developer.Migrations
                     b.ToTable("Apps");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Developer.DeveloperUser", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Developer.DeveloperUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -315,9 +315,9 @@ namespace Aiursoft.Developer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Aiursoft.Pylon.Models.Developer.App", b =>
+            modelBuilder.Entity("Aiursoft.Identity.Models.Developer.App", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Developer.DeveloperUser", "Creator")
+                    b.HasOne("Aiursoft.Identity.Models.Developer.DeveloperUser", "Creator")
                         .WithMany("MyApps")
                         .HasForeignKey("CreatorId");
                 });
@@ -333,7 +333,7 @@ namespace Aiursoft.Developer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Developer.DeveloperUser", null)
+                    b.HasOne("Aiursoft.Identity.Models.Developer.DeveloperUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -342,7 +342,7 @@ namespace Aiursoft.Developer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Developer.DeveloperUser", null)
+                    b.HasOne("Aiursoft.Identity.Models.Developer.DeveloperUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -357,7 +357,7 @@ namespace Aiursoft.Developer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Aiursoft.Pylon.Models.Developer.DeveloperUser", null)
+                    b.HasOne("Aiursoft.Identity.Models.Developer.DeveloperUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -366,7 +366,7 @@ namespace Aiursoft.Developer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Aiursoft.Pylon.Models.Developer.DeveloperUser", null)
+                    b.HasOne("Aiursoft.Identity.Models.Developer.DeveloperUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

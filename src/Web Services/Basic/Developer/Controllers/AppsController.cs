@@ -8,7 +8,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
-using Aiursoft.Pylon.Attributes;
+using Aiursoft.Identity.Attributes;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
