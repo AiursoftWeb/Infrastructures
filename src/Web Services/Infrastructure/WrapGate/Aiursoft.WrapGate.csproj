@@ -6,15 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\WrapGate.SDK\Aiursoft.WrapGate.SDK.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj" />
     <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4"></PackageReference>
   </ItemGroup>
 
 

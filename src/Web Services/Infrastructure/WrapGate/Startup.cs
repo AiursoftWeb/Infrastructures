@@ -1,15 +1,15 @@
 using Aiursoft.Archon.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
-using Aiursoft.WrapGate.Data;
-using Aiursoft.WrapGate.SDK.Services;
+using Aiursoft.Wrapgate.Data;
+using Aiursoft.Wrapgate.SDK.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.WrapGate
+namespace Aiursoft.Wrapgate
 {
     public class Startup
     {
@@ -21,12 +21,12 @@ namespace Aiursoft.WrapGate
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextWithCache<WrapGateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+            services.AddDbContextWithCache<WrapgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
             services.AddAiurAPIMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddSingleton(new WrapGateLocator(Configuration["WrapgateEndpoint"]));
+            services.AddSingleton(new WrapgateLocator(Configuration["WrapgateEndpoint"]));
             services.AddBasic();
         }
 

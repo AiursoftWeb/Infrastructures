@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Aiursoft.WrapGate.Migrations
+namespace Aiursoft.Wrapgate.Migrations
 {
     public partial class Init : Migration
     {
@@ -10,12 +10,12 @@ namespace Aiursoft.WrapGate.Migrations
                 name: "WrapApps",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    AppId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WrapApps", x => x.Id);
+                    table.PrimaryKey("PK_WrapApps", x => x.AppId);
                 });
         }
 

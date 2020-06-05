@@ -1,9 +1,9 @@
 using Aiursoft.SDK;
-using Aiursoft.WrapGate.Data;
+using Aiursoft.Wrapgate.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.WrapGate
+namespace Aiursoft.Wrapgate
 {
     public class Program
     {
@@ -11,7 +11,7 @@ namespace Aiursoft.WrapGate
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<WrapGateDbContext>()
+                .MigrateDbContext<WrapgateDbContext>()
                 .Run();
         }
 

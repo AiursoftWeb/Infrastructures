@@ -79,9 +79,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Observer.SDK", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "src\Web Services\Business\Status\Aiursoft.Status.csproj", "{08B3F8D4-DD14-42D4-B276-4155D3E116A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WrapGate", "src\Web Services\Infrastructure\WrapGate\Aiursoft.WrapGate.csproj", "{DAD46BA5-09C8-49AE-9119-5179AAD718F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wrapgate", "src\Web Services\Infrastructure\Wrapgate\Aiursoft.Wrapgate.csproj", "{DAD46BA5-09C8-49AE-9119-5179AAD718F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WrapGate.SDK", "src\Infrastructure\WrapGate.SDK\Aiursoft.WrapGate.SDK.csproj", "{1022A5E1-3334-4988-A056-BF9F57456028}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wrapgate.SDK", "src\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj", "{1022A5E1-3334-4988-A056-BF9F57456028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

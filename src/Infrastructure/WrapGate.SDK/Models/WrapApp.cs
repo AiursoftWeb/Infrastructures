@@ -1,7 +1,10 @@
-﻿namespace Aiursoft.WrapGate.SDK.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Aiursoft.Wrapgate.SDK.Models
 {
-    public class WrapApp
+    public class WrapgateApp
     {
-        public int Id { get; set; }
+        [Key]
+        public int AppId { get; set; }
     }
 }

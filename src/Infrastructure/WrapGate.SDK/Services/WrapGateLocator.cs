@@ -1,8 +1,8 @@
-﻿namespace Aiursoft.WrapGate.SDK.Services
+﻿namespace Aiursoft.Wrapgate.SDK.Services
 {
-    public class WrapGateLocator
+    public class WrapgateLocator
     {
-        public WrapGateLocator(string endpoint)
+        public WrapgateLocator(string endpoint)
         {
             Endpoint = endpoint;
         }

@@ -2,7 +2,7 @@
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.WrapGate.Controllers
+namespace Aiursoft.Wrapgate.Controllers
 {
     public class HomeController : Controller
     {
