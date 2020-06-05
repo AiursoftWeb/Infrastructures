@@ -10,5 +10,6 @@ namespace Aiursoft.Wrapgate.Data
         }
 
         public DbSet<WrapgateApp> WrapApps { get; set; }
+        public DbSet<WrapRecord> Records { get; set; }
     }
 }

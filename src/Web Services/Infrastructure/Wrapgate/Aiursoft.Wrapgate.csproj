@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>The core redirect service for aiursoft web apps.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj" />
+    <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4"></PackageReference>
+  </ItemGroup>
+
+
+</Project>

@@ -64,13 +64,12 @@ namespace Aiursoft.Probe.Repositories
             return site;
         }
 
-        public async Task<List<Site>> GetAllSitesUnderApp(string appid)
+        public Task<List<Site>> GetAllSitesUnderApp(string appid)
         {
-            var sites = await _dbContext
+            return _dbContext
                 .Sites
                 .Where(t => t.AppId == appid)
                 .ToListAsync();
-            return sites;
         }
 
         public async Task DeleteSite(Site site)
@@ -80,10 +79,10 @@ namespace Aiursoft.Probe.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateSite(Site site)
+        public Task UpdateSite(Site site)
         {
             _dbContext.Sites.Update(site);
-            await _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync();
         }
     }
 }
