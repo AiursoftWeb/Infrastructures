@@ -1,4 +1,6 @@
 ﻿using Aiursoft.SDKTools.Attributes;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,6 +31,7 @@ namespace Aiursoft.Wrapgate.SDK.Models
         public int Id { get; set; }
         public string AppId { get; set; }
         [ForeignKey(nameof(AppId))]
+        [JsonIgnore]
         public WrapgateApp App { get; set; }
 
         [ValidDomainName]
@@ -36,5 +39,6 @@ namespace Aiursoft.Wrapgate.SDK.Models
         [Url]
         public string TargetUrl { get; set; }
         public RecordType Type { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
     }
 }

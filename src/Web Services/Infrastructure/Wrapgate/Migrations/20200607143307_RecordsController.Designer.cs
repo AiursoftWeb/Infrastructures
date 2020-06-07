@@ -4,14 +4,16 @@ using Aiursoft.Wrapgate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Wrapgate.Migrations
 {
     [DbContext(typeof(WrapgateDbContext))]
-    partial class WrapgateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200607143307_RecordsController")]
+    partial class RecordsController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
