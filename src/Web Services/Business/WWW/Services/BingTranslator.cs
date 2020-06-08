@@ -3,10 +3,11 @@ using Aiursoft.WWW.Services;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using Aiursoft.Scanner.Interfaces;
 
 namespace Aiursoft.WWW.Services
 {
-    public class BingTranslator
+    public class BingTranslator : IScopedDependency
     {
         public static string APIKey;
 
