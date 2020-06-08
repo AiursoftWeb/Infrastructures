@@ -1,4 +1,5 @@
 using Aiursoft.Archon.SDK;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Wrapgate.Data;
@@ -17,6 +18,8 @@ namespace Aiursoft.Wrapgate
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppsContainer.CurrentAppId = configuration["WrapgateAppId"];
+            AppsContainer.CurrentAppSecret = configuration["WrapgateAppSecret"];
         }
 
         public void ConfigureServices(IServiceCollection services)
