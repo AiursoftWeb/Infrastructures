@@ -3,6 +3,7 @@ using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
+using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ namespace Aiursoft.WWW
             Configuration = configuration;
             AppsContainer.CurrentAppId = configuration["WWWAppId"];
             AppsContainer.CurrentAppSecret = configuration["WWWAppSecret"];
+            BingTranslator.APIKey = configuration["TranslateAPIKey"];
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -29,7 +31,7 @@ namespace Aiursoft.WWW
             services.AddIdentity<WWWUser, IdentityRole>()
                 .AddEntityFrameworkStores<WWWDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddCors();
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<WWWUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
@@ -41,6 +43,7 @@ namespace Aiursoft.WWW
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAiurUserHandler(env.IsDevelopment());
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseAiursoftDefault();
         }
     }

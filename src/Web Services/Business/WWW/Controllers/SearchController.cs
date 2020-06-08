@@ -11,25 +11,28 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Controllers
 {
-    [LimitPerMin]
+    [LimitPerMin(180)]
     public class SearchController : Controller
     {
         private readonly SearchService _searchService;
         private readonly WWWDbContext _dbContext;
+        private readonly BingTranslator _bingTranslator;
         private readonly AiurCache _cahce;
 
         public SearchController(
             SearchService searchService,
             WWWDbContext dbContext,
+            BingTranslator bingTranslator,
             AiurCache cahce)
         {
             _searchService = searchService;
             _dbContext = dbContext;
+            _bingTranslator = bingTranslator;
             _cahce = cahce;
         }
 
         [Route("search")]
-        public async Task<IActionResult> DoSearch([FromQuery(Name = "q")]string question, int page = 1)
+        public async Task<IActionResult> DoSearch([FromQuery(Name = "q")] string question, int page = 1)
         {
             if (string.IsNullOrWhiteSpace(question))
             {
@@ -54,7 +57,7 @@ namespace Aiursoft.WWW.Controllers
 
         [Route("suggestion/{question}")]
 
-        public async Task<IActionResult> Suggestion([FromRoute]string question)
+        public async Task<IActionResult> Suggestion([FromRoute] string question)
         {
             var market = CultureInfo.CurrentCulture.Name;
             var suggestions = await _cahce.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
@@ -73,6 +76,17 @@ namespace Aiursoft.WWW.Controllers
         {
             Response.ContentType = "text/xml";
             return View();
+        }
+
+        [Route("TranslateRaw/{question}")]
+
+        public IActionResult TranslateRaw([FromRoute] string question, [FromQuery] string lang)
+        {
+            var result = _bingTranslator.CallTranslate(question, lang);
+            return Json(new
+            {
+                value = result
+            });
         }
     }
 }
