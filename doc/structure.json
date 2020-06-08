@@ -107,15 +107,6 @@
         "docAPIAddress": "https://observer.aiursoft.com/doc"
     },
     {
-        "collectionTitle": "Identity",
-        "articles": [
-            {
-                "articleTitle": "What is Identity",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Identity/master/Readme.md"
-            }
-        ]
-    },
-    {
         "collectionTitle": "Kahla",
         "articles": [
             {
