@@ -76,6 +76,11 @@
         "docAPIAddress": "https://developer.aiursoft.com/doc"
     },
     {
+        "collectionTitle": "Wrapgate",
+        "articles": [],
+        "docAPIAddress": "https://wrapgate.aiursoft.com/doc"
+    },
+    {
         "collectionTitle": "Integrated Website",
         "articles": [
             {
