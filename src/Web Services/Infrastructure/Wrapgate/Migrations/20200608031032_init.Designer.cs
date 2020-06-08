@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aiursoft.Wrapgate.Migrations
 {
     [DbContext(typeof(WrapgateDbContext))]
-    [Migration("20200607143307_RecordsController")]
-    partial class RecordsController
+    [Migration("20200608031032_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

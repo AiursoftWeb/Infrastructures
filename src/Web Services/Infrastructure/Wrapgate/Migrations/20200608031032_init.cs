@@ -1,18 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aiursoft.Wrapgate.Migrations
 {
-    public partial class AddRecord : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "AppId",
-                table: "WrapApps",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
+            migrationBuilder.CreateTable(
+                name: "WrapApps",
+                columns: table => new
+                {
+                    AppId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WrapApps", x => x.AppId);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Records",
@@ -20,7 +24,11 @@ namespace Aiursoft.Wrapgate.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AppId = table.Column<string>(nullable: true)
+                    AppId = table.Column<string>(nullable: true),
+                    RecordUniqueName = table.Column<string>(nullable: true),
+                    TargetUrl = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,13 +52,8 @@ namespace Aiursoft.Wrapgate.Migrations
             migrationBuilder.DropTable(
                 name: "Records");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "AppId",
-                table: "WrapApps",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string))
-                .Annotation("SqlServer:Identity", "1, 1");
+            migrationBuilder.DropTable(
+                name: "WrapApps");
         }
     }
 }
