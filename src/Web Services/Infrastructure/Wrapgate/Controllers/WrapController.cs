@@ -36,29 +36,35 @@ namespace Aiursoft.Wrapgate.Controllers
             {
                 return NotFound();
             }
+            var builtUrl = BuildTargetUrl(record, model.Path);
             switch (record.Type)
             {
                 case RecordType.IFrame:
-                    return View("Iframe", record.TargetUrl.TrimEnd('/') + "/" + model.Path);
+                    return View("Iframe", builtUrl);
                 case RecordType.Redirect:
-                    return Redirect(record.TargetUrl.TrimEnd('/') + "/" + model.Path);
+                    return Redirect(builtUrl);
                 case RecordType.PermanentRedirect:
-                    return RedirectPermanent(record.TargetUrl.TrimEnd('/') + "/" + model.Path);
+                    return RedirectPermanent(builtUrl);
                 case RecordType.ReverseProxy:
                     var response = await _client.SendAsync(new HttpRequestMessage
                     {
-                        RequestUri = new Uri(record.TargetUrl.TrimEnd('/') + "/" + model.Path),
+                        RequestUri = new Uri(builtUrl),
                         Method = new HttpMethod(Request.Method)
                     });
-                    var content = await response.Content.ReadAsStringAsync();
+                    var content = await response.Content.ReadAsStreamAsync();
                     Response.StatusCode = (int)response.StatusCode;
                     Response.ContentType = response.Content.Headers.ContentType.ToString();
                     Response.ContentLength = response.Content.Headers.ContentLength;
-                    await Response.WriteAsync(content);
+                    await content.CopyToAsync(Response.Body);
                     return Ok();
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        private string BuildTargetUrl(WrapRecord record, string path)
+        {
+            return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString.ToString();
         }
     }
 }
