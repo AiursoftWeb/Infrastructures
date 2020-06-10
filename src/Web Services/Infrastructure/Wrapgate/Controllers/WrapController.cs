@@ -3,10 +3,12 @@ using Aiursoft.Wrapgate.Data;
 using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrapgate.Controllers
@@ -15,10 +17,14 @@ namespace Aiursoft.Wrapgate.Controllers
     [APIModelStateChecker]
     public class WrapController : Controller
     {
+        private readonly HttpClient _client;
         private readonly RecordRepo _recordRepo;
 
-        public WrapController(RecordRepo recordRepo)
+        public WrapController(
+            RecordRepo recordRepo,
+            IHttpClientFactory clientFactory)
         {
+            _client = clientFactory.CreateClient();
             _recordRepo = recordRepo;
         }
 
@@ -33,14 +39,23 @@ namespace Aiursoft.Wrapgate.Controllers
             switch (record.Type)
             {
                 case RecordType.IFrame:
-                    return View("Iframe", record.TargetUrl);
+                    return View("Iframe", record.TargetUrl.TrimEnd('/') + "/" + model.Path);
                 case RecordType.Redirect:
-                    return Redirect(record.TargetUrl);
+                    return Redirect(record.TargetUrl.TrimEnd('/') + "/" + model.Path);
                 case RecordType.PermanentRedirect:
-                    return RedirectPermanent(record.TargetUrl);
+                    return RedirectPermanent(record.TargetUrl.TrimEnd('/') + "/" + model.Path);
                 case RecordType.ReverseProxy:
-                    var result = await Task.FromResult(record.TargetUrl.TrimEnd('/') + "/" + model.Path);
-                    return Content(result);
+                    var response = await _client.SendAsync(new HttpRequestMessage
+                    {
+                        RequestUri = new Uri(record.TargetUrl.TrimEnd('/') + "/" + model.Path),
+                        Method = new HttpMethod(Request.Method)
+                    });
+                    var content = await response.Content.ReadAsStringAsync();
+                    Response.StatusCode = (int)response.StatusCode;
+                    Response.ContentType = response.Content.Headers.ContentType.ToString();
+                    Response.ContentLength = response.Content.Headers.ContentLength;
+                    await Response.WriteAsync(content);
+                    return Ok();
                 default:
                     throw new NotImplementedException();
             }
