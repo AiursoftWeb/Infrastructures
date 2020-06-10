@@ -21,10 +21,12 @@ namespace Aiursoft.Wrapgate.Controllers
         private readonly RecordRepo _recordRepo;
 
         public WrapController(
-            RecordRepo recordRepo,
-            IHttpClientFactory clientFactory)
+            RecordRepo recordRepo)
         {
-            _client = clientFactory.CreateClient();
+            _client = new HttpClient(new HttpClientHandler()
+            {
+                AllowAutoRedirect = false
+            });
             _recordRepo = recordRepo;
         }
 
@@ -46,11 +48,13 @@ namespace Aiursoft.Wrapgate.Controllers
                 case RecordType.PermanentRedirect:
                     return RedirectPermanent(builtUrl);
                 case RecordType.ReverseProxy:
-                    var response = await _client.SendAsync(new HttpRequestMessage
+                    var request = new HttpRequestMessage
                     {
                         RequestUri = new Uri(builtUrl),
                         Method = new HttpMethod(Request.Method)
-                    });
+                    };
+                    request.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
+                    var response = await _client.SendAsync(request);
                     var content = await response.Content.ReadAsStreamAsync();
                     Response.StatusCode = (int)response.StatusCode;
                     Response.ContentType = response.Content.Headers.ContentType.ToString();
