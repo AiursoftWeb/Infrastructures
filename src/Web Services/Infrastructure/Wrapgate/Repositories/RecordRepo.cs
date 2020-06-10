@@ -35,14 +35,14 @@ namespace Aiursoft.Wrapgate.Repositories
 
         public Task<WrapRecord> GetRecordByName(string recordName)
         {
-            return _table.SingleOrDefaultAsync(t => t.RecordUniqueName == recordName);
+            return _table.SingleOrDefaultAsync(t => t.RecordUniqueName == recordName.ToLower());
         }
 
         public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl)
         {
             var newRecord = new WrapRecord
             {
-                RecordUniqueName = newRecordName,
+                RecordUniqueName = newRecordName.ToLower(),
                 Type = type,
                 AppId = appid,
                 TargetUrl = targetUrl

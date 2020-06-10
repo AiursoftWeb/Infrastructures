@@ -66,7 +66,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a record with name: '{model.NewRecordName}'. Please try another new name.");
             }
-            record.RecordUniqueName = model.NewRecordName;
+            record.RecordUniqueName = model.NewRecordName.ToLower();
             record.Type = model.NewType;
             record.TargetUrl= model.NewUrl;
             await _recordRepo.UpdateRecord(record);
