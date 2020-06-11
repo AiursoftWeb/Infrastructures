@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Handler.Attributes;
+using Aiursoft.WebTools;
 using Aiursoft.Wrapgate.Data;
 using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models;
@@ -48,19 +49,7 @@ namespace Aiursoft.Wrapgate.Controllers
                 case RecordType.PermanentRedirect:
                     return RedirectPermanent(builtUrl);
                 case RecordType.ReverseProxy:
-                    var request = new HttpRequestMessage
-                    {
-                        RequestUri = new Uri(builtUrl),
-                        Method = new HttpMethod(Request.Method)
-                    };
-                    request.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
-                    var response = await _client.SendAsync(request);
-                    var content = await response.Content.ReadAsStreamAsync();
-                    Response.StatusCode = (int)response.StatusCode;
-                    Response.ContentType = response.Content.Headers.ContentType.ToString();
-                    Response.ContentLength = response.Content.Headers.ContentLength;
-                    await content.CopyToAsync(Response.Body);
-                    return Ok();
+                    return await RewriteToUrl(builtUrl);
                 default:
                     throw new NotImplementedException();
             }
@@ -69,6 +58,27 @@ namespace Aiursoft.Wrapgate.Controllers
         private string BuildTargetUrl(WrapRecord record, string path)
         {
             return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString.ToString();
+        }
+
+        private async Task<IActionResult> RewriteToUrl(string url)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(url),
+                Method = new HttpMethod(Request.Method)
+            };
+            foreach (var header in Request.Headers)
+            {
+                request.Headers.Add(header.Key, header.Value.ToString());
+            }
+            var response = await _client.SendAsync(request);
+            foreach (var header in response.Headers)
+            {
+                Response.Headers.Add(header.Key, header.Value.ToString());
+            }
+            Response.StatusCode = (int)response.StatusCode;
+            await response.Content.CopyToAsync(Response.Body);
+            return Ok();
         }
     }
 }
