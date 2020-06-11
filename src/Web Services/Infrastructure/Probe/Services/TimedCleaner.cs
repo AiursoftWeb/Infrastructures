@@ -2,10 +2,12 @@
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -70,14 +72,14 @@ namespace Aiursoft.Probe.Services
                     // delete file in db.
                     dbContext.Files.Remove(file);
                 }
-                await dbContext.SaveChangesAsync();
             }
+            await dbContext.SaveChangesAsync();
             var storageFiles = storageProvider.GetAllFileNamesInHardware();
             foreach (var file in storageFiles)
             {
-                if (!await dbContext.Files.AnyAsync(t => t.HardwareId == file))
+                if (!files.Any(t => t.HardwareId == file))
                 {
-                    _logger.LogCritical($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delet file on disk!");
+                    _logger.LogCritical($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delete that file on disk!");
                 }
             }
             return;
