@@ -68,7 +68,7 @@ namespace Aiursoft.Probe.Services
             {
                 if (!storageProvider.ExistInHardware(file.HardwareId))
                 {
-                    _logger.LogInformation($"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
+                    _logger.LogWarning($"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
                     // delete file in db.
                     dbContext.Files.Remove(file);
                 }
@@ -79,7 +79,9 @@ namespace Aiursoft.Probe.Services
             {
                 if (!files.Any(t => t.HardwareId == file))
                 {
-                    _logger.LogCritical($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delete that file on disk!");
+                    _logger.LogWarning($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delete that file on disk!");
+                    // delete file in disk
+                    storageProvider.DeleteToTrash(file);
                 }
             }
             return;

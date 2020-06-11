@@ -10,7 +10,6 @@ namespace Aiursoft.Probe.Services
 {
     public class ImageCompressor : ITransientDependency
     {
-        private readonly IConfiguration _configuration;
         private readonly SizeCalculator _sizeCalculator;
         private readonly string _tempFilePath;
         private static readonly object _objCompreLock = new object();
@@ -20,14 +19,12 @@ namespace Aiursoft.Probe.Services
             IConfiguration configuration,
             SizeCalculator sizeCalculator)
         {
-            _configuration = configuration;
             _sizeCalculator = sizeCalculator;
-            var tempFilePath = _configuration["TempFileStoragePath"];
-            if (string.IsNullOrWhiteSpace(tempFilePath))
+            _tempFilePath = configuration["TempFileStoragePath"];
+            if (string.IsNullOrWhiteSpace(_tempFilePath))
             {
-                tempFilePath = _configuration["StoragePath"];
+                _tempFilePath = configuration["StoragePath"];
             }
-            _tempFilePath = tempFilePath;
         }
 
         public async Task<string> ClearExif(string path)

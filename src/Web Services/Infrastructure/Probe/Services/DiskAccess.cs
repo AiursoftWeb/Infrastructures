@@ -9,35 +9,56 @@ namespace Aiursoft.Probe.Services
     public class DiskAccess : IStorageProvider
     {
         private readonly char _ = Path.DirectorySeparatorChar;
-        private readonly IConfiguration _configuration;
+        private readonly string _path;
+        private readonly string _trashPath;
         private readonly AiurCache _cache;
 
         public DiskAccess(
             IConfiguration configuration,
             AiurCache aiurCache)
         {
-            _configuration = configuration;
+            _path = configuration["StoragePath"] + $"{_}Storage{_}";
+            var tempFilePath = configuration["TempFileStoragePath"];
+            if (string.IsNullOrWhiteSpace(tempFilePath))
+            {
+                tempFilePath = configuration["StoragePath"];
+            }
+            _trashPath = tempFilePath + $"{_}trashbin{_}";
             _cache = aiurCache;
         }
 
         public void Delete(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{hardwareUuid}.dat";
+            var path = _path + $"{hardwareUuid}.dat";
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
         }
 
+        public void DeleteToTrash(string hardwareUuid)
+        {
+            var path = _path + $"{hardwareUuid}.dat";
+            var target = _trashPath + $"{hardwareUuid}.dat";
+            if (File.Exists(path))
+            {
+                if (Directory.Exists(_trashPath) == false)
+                {
+                    Directory.CreateDirectory(_trashPath);
+                }
+                File.Move(path, target);
+            }
+        }
+
         public bool ExistInHardware(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $"{_}Storage{_}{hardwareUuid}.dat";
+            var path = _path + $"{hardwareUuid}.dat";
             return File.Exists(path);
         }
 
         public string[] GetAllFileNamesInHardware()
         {
-            return Directory.GetFiles(_configuration["StoragePath"] + $"{_}Storage");
+            return Directory.GetFiles(_path);
         }
 
         public string GetExtension(string fileName)
@@ -47,7 +68,7 @@ namespace Aiursoft.Probe.Services
 
         public string GetFilePath(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $"{_}Storage{_}{hardwareUuid}.dat";
+            var path = _path + $"{hardwareUuid}.dat";
             return path;
         }
 
@@ -59,19 +80,18 @@ namespace Aiursoft.Probe.Services
         public async Task Save(string hardwareUuid, IFormFile file)
         {
             //Try saving file.
-            var directoryPath = _configuration["StoragePath"] + $"{_}Storage{_}";
-            if (Directory.Exists(directoryPath) == false)
+            if (Directory.Exists(_path) == false)
             {
-                Directory.CreateDirectory(directoryPath);
+                Directory.CreateDirectory(_path);
             }
-            using var fileStream = new FileStream(directoryPath + hardwareUuid + ".dat", FileMode.Create);
+            using var fileStream = new FileStream(_path + hardwareUuid + ".dat", FileMode.Create);
             await file.CopyToAsync(fileStream);
             fileStream.Close();
         }
 
         private long GetFileSize(string hardwareUuid)
         {
-            var path = _configuration["StoragePath"] + $@"{_}Storage{_}{hardwareUuid}.dat";
+            var path = _path + $"{hardwareUuid}.dat";
             if (File.Exists(path))
             {
                 return new FileInfo(path).Length;

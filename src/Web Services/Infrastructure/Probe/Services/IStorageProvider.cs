@@ -6,6 +6,7 @@ namespace Aiursoft.Probe.Services
     public interface IStorageProvider
     {
         void Delete(string hardwareUuid);
+        void DeleteToTrash(string hardwareUuid);
         long GetSize(string hardwareUuid);
         Task Save(string hardwareUuid, IFormFile file);
         string GetFilePath(string hardwareUuid);
