@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Services
@@ -23,7 +24,7 @@ namespace Aiursoft.Probe.Services
             {
                 tempFilePath = configuration["StoragePath"];
             }
-            _trashPath = tempFilePath + $"{_}trashbin{_}";
+            _trashPath = tempFilePath + $"{_}TrashBin{_}";
             _cache = aiurCache;
         }
 
@@ -58,7 +59,7 @@ namespace Aiursoft.Probe.Services
 
         public string[] GetAllFileNamesInHardware()
         {
-            return Directory.GetFiles(_path);
+            return Directory.GetFiles(_path).Select(t => Path.GetFileNameWithoutExtension(t)).ToArray();
         }
 
         public string GetExtension(string fileName)
