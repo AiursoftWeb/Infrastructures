@@ -68,7 +68,5 @@ namespace Aiursoft.Wrapgate.Controllers
             await HttpContext.CopyProxyHttpResponse(response);
             return Ok();
         }
-
-       
     }
 }
