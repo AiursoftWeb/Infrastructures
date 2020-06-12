@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.XelNaga.Services;
 
 namespace Aiursoft.Wrapgate.Controllers
 {
@@ -62,23 +63,12 @@ namespace Aiursoft.Wrapgate.Controllers
 
         private async Task<IActionResult> RewriteToUrl(string url)
         {
-            var request = new HttpRequestMessage
-            {
-                RequestUri = new Uri(url),
-                Method = new HttpMethod(Request.Method)
-            };
-            foreach (var header in Request.Headers)
-            {
-                request.Headers.Add(header.Key, header.Value.ToString());
-            }
-            var response = await _client.SendAsync(request);
-            foreach (var header in response.Headers)
-            {
-                Response.Headers.Add(header.Key, header.Value.ToString());
-            }
-            Response.StatusCode = (int)response.StatusCode;
-            await response.Content.CopyToAsync(Response.Body);
+            var request = HttpContext.CreateProxyHttpRequest(new Uri(url));
+            var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+            await HttpContext.CopyProxyHttpResponse(response);
             return Ok();
         }
+
+       
     }
 }
