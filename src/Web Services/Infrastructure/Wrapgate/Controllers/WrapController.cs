@@ -27,7 +27,8 @@ namespace Aiursoft.Wrapgate.Controllers
         {
             _client = new HttpClient(new HttpClientHandler()
             {
-                AllowAutoRedirect = false
+                AllowAutoRedirect = false,
+                UseCookies = false
             });
             _recordRepo = recordRepo;
         }
