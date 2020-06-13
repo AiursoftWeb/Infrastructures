@@ -10,6 +10,7 @@ using Aiursoft.Identity.Attributes;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
+using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

@@ -1,8 +1,5 @@
 ﻿using Aiursoft.SDKTools.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
 {
@@ -23,6 +20,8 @@ namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
         [Required]
         public RecordType NewType { get; set; }
         [Required]
+        [MaxLength(1000)]
+        [MinLength(5)]
         public string NewUrl { get; set; }
     }
 }

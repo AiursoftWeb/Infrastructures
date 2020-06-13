@@ -10,6 +10,7 @@ using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Wrapgate.SDK.Models;
+using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

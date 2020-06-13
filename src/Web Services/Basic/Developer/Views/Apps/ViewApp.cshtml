@@ -505,8 +505,8 @@
                                                 <td data-utc-time="@record.CreationTime"></td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-id="@record.Id" class="btn btn-danger">@Localizer["Delete"]</a>
-                                                        <a asp-controller="Records" asp-action="Edit" asp-route-appId="@Model.AppId" asp-route-id="@record.Id" class="btn btn-secondary">@Localizer["Settings"]</a>
+                                                        <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-recordName="@record.RecordUniqueName" class="btn btn-danger">@Localizer["Delete"]</a>
+                                                        <a asp-controller="Records" asp-action="Edit" asp-route-appId="@Model.AppId" asp-route-recordName="@record.RecordUniqueName" class="btn btn-secondary">@Localizer["Settings"]</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -514,7 +514,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a asp-controller="Records" asp-action="CreateRecord" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create new record"]</a>
+                            <a asp-controller="Records" asp-action="CreateRecord" asp-route-appId="@Model.AppId" class="btn btn-success">@Localizer["Create new record"]</a>
                         </div>
                     </div>
                 </div>

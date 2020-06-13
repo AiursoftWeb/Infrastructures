@@ -4,13 +4,12 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
 using Aiursoft.Wrapgate.SDK.Models.ViewModels;
-using Aiursoft.Wrapgate.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Probe.SDK.Services.ToProbeServer
+namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
 {
     public class RecordsService : IScopedDependency
     {
