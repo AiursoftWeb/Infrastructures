@@ -28,6 +28,7 @@ namespace Aiursoft.Developer.Controllers
         private readonly SitesService _siteService;
         private readonly EventService _eventService;
         private readonly ChannelService _channelService;
+        private readonly RecordsService _recordsService;
 
         public AppsController(
             DeveloperDbContext dbContext,
@@ -35,7 +36,8 @@ namespace Aiursoft.Developer.Controllers
             CoreApiService coreApiService,
             SitesService siteService,
             EventService eventService,
-            ChannelService channelService)
+            ChannelService channelService,
+            RecordsService recordsService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
@@ -43,6 +45,7 @@ namespace Aiursoft.Developer.Controllers
             _siteService = siteService;
             _eventService = eventService;
             _channelService = channelService;
+            _recordsService = recordsService;
         }
 
         public IActionResult Index()
@@ -103,7 +106,7 @@ namespace Aiursoft.Developer.Controllers
                 return NotFound();
             }
             var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService, _channelService, page);
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -117,7 +120,7 @@ namespace Aiursoft.Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, _channelService, page);
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);
@@ -226,6 +229,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
                 await _siteService.DeleteAppAsync(token, target.AppId);
+                await _recordsService.DeleteAppAsync(token, target.AppId);
             }
             catch (AiurUnexceptedResponse e)
             {

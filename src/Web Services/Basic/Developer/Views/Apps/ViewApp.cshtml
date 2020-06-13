@@ -37,13 +37,14 @@
             </form>
             <div class="col-md-12 mb-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App Info</a>
+                    <a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">App info</a>
                     <a class="nav-link" id="v-pills-perm-tab" data-toggle="pill" href="#v-pills-perm" role="tab" aria-controls="v-pills-perm" aria-selected="false">Permissions</a>
-                    <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth Settings</a>
-                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App Grant History</a>
-                    <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site Storage</a>
-                    <a class="nav-link" id="v-pills-channels-tab" data-toggle="pill" href="#v-pills-channels" role="tab" aria-controls="v-pills-channels" aria-selected="false">Stargate Channels</a>
-                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-logs" role="tab" aria-controls="v-pills-logs" aria-selected="false">Error logs</a>
+                    <a class="nav-link" id="v-pills-oauth-tab" data-toggle="pill" href="#v-pills-oauth" role="tab" aria-controls="v-pills-oauth" aria-selected="false">OAuth settings</a>
+                    <a class="nav-link" id="v-pills-grant-tab" data-toggle="pill" href="#v-pills-grant" role="tab" aria-controls="v-pills-grant" aria-selected="false">App grant history</a>
+                    <a class="nav-link" id="v-pills-sites-tab" data-toggle="pill" href="#v-pills-sites" role="tab" aria-controls="v-pills-sites" aria-selected="false">Site storage</a>
+                    <a class="nav-link" id="v-pills-channels-tab" data-toggle="pill" href="#v-pills-channels" role="tab" aria-controls="v-pills-channels" aria-selected="false">Stargate channels</a>
+                    <a class="nav-link" id="v-pills-logs-tab" data-toggle="pill" href="#v-pills-logs" role="tab" aria-controls="v-pills-logs" aria-selected="false">Error logs</a>
+                    <a class="nav-link" id="v-pills-records-tab" data-toggle="pill" href="#v-pills-records" role="tab" aria-controls="v-pills-records" aria-selected="false">Wrapgate records</a>
                 </div>
             </div>
         </div>
@@ -341,7 +342,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create New Site"]</a>
+                            <a asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create new site"]</a>
                         </div>
                     </div>
                 </div>
@@ -473,6 +474,47 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-records" role="tabpanel" aria-labelledby="v-pills-records-tab">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-bar-chart"></i>
+                            @Localizer["Wrapgate records"]
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped datatable-sites">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["Record name"]</th>
+                                            <th>@Localizer["Target URL"]</th>
+                                            <th>@Localizer["Type"]</th>
+                                            <th>@Localizer["Create time"]</th>
+                                            <th>@Localizer["Operation"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var record in Model.Records)
+                                        {
+                                            <tr>
+                                                <td>@record.RecordUniqueName</td>
+                                                <td>@record.TargetUrl</td>
+                                                <td>@record.Type</td>
+                                                <td data-utc-time="@record.CreationTime"></td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-id="@record.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+                                                        <a asp-controller="Records" asp-action="Edit" asp-route-appId="@Model.AppId" asp-route-id="@record.Id" class="btn btn-secondary">@Localizer["Settings"]</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a asp-controller="Records" asp-action="CreateRecord" asp-route-id="@Model.AppId" class="btn btn-success">@Localizer["Create new record"]</a>
                         </div>
                     </div>
                 </div>
