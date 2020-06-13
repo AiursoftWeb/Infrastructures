@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Controllers
 {
-    [LimitPerMin(180)]
+    [LimitPerMin]
     public class SearchController : Controller
     {
         private readonly SearchService _searchService;
