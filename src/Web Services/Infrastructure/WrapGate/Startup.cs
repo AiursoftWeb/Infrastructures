@@ -29,7 +29,9 @@ namespace Aiursoft.Wrapgate
             services.AddAiurAPIMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddSingleton(new WrapgateLocator(Configuration["WrapgateEndpoint"]));
+            services.AddSingleton(new WrapgateLocator(
+                Configuration["WrapgateEndpoint"], 
+                Configuration["WrapPattern"]));
             services.AddBasic();
         }
 

@@ -19,7 +19,7 @@ namespace Aiursoft.XelNaga.Services
                 }
                 catch (Exception)
                 {
-                    Thread.Sleep(10 * 1000);
+                    Thread.Sleep((i + 1) * 10 * 1000);
                 }
             }
         }

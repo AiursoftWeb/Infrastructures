@@ -1,18 +1,18 @@
 ﻿using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Wrapgate.SDK.Models.ViewModels;
+using Aiursoft.Wrapgate.SDK.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Wrapgate.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration _configuration;
+        private readonly WrapgateLocator _locator;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(WrapgateLocator locator)
         {
-            _configuration = configuration;
+            _locator = locator;
         }
 
         [APIProduces(typeof(IndexViewModel))]
@@ -22,7 +22,7 @@ namespace Aiursoft.Wrapgate.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Wrapgate!",
-                WrapPattern = _configuration["WrapPattern"]
+                WrapPattern = _locator.WrapPattern
             };
             return Json(model);
         }
