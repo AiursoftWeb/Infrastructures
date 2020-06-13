@@ -17,6 +17,7 @@ namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
         [Required]
         [MaxLength(1000)]
         [MinLength(5)]
+        [Url]
         public string TargetUrl { get; set; }
     }
 }

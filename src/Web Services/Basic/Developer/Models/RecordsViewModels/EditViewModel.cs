@@ -44,6 +44,7 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
         [Required]
         [MaxLength(1000)]
         [MinLength(5)]
+        [Url]
         public string URL { get; set; }
 
         [Required]
