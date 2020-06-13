@@ -1,0 +1,90 @@
+﻿@model Aiursoft.Developer.Models.RecordsViewModels.EditViewModel
+@{
+    ViewData["Title"] = "Edit record - " + Model.OldRecordName;
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @ViewData["Title"]
+        </li>
+    </ol>
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Edit record Info"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Records" asp-action="Edit" asp-route-id="@Model.AppId" asp-route-oldRecordName="@Model.OldRecordName" method="post" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="NewRecordName"></label>
+                            <input asp-for="NewRecordName" type="text" class="form-control">
+                            <span asp-validation-for="NewRecordName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="URL"></label>
+                            <input asp-for="URL" type="text" class="form-control" placeholder="Enter your new record url...">
+                            <span asp-validation-for="URL" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Type"></label>
+                        <select class="form-control" asp-for="Type">
+                            <option value="0">@Localizer["Redirect"]</option>
+                            <option value="1">@Localizer["Permanent redirect"]</option>
+                            <option value="2">@Localizer["iFrame"]</option>
+                            <option value="3">@Localizer["Reverse proxy"]</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
+                        @if (!string.IsNullOrEmpty(Model.AppId))
+                        {
+                            <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header text-danger">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Danger zone"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-recordName="@Model.OldRecordName" class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i>
+                    Delete the record
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
