@@ -1,17 +1,13 @@
 ﻿using Aiursoft.Handler.Attributes;
-using Aiursoft.WebTools;
-using Aiursoft.Wrapgate.Data;
 using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.XelNaga.Services;
 
 namespace Aiursoft.Wrapgate.Controllers
 {
@@ -67,7 +63,7 @@ namespace Aiursoft.Wrapgate.Controllers
             var request = HttpContext.CreateProxyHttpRequest(new Uri(url));
             var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
             await HttpContext.CopyProxyHttpResponse(response);
-            return Ok();
+            return StatusCode((int)response.StatusCode);
         }
     }
 }
