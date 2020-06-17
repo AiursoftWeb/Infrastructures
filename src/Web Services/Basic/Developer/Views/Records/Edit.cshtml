@@ -1,4 +1,5 @@
-﻿@model Aiursoft.Developer.Models.RecordsViewModels.EditViewModel
+﻿@using System.Text.RegularExpressions;
+@model Aiursoft.Developer.Models.RecordsViewModels.EditViewModel
 @{
     ViewData["Title"] = "Edit record - " + Model.OldRecordName;
 }
@@ -38,7 +39,17 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="NewRecordName"></label>
-                            <input asp-for="NewRecordName" type="text" class="form-control">
+                            <div class="input-group mb-3">
+                                <input asp-for="NewRecordName" type="text" class="form-control">
+                                <div class="input-group-append">
+                                    @{
+                                        var httpRegex = new Regex("^https://", RegexOptions.Compiled);
+                                        var ioPath = WrapgateLocator.WrapPattern;
+                                        ioPath = httpRegex.Replace(ioPath, string.Empty);
+                                    }
+                                    <span class="input-group-text" id="basic-addon2">@string.Format(ioPath, string.Empty)</span>
+                                </div>
+                            </div>
                             <span asp-validation-for="NewRecordName" class="text-danger"></span>
                         </div>
                     </div>

@@ -25,6 +25,7 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
         [FromRoute]
         public string AppId { get; set; }
 
+        [Display(Name = "Enter your new shorten URL.")]
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
@@ -33,6 +34,7 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
 
         public string AppName { get; set; }
 
+        [Display(Name = "Target URL.")]
         [Required]
         [MaxLength(1000)]
         [MinLength(5)]

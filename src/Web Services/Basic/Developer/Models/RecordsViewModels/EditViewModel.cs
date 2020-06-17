@@ -32,11 +32,11 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
         [Display(Name = "Old record name")]
         public string OldRecordName { get; set; }
 
+        [Display(Name = "Enter your new shorten URL.")]
         [Required]
         [MaxLength(50)]
         [MinLength(5)]
         [ValidDomainName]
-        [Display(Name = "New record name")]
         public string NewRecordName { get; set; }
 
         public string AppName { get; set; }
