@@ -23,7 +23,12 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             _serviceLocation = serviceLocation;
         }
 
-        public async Task<AiurProtocol> CreateNewRecordAsync(string accessToken, string newRecordName, string targetUrl, RecordType type)
+        public async Task<AiurProtocol> CreateNewRecordAsync(
+            string accessToken, 
+            string newRecordName, 
+            string targetUrl, 
+            RecordType type,
+            bool enabled)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "CreateNewRecord", new { });
             var form = new AiurUrl(string.Empty, new CreateNewRecordAddressModel
@@ -31,7 +36,8 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
                 AccessToken = accessToken,
                 NewRecordName = newRecordName,
                 TargetUrl = targetUrl,
-                Type = type
+                Type = type,
+                Enabled = enabled
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
@@ -53,7 +59,13 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             return jResult;
         }
 
-        public async Task<AiurProtocol> UpdateRecordInfoAsync(string accessToken, string oldRecordName, string newRecordName, RecordType newType, string newUrl)
+        public async Task<AiurProtocol> UpdateRecordInfoAsync(
+            string accessToken, 
+            string oldRecordName, 
+            string newRecordName, 
+            RecordType newType, 
+            string newUrl,
+            bool enabled)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "UpdateRecordInfo", new { });
             var form = new AiurUrl(string.Empty, new UpdateRecordInfoAddressModel
@@ -62,7 +74,8 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
                 OldRecordName = oldRecordName,
                 NewRecordName = newRecordName,
                 NewType = newType,
-                NewUrl = newUrl
+                NewUrl = newUrl,
+                Enabled = enabled
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);

@@ -450,7 +450,7 @@
                                         @foreach (var log in Model.ErrorLogs)
                                         {
                                             <tr>
-                                                <td>@(new string(log.Message.Take(70).ToArray()))...</td>
+                                                <td>@log.Message.OTake(60)</td>
                                                 <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
                                                 <td data-utc-time="@log.First.LogTime" data-order="@log.First.LogTime.Ticks"></td>
@@ -489,6 +489,7 @@
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Record name"]</th>
+                                            <th>@Localizer["Enabled"]</th>
                                             <th>@Localizer["Target URL"]</th>
                                             <th>@Localizer["Type"]</th>
                                             <th>@Localizer["Create time"]</th>
@@ -500,7 +501,21 @@
                                         {
                                             <tr>
                                                 <td>@record.RecordUniqueName</td>
-                                                <td>@record.TargetUrl</td>
+                                                <td>
+                                                    @if (record.Enabled)
+                                                    {
+                                                        <label class="text-success">
+                                                            <i class="fa fa-check"></i>
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="text-danger">
+                                                            <i class="fa fa-times"></i>
+                                                        </label>
+                                                    }
+                                                </td>
+                                                <td>@record.TargetUrl.OTake(60)</td>
                                                 <td>@record.Type</td>
                                                 <td data-utc-time="@record.CreationTime"></td>
                                                 <td>

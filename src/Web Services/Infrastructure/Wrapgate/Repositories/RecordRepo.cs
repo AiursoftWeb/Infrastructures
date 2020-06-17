@@ -4,7 +4,6 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wrapgate.Data;
 using Aiursoft.Wrapgate.SDK.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,14 +37,15 @@ namespace Aiursoft.Wrapgate.Repositories
             return _table.SingleOrDefaultAsync(t => t.RecordUniqueName == recordName.ToLower());
         }
 
-        public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl)
+        public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled)
         {
             var newRecord = new WrapRecord
             {
                 RecordUniqueName = newRecordName.ToLower(),
                 Type = type,
                 AppId = appid,
-                TargetUrl = targetUrl
+                TargetUrl = targetUrl,
+                Enabled = enabled
             };
             _table.Add(newRecord);
             await _dbContext.SaveChangesAsync();

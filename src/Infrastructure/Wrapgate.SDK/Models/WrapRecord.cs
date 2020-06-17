@@ -41,7 +41,7 @@ namespace Aiursoft.Wrapgate.SDK.Models
         public RecordType Type { get; set; }
         public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        //public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = true;
         //public bool Recursive { get; set; } = true;
     }
 }

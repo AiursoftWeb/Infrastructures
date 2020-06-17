@@ -22,7 +22,7 @@
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-            <strong>@Localizer["Invalid Input!"]</strong>
+            <strong>@Localizer["Invalid input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
     }
@@ -30,7 +30,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fa fa-inbox"></i>
-            @Localizer["New Site Info"]
+            @Localizer["New record info"]
         </div>
         <div class="card-body">
             <div class="col-12">
@@ -41,6 +41,13 @@
                             <input asp-for="RecordName" type="text" class="form-control" placeholder="Enter your new record name...">
                             <span asp-validation-for="RecordName" class="text-danger"></span>
                         </div>
+                    </div>
+
+                    <div class="form-check col-12 pl-5">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="Enabled" checked="checked" />
+                            <label asp-for="Enabled"></label>
+                        </label>
                     </div>
 
                     <div class="col-md-12">
@@ -66,8 +73,7 @@
                         <input type="reset" class="btn btn-danger btn" id="cleartoasts" value="@Localizer["Clear"]" />
                         @if (!string.IsNullOrEmpty(Model.AppId))
                         {
-                            <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
-                        }
+                <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>}
                     </div>
                 </form>
             </div>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Wrapgate.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class WrapController : Controller
@@ -34,6 +35,10 @@ namespace Aiursoft.Wrapgate.Controllers
         {
             var record = await _recordRepo.GetRecordByName(model.RecordName);
             if (record == null)
+            {
+                return NotFound();
+            }
+            if (!record.Enabled)
             {
                 return NotFound();
             }

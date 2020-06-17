@@ -35,7 +35,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a record with name: '{model.NewRecordName}'. Please try another new name.");
             }
-            var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl);
+            var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl, model.Enabled);
             return this.Protocol(ErrorType.Success, $"Successfully created your new record: '{createdRecord.RecordUniqueName}' at {createdRecord.CreationTime}.");
         }
 
@@ -69,6 +69,7 @@ namespace Aiursoft.Probe.Controllers
             record.RecordUniqueName = model.NewRecordName.ToLower();
             record.Type = model.NewType;
             record.TargetUrl= model.NewUrl;
+            record.Enabled = model.Enabled;
             await _recordRepo.UpdateRecord(record);
             return this.Protocol(ErrorType.Success, "Successfully updated your Record!");
         }

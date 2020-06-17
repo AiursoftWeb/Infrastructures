@@ -1,4 +1,5 @@
 ﻿using Aiursoft.DocGenerator.Attributes;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Wrapgate.SDK.Models.ViewModels;
 using Aiursoft.Wrapgate.SDK.Services;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Wrapgate.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
         private readonly WrapgateLocator _locator;

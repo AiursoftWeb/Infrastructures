@@ -82,7 +82,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Type);
+                await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Type, model.Enabled);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
@@ -150,7 +150,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL);
+                await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL, model.Enabled);
                 _cache.Clear($"Record-public-status-{model.OldRecordName}");
                 _cache.Clear($"Record-public-status-{model.NewRecordName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });

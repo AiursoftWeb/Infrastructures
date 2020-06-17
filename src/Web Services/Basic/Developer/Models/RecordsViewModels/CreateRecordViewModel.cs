@@ -42,5 +42,8 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
         [Required]
         [Display(Name = "Type")]
         public RecordType Type { get; set; }
+
+        [Required]
+        public bool Enabled { get; set; }
     }
 }

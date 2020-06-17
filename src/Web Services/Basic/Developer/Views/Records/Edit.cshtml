@@ -43,6 +43,13 @@
                         </div>
                     </div>
 
+                    <div class="form-check col-12 pl-5">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="Enabled" checked="checked" />
+                            <label asp-for="Enabled"></label>
+                        </label>
+                    </div>
+
                     <div class="col-md-12">
                         <div class="form-group">
                             <label asp-for="URL"></label>
@@ -65,8 +72,7 @@
                         <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
                         @if (!string.IsNullOrEmpty(Model.AppId))
                         {
-                            <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
-                        }
+                <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>}
                     </div>
                 </form>
             </div>

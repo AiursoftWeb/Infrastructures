@@ -24,5 +24,8 @@ namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
         [MinLength(5)]
         [Url]
         public string NewUrl { get; set; }
+
+        [Required]
+        public bool Enabled { get; set; }
     }
 }
