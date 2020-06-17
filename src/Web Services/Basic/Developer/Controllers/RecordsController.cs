@@ -38,7 +38,7 @@ namespace Aiursoft.Developer.Controllers
 
 
         [Route("Apps/{appId}/CreateRecord")]
-        public async Task<IActionResult> CreateRecord([FromRoute]string appId)// app id
+        public async Task<IActionResult> CreateRecord([FromRoute] string appId)// app id
         {
             var user = await GetCurrentUserAsync();
             var app = await _dbContext.Apps.FindAsync(appId);
@@ -110,7 +110,7 @@ namespace Aiursoft.Developer.Controllers
             var accesstoken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
             var allRecords = await _recordsService.ViewMyRecordsAsync(await accesstoken);
             var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
-            if(recordDetail == null)
+            if (recordDetail == null)
             {
                 return NotFound();
             }
@@ -121,7 +121,8 @@ namespace Aiursoft.Developer.Controllers
                 NewRecordName = recordName,
                 AppName = app.AppName,
                 Type = recordDetail.Type,
-                URL = recordDetail.TargetUrl
+                URL = recordDetail.TargetUrl,
+                Enabled = recordDetail.Enabled
             };
             return View(model);
         }
