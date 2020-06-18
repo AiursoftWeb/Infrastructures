@@ -69,6 +69,16 @@ Continue? Try runing the example project! Or continue reading.
 
 ## Customization and API
 
+### Change document output address
+
+```csharp
+app.UseAiursoftDocGenerator(options =>
+{
+    // Default value is '/doc'. You can change it to other path.
+    options.DocAddress = "/my-doc";
+});
+```
+
 ### Change document output format
 
 ```csharp

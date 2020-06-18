@@ -31,6 +31,7 @@ namespace Aiursoft.DocGenerator.Services
         };
         public List<object> GlobalPossibleResponse { get; set; } = new List<object>();
         public DocFormat Format = DocFormat.Json;
+        public string DocAddress = "doc";
     }
     public static class ServiceCollectionExtends
     {

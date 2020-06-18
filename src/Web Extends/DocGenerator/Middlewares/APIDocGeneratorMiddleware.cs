@@ -21,6 +21,7 @@ namespace Aiursoft.DocGenerator.Middlewares
         private static Func<MethodInfo, Type, bool> _judgeAuthorized;
         private static List<object> _globalPossibleResponse;
         private static DocFormat _format;
+        private static string _docAddress;
 
         public APIDocGeneratorMiddleware(RequestDelegate next)
         {
@@ -33,6 +34,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             _judgeAuthorized = settings.JudgeAuthorized;
             _globalPossibleResponse = settings.GlobalPossibleResponse;
             _format = settings.Format;
+            _docAddress = settings.DocAddress.TrimStart('/').ToLower();
         }
 
         public async Task Invoke(HttpContext context)
@@ -41,7 +43,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             {
                 throw new ArgumentNullException();
             }
-            if (context.Request.Path.ToString().Trim().Trim('/').ToLower() != "doc")
+            if (context.Request.Path.ToString().Trim().Trim('/').ToLower() != _docAddress)
             {
                 await _next.Invoke(context);
                 return;
@@ -59,7 +61,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             }
             context.Response.StatusCode = 200;
             var actionsMatches = new List<API>();
-            var possibleControllers = Assembly.GetEntryAssembly().GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type));
+            var possibleControllers = Assembly.GetEntryAssembly().GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type));
             foreach (var controller in possibleControllers)
             {
                 if (!IsController(controller))
@@ -179,7 +181,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             return
                 type.Name.EndsWith("Controller") &&
                 type.Name != "Controller" &&
-                type.IsSubclassOf(typeof(Controller)) &&
+                type.IsSubclassOf(typeof(ControllerBase)) &&
                 type.IsPublic;
         }
 
