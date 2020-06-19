@@ -1,5 +1,5 @@
 echo Start cleaning...
-find . -name 'bin' | xargs -L1 rm -rvf
-find . -name 'obj' | xargs -L1 rm -rvf
+find . -name "bin"  -exec bash -c "rm -rvf '{}'" \;
+find . -name "obj"  -exec bash -c "rm -rvf '{}'" \;
 rm ./.vs -rvf
 exit
