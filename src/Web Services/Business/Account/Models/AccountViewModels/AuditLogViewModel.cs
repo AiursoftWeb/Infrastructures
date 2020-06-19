@@ -2,7 +2,7 @@
 using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Handler.Models;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
@@ -14,7 +14,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public AuditLogViewModel(AccountUser user) : base(user, "Audit Log") { }
 
-        public List<App> Apps { get; set; } = new List<App>();
+        public ConcurrentBag<App> Apps { get; set; } = new ConcurrentBag<App>();
         public AiurPagedCollection<AuditLog> Logs { get; set; }
     }
 }
