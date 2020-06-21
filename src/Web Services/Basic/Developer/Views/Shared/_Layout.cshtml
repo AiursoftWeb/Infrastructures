@@ -185,9 +185,7 @@
                 </div>
             </div>
         }
-        <div id="render-part">
-            @RenderBody()
-        </div>
+        @RenderBody()
         <footer class="sticky-footer">
             <div class="ml-3">
                 <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
@@ -197,9 +195,6 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-        <script>
-            asyncLayout('#render-part');
-        </script>
     </div>
 </body>
 </html>
