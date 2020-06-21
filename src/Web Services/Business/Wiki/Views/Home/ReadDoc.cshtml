@@ -41,13 +41,10 @@
         }
     </div>
 </div>
-
-<script>
-    var onload = function () {
+@section js {
+    <script>
         document.querySelectorAll('pre code').forEach((block) => {
             hljs.highlightBlock(block);
         });
-        window.removeEventListener('load', onload);
-    };
-    window.addEventListener('load', onload);
-</script>
+    </script>
+}

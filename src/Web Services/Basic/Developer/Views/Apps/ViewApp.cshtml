@@ -485,7 +485,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped datatable-sites">
+                                <table class="table table-striped datatable-records">
                                     <thead>
                                         <tr>
                                             <th>@Localizer["Record name"]</th>
@@ -607,6 +607,11 @@
 
         $('.datatable-stargate').DataTable().destroy();
         $('.datatable-stargate').DataTable({
+            "order": [[0, "desc"]]
+        });
+
+        $('.datatable-records').DataTable().destroy();
+        $('.datatable-records').DataTable({
             "order": [[0, "desc"]]
         });
     });
