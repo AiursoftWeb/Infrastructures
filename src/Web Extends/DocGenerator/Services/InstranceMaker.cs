@@ -10,7 +10,7 @@ namespace Aiursoft.DocGenerator.Services
 {
     public static class InstanceMaker
     {
-        public static IList GetArrayWithInstanceInherts(Type itemType)
+        private static IList GetArrayWithInstanceInherts(Type itemType)
         {
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(itemType);
@@ -19,23 +19,23 @@ namespace Aiursoft.DocGenerator.Services
             {
                 instance.Add(Make(itemType));
             }
-            foreach (var item in Assembly.GetEntryAssembly().GetTypes().Where(t => !t.IsAbstract).Where(t => t.IsSubclassOf(itemType)))
+            foreach (var item in Assembly.GetEntryAssembly()?.GetTypes().Where(t => !t.IsAbstract).Where(t => t.IsSubclassOf(itemType)) ?? new List<Type>())
             {
                 instance.Add(Make(item));
             }
             return instance;
         }
 
-        public static object GenerateWithConstructor(Type type)
+        private static object GenerateWithConstructor(Type type)
         {
             // Has default constructor.
-            if (type.GetConstructors().Count() == 1 &&
-                type.GetConstructors()[0].GetParameters().Count() == 0 &&
+            if (type.GetConstructors().Length == 1 &&
+                !type.GetConstructors()[0].GetParameters().Any() &&
                 !type.IsAbstract)
             {
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName);
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty);
             }
-            else if (type.GetConstructors().Where(t => t.IsPublic).Any() && !type.IsAbstract)
+            else if (type.GetConstructors().Any(t => t.IsPublic) && !type.IsAbstract)
             {
                 // Has a constructor, and constructor has some arguments.
                 var constructor = type.GetConstructors()[0];
@@ -46,7 +46,7 @@ namespace Aiursoft.DocGenerator.Services
                     var requirement = args[i].ParameterType;
                     parameters[i] = Make(requirement);
                 }
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName, true, BindingFlags.Default, null, parameters, null, null);
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty, true, BindingFlags.Default, null, parameters, null, null);
             }
             else if (type.IsAbstract)
             {
@@ -58,7 +58,7 @@ namespace Aiursoft.DocGenerator.Services
             }
             else
             {
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName);
+                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty);
             }
         }
 
@@ -103,7 +103,7 @@ namespace Aiursoft.DocGenerator.Services
             {
                 var itemType = type.GetElementType();
                 var list = GetArrayWithInstanceInherts(itemType);
-                var array = Array.CreateInstance(itemType, list.Count);
+                var array = Array.CreateInstance(itemType ?? typeof(string[]), list.Count);
                 list.CopyTo(array, 0);
                 return array;
             }

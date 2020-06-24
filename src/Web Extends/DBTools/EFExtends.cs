@@ -42,7 +42,7 @@ namespace Aiursoft.DBTools
         }
 
         public static void Sync<T, M>(this DbSet<T> dbSet,
-            Func<T, bool> filter,
+            Expression<Func<T, bool>> filter,
             M[] collection)
             where T : class
             where M : ISyncable<T>
@@ -50,17 +50,18 @@ namespace Aiursoft.DBTools
             foreach (var item in collection.DistinctBySync<T, M>())
             {
                 var itemCountShallBe = collection.Count(t => t.EqualsInDb(item.Map()));
-                var itemQuery = dbSet
+                var items = dbSet
                     .IgnoreQueryFilters()
                     .Where(filter)
                     .AsEnumerable()
-                    .Where(t => item.EqualsInDb(t));
-                var itemCount = itemQuery
+                    .Where(t => item.EqualsInDb(t))
+                    .ToList();
+                var itemCount = items
                     .Count();
 
                 if (itemCount > itemCountShallBe)
                 {
-                    dbSet.RemoveRange(itemQuery.Skip(itemCountShallBe));
+                    dbSet.RemoveRange(items.Skip(itemCountShallBe));
                 }
                 else if (itemCount < itemCountShallBe)
                 {
@@ -71,8 +72,8 @@ namespace Aiursoft.DBTools
                 }
             }
             var toDelete = dbSet
-                .AsEnumerable()
                 .Where(filter)
+                .AsEnumerable()
                 .Where(t => !collection.Any(p => p.EqualsInDb(t)));
             dbSet.RemoveRange(toDelete);
         }
