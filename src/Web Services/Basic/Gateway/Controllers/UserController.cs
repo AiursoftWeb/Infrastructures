@@ -369,27 +369,24 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<IActionResult> TwoFAVerificyCode(TwoFAVerificyCodeAddressModel model)
+        public async Task<IActionResult> TwoFAVerifyCode(TwoFAVerifyCodeAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 
             // Strip spaces and hypens
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+            var is2FATokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            if (is2faTokenValid)
+            if (is2FATokenValid && !user.TwoFactorEnabled)
             {
                 // enable 2fa.
-                if (!user.TwoFactorEnabled)
-                {
-                    user.TwoFactorEnabled = true;
-                    await _userManager.UpdateAsync(user);
-                }
+                user.TwoFactorEnabled = true;
+                await _userManager.UpdateAsync(user);
             }
 
-            return Json(new AiurValue<bool>(is2faTokenValid)
+            return Json(new AiurValue<bool>(is2FATokenValid)
             {
                 Code = ErrorType.Success,
                 Message = "Sucess Verified code."
@@ -402,15 +399,15 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
 
-            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if (true == disable2faResult.Succeeded)
+            var disable2FAResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (disable2FAResult.Succeeded)
             {
                 user.TwoFactorEnabled = false;
                 user.Has2FAKey = false;
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 await _userManager.UpdateAsync(user);
             }
-            bool success = disable2faResult.Succeeded;
+            bool success = disable2FAResult.Succeeded;
 
             return Json(new AiurValue<bool>(success)
             {

@@ -2,7 +2,7 @@
 
 namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels
 {
-    public class TwoFAVerificyCodeAddressModel : UserOperationAddressModel
+    public class TwoFAVerifyCodeAddressModel : UserOperationAddressModel
     {
         [Required]
         [StringLength(6)]

@@ -283,7 +283,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "View2FAKey", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "View2FAKey", new UserOperationAddressModel());
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
@@ -326,25 +326,25 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             return jresult;
         }
 
-        public async Task<AiurValue<bool>> TwoFAVerificyCodeAsync(string openId, string accessToken, string code)
+        public async Task<AiurValue<bool>> TwoFAVerifyCodeAsync(string openId, string accessToken, string code)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "TwoFAVerificyCode", new TwoFAVerificyCodeAddressModel { });
-            var form = new AiurUrl(string.Empty, new TwoFAVerificyCodeAddressModel
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "TwoFAVerifyCode", new TwoFAVerifyCodeAddressModel());
+            var form = new AiurUrl(string.Empty, new TwoFAVerifyCodeAddressModel
             {
                 OpenId = openId,
                 AccessToken = accessToken,
                 Code = code
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "DisableTwoFA", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "DisableTwoFA", new UserOperationAddressModel());
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,
@@ -359,7 +359,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
 
         public async Task<AiurCollection<string>> GetRecoveryCodesAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "GetRecoveryCodes", new UserOperationAddressModel { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "GetRecoveryCodes", new UserOperationAddressModel());
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 OpenId = openId,

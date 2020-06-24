@@ -330,7 +330,6 @@ namespace Aiursoft.Account.Controllers
             {
                 Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
             };
-            var taskList = new List<Task>();
             var appsBag = new ConcurrentBag<App>();
             await model.Grants.ForEachParallel(async grant =>
             {
@@ -430,10 +429,10 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var success = (await _userService.TwoFAVerificyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code)).Value;
+            var success = (await _userService.TwoFAVerifyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code)).Value;
             if (success)
             {
-                // go to recoverycodes page
+                // go to recovery codes page
                 return RedirectToAction(nameof(TwoFactorAuthentication), new { success = true });
             }
             else
