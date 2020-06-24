@@ -61,8 +61,8 @@ namespace Aiursoft.DocGenerator.Middlewares
             }
             context.Response.StatusCode = 200;
             var actionsMatches = new List<API>();
-            var possibleControllers = Assembly.GetEntryAssembly().GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type));
-            foreach (var controller in possibleControllers)
+            var possibleControllers = Assembly.GetEntryAssembly()?.GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type));
+            foreach (var controller in possibleControllers ?? new List<Type>())
             {
                 if (!IsController(controller))
                 {
@@ -70,7 +70,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                 }
                 var controllerRoute = controller.GetCustomAttributes(typeof(RouteAttribute), true)
                             .Select(t => t as RouteAttribute)
-                            .Select(t => t.Template)
+                            .Select(t => t?.Template)
                             .FirstOrDefault();
                 foreach (var method in controller.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
                 {
@@ -87,7 +87,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                         IsPost = method.CustomAttributes.Any(t => t.AttributeType == typeof(HttpPostAttribute)),
                         Routes = method.GetCustomAttributes(typeof(RouteAttribute), true)
                             .Select(t => t as RouteAttribute)
-                            .Select(t => t.Template)
+                            .Select(t => t?.Template)
                             .Select(t => $"{controllerRoute}/{t}")
                             .ToList(),
                         Arguments = args,
@@ -117,17 +117,16 @@ namespace Aiursoft.DocGenerator.Middlewares
                 }
                 await context.Response.WriteAsync(finalMarkDown);
             }
-            return;
         }
 
         private string[] GetPossibleResponses(MethodInfo action)
         {
             var possibleList = action.GetCustomAttributes(typeof(APIProduces))
-                .Select(t => (t as APIProduces).PossibleType)
+                .Select(t => (t as APIProduces)?.PossibleType)
                 .Select(t => t.Make())
-                .Select(t => JsonConvert.SerializeObject(t)).ToList();
+                .Select(JsonConvert.SerializeObject).ToList();
             possibleList.AddRange(
-                _globalPossibleResponse.Select(t => JsonConvert.SerializeObject(t)));
+                _globalPossibleResponse.Select(JsonConvert.SerializeObject));
             return possibleList.ToArray();
         }
 
@@ -153,7 +152,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                     args.Add(new Argument
                     {
                         Name = GetArgumentName(param, param.Name),
-                        Required = param.HasDefaultValue ? false : JudgeRequired(param.ParameterType, param.CustomAttributes),
+                        Required = !param.HasDefaultValue && JudgeRequired(param.ParameterType, param.CustomAttributes),
                         Type = ConvertTypeToArgumentType(param.ParameterType)
                     });
                 }
@@ -167,7 +166,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             var fromQuery = property.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
             if (fromQuery != null)
             {
-                var queriedName = (fromQuery as IModelNameProvider).Name;
+                var queriedName = (fromQuery as IModelNameProvider)?.Name;
                 if (!string.IsNullOrWhiteSpace(queriedName))
                 {
                     propName = queriedName;
@@ -199,18 +198,18 @@ namespace Aiursoft.DocGenerator.Middlewares
         private ArgumentType ConvertTypeToArgumentType(Type t)
         {
             return
-                t == typeof(int) ? ArgumentType.number :
-                t == typeof(int?) ? ArgumentType.number :
-                t == typeof(long) ? ArgumentType.number :
-                t == typeof(long?) ? ArgumentType.number :
-                t == typeof(string) ? ArgumentType.text :
-                t == typeof(DateTime) ? ArgumentType.datetime :
-                t == typeof(DateTime?) ? ArgumentType.datetime :
-                t == typeof(bool) ? ArgumentType.boolean :
-                t == typeof(bool?) ? ArgumentType.boolean :
-                t == typeof(string[]) ? ArgumentType.collection :
-                t == typeof(List<string>) ? ArgumentType.collection :
-                ArgumentType.unknown;
+                t == typeof(int) ? ArgumentType.Number :
+                t == typeof(int?) ? ArgumentType.Number :
+                t == typeof(long) ? ArgumentType.Number :
+                t == typeof(long?) ? ArgumentType.Number :
+                t == typeof(string) ? ArgumentType.Text :
+                t == typeof(DateTime) ? ArgumentType.Datetime :
+                t == typeof(DateTime?) ? ArgumentType.Datetime :
+                t == typeof(bool) ? ArgumentType.Boolean :
+                t == typeof(bool?) ? ArgumentType.Boolean :
+                t == typeof(string[]) ? ArgumentType.Collection :
+                t == typeof(List<string>) ? ArgumentType.Collection :
+                ArgumentType.Unknown;
         }
 
         private bool JudgeRequired(Type source, IEnumerable<CustomAttributeData> attributes)
@@ -220,10 +219,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                 return true;
             }
             return
-                source == typeof(int) ? true :
-                source == typeof(DateTime) ? true :
-                source == typeof(bool) ? true :
-                false;
+                source == typeof(int) || source == typeof(DateTime) || source == typeof(bool);
         }
     }
 
@@ -247,11 +243,11 @@ namespace Aiursoft.DocGenerator.Middlewares
 
     public enum ArgumentType
     {
-        text = 0,
-        number = 1,
-        boolean = 2,
-        datetime = 3,
-        collection = 4,
-        unknown = 5
+        Text = 0,
+        Number = 1,
+        Boolean = 2,
+        Datetime = 3,
+        Collection = 4,
+        Unknown = 5
     }
 }

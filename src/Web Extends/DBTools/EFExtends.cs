@@ -15,7 +15,7 @@ namespace Aiursoft.DBTools
 
     public static class EFExtends
     {
-        public static IEnumerable<M> DistinctBySync<T, M>(this IEnumerable<M> query) where M : ISyncable<T>
+        private static IEnumerable<M> DistinctBySync<T, M>(this IEnumerable<M> query) where M : ISyncable<T>
         {
             var knownKeys = new HashSet<M>();
             foreach (M element in query)

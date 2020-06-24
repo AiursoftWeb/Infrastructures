@@ -69,12 +69,12 @@ namespace Aiursoft.SDK.Services
             }
         }
 
-        public async Task<bool> TryConnect(string path)
+        private async Task<bool> TryConnect(string path)
         {
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Head, path);
-                var response = await _client.SendAsync(request);
+                await _client.SendAsync(request);
                 return true;
             }
             catch (HttpRequestException)
@@ -83,7 +83,7 @@ namespace Aiursoft.SDK.Services
             }
         }
 
-        public async Task<IDnsQueryResponse> QueryDNS(string host)
+        private async Task<IDnsQueryResponse> QueryDNS(string host)
         {
             var httpsRegex = new Regex("^https://", RegexOptions.Compiled);
             var httpRegex = new Regex("^http://", RegexOptions.Compiled);

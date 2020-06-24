@@ -18,17 +18,17 @@ namespace Aiursoft.DocGenerator.Services
         {
             switch (type)
             {
-                case ArgumentType.boolean:
+                case ArgumentType.Boolean:
                     return "Boolean";
-                case ArgumentType.text:
+                case ArgumentType.Text:
                     return "Text";
-                case ArgumentType.number:
+                case ArgumentType.Number:
                     return "Number";
-                case ArgumentType.datetime:
+                case ArgumentType.Datetime:
                     return "DateTime";
-                case ArgumentType.collection:
+                case ArgumentType.Collection:
                     return "Text Collection";
-                case ArgumentType.unknown:
+                case ArgumentType.Unknown:
                     return "A magic type!";
                 default:
                     break;
@@ -40,14 +40,14 @@ namespace Aiursoft.DocGenerator.Services
         {
             switch (arg.Type)
             {
-                case ArgumentType.boolean:
+                case ArgumentType.Boolean:
                     return "false";
-                case ArgumentType.datetime:
+                case ArgumentType.Datetime:
                     return "01/01/2018";
-                case ArgumentType.number:
+                case ArgumentType.Number:
                     return "0";
-                case ArgumentType.text:
-                case ArgumentType.collection:
+                case ArgumentType.Text:
+                case ArgumentType.Collection:
                     return $"your{arg.Name}";
                 default:
                     return $"your{arg.Name}";
@@ -59,7 +59,7 @@ namespace Aiursoft.DocGenerator.Services
             var path = "";
             foreach (var arg in args)
             {
-                if (arg.Type != ArgumentType.collection)
+                if (arg.Type != ArgumentType.Collection)
                 {
                     path += $"{arg.Name}={GetExampleValue(arg)}&";
                 }
