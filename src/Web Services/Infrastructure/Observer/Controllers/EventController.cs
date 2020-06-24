@@ -41,7 +41,7 @@ namespace Aiursoft.Observer.Controllers
                 {
                     AppId = appid
                 };
-                _dbContext.ObserverApps.Add(appLocal);
+                await _dbContext.ObserverApps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
             var newEvent = new ErrorLog
@@ -52,9 +52,9 @@ namespace Aiursoft.Observer.Controllers
                 EventLevel = model.EventLevel,
                 Path = model.Path
             };
-            _dbContext.ErrorLogs.Add(newEvent);
+            await _dbContext.ErrorLogs.AddAsync(newEvent);
             await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, $"Successfully logged your event.");
+            return this.Protocol(ErrorType.Success, "Successfully logged your event.");
         }
 
         [APIProduces(typeof(ViewLogViewModel))]
@@ -68,7 +68,7 @@ namespace Aiursoft.Observer.Controllers
                 {
                     AppId = appid
                 };
-                _dbContext.ObserverApps.Add(appLocal);
+                await _dbContext.ObserverApps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
 
