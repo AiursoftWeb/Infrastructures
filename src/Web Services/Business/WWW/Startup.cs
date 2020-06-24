@@ -37,7 +37,7 @@ namespace Aiursoft.WWW
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateyEndpoint: Configuration.GetConnectionString("GatewayConnection"));
+                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

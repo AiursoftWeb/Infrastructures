@@ -39,11 +39,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 PageSize = pageSize
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AiurPagedCollection<Grant>>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurPagedCollection<Grant>>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> DropGrantsAsync(string accessToken)

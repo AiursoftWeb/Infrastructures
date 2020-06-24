@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Identity.Services.Authentication;
-using Aiursoft.Identity.Services.Authentication.ToGoogerServer;
+using Aiursoft.Identity.Services.Authentication.ToGoogleServer;
 
 namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
 {

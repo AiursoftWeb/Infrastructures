@@ -34,20 +34,20 @@ namespace Aiursoft.Probe.SDK
             return services;
         }
 
-        public static IHost InitSite<TokenProvider>(this IHost host,
+        public static IHost InitSite<TProvider>(this IHost host,
             Func<IConfiguration, string> getConfig,
-            Func<TokenProvider, Task<string>> getToken,
+            Func<TProvider, Task<string>> getToken,
             bool openToUpload = true,
-            bool openToDownload = true) where TokenProvider : class
+            bool openToDownload = true) where TProvider : class
         {
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var configuration = services.GetService<IConfiguration>();
-                var logger = services.GetRequiredService<ILogger<TokenProvider>>();
+                var logger = services.GetRequiredService<ILogger<TProvider>>();
                 var siteName = getConfig(configuration);
                 var sitesService = services.GetService<SitesService>();
-                var tokenProvider = services.GetService(typeof(TokenProvider)) as TokenProvider;
+                var tokenProvider = services.GetService(typeof(TProvider)) as TProvider;
                 Task.Factory.StartNew(async () =>
                 {
                     // Wait 20 seconds. Dependencies might not be started yet.

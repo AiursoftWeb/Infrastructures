@@ -59,7 +59,11 @@ namespace Aiursoft.SDK.Middlewares
                         var accessToken = _appsContainer.AccessToken();
                         await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, context.Request.Path);
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
+
                     return;
                 }
                 throw;

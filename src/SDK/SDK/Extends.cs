@@ -8,7 +8,6 @@ using Aiursoft.SDK.Middlewares;
 using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -101,7 +100,7 @@ namespace Aiursoft.SDK
             {
                 app.UseMiddleware<HandleRobotsMiddleware>();
                 app.UseMiddleware<EnforceHttpsMiddleware>();
-                app.UseMiddleware<APIFriendlyServerExceptionMiddeware>();
+                app.UseMiddleware<APIFriendlyServerExceptionMiddleware>();
             }
             return app;
         }
@@ -110,11 +109,12 @@ namespace Aiursoft.SDK
         /// Static files, routing, auth, language switcher, endpoints.
         /// </summary>
         /// <param name="app"></param>
+        /// <param name="beforeMvc"></param>
         /// <returns></returns>
         public static IApplicationBuilder UseAiursoftDefault(
             this IApplicationBuilder app,
             Func<IApplicationBuilder,
-            IApplicationBuilder> beforeMVC = null)
+            IApplicationBuilder> beforeMvc = null)
         {
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
@@ -126,7 +126,7 @@ namespace Aiursoft.SDK
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAiursoftAPIDefault(false, beforeMVC);
+            app.UseAiursoftAPIDefault(false, beforeMvc);
             app.UseMiddleware<SwitchLanguageMiddleware>();
 
             return app;
@@ -136,13 +136,15 @@ namespace Aiursoft.SDK
         /// Static files, routing, auth, language switcher, endpoints.
         /// </summary>
         /// <param name="app"></param>
+        /// <param name="addRouting"></param>
+        /// <param name="beforeMvc"></param>
         /// <returns></returns>
         public static IApplicationBuilder UseAiursoftAPIDefault(
             this IApplicationBuilder app,
             bool addRouting = true,
-            Func<IApplicationBuilder, IApplicationBuilder> beforeMVC = null)
+            Func<IApplicationBuilder, IApplicationBuilder> beforeMvc = null)
         {
-            beforeMVC?.Invoke(app);
+            beforeMvc?.Invoke(app);
             if (addRouting)
             {
                 app.UseRouting();
@@ -185,7 +187,7 @@ namespace Aiursoft.SDK
         {
             services.AddHttpClient();
             services.AddMemoryCache();
-            if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
+            if (Assembly.GetEntryAssembly()?.FullName?.StartsWith("ef") ?? false)
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
@@ -204,8 +206,6 @@ namespace Aiursoft.SDK
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var context = services.GetService<TContext>();
                 var configuration = services.GetService<IConfiguration>();
-                var env = services.GetService<IWebHostEnvironment>();
-
                 var connectionString = configuration.GetConnectionString("DatabaseConnection");
                 try
                 {

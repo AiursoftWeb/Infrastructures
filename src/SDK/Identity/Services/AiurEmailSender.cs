@@ -55,7 +55,6 @@ namespace Aiursoft.Identity.Services
                 mailMessage.To.Add(target);
                 mailMessage.Bcc.Add(_mailUser);
                 await client.SendMailAsync(mailMessage);
-                return;
             }
             catch (Exception e)
             {
@@ -65,7 +64,10 @@ namespace Aiursoft.Identity.Services
                     var accessToken = _appsContainer.AccessToken();
                     await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, string.Empty);
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
         }
     }

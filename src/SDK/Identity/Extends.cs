@@ -32,9 +32,14 @@ namespace Aiursoft.Identity
             string archonEndpoint,
             string observerEndpoint,
             string probeEndpoint,
-            string gateyEndpoint) where TUser : AiurUserBase, new()
+            string gateEndpoint) where TUser : AiurUserBase, new()
         {
-            if (Assembly.GetEntryAssembly().FullName.StartsWith("ef"))
+            var entry = Assembly.GetEntryAssembly();
+            if (entry == null)
+            {
+                throw new ArgumentNullException(nameof(entry));
+            }
+            if (entry.FullName?.StartsWith("ef") ?? false)
             {
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
@@ -42,7 +47,7 @@ namespace Aiursoft.Identity
             services.AddObserverServer(observerEndpoint); // For error reporting.
             services.AddArchonServer(archonEndpoint); // For token exchanging.
             services.AddProbeServer(probeEndpoint); // For file storaging.
-            services.AddGatewayServer(gateyEndpoint); // For authentication.
+            services.AddGatewayServer(gateEndpoint); // For authentication.
             services.AddBasic(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();

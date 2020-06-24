@@ -37,7 +37,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
             if (!await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
             {
                 var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
-                return await _tokenService.GetTokenAsync(accessToken, siteName, new string[] { "Upload" }, path);
+                return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path);
             }
             return string.Empty;
         }

@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.SDK.Middlewares
 {
-    public class APIFriendlyServerExceptionMiddeware
+    public class APIFriendlyServerExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<APIFriendlyServerExceptionMiddeware> _logger;
+        private readonly ILogger<APIFriendlyServerExceptionMiddleware> _logger;
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
 
-        public APIFriendlyServerExceptionMiddeware(
+        public APIFriendlyServerExceptionMiddleware(
             RequestDelegate next,
-            ILogger<APIFriendlyServerExceptionMiddeware> logger,
+            ILogger<APIFriendlyServerExceptionMiddleware> logger,
             AppsContainer appsContainer,
             EventService eventService)
         {
@@ -44,7 +44,7 @@ namespace Aiursoft.SDK.Middlewares
                     context.Response.Clear();
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = "application/json; charset=utf-8";
-                    var projectName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+                    var projectName = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name;
                     var message = JsonConvert.SerializeObject(new AiurProtocol
                     {
                         Code = ErrorType.UnknownError,
@@ -57,7 +57,11 @@ namespace Aiursoft.SDK.Middlewares
                         var accessToken = _appsContainer.AccessToken();
                         await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, context.Request.Path);
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
+
                     return;
                 }
                 throw;

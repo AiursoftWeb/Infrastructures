@@ -5,11 +5,6 @@ namespace Aiursoft.Identity.Views.Shared.Components.ChinaRegister
 {
     public class ChinaRegister : ViewComponent
     {
-        public ChinaRegister()
-        {
-
-        }
-
         public IViewComponentResult Invoke()
         {
             var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>();

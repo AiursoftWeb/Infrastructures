@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.Identity.Services.Authentication.ToGoogerServer
+namespace Aiursoft.Identity.Services.Authentication.ToGoogleServer
 {
     public class GoogleUserDetail : IUserDetail
     {

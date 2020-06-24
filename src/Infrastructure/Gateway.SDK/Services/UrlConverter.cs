@@ -6,7 +6,7 @@ namespace Aiursoft.Gateway.SDK.Services
 {
     public class UrlConverter : ITransientDependency
     {
-        public readonly GatewayLocator _serviceLocation;
+        private readonly GatewayLocator _serviceLocation;
 
         public UrlConverter(
             GatewayLocator serviceLocation)
