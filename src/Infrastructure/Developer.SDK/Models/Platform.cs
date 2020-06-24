@@ -1,10 +1,10 @@
 ﻿namespace Aiursoft.Developer.SDK.Models
 {
-    public enum Platform : int
+    public enum Platform
     {
         CrossPlatform = 0,
         Android = 1,
-        iOS = 2,
+        IOS = 2,
         WindowsDesktop = 3,
         WindowsUWP = 4,
         Linux = 5,

@@ -41,10 +41,10 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
                 AppId = appId
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            var jResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
     }
 }

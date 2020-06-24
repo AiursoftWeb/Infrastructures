@@ -26,11 +26,11 @@ namespace Aiursoft.Archon.SDK.Services.ToArchonServer
         {
             var url = new AiurUrl(_archonLocator.Endpoint, "Home", "Index", new { });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<IndexViewModel>(result);
+            var jResult = JsonConvert.DeserializeObject<IndexViewModel>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
@@ -41,11 +41,11 @@ namespace Aiursoft.Archon.SDK.Services.ToArchonServer
                 AppSecret = appSecret
             });
             var result = await _http.Get(url, true);
-            var JResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
+            var jResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
-            if (JResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(JResult);
-            return JResult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexceptedResponse(jResult);
+            return jResult;
         }
     }
 }
