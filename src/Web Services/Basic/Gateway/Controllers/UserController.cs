@@ -241,7 +241,7 @@ namespace Aiursoft.Gateway.Controllers
             var appToDelete = await _dbContext
                 .LocalAppGrant
                 .Where(t => t.GatewayUserId == user.Id)
-                .SingleOrDefaultAsync(t => t.AppID == model.AppIdToDrop);
+                .SingleOrDefaultAsync(t => t.AppId == model.AppIdToDrop);
             if (appToDelete == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can not find target grant record with app with id: {model.AppIdToDrop}");

@@ -335,13 +335,13 @@ namespace Aiursoft.Account.Controllers
             {
                 try
                 {
-                    var appInfo = await _developerApiService.AppInfoAsync(grant.AppID);
+                    var appInfo = await _developerApiService.AppInfoAsync(grant.AppId);
                     appsBag.Add(appInfo.App);
                 }
                 catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound) { }
             });
             model.Apps = appsBag.OrderBy(app =>
-                model.Grants.Single(grant => grant.AppID == app.AppId).GrantTime).ToList();
+                model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
             return View(model);
         }
 

@@ -102,7 +102,7 @@ namespace Aiursoft.Gateway.Controllers
             var query = _dbContext
                 .LocalAppGrant
                 .Include(t => t.User)
-                .Where(t => t.AppID == appid)
+                .Where(t => t.AppId == appid)
                 .OrderByDescending(t => t.GrantTime);
             var result = await AiurPagedCollectionBuilder.BuildAsync<Grant>(
                 query,
@@ -118,7 +118,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> DropGrants([Required]string accessToken)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
-            _dbContext.LocalAppGrant.Delete(t => t.AppID == appid);
+            _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully droped all users granted!");
         }

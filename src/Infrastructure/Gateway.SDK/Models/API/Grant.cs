@@ -5,7 +5,7 @@ namespace Aiursoft.Gateway.SDK.Models.API
 {
     public class Grant
     {
-        public string AppID { get; set; }
+        public string AppId { get; set; }
         public DateTime GrantTime { get; set; } = DateTime.UtcNow;
         public string GatewayUserId { get; set; }
         [NotMapped]

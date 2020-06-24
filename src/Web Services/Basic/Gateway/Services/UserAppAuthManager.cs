@@ -61,7 +61,7 @@ namespace Aiursoft.Gateway.Services
             {
                 var appGrant = new AppGrant
                 {
-                    AppID = appId,
+                    AppId = appId,
                     GatewayUserId = user.Id
                 };
                 _dbContext.LocalAppGrant.Add(appGrant);
@@ -86,7 +86,7 @@ namespace Aiursoft.Gateway.Services
         {
             return _dbContext
                 .LocalAppGrant
-                .Where(t => t.AppID == appId)
+                .Where(t => t.AppId == appId)
                 .AnyAsync(t => t.GatewayUserId == user.Id);
         }
 

@@ -38,7 +38,7 @@ namespace Aiursoft.Gateway.Services
             var appid = _tokenManager.ValidateAccessToken(accessToken);
             var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);
             var app = await _aiurCache.GetAndCache($"app-info-cache-{appid}", () => _developerApiService.AppInfoAsync(appid));
-            if (!_dbContext.LocalAppGrant.Any(t => t.AppID == appid && t.GatewayUserId == targetUser.Id))
+            if (!_dbContext.LocalAppGrant.Any(t => t.AppId == appid && t.GatewayUserId == targetUser.Id))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");
             }
