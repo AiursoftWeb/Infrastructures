@@ -14,7 +14,7 @@ namespace Aiursoft.XelNaga.Tools
             foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
             {
                 var attribute = prop.GetCustomAttributes(typeof(CSVProperty), true).FirstOrDefault();
-                csv += $@"""{(attribute as CSVProperty).Name}"",";
+                csv += $@"""{(attribute as CSVProperty)?.Name}"",";
             }
             csv = csv.Trim(',') + "\r\n";
             foreach (var item in items)

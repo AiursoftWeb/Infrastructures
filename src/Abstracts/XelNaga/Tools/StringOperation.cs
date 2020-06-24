@@ -46,7 +46,7 @@ namespace Aiursoft.XelNaga.Tools
 
         public static byte[] ToUTF8WithDom(this string content)
         {
-            byte[] encoded = new System.Text.UTF8Encoding().GetBytes(content);
+            byte[] encoded = new UTF8Encoding().GetBytes(content);
             var bom = new byte[] { 0xEF, 0xBB, 0xBF };
             var all = new byte[bom.Length + encoded.Length];
             Array.Copy(bom, all, bom.Length);
@@ -119,9 +119,9 @@ namespace Aiursoft.XelNaga.Tools
             return filename.IsInFollowingExtension("mp4", "webm", "ogg");
         }
 
-        public static string ORemoveHTML(this string content)
+        public static string ORemoveHtml(this string content)
         {
-            string s = string.Empty;
+            var s = string.Empty;
             content = WebUtility.HtmlDecode(content);
             if (!content.Contains(">"))
             {
@@ -129,21 +129,20 @@ namespace Aiursoft.XelNaga.Tools
             }
             while (content.Contains(">"))
             {
-                s += content.Substring(0, content.IndexOf("<"));
-                content = content.Substring(content.IndexOf(">") + 1);
+                s += content.Substring(0, content.IndexOf("<", StringComparison.Ordinal));
+                content = content.Substring(content.IndexOf(">", StringComparison.Ordinal) + 1);
             }
             return s + content;
         }
 
-        private static Random _staticRan { get; set; } = new Random();
+        private static Random StaticRan { get; } = new Random();
         public static string RandomString(int count)
         {
-            int number;
             string checkCode = string.Empty;
-            var random = new Random(_staticRan.Next());
+            var random = new Random(StaticRan.Next());
             for (int i = 0; i < count; i++)
             {
-                number = random.Next();
+                var number = random.Next();
                 number %= 36;
                 if (number < 10)
                 {
@@ -194,11 +193,11 @@ namespace Aiursoft.XelNaga.Tools
         {
             if (input == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException(nameof(input));
             }
             if (partLength <= 0)
             {
-                throw new ArgumentException("Part length has to be positive.", "partLength");
+                throw new ArgumentException("Part length has to be positive.", nameof(partLength));
             }
             for (var i = 0; i < input.Length; i += partLength)
             {
@@ -215,7 +214,7 @@ namespace Aiursoft.XelNaga.Tools
                 order++;
                 size /= 1024;
             }
-            return string.Format("{0:0.##} {1}", size, sizes[order]);
+            return $"{size:0.##} {sizes[order]}";
         }
     }
 }

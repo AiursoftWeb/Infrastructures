@@ -43,7 +43,7 @@ namespace Aiursoft.XelNaga.Services
             }
             else
             {
-                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
 
@@ -69,7 +69,7 @@ namespace Aiursoft.XelNaga.Services
             }
             else
             {
-                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
 
@@ -97,7 +97,7 @@ namespace Aiursoft.XelNaga.Services
             }
             else
             {
-                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
     }

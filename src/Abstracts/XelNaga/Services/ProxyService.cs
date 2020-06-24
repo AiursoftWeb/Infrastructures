@@ -8,7 +8,7 @@ namespace Aiursoft.XelNaga.Services
 {
     public static class ProxyService
     {
-        private const int _streamCopyBufferSize = 81920;
+        private const int StreamCopyBufferSize = 81920;
         public static HttpRequestMessage CreateProxyHttpRequest(this HttpContext context, Uri uri)
         {
             var request = context.Request;
@@ -27,7 +27,7 @@ namespace Aiursoft.XelNaga.Services
             // Copy the request headers
             foreach (var header in request.Headers)
             {
-                if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()) && requestMessage.Content != null)
+                if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()))
                 {
                     requestMessage.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
                 }
@@ -64,10 +64,8 @@ namespace Aiursoft.XelNaga.Services
             // SendAsync removes chunking from the response. This removes the header so it doesn't expect a chunked response.
             response.Headers.Remove("transfer-encoding");
 
-            using (var responseStream = await responseMessage.Content.ReadAsStreamAsync())
-            {
-                await responseStream.CopyToAsync(response.Body, _streamCopyBufferSize, context.RequestAborted);
-            }
+            await using var responseStream = await responseMessage.Content.ReadAsStreamAsync();
+            await responseStream.CopyToAsync(response.Body, StreamCopyBufferSize, context.RequestAborted);
         }
     }
 }

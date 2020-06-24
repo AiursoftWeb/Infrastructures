@@ -21,8 +21,8 @@ namespace Aiursoft.Archon.SDK.Services
             ACToken token;
             try
             {
-                var tokenparts = value.Split('.');
-                string tokenBase64 = tokenparts[0], tokenSign = tokenparts[1];
+                var tokenParts = value.Split('.');
+                string tokenBase64 = tokenParts[0], tokenSign = tokenParts[1];
                 token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
                 if (DateTime.UtcNow > token.Expires)
                 {
