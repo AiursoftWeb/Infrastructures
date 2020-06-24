@@ -9,7 +9,7 @@ namespace Aiursoft.Handler.Exceptions
     /// </summary>
     public class AiurAPIModelException : Exception
     {
-        public ErrorType Code { get; set; }
+        public ErrorType Code { get; }
         public AiurAPIModelException(ErrorType code, string message) : base(message)
         {
             Code = code;

@@ -4,7 +4,7 @@ namespace Aiursoft.XelNaga.Attributes
 {
     public class CSVProperty : Attribute
     {
-        public string Name;
+        public readonly string Name;
         public CSVProperty(string name)
         {
             Name = name;

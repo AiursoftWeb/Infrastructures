@@ -2,24 +2,26 @@
 
 namespace Aiursoft.XelNaga.Models
 {
-    public class MIME
+    public static class MIME
     {
-        public static bool HasKey(string extension)
+        private static bool HasKey(string extension)
         {
             string lower = extension.ToLower().TrimStart('.');
-            return _mimeTypesDictionary.ContainsKey(lower);
+            return MimeTypesDictionary.ContainsKey(lower);
         }
+
         public static string GetContentType(string extenstion)
         {
             //Not to download the file, and we can process the file, let us process it.
             if (HasKey(extenstion))
             {
                 string lower = extenstion.ToLower().TrimStart('.');
-                return _mimeTypesDictionary[lower];
+                return MimeTypesDictionary[lower];
             }
             return "application/octet-stream";
         }
-        private static readonly Dictionary<string, string> _mimeTypesDictionary = new Dictionary<string, string>
+
+        private static readonly Dictionary<string, string> MimeTypesDictionary = new Dictionary<string, string>
         {
             {"wav", "audio/wav"},
             {"mkv", "video/x-matroska"},

@@ -24,21 +24,21 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        private static readonly TaskFactory _taskFactory = new
+        private static readonly TaskFactory TaskFactory = new
             TaskFactory(CancellationToken.None,
                         TaskCreationOptions.None,
                         TaskContinuationOptions.None,
                         TaskScheduler.Default);
 
         public static TResult RunSync<TResult>(Func<Task<TResult>> func)
-            => _taskFactory
+            => TaskFactory
                 .StartNew(func)
                 .Unwrap()
                 .GetAwaiter()
                 .GetResult();
 
         public static void RunSync(Func<Task> func)
-            => _taskFactory
+            => TaskFactory
                 .StartNew(func)
                 .Unwrap()
                 .GetAwaiter()

@@ -50,7 +50,7 @@ namespace Aiursoft.Stargate.Controllers
             //Create Message
             var message = new Message
             {
-                Id = _counter.GetUniqueNo,
+                Id = _counter.GetUniqueNo(),
                 ChannelId = channel.Id,
                 Content = model.MessageContent
             };

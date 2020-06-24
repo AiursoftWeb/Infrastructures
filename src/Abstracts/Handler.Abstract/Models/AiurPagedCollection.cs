@@ -6,7 +6,7 @@ namespace Aiursoft.Handler.Models
     public class AiurPagedCollection<T> : AiurCollection<T>
     {
         [Obsolete("This method is only for framework", true)]
-        public AiurPagedCollection() : base() { }
+        public AiurPagedCollection() { }
         public AiurPagedCollection(List<T> items) : base(items) { }
 
         public int TotalCount { get; set; }
