@@ -14,7 +14,7 @@ namespace Aiursoft.Stargate.Services
     public class WebSocketPusher : IScopedDependency
     {
         private WebSocket _ws;
-        private bool _dropped = false;
+        private bool _dropped;
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
 
@@ -45,7 +45,7 @@ namespace Aiursoft.Stargate.Services
                 var buffer = new ArraySegment<byte>(new byte[4096 * 20]);
                 while (true)
                 {
-                    var received = await _ws.ReceiveAsync(buffer, CancellationToken.None);
+                    await _ws.ReceiveAsync(buffer, CancellationToken.None);
                     if (_ws.State != WebSocketState.Open)
                     {
                         _dropped = true;

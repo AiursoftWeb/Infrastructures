@@ -141,4 +141,8 @@
   <data name="Bind now" xml:space="preserve">
     <value>立即绑定</value>
   </data>
+  <data name="View in" xml:space="preserve">
+    <value>查看绑定于</value>
+    <comment>View in</comment>
+  </data>
 </root>

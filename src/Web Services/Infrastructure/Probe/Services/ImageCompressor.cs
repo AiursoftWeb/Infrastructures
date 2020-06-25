@@ -12,8 +12,8 @@ namespace Aiursoft.Probe.Services
     {
         private readonly SizeCalculator _sizeCalculator;
         private readonly string _tempFilePath;
-        private static readonly object _objCompreLock = new object();
-        private static readonly object _objClearLock = new object();
+        private static readonly object ObjCompareLock = new object();
+        private static readonly object ObjClearLock = new object();
 
         public ImageCompressor(
             IConfiguration configuration,
@@ -36,9 +36,9 @@ namespace Aiursoft.Probe.Services
                 {
                     Directory.CreateDirectory(clearedFolder);
                 }
-                var clearededImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
-                await ClearImage(path, clearededImagePath);
-                return clearededImagePath;
+                var clearedImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
+                await ClearImage(path, clearedImagePath);
+                return clearedImagePath;
             }
             catch (ImageFormatException)
             {
@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.Services
             {
                 return;
             }
-            else if (fileExists && !fileCanRead)
+            if (fileExists)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
@@ -63,7 +63,7 @@ namespace Aiursoft.Probe.Services
             }
             else
             {
-                lock (_objClearLock)
+                lock (ObjClearLock)
                 {
                     using var stream = File.OpenWrite(saveTarget);
                     var image = Image.Load(sourceImage, out IImageFormat format);
@@ -104,7 +104,7 @@ namespace Aiursoft.Probe.Services
             {
                 return;
             }
-            else if (fileExists && !fileCanRead)
+            if (fileExists)
             {
                 while (!FileCanBeRead(saveTarget))
                 {
@@ -113,7 +113,7 @@ namespace Aiursoft.Probe.Services
             }
             else
             {
-                lock (_objCompreLock)
+                lock (ObjCompareLock)
                 {
                     // Create file
                     using var stream = File.OpenWrite(saveTarget);

@@ -3,7 +3,6 @@ using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
 using Aiursoft.XelNaga.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
@@ -54,7 +53,7 @@ namespace Aiursoft.Wrapgate.Controllers
                 case RecordType.ReverseProxy:
                     return await RewriteToUrl(builtUrl);
                 default:
-                    throw new NotImplementedException();
+                    return Redirect(builtUrl);
             }
         }
 

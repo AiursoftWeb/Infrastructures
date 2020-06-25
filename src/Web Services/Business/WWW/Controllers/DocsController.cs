@@ -1,7 +1,7 @@
 using Aiursoft.Handler.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.WWW
+namespace Aiursoft.WWW.Controllers
 {
     [LimitPerMin]
     public class DocsController : Controller

@@ -144,4 +144,13 @@
   <data name="Sign Up" xml:space="preserve">
     <value>注册</value>
   </data>
+  <data name="en-US" xml:space="preserve">
+    <value>zh-CN</value>
+  </data>
+  <data name="By register, you agree to our " xml:space="preserve">
+    <value>注册账号，视为同意我们的</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>许可协议</value>
+  </data>
 </root>

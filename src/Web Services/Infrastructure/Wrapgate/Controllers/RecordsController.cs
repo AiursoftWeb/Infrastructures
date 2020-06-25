@@ -8,7 +8,7 @@ using Aiursoft.Wrapgate.SDK.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Probe.Controllers
+namespace Aiursoft.Wrapgate.Controllers
 {
     [LimitPerMin]
     [APIExpHandler]

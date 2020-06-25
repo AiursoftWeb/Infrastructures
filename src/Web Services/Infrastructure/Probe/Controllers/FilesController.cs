@@ -148,7 +148,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
             var fileName = _folderSpliter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
-            await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId); ;
+            await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
             var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
             var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
             return Json(new UploadFileViewModel

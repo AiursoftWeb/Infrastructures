@@ -10,7 +10,7 @@
                 <h1>@Localizer["Unlock the power of your"]</h1>
                 <h1 class="mb-5">@Values.ProjectName Account</h1>
                 @{
-                    var description = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
+                    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
                 }
                 <h3>@description</h3>
             </div>
@@ -36,7 +36,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-book m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["Kahla"]</h3>
+                    <h3>Kahla</h3>
                 </div>
             </div>
             <div class="col-lg">
@@ -44,7 +44,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-wrench m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["EE"]</h3>
+                    <h3>EE</h3>
                 </div>
             </div>
             <div class="col-lg">
@@ -52,7 +52,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-share-alt m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["Colossus"]</h3>
+                    <h3>Colossus</h3>
                 </div>
             </div>
             <div class="col-lg">
@@ -60,7 +60,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-book m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["Stargate"]</h3>
+                    <h3>Stargate</h3>
                 </div>
             </div>
             <div class="col-lg">
@@ -68,7 +68,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-wrench m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["OSS"]</h3>
+                    <h3>Probe</h3>
                 </div>
             </div>
             <div class="col-lg">
@@ -76,7 +76,7 @@
                     <div class="features-icons-icon d-flex">
                         <i class="fa fa-share-alt m-auto text-primary"></i>
                     </div>
-                    <h3>@Localizer["Developer"]</h3>
+                    <h3>Developer</h3>
                 </div>
             </div>
         </div>

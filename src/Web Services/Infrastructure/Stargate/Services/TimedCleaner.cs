@@ -50,7 +50,7 @@ namespace Aiursoft.Stargate.Services
             _logger.LogInformation("Cleaner task finished!");
         }
 
-        public async Task AllClean(StargateDbContext dbContext)
+        private async Task AllClean(StargateDbContext dbContext)
         {
             try
             {
@@ -59,12 +59,12 @@ namespace Aiursoft.Stargate.Services
                     var middleMessage = _memoryContext.Messages.Average(t => t.Id);
                     _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
                 }
-                var tobeDeleted = dbContext
+                var toDelete = dbContext
                     .Channels
-                    .AsEnumerable()
+                    .ToList()
                     .Where(t => _channelLiveJudger.IsDead(t.Id))
                     .ToList();
-                dbContext.Channels.RemoveRange(tobeDeleted);
+                dbContext.Channels.RemoveRange(toDelete);
                 await dbContext.SaveChangesAsync();
             }
             catch (Exception e)

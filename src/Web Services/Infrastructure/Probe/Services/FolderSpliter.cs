@@ -26,7 +26,8 @@ namespace Aiursoft.Probe.Services
 
         public string GetValidFileName(IEnumerable<string> existingFileNames, string expectedFileName)
         {
-            while (existingFileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
+            var fileNames = existingFileNames.ToArray();
+            while (fileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
             {
                 expectedFileName = "_" + expectedFileName;
             }

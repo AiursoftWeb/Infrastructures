@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Identity.Views.Shared.Components.AiurFooter
+namespace Aiursoft.WWW.Views.Shared.Components.WebPage
 {
     public class WebPage : ViewComponent
     {

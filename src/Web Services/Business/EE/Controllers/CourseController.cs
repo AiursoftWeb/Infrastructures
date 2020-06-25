@@ -19,20 +19,17 @@ namespace Aiursoft.EE.Controllers
     public class CourseController : Controller
     {
         private readonly UserManager<EEUser> _userManager;
-        private readonly SignInManager<EEUser> _signInManager;
         private readonly EEDbContext _dbContext;
         private readonly ServiceLocation _serviceLocation;
         private readonly ScriptsFilter _scriptsFilter;
 
         public CourseController(
             UserManager<EEUser> userManager,
-            SignInManager<EEUser> signInManager,
             EEDbContext dbContext,
             ServiceLocation serviceLocation,
             ScriptsFilter scriptsFilter)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _dbContext = dbContext;
             _serviceLocation = serviceLocation;
             _scriptsFilter = scriptsFilter;
@@ -91,7 +88,7 @@ namespace Aiursoft.EE.Controllers
                 .Where(t => t.Context.CourseId == course.Id)
                 .ToListAsync();
             var user = await GetCurrentUserAsync();
-            var Subscribed = user != null && await _dbContext
+            var subscribed = user != null && await _dbContext
                 .Subscriptions
                 .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id) != null;
 
@@ -105,12 +102,13 @@ namespace Aiursoft.EE.Controllers
                 TeacherDescription = course.Owner.LongDescription,
                 Name = course.Name,
                 Description = course.Description,
-                Subscribed = Subscribed,
+                Subscribed = subscribed,
                 IsOwner = user?.Id == course.OwnerId,
                 AuthorName = course.Owner.NickName,
                 DisplayOwnerInfo = course.DisplayOwnerInfo,
                 Sections = course.Sections,
-                WhatYouWillLearn = course.WhatYouWillLearn
+                WhatYouWillLearn = course.WhatYouWillLearn,
+                Chapters = allChapters
             };
             return View(model);
         }
@@ -130,11 +128,11 @@ namespace Aiursoft.EE.Controllers
                 return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
             }
 
-            var sub = await _dbContext
+            var subscribed = await _dbContext
                 .Subscriptions
-                .SingleOrDefaultAsync(t => t.CourseId == id && user.Id == user.Id);
+                .AnyAsync(t => t.CourseId == id && t.UserId == user.Id);
 
-            if (sub == null)
+            if (!subscribed)
             {
                 var newSubscription = new Subscription
                 {
@@ -164,7 +162,7 @@ namespace Aiursoft.EE.Controllers
             }
             var sub = await _dbContext
                 .Subscriptions
-                .SingleOrDefaultAsync(t => t.CourseId == id && user.Id == user.Id);
+                .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id);
 
             if (sub != null)
             {

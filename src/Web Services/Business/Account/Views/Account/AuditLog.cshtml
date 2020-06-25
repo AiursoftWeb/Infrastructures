@@ -45,6 +45,10 @@
                 @foreach (var log in Model.Logs.Items)
                 {
                     var app = Model.Apps.SingleOrDefault(t => t.AppId == log.AppId);
+                    if (app == null)
+                    {
+                        continue;
+                    }
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-10 d-flex">

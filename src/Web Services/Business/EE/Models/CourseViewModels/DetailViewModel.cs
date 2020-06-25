@@ -18,5 +18,6 @@ namespace Aiursoft.EE.Models.CourseViewModels
         public bool DisplayOwnerInfo { get; set; }
 
         public IEnumerable<Section> Sections { get; set; }
+        public List<Chapter> Chapters { get; set; }
     }
 }

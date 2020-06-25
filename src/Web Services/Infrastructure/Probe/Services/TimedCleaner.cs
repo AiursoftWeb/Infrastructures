@@ -2,7 +2,6 @@
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -77,14 +76,13 @@ namespace Aiursoft.Probe.Services
             var storageFiles = storageProvider.GetAllFileNamesInHardware();
             foreach (var file in storageFiles)
             {
-                if (!files.Any(t => t.HardwareId == file))
+                if (files.All(t => t.HardwareId != file))
                 {
-                    _logger.LogWarning($"Cleaner message: File with harewareId: {file} was found on disk but not found in database! Consider Delete that file on disk!");
+                    _logger.LogWarning($"Cleaner message: File with hardware Id: {file} was found on disk but not found in database! Consider Delete that file on disk!");
                     // delete file in disk
                     storageProvider.DeleteToTrash(file);
                 }
             }
-            return;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

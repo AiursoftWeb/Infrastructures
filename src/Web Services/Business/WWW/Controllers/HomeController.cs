@@ -6,7 +6,6 @@ using Aiursoft.WWW.Models;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
@@ -15,21 +14,18 @@ namespace Aiursoft.WWW.Controllers
     [LimitPerMin]
     public class HomeController : Controller
     {
-        public readonly SignInManager<WWWUser> _signInManager;
-        public readonly ILogger _logger;
+        private readonly SignInManager<WWWUser> _signInManager;
+        private readonly ILogger _logger;
         private readonly GatewayLocator _serviceLocation;
-        private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(
             SignInManager<WWWUser> signInManager,
             ILoggerFactory loggerFactory,
-            GatewayLocator serviceLocation,
-            IStringLocalizer<HomeController> localizer)
+            GatewayLocator serviceLocation)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<HomeController>();
             _serviceLocation = serviceLocation;
-            _localizer = localizer;
         }
 
         [AiurForceAuth("", "", justTry: true)]

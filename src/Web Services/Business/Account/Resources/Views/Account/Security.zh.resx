@@ -135,4 +135,8 @@
   <data name="Change Password" xml:space="preserve">
     <value>更改密码</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清空</value>
+    <comment>Clear</comment>
+  </data>
 </root>

@@ -17,18 +17,18 @@ namespace Aiursoft.WWW.Controllers
         private readonly SearchService _searchService;
         private readonly WWWDbContext _dbContext;
         private readonly BingTranslator _bingTranslator;
-        private readonly AiurCache _cahce;
+        private readonly AiurCache _cahceService;
 
         public SearchController(
             SearchService searchService,
             WWWDbContext dbContext,
             BingTranslator bingTranslator,
-            AiurCache cahce)
+            AiurCache cahceService)
         {
             _searchService = searchService;
             _dbContext = dbContext;
             _bingTranslator = bingTranslator;
-            _cahce = cahce;
+            _cahceService = cahceService;
         }
 
         [Route("search")]
@@ -40,8 +40,8 @@ namespace Aiursoft.WWW.Controllers
             }
             ViewBag.CurrentPage = page;
             var market = CultureInfo.CurrentCulture.Name;
-            var result = await _cahce.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
-            ViewBag.Entities = await _cahce.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
+            var result = await _cahceService.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
+            ViewBag.Entities = await _cahceService.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
             if (HttpContext.AllowTrack())
             {
                 await _dbContext.SearchHistories.AddAsync(new SearchHistory
@@ -60,18 +60,18 @@ namespace Aiursoft.WWW.Controllers
         public async Task<IActionResult> Suggestion([FromRoute] string question)
         {
             var market = CultureInfo.CurrentCulture.Name;
-            var suggestions = await _cahce.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
+            var suggestions = await _cahceService.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
             var strings = suggestions
                 ?.SuggestionGroups
                 ?.FirstOrDefault(t => t.Name == "Web")
                 ?.SearchSuggestions
                 ?.Select(t => t.Query)
-                ?.Take(10)
-                ?.ToList();
+                .Take(10)
+                .ToList();
             return Json(strings);
         }
 
-        [Route("opensearch")]
+        [Route("open-search")]
         public IActionResult OpenSearch()
         {
             Response.ContentType = "text/xml";

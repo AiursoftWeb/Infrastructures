@@ -12,9 +12,9 @@
     <script src="https://ui.aiursoft.com/node_modules/jquery/dist/jquery.min.js"></script>
     <script>
     function GetWSAddress(){
-        var ishttps = 'https:' == document.location.protocol ? true: false;
+        var https = 'https:' === document.location.protocol ? true: false;
         var host  = window.location.host;
-        var head = ishttps ? "wss://" : "ws://"
+        var head = https ? "wss://" : "ws://";
         return head + host;
     }
     var webSocket;

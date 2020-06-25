@@ -9,7 +9,7 @@
     <div class="container">
         <h3>Welcome to @Values.ProjectName Colossus</h3>
         @{
-            var description = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
+            var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
         }
         <p>@Localizer[description]</p>
         <div class="btn-group" role="group">
@@ -38,7 +38,7 @@
             </div>
             <label class="w-100 mt-3 mb-0">
                 @Localizer["By uploading, you agree to our "]
-                <a href="@Aiursoft.SDK.Values.Footer["Terms"]" target="_blank">
+                <a href="@Values.Footer["Terms"]" target="_blank">
                     @Localizer["Terms"].
                 </a>
             </label>
