@@ -64,7 +64,7 @@ namespace Aiursoft.Gateway.Services
                     AppId = appId,
                     GatewayUserId = user.Id
                 };
-                _dbContext.LocalAppGrant.Add(appGrant);
+                await _dbContext.LocalAppGrant.AddAsync(appGrant);
                 await _dbContext.SaveChangesAsync();
             }
         }
@@ -77,7 +77,7 @@ namespace Aiursoft.Gateway.Services
                 UserId = user.Id,
                 ApplyAppId = appId
             };
-            _dbContext.OAuthPack.Add(pack);
+            await _dbContext.OAuthPack.AddAsync(pack);
             await _dbContext.SaveChangesAsync();
             return pack;
         }

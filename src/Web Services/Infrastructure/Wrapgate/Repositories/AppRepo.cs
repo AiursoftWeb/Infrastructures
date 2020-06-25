@@ -38,7 +38,7 @@ namespace Aiursoft.Wrapgate.Repositories
                 {
                     AppId = appid
                 };
-                _dbContext.WrapApps.Add(appLocal);
+                await _dbContext.WrapApps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
             return appLocal;

@@ -61,6 +61,6 @@
     </footer>
     <vc:scroll-to-top></vc:scroll-to-top>
     <vc:aiur-market-js></vc:aiur-market-js>
-    @RenderSection("js", required: false)
+@await RenderSectionAsync("js", required: false)
 </body>
 </html>

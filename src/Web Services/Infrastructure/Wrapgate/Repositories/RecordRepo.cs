@@ -47,7 +47,7 @@ namespace Aiursoft.Wrapgate.Repositories
                 TargetUrl = targetUrl,
                 Enabled = enabled
             };
-            _table.Add(newRecord);
+            await _table.AddAsync(newRecord);
             await _dbContext.SaveChangesAsync();
             return newRecord;
         }

@@ -133,7 +133,7 @@ namespace Aiursoft.Gateway.Controllers
                 EmailAddress = model.NewEmail.ToLower(),
                 Validated = false
             };
-            _dbContext.UserEmails.Add(mail);
+            await _dbContext.UserEmails.AddAsync(mail);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, "Successfully set");
         }

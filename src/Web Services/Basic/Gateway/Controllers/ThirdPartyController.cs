@@ -10,7 +10,6 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services.Authentication;
-using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +35,6 @@ namespace Aiursoft.Gateway.Controllers
         private readonly UserManager<GatewayUser> _userManager;
         private readonly SignInManager<GatewayUser> _signInManager;
         private readonly AuthLogger _authLogger;
-        private readonly ServiceLocation _serviceLocation;
 
         public ThirdPartyController(
             IEnumerable<IAuthProvider> authProviders,
@@ -45,8 +43,7 @@ namespace Aiursoft.Gateway.Controllers
             DeveloperApiService apiService,
             UserManager<GatewayUser> userManager,
             SignInManager<GatewayUser> signInManager,
-            AuthLogger authLogger,
-            ServiceLocation serviceLocation)
+            AuthLogger authLogger)
         {
             _authProviders = authProviders;
             _dbContext = dbContext;
@@ -55,7 +52,6 @@ namespace Aiursoft.Gateway.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _authLogger = authLogger;
-            _serviceLocation = serviceLocation;
         }
 
         [Route("sign-in/{providerName}")]
@@ -67,20 +63,20 @@ namespace Aiursoft.Gateway.Controllers
                 return NotFound();
             }
             var oauthModel = model.BuildOAuthInfo();
-            IUserDetail info = null;
+            IUserDetail info;
             try
             {
                 info = await provider.GetUserDetail(model.Code);
             }
             catch (AiurAPIModelException)
             {
-                var refreshlink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
+                var refreshLink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
                 {
                     AppId = oauthModel.AppId,
                     RedirectUri = oauthModel.RedirectUri,
                     State = oauthModel.State,
                 }));
-                return Redirect(refreshlink);
+                return Redirect(refreshLink);
             }
             var account = await _dbContext
                 .ThirdPartyAccounts
@@ -142,7 +138,7 @@ namespace Aiursoft.Gateway.Controllers
                     OwnerId = user.Id,
                     ValidateToken = Guid.NewGuid().ToString("N")
                 };
-                _dbContext.UserEmails.Add(primaryMail);
+                await _dbContext.UserEmails.AddAsync(primaryMail);
                 await _dbContext.SaveChangesAsync();
 
                 var link = new ThirdPartyAccount
@@ -152,7 +148,7 @@ namespace Aiursoft.Gateway.Controllers
                     OpenId = model.UserDetail.Id,
                     Name = model.UserDetail.Name,
                 };
-                _dbContext.ThirdPartyAccounts.Add(link);
+                await _dbContext.ThirdPartyAccounts.AddAsync(link);
                 await _dbContext.SaveChangesAsync();
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
@@ -206,7 +202,7 @@ namespace Aiursoft.Gateway.Controllers
                 ProviderName = provider.GetName(),
                 Name = info.Name
             };
-            _dbContext.ThirdPartyAccounts.Add(link);
+            await _dbContext.ThirdPartyAccounts.AddAsync(link);
             await _dbContext.SaveChangesAsync();
             // Complete
             var viewModel = new BindAccountViewModel
