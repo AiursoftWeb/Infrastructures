@@ -338,7 +338,7 @@ namespace Aiursoft.Colossus.Controllers
                 await _userManager.UpdateAsync(user);
                 _cache.Clear($"site-public-status-{model.OldSiteName}");
                 _cache.Clear($"site-public-status-{model.NewSiteName}");
-                return RedirectToAction(nameof(DashboardController.Settings), "Dashboard", new { JustHaveUpdated = true });
+                return RedirectToAction(nameof(Settings), "Dashboard", new { JustHaveUpdated = true });
             }
             catch (AiurUnexceptedResponse e)
             {

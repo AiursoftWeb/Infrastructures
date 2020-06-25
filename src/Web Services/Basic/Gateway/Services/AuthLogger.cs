@@ -37,7 +37,7 @@ namespace Aiursoft.Gateway.Services
                 {
                     UserId = userId,
                     IPAddress = "Unknown(because of `dnt` policy)",
-                    Success = success,
+                    Success = true,
                     AppId = appId
                 };
                 _dbContext.AuditLogs.Add(log);

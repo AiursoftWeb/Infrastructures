@@ -182,8 +182,7 @@ namespace Aiursoft.Gateway.Controllers
             var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
             if (provider == null)
             {
-                // TODO: Handle.
-                throw new NotImplementedException($"Provider: '{model.ProviderName}' is not implemented!");
+                return NotFound();
             }
             IUserDetail info;
             try
@@ -192,8 +191,8 @@ namespace Aiursoft.Gateway.Controllers
             }
             catch (AiurAPIModelException)
             {
-                var refreshlink = provider.GetBindRedirectLink();
-                return Redirect(refreshlink);
+                var refreshLink = provider.GetBindRedirectLink();
+                return Redirect(refreshLink);
             }
             var link = new ThirdPartyAccount
             {

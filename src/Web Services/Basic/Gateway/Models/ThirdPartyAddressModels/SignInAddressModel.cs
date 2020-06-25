@@ -26,7 +26,8 @@ namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
                     .TrimStart('?')
                     .Split('&')
                     .Select(t => t.Split('='))
-                    .Select(t => new KeyValuePair<string, string>(t[0].ToLower(), WebUtility.UrlDecode(t[1])));
+                    .Select(t => new KeyValuePair<string, string>(t[0].ToLower(), WebUtility.UrlDecode(t[1])))
+                    .ToArray();
                 return new FinishAuthInfo
                 {
                     AppId = values.SingleOrDefault(t => t.Key == "appid").Value,

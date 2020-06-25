@@ -41,7 +41,7 @@ namespace Aiursoft.Gateway
                 options.Cookie.HttpOnly = true;
             });
 
-            services.AddIdentity<GatewayUser, IdentityRole>(options => options.Password = Aiursoft.Identity.AuthValues.PasswordOptions)
+            services.AddIdentity<GatewayUser, IdentityRole>(options => options.Password = Identity.AuthValues.PasswordOptions)
                 .AddEntityFrameworkStores<GatewayDbContext>()
                 .AddDefaultTokenProviders();
 
