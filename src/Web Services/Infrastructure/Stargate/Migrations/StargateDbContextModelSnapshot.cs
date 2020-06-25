@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Stargate.Migrations
 {
     [DbContext(typeof(StargateDbContext))]
-    partial class StargateDbContextModelSnapshot : ModelSnapshot
+    class StargateDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

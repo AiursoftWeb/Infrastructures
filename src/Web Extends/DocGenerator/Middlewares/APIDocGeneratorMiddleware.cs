@@ -101,7 +101,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                     actionsMatches.Add(api);
                 }
             }
-            var generatoredJsonDoc = await JsonConvert.SerializeObjectAsync(actionsMatches);
+            var generatoredJsonDoc = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(actionsMatches));
             if (_format == DocFormat.Json)
             {
                 await context.Response.WriteAsync(generatoredJsonDoc);
