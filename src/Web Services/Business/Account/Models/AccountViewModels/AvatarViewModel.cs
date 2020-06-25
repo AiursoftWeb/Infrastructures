@@ -11,6 +11,6 @@ namespace Aiursoft.Account.Models.AccountViewModels
         {
             RootRecover(user, "Avatar");
         }
-        public string NewIconAddres { get; set; }
+        public string NewIconAddress { get; set; }
     }
 }

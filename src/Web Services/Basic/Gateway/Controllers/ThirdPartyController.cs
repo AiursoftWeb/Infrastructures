@@ -3,7 +3,7 @@ using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
-using Aiursoft.Gateway.Models.ThirdyPartyViewModels;
+using Aiursoft.Gateway.Models.ThirdPartyViewModels;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;

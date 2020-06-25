@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Identity.Services.Authentication;
 
-namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
+namespace Aiursoft.Gateway.Models.ThirdPartyViewModels
 {
     public class BindAccountViewModel
     {

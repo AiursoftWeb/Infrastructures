@@ -39,7 +39,7 @@
                 <div class="row">
                     <form asp-controller="Account" asp-action="Avatar" method="post" class="col-md-10" enctype="multipart/form-data">
                         <h4 class="box-title">@Localizer["Upload Your profile picture"]</h4>
-                        <vc:aiur-uploader asp-for="@nameof(Model.NewIconAddres)" site-name="@Configuration["UserIconSiteName"]" path="@DateTime.UtcNow.ToString("yyyy-MM-dd")" size-in-mb="5" allowed-extensions="jpg png bmp" default-file="@Model.NewIconAddres"></vc:aiur-uploader>
+                        <vc:aiur-uploader asp-for="@nameof(Model.NewIconAddress)" site-name="@Configuration["UserIconSiteName"]" path="@DateTime.UtcNow.ToString("yyyy-MM-dd")" size-in-mb="5" allowed-extensions="jpg png bmp" default-file="@Model.NewIconAddress"></vc:aiur-uploader>
                         <p class="help margin-top-10">@Localizer["Only jpg, bmp, png images, 5MB max."]</p>
                         <div class="col-12 mt-3">
                             <button type="submit" data-disable-with="Uploading" class="btn btn-primary">@Localizer["Upload"]</button>

@@ -48,7 +48,7 @@ namespace Aiursoft.Account.Controllers
             UserService userService,
             AppsContainer appsContainer,
             IConfiguration configuration,
-            DeveloperApiService developerApiSerivce,
+            DeveloperApiService developerApiService,
             AuthService<AccountUser> authService,
             IEnumerable<IAuthProvider> authProviders,
             QRCodeService qrCodeService,
@@ -59,7 +59,7 @@ namespace Aiursoft.Account.Controllers
             _userService = userService;
             _appsContainer = appsContainer;
             _configuration = configuration;
-            _developerApiService = developerApiSerivce;
+            _developerApiService = developerApiService;
             _authService = authService;
             _authProviders = authProviders;
             _qrCodeService = qrCodeService;
@@ -80,17 +80,17 @@ namespace Aiursoft.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.Recover(cuser);
+                model.Recover(currentUser);
                 return View(model);
             }
-            cuser.NickName = model.NickName;
-            cuser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio);
-            await _userManager.UpdateAsync(cuser);
+            currentUser.NickName = model.NickName;
+            currentUser.Bio = model.Bio;
+            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessToken(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+            await _userManager.UpdateAsync(currentUser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
 
@@ -177,7 +177,7 @@ namespace Aiursoft.Account.Controllers
             var model = new AvatarViewModel(user)
             {
                 JustHaveUpdated = justHaveUpdated,
-                NewIconAddres = user.IconFilePath
+                NewIconAddress = user.IconFilePath
             };
             return View(model);
         }
@@ -186,16 +186,16 @@ namespace Aiursoft.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Avatar(AvatarViewModel model)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.Recover(cuser);
+                model.Recover(currentUser);
                 return View(model);
             }
-            cuser.IconFilePath = model.NewIconAddres;
-            await _userService.ChangeProfileAsync(cuser.Id, await _appsContainer.AccessToken(), cuser.NickName, cuser.IconFilePath, cuser.Bio);
-            await _userManager.UpdateAsync(cuser);
+            currentUser.IconFilePath = model.NewIconAddress;
+            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessToken(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+            await _userManager.UpdateAsync(currentUser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
 
@@ -213,23 +213,23 @@ namespace Aiursoft.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Security(SecurityViewModel model)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.Recover(cuser);
+                model.Recover(currentUser);
                 return View(model);
             }
             try
             {
-                await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
+                await _userService.ChangePasswordAsync(currentUser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
                 return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
                 model.ModelStateValid = false;
-                model.Recover(cuser);
+                model.Recover(currentUser);
             }
             return View(model);
         }
@@ -380,11 +380,11 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> TwoFactorAuthentication()
         {
             var user = await GetCurrentUserAsync();
-            var has2FAkey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
             var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
-                NewHas2FAKey = has2FAkey.Value,
+                NewHas2FAKey = has2FAKey.Value,
                 NewTwoFactorEnabled = twoFactorEnabled.Value
             };
             return View(model);

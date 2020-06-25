@@ -2,7 +2,7 @@
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.Identity.Services.Authentication.ToGoogleServer;
 
-namespace Aiursoft.Gateway.Models.ThirdyPartyViewModels
+namespace Aiursoft.Gateway.Models.ThirdPartyViewModels
 {
     public class SignInViewModel : FinishAuthInfo
     {
