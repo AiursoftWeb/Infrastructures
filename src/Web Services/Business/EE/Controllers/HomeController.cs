@@ -50,7 +50,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Search(string word)
         {
-            var results = await _dbContext.Courses.Where(t => t.Name.Contains(word)).ToListAsync();
+            await _dbContext.Courses.Where(t => t.Name.Contains(word)).ToListAsync();
             return View();
         }
     }

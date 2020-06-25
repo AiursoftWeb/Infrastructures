@@ -6,7 +6,7 @@
     <div class="container">
         <h1 class="jumbotron-heading">@Localizer["Where Engineers Learn"]</h1>
         @{
-            var description = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
+            var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
         }
         <p class="lead text-muted">@description</p>
         <p>

@@ -77,10 +77,10 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @await UserImageGenerator.RenderUserImageAsync(User)
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <div class="dropdown-menu" aria-labelledby="dropdown03">
                                     <a class="dropdown-item" asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
                                     <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
                                     <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">@Localizer["Sign out"]</a>

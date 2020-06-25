@@ -220,4 +220,20 @@
     <value>许可协议</value>
     <comment>Terms</comment>
   </data>
+  <data name="30 days limit" xml:space="preserve">
+    <value>30天时间限制</value>
+    <comment>30 days limit</comment>
+  </data>
+  <data name="All files public" xml:space="preserve">
+    <value>所有文件公开</value>
+    <comment>All files public</comment>
+  </data>
+  <data name="No custom domain" xml:space="preserve">
+    <value>没有自定义域名</value>
+    <comment>No custom domain</comment>
+  </data>
+  <data name="Shared storage with others" xml:space="preserve">
+    <value>与其它人共享存储上下文</value>
+    <comment>Shared storage with others</comment>
+  </data>
 </root>

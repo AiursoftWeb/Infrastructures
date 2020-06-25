@@ -1,6 +1,6 @@
 ﻿var subscribe = function (id) {
     $.post('/Course/Subscribe/' + id, function (data) {
-        if (data.code == 0) {
+        if (data.code === 0) {
             $('#subscribe')
                 .removeClass('btn-primary')
                 .addClass('btn-danger')
@@ -14,7 +14,7 @@
 
 var unsubscribe = function (id) {
     $.post('/Course/UnSubscribe/' + id, function (data) {
-        if (data.code == 0) {
+        if (data.code === 0) {
             $('#subscribe')
                 .removeClass('btn-danger')
                 .addClass('btn-primary')
@@ -27,8 +27,8 @@ var unsubscribe = function (id) {
 }
 
 var follow = function (id) {
-    $.post('/Profile/Follow/' + id, function (data) {
-        if (data.code == 0) {
+    $.post('/Profile/Follow/' + id, function(data) {
+        if (data.code === 0) {
             $('#follow')
                 .removeClass('btn-primary')
                 .addClass('btn-danger')
@@ -37,12 +37,12 @@ var follow = function (id) {
         } else {
             alert(data.message);
         }
-    })
+    });
 }
 
 var unfollow = function (id) {
-    $.post('/Profile/UnFollow/' + id, function (data) {
-        if (data.code == 0) {
+    $.post('/Profile/UnFollow/' + id, function(data) {
+        if (data.code === 0) {
             $('#follow')
                 .removeClass('btn-danger')
                 .addClass('btn-primary')
@@ -51,5 +51,5 @@ var unfollow = function (id) {
         } else {
             alert(data.message);
         }
-    })
+    });
 }

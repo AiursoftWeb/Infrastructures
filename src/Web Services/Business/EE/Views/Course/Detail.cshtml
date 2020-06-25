@@ -139,20 +139,20 @@
                         text: "Cancel",
                         value: false,
                         visible: true,
-                        className: "btn btn-success",
+                        className: "btn btn-success"
                     },
                     confirm: {
                         text: "Delete it!",
                         value: true,
                         visible: true,
-                        className: "btn btn-danger",
+                        className: "btn btn-danger"
                     }
                 }
             }).then((result) => {
-                console.log(result)
+                console.log(result);
                 if (result) {
                     $.post('/section/Drop/' + id, { }, function(data) {
-                        if (data.code == 0) {
+                        if (data.code === 0) {
                             swal({
                                 icon: 'success',
                                 title: 'Deleted!',

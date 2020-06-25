@@ -8,6 +8,7 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.EE.Controllers
@@ -88,7 +89,7 @@ namespace Aiursoft.EE.Controllers
         public async Task<IActionResult> Drop(int id) //Section Id
         {
             var user = await GetCurrentUserAsync();
-            var section = await _dbContext.Sections.SingleOrDefaultAsync(t => t.Id == id);
+            var section = await _dbContext.Sections.Where(t => t.Context.OwnerId == user.Id).SingleOrDefaultAsync(t => t.Id == id);
             if (section == null)
             {
                 return NotFound();

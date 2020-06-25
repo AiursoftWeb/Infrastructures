@@ -1,9 +1,8 @@
-﻿using Aiursoft.WWW.Services.BingModels;
-using Aiursoft.WWW.Services;
+﻿using Aiursoft.Scanner.Interfaces;
+using Aiursoft.WWW.Services.BingModels;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
-using Aiursoft.Scanner.Interfaces;
 
 namespace Aiursoft.WWW.Services
 {

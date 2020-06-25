@@ -54,8 +54,8 @@
         webSocket.onmessage = function (evt) {
             $("#message").append('<p>' + evt.data + '</p>');
         };
-        webSocket.onerror = function (evt) {
-            alert('Can not connect！');
+        webSocket.onerror = function () {
+            alert('Can not connect!');
         };
         webSocket.onclose = function () {
             $("#spanStatus").text("Disconnected!");
