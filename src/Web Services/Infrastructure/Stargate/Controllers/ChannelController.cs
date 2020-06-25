@@ -54,7 +54,7 @@ namespace Aiursoft.Stargate.Controllers
                     Id = appid,
                     Channels = new List<Channel>()
                 };
-                _dbContext.Apps.Add(appLocal);
+                await _dbContext.Apps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
             var channels = await _dbContext
@@ -127,7 +127,7 @@ namespace Aiursoft.Stargate.Controllers
                     Id = appid,
                     Channels = new List<Channel>()
                 };
-                _dbContext.Apps.Add(appLocal);
+                await _dbContext.Apps.AddAsync(appLocal);
             }
             //Create and save to database
             var newChannel = new Channel

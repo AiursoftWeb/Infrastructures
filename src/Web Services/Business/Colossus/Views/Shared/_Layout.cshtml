@@ -4,7 +4,7 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName Colossus</title>
     <vc:aiur-market-css></vc:aiur-market-css>
-    @RenderSection("css", required: false)
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
@@ -72,6 +72,6 @@
     <vc:scroll-to-top></vc:scroll-to-top>
     <vc:aiur-logout></vc:aiur-logout>
     <vc:aiur-market-js></vc:aiur-market-js>
-    @RenderSection("js", required: false)
+@await RenderSectionAsync("js", required: false)
 </body>
 </html>

@@ -71,7 +71,7 @@ namespace Aiursoft.Wiki.Services
                         CollectionTitle = collection.CollectionTitle,
                         DocAPIAddress = collection.DocAPIAddress
                     };
-                    _dbContext.Collections.Add(newCollection);
+                    await _dbContext.Collections.AddAsync(newCollection);
                     await _dbContext.SaveChangesAsync();
 
                     // Get markdown from existing documents.
@@ -87,7 +87,7 @@ namespace Aiursoft.Wiki.Services
                                 ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress), false),
                                 CollectionId = newCollection.CollectionId
                             };
-                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.Article.AddAsync(newarticle);
                             await _dbContext.SaveChangesAsync();
                         }
                         // GitHub repo.
@@ -99,7 +99,7 @@ namespace Aiursoft.Wiki.Services
                                 ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
                                 CollectionId = newCollection.CollectionId
                             };
-                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.Article.AddAsync(newarticle);
                             await _dbContext.SaveChangesAsync();
                         }
                     }
@@ -122,7 +122,7 @@ namespace Aiursoft.Wiki.Services
                                 CollectionId = newCollection.CollectionId,
                                 BuiltByJson = true
                             };
-                            _dbContext.Article.Add(newarticle);
+                            await _dbContext.Article.AddAsync(newarticle);
                             await _dbContext.SaveChangesAsync();
                         }
                     }

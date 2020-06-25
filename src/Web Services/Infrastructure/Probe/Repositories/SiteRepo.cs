@@ -49,7 +49,7 @@ namespace Aiursoft.Probe.Repositories
             {
                 FolderName = "blob"
             };
-            _dbContext.Folders.Add(newRootFolder);
+            await _dbContext.Folders.AddAsync(newRootFolder);
             await _dbContext.SaveChangesAsync();
             var site = new Site
             {
@@ -59,7 +59,7 @@ namespace Aiursoft.Probe.Repositories
                 OpenToUpload = openToUpload,
                 OpenToDownload = openToDownload
             };
-            _dbContext.Sites.Add(site);
+            await _dbContext.Sites.AddAsync(site);
             await _dbContext.SaveChangesAsync();
             return site;
         }

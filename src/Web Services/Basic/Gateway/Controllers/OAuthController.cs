@@ -128,14 +128,10 @@ namespace Aiursoft.Gateway.Controllers
                     State = model.State
                 }).ToString());
             }
-            if (result.IsLockedOut)
-            {
-                ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "The password does not match our records.");
-            }
+            ModelState.AddModelError(string.Empty,
+                result.IsLockedOut
+                    ? "The account is locked for too many attempts."
+                    : "The password does not match our records.");
             model.Recover(app.AppName, app.IconPath);
             return View(model);
         }
@@ -305,7 +301,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             if (!_captcha.ValidateCaptchaCode(model.CaptchaCode, HttpContext.Session))
             {
-                ModelState.AddModelError(string.Empty, "Invalid captacha code!");
+                ModelState.AddModelError(string.Empty, "Invalid captcha code!");
             }
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
@@ -327,7 +323,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.AccountCreateTime > countStart)
                 .CountAsync() > 5)
             {
-                ModelState.AddModelError(string.Empty, $"You can't create more than 5 accounts in one day!");
+                ModelState.AddModelError(string.Empty, "You can't create more than 5 accounts in one day!");
                 model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
@@ -349,7 +345,7 @@ namespace Aiursoft.Gateway.Controllers
                     OwnerId = user.Id,
                     ValidateToken = Guid.NewGuid().ToString("N")
                 };
-                _dbContext.UserEmails.Add(primaryMail);
+                await _dbContext.UserEmails.AddAsync(primaryMail);
                 await _dbContext.SaveChangesAsync();
                 // Send him an confirmation email here:
                 await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);

@@ -9,6 +9,6 @@
 <body class="bg-light lines">
     @RenderBody()
     <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-    @RenderSection("scripts", required: false)
+@await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

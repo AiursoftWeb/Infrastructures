@@ -5,7 +5,7 @@
     <title>@ViewData["Title"] - @Values.ProjectName EE</title>
     <vc:aiur-market-css></vc:aiur-market-css>
     <link href="~/css/ee.css" rel="stylesheet">
-    @RenderSection("Styles", required: false)
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -117,6 +117,6 @@
     <vc:aiur-logout></vc:aiur-logout>
     <vc:aiur-market-js></vc:aiur-market-js>
     <script src="~/js/site.js"></script>
-    @RenderSection("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

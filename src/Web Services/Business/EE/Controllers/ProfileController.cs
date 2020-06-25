@@ -137,7 +137,7 @@ namespace Aiursoft.EE.Controllers
             var follow = await _dbContext.Follows.SingleOrDefaultAsync(t => t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
             if (follow == null)
             {
-                _dbContext.Follows.Add(new Follow
+                await _dbContext.Follows.AddAsync(new Follow
                 {
                     TriggerId = currentUser.Id,
                     ReceiverId = user.Id

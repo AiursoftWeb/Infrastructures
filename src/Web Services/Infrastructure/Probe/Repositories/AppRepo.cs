@@ -38,7 +38,7 @@ namespace Aiursoft.Probe.Repositories
                 {
                     AppId = appid
                 };
-                _dbContext.Apps.Add(appLocal);
+                await _dbContext.Apps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
             return appLocal;

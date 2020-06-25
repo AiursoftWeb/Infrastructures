@@ -65,7 +65,7 @@ namespace Aiursoft.EE.Controllers
                 Price = model.Price,
                 OwnerId = user.Id
             };
-            _dbContext.Courses.Add(course);
+            await _dbContext.Courses.AddAsync(course);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Detail), new { id = course.Id });
         }
@@ -141,7 +141,7 @@ namespace Aiursoft.EE.Controllers
                     UserId = user.Id,
                     CourseId = id
                 };
-                _dbContext.Subscriptions.Add(newSubscription);
+                await _dbContext.Subscriptions.AddAsync(newSubscription);
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "You have successfully subscribed this course!");
             }

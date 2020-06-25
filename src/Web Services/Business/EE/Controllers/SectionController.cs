@@ -76,7 +76,7 @@ namespace Aiursoft.EE.Controllers
                 SectionName = model.NewSectionName,
                 CourseId = model.CourseId
             };
-            _dbContext.Sections.Add(newSection);
+            await _dbContext.Sections.AddAsync(newSection);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(CourseController.Detail), "Course", new { id = course.Id });
         }

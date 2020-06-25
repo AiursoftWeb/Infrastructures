@@ -93,7 +93,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 CreatorId = cuser.Id
             };
-            _dbContext.Apps.Add(newApp);
+            await _dbContext.Apps.AddAsync(newApp);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = newApp.AppId });
         }

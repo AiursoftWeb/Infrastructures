@@ -62,7 +62,7 @@ namespace Aiursoft.Probe.Repositories
                 ContextId = folderId,
                 FileSize = size
             };
-            _dbContext.Files.Add(newFile);
+            await _dbContext.Files.AddAsync(newFile);
             await _dbContext.SaveChangesAsync();
             return newFile.HardwareId;
         }
@@ -76,7 +76,7 @@ namespace Aiursoft.Probe.Repositories
                 ContextId = contextId,
                 HardwareId = hardwareId
             };
-            _dbContext.Files.Add(newFile);
+            await _dbContext.Files.AddAsync(newFile);
             await _dbContext.SaveChangesAsync();
         }
     }

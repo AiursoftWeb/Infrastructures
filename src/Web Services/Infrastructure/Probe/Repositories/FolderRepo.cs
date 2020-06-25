@@ -98,7 +98,7 @@ namespace Aiursoft.Probe.Repositories
                     ContextId = root.Id,
                     FolderName = subFolderName
                 };
-                _dbContext.Folders.Add(subFolder);
+                await _dbContext.Folders.AddAsync(subFolder);
                 await _dbContext.SaveChangesAsync();
             }
             return await GetFolderFromPath(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);

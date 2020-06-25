@@ -44,7 +44,7 @@ namespace Aiursoft.WWW.Controllers
             ViewBag.Entities = await _cahce.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
             if (HttpContext.AllowTrack())
             {
-                _dbContext.SearchHistories.Add(new SearchHistory
+                await _dbContext.SearchHistories.AddAsync(new SearchHistory
                 {
                     Question = question,
                     TriggerUserId = User.GetUserId(),

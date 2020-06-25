@@ -5,7 +5,7 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["File Upload Dashboard"]</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
-    @RenderSection("css", required: false)
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -149,7 +149,7 @@
         <vc:scroll-to-top></vc:scroll-to-top>
         <vc:aiur-logout></vc:aiur-logout>
         <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-        @RenderSection("js", required: false)
+        @await RenderSectionAsync("js", required: false)
     </div>
 </body>
 </html>

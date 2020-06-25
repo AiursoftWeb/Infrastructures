@@ -5,7 +5,7 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Account Management Center"]</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
-    @RenderSection("css", required: false)
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -175,7 +175,7 @@
         <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
         <script src="@ServiceLocation.UI/node_modules/qrcodejs/qrcode.min.js"></script>
         <script src="~/js/site.js"></script>
-        @RenderSection("js", required: false)
+        @await RenderSectionAsync("js", required: false)
     </div>
 </body>
 </html>

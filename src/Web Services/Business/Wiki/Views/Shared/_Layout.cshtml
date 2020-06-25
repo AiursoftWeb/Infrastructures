@@ -7,7 +7,7 @@
     <title>@Values.ProjectName Document Center - @Model.CurrentArticle.ArticleTitle</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
     <link href="@ServiceLocation.UI/node_modules/highlightjs/styles/vs.css" rel="stylesheet" />
-    @RenderSection("css", required: false)
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
     <!-- Navigation-->
@@ -79,7 +79,7 @@
         <vc:aiur-logout></vc:aiur-logout>
         <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
         <script src="@ServiceLocation.UI/node_modules/highlightjs/highlight.pack.min.js"></script>
-        @RenderSection("js", required: false)
+        @await RenderSectionAsync("js", required: false)
     </div>
 </body>
 </html>
