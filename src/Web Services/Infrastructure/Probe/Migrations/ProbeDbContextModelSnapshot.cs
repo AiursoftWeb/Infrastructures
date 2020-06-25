@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Probe.Migrations
 {
     [DbContext(typeof(ProbeDbContext))]
-    partial class ProbeDbContextModelSnapshot : ModelSnapshot
+    class ProbeDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.EE.Migrations
 {
     [DbContext(typeof(EEDbContext))]
-    partial class EEDbContextModelSnapshot : ModelSnapshot
+    class EEDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

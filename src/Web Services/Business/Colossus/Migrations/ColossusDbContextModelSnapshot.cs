@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Colossus.Migrations
 {
     [DbContext(typeof(ColossusDbContext))]
-    partial class ColossusDbContextModelSnapshot : ModelSnapshot
+    class ColossusDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

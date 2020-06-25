@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Wiki.Migrations
 {
     [DbContext(typeof(WikiDbContext))]
-    partial class WikiDbContextModelSnapshot : ModelSnapshot
+    class WikiDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

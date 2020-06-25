@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.WWW.Migrations
 {
     [DbContext(typeof(WWWDbContext))]
-    partial class WWWDbContextModelSnapshot : ModelSnapshot
+    class WWWDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

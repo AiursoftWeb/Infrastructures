@@ -7,7 +7,6 @@ using Aiursoft.Identity.Attributes;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Colossus.Controllers
@@ -15,17 +14,14 @@ namespace Aiursoft.Colossus.Controllers
     [LimitPerMin]
     public class HomeController : Controller
     {
-        private readonly IConfiguration _configuration;
         private readonly SignInManager<ColossusUser> _signInManager;
         private readonly GatewayLocator _gatewayLocator;
-        private const int _defaultSize = 30 * 1024 * 1024;
+        private const int DefaultSize = 30 * 1024 * 1024;
 
         public HomeController(
-            IConfiguration configuration,
             SignInManager<ColossusUser> signInManager,
             GatewayLocator gatewayLocator)
         {
-            _configuration = configuration;
             _signInManager = signInManager;
             _gatewayLocator = gatewayLocator;
         }
@@ -35,7 +31,7 @@ namespace Aiursoft.Colossus.Controllers
         {
             var model = new IndexViewModel
             {
-                MaxSize = _defaultSize
+                MaxSize = DefaultSize
             };
             return View(model);
         }
