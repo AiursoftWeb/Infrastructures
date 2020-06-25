@@ -44,7 +44,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
 
         public string GetName() => "Microsoft";
 
-        public string GetSettingsPage() => $"https://account.microsoft.com/";
+        public string GetSettingsPage() => "https://account.microsoft.com/";
 
         public string GetButtonColor() => "warning";
 
@@ -116,7 +116,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
             request.Headers.Add("Authorization", $"Bearer {accessToken}");
-            request.Headers.Add("User-Agent", $"curl/7.65.3");
+            request.Headers.Add("User-Agent", "curl/7.65.3");
 
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)

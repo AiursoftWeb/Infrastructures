@@ -17,14 +17,14 @@ namespace Aiursoft.Probe.Controllers
     [Route("Folders")]
     public class FoldersController : Controller
     {
-        private readonly FolderSpliter _folderSpliter;
+        private readonly FolderSplitter _folderSplitter;
         private readonly FolderRepo _folderRepo;
 
         public FoldersController(
-            FolderSpliter folderLocator,
+            FolderSplitter folderLocator,
             FolderRepo folderRepo)
         {
-            _folderSpliter = folderLocator;
+            _folderSplitter = folderLocator;
             _folderRepo = folderRepo;
         }
 
@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.Controllers
         [APIProduces(typeof(AiurValue<Folder>))]
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
-            var folders = _folderSpliter.SplitToFolders(model.FolderNames);
+            var folders = _folderSplitter.SplitToFolders(model.FolderNames);
             var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {
@@ -49,7 +49,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("CreateNewFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
         {
-            var folders = _folderSpliter.SplitToFolders(model.FolderNames);
+            var folders = _folderSplitter.SplitToFolders(model.FolderNames);
             var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
             if (folder == null)
             {
@@ -68,7 +68,7 @@ namespace Aiursoft.Probe.Controllers
         [Route("DeleteFolder/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model)
         {
-            var folders = _folderSpliter.SplitToFolders(model.FolderNames);
+            var folders = _folderSplitter.SplitToFolders(model.FolderNames);
             var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
             if (folder == null)
             {

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Aiursoft.Probe.Services
 {
-    public class FolderSpliter : IScopedDependency
+    public class FolderSplitter : IScopedDependency
     {
         public string[] SplitToFolders(string folderNames) =>
             folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];

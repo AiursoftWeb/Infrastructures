@@ -68,7 +68,7 @@ namespace Aiursoft.Wrapgate.Repositories
             }
             if (record.AppId != appid)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, $"The site you tried to access is not your app's site.");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "The site you tried to access is not your app's site.");
             }
             return record;
         }

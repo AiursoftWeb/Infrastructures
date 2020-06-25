@@ -15,7 +15,7 @@ namespace Aiursoft.Probe.Controllers
     [APIExpHandler]
     public class DownloadController : Controller
     {
-        private readonly FolderSpliter _folderSpliter;
+        private readonly FolderSplitter _folderSplitter;
         private readonly ImageCompressor _imageCompressor;
         private readonly TokenEnsurer _tokenEnsurer;
         private readonly IStorageProvider _storageProvider;
@@ -24,7 +24,7 @@ namespace Aiursoft.Probe.Controllers
         private readonly SiteRepo _siteRepo;
 
         public DownloadController(
-            FolderSpliter folderLocator,
+            FolderSplitter folderLocator,
             ImageCompressor imageCompressor,
             TokenEnsurer tokenEnsurer,
             IStorageProvider storageProvider,
@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.Controllers
             FileRepo fileRepo,
             SiteRepo siteRepo)
         {
-            _folderSpliter = folderLocator;
+            _folderSplitter = folderLocator;
             _imageCompressor = imageCompressor;
             _tokenEnsurer = tokenEnsurer;
             _storageProvider = storageProvider;
@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 _tokenEnsurer.Ensure(model.PBToken, "Download", model.SiteName, model.FolderNames);
             }
-            var (folders, fileName) = _folderSpliter.SplitToFoldersAndFile(model.FolderNames);
+            var (folders, fileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
             try
             {
                 var siteRoot = await _folderRepo.GetFolderFromId(site.RootFolderId);

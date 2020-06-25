@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.Repositories
             }
             if (site.AppId != appid)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, $"The site you tried to access is not your app's site.");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "The site you tried to access is not your app's site.");
             }
             return site;
         }
