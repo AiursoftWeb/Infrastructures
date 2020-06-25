@@ -8,7 +8,7 @@ namespace Aiursoft.Developer.Models
     public class DeveloperApp : App
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
-        public DeveloperApp() : base() { }
+        public DeveloperApp() { }
         public DeveloperApp(string name, string description, Category category, Platform platform, string iconPath = null, string forceAppId = null, string forceAppSecret = null)
             : base(name, description, category, platform, iconPath, forceAppId, forceAppSecret) { }
 

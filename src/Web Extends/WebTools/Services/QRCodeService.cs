@@ -14,26 +14,19 @@ namespace Aiursoft.WebTools.Services
             var qrGenerator = new QRCodeGenerator();
             var qrCodeData = qrGenerator.CreateQrCode(source, QRCodeGenerator.ECCLevel.Q);
             var qrCode = new QRCode(qrCodeData);
-            string imagebase64 = string.Empty;
-            using (var qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, true))
-            {
-                imagebase64 = ToBase64String(qrCodeImage, ImageFormat.Png);
-            }
-            return ("data:image/png;base64," + imagebase64);
+            using var qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, true);
+            var imageBase64 = ToBase64String(qrCodeImage, ImageFormat.Png);
+            return ("data:image/png;base64," + imageBase64);
         }
 
         private string ToBase64String(Bitmap bmp, ImageFormat imageFormat)
         {
-            string base64String = string.Empty;
-            using (var memoryStream = new MemoryStream())
-            {
-                bmp.Save(memoryStream, imageFormat);
-                memoryStream.Position = 0;
-                byte[] byteBuffer = memoryStream.ToArray();
-                memoryStream.Close();
-                base64String = Convert.ToBase64String(byteBuffer);
-                byteBuffer = null;
-            }
+            using var memoryStream = new MemoryStream();
+            bmp.Save(memoryStream, imageFormat);
+            memoryStream.Position = 0;
+            byte[] byteBuffer = memoryStream.ToArray();
+            memoryStream.Close();
+            var base64String = Convert.ToBase64String(byteBuffer);
             return base64String;
         }
     }

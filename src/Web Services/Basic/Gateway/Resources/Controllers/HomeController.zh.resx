@@ -118,6 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="en-US" xml:space="preserve">
-    <value>zh-CN</value>
+    <value>zh</value>
+  </data>
+  <data name="en" xml:space="preserve">
+    <value>en</value>
+    <comment>en</comment>
   </data>
 </root>

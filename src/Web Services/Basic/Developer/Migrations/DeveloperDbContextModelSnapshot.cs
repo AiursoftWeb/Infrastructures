@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Developer.Migrations
 {
     [DbContext(typeof(DeveloperDbContext))]
-    partial class DeveloperDbContextModelSnapshot : ModelSnapshot
+    class DeveloperDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
