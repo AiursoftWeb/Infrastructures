@@ -168,9 +168,6 @@
   <data name="Basic" xml:space="preserve">
     <value>基本</value>
   </data>
-  <data name="1GB file size limit" xml:space="preserve">
-    <value>1GB 文件大小限制</value>
-  </data>
   <data name="Up to 30 days limit" xml:space="preserve">
     <value>最多30天的限制</value>
   </data>
@@ -235,5 +232,37 @@
   <data name="Shared storage with others" xml:space="preserve">
     <value>与其它人共享存储上下文</value>
     <comment>Shared storage with others</comment>
+  </data>
+  <data name="2Gb file size limit" xml:space="preserve">
+    <value>2GB 文件大小限制</value>
+    <comment>2Gb file size limit</comment>
+  </data>
+  <data name="365 days limit" xml:space="preserve">
+    <value>365天时间限制</value>
+    <comment>365 days limit</comment>
+  </data>
+  <data name="Private site supported" xml:space="preserve">
+    <value>支持私有站点</value>
+    <comment>Private site supported</comment>
+  </data>
+  <data name="Your personal storage" xml:space="preserve">
+    <value>专属存储空间</value>
+    <comment>Your personal storage</comment>
+  </data>
+  <data name="No time limit" xml:space="preserve">
+    <value>没有时间限制</value>
+    <comment>No time limit</comment>
+  </data>
+  <data name="Download logs" xml:space="preserve">
+    <value>下载日志</value>
+    <comment>Download logs</comment>
+  </data>
+  <data name="Custom domain supported" xml:space="preserve">
+    <value>自定义域名</value>
+    <comment>Custom domain supported</comment>
+  </data>
+  <data name="Multiple customizable storage" xml:space="preserve">
+    <value>多重自定义存储空间</value>
+    <comment>Multiple customizable storage</comment>
   </data>
 </root>

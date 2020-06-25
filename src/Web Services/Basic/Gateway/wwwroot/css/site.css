@@ -1,3 +1,4 @@
 ﻿.card {
+    box-shadow: 0 28px 35px -5px #000000;
     box-shadow: 0 28px 35px -5px rgba(0,0,0,0.31);
 }

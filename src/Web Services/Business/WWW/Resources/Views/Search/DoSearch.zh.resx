@@ -123,4 +123,20 @@
   <data name="Results: About" xml:space="preserve">
     <value>结果数： 大约</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="Sign out" xml:space="preserve">
+    <value>注销</value>
+    <comment>Sign out</comment>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>登录</value>
+    <comment>Sign in</comment>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>注册</value>
+    <comment>Sign up</comment>
+  </data>
 </root>
