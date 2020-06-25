@@ -55,9 +55,9 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpGet]
-        public IActionResult Setlang(SetlangAddressModel model)
+        public IActionResult SetLang(SetLangAddressModel model)
         {
-            return View(new SetlangViewModel
+            return View(new SetLangViewModel
             {
                 Host = model.Host,
                 Path = model.Path
@@ -65,7 +65,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetLang(SetlangViewModel model)
+        public async Task<IActionResult> SetLang(SetLangViewModel model)
         {
             if (!ModelState.IsValid)
             {

@@ -24,7 +24,7 @@ namespace Aiursoft.Scanner.Services
             }
         }
 
-        public List<Type> AllAccessiableClass(bool includeSystem, bool includeMicrosoft)
+        public List<Type> AllAccessibleClass(bool includeSystem, bool includeMicrosoft)
         {
             var entry = Assembly.GetEntryAssembly();
             return ScanAssemblies(entry, !includeSystem, !includeMicrosoft)

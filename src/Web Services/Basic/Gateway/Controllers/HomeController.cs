@@ -34,7 +34,7 @@ namespace Aiursoft.Gateway.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,
@@ -42,7 +42,7 @@ namespace Aiursoft.Gateway.Controllers
                 Code = ErrorType.Success,
                 Message = "Server started successfully!",
                 Local = _localizer["en"],
-                User = cuser
+                User = currentUser
             });
         }
 

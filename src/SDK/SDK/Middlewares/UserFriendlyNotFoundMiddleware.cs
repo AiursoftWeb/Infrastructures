@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.SDK.Middlewares
 {
-    public class UserFriendlyNotFoundMiddeware
+    public class UserFriendlyNotFoundMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ServiceLocation _serviceLocation;
 
-        public UserFriendlyNotFoundMiddeware(
+        public UserFriendlyNotFoundMiddleware(
             RequestDelegate next,
             ServiceLocation serviceLocation)
         {

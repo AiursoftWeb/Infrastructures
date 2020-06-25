@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.SDK.Middlewares
 {
-    public class UserFriendlyServerExceptionMiddeware
+    public class UserFriendlyServerExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ServiceLocation _serviceLocation;
         private readonly ObserverLocator _statusLocator;
-        private readonly ILogger<UserFriendlyServerExceptionMiddeware> _logger;
+        private readonly ILogger<UserFriendlyServerExceptionMiddleware> _logger;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
 
-        public UserFriendlyServerExceptionMiddeware(
+        public UserFriendlyServerExceptionMiddleware(
             RequestDelegate next,
             ServiceLocation serviceLocation,
             ObserverLocator statusLocator,
-            ILogger<UserFriendlyServerExceptionMiddeware> logger,
+            ILogger<UserFriendlyServerExceptionMiddleware> logger,
             EventService eventService,
             AppsContainer appsContainer)
         {

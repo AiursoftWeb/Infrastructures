@@ -122,8 +122,8 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> BindNewEmail(BindNewEmailAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
-            var emailexists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
-            if (emailexists)
+            var emailExists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
+            if (emailExists)
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
             }
@@ -144,8 +144,8 @@ namespace Aiursoft.Gateway.Controllers
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
 
             var userEmails = _dbContext.UserEmails.Where(t => t.OwnerId == user.Id);
-            var useremail = await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
-            if (useremail == null)
+            var userEmail = await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
+            if (userEmail == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
             }
@@ -153,7 +153,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
             }
-            _dbContext.UserEmails.Remove(useremail);
+            _dbContext.UserEmails.Remove(userEmail);
             await _dbContext.SaveChangesAsync();
             return this.Protocol(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
         }
@@ -162,16 +162,16 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> SendConfirmationEmail(SendConfirmationEmailAddressModel model)//User Id
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
-            var useremail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
-            if (useremail == null)
+            var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (userEmail == null)
             {
                 return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
             }
-            if (useremail.OwnerId != user.Id)
+            if (userEmail.OwnerId != user.Id)
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The account you tried to authorize is not an account with id: {model.OpenId}");
             }
-            if (useremail.Validated)
+            if (userEmail.Validated)
             {
                 return this.Protocol(ErrorType.HasDoneAlready, $"The email: {model.Email} was already validated!");
             }
@@ -181,15 +181,15 @@ namespace Aiursoft.Gateway.Controllers
                 return this.Protocol(ErrorType.HasDoneAlready, $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
             }
             // limit the sending frenquency to 3 minutes.
-            if (DateTime.UtcNow > useremail.LastSendTime + new TimeSpan(0, 1, 0))
+            if (DateTime.UtcNow > userEmail.LastSendTime + new TimeSpan(0, 1, 0))
             {
                 var token = Guid.NewGuid().ToString("N");
-                useremail.ValidateToken = token;
-                useremail.LastSendTime = DateTime.UtcNow;
+                userEmail.ValidateToken = token;
+                userEmail.LastSendTime = DateTime.UtcNow;
                 await _dbContext.SaveChangesAsync();
                 try
                 {
-                    await _emailSender.SendConfirmation(user.Id, useremail.EmailAddress, token);
+                    await _emailSender.SendConfirmation(user.Id, userEmail.EmailAddress, token);
                 }
                 catch (SmtpException e)
                 {
@@ -299,7 +299,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<JsonResult> ViewHas2FAkey(UserOperationAddressModel model)
+        public async Task<JsonResult> ViewHas2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool key = user.Has2FAKey;

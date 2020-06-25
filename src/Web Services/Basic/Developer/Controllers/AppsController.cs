@@ -53,18 +53,18 @@ namespace Aiursoft.Developer.Controllers
         {
             return RedirectToAction(nameof(AllApps));
             // We did not implement the report page.
-            //var cuser = await GetCurrentUserAsync();
-            //var model = new IndexViewModel(cuser);
+            //var currentUser = await GetCurrentUserAsync();
+            //var model = new IndexViewModel(currentUser);
             //return View(model);
         }
 
         [Route("Apps")]
         public async Task<IActionResult> AllApps()
         {
-            var cuser = await GetCurrentUserAsync();
-            var model = new AllAppsViewModel(cuser)
+            var currentUser = await GetCurrentUserAsync();
+            var model = new AllAppsViewModel(currentUser)
             {
-                AllApps = _dbContext.Apps.Where(t => t.CreatorId == cuser.Id)
+                AllApps = _dbContext.Apps.Where(t => t.CreatorId == currentUser.Id)
             };
             return View(model);
         }
@@ -72,8 +72,8 @@ namespace Aiursoft.Developer.Controllers
         [Route("Apps/Create")]
         public async Task<IActionResult> CreateApp()
         {
-            var cuser = await GetCurrentUserAsync();
-            var model = new CreateAppViewModel(cuser);
+            var currentUser = await GetCurrentUserAsync();
+            var model = new CreateAppViewModel(currentUser);
             return View(model);
         }
 
@@ -82,16 +82,16 @@ namespace Aiursoft.Developer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateApp(CreateAppViewModel model)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                model.RootRecover(cuser);
+                model.RootRecover(currentUser);
                 return View(model);
             }
             var newApp = new DeveloperApp(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform, model.IconPath)
             {
-                CreatorId = cuser.Id
+                CreatorId = currentUser.Id
             };
             await _dbContext.Apps.AddAsync(newApp);
             await _dbContext.SaveChangesAsync();
@@ -106,8 +106,8 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
-            var cuser = await GetCurrentUserAsync();
-            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
+            var currentUser = await GetCurrentUserAsync();
+            var model = await ViewAppViewModel.SelfCreateAsync(currentUser, app, _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
             model.JustHaveUpdated = justHaveUpdated;
             return View(model);
         }
@@ -117,11 +117,11 @@ namespace Aiursoft.Developer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewApp([FromRoute]string id, ViewAppViewModel model, int page = 1)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
+                await model.Recover(currentUser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);
@@ -129,7 +129,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
-            else if (target.CreatorId != cuser.Id)
+            else if (target.CreatorId != currentUser.Id)
             {
                 return new UnauthorizedResult();
             }
@@ -165,12 +165,12 @@ namespace Aiursoft.Developer.Controllers
             return RedirectToAction(nameof(ViewApp), new { id = target.AppId, JustHaveUpdated = true });
         }
 
-        private bool _ChangePermission(bool inDatabase, bool newValue, ref bool changemark)
+        private bool _ChangePermission(bool inDatabase, bool newValue, ref bool changeMark)
         {
             //More permission
             if (inDatabase == false && newValue)
             {
-                changemark = true;
+                changeMark = true;
                 return true;
             }
             //Less permission
@@ -188,17 +188,17 @@ namespace Aiursoft.Developer.Controllers
         [Route("Apps/{id}/Delete")]
         public async Task<IActionResult> DeleteApp([FromRoute]string id)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             var target = await _dbContext.Apps.FindAsync(id);
             if (target == null)
             {
                 return NotFound();
             }
-            if (target.CreatorId != cuser.Id)
+            if (target.CreatorId != currentUser.Id)
             {
                 return new UnauthorizedResult();
             }
-            var model = new DeleteAppViewModel(cuser)
+            var model = new DeleteAppViewModel(currentUser)
             {
                 AppId = target.AppId,
                 AppName = target.AppName
@@ -211,10 +211,10 @@ namespace Aiursoft.Developer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteApp([FromRoute]string id, DeleteAppViewModel model)
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.RootRecover(cuser);
+                model.RootRecover(currentUser);
                 return View(model);
             }
             var target = await _dbContext.Apps.FindAsync(id);
@@ -222,7 +222,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return NotFound();
             }
-            else if (target.CreatorId != cuser.Id)
+            else if (target.CreatorId != currentUser.Id)
             {
                 return new UnauthorizedResult();
             }

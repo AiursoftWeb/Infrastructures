@@ -57,8 +57,8 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
             }
-            var capp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
-            if (!capp.ViewOpenId)
+            var currentApp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
+            if (!currentApp.ViewOpenId)
             {
                 return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
             }

@@ -2,6 +2,7 @@
 
 namespace Aiursoft.Developer.Migrations
 {
+    // ReSharper disable once IdentifierTypo
     public partial class CreateNewPriviledgeForAp : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace Aiursoft.DocGenerator.Middlewares
                     context.Response.ContentType = "text/markdown";
                     break;
                 default:
-                    throw new NotImplementedException($"Invalid format: '{_format}'!");
+                    throw new InvalidDataException($"Invalid format: '{_format}'!");
             }
             context.Response.StatusCode = 200;
             var actionsMatches = new List<API>();
@@ -101,17 +102,17 @@ namespace Aiursoft.DocGenerator.Middlewares
                     actionsMatches.Add(api);
                 }
             }
-            var generatoredJsonDoc = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(actionsMatches));
+            var generatedJsonDoc = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(actionsMatches));
             if (_format == DocFormat.Json)
             {
-                await context.Response.WriteAsync(generatoredJsonDoc);
+                await context.Response.WriteAsync(generatedJsonDoc);
             }
             else if (_format == DocFormat.Markdown)
             {
                 var generator = new MarkDownDocGenerator();
-                var grouppedControllers = actionsMatches.GroupBy(t => t.ControllerName);
+                var groupedControllers = actionsMatches.GroupBy(t => t.ControllerName);
                 string finalMarkDown = string.Empty;
-                foreach (var controllerDoc in grouppedControllers)
+                foreach (var controllerDoc in groupedControllers)
                 {
                     finalMarkDown += generator.GenerateMarkDownForAPI(controllerDoc, $"{context.Request.Scheme}://{context.Request.Host}") + "\r\n--------\r\n";
                 }

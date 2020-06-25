@@ -6,10 +6,10 @@ namespace Aiursoft.Scanner.Tools
 {
     public static class ListExtends
     {
-        public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toadd)
+        public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toAdd)
         {
             var list = input.ToList();
-            list.Add(toadd);
+            list.Add(toAdd);
             return list;
         }
 

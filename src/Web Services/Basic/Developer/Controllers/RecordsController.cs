@@ -107,8 +107,8 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var accesstoken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
-            var allRecords = await _recordsService.ViewMyRecordsAsync(await accesstoken);
+            var accessToken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken);
             var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
             if (recordDetail == null)
             {

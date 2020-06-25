@@ -1,4 +1,4 @@
-@model Aiursoft.Gateway.Models.ApiViewModels.SetlangViewModel
+@model Aiursoft.Gateway.Models.ApiViewModels.SetLangViewModel
 @{
     ViewData["Title"] = Localizer["Set Language"];
 }
@@ -10,7 +10,7 @@
             <p>@Localizer["Click the language you are speaking:"]</p>
             @foreach (var lang in Aiursoft.SDK.Extends.GetSupportedLanguages())
             {
-                <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
+                <form asp-controller="api" asp-action="SetLang" class="pt-2" method="post">
                     <input type="hidden" asp-for="Culture" value="@lang.Name" />
                     <input type="hidden" asp-for="Host" value="@Model.Host" />
                     <input type="hidden" asp-for="Path" value="@Model.Path" />

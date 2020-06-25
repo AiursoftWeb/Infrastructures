@@ -84,8 +84,8 @@ namespace Aiursoft.SDK
             {
                 app.UseMiddleware<HandleRobotsMiddleware>();
                 app.UseMiddleware<EnforceHttpsMiddleware>();
-                app.UseMiddleware<UserFriendlyServerExceptionMiddeware>();
-                app.UseMiddleware<UserFriendlyNotFoundMiddeware>();
+                app.UseMiddleware<UserFriendlyServerExceptionMiddleware>();
+                app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
             }
             return app;
         }

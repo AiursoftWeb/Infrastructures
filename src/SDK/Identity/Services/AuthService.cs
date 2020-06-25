@@ -31,12 +31,12 @@ namespace Aiursoft.Identity.Services
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
             var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.AccessToken(), model.Code);
-            var userinfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessToken(), openId.OpenId);
-            var current = await _userManager.FindByIdAsync(userinfo.User.Id);
+            var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessToken(), openId.OpenId);
+            var current = await _userManager.FindByIdAsync(userInfo.User.Id);
             if (current == null)
             {
                 current = new T();
-                current.Update(userinfo);
+                current.Update(userInfo);
                 var result = await _userManager.CreateAsync(current);
                 if (!result.Succeeded)
                 {
@@ -45,12 +45,12 @@ namespace Aiursoft.Identity.Services
                     {
                         message.AppendLine(error.Description);
                     }
-                    throw new InvalidOperationException($"The user info ({userinfo.User.Id}) we get could not register to our database because {message}.");
+                    throw new InvalidOperationException($"The user info ({userInfo.User.Id}) we get could not register to our database because {message}.");
                 }
             }
             else
             {
-                current.Update(userinfo);
+                current.Update(userInfo);
                 await _userManager.UpdateAsync(current);
             }
             await _signInManager.SignInAsync(current, isPersistent);
@@ -59,8 +59,8 @@ namespace Aiursoft.Identity.Services
 
         public async Task<T> OnlyUpdate(T user)
         {
-            var userinfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
-            user.Update(userinfo);
+            var userInfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
+            user.Update(userInfo);
             await _userManager.UpdateAsync(user);
             return user;
         }

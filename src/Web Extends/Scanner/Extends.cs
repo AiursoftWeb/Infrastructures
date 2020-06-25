@@ -69,7 +69,7 @@ namespace Aiursoft.Scanner
         /// <returns></returns>
         public static IServiceCollection AddScannedDependencies(this IServiceCollection services, params Type[] abstracts)
         {
-            var executingTypes = new ClassScanner().AllAccessiableClass(false, false);
+            var executingTypes = new ClassScanner().AllAccessibleClass(false, false);
             Register(executingTypes, services, abstracts);
             return services;
         }

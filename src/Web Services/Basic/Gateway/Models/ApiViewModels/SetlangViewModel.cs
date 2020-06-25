@@ -2,12 +2,12 @@
 
 namespace Aiursoft.Gateway.Models.ApiViewModels
 {
-    public class SetlangViewModel : SetlangAddressModel
+    public class SetLangViewModel : SetLangAddressModel
     {
         [Required]
         public string Culture { get; set; }
     }
-    public class SetlangAddressModel
+    public class SetLangAddressModel
     {
         [Required]
         public string Host { get; set; }

@@ -332,8 +332,8 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var accesstoken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
-            var siteDetail = await _sitesService.ViewSiteDetailAsync(await accesstoken, siteName);
+            var accessToken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            var siteDetail = await _sitesService.ViewSiteDetailAsync(await accessToken, siteName);
             var model = new EditViewModel(user)
             {
                 AppId = appId,
