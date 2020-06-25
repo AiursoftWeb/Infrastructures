@@ -232,7 +232,7 @@ namespace Aiursoft.Developer.Controllers
                 await _siteService.DeleteAppAsync(token, target.AppId);
                 await _recordsService.DeleteAppAsync(token, target.AppId);
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 if (e.Response.Code != ErrorType.HasDoneAlready) throw;
             }

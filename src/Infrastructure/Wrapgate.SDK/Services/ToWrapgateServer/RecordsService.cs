@@ -42,7 +42,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -55,7 +55,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -80,7 +80,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -95,7 +95,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -110,7 +110,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
     }

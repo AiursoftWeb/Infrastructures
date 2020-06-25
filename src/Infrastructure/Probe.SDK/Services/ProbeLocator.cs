@@ -49,29 +49,29 @@ namespace Aiursoft.Probe.SDK.Services
             return fullPath;
         }
 
-        public string GetProbeOpenAddress(string fullpath)
+        public string GetProbeOpenAddress(string fullPath)
         {
-            var (siteName, folders, fileName) = SplitToPath(fullpath);
+            var (siteName, folders, fileName) = SplitToPath(fullPath);
             var domain = string.Format(OpenFormat, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
 
-        public string GetProbeDownloadAddress(string fullpath)
+        public string GetProbeDownloadAddress(string fullPath)
         {
-            var (siteName, folders, fileName) = SplitToPath(fullpath);
+            var (siteName, folders, fileName) = SplitToPath(fullPath);
             var domain = string.Format(DownloadFormat, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }
 
-        private (string siteName, string[] folders, string fileName) SplitToPath(string fullpath)
+        private (string siteName, string[] folders, string fileName) SplitToPath(string fullPath)
         {
-            if (fullpath == null || fullpath.Length == 0)
+            if (fullPath == null || fullPath.Length == 0)
             {
-                throw new AiurAPIModelException(ErrorType.NotFound, $"Can't get your file download address from path: '{fullpath}'!");
+                throw new AiurAPIModelException(ErrorType.NotFound, $"Can't get your file download address from path: '{fullPath}'!");
             }
-            var paths = SplitStrings(fullpath);
+            var paths = SplitStrings(fullPath);
             var fileName = paths.Last();
             var siteName = paths.First();
             var folders = paths.Take(paths.Count() - 1).Skip(1).ToArray();

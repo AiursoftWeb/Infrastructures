@@ -30,8 +30,8 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
                 AppSecret = appSecret
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            return jresult.Code == ErrorType.Success;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            return jResult.Code == ErrorType.Success;
         }
 
         public async Task<AppInfoViewModel> AppInfoAsync(string appId)
@@ -43,7 +43,7 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
     }

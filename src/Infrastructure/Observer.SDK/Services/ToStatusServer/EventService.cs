@@ -38,7 +38,7 @@ namespace Aiursoft.Observer.SDK.Services.ToStatusServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -51,7 +51,7 @@ namespace Aiursoft.Observer.SDK.Services.ToStatusServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewLogViewModel>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
     }

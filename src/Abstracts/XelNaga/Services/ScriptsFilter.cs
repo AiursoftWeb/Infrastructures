@@ -1,10 +1,8 @@
-using Aiursoft.Scanner.Interfaces;
-
 namespace Aiursoft.XelNaga.Services
 {
-    public class ScriptsFilter : ITransientDependency
+    public static class ScriptsFilter
     {
-        public string Filt(string html)
+        public static string FilterString(string html)
         {
             return html.Replace("<scripts", "< scripts");
         }

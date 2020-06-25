@@ -26,16 +26,15 @@ namespace Aiursoft.XelNaga.Models
                     var propName = prop.Name;
                     var propValue = prop.GetValue(param).ToString();
                     var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-                    if (fromQuery is IModelNameProvider namer && namer.Name != null)
+                    if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
                     {
-                        propName = namer.Name;
+                        propName = nameProvider.Name;
                     }
                     if (prop.PropertyType == typeof(DateTime))
                     {
-                        var nullableValue = prop.GetValue(param) as DateTime?;
-                        if (nullableValue != null)
+                        if (prop.GetValue(param) is DateTime time)
                         {
-                            propValue = nullableValue.Value.ToString("o", CultureInfo.InvariantCulture);
+                            propValue = time.ToString("o", CultureInfo.InvariantCulture);
                         }
                     }
                     if (!string.IsNullOrWhiteSpace(propValue))

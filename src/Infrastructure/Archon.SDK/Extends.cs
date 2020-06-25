@@ -18,12 +18,12 @@ namespace Aiursoft.Archon.SDK
             {
                 var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
-                var publickKey = new RSAParameters
+                var publicKey = new RSAParameters
                 {
                     Modulus = serverModel.Modulus.Base64ToBytes(),
                     Exponent = serverModel.Exponent.Base64ToBytes()
                 };
-                services.AddSingleton(new ArchonLocator(serverEndpoint, publickKey));
+                services.AddSingleton(new ArchonLocator(serverEndpoint, publicKey));
             });
             services.AddLibraryDependencies();
             return services;

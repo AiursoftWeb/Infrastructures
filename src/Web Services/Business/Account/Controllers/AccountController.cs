@@ -125,7 +125,7 @@ namespace Aiursoft.Account.Controllers
             {
                 await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 model.ModelStateValid = false;
                 ModelState.AddModelError(string.Empty, e.Message);
@@ -225,7 +225,7 @@ namespace Aiursoft.Account.Controllers
                 await _userService.ChangePasswordAsync(cuser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
                 return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
                 model.ModelStateValid = false;
@@ -338,7 +338,7 @@ namespace Aiursoft.Account.Controllers
                     var appInfo = await _developerApiService.AppInfoAsync(grant.AppId);
                     appsBag.Add(appInfo.App);
                 }
-                catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound) { }
+                catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
             });
             model.Apps = appsBag.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
@@ -380,7 +380,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> TwoFactorAuthentication()
         {
             var user = await GetCurrentUserAsync();
-            var has2FAkey = await _userService.ViewHas2FAkeyAsync(user.Id, await _appsContainer.AccessToken());
+            var has2FAkey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
             var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
             var model = new TwoFactorAuthenticationViewModel(user)
             {

@@ -32,7 +32,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<Folder>>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -48,7 +48,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -62,7 +62,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
     }

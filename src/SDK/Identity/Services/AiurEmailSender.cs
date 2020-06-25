@@ -34,7 +34,7 @@ namespace Aiursoft.Identity.Services
             _eventService = eventService;
         }
 
-        public async Task SendEmail(string fromDisplayName, string target, string targetsubject, string content)
+        public async Task SendEmail(string fromDisplayName, string target, string targetSubject, string content)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Aiursoft.Identity.Services
                 {
                     From = new MailAddress(_mailUser, fromDisplayName),
                     Body = content,
-                    Subject = targetsubject,
+                    Subject = targetSubject,
                     IsBodyHtml = true,
                 };
                 mailMessage.To.Add(target);

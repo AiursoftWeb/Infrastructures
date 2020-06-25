@@ -21,7 +21,7 @@ namespace Aiursoft.Identity
         {
             var request = controller.HttpContext.Request;
             string serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
-            var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignout", new UserSignoutAddressModel
+            var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignOut", new UserSignOutAddressModel
             {
                 ToRedirect = serverPosition
             });

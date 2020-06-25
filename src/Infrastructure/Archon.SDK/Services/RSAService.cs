@@ -19,7 +19,7 @@ namespace Aiursoft.Archon.SDK.Services
         {
             var bytesToVerify = originalMessage.StringToBytes();
             var signedBytes = signedBase64.Base64ToBytes();
-            _rsa.ImportParameters(_archonLocator.PublickKey);
+            _rsa.ImportParameters(_archonLocator.PublicKey);
             return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         }
     }

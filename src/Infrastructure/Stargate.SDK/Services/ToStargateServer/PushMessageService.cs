@@ -21,7 +21,7 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
             _stargateLocator = serviceLocation;
         }
 
-        public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, string messageContent, bool noexception = false)
+        public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, string messageContent, bool noException = false)
         {
             var url = new AiurUrl(_stargateLocator.Endpoint, "Message", "PushMessage", new { });
             var form = new AiurUrl(string.Empty, new PushMessageAddressModel
@@ -32,9 +32,9 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
             });
             var result = await _httpService.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (!noexception && jResult.Code != ErrorType.Success)
+            if (!noException && jResult.Code != ErrorType.Success)
             {
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             }
             return jResult;
         }

@@ -4,10 +4,10 @@ namespace Aiursoft.Archon.SDK.Services
 {
     public class ArchonLocator
     {
-        public ArchonLocator(string endpoint, RSAParameters publickKey)
+        public ArchonLocator(string endpoint, RSAParameters publicKey)
         {
             Endpoint = endpoint;
-            PublickKey = publickKey;
+            PublicKey = publicKey;
         }
 
         public ArchonLocator(string endpoint)
@@ -16,6 +16,6 @@ namespace Aiursoft.Archon.SDK.Services
         }
 
         public string Endpoint { get; }
-        public RSAParameters PublickKey { get; }
+        public RSAParameters PublicKey { get; }
     }
 }

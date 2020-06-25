@@ -14,34 +14,6 @@ namespace Aiursoft.XelNaga.Services
             _cache = cache;
         }
 
-        public async Task<T> GetAndCacheWhen<T>(string cacheKey, Func<Task<T>> backup, Func<T, bool> when)
-        {
-            if (!_cache.TryGetValue(cacheKey, out T objectInCache) || objectInCache == null)
-            {
-                // Object not in cache.
-                objectInCache = await backup();
-                _cache.Set(cacheKey, objectInCache, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(20)));
-                return objectInCache;
-            }
-            else
-            {
-                // Object in cache.
-                var dontTrustCache = !when(objectInCache);
-                if (dontTrustCache)
-                {
-                    // Subfolder is not in cache. Might because cache is out dated!
-                    var resultReal = await backup();
-                    _cache.Set(cacheKey, resultReal, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(20)));
-                    return resultReal;
-                }
-                else
-                {
-                    // Subfolder is not in cache. And cache refreshed. Return null.
-                    return objectInCache;
-                }
-            }
-        }
-
         public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
             if (!_cache.TryGetValue(cacheKey, out T resultValue) || resultValue == null)

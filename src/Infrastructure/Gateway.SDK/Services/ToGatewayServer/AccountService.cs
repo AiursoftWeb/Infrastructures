@@ -31,11 +31,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 Code = code
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
+            var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
@@ -46,10 +46,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openid
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
     }
 }

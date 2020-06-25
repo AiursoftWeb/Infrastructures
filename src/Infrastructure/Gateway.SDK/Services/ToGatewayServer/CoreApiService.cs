@@ -42,7 +42,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             var jResult = JsonConvert.DeserializeObject<AiurPagedCollection<Grant>>(result);
 
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -56,7 +56,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
     }

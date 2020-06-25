@@ -21,18 +21,15 @@ namespace Aiursoft.EE.Controllers
         private readonly UserManager<EEUser> _userManager;
         private readonly EEDbContext _dbContext;
         private readonly ServiceLocation _serviceLocation;
-        private readonly ScriptsFilter _scriptsFilter;
 
         public CourseController(
             UserManager<EEUser> userManager,
             EEDbContext dbContext,
-            ServiceLocation serviceLocation,
-            ScriptsFilter scriptsFilter)
+            ServiceLocation serviceLocation)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _serviceLocation = serviceLocation;
-            _scriptsFilter = scriptsFilter;
         }
 
         [AiurForceAuth]
@@ -54,7 +51,7 @@ namespace Aiursoft.EE.Controllers
             }
             var course = new Course
             {
-                Description = _scriptsFilter.Filt(model.Description),
+                Description = ScriptsFilter.FilterString(model.Description),
                 CourseImage = $"{_serviceLocation.UI}/images/thumbnail.svg",
                 DisplayOwnerInfo = model.DisplayOwnerInfo,
                 WhatYouWillLearn = model.WhatYouWillLearn,

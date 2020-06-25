@@ -99,7 +99,7 @@ namespace Aiursoft.Developer.Controllers
                 await _sitesService.CreateNewSiteAsync(token, model.SiteName, model.OpenToUpload, model.OpenToDownload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -136,7 +136,7 @@ namespace Aiursoft.Developer.Controllers
                 };
                 return View(model);
             }
-            catch (AiurUnexceptedResponse e) when (e.Code == ErrorType.NotFound)
+            catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound)
             {
                 return NotFound();
             }
@@ -192,7 +192,7 @@ namespace Aiursoft.Developer.Controllers
                 await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName, false);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -251,7 +251,7 @@ namespace Aiursoft.Developer.Controllers
                 await _foldersService.DeleteFolderAsync(token, model.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -310,7 +310,7 @@ namespace Aiursoft.Developer.Controllers
                 await _filesService.DeleteFileAsync(token, model.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -376,7 +376,7 @@ namespace Aiursoft.Developer.Controllers
                 _cache.Clear($"site-public-status-{model.NewSiteName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -435,7 +435,7 @@ namespace Aiursoft.Developer.Controllers
                 await _sitesService.DeleteSiteAsync(token, model.SiteName);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;

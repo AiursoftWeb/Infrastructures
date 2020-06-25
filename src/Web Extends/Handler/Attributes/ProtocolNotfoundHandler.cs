@@ -7,7 +7,7 @@ namespace Aiursoft.Handler.Attributes
 {
     /// <summary>
     /// Adding this will handle `AiurAPIModelException` when the code is not found and return 404.
-    /// Adding this will handle `AiurUnexceptedResponse` when the code is not found and return 404.
+    /// Adding this will handle `AiurUnexpectedResponse` when the code is not found and return 404.
     /// </summary>
     public class ProtocolNotfoundHandler : ExceptionFilterAttribute
     {
@@ -16,7 +16,7 @@ namespace Aiursoft.Handler.Attributes
             base.OnException(context);
             switch (context.Exception)
             {
-                case AiurUnexceptedResponse exp:
+                case AiurUnexpectedResponse exp:
                     if (exp.Code == ErrorType.NotFound)
                     {
                         context.ExceptionHandled = true;

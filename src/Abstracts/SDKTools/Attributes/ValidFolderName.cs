@@ -22,15 +22,15 @@ namespace Aiursoft.SDKTools.Attributes
             }
             else
             {
-                var invalidCharators = string.Empty;
+                var invalidCharacters = string.Empty;
                 foreach (var invalidChar in Path.GetInvalidFileNameChars())
                 {
                     if (value is string val && val.Contains(invalidChar))
                     {
-                        invalidCharators += $" '{invalidChar}',";
+                        invalidCharacters += $" '{invalidChar}',";
                     }
                 }
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid charactor{invalidCharators.TrimEnd(',')}!");
+                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid characters{invalidCharacters.TrimEnd(',')}!");
             }
         }
     }

@@ -362,13 +362,13 @@ namespace Aiursoft.Gateway.Controllers
         [HttpPost]
         [APIExpHandler]
         [APIModelStateChecker]
-        public async Task<IActionResult> Signout()
+        public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
             return this.Protocol(ErrorType.Success, "Successfully signed out!");
         }
 
-        public async Task<IActionResult> UserSignout(UserSignoutAddressModel model)
+        public async Task<IActionResult> UserSignOut(UserSignOutAddressModel model)
         {
             await _signInManager.SignOutAsync();
             return Redirect(model.ToRedirect);

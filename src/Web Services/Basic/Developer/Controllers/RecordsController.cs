@@ -85,7 +85,7 @@ namespace Aiursoft.Developer.Controllers
                 await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Type, model.Enabled);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -156,7 +156,7 @@ namespace Aiursoft.Developer.Controllers
                 _cache.Clear($"Record-public-status-{model.NewRecordName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;
@@ -215,7 +215,7 @@ namespace Aiursoft.Developer.Controllers
                 await _recordsService.DeleteRecordAsync(token, model.RecordName);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
-            catch (AiurUnexceptedResponse e)
+            catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
                 model.ModelStateValid = false;

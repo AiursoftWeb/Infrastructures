@@ -7,7 +7,7 @@ namespace Aiursoft.Handler.Attributes
 {
     /// <summary>
     /// Adding this will handle `AiurAPIModelException` and return the result as JSON directly.
-    /// Adding this will handle `AiurUnexceptedResponse` and return the result as JSON directly.
+    /// Adding this will handle `AiurUnexpectedResponse` and return the result as JSON directly.
     /// </summary>
     public class APIExpHandler : ExceptionFilterAttribute
     {
@@ -16,7 +16,7 @@ namespace Aiursoft.Handler.Attributes
             base.OnException(context);
             switch (context.Exception)
             {
-                case AiurUnexceptedResponse exp:
+                case AiurUnexpectedResponse exp:
                     context.ExceptionHandled = true;
                     context.Result = new JsonResult(new AiurProtocol { Code = exp.Code, Message = exp.Message });
                     break;

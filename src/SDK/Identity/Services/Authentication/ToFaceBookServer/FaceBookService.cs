@@ -115,7 +115,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
             var request = new HttpRequestMessage(HttpMethod.Get, apiAddress);
 
             request.Headers.Add("Authorization", $"Bearer {accessToken}");
-            request.Headers.Add("User-Agent", $"curl/7.65.3");
+            request.Headers.Add("User-Agent", "curl/7.65.3");
             request.Headers.Add("fields", "id,picture,name,email,");
 
             var response = await _client.SendAsync(request);

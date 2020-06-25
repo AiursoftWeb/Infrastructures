@@ -36,11 +36,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 NewBio = newBio
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> ChangePasswordAsync(string openId, string accessToken, string oldPassword, string newPassword)
@@ -54,11 +54,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 NewPassword = newPassword
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
 
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurValue<string>> ViewPhoneNumberAsync(string openId, string accessToken)
@@ -69,10 +69,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openId
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
@@ -85,10 +85,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 Phone = phoneNumber
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurCollection<AiurUserEmail>> ViewAllEmailsAsync(string accessToken, string openId)
@@ -99,10 +99,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openId
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurCollection<AiurUserEmail>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> BindNewEmailAsync(string openId, string newEmail, string accessToken)
@@ -115,10 +115,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
@@ -131,10 +131,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 ThatEmail = thatEmail
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> SendConfirmationEmailAsync(string accessToken, string userId, string email)
@@ -147,10 +147,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 Email = email
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> SetPrimaryEmailAsync(string accessToken, string userId, string email)
@@ -163,10 +163,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 Email = email
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurCollection<Grant>> ViewGrantedAppsAsync(string accessToken, string userId)
@@ -177,10 +177,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = userId
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<Grant>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurCollection<Grant>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> DropGrantedAppsAsync(string accessToken, string userId, string appId)
@@ -193,10 +193,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 AppIdToDrop = appId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         /// <summary>
@@ -215,10 +215,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 PageNumber = pageNumber
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurPagedCollection<AuditLog>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurPagedCollection<AuditLog>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurCollection<AiurThirdPartyAccount>> ViewSocialAccountsAsync(string accessToken, string userId)
@@ -229,10 +229,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = userId
             });
             var result = await _http.Get(url, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<AiurThirdPartyAccount>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurCollection<AiurThirdPartyAccount>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> UnBindSocialAccountAsync(string accessToken, string userId, string providerName)
@@ -245,25 +245,25 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 ProviderName = providerName
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
-        public async Task<AiurValue<bool>> ViewHas2FAkeyAsync(string openId, string accessToken)
+        public async Task<AiurValue<bool>> ViewHas2FAKeyAsync(string openId, string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewHas2FAkey", new { });
+            var url = new AiurUrl(_serviceLocation.Endpoint, "User", "ViewHas2FAKey", new { });
             var form = new AiurUrl(string.Empty, new UserOperationAddressModel
             {
                 AccessToken = accessToken,
                 OpenId = openId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurValue<bool>> ViewTwoFactorEnabledAsync(string openId, string accessToken)
@@ -275,10 +275,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
@@ -290,10 +290,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<View2FAKeyViewModel>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<View2FAKeyViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurValue<bool>> SetTwoFAKeyAsync(string openId, string accessToken)
@@ -305,10 +305,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurProtocol> ResetTwoFAKeyAsync(string openId, string accessToken)
@@ -320,10 +320,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 OpenId = openId
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurValue<bool>> TwoFAVerifyCodeAsync(string openId, string accessToken, string code)
@@ -338,7 +338,7 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
             if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jResult);
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 
@@ -351,10 +351,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurValue<bool>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
         public async Task<AiurCollection<string>> GetRecoveryCodesAsync(string openId, string accessToken)
@@ -366,10 +366,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
                 AccessToken = accessToken
             });
             var result = await _http.Post(url, form, true);
-            var jresult = JsonConvert.DeserializeObject<AiurCollection<string>>(result);
-            if (jresult.Code != ErrorType.Success)
-                throw new AiurUnexceptedResponse(jresult);
-            return jresult;
+            var jResult = JsonConvert.DeserializeObject<AiurCollection<string>>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
         }
 
     }
