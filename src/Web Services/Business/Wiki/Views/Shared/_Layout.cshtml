@@ -21,6 +21,7 @@
                 @foreach (var collection in Model.Collections)
                 {
                     <li class="nav-item">
+                        @* ReSharper disable once Html.IdNotResolved *@
                         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti@(collection.CollectionId)" data-parent="#exampleAccordion">
                             <i class="fa fa-fw fa-book"></i>
                             <span class="nav-link-text">@collection.CollectionTitle</span>

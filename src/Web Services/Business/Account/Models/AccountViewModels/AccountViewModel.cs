@@ -8,13 +8,13 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public AccountViewModel() { }
         public AccountViewModel(AccountUser user, string title)
         {
-            Recover(user, title);
+            RootRecover(user, title);
         }
 
         public virtual bool ModelStateValid { get; set; } = true;
         public virtual bool JustHaveUpdated { get; set; } = false;
 
-        public virtual void Recover(AccountUser user, string title)
+        public void RootRecover(AccountUser user, string title)
         {
             EmailConfirmed = user.EmailConfirmed;
             UserName = user.NickName;

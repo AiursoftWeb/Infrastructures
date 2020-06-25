@@ -19,7 +19,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public string NewEmail { get; set; }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Email");
+            RootRecover(user, "Email");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public PhoneViewModel(AccountUser user) : base(user, "Phone") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Phone");
+            RootRecover(user, "Phone");
         }
         [Display(Name = "Current Phone Number")]
         public string CurrentPhoneNumber { get; set; }

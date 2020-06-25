@@ -13,7 +13,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Profile");
+            RootRecover(user, "Profile");
             NickName = user.NickName;
             Bio = user.Bio;
         }

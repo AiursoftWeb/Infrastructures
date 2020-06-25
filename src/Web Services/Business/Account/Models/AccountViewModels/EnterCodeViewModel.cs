@@ -10,7 +10,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public EnterCodeViewModel(AccountUser user) : base(user, "Enter Code") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Enter Code");
+            RootRecover(user, "Enter Code");
         }
         [Required]
         [Display(Name = "Code")]

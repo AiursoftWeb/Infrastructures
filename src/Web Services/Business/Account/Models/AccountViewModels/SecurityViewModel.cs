@@ -11,7 +11,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public SecurityViewModel(AccountUser user) : base(user, "Security") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Security");
+            RootRecover(user, "Security");
         }
         [Required]
         [DataType(DataType.Password)]

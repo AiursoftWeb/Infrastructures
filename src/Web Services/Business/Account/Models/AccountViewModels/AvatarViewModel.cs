@@ -9,7 +9,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         public AvatarViewModel(AccountUser user) : base(user, "Avatar") { }
         public void Recover(AccountUser user)
         {
-            base.Recover(user, "Avatar");
+            RootRecover(user, "Avatar");
         }
         public string NewIconAddres { get; set; }
     }

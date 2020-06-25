@@ -438,7 +438,7 @@ namespace Aiursoft.Account.Controllers
             else
             {
                 ModelState.AddModelError(string.Empty, "Invalid code!");
-                model.Recover(user, "Two-factor Authentication");
+                model.RootRecover(user, "Two-factor Authentication");
                 return View(model);
             }
         }
@@ -471,7 +471,7 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
             model.NewRecoveryCodesKey = newCodesKey.Items;
-            model.Recover(user, "Two-factor Authentication");
+            model.RootRecover(user, "Two-factor Authentication");
             return View(model);
         }
 

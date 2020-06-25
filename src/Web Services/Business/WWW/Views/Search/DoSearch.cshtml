@@ -79,7 +79,7 @@
             {
                 @foreach (var response in Model.RankingResponse.Mainline.Items)
                 {
-                    @if (response.AnswerType == "WebPages")
+                    @if (response.AnswerType == "WebPages" && Model.WebPages != null)
                     {
                         <vc:web-page page="@Model.WebPages.Value[response.ResultIndex ?? 0]"></vc:web-page>
                     }
