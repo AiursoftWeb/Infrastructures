@@ -6,6 +6,7 @@ namespace Aiursoft.EE.Models
     public class Subscription
     {
         public int Id { get; set; }
+        // ReSharper disable once IdentifierTypo
         public DateTime SubscribTime { get; set; } = DateTime.UtcNow;
         public bool Paid { get; set; } = false;
 

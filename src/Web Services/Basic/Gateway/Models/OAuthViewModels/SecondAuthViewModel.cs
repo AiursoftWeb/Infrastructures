@@ -11,6 +11,6 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
         public string VerifyCode { get; set; }
 
         [Display(Name = "Don't ask me this again on this device.")]
-        public bool DontAskMeOnIt { get; set; }
+        public bool DoNotAskMeOnIt { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Aiursoft.Gateway.Controllers
             var currentUser = await GetCurrentUserAsync();
             return Json(new IndexViewModel
             {
-                Signedin = User.Identity.IsAuthenticated,
+                SignedIn = User.Identity.IsAuthenticated,
                 ServerTime = DateTime.UtcNow,
                 Code = ErrorType.Success,
                 Message = "Server started successfully!",

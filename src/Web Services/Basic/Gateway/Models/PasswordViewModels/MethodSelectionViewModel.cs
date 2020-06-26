@@ -5,8 +5,8 @@ namespace Aiursoft.Gateway.Models.PasswordViewModels
     public class MethodSelectionViewModel
     {
         public string AccountName { get; set; }
-        public IEnumerable<UserEmail> AvaliableEmails { get; set; }
-        public bool SMSResetAvaliable { get; set; }
+        public IEnumerable<UserEmail> AvailableEmails { get; set; }
+        public bool SmsResetAvailable { get; set; }
         public string PhoneNumber { get; set; }
     }
 }

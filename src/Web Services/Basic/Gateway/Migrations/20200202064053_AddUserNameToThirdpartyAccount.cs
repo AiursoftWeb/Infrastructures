@@ -2,6 +2,8 @@
 
 namespace Aiursoft.Gateway.Migrations
 {
+    // ReSharper disable once UnusedType.Global
+    // ReSharper disable once IdentifierTypo
     public partial class AddUserNameToThirdpartyAccount : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -17,7 +17,7 @@ namespace Aiursoft.WWW.Services
         private readonly string _searchAPIKey;
         private readonly HttpClient _httpClient;
         private readonly WebSearchClient _client;
-        private readonly EntitySearchClient _entiyClient;
+        private readonly EntitySearchClient _entityClient;
 
         public SearchService(
             IConfiguration configuration,
@@ -27,7 +27,7 @@ namespace Aiursoft.WWW.Services
             _searchAPIKey = configuration["BingSearchAPIKey"];
             var credential = new ApiKeyServiceClientCredentials(_searchAPIKey);
             _client = new WebSearchClient(credential);
-            _entiyClient = new EntitySearchClient(credential);
+            _entityClient = new EntitySearchClient(credential);
         }
 
         public async Task<Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse> DoSearch(string question, string lang, int page = 1)
@@ -43,7 +43,7 @@ namespace Aiursoft.WWW.Services
 
         public async Task<Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse> EntitySearch(string question, string lang)
         {
-            var entity = await _entiyClient.Entities.SearchAsync(
+            var entity = await _entityClient.Entities.SearchAsync(
                 query: question,
                 setLang: lang);
             return entity;
@@ -64,7 +64,7 @@ namespace Aiursoft.WWW.Services
             }
             else
             {
-                throw new WebException($"The remote server returned unexpcted status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
     }

@@ -11,40 +11,40 @@ namespace Aiursoft.Gateway.Services
 {
     public class APISMSSender : ITransientDependency
     {
-        public string SMSAccountIdentification;
-        public string SMSAccountPassword;
-        public string SMSAccountFrom;
+        private readonly string _smsAccountIdentification;
+        private readonly string _smsAccountPassword;
+        private readonly string _smsAccountFrom;
         private readonly ILogger _logger;
         public APISMSSender(
             IConfiguration configuration,
             ILogger<APISMSSender> logger)
         {
-            SMSAccountFrom = configuration["SMSAccountFrom"];
-            SMSAccountIdentification = configuration["SMSAccountIdentification"];
-            SMSAccountPassword = configuration["SMSAccountPassword"];
+            _smsAccountFrom = configuration["SMSAccountFrom"];
+            _smsAccountIdentification = configuration["SMSAccountIdentification"];
+            _smsAccountPassword = configuration["SMSAccountPassword"];
             _logger = logger;
         }
 
         public Task SendAsync(string number, string message)
         {
-            if (string.IsNullOrWhiteSpace(SMSAccountFrom))
+            if (string.IsNullOrWhiteSpace(_smsAccountFrom))
             {
                 throw new ArgumentNullException();
             }
-            if (string.IsNullOrWhiteSpace(SMSAccountIdentification))
+            if (string.IsNullOrWhiteSpace(_smsAccountIdentification))
             {
                 throw new ArgumentNullException();
             }
-            if (string.IsNullOrWhiteSpace(SMSAccountPassword))
+            if (string.IsNullOrWhiteSpace(_smsAccountPassword))
             {
                 throw new ArgumentNullException();
             }
             try
             {
-                TwilioClient.Init(SMSAccountIdentification, SMSAccountPassword);
+                TwilioClient.Init(_smsAccountIdentification, _smsAccountPassword);
                 return MessageResource.CreateAsync(
                   to: new PhoneNumber(number),
-                  from: new PhoneNumber(SMSAccountFrom),
+                  from: new PhoneNumber(_smsAccountFrom),
                   body: message);
             }
             catch (Exception e)

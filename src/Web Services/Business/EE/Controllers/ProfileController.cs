@@ -83,7 +83,7 @@ namespace Aiursoft.EE.Controllers
 
         public async Task<IActionResult> Followings(string id)//Viewing user name
         {
-            var cuser = await GetCurrentUserAsync();
+            var currentUser = await GetCurrentUserAsync();
             var user = await _userManager.FindByNameAsync(id);
             if (user == null)
             {
@@ -97,7 +97,7 @@ namespace Aiursoft.EE.Controllers
             var model = new FollowingsViewModel
             {
                 Followings = followings,
-                IsMe = cuser?.Id == user.Id
+                IsMe = currentUser?.Id == user.Id
             };
             await model.Restore(user, 3, _dbContext, await GetCurrentUserAsync());
             return View(model);
@@ -167,7 +167,7 @@ namespace Aiursoft.EE.Controllers
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "You have successfully unfollowed the target user!");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "You did not follow the target user and can not unfollow him!");
+            return this.Protocol(ErrorType.HasDoneAlready, "You did not follow the target user and can not unFollow him!");
         }
 
         [AiurForceAuth]

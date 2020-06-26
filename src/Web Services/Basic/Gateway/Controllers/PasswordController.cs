@@ -103,9 +103,9 @@ namespace Aiursoft.Gateway.Controllers
             {
                 AccountName = user.Email
             };
-            model.SMSResetAvaliable = user.PhoneNumberConfirmed;
+            model.SmsResetAvailable = user.PhoneNumberConfirmed;
             model.PhoneNumber = user.PhoneNumber?.Substring(user.PhoneNumber.Length - 4) ?? string.Empty;
-            model.AvaliableEmails = user.Emails.Where(t => t.Validated);
+            model.AvailableEmails = user.Emails.Where(t => t.Validated);
             return View(model);
         }
 

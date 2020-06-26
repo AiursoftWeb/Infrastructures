@@ -32,7 +32,7 @@ var follow = function (id) {
             $('#follow')
                 .removeClass('btn-primary')
                 .addClass('btn-danger')
-                .attr('href', 'javascript:unfollow("' + id + '")')
+                .attr('href', 'javascript:unFollow("' + id + '")')
                 .html('Unfollow');
         } else {
             alert(data.message);
@@ -40,7 +40,7 @@ var follow = function (id) {
     });
 }
 
-var unfollow = function (id) {
+var unFollow = function (id) {
     $.post('/Profile/UnFollow/' + id, function(data) {
         if (data.code === 0) {
             $('#follow')
