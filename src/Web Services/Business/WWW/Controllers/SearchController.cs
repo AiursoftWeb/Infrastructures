@@ -17,18 +17,18 @@ namespace Aiursoft.WWW.Controllers
         private readonly SearchService _searchService;
         private readonly WWWDbContext _dbContext;
         private readonly BingTranslator _bingTranslator;
-        private readonly AiurCache _cahceService;
+        private readonly AiurCache _cache;
 
         public SearchController(
             SearchService searchService,
             WWWDbContext dbContext,
             BingTranslator bingTranslator,
-            AiurCache cahceService)
+            AiurCache cache)
         {
             _searchService = searchService;
             _dbContext = dbContext;
             _bingTranslator = bingTranslator;
-            _cahceService = cahceService;
+            _cache = cache;
         }
 
         [Route("search")]
@@ -40,8 +40,8 @@ namespace Aiursoft.WWW.Controllers
             }
             ViewBag.CurrentPage = page;
             var market = CultureInfo.CurrentCulture.Name;
-            var result = await _cahceService.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
-            ViewBag.Entities = await _cahceService.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
+            var result = await _cache.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
+            ViewBag.Entities = await _cache.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
             if (HttpContext.AllowTrack())
             {
                 await _dbContext.SearchHistories.AddAsync(new SearchHistory
@@ -60,7 +60,7 @@ namespace Aiursoft.WWW.Controllers
         public async Task<IActionResult> Suggestion([FromRoute] string question)
         {
             var market = CultureInfo.CurrentCulture.Name;
-            var suggestions = await _cahceService.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
+            var suggestions = await _cache.GetAndCache($"search-suggestion-{market}-" + question, () => _searchService.GetSuggestion(question, market));
             var strings = suggestions
                 ?.SuggestionGroups
                 ?.FirstOrDefault(t => t.Name == "Web")

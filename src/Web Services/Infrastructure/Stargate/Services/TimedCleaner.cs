@@ -16,18 +16,18 @@ namespace Aiursoft.Stargate.Services
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly StargateMemory _memoryContext;
-        private readonly ChannelLiveJudger _channelLiveJudger;
+        private readonly ChannelLiveJudge _channelLiveJudge;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
             StargateMemory memoryContext,
-            ChannelLiveJudger channelLiveJudger)
+            ChannelLiveJudge channelLiveJudge)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
             _memoryContext = memoryContext;
-            _channelLiveJudger = channelLiveJudger;
+            _channelLiveJudge = channelLiveJudge;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -62,7 +62,7 @@ namespace Aiursoft.Stargate.Services
                 var toDelete = dbContext
                     .Channels
                     .ToList()
-                    .Where(t => _channelLiveJudger.IsDead(t.Id))
+                    .Where(t => _channelLiveJudge.IsDead(t.Id))
                     .ToList();
                 dbContext.Channels.RemoveRange(toDelete);
                 await dbContext.SaveChangesAsync();

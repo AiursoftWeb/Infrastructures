@@ -2,6 +2,8 @@
 
 namespace Aiursoft.Wiki.Migrations
 {
+    // ReSharper disable once IdentifierTypo
+    // ReSharper disable once UnusedType.Global
     public partial class MarkIfAritlceBuiltByJson : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

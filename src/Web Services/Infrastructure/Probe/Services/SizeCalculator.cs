@@ -6,7 +6,7 @@ namespace Aiursoft.Probe.Services
 {
     public class SizeCalculator : ITransientDependency
     {
-        public IEnumerable<int> TwoPows()
+        private IEnumerable<int> GetTwoPowers()
         {
             yield return 0;
             for (int i = 1; i <= 8192; i *= 2)
@@ -21,7 +21,7 @@ namespace Aiursoft.Probe.Services
             {
                 return 8192;
             }
-            foreach (var optional in TwoPows())
+            foreach (var optional in GetTwoPowers())
             {
                 if (optional >= input)
                 {

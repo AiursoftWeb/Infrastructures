@@ -9,10 +9,10 @@ namespace Aiursoft.Probe.Services
         private readonly RSAParameters _privateKey;
         private readonly RSAParameters _publicKey;
         private readonly RSA _rsa;
-        public PBRSAService(PBKeyPair keypair)
+        public PBRSAService(PBKeyPair keyPair)
         {
-            _privateKey = keypair.PrivateKey;
-            _publicKey = keypair.PublicKey;
+            _privateKey = keyPair.PrivateKey;
+            _publicKey = keyPair.PublicKey;
             _rsa = RSA.Create();
         }
 

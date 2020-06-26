@@ -3,13 +3,13 @@ using System;
 
 namespace Aiursoft.Stargate.Services
 {
-    public class ChannelLiveJudger : ISingletonDependency
+    public class ChannelLiveJudge : ISingletonDependency
     {
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
         private readonly TimeSpan _maxIdleLife = TimeSpan.FromDays(10);
 
-        public ChannelLiveJudger(
+        public ChannelLiveJudge(
             ConnectedCountService connectedCountService,
             LastAccessService lastAccessService)
         {

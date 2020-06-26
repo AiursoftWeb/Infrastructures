@@ -22,7 +22,7 @@ namespace Aiursoft.Wiki.Services
 {
     public class Seeder : ITransientDependency
     {
-        private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HTTPService _http;
@@ -46,7 +46,7 @@ namespace Aiursoft.Wiki.Services
             _appsContainer = appsContainer;
         }
 
-        public Task AllClear()
+        private Task AllClear()
         {
             _dbContext.Article.Delete(t => true);
             _dbContext.Collections.Delete(t => true);
@@ -57,7 +57,7 @@ namespace Aiursoft.Wiki.Services
         {
             try
             {
-                await _semaphoreSlim.WaitAsync();
+                await SemaphoreSlim.WaitAsync();
                 await AllClear();
                 var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"), false);
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
@@ -80,26 +80,26 @@ namespace Aiursoft.Wiki.Services
                         // markdown http url.
                         if (!string.IsNullOrEmpty(article.ArticleAddress))
                         {
-                            var newarticle = new Article
+                            var newArticle = new Article
                             {
                                 ArticleTitle = article.ArticleTitle,
                                 ArticleAddress = article.ArticleAddress,
                                 ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress), false),
                                 CollectionId = newCollection.CollectionId
                             };
-                            await _dbContext.Article.AddAsync(newarticle);
+                            await _dbContext.Article.AddAsync(newArticle);
                             await _dbContext.SaveChangesAsync();
                         }
                         // GitHub repo.
                         else
                         {
-                            var newarticle = new Article
+                            var newArticle = new Article
                             {
                                 ArticleTitle = article.ArticleTitle,
                                 ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
                                 CollectionId = newCollection.CollectionId
                             };
-                            await _dbContext.Article.AddAsync(newarticle);
+                            await _dbContext.Article.AddAsync(newArticle);
                             await _dbContext.SaveChangesAsync();
                         }
                     }
@@ -115,14 +115,14 @@ namespace Aiursoft.Wiki.Services
                         foreach (var docController in docGrouped)
                         {
                             var markdown = _markDownGenerator.GenerateMarkDownForAPI(docController, apiRoot);
-                            var newarticle = new Article
+                            var newArticle = new Article
                             {
                                 ArticleTitle = docController.Key.TrimController(),
                                 ArticleContent = markdown,
                                 CollectionId = newCollection.CollectionId,
                                 BuiltByJson = true
                             };
-                            await _dbContext.Article.AddAsync(newarticle);
+                            await _dbContext.Article.AddAsync(newArticle);
                             await _dbContext.SaveChangesAsync();
                         }
                     }
@@ -137,7 +137,7 @@ namespace Aiursoft.Wiki.Services
             }
             finally
             {
-                _semaphoreSlim.Release();
+                SemaphoreSlim.Release();
             }
         }
     }

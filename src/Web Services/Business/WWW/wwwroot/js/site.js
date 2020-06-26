@@ -2,13 +2,13 @@
     var tempHtmlStorage = "";
     var hovering = false;
     $('*[data-hover-video]').each(function () {
-        var placehoder = $(this);
+        var placeholder = $(this);
         var innerPlace = $(this).find("[data-place]");
-        placehoder.hover(function () {
+        placeholder.hover(function () {
             if (hovering) return;
             hovering = true;
             tempHtmlStorage = innerPlace.html();
-            innerPlace.html('<video id="preview" loop="loop" autoplay="autoplay" muted="muted" style="width:100%" src="' + placehoder.attr('data-hover-video') + '"></video>');
+            innerPlace.html('<video id="preview" loop="loop" autoplay="autoplay" muted="muted" style="width:100%" src="' + placeholder.attr('data-hover-video') + '"></video>');
             setTimeout(function () {
                 document.getElementById('preview').addEventListener('loadedmetadata', function () {
                     this.currentTime = 0;

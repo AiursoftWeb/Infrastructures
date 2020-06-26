@@ -54,9 +54,9 @@ namespace Aiursoft.Probe.Services
             PBToken token;
             try
             {
-                var tokenparts = value.Split('.');
-                string tokenBase64 = tokenparts[0];
-                string tokenSign = tokenparts[1];
+                var tokenParts = value.Split('.');
+                string tokenBase64 = tokenParts[0];
+                string tokenSign = tokenParts[1];
                 token = JsonConvert.DeserializeObject<PBToken>(tokenBase64.Base64ToString());
                 if (DateTime.UtcNow > token.Expires)
                 {
