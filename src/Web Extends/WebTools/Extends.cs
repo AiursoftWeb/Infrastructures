@@ -1,7 +1,6 @@
 ﻿using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.WebTools
@@ -43,9 +42,6 @@ namespace Aiursoft.WebTools
             bool dnt = !string.IsNullOrWhiteSpace(dntFlag) && dntFlag.Trim() == 1.ToString();
             return !dnt;
         }
-
-        public static string GetUserId(this ClaimsPrincipal user) =>
-            user.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
         {

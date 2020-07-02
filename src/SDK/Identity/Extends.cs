@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace Aiursoft.Identity
 {
@@ -27,6 +28,9 @@ namespace Aiursoft.Identity
             });
             return controller.Redirect(toRedirect.ToString());
         }
+
+        public static string GetUserId(this ClaimsPrincipal user) =>
+            user.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services,
             string archonEndpoint,
