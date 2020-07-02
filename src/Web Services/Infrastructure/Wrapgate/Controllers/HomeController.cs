@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Wrapgate.Controllers
 {
     [LimitPerMin]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly WrapgateLocator _locator;
 
@@ -26,7 +26,7 @@ namespace Aiursoft.Wrapgate.Controllers
                 Message = "Welcome to Aiursoft Wrapgate!",
                 WrapPattern = _locator.WrapPattern
             };
-            return Json(model);
+            return Ok(model);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Aiursoft.Probe.Controllers
     [APIModelStateChecker]
     [Route("Files")]
     [DisableRequestSizeLimit]
-    public class FilesController : Controller
+    public class FilesController : ControllerBase
     {
         private readonly FolderSplitter _folderSplitter;
         private readonly TokenEnsurer _tokenEnsurer;
@@ -92,7 +92,7 @@ namespace Aiursoft.Probe.Controllers
             var newFileHardwareId = await _fileRepo.SaveFileToDb(fileName, folder.Id, file.Length);
             await _storageProvider.Save(newFileHardwareId, file);
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), fileName);
-            return Json(new UploadFileViewModel
+            return Ok(new UploadFileViewModel
             {
                 InternetPath = _probeLocator.GetProbeOpenAddress(filePath),
                 DownloadPath = _probeLocator.GetProbeDownloadAddress(filePath),
@@ -151,7 +151,7 @@ namespace Aiursoft.Probe.Controllers
             await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
             var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
             var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
-            return Json(new UploadFileViewModel
+            return Ok(new UploadFileViewModel
             {
                 InternetPath = internetPath,
                 SiteName = model.TargetSiteName,

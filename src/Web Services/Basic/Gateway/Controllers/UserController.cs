@@ -24,7 +24,7 @@ namespace Aiursoft.Gateway.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly UserManager<GatewayUser> _userManager;
         private readonly GatewayDbContext _dbContext;
@@ -53,29 +53,29 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
+        public async Task<IActionResult> ChangeProfile(ChangeProfileAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             user.NickName = model.NewNickName;
             user.IconFilePath = model.NewIconFilePathName;
             user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
-            return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
+            return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
 
         [HttpPost]
-        public async Task<JsonResult> ChangePassword(ChangePasswordAddressModel model)
+        public async Task<IActionResult> ChangePassword(ChangePasswordAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePassword);
             var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed your password!" });
+                return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed your password!" });
             }
             else
             {
-                return Json(new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
+                return Ok(new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
             }
         }
 
@@ -83,7 +83,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
-            return Json(new AiurValue<string>(user.PhoneNumber)
+            return Ok(new AiurValue<string>(user.PhoneNumber)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's phone number."
@@ -111,7 +111,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
             var emails = await _dbContext.UserEmails.Where(t => t.OwnerId == user.Id).ToListAsync();
-            return Json(new AiurCollection<UserEmail>(emails)
+            return Ok(new AiurCollection<UserEmail>(emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
@@ -227,7 +227,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
             var applications = await _dbContext.LocalAppGrant.Where(t => t.GatewayUserId == user.Id).ToListAsync();
-            return Json(new AiurCollection<AppGrant>(applications)
+            return Ok(new AiurCollection<AppGrant>(applications)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your granted apps!"
@@ -260,7 +260,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime);
 
-            return Json(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
+            return Ok(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
                 query,
                 model,
                 ErrorType.Success,
@@ -276,7 +276,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.OwnerId == user.Id)
                 .OrderByDescending(t => t.BindTime)
                 .ToListAsync();
-            return Json(new AiurCollection<ThirdPartyAccount>(accounts)
+            return Ok(new AiurCollection<ThirdPartyAccount>(accounts)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your audit log!"
@@ -299,11 +299,11 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<JsonResult> ViewHas2FAKey(UserOperationAddressModel model)
+        public async Task<IActionResult> ViewHas2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool key = user.Has2FAKey;
-            return Json(new AiurValue<bool>(key)
+            return Ok(new AiurValue<bool>(key)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's Has2FAkey."
@@ -312,11 +312,11 @@ namespace Aiursoft.Gateway.Controllers
 
         [HttpPost]
         [APIProduces(typeof(AiurValue<bool>))]
-        public async Task<JsonResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
+        public async Task<IActionResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool enabled = user.TwoFactorEnabled;
-            return Json(new AiurValue<bool>(enabled)
+            return Ok(new AiurValue<bool>(enabled)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's TwoFactorEnabled."
@@ -329,7 +329,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             var (twoFAKey, twoFAQRUri) = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user);
-            return Json(new View2FAKeyViewModel
+            return Ok(new View2FAKeyViewModel
             {
                 TwoFAKey = twoFAKey,
                 TwoFAQRUri = twoFAQRUri,
@@ -349,7 +349,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.UpdateAsync(user);
             }
             var hasKey = user.Has2FAKey;
-            return Json(new AiurValue<bool>(hasKey)
+            return Ok(new AiurValue<bool>(hasKey)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
@@ -386,7 +386,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.UpdateAsync(user);
             }
 
-            return Json(new AiurValue<bool>(is2FATokenValid)
+            return Ok(new AiurValue<bool>(is2FATokenValid)
             {
                 Code = ErrorType.Success,
                 Message = "Sucess Verified code."
@@ -409,7 +409,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             bool success = disable2FAResult.Succeeded;
 
-            return Json(new AiurValue<bool>(success)
+            return Ok(new AiurValue<bool>(success)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully called DisableTwoFA method!"
@@ -425,7 +425,7 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
 
-            return Json(new AiurCollection<string>(recoveryCodes.ToList())
+            return Ok(new AiurCollection<string>(recoveryCodes.ToList())
             {
                 Code = ErrorType.Success,
                 Message = "Sucess regenerate recovery Codes!."

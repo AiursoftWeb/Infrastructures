@@ -15,7 +15,7 @@ namespace Aiursoft.Probe.Controllers
     [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
-    public class TokenController : Controller
+    public class TokenController : ControllerBase
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ProbeDbContext _dbContext;
@@ -48,7 +48,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.Unauthorized, $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
             }
             var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions);
-            return Json(new AiurValue<string>(pbToken)
+            return Ok(new AiurValue<string>(pbToken)
             {
                 Code = ErrorType.Success,
                 Message = $"Successfully get your PBToken! Use it before {deadline} UTC!"

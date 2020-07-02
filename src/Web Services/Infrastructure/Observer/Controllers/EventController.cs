@@ -17,7 +17,7 @@ namespace Aiursoft.Observer.Controllers
     [LimitPerMin]
     [APIModelStateChecker]
     [APIExpHandler]
-    public class EventController : Controller
+    public class EventController : ControllerBase
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
@@ -91,7 +91,7 @@ namespace Aiursoft.Observer.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your logs!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
     }
 }

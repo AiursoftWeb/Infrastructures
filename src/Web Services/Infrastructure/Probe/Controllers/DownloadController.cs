@@ -13,7 +13,7 @@ namespace Aiursoft.Probe.Controllers
 {
     [Route("Download")]
     [APIExpHandler]
-    public class DownloadController : Controller
+    public class DownloadController : ControllerBase
     {
         private readonly FolderSplitter _folderSplitter;
         private readonly ImageCompressor _imageCompressor;

@@ -13,7 +13,7 @@ namespace Aiursoft.Wrapgate.Controllers
     [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
-    public class RecordsController : Controller
+    public class RecordsController : ControllerBase
     {
         private readonly AppRepo _appRepo;
         private readonly RecordRepo _recordRepo;
@@ -51,7 +51,7 @@ namespace Aiursoft.Wrapgate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your records!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
         [HttpPost]

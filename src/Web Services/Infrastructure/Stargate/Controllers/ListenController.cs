@@ -20,7 +20,7 @@ namespace Aiursoft.Stargate.Controllers
     [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
-    public class ListenController : Controller
+    public class ListenController : ControllerBase
     {
         private readonly Counter _counter;
         private readonly StargateDbContext _dbContext;
@@ -68,7 +68,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             if (channel.ConnectKey != model.Key)
             {
-                return Json(new AiurProtocol
+                return Ok(new AiurProtocol
                 {
                     Code = ErrorType.Unauthorized,
                     Message = "Wrong connection key!"
@@ -117,7 +117,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 _connectedCountService.ReduceConnectedCount(channel.Id);
             }
-            return Json(new { });
+            return Ok(new { });
         }
     }
 }

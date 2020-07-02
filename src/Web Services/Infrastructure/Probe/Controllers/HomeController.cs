@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace Aiursoft.Probe.Controllers
 {
     [LimitPerMin]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
@@ -18,7 +18,7 @@ namespace Aiursoft.Probe.Controllers
 
         public IActionResult Index()
         {
-            return Json(new IndexViewModel
+            return Ok(new IndexViewModel
             {
                 OpenPattern = _configuration["OpenPattern"],
                 DownloadPattern = _configuration["DownloadPattern"],

@@ -15,7 +15,7 @@ namespace Aiursoft.Probe.Controllers
     [APIExpHandler]
     [APIModelStateChecker]
     [Route("Folders")]
-    public class FoldersController : Controller
+    public class FoldersController : ControllerBase
     {
         private readonly FolderSplitter _folderSplitter;
         private readonly FolderRepo _folderRepo;
@@ -38,7 +38,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
             }
-            return Json(new AiurValue<Folder>(folder)
+            return Ok(new AiurValue<Folder>(folder)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get your folder!"

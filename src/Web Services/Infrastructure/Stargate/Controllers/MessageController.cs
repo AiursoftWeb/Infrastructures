@@ -13,7 +13,7 @@ namespace Aiursoft.Stargate.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class MessageController : Controller
+    public class MessageController : ControllerBase
     {
         private readonly StargateDbContext _dbContext;
         private readonly StargateMemory _memoryContext;
@@ -41,10 +41,10 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
             if (channel == null)
             {
-                return Json(new AiurProtocol
+                return Ok(new AiurProtocol
                 {
                     Code = ErrorType.NotFound,
-                    Message = "We can not find your channel!"
+                    Message = $"We can not find your channel with id: '{model.ChannelId}'!"
                 });
             }
             //Create Message
@@ -55,7 +55,7 @@ namespace Aiursoft.Stargate.Controllers
                 Content = model.MessageContent
             };
             _memoryContext.Messages.Add(message);
-            return Json(new AiurProtocol
+            return Ok(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = $"You have successfully pushed a new message to channel: {channel.Id}!"

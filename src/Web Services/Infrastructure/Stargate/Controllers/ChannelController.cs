@@ -20,7 +20,7 @@ namespace Aiursoft.Stargate.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class ChannelController : Controller
+    public class ChannelController : ControllerBase
     {
         private readonly StargateDbContext _dbContext;
         private readonly ACTokenValidator _tokenManager;
@@ -72,7 +72,7 @@ namespace Aiursoft.Stargate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
         [APIProduces(typeof(AiurValue<string>))]
@@ -81,7 +81,7 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.FindAsync(model.Id);
             if (channel == null)
             {
-                return Json(new AiurProtocol
+                return Ok(new AiurProtocol
                 {
                     Code = ErrorType.NotFound,
                     Message = "Can not find your channel!"
@@ -89,7 +89,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             if (!_channelLiveJudge.IsAlive(channel.Id))
             {
-                return Json(new AiurProtocol
+                return Ok(new AiurProtocol
                 {
                     Code = ErrorType.Pending,
                     Message = "Your channel is out dated and about to be deleted!"
@@ -97,7 +97,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             if (channel.ConnectKey != model.Key)
             {
-                return Json(new AiurProtocol
+                return Ok(new AiurProtocol
                 {
                     Code = ErrorType.Unauthorized,
                     Message = "Wrong connection key!"
@@ -105,7 +105,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             else
             {
-                return Json(new AiurValue<string>(channel.AppId)
+                return Ok(new AiurValue<string>(channel.AppId)
                 {
                     Code = ErrorType.Success,
                     Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
@@ -145,7 +145,7 @@ namespace Aiursoft.Stargate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully created your channel!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
         [HttpPost]
@@ -155,11 +155,11 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.FindAsync(model);
             if (channel.AppId != appid)
             {
-                return Json(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
+                return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
             }
             _dbContext.Channels.Remove(channel);
             await _dbContext.SaveChangesAsync();
-            return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
+            return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Aiursoft.Stargate.Controllers
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)
             {
-                return Json(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
+                return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
             }
             var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
@@ -181,9 +181,9 @@ namespace Aiursoft.Stargate.Controllers
                 _dbContext.Channels.Delete(t => t.AppId == target.Id);
                 _dbContext.Apps.Remove(target);
                 await _dbContext.SaveChangesAsync();
-                return Json(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
+                return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
             }
-            return Json(new AiurProtocol { Code = ErrorType.HasDoneAlready, Message = "That app do not exists in our database." });
+            return Ok(new AiurProtocol { Code = ErrorType.HasDoneAlready, Message = "That app do not exists in our database." });
         }
     }
 }

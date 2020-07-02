@@ -13,7 +13,7 @@ namespace Aiursoft.Probe.Controllers
     [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
-    public class SitesController : Controller
+    public class SitesController : ControllerBase
     {
         private readonly AppRepo _appRepo;
         private readonly FolderRepo _folderRepo;
@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your sites!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
         [APIProduces(typeof(ViewSiteDetailViewModel))]
@@ -70,7 +70,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your site!"
             };
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
         [HttpPost]
