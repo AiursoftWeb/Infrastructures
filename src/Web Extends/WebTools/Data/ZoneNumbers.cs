@@ -1,19 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Aiursoft.WebTools.Data
 {
     public class ZoneNumbers
     {
-        public static SelectList BuildSelectList()
-        {
-            return new SelectList(Numbers.Select(t => new KeyValuePair<string, string>($"+{t.Value} {t.Key}", "+" + t.Value)),
-                nameof(KeyValuePair<string, string>.Value),
-                nameof(KeyValuePair<string, string>.Key),
-                Numbers.First().Value);
-        }
-
         public static readonly Dictionary<string, int> Numbers = new Dictionary<string, int>
         {
             {

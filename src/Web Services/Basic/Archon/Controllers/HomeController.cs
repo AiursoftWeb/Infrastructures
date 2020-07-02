@@ -7,12 +7,11 @@ using Microsoft.Extensions.Configuration;
 namespace Aiursoft.Archon.Controllers
 {
     [LimitPerMin]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
-        public HomeController(
-            IConfiguration configuration)
+        public HomeController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -20,7 +19,7 @@ namespace Aiursoft.Archon.Controllers
         public IActionResult Index()
         {
             var keyConfig = _configuration.GetSection("Key");
-            return Json(new IndexViewModel
+            return Ok(new IndexViewModel
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Archon server!",

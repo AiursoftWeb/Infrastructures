@@ -47,9 +47,9 @@ namespace Aiursoft.WebTools
         public static string GetUserId(this ClaimsPrincipal user) =>
             user.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public static JsonResult Protocol(this Controller controller, ErrorType errorType, string errorMessage)
+        public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
         {
-            return controller.Json(new AiurProtocol
+            return controller.Ok(new AiurProtocol
             {
                 Code = errorType,
                 Message = errorMessage

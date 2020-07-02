@@ -17,6 +17,7 @@ using Aiursoft.WebTools.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Concurrent;
@@ -243,7 +244,11 @@ namespace Aiursoft.Account.Controllers
                 CurrentPhoneNumber = phone.Value,
                 PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
                 JustHaveUpdated = justHaveUpdated,
-                AvailableZoneNumbers = ZoneNumbers.BuildSelectList()
+                AvailableZoneNumbers = new SelectList(
+                    ZoneNumbers.Numbers.Select(t => new KeyValuePair<string, string>($"+{t.Value} {t.Key}", "+" + t.Value)),
+                    nameof(KeyValuePair<string, string>.Value),
+                    nameof(KeyValuePair<string, string>.Key),
+                    ZoneNumbers.Numbers.First().Value)
             };
             return View(model);
         }

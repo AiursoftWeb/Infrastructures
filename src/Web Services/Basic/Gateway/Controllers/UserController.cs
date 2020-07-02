@@ -91,7 +91,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
+        public async Task<IActionResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePhoneNumber);
             if (string.IsNullOrWhiteSpace(model.Phone))

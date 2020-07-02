@@ -13,7 +13,7 @@ namespace Aiursoft.Developer.Controllers
     [APIExpHandler]
     [APIModelStateChecker]
     [LimitPerMin]
-    public class ApiController : Controller
+    public class ApiController : ControllerBase
     {
         private readonly DeveloperDbContext _dbContext;
 
@@ -23,25 +23,25 @@ namespace Aiursoft.Developer.Controllers
             _dbContext = context;
         }
 
-        public async Task<JsonResult> IsValidApp(IsValidateAppAddressModel model)
+        public async Task<IActionResult> IsValidApp(IsValidateAppAddressModel model)
         {
             var target = await _dbContext.Apps.FindAsync(model.AppId);
             if (target == null)
             {
-                return Json(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
+                return Ok(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
             }
             else if (target.AppSecret != model.AppSecret)
             {
-                return Json(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+                return Ok(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
             }
             else
             {
-                return Json(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
+                return Ok(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
             }
         }
 
         [APIProduces(typeof(AppInfoViewModel))]
-        public async Task<JsonResult> AppInfo(AppInfoAddressModel model)
+        public async Task<IActionResult> AppInfo(AppInfoAddressModel model)
         {
             var target = await _dbContext
                 .Apps
@@ -49,9 +49,9 @@ namespace Aiursoft.Developer.Controllers
 
             if (target == null)
             {
-                return Json(new AiurProtocol { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
+                return Ok(new AiurProtocol { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
             }
-            return Json(new AppInfoViewModel
+            return Ok(new AppInfoViewModel
             {
                 Message = "Successfully get target app info.",
                 Code = ErrorType.Success,

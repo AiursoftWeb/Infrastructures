@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Archon.Controllers
 {
     [LimitPerMin]
-    public class APIController : Controller
+    public class APIController : ControllerBase
     {
         private readonly TokenGenerator _tokenManager;
         private readonly DeveloperApiService _developerApiService;
@@ -38,7 +38,7 @@ namespace Aiursoft.Archon.Controllers
             if (correctApp)
             {
                 var token = _tokenManager.GenerateAccessToken(model.AppId);
-                return Json(new AccessTokenViewModel
+                return Ok(new AccessTokenViewModel
                 {
                     Code = ErrorType.Success,
                     Message = "Successfully get access token.",
