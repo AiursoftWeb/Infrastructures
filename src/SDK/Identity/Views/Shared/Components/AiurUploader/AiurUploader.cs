@@ -2,6 +2,7 @@
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
@@ -37,7 +38,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
             if (!await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
             {
                 var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
-                return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path);
+                return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path, TimeSpan.FromMinutes(100));
             }
             return string.Empty;
         }

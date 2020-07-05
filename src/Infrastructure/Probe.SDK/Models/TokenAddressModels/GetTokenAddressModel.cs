@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Probe.SDK.Models.TokenAddressModels
 {
@@ -14,5 +15,8 @@ namespace Aiursoft.Probe.SDK.Models.TokenAddressModels
         /// </summary>
         [Required]
         public string Permissions { get; set; }
+
+        [Range(10, 31536000/*One year*/)]
+        public long LifespanSeconds { get; set; } = 3600;
     }
 }

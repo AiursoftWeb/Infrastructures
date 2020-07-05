@@ -27,14 +27,14 @@ namespace Aiursoft.Probe.Services
             _rsa = rsa;
         }
 
-        public (string, DateTime) GenerateAccessToken(string siteName, string underPath, string permissions)
+        public (string, DateTime) GenerateAccessToken(string siteName, string underPath, string permissions, TimeSpan lifespan)
         {
             var token = new PBToken
             {
                 SiteName = siteName,
                 UnderPath = underPath,
                 Permissions = permissions,
-                Expires = DateTime.UtcNow + new TimeSpan(0, 60, 0)
+                Expires = DateTime.UtcNow + lifespan
             };
             var tokenJson = JsonConvert.SerializeObject(token, new JsonSerializerSettings
             {

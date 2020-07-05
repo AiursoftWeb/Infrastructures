@@ -8,6 +8,7 @@ using Aiursoft.Probe.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers
@@ -47,7 +48,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.Unauthorized, $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
             }
-            var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions);
+            var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions, TimeSpan.FromSeconds(model.LifespanSeconds));
             return Ok(new AiurValue<string>(pbToken)
             {
                 Code = ErrorType.Success,
