@@ -1,19 +1,7 @@
-﻿<a class='aiur-scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>
+﻿
+<!--Aiur scroll to top-->
+<a class='aiur-scroll-to-top rounded' href='#page-top'><i class='fa fa-angle-up'></i></a>
 <script>
-    window.addEventListener('load', function () {
-        $(document).scroll(function () {
-            var scrollDistance = $(this).scrollTop();
-            if (scrollDistance > 100) {
-                $('.aiur-scroll-to-top').fadeIn();
-            } else {
-                $('.aiur-scroll-to-top').fadeOut();
-            }
-        });
-
-        $('a.aiur-scroll-to-top').off('click');
-        $('a.aiur-scroll-to-top').on('click', function (event) {
-            $('html, body').animate({ scrollTop: 0 }, 'easeInOutExpo');
-            event.preventDefault();
-        });
-    });
+    window.addEventListener("load", function () { $(document).scroll(function () { var scrollDistance = $(this).scrollTop(); if (scrollDistance > 100) { $(".aiur-scroll-to-top").fadeIn() } else { $(".aiur-scroll-to-top").fadeOut() } }); $("a.aiur-scroll-to-top").off("click"); $("a.aiur-scroll-to-top").on("click", function (event) { $("html, body").animate({ scrollTop: 0 }, "easeInOutExpo"); event.preventDefault() }) });
 </script>
+<!--End Aiur scroll to top-->
