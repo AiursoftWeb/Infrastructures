@@ -1,0 +1,35 @@
+﻿@model string
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiursoft video player</title>
+    <link href="@ServiceLocation.UI/node_modules/video.js/dist/video-js.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="player" class="video-js vjs-default-skin vjs-big-play-centered vjs-fill" playsinline>
+        <source src="@Html.Raw(Model)">
+    </video>
+
+    <script src="@ServiceLocation.UI/node_modules/video.js/dist/video.min.js"></script>
+    <script>
+        var player = videojs('player', {
+            fill: true,
+            controls: true,
+            autoplay: true,
+            preload: 'auto'
+        });
+    </script>
+</body>
+
+</html>
