@@ -1,5 +1,6 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Models;
 using Aiursoft.XelNaga.Tools;
 using System;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace Aiursoft.Probe.SDK.Services
         public string Endpoint { get; private set; }
         public string OpenFormat { get; private set; }
         public string DownloadFormat { get; private set; }
+
+        public string GetProbeOpenAddress(string siteName, string[] folders, string fileName)
+        {
+            return GetProbeOpenAddress(siteName, string.Join('/', folders), fileName);
+        }
 
         public string GetProbeOpenAddress(string siteName, string path, string fileName)
         {

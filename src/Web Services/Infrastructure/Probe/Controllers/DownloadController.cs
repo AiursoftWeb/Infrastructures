@@ -82,7 +82,7 @@ namespace Aiursoft.Probe.Controllers
                 }
                 else if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "Video")
                 {
-                    return VideoPlayerWithFile(probeLocator.GetProbeOpenAddress(path));
+                    return VideoPlayerWithFile(probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName));
                 }
                 else if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
