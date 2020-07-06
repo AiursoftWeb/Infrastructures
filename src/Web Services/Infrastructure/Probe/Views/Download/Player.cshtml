@@ -31,6 +31,7 @@
     <script src="@ServiceLocation.UI/node_modules/video.js/dist/video.min.js"></script>
     <script>
         var player = videojs('player', {
+            playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3],
             fill: true,
             controls: true,
             autoplay: true,
