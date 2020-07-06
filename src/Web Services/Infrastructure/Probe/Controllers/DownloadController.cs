@@ -5,6 +5,7 @@ using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
+using Aiursoft.Probe.ViewModels.DownloadViewModels;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
@@ -82,7 +83,10 @@ namespace Aiursoft.Probe.Controllers
                 }
                 else if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "Video")
                 {
-                    return VideoPlayerWithFile(probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName));
+                    return VideoPlayerWithFile(
+                        probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName),
+                        model.PBToken,
+                        fileName);
                 }
                 else if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
                 {
@@ -99,8 +103,14 @@ namespace Aiursoft.Probe.Controllers
             }
         }
 
-        private IActionResult VideoPlayerWithFile(string path)
+        private IActionResult VideoPlayerWithFile(string path, string token, string fileName)
         {
+            var model = new PlayerViewModel
+            {
+                Src = path,
+                Token = token,
+                Title = fileName
+            };
             return View("Player", path);
         }
 
