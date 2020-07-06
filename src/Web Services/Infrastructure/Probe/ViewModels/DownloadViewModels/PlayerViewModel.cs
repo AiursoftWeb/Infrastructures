@@ -8,7 +8,7 @@ namespace Aiursoft.Probe.ViewModels.DownloadViewModels
     public class PlayerViewModel
     {
         public string Src { get; set; }
-        public string Token { get; set; }
+        public string PbToken { get; set; }
         public string Title { get; set; }
     }
 }

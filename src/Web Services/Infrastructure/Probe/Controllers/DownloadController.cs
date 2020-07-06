@@ -103,15 +103,15 @@ namespace Aiursoft.Probe.Controllers
             }
         }
 
-        private IActionResult VideoPlayerWithFile(string path, string token, string fileName)
+        private IActionResult VideoPlayerWithFile(string path, string pbToken, string fileName)
         {
             var model = new PlayerViewModel
             {
                 Src = path,
-                Token = token,
+                PbToken = pbToken,
                 Title = fileName
             };
-            return View("Player", path);
+            return View("Player", model);
         }
 
         private async Task<IActionResult> FileWithImageCompressor(string path, string extension)
