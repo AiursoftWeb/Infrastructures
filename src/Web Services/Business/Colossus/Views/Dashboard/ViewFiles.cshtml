@@ -105,7 +105,14 @@
                                                 <i class="fa fa-fw fa-2x fa-file-text text-azure"></i>
                                             </div>
                                             <div class="ml-3 pt-1">
-                                                <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                                @{ 
+                                                    var link = ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName);
+                                                    @if(MIME.IsVideo(file.FileName))
+                                                    {
+                                                        link = ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName);
+                                                    }
+                                                }
+                                                <a href="@link" target="_blank">
                                                     @file.FileName
                                                 </a>
                                             </div>
@@ -121,17 +128,18 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 @if(MIME.CanHandle(file.FileName))
                                                 { 
-                                                    <a class="dropdown-item" href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                    <a class="dropdown-item" href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                                         <i class="fa fa-fw fa-window-maximize"></i>
-                                                        Open
+                                                        Open in browser
                                                     </a>
                                                     <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)">
                                                         <i class="fa fa-fw fa-clipboard"></i>
-                                                        Copy file link
+                                                        Copy link
                                                     </a>
                                                     @if(MIME.IsVideo(file.FileName))
                                                     {
-                                                        <a class="dropdown-item" href="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                                             <i class="fa fa-fw fa-play-circle"></i>
                                                             Open in video player
                                                         </a>
@@ -141,6 +149,7 @@
                                                         </a>
                                                     }
                                                 }
+                                                <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
                                                     <i class="fa fa-fw fa-download"></i>
                                                     Download
