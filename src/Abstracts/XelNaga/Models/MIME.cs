@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Aiursoft.XelNaga.Models
 {
@@ -8,6 +9,20 @@ namespace Aiursoft.XelNaga.Models
         {
             string lower = extension.ToLower().TrimStart('.');
             return MimeTypesDictionary.ContainsKey(lower);
+        }
+
+        public static bool CanHandle(string fileName)
+        {
+            var extension = Path.GetExtension(fileName).Trim('.');
+            var contentType = GetContentType(extension);
+            return contentType != "application/octet-stream";
+        }
+
+        public static bool IsVideo(string fileName)
+        {
+            var extension = Path.GetExtension(fileName).Trim('.');
+            var contentType = GetContentType(extension);
+            return contentType.StartsWith("video"); ;
         }
 
         public static string GetContentType(string extenstion)
