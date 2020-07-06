@@ -22,6 +22,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 OpenPattern = _configuration["OpenPattern"],
                 DownloadPattern = _configuration["DownloadPattern"],
+                PlayerPattern = _configuration["PlayerPattern"],
                 Code = ErrorType.Success,
                 Message = "Welcome to Probe!"
             });

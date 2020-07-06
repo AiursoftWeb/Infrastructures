@@ -39,7 +39,8 @@ namespace Aiursoft.Probe
             services.AddSingleton(new ProbeLocator(
                 endpoint: Configuration["ProbeEndpoint"],
                 openFormat: Configuration["OpenPattern"],
-                downloadFormat: Configuration["DownloadPattern"]));
+                downloadFormat: Configuration["DownloadPattern"],
+                playerFormat: Configuration["PlayerPattern"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

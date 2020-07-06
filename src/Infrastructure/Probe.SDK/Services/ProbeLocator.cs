@@ -12,7 +12,8 @@ namespace Aiursoft.Probe.SDK.Services
         public ProbeLocator(
             string endpoint,
             string openFormat,
-            string downloadFormat)
+            string downloadFormat,
+            string playerFormat)
         {
             Endpoint = endpoint;
             if (string.IsNullOrWhiteSpace(openFormat))
@@ -25,8 +26,14 @@ namespace Aiursoft.Probe.SDK.Services
                 downloadFormat = endpoint + "/download/file/{0}";
             }
             DownloadFormat = downloadFormat;
+            if (string.IsNullOrWhiteSpace(playerFormat))
+            {
+                playerFormat = endpoint + "/Video/file/{0}";
+            }
+            PlayerFormat = playerFormat;
         }
 
+        public string PlayerFormat;
         public string Endpoint { get; private set; }
         public string OpenFormat { get; private set; }
         public string DownloadFormat { get; private set; }
@@ -48,6 +55,12 @@ namespace Aiursoft.Probe.SDK.Services
             return GetProbeDownloadAddress(fullPath);
         }
 
+        public string GetProbePlayerAddress(string siteName, string path, string fileName)
+        {
+            var fullPath = GetProbeFullPath(siteName, path, fileName);
+            return GetProbePlayerAddress(fullPath);
+        }
+
         public string GetProbeFullPath(string siteName, string path, string fileName)
         {
             var filePath = $"{path}/{fileName}".TrimStart('/');
@@ -67,6 +80,14 @@ namespace Aiursoft.Probe.SDK.Services
         {
             var (siteName, folders, fileName) = SplitToPath(fullPath);
             var domain = string.Format(DownloadFormat, siteName);
+            var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
+            return $"{domain}/{path}{fileName.ToUrlEncoded()}";
+        }
+
+        public string GetProbePlayerAddress(string fullPath)
+        {
+            var (siteName, folders, fileName) = SplitToPath(fullPath);
+            var domain = string.Format(PlayerFormat, siteName);
             var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
             return $"{domain}/{path}{fileName.ToUrlEncoded()}";
         }

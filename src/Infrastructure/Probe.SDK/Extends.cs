@@ -27,7 +27,8 @@ namespace Aiursoft.Probe.SDK
                 var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
                 var openFormat = serverConfig.OpenPattern;
                 var downloadFormat = serverConfig.DownloadPattern;
-                services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat));
+                var playerFormat = serverConfig.PlayerPattern;
+                services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat, playerFormat));
             });
 
             services.AddLibraryDependencies();

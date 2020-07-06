@@ -121,25 +121,21 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 @if(MIME.CanHandle(file.FileName))
                                                 { 
-                                                    var link = ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName);
-                                                    <a class="dropdown-item" href="@link">
+                                                    <a class="dropdown-item" href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)">
                                                         <i class="fa fa-fw fa-download"></i>
                                                         Open
                                                     </a>
-                                                    @if(MIME.IsVideo(file.FileName))
-                                                    {
-                                                        <a class="dropdown-item" href="@link">
-                                                            <i class="fa fa-fw fa-download"></i>
-                                                            Open in video player
-                                                        </a>
-                                                    }
-                                                    <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@link">
+                                                    <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)">
                                                         <i class="fa fa-fw fa-download"></i>
                                                         Copy file link
                                                     </a>
                                                     @if(MIME.IsVideo(file.FileName))
                                                     {
-                                                        <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@link">
+                                                        <a class="dropdown-item" href="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                            <i class="fa fa-fw fa-download"></i>
+                                                            Open in video player
+                                                        </a>
+                                                        <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)">
                                                             <i class="fa fa-fw fa-download"></i>
                                                             Copy player link
                                                         </a>
