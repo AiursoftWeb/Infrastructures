@@ -20,7 +20,7 @@
     <video id="player" class="video-js vjs-default-skin vjs-big-play-centered vjs-fill" playsinline>
         @if (!string.IsNullOrWhiteSpace(Model.PbToken))
         {
-            <source src="@Html.Raw(Model.Src)?pbtoken=@System.Net.WebUtility.UrlEncode(Model.PbToken)">
+            <source src="@Html.Raw(Model.Src)?token=@System.Net.WebUtility.UrlEncode(Model.PbToken)">
         }
         else
         {
