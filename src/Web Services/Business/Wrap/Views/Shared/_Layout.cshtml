@@ -1,49 +1,77 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Aiursoft.Wrap</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <vc:aiur-header></vc:aiur-header>
+    <title>@ViewData["Title"] - @Values.ProjectName Wrap</title>
+    <vc:aiur-market-css></vc:aiur-market-css>
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Aiursoft.Wrap</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="@ServiceLocation.WWW">@Values.ProjectName</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["Price"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Wiki">@Localizer["API"]</a></li>
+                </ul>
+                <div class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @await UserImageGenerator.RenderUserImageAsync(User)
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <a class="dropdown-item" asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+                                    <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">@Localizer["Sign out"]</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                    @Localizer["Sign in"]
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                    @Localizer["Sign up"]
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Aiursoft.Wrap - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <ul class="bd-footer-links">
+                <vc:aiur-footer template="li" item-class=""></vc:aiur-footer>
+            </ul>
+            <p>
+                &copy; @DateTime.Now.Year - @Values.ProjectName
+                <vc:china-register></vc:china-register>
+            </p>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <vc:scroll-to-top></vc:scroll-to-top>
+    <vc:aiur-logout></vc:aiur-logout>
+    <vc:aiur-market-js></vc:aiur-market-js>
+@await RenderSectionAsync("js", required: false)
 </body>
 </html>

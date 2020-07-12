@@ -1,8 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model Aiursoft.Wrap.Models.HomeViewModels.IndexViewModel
+@using Microsoft.Extensions.Configuration
+@using System.Reflection
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Home";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron">
+    <div class="container">
+        <h3>Welcome to @Values.ProjectName Wrap</h3>
+        @{
+            var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+        }
+        <p>@Localizer[description]</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
+                <i class="fa fa-pencil"></i>
+                @Localizer["Sign in to your personal URL database"]
+            </a>
+        </div>
+    </div>
 </div>
+<main role="main" class="container">
+
+</main>
+@section js{
+   
+}

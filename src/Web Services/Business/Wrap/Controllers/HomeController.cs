@@ -1,37 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aiursoft.Wrap.Models;
+using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Handler.Attributes;
+using Aiursoft.Identity;
+using Aiursoft.Identity.Attributes;
+using Aiursoft.XelNaga.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Aiursoft.Wrap.Models;
+using System.Threading.Tasks;
+using Aiursoft.Wrap.Models.HomeViewModels;
 
 namespace Aiursoft.Wrap.Controllers
 {
+    [LimitPerMin]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<WrapUser> _signInManager;
+        private readonly GatewayLocator _gatewayLocator;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            SignInManager<WrapUser> signInManager,
+            GatewayLocator gatewayLocator)
         {
-            _logger = logger;
+            _signInManager = signInManager;
+            _gatewayLocator = gatewayLocator;
         }
 
+        [AiurForceAuth("", "", justTry: true)]
         public IActionResult Index()
         {
-            return View();
+            var model = new IndexViewModel();
+            return View(model);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> LogOff()
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            await _signInManager.SignOutAsync();
+            return this.SignOutRootServer(_gatewayLocator.Endpoint, new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
         }
     }
 }

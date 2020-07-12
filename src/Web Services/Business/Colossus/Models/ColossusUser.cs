@@ -8,7 +8,6 @@ namespace Aiursoft.Colossus.Models
         FileBrowser
     }
 
-    // Add profile data for application users by adding properties to the ApplicationUser class
     public class ColossusUser : AiurUserBase
     {
         public string SiteName { get; set; }

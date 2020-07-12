@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Aiursoft.Wrap.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Wrap.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class WrapDbContext : IdentityDbContext<WrapUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public WrapDbContext(DbContextOptions<WrapDbContext> options) : base(options)
         {
         }
     }
