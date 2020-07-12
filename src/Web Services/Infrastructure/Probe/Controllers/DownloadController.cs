@@ -105,10 +105,8 @@ namespace Aiursoft.Probe.Controllers
 
         private IActionResult VideoPlayerWithFile(string path, string pbToken, string fileName)
         {
-            var model = new PlayerViewModel
+            var model = new PlayerViewModel(src: path, token: pbToken)
             {
-                Src = path,
-                PbToken = pbToken,
                 Title = fileName
             };
             return View("Player", model);

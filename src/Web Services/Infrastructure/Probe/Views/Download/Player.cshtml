@@ -18,14 +18,7 @@
 
 <body>
     <video id="player" class="video-js vjs-default-skin vjs-big-play-centered vjs-fill" playsinline>
-        @if (!string.IsNullOrWhiteSpace(Model.PbToken))
-        {
-            <source src="@Html.Raw(Model.Src)?token=@System.Net.WebUtility.UrlEncode(Model.PbToken)">
-        }
-        else
-        {
-            <source src="@Html.Raw(Model.Src)">
-        }
+        <source src="@Html.Raw(Model.PlayUrl)">
     </video>
 
     <script src="@ServiceLocation.UI/node_modules/video.js/dist/video.min.js"></script>
