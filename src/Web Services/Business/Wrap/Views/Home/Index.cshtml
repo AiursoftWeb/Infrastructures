@@ -20,12 +20,12 @@
 
         <div class="col-12 mb-3 mt-5">
             <div class="form-group">
-                <input type="url" asp-for="Url" class="form-control form-control-lg" placeholder="@Localizer["Input the long url. Example: https://github.com/AiursoftWeb/Nexus"]" />
+                <input type="url" id="url" asp-for="Url" class="form-control form-control-lg" placeholder="@Localizer["Input the long url. Example: https://github.com/AiursoftWeb/Nexus"]" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
 
-            <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0">
-                <label asp-for="NewRecordName"></label>
+            <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0 d-none" id="record-name-part">
+                <label asp-for="NewRecordName">Shorten URL (You can edit it below)</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">https://</span>
@@ -54,5 +54,17 @@
 </main>
 
 @section js{
-
+    <script>
+        $(document).ready(function () {
+            $('#url').on('input', function (e) {
+                var urlInput = $(this);
+                var urlValue = urlInput.val();
+                if (urlValue) {
+                    $('#record-name-part').removeClass('d-none');
+                } else {
+                    $('#record-name-part').addClass('d-none');
+                }
+            });
+        });
+    </script>
 }
