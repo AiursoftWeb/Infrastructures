@@ -2,27 +2,45 @@
 @using Microsoft.Extensions.Configuration
 @using System.Reflection
 @inject IConfiguration Configuration
-@{
-    ViewData["Title"] = "Home";
-}
+@{ ViewData["Title"] = "Home"; }
 <div class="jumbotron">
-    <div class="container">
-        <h3>Welcome to @Values.ProjectName Wrap</h3>
-        @{
-            var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
-        }
-        <p>@Localizer[description]</p>
-        <div class="btn-group" role="group">
+    <form class="container" method="post">
+        <div class="col-12">
+            <h3>Welcome to @Values.ProjectName Wrap</h3>
+            @{ var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description; }
+            <p>@Localizer[description]</p>
+        </div>
+
+        <div class="col-12 mb-3 mt-5">
+            <div class="form-group">
+                <input type="url" asp-for="Url" class="form-control form-control-lg" placeholder="@Localizer["Input the long url. Example: https://github.com/AiursoftWeb/Nexus"]" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input asp-for="NewRecordName" type="text" class="form-control form-control-lg" placeholder="Enter a valid domain">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">@string.Format("https://{0}.fuck.com", string.Empty)</span>
+                    </div>
+                </div>
+                <span asp-validation-for="NewRecordName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-lg btn-success">
+                <i class="fa fa-random"></i> Create redirect
+            </button>
             <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
                 <i class="fa fa-pencil"></i>
                 @Localizer["Sign in to your personal URL database"]
             </a>
         </div>
-    </div>
+    </form>
 </div>
 <main role="main" class="container">
 
 </main>
 @section js{
-   
+
 }
