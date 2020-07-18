@@ -9,6 +9,7 @@ namespace Aiursoft.Wrap.Models.HomeViewModels
 {
     public class IndexViewModel
     {
+        [Display(Name = "Your shorten URL")]
         [Required]
         [ValidDomainName]
         [MaxLength(50)]

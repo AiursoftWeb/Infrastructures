@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Aiursoft.Wrapgate.SDK;
 
 namespace Aiursoft.Wrap
 {
@@ -32,7 +33,7 @@ namespace Aiursoft.Wrap
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-
+            services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
             services.AddAiurDependenciesWithIdentity<WrapUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),

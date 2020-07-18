@@ -48,7 +48,7 @@
                                         ioPath = httpRegex.Replace(ioPath, string.Empty);
                                         ioPath = ioPath.Replace("{wrap}", string.Empty);
                                     }
-                                    <span class="input-group-text" id="basic-addon2">@string.Format(ioPath, string.Empty)</span>
+                                    <span class="input-group-text">@string.Format(ioPath, string.Empty)</span>
                                 </div>
                             </div>
                             <span asp-validation-for="RecordName" class="text-danger"></span>

@@ -1,13 +1,20 @@
 @model Aiursoft.Wrap.Models.HomeViewModels.IndexViewModel
-@using Microsoft.Extensions.Configuration
 @using System.Reflection
-@inject IConfiguration Configuration
-@{ ViewData["Title"] = "Home"; }
+@using System.Text.RegularExpressions;
+@using Aiursoft.Wrapgate.SDK.Services
+@inject WrapgateLocator WrapgateLocator
+@{ 
+    ViewData["Title"] = "Home";
+    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+    var httpRegex = new Regex("^https://", RegexOptions.Compiled);
+    var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
+    pattern = httpRegex.Replace(pattern, string.Empty);
+    pattern = pattern.Replace("{wrap}", string.Empty);
+}
 <div class="jumbotron">
     <form class="container" method="post">
         <div class="col-12">
             <h3>Welcome to @Values.ProjectName Wrap</h3>
-            @{ var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description; }
             <p>@Localizer[description]</p>
         </div>
 
@@ -17,21 +24,25 @@
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0">
+                <label asp-for="NewRecordName"></label>
                 <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">https://</span>
+                    </div>
                     <input asp-for="NewRecordName" type="text" class="form-control form-control-lg" placeholder="Enter a valid domain">
                     <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon2">@string.Format("https://{0}.fuck.com", string.Empty)</span>
+                        <span class="input-group-text">@pattern</span>
                     </div>
                 </div>
                 <span asp-validation-for="NewRecordName" class="text-danger"></span>
             </div>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-lg btn-success">
+            <button type="submit" class="btn btn-lg btn-success mb-3">
                 <i class="fa fa-random"></i> Create redirect
             </button>
-            <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index" role="button">
+            <a class="btn btn-primary btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
                 <i class="fa fa-pencil"></i>
                 @Localizer["Sign in to your personal URL database"]
             </a>
@@ -41,6 +52,7 @@
 <main role="main" class="container">
 
 </main>
+
 @section js{
 
 }
