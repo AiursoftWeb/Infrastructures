@@ -12,6 +12,8 @@ using System;
 using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Wrapgate.SDK.Models;
+using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 
 namespace Aiursoft.Wrap.Controllers
 {
@@ -46,7 +48,15 @@ namespace Aiursoft.Wrap.Controllers
         public async Task<IActionResult> Create(IndexViewModel model)
         {
             var token = await _appsContainer.AccessToken();
-            await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, RecordType.Redirect, enabled: true);
+            try
+            {
+                await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, RecordType.Redirect, enabled: true);
+            }
+            catch(AiurUnexpectedResponse e) when (e.Code == ErrorType.NotEnoughResources)
+            {
+                ModelState.AddModelError(nameof(model.NewRecordName), $"Sorry but the key:'{model.NewRecordName}' already exists. Try another one.");
+                return View(nameof(Index), model);
+            }
             return View("Created", model);
         }
 
