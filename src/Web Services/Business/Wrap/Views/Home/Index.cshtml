@@ -12,7 +12,7 @@
     pattern = pattern.Replace("{wrap}", string.Empty);
 }
 <div class="jumbotron">
-    <form class="container" method="post">
+    <form class="container" asp-controller="Home" asp-action="Create" method="post">
         <div class="col-12">
             <h3>Welcome to @Values.ProjectName Wrap</h3>
             <p>@Localizer[description]</p>
@@ -49,9 +49,6 @@
         </div>
     </form>
 </div>
-<main role="main" class="container">
-
-</main>
 
 @section js{
     <script>

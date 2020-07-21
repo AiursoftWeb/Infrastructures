@@ -1,0 +1,44 @@
+@model Aiursoft.Wrap.Models.HomeViewModels.IndexViewModel
+@using System.Reflection
+@using System.Text.RegularExpressions;
+@using Aiursoft.Wrapgate.SDK.Services
+@inject WrapgateLocator WrapgateLocator
+@{ 
+    ViewData["Title"] = "Home";
+    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+    var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
+    var url = pattern.Replace("{wrap}", Model.NewRecordName); 
+}
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-12">
+            <h3>Your link was created!</h3>
+            <p>@Localizer[description]</p>
+        </div>
+
+        <div class="col-12 mb-3 mt-5">
+            <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0">
+                <label>Shorten URL</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" readonly="readonly" value="@url">
+                    <span class="input-group-append">
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@url">@Localizer["Copy"]</button>
+                        <a type="button" class="btn btn-success" href="@url" target="_blank">@Localizer["Open"]</a>
+                    </span>
+                </div>
+            </div>
+            <p class="text-muted">
+                By clicking it, you will be redirected to <a href="@Model.Url">@Model.Url</a>.
+            </p>
+        </div>
+        <div class="col-12">
+            <p class="text-muted">
+                Enjoy our service? Want to edit your records? <a asp-controller="Dashboard" asp-action="Index">Sign in</a>.
+            </p>
+            <a class="btn btn-primary btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
+                <i class="fa fa-pencil"></i>
+                @Localizer["Sign in to your personal URL database"]
+            </a>
+        </div>
+    </div>
+</div>
