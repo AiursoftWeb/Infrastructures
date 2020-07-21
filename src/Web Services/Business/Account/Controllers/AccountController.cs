@@ -84,7 +84,6 @@ namespace Aiursoft.Account.Controllers
             var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(currentUser);
                 return View(model);
             }
@@ -117,7 +116,6 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -128,7 +126,6 @@ namespace Aiursoft.Account.Controllers
             }
             catch (AiurUnexpectedResponse e)
             {
-                model.ModelStateValid = false;
                 ModelState.AddModelError(string.Empty, e.Message);
                 model.Recover(user);
                 var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
@@ -190,7 +187,6 @@ namespace Aiursoft.Account.Controllers
             var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(currentUser);
                 return View(model);
             }
@@ -217,7 +213,6 @@ namespace Aiursoft.Account.Controllers
             var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(currentUser);
                 return View(model);
             }
@@ -229,7 +224,6 @@ namespace Aiursoft.Account.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
-                model.ModelStateValid = false;
                 model.Recover(currentUser);
             }
             return View(model);
@@ -261,7 +255,6 @@ namespace Aiursoft.Account.Controllers
             if (!ModelState.IsValid)
             {
                 model.Recover(user);
-                model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
             var phone = model.ZoneNumber + model.NewPhoneNumber;
@@ -288,7 +281,6 @@ namespace Aiursoft.Account.Controllers
             if (!ModelState.IsValid)
             {
                 model.Recover(user);
-                model.ModelStateValid = ModelState.IsValid;
                 return View(model);
             }
             var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
@@ -305,7 +297,6 @@ namespace Aiursoft.Account.Controllers
             }
             else
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 ModelState.AddModelError(string.Empty, "Your token is invalid!");
                 return View(model);
