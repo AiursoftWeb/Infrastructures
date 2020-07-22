@@ -15,7 +15,7 @@
         </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
-    @if (!Model.ModelStateValid)
+    @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger" role="alert">
             <strong>@Localizer["Invalid Input!"]</strong>

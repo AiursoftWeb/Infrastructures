@@ -20,7 +20,6 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
             RootRecover(user);
         }
 
-        public bool ModelStateValid { get; set; } = true;
         [Required]
         [FromRoute]
         public string AppId { get; set; }

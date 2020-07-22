@@ -46,7 +46,6 @@ namespace Aiursoft.EE.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 return View(model);
             }
             var course = new Course

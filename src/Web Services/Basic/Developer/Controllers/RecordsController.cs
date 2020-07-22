@@ -66,7 +66,6 @@ namespace Aiursoft.Developer.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -88,7 +87,6 @@ namespace Aiursoft.Developer.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -144,7 +142,6 @@ namespace Aiursoft.Developer.Controllers
             }
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user, app.AppName);
                 return View(model);
             }
@@ -159,7 +156,6 @@ namespace Aiursoft.Developer.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user, app.AppName);
                 model.NewRecordName = model.OldRecordName;
                 return View(model);
@@ -205,7 +201,6 @@ namespace Aiursoft.Developer.Controllers
             }
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user, app.AppName);
                 return View(model);
             }
@@ -218,7 +213,6 @@ namespace Aiursoft.Developer.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user, app.AppName);
                 return View(model);
             }

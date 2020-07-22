@@ -193,7 +193,6 @@ namespace Aiursoft.Gateway.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 return View(model);
             }
             var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
@@ -214,7 +213,6 @@ namespace Aiursoft.Gateway.Controllers
             }
             else
             {
-                model.ModelStateValid = false;
                 ModelState.AddModelError("", "Your code is not correct and we can't help you reset your password!");
                 return View(model);
             }

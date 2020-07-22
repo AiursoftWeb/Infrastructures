@@ -4,7 +4,6 @@ namespace Aiursoft.Gateway.Models.PasswordViewModels
 {
     public class EnterSMSCodeViewModel
     {
-        public bool ModelStateValid { get; set; } = true;
         public string PhoneLast { get; set; }
         [Required]
         public string Code { get; set; }

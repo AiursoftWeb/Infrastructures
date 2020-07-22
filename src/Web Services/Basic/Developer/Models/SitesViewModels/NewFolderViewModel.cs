@@ -16,7 +16,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
             AppName = appName;
         }
 
-        public bool ModelStateValid { get; set; } = true;
         public string NewFolderName { get; set; }
 
         [FromRoute]

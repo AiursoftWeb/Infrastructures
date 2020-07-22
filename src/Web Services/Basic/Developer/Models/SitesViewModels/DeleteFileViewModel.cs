@@ -19,7 +19,6 @@ namespace Aiursoft.Developer.Models.SitesViewModels
             RootRecover(user);
         }
 
-        public bool ModelStateValid { get; set; } = true;
         [Required]
         public string AppId { get; set; }
 

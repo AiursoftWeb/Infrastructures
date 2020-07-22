@@ -11,7 +11,6 @@ namespace Aiursoft.Colossus.Models.DashboardViewModels
             RootRecover(user, title);
         }
 
-        public bool ModelStateValid { get; set; } = true;
         public bool JustHaveUpdated { get; set; } = false;
 
         public void RootRecover(ColossusUser user, string title)

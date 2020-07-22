@@ -10,8 +10,6 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public CreateAppViewModel() { }
         public CreateAppViewModel(DeveloperUser user) : base(user) { }
 
-        public bool ModelStateValid { get; set; } = true;
-
         [Display(Name = "App Name")]
         [Required]
         [StringLength(maximumLength: 25, MinimumLength = 1)]

@@ -82,7 +82,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -96,7 +95,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -147,7 +145,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -159,7 +156,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -184,7 +180,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -196,7 +191,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -221,7 +215,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -233,7 +226,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -266,7 +258,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -280,7 +271,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -326,7 +316,6 @@ namespace Aiursoft.Colossus.Controllers
             var user = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.Recover(user);
                 return View(model);
             }
@@ -343,7 +332,6 @@ namespace Aiursoft.Colossus.Controllers
             catch (AiurUnexpectedResponse e)
             {
                 ModelState.AddModelError(string.Empty, e.Response.Message);
-                model.ModelStateValid = false;
                 model.Recover(user);
                 model.NewSiteName = model.OldSiteName;
                 return View(model);

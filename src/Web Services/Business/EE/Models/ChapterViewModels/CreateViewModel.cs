@@ -4,7 +4,6 @@ namespace Aiursoft.EE.Models.ChapterViewModels
 {
     public class CreateViewModel
     {
-        public bool ModelStateValid { get; set; } = true;
         public string CourseName { get; set; }
         public int CourseId { get; set; }
 

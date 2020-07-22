@@ -85,7 +85,6 @@ namespace Aiursoft.Developer.Controllers
             var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 model.RootRecover(currentUser);
                 return View(model);
             }
@@ -120,7 +119,6 @@ namespace Aiursoft.Developer.Controllers
             var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
-                model.ModelStateValid = false;
                 await model.Recover(currentUser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService, _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
                 return View(model);
             }
