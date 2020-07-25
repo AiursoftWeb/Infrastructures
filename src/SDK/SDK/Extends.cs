@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -122,7 +123,17 @@ namespace Aiursoft.SDK
                 SupportedCultures = GetSupportedLanguages(),
                 SupportedUICultures = GetSupportedLanguages()
             });
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = options =>
+                {
+                    options.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromDays(14)
+                    };
+                }
+            });
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
