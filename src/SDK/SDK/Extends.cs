@@ -9,6 +9,7 @@ using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -84,6 +85,10 @@ namespace Aiursoft.SDK
             else
             {
                 app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddleware>();
                 app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
@@ -100,6 +105,10 @@ namespace Aiursoft.SDK
             else
             {
                 app.UseMiddleware<HandleRobotsMiddleware>();
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<APIFriendlyServerExceptionMiddleware>();
             }
