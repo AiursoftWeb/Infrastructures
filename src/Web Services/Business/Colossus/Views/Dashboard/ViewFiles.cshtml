@@ -34,7 +34,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <a asp-controller="Dashboard" asp-action="NewFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-secondary mr-2">
-                <i class="fa fa-folder-open"></i>
+                <i class="far fa-folderpen"></i>
                 New folder
             </a>
             @if (Model.Path != null)
@@ -44,7 +44,7 @@
                     Up
                 </a>
                 <a asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path" class="btn btn-sm btn-danger mr-2">
-                    <i class="fa fa-trash"></i>
+                    <i class="fas fa-trash-alt"></i>
                     Delete @Model.Folder.FolderName
                 </a>
             }

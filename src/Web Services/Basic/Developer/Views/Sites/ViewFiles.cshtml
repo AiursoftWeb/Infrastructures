@@ -32,7 +32,7 @@
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-folder-open ico"></i>
+            <i class="far fa-folderpen ico"></i>
             Files in site:
             <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@string.Empty">
                 @Model.SiteName
@@ -47,7 +47,7 @@
                         Up
                     </a>
                     <a asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-danger mb-3">
-                        <i class="fa fa-trash"></i>
+                        <i class="fas fa-trash-alt"></i>
                         Delete @Model.Folder.FolderName
                     </a>
 
@@ -93,7 +93,7 @@
                             {
                                 <tr>
                                     <td data-order="Z@(file.FileName)">
-                                        <i class="fa fa-file-o text-primary"></i>
+                                        <i class="far fa-file text-primary"></i>
                                         <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
                                         </a>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="mt-3">
                     <a asp-controller="Sites" asp-action="NewFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path" class="btn btn-secondary">
-                        <i class="fa fa-folder-open"></i>
+                        <i class="far fa-folderpen"></i>
                         New folder
                     </a>
                 </div>

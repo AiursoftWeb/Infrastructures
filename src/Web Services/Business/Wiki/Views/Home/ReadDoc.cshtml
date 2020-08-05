@@ -21,21 +21,21 @@
             paths = paths.Skip(3).ToArray();
             var path = "https://github.com" + $"/{paths[0]}/{paths[1]}/blob/{string.Join("/", paths.Skip(2))}";
             <a class="btn btn-info" href="@path" target="_blank">
-                <i class="fa fa-github"></i>
+                <i class="fab fa-github"></i>
                 View in GitHub
             </a>
         }
         else if (Model.CurrentArticle.BuiltByJson)
         {
             <a class="btn btn-info" href="@Model.CurrentCollection.DocAPIAddress" target="_blank">
-                <i class="fa fa-github"></i>
+                <i class="fab fa-github"></i>
                 View wiki in JSON
             </a>
         }
         else
         {
             <a class="btn btn-info" href="@Configuration["GitHubEditPath"]@Model.CurrentCollection.CollectionTitle/@(Model.CurrentArticle.ArticleTitle).md" target="_blank">
-                <i class="fa fa-github"></i>
+                <i class="fab fa-github"></i>
                 Edit in GitHub
             </a>
         }
