@@ -1,6 +1,6 @@
 ﻿@model Aiursoft.Gateway.Models.ThirdPartyViewModels.BindAccountViewModel
 @{
-    ViewData["Title"] = "Bind failed with " + Model.Provider.GetName();
+    ViewData["Title"] = "Bind success with " + Model.Provider.GetName();
 }
 <div class="container">
     <div class="card mx-auto mt-5" style="max-width: 50rem;">
@@ -16,16 +16,14 @@
                     <img class="rounded ml-3" style="width:100px;height:100px;" src="@Model.UserDetail.AvatarUrl">
                 }
             </div>
-            <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+            <div class="alert alert-success alert-dismissible mt-3" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-                <strong>@Localizer["Bind failed!"]</strong>
+                <strong>@Localizer["Bind success!"]</strong>
                 <p class="mb-0">
-                    There already exists another Aiursoft account binded with the @Model.Provider.GetName() account <strong>@Model.UserDetail.Name</strong>!
-                </p>
-                <p>
-                    If you believe that you own this account, please sign in with your @Model.Provider.GetName() account directly.
+                    You have successfully bind your Aiursoft account <strong>@Model.User.NickName</strong> with @Model.Provider.GetName() account <strong>@Model.UserDetail.Name</strong>!
                 </p>
             </div>
+            <p class="text-muted">Now you can use your @Model.Provider.GetName() identity to sign in your Aiursoft account.</p>
             <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social"><i class="fa fa-fw fa-@Model.Provider.GetButtonIcon()"></i>Back to account center</a>
         </div>
     </div>

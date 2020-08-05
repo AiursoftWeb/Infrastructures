@@ -194,6 +194,16 @@ namespace Aiursoft.Gateway.Controllers
                 var refreshLink = provider.GetBindRedirectLink();
                 return Redirect(refreshLink);
             }
+            if (await _dbContext.ThirdPartyAccounts.AnyAsync(t => t.OpenId == info.Id))
+            {
+                // The third-party account already bind an account.
+                return View(viewName: "BindFailed", model: new BindAccountViewModel
+                {
+                    UserDetail = info,
+                    Provider = provider,
+                    User = user
+                });
+            }
             var link = new ThirdPartyAccount
             {
                 OwnerId = user.Id,
