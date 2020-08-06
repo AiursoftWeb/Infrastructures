@@ -48,11 +48,11 @@
                                     <label style="font-size:16px; font-weight:500">@item.ProjectName</label>
                                     @if (item.LastHealthStatus)
                                     {
-                                        <p class="pull-right text-success"><i class="fa fa-check"></i>@Localizer["Operational"]</p>
+                                        <p class="float-right text-success"><i class="fa fa-check"></i>@Localizer["Operational"]</p>
                                     }
                                     else
                                     {
-                                        <p class="pull-right text-danger"><i class="fa fa-times"></i>@Localizer["Issue"]</p>
+                                        <p class="float-right text-danger"><i class="fa fa-times"></i>@Localizer["Issue"]</p>
                                     }
                                     <p class="mb-0 text-muted">@Localizer["Update:"] <label data-utc-time="@item.LastCheckTime"></label></p>
                                 </li>
