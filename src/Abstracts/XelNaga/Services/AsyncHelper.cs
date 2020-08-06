@@ -10,16 +10,20 @@ namespace Aiursoft.XelNaga.Services
     {
         public static void TryAsyncThreeTimes(Func<Task> steps)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 try
                 {
                     RunSync(async () => await steps());
                     break;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    Thread.Sleep((i + 1) * 10 * 1000);
+                    if (i >= 3)
+                    {
+                        throw e;
+                    }
+                    Thread.Sleep(i * 10 * 1000);
                 }
             }
         }
