@@ -49,21 +49,21 @@
                             switch (Math.Abs(app.AppId.GetHashCode()) % 4)
                             {
                                 case 0:
-                                    icon = "server";
+                                    icon = "fas fa-server";
                                     break;
                                 case 1:
-                                    icon = "adn";
+                                    icon = "fab fa-app-store-ios";
                                     break;
                                 case 2:
-                                    icon = "code";
+                                    icon = "fas fa-code";
                                     break;
                                 case 3:
-                                    icon = "random";
+                                    icon = "fas fa-random";
                                     break;
                             }
                             <li>
                                 <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@app.AppId">
-                                    <i class="fa fa-@icon"></i>
+                                    <i class="@icon"></i>
                                     @app.AppName
                                 </a>
                             </li>

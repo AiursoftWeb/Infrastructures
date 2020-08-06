@@ -22,6 +22,7 @@ ICONS=(
     # v4 nombre             # v5 nombre                                 # v5 prefijo
     address-book-o          address-book                                far
     address-card-o          address-card                                far
+    adn                     app-store-ios                               fab
     area-chart              chart-area                                  fas
     arrow-circle-o-down     arrow-alt-circle-down                       far
     arrow-circle-o-left     arrow-alt-circle-left                       far

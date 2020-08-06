@@ -16,23 +16,23 @@
             switch (Math.Abs(app.AppId.GetHashCode()) % 4)
             {
                 case 0:
-                    icon = "server";
+                    icon = "fas fa-server";
                     break;
                 case 1:
-                    icon = "adn";
+                    icon = "fab fa-app-store-ios";
                     break;
                 case 2:
-                    icon = "code";
+                    icon = "fas fa-code";
                     break;
                 case 3:
-                    icon = "random";
+                    icon = "fas fa-random";
                     break;
             }
             <div class="col-12 col-sm-4 col-xl-3 mb-3">
                 <div class="card text-white bg-azure o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa fa-@icon"></i>
+                            <i class="@icon"></i>
                         </div>
                         <div class="mr-5">@Html.DisplayFor(t => app.AppName)</div>
                         <div class="mr-5 small">@Html.DisplayFor(t => app.AppDescription)</div>
