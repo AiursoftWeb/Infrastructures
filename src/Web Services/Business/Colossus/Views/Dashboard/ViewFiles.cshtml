@@ -69,7 +69,7 @@
                                     <td class="pl-4 pb-0">
                                         <div class="row">
                                             <div class="pl-3">
-                                                <i class="fa fa-fw fa-2x fa-folder text-azure"></i>
+                                                <i class="fa fa-2x fa-folder text-azure"></i>
                                             </div>
                                             <div class="ml-3 pt-1">
                                                 <a asp-controller="Dashboard" asp-action="ViewFiles" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
@@ -88,7 +88,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" asp-controller="Dashboard" asp-action="DeleteFolder" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                     Delete
                                                 </a>
                                             </div>
@@ -102,7 +102,7 @@
                                     <td class="pl-4">
                                         <div class="row">
                                             <div class="pl-3">
-                                                <i class="fa fa-fw fa-2x fa-file-text text-azure"></i>
+                                                <i class="fa fa-2x fa-file-text text-azure"></i>
                                             </div>
                                             <div class="ml-3 pt-1">
                                                 @{ 
@@ -129,33 +129,33 @@
                                                 @if(MIME.CanHandle(file.FileName))
                                                 { 
                                                     <a class="dropdown-item" href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
-                                                        <i class="fa fa-fw fa-window-maximize"></i>
+                                                        <i class="fa fa-window-maximize"></i>
                                                         Open in browser
                                                     </a>
                                                     <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                        <i class="fa fa-fw fa-clipboard"></i>
+                                                        <i class="fa fa-clipboard"></i>
                                                         Copy link
                                                     </a>
                                                     @if(MIME.IsVideo(file.FileName))
                                                     {
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
-                                                            <i class="fa fa-fw fa-play-circle"></i>
+                                                            <i class="fa fa-play-circle"></i>
                                                             Open in video player
                                                         </a>
                                                         <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbePlayerAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                            <i class="fa fa-fw fa-clipboard"></i>
+                                                            <i class="fa fa-clipboard"></i>
                                                             Copy player link
                                                         </a>
                                                     }
                                                 }
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                    <i class="fa fa-fw fa-download"></i>
+                                                    <i class="fa fa-download"></i>
                                                     Download
                                                 </a>
                                                 <a class="dropdown-item" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                    <i class="fa fa-fw fa-clipboard"></i>
+                                                    <i class="fa fa-clipboard"></i>
                                                     Copy download link
                                                 </a>
                                             </div>
@@ -168,11 +168,11 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" asp-controller="Dashboard" asp-action="DeleteFile" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                     Delete
                                                 </a>
                                                 <a class="dropdown-item" asp-controller="Dashboard" asp-action="CloneFile" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                                    <i class="fa fa-fw fa-copy"></i>
+                                                    <i class="fa fa-copy"></i>
                                                     Copy
                                                 </a>
                                             </div>

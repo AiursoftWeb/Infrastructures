@@ -81,7 +81,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                     Delete
                                                 </a>
                                             </div>
@@ -107,11 +107,11 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                    <i class="fa fa-fw fa-download"></i>
+                                                    <i class="fa fa-download"></i>
                                                     Download
                                                 </a>
                                                 <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                                    <i class="fa fa-fw fa-trash"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                     Delete
                                                 </a>
                                             </div>
