@@ -80,8 +80,7 @@ namespace Aiursoft.WWW.Controllers
         }
 
         [Route("TranslateRaw/{question}")]
-
-        public IActionResult TranslateRaw([FromRoute]string question, [FromQuery]string lang)
+        public IActionResult TranslateRaw([FromRoute] string question, [FromQuery] string lang)
         {
             var result = _bingTranslator.CallTranslate(question, lang);
             return Json(new

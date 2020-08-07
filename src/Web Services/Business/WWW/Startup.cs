@@ -31,7 +31,6 @@ namespace Aiursoft.WWW
             services.AddIdentity<WWWUser, IdentityRole>()
                 .AddEntityFrameworkStores<WWWDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddCors();
             services.AddAiurMvc();
             services.AddAiurDependenciesWithIdentity<WWWUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
@@ -43,7 +42,6 @@ namespace Aiursoft.WWW
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseAiursoftDefault();
         }
     }

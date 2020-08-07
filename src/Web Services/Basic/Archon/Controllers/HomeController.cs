@@ -1,6 +1,8 @@
 ﻿using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Archon.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -9,22 +11,21 @@ namespace Aiursoft.Archon.Controllers
     [LimitPerMin]
     public class HomeController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly PrivateKeyStore _privateKeyStore;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(PrivateKeyStore privateKeyStore)
         {
-            _configuration = configuration;
+            _privateKeyStore = privateKeyStore;
         }
 
         public IActionResult Index()
         {
-            var keyConfig = _configuration.GetSection("Key");
             return Ok(new IndexViewModel
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Archon server!",
-                Exponent = keyConfig["Exponent"],
-                Modulus = keyConfig["Modulus"]
+                Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
+                Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64()
             });
         }
     }
