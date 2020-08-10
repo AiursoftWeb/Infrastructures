@@ -45,7 +45,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToGitHubServer
 
         public string GetButtonColor() => "light btn-outline-secondary";
 
-        public string GetButtonIcon() => "github";
+        public string GetButtonIcon() => "fab fa-github";
 
         public string GetBindRedirectLink()
         {

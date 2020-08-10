@@ -45,7 +45,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToGoogleServer
 
         public string GetButtonColor() => "primary";
 
-        public string GetButtonIcon() => "google";
+        public string GetButtonIcon() => "fab fa-google";
 
         public string GetBindRedirectLink()
         {

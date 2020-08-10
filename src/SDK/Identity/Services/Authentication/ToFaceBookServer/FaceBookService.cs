@@ -45,7 +45,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
 
         public string GetButtonColor() => "secondary";
 
-        public string GetButtonIcon() => "facebook";
+        public string GetButtonIcon() => "fab fa-facebook-square";
 
         public string GetBindRedirectLink()
         {

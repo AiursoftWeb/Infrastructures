@@ -48,7 +48,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
 
         public string GetButtonColor() => "warning";
 
-        public string GetButtonIcon() => "windows";
+        public string GetButtonIcon() => "fab fa-microsoft";
 
         public string GetBindRedirectLink()
         {
