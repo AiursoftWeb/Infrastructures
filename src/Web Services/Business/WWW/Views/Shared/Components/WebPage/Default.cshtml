@@ -1,36 +1,40 @@
 ﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.WebPage
-
-<h3 class="mb-0 mt-3" style="font-size: 20px;line-height: 1.3;font-weight:normal">
-    <a href="@Model.Url">
-        @Model.Name
-    </a>
-</h3>
-<p class="text-muted mb-0">
-    @Model.DisplayUrl
-    <label class="ml-3" data-utc-time="@Model.DateLastCrawled"></label>
-</p>
-<span>
-    @Model.Snippet
-</span>
-@if (Model.DeepLinks != null && Model.DeepLinks.Any())
+@using Aiursoft.WWW.Services;
+@inject BlackListPorivder BlackListPorivder
+@if(!BlackListPorivder.InBlackList(Model.Url))
 {
-    <div class="row ml-5">
-        @foreach (var deepLink in Model.DeepLinks.Take(4))
-        {
-            <div class="col-6">
-                <h4 class="mb-0 mt-3" style="font-size: 17px;line-height: 1.3;font-weight:normal">
-                    <a href="@deepLink.Url">
-                        @deepLink.Name
-                    </a>
-                </h4>
-                <span style=" overflow: hidden;
-                                   text-overflow: ellipsis;
-                                   display: -webkit-box;
-                                   -webkit-line-clamp: 3;
-                                   -webkit-box-orient: vertical;">
-                    @deepLink.Snippet
-                </span>
-            </div>
-        }
-    </div>
+    <h3 class="mb-0 mt-3" style="font-size: 20px;line-height: 1.3;font-weight:normal">
+        <a href="@Model.Url">
+            @Model.Name
+        </a>
+    </h3>
+    <p class="text-muted mb-0">
+        @Model.DisplayUrl
+        <label class="ml-3" data-utc-time="@Model.DateLastCrawled"></label>
+    </p>
+    <span>
+        @Model.Snippet
+    </span>
+    @if (Model.DeepLinks != null && Model.DeepLinks.Any())
+    {
+        <div class="row ml-5">
+            @foreach (var deepLink in Model.DeepLinks.Take(4))
+            {
+                <div class="col-6">
+                    <h4 class="mb-0 mt-3" style="font-size: 17px;line-height: 1.3;font-weight:normal">
+                        <a href="@deepLink.Url">
+                            @deepLink.Name
+                        </a>
+                    </h4>
+                    <span style=" overflow: hidden;
+                                       text-overflow: ellipsis;
+                                       display: -webkit-box;
+                                       -webkit-line-clamp: 3;
+                                       -webkit-box-orient: vertical;">
+                        @deepLink.Snippet
+                    </span>
+                </div>
+            }
+        </div>
+    }
 }
