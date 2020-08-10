@@ -20,7 +20,7 @@ namespace Aiursoft.WWW.Services
         {
             var url = new Uri(input);
             var domain = url.Host;
-            return BlackListItem.Any(t => t.ToLower().Trim() == domain.ToLower().Trim());
+            return BlackListItem.Any(t => domain.ToLower().Trim().EndsWith(t.ToLower().Trim()));
         }
     }
 }
