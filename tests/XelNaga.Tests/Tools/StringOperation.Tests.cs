@@ -37,7 +37,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 
             var result = source.GetMD5();
 
-            Assert.AreEqual(result, "0A4112DD96480D0F3EEC8CE5B42082A6");
+            Assert.AreEqual(result, "0a4112dd96480d0f3eec8ce5b42082a6");
         }
 
     }
