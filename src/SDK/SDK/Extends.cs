@@ -5,6 +5,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
+using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 
 namespace Aiursoft.SDK
@@ -255,6 +257,18 @@ namespace Aiursoft.SDK
             {
                 options.UseMemoryCacheProvider().DisableLogging(true);
                 options.CacheAllQueries(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(30));
+            });
+            return services;
+        }
+
+        public static IServiceCollection UseBlacklistFromAddress(this IServiceCollection services, string address)
+        {
+            AsyncHelper.TryAsyncThreeTimes(async () =>
+            {
+                var list = await new WebClient().DownloadStringTaskAsync(address);
+                var provider = new BlackListPorivder(list.Split('\n'));
+                services.AddSingleton(provider);
+
             });
             return services;
         }

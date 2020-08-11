@@ -9,7 +9,6 @@ using Aiursoft.Probe.ViewModels.DownloadViewModels;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
-using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Controllers

@@ -3,13 +3,11 @@ using Aiursoft.Archon.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Security.Cryptography;
 
 namespace Aiursoft.Archon
 {

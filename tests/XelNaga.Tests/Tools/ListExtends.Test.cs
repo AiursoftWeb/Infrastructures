@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using Aiursoft.XelNaga.Tools;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Text;
-using Aiursoft.XelNaga.Tools;
 using System.Linq;
 
 namespace Aiursoft.XelNaga.Tests.Tools
@@ -13,7 +11,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
         [TestMethod]
         public void Shuffle()
         {
-            var list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 };
+            var list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11 };
 
             list.Shuffle();
 
@@ -23,9 +21,9 @@ namespace Aiursoft.XelNaga.Tests.Tools
                 list[2] != 2 ||
                 list[3] != 3;
 
-            var countNotChanged = list.Distinct().Count() == 8;
+            var countNotChanged = list.Distinct().Count() == list.Count - 1;
 
-            var inRange = list.Max() == 7 && list.Min() == 0;
+            var inRange = list.Max() == 11 && list.Min() == 0;
 
             Assert.IsTrue(shuffled && countNotChanged && inRange);
         }

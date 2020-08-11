@@ -2,7 +2,6 @@
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
-using Aiursoft.WWW.Extends;
 using Aiursoft.WWW.Models;
 using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Builder;

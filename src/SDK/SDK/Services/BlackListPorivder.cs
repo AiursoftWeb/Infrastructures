@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
 
-namespace Aiursoft.WWW.Services
+namespace Aiursoft.SDK.Services
 {
     public class BlackListPorivder
     {

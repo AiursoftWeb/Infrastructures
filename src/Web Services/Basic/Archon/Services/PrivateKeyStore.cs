@@ -1,7 +1,4 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Tools;
-using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 namespace Aiursoft.Archon.Services
 {
