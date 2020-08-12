@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>3.2.5</Version>
+    <Version>3.2.6</Version>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/AiursoftWeb/Scanner.git</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
