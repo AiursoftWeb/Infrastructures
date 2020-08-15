@@ -1,24 +1,30 @@
-﻿using Aiursoft.Status.Models;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Observer.SDK.Services;
+using Aiursoft.SDK.Services;
+using Aiursoft.Status.Models;
 using System.Collections.Generic;
 
 namespace Aiursoft.Status.Data
 {
     public static class SeedData
     {
-        public static IEnumerable<MonitorRule> GetRules()
+        public static IEnumerable<MonitorRule> GetRules(
+            ServiceLocation serviceLocation, 
+            ObserverLocator observerLocator, 
+            ArchonLocator archonLocator)
         {
             return new List<MonitorRule>
             {
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft home page",
-                    CheckAddress = "https://www.aiursoft.com/?show=direct",
+                    CheckAddress = $"{serviceLocation.WWW}/?show=direct",
                     ExpectedContent = "Free training, tools, and community to help you grow your skills, career, or business."
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Archon",
-                    CheckAddress = "https://archon.aiursoft.com/",
+                    CheckAddress = $"{archonLocator.Endpoint}",
                     ExpectedContent = "Welcome to Archon server!"
                 },
                 new MonitorRule
@@ -48,19 +54,19 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft account center",
-                    CheckAddress = "https://account.aiursoft.com/?show=direct",
+                    CheckAddress = $"{serviceLocation.Account}/?show=direct",
                     ExpectedContent = "Unlock the power of your"
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Colossus",
-                    CheckAddress = "https://Colossus.aiursoft.com/?show=direct",
+                    CheckAddress = $"{serviceLocation.Colossus}/?show=direct",
                     ExpectedContent = "Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft wiki center",
-                    CheckAddress = "https://wiki.aiursoft.com/Welcome/Home.md",
+                    CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
                     ExpectedContent = "Aiursoft Wiki Center"
                 },
                 new MonitorRule
@@ -72,13 +78,13 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Tracer",
-                    CheckAddress = "https://tracer.aiursoft.com",
+                    CheckAddress = $"{serviceLocation.Tracer}",
                     ExpectedContent = "Tracer is a simple network quality testing app."
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Observer",
-                    CheckAddress = "https://observer.aiursoft.com",
+                    CheckAddress = $"{observerLocator.Endpoint}",
                     ExpectedContent = "Welcome"
                 },
                 new MonitorRule
@@ -90,8 +96,14 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Wrap",
-                    CheckAddress = "https://wrap.aiursoft.com",
+                    CheckAddress = $"{serviceLocation.Wrap}",
                     ExpectedContent = "shorten your URL"
+                },
+                new MonitorRule
+                {
+                    ProjectName = "Aiursoft UI",
+                    CheckAddress = $"{serviceLocation.UI}",
+                    ExpectedContent = "Welcome"
                 }
             };
         }

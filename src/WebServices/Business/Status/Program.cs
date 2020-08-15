@@ -11,7 +11,7 @@ namespace Aiursoft.Status
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed())
+                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed(service))
                 .Run();
         }
 
