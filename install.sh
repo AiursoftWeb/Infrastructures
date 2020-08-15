@@ -129,7 +129,7 @@ install_nexus()
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
     add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
-    add_service "developer" $gateway_developer "Aiursoft.Developer" $1
+    add_service "developer" $developer_path "Aiursoft.Developer" $1
     add_service "observer" $observer_path "Aiursoft.Observer" $1
     add_service "probe" $probe_path "Aiursoft.Probe" $1
     add_service "stargate" $stargate_path "Aiursoft.Stargate" $1
