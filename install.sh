@@ -89,6 +89,7 @@ install_nexus()
     aiur mssql/config_password $dbPassword
 
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
+    dotnet restore ./Nexus/Nexus.sln
     build_to $archon_code $archon_path "Aiursoft.Archon"
     build_to $gateway_code $gateway_path "Aiursoft.Gateway"
     build_to $developer_code $developer_path "Aiursoft.Developer"
