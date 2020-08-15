@@ -39,7 +39,7 @@ build_to()
     code_path="$1"
     dist_path="$2"
     project_name="$3"
-    dotnet publish -c Release -o $dist_path $code_path/$project_name.csproj
+    aiur dotnet/publish $dist_path $code_path/$project_name.csproj
     cat $dist_path/appsettings.json > $dist_path/appsettings.Production.json
 }
 
