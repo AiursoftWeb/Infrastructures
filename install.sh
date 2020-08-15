@@ -43,6 +43,15 @@ build_to()
     cat $dist_path/appsettings.json > $dist_path/appsettings.Production.json
 }
 
+set_db()
+{
+    dist_path="$1"
+    db_name="$2"
+    connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
+    aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
+
+}
+
 install_nexus()
 {
     if [[ $(curl -sL ifconfig.me) == "$(dig +short $(uuidgen).$1)" ]]; 
@@ -77,6 +86,20 @@ install_nexus()
     build_to $wrap_code $wrap_path "Aiursoft.Wrap"
     build_to $ee_code $ee_path "Aiursoft.EE"
     rm $nexus_code -rf
+
+    set_db $gateway_path "Gateway"
+    set_db $developer_path "Developer"
+    set_db $observer_path "Observer"
+    set_db $probe_path "Probe"
+    set_db $stargate_path "Stargate"
+    set_db $wrapgate_path "Wrapgate"
+    set_db $www_path "WWW"
+    set_db $wiki_path "Wiki"
+    set_db $status_path "Status"
+    set_db $account_path "Account"
+    set_db $colossus_path "Colossus"
+    set_db $wrap_path "Wrap"
+    set_db $ee_path "EE"
 
     # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
     # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json
