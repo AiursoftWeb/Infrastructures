@@ -10,7 +10,7 @@
     <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
     <ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
     <ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
-    <ProjectReference Include="..\..\Web Extends\Scanner\Aiursoft.Scanner.csproj" />
+    <ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
   </ItemGroup>
 
 </Project>

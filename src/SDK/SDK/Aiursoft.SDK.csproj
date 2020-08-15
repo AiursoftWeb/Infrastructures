@@ -22,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Web Extends\DBTools\Aiursoft.DBTools.csproj" />
-    <ProjectReference Include="..\..\Web Extends\DocGenerator\Aiursoft.DocGenerator.csproj" />
-    <ProjectReference Include="..\..\Web Extends\Handler\Aiursoft.Handler.csproj" />
-    <ProjectReference Include="..\..\Web Extends\Scanner\Aiursoft.Scanner.csproj" />
-    <ProjectReference Include="..\..\Web Extends\WebTools\Aiursoft.WebTools.csproj" />
+    <ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
+    <ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
+    <ProjectReference Include="..\..\WebExtends\Handler\Aiursoft.Handler.csproj" />
+    <ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
+    <ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
   </ItemGroup>
 
 </Project>
