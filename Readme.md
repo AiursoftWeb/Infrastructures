@@ -25,6 +25,37 @@ Nexus provides a central platform for an entire enterprise. So the enterprise ca
 * Wiki center https://wiki.aiursoft.com (Read document)
 * Cross-platform deployment (Supports Windows, Linux, and docker)
 
+## How to install
+
+### Brief steps:
+
+* Get a domain name. (Like aiursoft.com)
+* Get a new server.
+* Create DNS record.
+* Execute the install command on your server.
+
+### Get a server
+
+Get a brand new Ubuntu 18.04 server.
+
+  * Server must be Ubuntu 18.04. (20.04 and 16.04 is not supported)
+  * Server must have a public IP address. (No local VM)
+  * Server must have access to the global Internet. (Not Chinese network)
+
+Vultr or DigitalOcean is suggested. [Get it from Vultr](https://www.vultr.com/?ref=7274488).
+
+### Install on server
+
+Create a wildcard domian record to your server's IP. 
+
+> Example: Resolve *.aiursoft.com to 123.123.123.123
+
+Execute the following command on the server:
+
+```bash
+$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/install.sh | sudo bash -s aiursoft.com
+```
+
 ## Layers
 
 Nexus code structure has 4 layers:
