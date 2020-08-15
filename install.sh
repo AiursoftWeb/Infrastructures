@@ -4,6 +4,21 @@ nexus_code="./Nexus"
 nexus_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
 
+archon_code="$nexus_code/src/WebServices/Basic/Archon"
+gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
+developer_code="$nexus_code/src/WebServices/Basic/Developer"
+observer_code="$nexus_code/src/WebServices/Infrastructure/Observer"
+probe_code="$nexus_code/src/WebServices/Infrastructure/Probe"
+stargate_code="$nexus_code/src/WebServices/Infrastructure/Stargate"
+wrapgate_code="$nexus_code/src/WebServices/Infrastructure/Wrapgate"
+www_code="$nexus_code/src/WebServices/Business/WWW"
+wiki_code="$nexus_code/src/WebServices/Business/Wiki"
+status_code="$nexus_code/src/WebServices/Business/Status"
+account_code="$nexus_code/src/WebServices/Business/Account"
+colossus_code="$nexus_code/src/WebServices/Business/Colossus"
+wrap_code="$nexus_code/src/WebServices/Business/Wrap"
+ee_code="$nexus_code/src/WebServices/Business/EE"
+
 archon_path="$nexus_path/Archon"
 gateway_path="$nexus_path/Gateway"
 developer_path="$nexus_path/Developer"
@@ -19,20 +34,14 @@ colossus_path="$nexus_path/Colossus"
 wrap_path="$nexus_path/Wrap"
 ee_path="$nexus_path/EE"
 
-archon_code="$nexus_code/src/Web\ Services/Basic/Archon"
-gateway_code="$nexus_code/src/Web\ Services/Basic/Gateway"
-developer_code="$nexus_code/src/Web\ Services/Basic/Developer"
-observer_code="$nexus_code/src/Web\ Services/Infrastructure/Observer"
-probe_code="$nexus_code/src/Web\ Services/Infrastructure/Probe"
-stargate_code="$nexus_code/src/Web\ Services/Infrastructure/Stargate"
-wrapgate_code="$nexus_code/src/Web\ Services/Infrastructure/Wrapgate"
-www_code="$nexus_code/src/Web\ Services/Business/WWW"
-wiki_code="$nexus_code/src/Web\ Services/Business/Wiki"
-status_code="$nexus_code/src/Web\ Services/Business/Status"
-account_code="$nexus_code/src/Web\ Services/Business/Account"
-colossus_code="$nexus_code/src/Web\ Services/Business/Colossus"
-wrap_code="$nexus_code/src/Web\ Services/Business/Wrap"
-ee_code="$nexus_code/src/Web\ Services/Business/EE"
+build_to()
+{
+    code_path="$1"
+    dist_path="$2"
+    project_name="$3"
+    dotnet publish -c Release -o $dist_path $code_path/$project_name.csproj
+    cat $dist_path/appsettings.json > $dist_path/appsettings.Production.json
+}
 
 install_nexus()
 {
@@ -51,9 +60,23 @@ install_nexus()
     aiur install/jq
     aiur install/sql_server
     aiur mssql/config_password $dbPassword
+
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
-    # dotnet publish -c Release -o $kahla_path ./Kahla/Kahla.Server/Kahla.Server.csproj && rm ./Kahla -rf
-    # cat $kahla_path/appsettings.json > $kahla_path/appsettings.Production.json
+    build_to $archon_code $archon_path "Aiursoft.Archon"
+    build_to $gateway_code $gateway_path "Aiursoft.Gateway"
+    build_to $developer_code $developer_path "Aiursoft.Developer"
+    build_to $observer_code $observer_path "Aiursoft.Observer"
+    build_to $probe_code $probe_path "Aiursoft.Probe"
+    build_to $stargate_code $stargate_path "Aiursoft.Stargate"
+    build_to $wrapgate_code $wrapgate_path "Aiursoft.Wrapgate"
+    build_to $www_code $www_path "Aiursoft.WWW"
+    build_to $wiki_code $wiki_path "Aiursoft.Wiki"
+    build_to $status_code $status_path "Aiursoft.Status"
+    build_to $account_code $account_path "Aiursoft.Account"
+    build_to $colossus_code $colossus_path "Aiursoft.Colossus"
+    build_to $wrap_code $wrap_path "Aiursoft.Wrap"
+    build_to $ee_code $ee_path "Aiursoft.EE"
+    rm $nexus_code -rf
 
     # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
     # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json
