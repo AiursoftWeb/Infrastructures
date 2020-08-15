@@ -49,7 +49,18 @@ set_db()
     db_name="$2"
     connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
     aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
+}
 
+add_service()
+{
+    name="$1"
+    path="$2"
+    dll="$3"
+    domain="$4"
+
+    port=$(aiur network/get_port)
+    aiur services/register_aspnet_service $name $port $path $dll
+    aiur caddy/add_proxy $name.$domain $port
 }
 
 install_nexus()
@@ -100,6 +111,21 @@ install_nexus()
     set_db $colossus_path "Colossus"
     set_db $wrap_path "Wrap"
     set_db $ee_path "EE"
+
+    add_service "archon" $archon_path "Aiursoft.Archon" $1
+    add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
+    add_service "developer" $gateway_developer "Aiursoft.Developer" $1
+    add_service "observer" $observer_path "Aiursoft.Observer" $1
+    add_service "probe" $probe_path "Aiursoft.Probe" $1
+    add_service "stargate" $stargate_path "Aiursoft.Stargate" $1
+    add_service "wrapgate" $wrapgate_path "Aiursoft.Wrapgate" $1
+    add_service "www" $www_path "Aiursoft.WWW" $1
+    add_service "wiki" $wiki_path "Aiursoft.Wiki" $1
+    add_service "status" $status_path "Aiursoft.Status" $1
+    add_service "account" $account_path "Aiursoft.Account" $1
+    add_service "colossus" $colossus_path "Aiursoft.Colossus" $1
+    add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
+    add_service "ee" $ee_path "Aiursoft.EE" $1
 
     # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
     # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json
