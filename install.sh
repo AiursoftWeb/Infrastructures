@@ -50,12 +50,12 @@ set_db()
     domain="$3"
     connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
     aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.ArchonConnection" "archon.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.StargateConnection" "stargate.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.ObserverConnection" "observer.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.ProbeConnection" "probe.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.GatewayConnection" "gateway.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.WrapgateConnection" "wrapgate.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.StargateConnection" "https://stargate.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.ProbeConnection" "https://probe.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.WrapgateConnection" "https://wrapgate.$domain" $dist_path/appsettings.Production.json
 }
 
 add_service()
