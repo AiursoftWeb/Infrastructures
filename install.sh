@@ -106,19 +106,19 @@ install_nexus()
     build_to $ee_code $ee_path "Aiursoft.EE"
     rm $nexus_code -rf
 
-    set_db $gateway_path "Gateway"
-    set_db $developer_path "Developer"
-    set_db $observer_path "Observer"
-    set_db $probe_path "Probe"
-    set_db $stargate_path "Stargate"
-    set_db $wrapgate_path "Wrapgate"
-    set_db $www_path "WWW"
-    set_db $wiki_path "Wiki"
-    set_db $status_path "Status"
-    set_db $account_path "Account"
-    set_db $colossus_path "Colossus"
-    set_db $wrap_path "Wrap"
-    set_db $ee_path "EE"
+    set_db $gateway_path "Gateway" $1
+    set_db $developer_path "Developer" $1
+    set_db $observer_path "Observer" $1
+    set_db $probe_path "Probe" $1
+    set_db $stargate_path "Stargate" $1
+    set_db $wrapgate_path "Wrapgate" $1
+    set_db $www_path "WWW" $1
+    set_db $wiki_path "Wiki" $1
+    set_db $status_path "Status" $1
+    set_db $account_path "Account" $1
+    set_db $colossus_path "Colossus" $1
+    set_db $wrap_path "Wrap" $1
+    set_db $ee_path "EE" $1
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
     add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
