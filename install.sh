@@ -3,6 +3,9 @@ aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/Aiu
 nexus_code="./Nexus"
 nexus_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
+userId=$(uuidgen)
+developerAppId=$(uuidgen)
+developerAppSecret=$(uuidgen)
 
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
@@ -142,6 +145,9 @@ install_nexus()
     add_service "colossus" $colossus_path "Aiursoft.Colossus" $1
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
+
+    curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
+    cat ./temp.sql | sed "s/{{userId}}/$userId/g" > ./temp.sql
 
     # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
     # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json

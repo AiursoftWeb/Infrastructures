@@ -31,7 +31,7 @@ VALUES
     '3BO4UKYBY2GJVGNTBM756HO6NQLUAKGQ',
     '89f42d2b-1af9-416a-8953-5abb02b523a1',
     '2020-01-01 12:34:56',
-    '$(userId)',
+    '{{userId}}',
     'Admin',
     'en-US',
     'admin@anduinxue.com',
@@ -49,7 +49,7 @@ insert into UserEmails
 VALUES
 (
     'admin@anduinxue.com',
-    '$(userId)',
+    '{{userId}}',
     1,
     0,
     '2020-01-01 12:34:56'
@@ -88,7 +88,7 @@ VALUES
     '3BO4UKYBY2GJVGNTBM756HO6NQLUAKGQ',
     '89f42d2b-1af9-416a-8953-5abb02b523a1',
     '2020-01-01 12:34:56',
-    '$(userId)',
+    '{{userId}}',
     'Admin',
     'en-US',
     'admin@anduinxue.com',
