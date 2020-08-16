@@ -81,6 +81,14 @@ add_service()
     aiur caddy/add_proxy $name.$domain $port
 }
 
+replace_in_file()
+{
+    file="$1"
+    from="$2"
+    to="$3"
+    cat $file | sed "s/$from/$to/g" | sponge $file
+}
+
 install_nexus()
 {
     if [[ $(curl -sL ifconfig.me) == "$(dig +short $(uuidgen).$1)" ]]; 
@@ -147,7 +155,7 @@ install_nexus()
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
-    cat ./temp.sql | sed "s/{{userId}}/$userId/g" > ./temp.sql
+    replace_in_file ./temp.sql "{{userId}}" $userId
 
     # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
     # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json
