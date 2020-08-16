@@ -155,13 +155,17 @@ install_nexus()
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
+    domainUpper=$(echo $domain | tr a-z A-Z)
     replace_in_file ./temp.sql "{{userId}}" $userId
+    replace_in_file ./temp.sql "{{domain}}" $1
+    replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
+    replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
+    replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
 
-    # aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $kahla_path/appsettings.Production.json
-    # aiur text/edit_json "KahlaAppId" "$2" $kahla_path/appsettings.Production.json
-    # aiur text/edit_json "KahlaAppSecret" "$3" $kahla_path/appsettings.Production.json
-    # aiur services/register_aspnet_service "kahla" $port $kahla_path "Kahla.Server"
-    # aiur caddy/add_proxy $1 $port
+    aiur mssql/run_sql $dbPassword ./temp.sql
+
+    aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
+    aiur text/edit_json "developerAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
 
     # Finish the installation
     echo "Successfully installed Nexus as a service in your machine! Please open https://www.$1 to try it now!"

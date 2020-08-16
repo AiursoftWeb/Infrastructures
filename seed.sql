@@ -25,8 +25,8 @@ VALUES
     0,
     1,
     0,
-    'admin@anduinxue.com',
-    'ADMIN@ANDUINXUE.COM',
+    'admin@{{domain}}',
+    'ADMIN@{{domainUpper}}',
     'AQAAAAEAACcQAAAAEHswFfciW8m5p2De3KzBd7ha0OX04Dav4jRy3CL/M/L54nWtMOGLwDZF1qo211KVRg==',
     '3BO4UKYBY2GJVGNTBM756HO6NQLUAKGQ',
     '89f42d2b-1af9-416a-8953-5abb02b523a1',
@@ -34,7 +34,7 @@ VALUES
     '{{userId}}',
     'Admin',
     'en-US',
-    'admin@anduinxue.com',
+    'admin@{{domain}}',
     'usericon/default.png'
 );
 
@@ -48,7 +48,7 @@ insert into UserEmails
 )
 VALUES
 (
-    'admin@anduinxue.com',
+    'admin@{{domain}}',
     '{{userId}}',
     1,
     0,
@@ -58,6 +58,7 @@ VALUES
 use Developer;
 
 delete from AspNetUsers;
+delete from Apps;
 
 insert into AspNetUsers 
 (
@@ -82,8 +83,8 @@ VALUES
     0,
     1,
     0,
-    'admin@anduinxue.com',
-    'ADMIN@ANDUINXUE.COM',
+    'admin@{{domain}}',
+    'ADMIN@{{domainUpper}}',
     'AQAAAAEAACcQAAAAEHswFfciW8m5p2De3KzBd7ha0OX04Dav4jRy3CL/M/L54nWtMOGLwDZF1qo211KVRg==',
     '3BO4UKYBY2GJVGNTBM756HO6NQLUAKGQ',
     '89f42d2b-1af9-416a-8953-5abb02b523a1',
@@ -91,7 +92,54 @@ VALUES
     '{{userId}}',
     'Admin',
     'en-US',
-    'admin@anduinxue.com',
+    'admin@{{domain}}',
     1,
     'usericon/default.png'
+);
+
+insert into Apps
+(
+    AppId,
+    AppSecret,
+    AppName,
+    AppCreateTime,
+    IconPath,
+    AppDescription,
+    AppCategory,
+    AppPlatform,
+    EnableOAuth,
+    ForceConfirmation,
+    ForceInputPassword,
+    DebugMode,
+    [AppDomain],
+    ViewOpenId,
+    CreatorId,
+    ViewPhoneNumber,
+    ChangePhoneNumber,
+    ConfirmEmail,
+    ChangeBasicInfo,
+    ChangePassword
+)
+values
+(
+    '{{developerAppId}}',
+    '{{developerAppSecret}}',
+    'Aiursoft Developer Center',
+    '2020-01-01 12:34:56',
+    'aiursoft-app-icons/appdefaulticon.png',
+    'Aiursoft Developer Center',
+    0,
+    7,
+    1,
+    0,
+    0,
+    0,
+    'developer.{{domain}}',
+    1,
+    '{{userId}}',
+    0,
+    0,
+    0,
+    1,
+    1
 );
