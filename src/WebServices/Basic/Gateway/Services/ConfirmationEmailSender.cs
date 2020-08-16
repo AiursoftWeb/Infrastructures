@@ -10,19 +10,19 @@ namespace Aiursoft.Gateway.Services
 {
     public class ConfirmationEmailSender : ITransientDependency
     {
-        private readonly GatewayLocator _serviceLocation;
+        private readonly GatewayLocator _gatewayLocator;
         private readonly AiurEmailSender _emailSender;
         public ConfirmationEmailSender(
-            GatewayLocator serviceLocation,
+            GatewayLocator gatewayLocator,
             AiurEmailSender emailSender)
         {
-            _serviceLocation = serviceLocation;
+            _gatewayLocator = gatewayLocator;
             _emailSender = emailSender;
         }
 
         public async Task SendConfirmation(string userId, string emailAddress, string token)
         {
-            var callbackUrl = new AiurUrl(_serviceLocation.Endpoint, "Password", nameof(PasswordController.EmailConfirm), new
+            var callbackUrl = new AiurUrl(_gatewayLocator.Endpoint, "Password", nameof(PasswordController.EmailConfirm), new
             {
                 userId,
                 code = token
@@ -33,7 +33,7 @@ namespace Aiursoft.Gateway.Services
 
         public Task SendResetPassword(string code, string userId, string targetEmail)
         {
-            var callbackUrl = new AiurUrl(_serviceLocation.Endpoint, "Password", nameof(PasswordController.ResetPassword), new
+            var callbackUrl = new AiurUrl(_gatewayLocator.Endpoint, "Password", nameof(PasswordController.ResetPassword), new
             {
                 Code = code,
                 UserId = userId
