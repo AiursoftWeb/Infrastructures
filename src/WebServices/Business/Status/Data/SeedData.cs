@@ -102,7 +102,7 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft UI",
-                    CheckAddress = $"{serviceLocation.UI}",
+                    CheckAddress = $"{serviceLocation.UI}/index.html",
                     ExpectedContent = "Welcome"
                 }
             };
