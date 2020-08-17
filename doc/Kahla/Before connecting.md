@@ -1,18 +1,42 @@
 # Kahla API Document
 
-## Server address
+## Branchs
 
-There are three servers for Kahla.
+There are two branch of Kahla. One is master (also called 'Production'). The other one is dev (also called 'Staging').
+
+Kahla's Servers
+├───Production (Production DB)
+│   ├───Kahla App
+│   │   └───web.kahla.app
+│   ├───Kahla Home
+│   │   └───www.kahla.app
+│   └───Kahla Server
+│       └───server.kahla.app
+└───Staging (Staging DB)
+    ├───Kahla App
+    │   └───staging.web.kahla.app
+    ├───Kahla Home
+    │   └───staging.kahla.app
+    └───Kahla Server
+        ├───dev.server.kahla.app
+        └───staging.server.kahla.app
 
 | Server Address | Allow Cross-Domain | Code Branch | Usage | Corresponding Kahla Client |
 |-|-|-|-|-|
-server.kahla.app | [https://web.kahla.app](https://web.kahla.app) | master | hosting production version of Kahla server | master |
+| server.kahla.app | [https://web.kahla.app](https://web.kahla.app) | master | hosting production version of Kahla server | master |
 | staging.server.kahla.app | [https://staging.web.kahla.app](https://staging.web.kahla.app) | dev | hosting staging version of the Kahla server | dev |
 | dev.server.kahla.app | [http://localhost:4200](http://localhost:4200) | dev | For developers locally debugging Kahla.App | Local |
 
+There are two servers for Kahla home page.
+
+| Server Address | App domain | Code Branch | Usage | Corresponding Kahla Client |
+|-|-|-|-|-|
+| www.kahla.app | [https://web.kahla.app](https://web.kahla.app) | master | hosting production version of Kahla server | master |
+| staging.kahla.app | [https://staging.web.kahla.app](https://staging.web.kahla.app) | dev | hosting staging version of the Kahla server | dev |
+
 ## Protocol
 
-All of Kahla's server communications requires HTTPS and supports HSTS.
+All of Kahla's server communications requires HTTPS. And support HSTS.
 
 ## Database
 
@@ -37,11 +61,11 @@ We have two meaning of word `Version`.
 * API Level
 * App version
 
-API level is the communication protocol level. The version of the Kahla API. Can only get it from server `/`. For example, to check the API level of Kahla server: `https://staging.server2.kahla.app`, just access: https://staging.server2.kahla.app and the version will be shown.
+API level is the communication protocol level. The version of the Kahla API. Can only get it from server `/`. For example, to check the API level of Kahla server: `https://staging.server.kahla.app`, just access: https://staging.server.kahla.app and the version will be shown.
 
 The App version is the version of the current Kahla app. Ideally, it is the same as the API level to which server you are connecting to. And it is the same as the latest Kahla.App version.
 
-To check the latest app version, access: https://staging.kahla.app/version (For production, it is: https://staging.kahla.app/version)
+To check the latest app version, access: https://staging.kahla.app/version (For production, it is: https://www.kahla.app/version)
 
 The logic for apps:
 
@@ -51,11 +75,7 @@ The logic for apps:
 The app needs to hard code only two address:
 
 * https://staging.kahla.app/version (Check app version)
-* https://staging.kahla.app/servers (Check server list.)
-
-**The old version checking API is deleted.**
-
-### Why we need to do that
+* https://staging.kahla.app/servers (Check server list)
 
 For some other users may deploy their own version of Kahla. If all `Kahla.Server` can check the version of the current app, which means that the response may be fake. And `Kahla.Server` maintainers shall not be concerned with the app versions. They only need to care about their API level. So we need only one version checking endpoint no matter which server the app is connecting to.
 
