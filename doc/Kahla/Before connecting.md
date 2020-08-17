@@ -6,6 +6,7 @@ There are two branch of Kahla. One is master (also called 'Production'). The oth
 
 ```
 Kahla's Servers
+│
 ├───Production (Production DB)
 │   ├───Kahla App
 │   │   └───web.kahla.app
@@ -13,6 +14,7 @@ Kahla's Servers
 │   │   └───www.kahla.app
 │   └───Kahla Server
 │       └───server.kahla.app
+│
 └───Staging (Staging DB)
     ├───Kahla App
     │   └───staging.web.kahla.app
