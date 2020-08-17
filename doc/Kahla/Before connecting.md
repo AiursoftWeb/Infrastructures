@@ -4,6 +4,7 @@
 
 There are two branch of Kahla. One is master (also called 'Production'). The other one is dev (also called 'Staging').
 
+```
 Kahla's Servers
 ├───Production (Production DB)
 │   ├───Kahla App
@@ -20,6 +21,7 @@ Kahla's Servers
     └───Kahla Server
         ├───dev.server.kahla.app
         └───staging.server.kahla.app
+```
 
 | Server Address | Allow Cross-Domain | Code Branch | Usage | Corresponding Kahla Client |
 |-|-|-|-|-|
