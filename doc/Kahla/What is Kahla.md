@@ -13,7 +13,7 @@ As a cross-platform business messaging app, Kahla can encrypt communications at 
 
 Kahla exists as a sub-service in the Aiursoft microservices system. Enjoy all the rights to all of Aiursoft's high-level applications.
 
-Karaoke relies on [Aiursoft Stargate](../Stargate/What%20is%20Stargate.md) to implement message push. Rely on [Aiursoft Probe](../Integrated%20Website/Getting%20Started.md) to store images and files sent between users.
+Kahla relies on [Aiursoft Stargate](../Stargate/What%20is%20Stargate.md) to implement message push. Rely on [Aiursoft Probe](../Integrated%20Website/Getting%20Started.md) to store images and files sent between users.
 
 ## Continue
 
