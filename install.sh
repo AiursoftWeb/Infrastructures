@@ -114,6 +114,7 @@ install_nexus()
     aiur dotnet/seeddb $ee_code "EE" $dbPassword
 
     aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
+    cp $archon_path/appsettings.json $archon_path/appsettings.Production.json
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
