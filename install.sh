@@ -48,11 +48,15 @@ build_to()
 
 set_db()
 {
-    dist_path="$1"
-    db_name="$2"
-    domain="$3"
+    code_path="$1"
+    dist_path="$2"
+    db_name="$3"
+    domain="$4"
     connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
     aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $code_path/appsettings.json
+    dotnet ef database update --project $code_path
+    dotnet add $code_path package Microsoft.EntityFrameworkCore.Design
     aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
@@ -126,20 +130,20 @@ install_nexus()
     build_to $ee_code $ee_path "Aiursoft.EE"
     rm $nexus_code -rf
 
-    set_db $archon_path "Archon" $1
-    set_db $gateway_path "Gateway" $1
-    set_db $developer_path "Developer" $1
-    set_db $observer_path "Observer" $1
-    set_db $probe_path "Probe" $1
-    set_db $stargate_path "Stargate" $1
-    set_db $wrapgate_path "Wrapgate" $1
-    set_db $www_path "WWW" $1
-    set_db $wiki_path "Wiki" $1
-    set_db $status_path "Status" $1
-    set_db $account_path "Account" $1
-    set_db $colossus_path "Colossus" $1
-    set_db $wrap_path "Wrap" $1
-    set_db $ee_path "EE" $1
+    set_db $archon_code $archon_path "Archon" $1
+    set_db $gateway_code $gateway_path "Gateway" $1
+    set_db $developer_code $developer_path "Developer" $1
+    set_db $observer_code $observer_path "Observer" $1
+    set_db $probe_code $probe_path "Probe" $1
+    set_db $stargate_code $stargate_path "Stargate" $1
+    set_db $wrapgate_code $wrapgate_path "Wrapgate" $1
+    set_db $www_code $www_path "WWW" $1
+    set_db $wiki_code $wiki_path "Wiki" $1
+    set_db $status_code $status_path "Status" $1
+    set_db $account_code $account_path "Account" $1
+    set_db $colossus_code $colossus_path "Colossus" $1
+    set_db $wrap_code $wrap_path "Wrap" $1
+    set_db $ee_code $ee_path "EE" $1
 
     aiur text/edit_json "ArchonEndpoint" "https://archon.$domain" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperEndpoint" "https://developer.$domain" $developer_path/appsettings.Production.json
@@ -167,8 +171,8 @@ install_nexus()
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
-    echo 'Waitting for all services to start and init database.'
-    sleep 130
+    echo 'Waitting for all services to start and init database...'
+    sleep 10
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
     replace_in_file ./temp.sql "{{userId}}" $userId
@@ -182,9 +186,11 @@ install_nexus()
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
 
     # Finish the installation
-    echo "Successfully installed Nexus as a service in your machine! Please open https://www.$1 to try it now!"
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"
-    echo "Database identity: $1:1433 with username: sa and password: $dbPassword"
+    echo ""
+    echo "Successfully installed Nexus as a service in your machine!"
+    echo "Database identity: $1:1433 with username: sa and password: $dbPassword."
+    echo "Aiursoft identity: https://www.$1 with username: admin@$1 and password: admin123."
 }
 
 install_nexus "$@"
