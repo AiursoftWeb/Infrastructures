@@ -41,7 +41,6 @@ set_env()
 {
     dist_path="$1"
     domain="$2"
-
     aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
@@ -99,6 +98,21 @@ install_nexus()
 
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
     dotnet restore ./Nexus/Nexus.sln
+
+    aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
+    aiur dotnet/seeddb $developer_code "Developer" $dbPassword
+    aiur dotnet/seeddb $observer_code "Observer" $dbPassword
+    aiur dotnet/seeddb $probe_code "Probe" $dbPassword
+    aiur dotnet/seeddb $stargate_code "Stargate" $dbPassword
+    aiur dotnet/seeddb $wrapgate_code "Wrapgate" $dbPassword
+    aiur dotnet/seeddb $www_code "WWW" $dbPassword
+    aiur dotnet/seeddb $wiki_code "Wiki" $dbPassword
+    aiur dotnet/seeddb $status_code "Status" $dbPassword
+    aiur dotnet/seeddb $account_code "Account" $dbPassword
+    aiur dotnet/seeddb $colossus_code "Colossus" $dbPassword
+    aiur dotnet/seeddb $wrap_code "Wrap" $dbPassword
+    aiur dotnet/seeddb $ee_code "EE" $dbPassword
+
     aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
@@ -114,19 +128,6 @@ install_nexus()
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
 
-    aiur dotnet/seeddb $gateway_path "Gateway" $dbPassword
-    aiur dotnet/seeddb $developer_path "Developer" $dbPassword
-    aiur dotnet/seeddb $observer_path "Observer" $dbPassword
-    aiur dotnet/seeddb $probe_path "Probe" $dbPassword
-    aiur dotnet/seeddb $stargate_path "Stargate" $dbPassword
-    aiur dotnet/seeddb $wrapgate_path "Wrapgate" $dbPassword
-    aiur dotnet/seeddb $www_path "WWW" $dbPassword
-    aiur dotnet/seeddb $wiki_path "Wiki" $dbPassword
-    aiur dotnet/seeddb $status_path "Status" $dbPassword
-    aiur dotnet/seeddb $account_path "Account" $dbPassword
-    aiur dotnet/seeddb $colossus_path "Colossus" $dbPassword
-    aiur dotnet/seeddb $wrap_path "Wrap" $dbPassword
-    aiur dotnet/seeddb $ee_path "EE" $dbPassword
     rm $nexus_code -rf
 
     set_env $archon_path $1
