@@ -37,17 +37,11 @@ colossus_path="$nexus_path/Colossus"
 wrap_path="$nexus_path/Wrap"
 ee_path="$nexus_path/EE"
 
-set_db()
+set_env()
 {
-    code_path="$1"
-    dist_path="$2"
-    db_name="$3"
-    domain="$4"
-    connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
-    aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $code_path/appsettings.json
-    dotnet ef database update --project $code_path
-    dotnet add $code_path package Microsoft.EntityFrameworkCore.Design
+    dist_path="$1"
+    domain="$2"
+
     aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
@@ -119,22 +113,36 @@ install_nexus()
     aiur dotnet/publish $colossus_path $colossus_code/"Aiursoft.Colossus.csproj"
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
+
+    aiur dotnet/seeddb $gateway_path "Gateway" $dbPassword
+    aiur dotnet/seeddb $developer_path "Developer" $dbPassword
+    aiur dotnet/seeddb $observer_path "Observer" $dbPassword
+    aiur dotnet/seeddb $probe_path "Probe" $dbPassword
+    aiur dotnet/seeddb $stargate_path "Stargate" $dbPassword
+    aiur dotnet/seeddb $wrapgate_path "Wrapgate" $dbPassword
+    aiur dotnet/seeddb $www_path "WWW" $dbPassword
+    aiur dotnet/seeddb $wiki_path "Wiki" $dbPassword
+    aiur dotnet/seeddb $status_path "Status" $dbPassword
+    aiur dotnet/seeddb $account_path "Account" $dbPassword
+    aiur dotnet/seeddb $colossus_path "Colossus" $dbPassword
+    aiur dotnet/seeddb $wrap_path "Wrap" $dbPassword
+    aiur dotnet/seeddb $ee_path "EE" $dbPassword
     rm $nexus_code -rf
 
-    set_db $archon_code $archon_path "Archon" $1
-    set_db $gateway_code $gateway_path "Gateway" $1
-    set_db $developer_code $developer_path "Developer" $1
-    set_db $observer_code $observer_path "Observer" $1
-    set_db $probe_code $probe_path "Probe" $1
-    set_db $stargate_code $stargate_path "Stargate" $1
-    set_db $wrapgate_code $wrapgate_path "Wrapgate" $1
-    set_db $www_code $www_path "WWW" $1
-    set_db $wiki_code $wiki_path "Wiki" $1
-    set_db $status_code $status_path "Status" $1
-    set_db $account_code $account_path "Account" $1
-    set_db $colossus_code $colossus_path "Colossus" $1
-    set_db $wrap_code $wrap_path "Wrap" $1
-    set_db $ee_code $ee_path "EE" $1
+    set_env $archon_path $1
+    set_env $gateway_path $1
+    set_env $developer_path $1
+    set_env $observer_path $1
+    set_env $probe_path $1
+    set_env $stargate_path $1
+    set_env $wrapgate_path $1
+    set_env $www_path $1
+    set_env $wiki_path $1
+    set_env $status_path $1
+    set_env $account_path $1
+    set_env $colossus_path $1
+    set_env $wrap_path $1
+    set_env $ee_path $1
 
     aiur text/edit_json "ArchonEndpoint" "https://archon.$domain" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperEndpoint" "https://developer.$domain" $developer_path/appsettings.Production.json
