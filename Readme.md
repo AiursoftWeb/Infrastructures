@@ -53,7 +53,7 @@ Create a wildcard domian record to your server's IP.
 Execute the following command on the server:
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/install.sh | sudo bash -s aiursoft.com
+$ curl -sL https://install.aiurs.co | sudo bash -s aiursoft.com
 ```
 
 ## Layers
