@@ -140,6 +140,17 @@ install_nexus()
     set_db $wrap_path "Wrap" $1
     set_db $ee_path "EE" $1
 
+    aiur text/edit_json "ArchonEndpoint" "https://archon.$domain" $archon_path/appsettings.Production.json
+    aiur text/edit_json "DeveloperEndpoint" "https://developer.$domain" $developer_path/appsettings.Production.json
+    aiur text/edit_json "GatewayEndpoint" "https://gateway.$domain" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "ObserverEndpoint" "https://observer.$domain" $observer_path/appsettings.Production.json
+    aiur text/edit_json "ProbeEndpoint" "https://probe.$domain" $probe_path/appsettings.Production.json
+    aiur text/edit_json "OpenPattern" "https://probe.$domain/download/open/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "DownloadPattern" "https://probe.$domain/download/file/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "PlayerPattern" "https://probe.$domain/download/video/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "StargateEndpoint" "https://stargate.$domain" $stargate_path/appsettings.Production.json
+    aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$domain" $wrapgate_path/appsettings.Production.json
+
     add_service "archon" $archon_path "Aiursoft.Archon" $1
     add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
     add_service "developer" $developer_path "Aiursoft.Developer" $1
