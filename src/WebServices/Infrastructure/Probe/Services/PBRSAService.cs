@@ -6,20 +6,19 @@ namespace Aiursoft.Probe.Services
 {
     public class PBRSAService : ITransientDependency
     {
-        private readonly RSAParameters _privateKey;
-        private readonly RSAParameters _publicKey;
         private readonly RSA _rsa;
+        private readonly PBKeyPair _keyPair;
+
         public PBRSAService(PBKeyPair keyPair)
         {
-            _privateKey = keyPair.PrivateKey;
-            _publicKey = keyPair.PublicKey;
             _rsa = RSA.Create();
+            _keyPair = keyPair;
         }
 
         public string SignData(string message)
         {
             var originalData = message.StringToBytes();
-            _rsa.ImportParameters(_privateKey);
+            _rsa.ImportParameters(_keyPair.GetKey());
             var signedBytes = _rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             return signedBytes.BytesToBase64();
         }
@@ -28,7 +27,7 @@ namespace Aiursoft.Probe.Services
         {
             var bytesToVerify = originalMessage.StringToBytes();
             var signedBytes = signedBase64.Base64ToBytes();
-            _rsa.ImportParameters(_publicKey);
+            _rsa.ImportParameters(_keyPair.GetKey());
             return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         }
     }
