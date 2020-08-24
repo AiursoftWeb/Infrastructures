@@ -167,7 +167,7 @@ install_nexus()
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
-    sleep 30
+    sleep 130
     echo 'Waitting for all services to start and init database.'
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
