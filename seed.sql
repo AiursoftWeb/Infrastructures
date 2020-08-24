@@ -1,3 +1,5 @@
+SET QUOTED_IDENTIFIER ON;
+
 use Gateway;
 
 delete from UserEmails;

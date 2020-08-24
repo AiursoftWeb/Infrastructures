@@ -154,6 +154,8 @@ install_nexus()
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
+    sleep 30
+    echo 'Waitting for all services to start and init database.'
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
     replace_in_file ./temp.sql "{{userId}}" $userId
@@ -161,11 +163,10 @@ install_nexus()
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
-
     aiur mssql/run_sql $dbPassword ./temp.sql
 
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
-    aiur text/edit_json "developerAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
+    aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
 
     # Finish the installation
     echo "Successfully installed Nexus as a service in your machine! Please open https://www.$1 to try it now!"
