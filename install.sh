@@ -52,8 +52,8 @@ set_db()
     db_name="$2"
     domain="$3"
     connectionString="Server=tcp:127.0.0.1,1433;Database=$db_name;uid=sa;Password=$dbPassword;MultipleActiveResultSets=True;"
-    aiur text/edit_json "ConnectionStrings.DeveloperConnection" "$connectionString" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.DatabaseConnection" "$connectionString" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.StargateConnection" "https://stargate.$domain" $dist_path/appsettings.Production.json
