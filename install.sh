@@ -37,15 +37,6 @@ colossus_path="$nexus_path/Colossus"
 wrap_path="$nexus_path/Wrap"
 ee_path="$nexus_path/EE"
 
-build_to()
-{
-    code_path="$1"
-    dist_path="$2"
-    project_name="$3"
-    aiur dotnet/publish $dist_path $code_path/$project_name.csproj
-    cat $dist_path/appsettings.json > $dist_path/appsettings.Production.json
-}
-
 set_db()
 {
     code_path="$1"
@@ -114,20 +105,20 @@ install_nexus()
 
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
     dotnet restore ./Nexus/Nexus.sln
-    build_to $archon_code $archon_path "Aiursoft.Archon"
-    build_to $gateway_code $gateway_path "Aiursoft.Gateway"
-    build_to $developer_code $developer_path "Aiursoft.Developer"
-    build_to $observer_code $observer_path "Aiursoft.Observer"
-    build_to $probe_code $probe_path "Aiursoft.Probe"
-    build_to $stargate_code $stargate_path "Aiursoft.Stargate"
-    build_to $wrapgate_code $wrapgate_path "Aiursoft.Wrapgate"
-    build_to $www_code $www_path "Aiursoft.WWW"
-    build_to $wiki_code $wiki_path "Aiursoft.Wiki"
-    build_to $status_code $status_path "Aiursoft.Status"
-    build_to $account_code $account_path "Aiursoft.Account"
-    build_to $colossus_code $colossus_path "Aiursoft.Colossus"
-    build_to $wrap_code $wrap_path "Aiursoft.Wrap"
-    build_to $ee_code $ee_path "Aiursoft.EE"
+    aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
+    aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
+    aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
+    aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
+    aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
+    aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj"
+    aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj"
+    aiur dotnet/publish $www_path $www_code/"Aiursoft.WWW.csproj"
+    aiur dotnet/publish $wiki_path $wiki_code/"Aiursoft.Wiki.csproj"
+    aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
+    aiur dotnet/publish $account_path $account_code/"Aiursoft.Account.csproj"
+    aiur dotnet/publish $colossus_path $colossus_code/"Aiursoft.Colossus.csproj"
+    aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
+    aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
     rm $nexus_code -rf
 
     set_db $archon_code $archon_path "Archon" $1
