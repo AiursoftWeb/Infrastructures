@@ -125,6 +125,7 @@ install_nexus()
     build_to $ee_code $ee_path "Aiursoft.EE"
     rm $nexus_code -rf
 
+    set_db $archon_path "Archon" $1
     set_db $gateway_path "Gateway" $1
     set_db $developer_path "Developer" $1
     set_db $observer_path "Observer" $1
