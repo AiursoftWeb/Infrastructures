@@ -21,6 +21,7 @@ namespace Aiursoft.Developer.Models.SitesViewModels
 
         [Required]
         [FromRoute]
+        [IsGuidOrEmpty]
         public string AppId { get; set; }
 
         [Required]

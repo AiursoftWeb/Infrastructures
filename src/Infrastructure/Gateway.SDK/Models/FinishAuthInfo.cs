@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.SDKTools.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Gateway.SDK.Models
@@ -6,6 +7,7 @@ namespace Aiursoft.Gateway.SDK.Models
     public class FinishAuthInfo
     {
         [Required]
+        [IsGuidOrEmpty]
         [FromQuery(Name = "appid")]
         public string AppId { get; set; }
 

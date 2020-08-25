@@ -42,19 +42,14 @@ namespace Aiursoft.Wrapgate.Controllers
                 return NotFound();
             }
             var builtUrl = BuildTargetUrl(record, model.Path);
-            switch (record.Type)
+            return record.Type switch
             {
-                case RecordType.IFrame:
-                    return View("Iframe", builtUrl);
-                case RecordType.Redirect:
-                    return Redirect(builtUrl);
-                case RecordType.PermanentRedirect:
-                    return RedirectPermanent(builtUrl);
-                case RecordType.ReverseProxy:
-                    return await RewriteToUrl(builtUrl);
-                default:
-                    return Redirect(builtUrl);
-            }
+                RecordType.IFrame => View("Iframe", builtUrl),
+                RecordType.Redirect => Redirect(builtUrl),
+                RecordType.PermanentRedirect => RedirectPermanent(builtUrl),
+                RecordType.ReverseProxy => await RewriteToUrl(builtUrl),
+                _ => Redirect(builtUrl),
+            };
         }
 
         private string BuildTargetUrl(WrapRecord record, string path)
