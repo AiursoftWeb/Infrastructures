@@ -4,8 +4,12 @@ nexus_code="./Nexus"
 nexus_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
+
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
+
+gatewayAppId=$(uuidgen)
+gatewayAppSecret=$(uuidgen)
 
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
@@ -99,6 +103,7 @@ install_nexus()
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
     dotnet restore ./Nexus/Nexus.sln
 
+    cp $archon_code/appsettings.json $archon_code/appsettings.Production.json
     aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
     aiur dotnet/seeddb $developer_code "Developer" $dbPassword
     aiur dotnet/seeddb $observer_code "Observer" $dbPassword
@@ -114,7 +119,6 @@ install_nexus()
     aiur dotnet/seeddb $ee_code "EE" $dbPassword
 
     aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
-    cp $archon_path/appsettings.json $archon_path/appsettings.Production.json
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
@@ -181,10 +185,17 @@ install_nexus()
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
+    replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
+    replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
+    aiur text/edit_json "DeveloperEndpoint" "https://developer.$1" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
+
+    aiur text/edit_json "GatewayEndpoint" "https://developer.$1" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
 
     # Finish the installation
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"

@@ -14,12 +14,16 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
     {
         private readonly DeveloperLocator _serviceLocation;
         private readonly HTTPService _http;
+        private readonly AiurCache _cache;
+
         public DeveloperApiService(
             DeveloperLocator serviceLocation,
-            HTTPService http)
+            HTTPService http,
+            AiurCache cache)
         {
             _serviceLocation = serviceLocation;
             _http = http;
+            _cache = cache;
         }
 
         public async Task<bool> IsValidAppAsync(string appId, string appSecret)
@@ -34,7 +38,12 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             return jResult.Code == ErrorType.Success;
         }
 
-        public async Task<AppInfoViewModel> AppInfoAsync(string appId)
+        public Task<AppInfoViewModel> AppInfoAsync(string appId)
+        {
+            return _cache.GetAndCache($"app-info-cache-{appId}", () => AppInfoWithOutCacheAsync(appId));
+        }
+
+        private async Task<AppInfoViewModel> AppInfoWithOutCacheAsync(string appId)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "api", "AppInfo", new AppInfoAddressModel
             {
