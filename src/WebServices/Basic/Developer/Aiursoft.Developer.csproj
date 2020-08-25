@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.20.0" />
+    <PackageReference Include="Markdig" Version="0.21.1" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
   </ItemGroup>
   
