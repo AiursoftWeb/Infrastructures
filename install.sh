@@ -118,7 +118,6 @@ install_nexus()
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $nexus_code/src/SDK/SDK/Values.cs
     dotnet restore $nexus_code/Nexus.sln
-
     cp $archon_code/appsettings.json $archon_code/appsettings.Production.json
     aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
     aiur dotnet/seeddb $developer_code "Developer" $dbPassword
@@ -188,6 +187,7 @@ install_nexus()
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
+    replace_in_file ./temp.sql "{{Instance}}" $instance_name
     replace_in_file ./temp.sql "{{userId}}" $userId
     replace_in_file ./temp.sql "{{domain}}" $1
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
