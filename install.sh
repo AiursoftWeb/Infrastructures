@@ -11,6 +11,9 @@ developerAppSecret=$(uuidgen)
 gatewayAppId=$(uuidgen)
 gatewayAppSecret=$(uuidgen)
 
+stargateAppId=$(uuidgen)
+stargateAppSecret=$(uuidgen)
+
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
 developer_code="$nexus_code/src/WebServices/Basic/Developer"
@@ -72,6 +75,8 @@ add_service()
     port=$(aiur network/get_port)
     aiur services/register_aspnet_service $name $port $path $dll
     aiur caddy/add_proxy $name.$domain $port
+    curl -s https://$name.$domain/ --output - > /dev/null # Init a request to let caddy config its cert.
+    sleep 1
 }
 
 replace_in_file()
@@ -150,16 +155,38 @@ install_nexus()
     set_env $wrap_path $1
     set_env $ee_path $1
 
-    aiur text/edit_json "ArchonEndpoint" "https://archon.$domain" $archon_path/appsettings.Production.json
-    aiur text/edit_json "DeveloperEndpoint" "https://developer.$domain" $developer_path/appsettings.Production.json
-    aiur text/edit_json "GatewayEndpoint" "https://gateway.$domain" $gateway_path/appsettings.Production.json
-    aiur text/edit_json "ObserverEndpoint" "https://observer.$domain" $observer_path/appsettings.Production.json
-    aiur text/edit_json "ProbeEndpoint" "https://probe.$domain" $probe_path/appsettings.Production.json
-    aiur text/edit_json "OpenPattern" "https://probe.$domain/download/open/{0}" $probe_path/appsettings.Production.json
-    aiur text/edit_json "DownloadPattern" "https://probe.$domain/download/file/{0}" $probe_path/appsettings.Production.json
-    aiur text/edit_json "PlayerPattern" "https://probe.$domain/download/video/{0}" $probe_path/appsettings.Production.json
-    aiur text/edit_json "StargateEndpoint" "https://stargate.$domain" $stargate_path/appsettings.Production.json
-    aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$domain" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "ArchonEndpoint" "https://archon.$1" $archon_path/appsettings.Production.json
+    aiur text/edit_json "DeveloperEndpoint" "https://developer.$1" $developer_path/appsettings.Production.json
+    aiur text/edit_json "GatewayEndpoint" "https://gateway.$1" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "ObserverEndpoint" "https://observer.$1" $observer_path/appsettings.Production.json
+    aiur text/edit_json "ProbeEndpoint" "https://probe.$1" $probe_path/appsettings.Production.json
+    aiur text/edit_json "OpenPattern" "https://probe.$1/download/open/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "DownloadPattern" "https://probe.$1/download/file/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "PlayerPattern" "https://probe.$1/download/video/{0}" $probe_path/appsettings.Production.json
+    aiur text/edit_json "StargateEndpoint" "https://stargate.$1" $stargate_path/appsettings.Production.json
+    aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$1" $wrapgate_path/appsettings.Production.json
+
+    aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
+    aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
+
+    aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
+
+    aiur text/edit_json "TestAppId" "$stargateAppId" $stargate_path/appsettings.Production.json
+    aiur text/edit_json "TestAppSecret" "$stargateAppSecret" $stargate_path/appsettings.Production.json
+
+    curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
+    domainUpper=$(echo $domain | tr a-z A-Z)
+    replace_in_file ./temp.sql "{{userId}}" $userId
+    replace_in_file ./temp.sql "{{domain}}" $1
+    replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
+    replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
+    replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
+    replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
+    replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
+    replace_in_file ./temp.sql "{{stargateAppId}}" $stargateAppId
+    replace_in_file ./temp.sql "{{stargateAppSecret}}" $stargateAppSecret
+    aiur mssql/run_sql $dbPassword ./temp.sql
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
     add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
@@ -178,24 +205,8 @@ install_nexus()
 
     echo 'Waitting for all services to start and init database...'
     sleep 10
-    curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
-    domainUpper=$(echo $domain | tr a-z A-Z)
-    replace_in_file ./temp.sql "{{userId}}" $userId
-    replace_in_file ./temp.sql "{{domain}}" $1
-    replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
-    replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
-    replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
-    replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
-    replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
-    aiur mssql/run_sql $dbPassword ./temp.sql
 
-    aiur text/edit_json "DeveloperEndpoint" "https://developer.$1" $developer_path/appsettings.Production.json
-    aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
-    aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
-
-    aiur text/edit_json "GatewayEndpoint" "https://developer.$1" $gateway_path/appsettings.Production.json
-    aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
-    aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
+    curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
 
     # Finish the installation
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"
