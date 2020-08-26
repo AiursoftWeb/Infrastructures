@@ -38,22 +38,22 @@ Nexus provides a central platform for an entire enterprise. So the enterprise ca
 
 Get a brand new Ubuntu 18.04 server.
 
-  * Server must be Ubuntu 18.04. (20.04 and 16.04 is not supported)
-  * Server must have a public IP address. (No local VM)
-  * Server must have access to the global Internet. (Not Chinese network)
+* Server must be Ubuntu 18.04. (20.04 and 16.04 is not supported)
+* Server must have a public IP address. (No local VM)
+* Server must have access to the global Internet. (Not Chinese network)
 
 Vultr or DigitalOcean is suggested. [Get it from Vultr](https://www.vultr.com/?ref=7274488).
 
 ### Install on server
 
-Create a wildcard domian record to your server's IP. 
+Create a wildcard domian record to your server's IP.
 
-> Example: Resolve *.aiursoft.com to 123.123.123.123
+> Example: Resolve *.aiur.io to 123.123.123.123
 
 Execute the following command on the server:
 
 ```bash
-$ curl -sL https://install.aiurs.co | sudo bash -s aiursoft.com
+$ curl -sL https://install.aiurs.co | sudo bash -s aiur.io instance.name
 ```
 
 ## Layers

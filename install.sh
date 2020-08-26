@@ -14,6 +14,15 @@ gatewayAppSecret=$(uuidgen)
 stargateAppId=$(uuidgen)
 stargateAppSecret=$(uuidgen)
 
+observerAppId=$(uuidgen)
+observerAppSecret=$(uuidgen)
+
+probeAppId=$(uuidgen)
+probeAppSecret=$(uuidgen)
+
+wrapgateAppId=$(uuidgen)
+wrapgateAppSecret=$(uuidgen)
+
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
 developer_code="$nexus_code/src/WebServices/Basic/Developer"
@@ -184,6 +193,15 @@ install_nexus()
 
     aiur text/edit_json "TestAppId" "$stargateAppId" $stargate_path/appsettings.Production.json
     aiur text/edit_json "TestAppSecret" "$stargateAppSecret" $stargate_path/appsettings.Production.json
+    
+    aiur text/edit_json "ObserverAppId" "$observerAppId" $observer_path/appsettings.Production.json
+    aiur text/edit_json "ObserverAppSecret" "$observerAppSecret" $observer_path/appsettings.Production.json
+
+    aiur text/edit_json "ProbeAppId" "$probeAppId" $probe_path/appsettings.Production.json
+    aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
+
+    aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
@@ -197,6 +215,12 @@ install_nexus()
     replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
     replace_in_file ./temp.sql "{{stargateAppId}}" $stargateAppId
     replace_in_file ./temp.sql "{{stargateAppSecret}}" $stargateAppSecret
+    replace_in_file ./temp.sql "{{observerAppId}}" $observerAppId
+    replace_in_file ./temp.sql "{{observerAppSecret}}" $observerAppSecret
+    replace_in_file ./temp.sql "{{probeAppId}}" $probeAppId
+    replace_in_file ./temp.sql "{{probeAppSecret}}" $probeAppSecret
+    replace_in_file ./temp.sql "{{wrapgateAppId}}" $wrapgateAppId
+    replace_in_file ./temp.sql "{{wrapgateAppSecret}}" $wrapgateAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
@@ -214,8 +238,8 @@ install_nexus()
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
-    echo 'Waitting for all services to start and init database...'
-    sleep 10
+    echo 'Waitting for all services to start and config certificate...'
+    sleep 20
 
     curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
 

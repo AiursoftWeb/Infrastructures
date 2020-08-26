@@ -43,7 +43,11 @@ namespace Aiursoft.Wiki.Controllers
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
         public async Task<IActionResult> Index()//Title
         {
-            var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstAsync();
+            var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstOrDefaultAsync();
+            if (firstArticle == null)
+            {
+                return NotFound();
+            }
             return Redirect($"/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
         }
 
