@@ -3,6 +3,7 @@ using Aiursoft.Developer.SDK.Models.ApiViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDKTools.Attributes;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
@@ -26,7 +27,29 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             _cache = cache;
         }
 
-        public async Task<bool> IsValidAppAsync(string appId, string appSecret)
+        public Task<bool> IsValidAppAsync(string appId, string appSecret)
+        {
+            if (!new IsGuidOrEmpty().IsValid(appId))
+            {
+                return Task.FromResult(false);
+            }
+            if (!new IsGuidOrEmpty().IsValid(appSecret))
+            {
+                return Task.FromResult(false);
+            }
+            return _cache.GetAndCache($"ValidAppWithId-{appId}-Secret-{appSecret}", () => IsValidAppWithoutCacheAsync(appId, appSecret));
+        }
+
+        public Task<AppInfoViewModel> AppInfoAsync(string appId)
+        {
+            if (!new IsGuidOrEmpty().IsValid(appId))
+            {
+                throw new AiurAPIModelException(ErrorType.NotFound, "Invalid app Id!");
+            }
+            return _cache.GetAndCache($"app-info-cache-{appId}", () => AppInfoWithoutCacheAsync(appId));
+        }
+
+        private async Task<bool> IsValidAppWithoutCacheAsync(string appId, string appSecret)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "api", "IsValidApp", new IsValidateAppAddressModel
             {
@@ -38,12 +61,7 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             return jResult.Code == ErrorType.Success;
         }
 
-        public Task<AppInfoViewModel> AppInfoAsync(string appId)
-        {
-            return _cache.GetAndCache($"app-info-cache-{appId}", () => AppInfoWithOutCacheAsync(appId));
-        }
-
-        private async Task<AppInfoViewModel> AppInfoWithOutCacheAsync(string appId)
+        private async Task<AppInfoViewModel> AppInfoWithoutCacheAsync(string appId)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "api", "AppInfo", new AppInfoAddressModel
             {

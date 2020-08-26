@@ -16,16 +16,13 @@ namespace Aiursoft.Archon.Controllers
     {
         private readonly TokenGenerator _tokenManager;
         private readonly DeveloperApiService _developerApiService;
-        private readonly AiurCache _cache;
 
         public APIController(
             TokenGenerator tokenManager,
-            DeveloperApiService developerApiService,
-            AiurCache cache)
+            DeveloperApiService developerApiService)
         {
             _tokenManager = tokenManager;
             _developerApiService = developerApiService;
-            _cache = cache;
         }
 
         [APIExpHandler]
@@ -33,8 +30,7 @@ namespace Aiursoft.Archon.Controllers
         [APIProduces(typeof(AccessTokenViewModel))]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
-            var cacheKey = $"Id-{model.AppId}-Secret-{model.AppSecret}";
-            var correctApp = await _cache.GetAndCache(cacheKey, () => _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret));
+            var correctApp = await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
             if (correctApp)
             {
                 var token = _tokenManager.GenerateAccessToken(model.AppId);
