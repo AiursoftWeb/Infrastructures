@@ -8,18 +8,10 @@ namespace Aiursoft.Developer.SDK.Models
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public App() { }
-        public App(string name, string description, Category category, Platform platform, string iconPath = null, string forceAppId = null, string forceAppSecret = null)
+        public App(string name, string description, Category category, Platform platform, string iconPath = null)
         {
-            if (!string.IsNullOrWhiteSpace(forceAppId) && !string.IsNullOrWhiteSpace(forceAppSecret))
-            {
-                this.AppId = forceAppId;
-                this.AppSecret = forceAppSecret;
-            }
-            else
-            {
-                this.AppId = Guid.NewGuid().ToString("N");
-                this.AppSecret = Guid.NewGuid().ToString("N");
-            }
+            this.AppId = Guid.NewGuid().ToString("N");
+            this.AppSecret = Guid.NewGuid().ToString("N");
             this.AppName = name;
             this.AppDescription = description;
             this.AppCategory = category;
