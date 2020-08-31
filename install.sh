@@ -194,6 +194,7 @@ install_nexus()
     aiur text/edit_json "PlayerPattern" "https://probe.$1/download/video/{0}" $probe_path/appsettings.Production.json
     aiur text/edit_json "StargateEndpoint" "https://stargate.$1" $stargate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$1" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WrapPattern" "https://wrapgate.$1/wrap/{wrap}" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
     aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
