@@ -27,7 +27,7 @@ Nexus provides a central platform for an entire enterprise. So the enterprise ca
 
 ## How to install
 
-### Brief steps:
+### Brief steps
 
 * Get a domain name. (Like aiursoft.com)
 * Get a new server.
@@ -50,10 +50,18 @@ Create a wildcard domian record to your server's IP.
 
 > Example: Resolve *.aiur.io to 123.123.123.123
 
-Execute the following command on the server:
+Execute the following command on the server (Replace the `instance.name` to your own brand name.):
 
 ```bash
 $ curl -sL https://install.aiurs.co | sudo bash -s aiur.io instance.name
+```
+
+### Upgrade your server
+
+If we release a newer version, and you can upgrade your server via:
+
+```bash
+$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/upgrade.sh | sudo bash -s instance.name
 ```
 
 ## Layers
