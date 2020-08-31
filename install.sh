@@ -193,6 +193,8 @@ install_nexus()
     aiur text/edit_json "PlayerPattern" "https://probe.$1/download/video/{0}" $probe_path/appsettings.Production.json
     aiur text/edit_json "StargateEndpoint" "https://stargate.$1" $stargate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$1" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
+    aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
 
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
@@ -208,8 +210,8 @@ install_nexus()
     aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $www_path/appsettings.Production.json
-    aiur text/edit_json "WikiAppId" "$wrapgateAppId" $wiki_path/appsettings.Production.json
-    aiur text/edit_json "WikiAppSecret" "$wrapgateAppSecret" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppId" "$wikiAppId" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppSecret" "$wikiAppSecret" $wiki_path/appsettings.Production.json
     aiur text/edit_json "AccountAppId" "$accountAppId" $account_path/appsettings.Production.json
     aiur text/edit_json "AccountAppSecret" "$accountAppSecret" $account_path/appsettings.Production.json
     aiur text/edit_json "StatusAppId" "$statusAppId" $status_path/appsettings.Production.json
