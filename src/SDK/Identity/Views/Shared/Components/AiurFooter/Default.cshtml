@@ -1,4 +1,5 @@
 ﻿@using Aiursoft.SDK.Services
+@using Aiursoft.SDK 
 @using Aiursoft.XelNaga.Models
 @using Aiursoft.Gateway.SDK.Services
 @model Aiursoft.Identity.Views.Shared.Components.AiurFooter.AiurFooterViewModel
@@ -29,5 +30,5 @@
 @Html.Raw(GetRenderedFooter(ServiceLocation.Developer, "Developer"))
 @Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "Company"))
 @Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "GitHub"))
-@Html.Raw(GetRenderedFooter("https://www.aiursoft.com/docs/terms", "Terms"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.WWW + Values.TermsAfterWWW, "Terms"))
 @Html.Raw(GetRenderedFooter(langLink.ToString(), "Language").Replace("<a", "<a data-language-change-link"))
