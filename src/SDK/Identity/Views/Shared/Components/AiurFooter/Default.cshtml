@@ -1,7 +1,9 @@
-﻿@using Aiursoft.XelNaga.Models
+﻿@using Aiursoft.SDK.Services
+@using Aiursoft.XelNaga.Models
 @using Aiursoft.Gateway.SDK.Services
 @model Aiursoft.Identity.Views.Shared.Components.AiurFooter.AiurFooterViewModel
 @inject GatewayLocator GatewayLocator
+@inject ServiceLocation ServiceLocation
 @{
     var classText = "";
     if (!string.IsNullOrWhiteSpace(Model.Class))
@@ -18,11 +20,14 @@
     }
 }
 
-@foreach (var foot in Aiursoft.SDK.Values.Footer)
-{
-    @Html.Raw(GetRenderedFooter(foot.Value, foot.Key))
-}
 @{
     var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { });
 }
+@Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Status, "Status"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Developer, "Developer"))
+@Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "Company"))
+@Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "GitHub"))
+@Html.Raw(GetRenderedFooter("https://www.aiursoft.com/docs/terms", "Terms"))
 @Html.Raw(GetRenderedFooter(langLink.ToString(), "Language").Replace("<a", "<a data-language-change-link"))

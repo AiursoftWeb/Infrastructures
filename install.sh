@@ -73,6 +73,7 @@ set_env()
     aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ProbeConnection" "https://probe.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.WrapgateConnection" "https://wrapgate.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "Dependencies.DeveloperPath" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.AccountPath" "https://account.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.UIPath" "https://ui.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.ColossusPath" "https://colossus.$domain" $dist_path/appsettings.Production.json

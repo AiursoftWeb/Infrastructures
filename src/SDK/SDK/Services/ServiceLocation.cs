@@ -15,6 +15,7 @@ namespace Aiursoft.SDK.Services
         public string Account { get; private set; }
         public string UI { get; private set; }
         public string Colossus { get; private set; }
+        public string Developer { get; private set; }
         public string EE { get; private set; }
         public string Wiki { get; private set; }
         public string Wrap { get; private set; }
@@ -33,6 +34,7 @@ namespace Aiursoft.SDK.Services
             UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
             Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Wrap = TrySet(section["WrapPath"], "https://wrap.aiursoft.com");
+            Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
             Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
             WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
