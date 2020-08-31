@@ -206,8 +206,8 @@ install_nexus()
     aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
-    aiur text/edit_json "WWWAppId" "$wwwAppId" $wiki_path/appsettings.Production.json
-    aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $www_path/appsettings.Production.json
     aiur text/edit_json "WikiAppId" "$wrapgateAppId" $wiki_path/appsettings.Production.json
     aiur text/edit_json "WikiAppSecret" "$wrapgateAppSecret" $wiki_path/appsettings.Production.json
     aiur text/edit_json "AccountAppId" "$accountAppId" $account_path/appsettings.Production.json
