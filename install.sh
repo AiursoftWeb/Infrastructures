@@ -120,7 +120,7 @@ install_nexus()
 
     if [[ $instance_name == "" ]];
     then
-        $instance_name="Aiursoft"
+        instance_name="Aiursoft"
         echo "Using instance name: $instance_name"
     else
         echo "Instance name is: $instance_name"
