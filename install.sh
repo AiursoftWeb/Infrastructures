@@ -7,21 +7,30 @@ userId=$(uuidgen)
 
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
-
 gatewayAppId=$(uuidgen)
 gatewayAppSecret=$(uuidgen)
-
 stargateAppId=$(uuidgen)
 stargateAppSecret=$(uuidgen)
-
 observerAppId=$(uuidgen)
 observerAppSecret=$(uuidgen)
-
 probeAppId=$(uuidgen)
 probeAppSecret=$(uuidgen)
-
 wrapgateAppId=$(uuidgen)
 wrapgateAppSecret=$(uuidgen)
+wwwAppId=$(uuidgen)
+wwwAppSecret=$(uuidgen)
+wikiAppId=$(uuidgen)
+wikiAppSecret=$(uuidgen)
+accountAppId=$(uuidgen)
+accountAppSecret=$(uuidgen)
+statusAppId=$(uuidgen)
+statusAppSecret=$(uuidgen)
+colossusAppId=$(uuidgen)
+colossusAppSecret=$(uuidgen)
+wrapAppId=$(uuidgen)
+wrapAppSecret=$(uuidgen)
+eeAppId=$(uuidgen)
+eeAppSecret=$(uuidgen)
 
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
@@ -187,21 +196,30 @@ install_nexus()
 
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
-
     aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
     aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
-
     aiur text/edit_json "TestAppId" "$stargateAppId" $stargate_path/appsettings.Production.json
     aiur text/edit_json "TestAppSecret" "$stargateAppSecret" $stargate_path/appsettings.Production.json
-    
     aiur text/edit_json "ObserverAppId" "$observerAppId" $observer_path/appsettings.Production.json
     aiur text/edit_json "ObserverAppSecret" "$observerAppSecret" $observer_path/appsettings.Production.json
-
     aiur text/edit_json "ProbeAppId" "$probeAppId" $probe_path/appsettings.Production.json
     aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
-
     aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppId" "$wwwAppId" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppId" "$wrapgateAppId" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppSecret" "$wrapgateAppSecret" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "AccountAppId" "$accountAppId" $account_path/appsettings.Production.json
+    aiur text/edit_json "AccountAppSecret" "$accountAppSecret" $account_path/appsettings.Production.json
+    aiur text/edit_json "StatusAppId" "$statusAppId" $status_path/appsettings.Production.json
+    aiur text/edit_json "StatusAppSecret" "$statusAppSecret" $status_path/appsettings.Production.json
+    aiur text/edit_json "ColossusAppId" "$colossusAppId" $colossus_path/appsettings.Production.json
+    aiur text/edit_json "ColossusAppSecret" "$colossusAppSecret" $colossus_path/appsettings.Production.json
+    aiur text/edit_json "WrapAppId" "$wrapAppId" $wrap_path/appsettings.Production.json
+    aiur text/edit_json "WrapAppSecret" "$wrapAppSecret" $wrap_path/appsettings.Production.json
+    aiur text/edit_json "EEAppId" "$eeAppId" $ee_path/appsettings.Production.json
+    aiur text/edit_json "EEAppSecret" "$eeAppSecret" $ee_path/appsettings.Production.json
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
@@ -221,6 +239,20 @@ install_nexus()
     replace_in_file ./temp.sql "{{probeAppSecret}}" $probeAppSecret
     replace_in_file ./temp.sql "{{wrapgateAppId}}" $wrapgateAppId
     replace_in_file ./temp.sql "{{wrapgateAppSecret}}" $wrapgateAppSecret
+    replace_in_file ./temp.sql "{{wikiAppId}}" $wikiAppId
+    replace_in_file ./temp.sql "{{wikiAppSecret}}" $wikiAppSecret
+    replace_in_file ./temp.sql "{{wwwAppId}}" $wwwAppId
+    replace_in_file ./temp.sql "{{wwwAppSecret}}" $wwwAppSecret
+    replace_in_file ./temp.sql "{{accountAppId}}" $accountAppId
+    replace_in_file ./temp.sql "{{accountAppSecret}}" $accountAppSecret
+    replace_in_file ./temp.sql "{{statusAppId}}" $statusAppId
+    replace_in_file ./temp.sql "{{statusAppSecret}}" $statusAppSecret
+    replace_in_file ./temp.sql "{{colossusAppId}}" $colossusAppId
+    replace_in_file ./temp.sql "{{colossusAppSecret}}" $colossusAppSecret
+    replace_in_file ./temp.sql "{{wrapAppId}}" $wrapAppId
+    replace_in_file ./temp.sql "{{wrapAppSecret}}" $wrapAppSecret
+    replace_in_file ./temp.sql "{{eeAppId}}" $eeAppId
+    replace_in_file ./temp.sql "{{eeAppSecret}}" $eeAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
