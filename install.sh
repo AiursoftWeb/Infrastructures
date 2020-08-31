@@ -274,10 +274,14 @@ install_nexus()
 
     echo 'Waitting for all services to start and config certificate...'
     sleep 20
+    echo 'Waitting for all services to start and config certificate...'
 
     curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
     sleep 10
     curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
+    sleep 10
+    curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
+    curl -sL https://status.$1/ --output - > /dev/null
 
     # Finish the installation
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"
