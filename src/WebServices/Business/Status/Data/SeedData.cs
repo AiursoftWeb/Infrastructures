@@ -53,7 +53,7 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft account center",
+                    ProjectName = "Aiursoft Account Center",
                     CheckAddress = $"{serviceLocation.Account}/?show=direct",
                     ExpectedContent = "Unlock the power of your"
                 },
