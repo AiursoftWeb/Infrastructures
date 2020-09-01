@@ -67,7 +67,7 @@
                             {
                                 <tr>
                                     <td data-order="A@(folder.FolderName)">
-                                        <i class="fa fa-folder text-primary"></i>
+                                        <i class="fas fa-folder text-primary"></i>
                                         <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
                                             @folder.FolderName
                                         </a>
@@ -93,7 +93,7 @@
                             {
                                 <tr>
                                     <td data-order="Z@(file.FileName)">
-                                        <i class="far fa-file text-primary"></i>
+                                        <i class="fas fa-file-alt text-primary"></i>
                                         <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
                                             @file.FileName
                                         </a>
