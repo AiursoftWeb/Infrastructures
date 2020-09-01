@@ -67,7 +67,7 @@ namespace Aiursoft.Status.Data
                 {
                     ProjectName = "Aiursoft wiki center",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
-                    ExpectedContent = "Aiursoft Wiki Center"
+                    ExpectedContent = "Wiki Center"
                 },
                 new MonitorRule
                 {
