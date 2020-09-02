@@ -57,7 +57,6 @@ namespace Aiursoft.WWW.Controllers
         }
 
         [Route("suggestion/{question}")]
-
         public async Task<IActionResult> Suggestion([FromRoute] string question)
         {
             var market = CultureInfo.CurrentCulture.Name;
