@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Identity.Views.Shared.Components.ChinaRegister
+﻿namespace Aiursoft.SDK.Views.Shared.Components.ChinaRegister
 {
     public class ChinaRegisterViewModel
     {
