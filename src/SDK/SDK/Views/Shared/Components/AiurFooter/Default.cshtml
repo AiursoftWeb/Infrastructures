@@ -1,12 +1,10 @@
 ﻿@using Aiursoft.SDK.Services
 @using Aiursoft.SDK 
 @using Aiursoft.XelNaga.Models
-@using Aiursoft.Gateway.SDK.Services
-@model Aiursoft.Identity.Views.Shared.Components.AiurFooter.AiurFooterViewModel
-@inject GatewayLocator GatewayLocator
+@model Aiursoft.SDK.Views.Shared.Components.AiurFooter.AiurFooterViewModel
 @inject ServiceLocation ServiceLocation
 @{
-    var classText = "";
+    var classText = string.Empty;
     if (!string.IsNullOrWhiteSpace(Model.Class))
     {
         classText = $" class=\"{Model.Class}\"";
@@ -22,7 +20,7 @@
 }
 
 @{
-    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { });
+    var langLink = new AiurUrl(ServiceLocation.Gateway, "Api", "SetLang", new { });
 }
 @Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))
