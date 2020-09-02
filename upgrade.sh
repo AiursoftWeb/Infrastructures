@@ -40,15 +40,33 @@ update()
     aiur git/clone_to AiursoftWeb/Nexus $nexus_code
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $nexus_code/src/SDK/SDK/Values.cs
 
-    systemctl stop "archon.service" && aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj" && systemctl start "archon.service" &
-    systemctl stop "stargate.service" && aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj" && systemctl start "stargate.service" &
-    systemctl stop "probe.service" && aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj" && systemctl start "probe.service" &
-    systemctl stop "gateway.service" && aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj" && systemctl start "gateway.service" &
-    systemctl stop "wrapgate.service" && aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj" && systemctl start "wrapgate.service" &
-    systemctl stop "observer.service" && aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj" && systemctl start "observer.service" &
-    systemctl stop "developer.service" && aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj" && systemctl start "developer.service" &
-    wait
+    systemctl stop "archon.service"
+    aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
+    systemctl start "archon.service"
 
+    systemctl stop "stargate.service"
+    aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj"
+    systemctl start "stargate.service"
+
+    systemctl stop "probe.service"
+    aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
+    systemctl start "probe.service"
+
+    systemctl stop "gateway.service"
+    aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
+    systemctl start "gateway.service"
+
+    systemctl stop "wrapgate.service"
+    aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj"
+    systemctl start "wrapgate.service"
+
+    systemctl stop "observer.service"
+    aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
+    systemctl start "observer.service"
+
+    systemctl stop "developer.service"
+    aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
+    systemctl start "developer.service"
 
     systemctl stop "www.service"
     aiur dotnet/publish $www_path $www_code/"Aiursoft.WWW.csproj"
