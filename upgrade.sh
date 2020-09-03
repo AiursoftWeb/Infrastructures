@@ -3,6 +3,9 @@ aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/Aiu
 update()
 {
     instance_name="$1"
+    
+    # Upgrade AiurUI
+    curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/upgrade.sh | sudo bash
 
     nexus_code="./Nexus"
     nexus_path="/opt/apps/Nexus"
