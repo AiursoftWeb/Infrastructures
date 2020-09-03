@@ -53,7 +53,7 @@ Create a wildcard domian record to your server's IP.
 Execute the following command on the server (Replace the `instance.name` to your own brand name.):
 
 ```bash
-$ curl -sL https://install.aiurs.co | sudo bash -s aiur.io instance.name
+$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/install.sh | sudo bash -s aiur.io instance.name
 ```
 
 ### Upgrade your server
