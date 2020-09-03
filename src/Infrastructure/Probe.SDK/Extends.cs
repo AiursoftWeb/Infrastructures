@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.SDK
@@ -21,6 +22,11 @@ namespace Aiursoft.Probe.SDK
             this IServiceCollection services,
             string serverEndpoint)
         {
+            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
+            {
+                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
+                return services;
+            }
             AsyncHelper.TryAsyncThreeTimes(async () =>
             {
                 var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
