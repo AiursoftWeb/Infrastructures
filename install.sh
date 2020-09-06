@@ -5,6 +5,8 @@ nexus_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
 
+archonAppId=$(uuidgen)
+archonAppSecret=$(uuidgen)
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
 gatewayAppId=$(uuidgen)
@@ -198,6 +200,8 @@ install_nexus()
     aiur text/edit_json "WrapPattern" "https://wrapgate.$1/wrap/{wrap}" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
     aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
+    aiur text/edit_json "ArchonAppId" "$archonAppId" $archon_path/appsettings.Production.json
+    aiur text/edit_json "ArchonAppSecret" "$archonAppSecret" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
     aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
@@ -231,6 +235,8 @@ install_nexus()
     replace_in_file ./temp.sql "{{userId}}" $userId
     replace_in_file ./temp.sql "{{domain}}" $1
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
+    replace_in_file ./temp.sql "{{archonAppId}}" $archonAppId
+    replace_in_file ./temp.sql "{{archonAppSecret}}" $archonAppSecret
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
     replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
