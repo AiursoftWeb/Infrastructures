@@ -78,10 +78,10 @@ namespace Aiursoft.WWW.Controllers
             return View();
         }
 
-        [Route("TranslateRaw/{question}")]
-        public IActionResult TranslateRaw([FromRoute] string question, [FromQuery] string lang)
+        [Route("translate-raw/{question}")]
+        public async Task<IActionResult> TranslateRaw([FromRoute] string question, [FromQuery] string lang)
         {
-            var result = _bingTranslator.CallTranslate(question, lang);
+            var result = await _bingTranslator.CallTranslate(question, lang);
             return Json(new
             {
                 value = result
