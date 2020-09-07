@@ -1,4 +1,5 @@
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK.Services;
 using Aiursoft.Status.Models;
@@ -21,17 +22,10 @@ namespace Aiursoft.Status.Data
         {
             MonitorRules.RemoveRange(MonitorRules);
             SaveChanges();
-            var existingData = MonitorRules.ToList();
             var serviceLocation = services.GetRequiredService<ServiceLocation>();
             var observerLocator = services.GetRequiredService<ObserverLocator>();
             var archonLocator = services.GetRequiredService<ArchonLocator>();
-            foreach (var item in SeedData.GetRules(serviceLocation, observerLocator, archonLocator))
-            {
-                if (!existingData.Exists(t => t.ProjectName == item.ProjectName))
-                {
-                    MonitorRules.Add(item);
-                }
-            }
+            MonitorRules.Sync(SeedData.GetRules(serviceLocation, observerLocator, archonLocator).ToList());
             SaveChanges();
         }
     }

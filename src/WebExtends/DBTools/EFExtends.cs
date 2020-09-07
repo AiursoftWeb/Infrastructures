@@ -34,7 +34,7 @@ namespace Aiursoft.DBTools
         }
 
         public static void Sync<T, M>(this DbSet<T> dbSet,
-            M[] collection)
+            IList<M> collection)
             where T : class
             where M : ISyncable<T>
         {
@@ -43,7 +43,7 @@ namespace Aiursoft.DBTools
 
         public static void Sync<T, M>(this DbSet<T> dbSet,
             Expression<Func<T, bool>> filter,
-            M[] collection)
+            IList<M> collection)
             where T : class
             where M : ISyncable<T>
         {
