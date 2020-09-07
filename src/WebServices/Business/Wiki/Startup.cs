@@ -3,12 +3,16 @@ using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
+using Aiursoft.Wiki.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Aiursoft.Wiki
 {
@@ -44,6 +48,32 @@ namespace Aiursoft.Wiki
         {
             app.UseAiurUserHandler(env.IsDevelopment());
             app.UseAiursoftDefault();
+        }
+    }
+
+    public static class PostStartUp
+    {
+        public static IHost Seed(this IHost host)
+        {
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var logger = services.GetRequiredService<ILogger<Seeder>>();
+            var seeder = services.GetService<Seeder>();
+            try
+            {
+                logger.LogInformation($"Seeding...");
+                AsyncHelper.TryAsyncThreeTimes(async () =>
+                {
+                    await seeder.Seed();
+                });
+                logger.LogInformation($"Seeded");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"An error occurred while seeding.");
+            }
+
+            return host;
         }
     }
 }

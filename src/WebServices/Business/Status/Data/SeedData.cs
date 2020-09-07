@@ -13,6 +13,7 @@ namespace Aiursoft.Status.Data
             ObserverLocator observerLocator, 
             ArchonLocator archonLocator)
         {
+#warning Prevent hard code address.
             return new List<MonitorRule>
             {
                 new MonitorRule
@@ -30,13 +31,13 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Developer",
-                    CheckAddress = "https://developer.aiursoft.com/?show=direct",
+                    CheckAddress = $"{serviceLocation.Developer}/?show=direct",
                     ExpectedContent = "Welcome to Aiursoft Developer Center"
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft authentication gateway",
-                    CheckAddress = "https://gateway.aiursoft.com/oauth/authorize?appid=4b43b0aee35624cd95b910189b3dc231&redirect_uri=https%3A%2F%2Fdeveloper.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    CheckAddress = $"{serviceLocation.Gateway}/oauth/authorize?appid=4b43b0aee35624cd95b910189b3dc231&redirect_uri=https%3A%2F%2Fdeveloper.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                     ExpectedContent = "Login to Aiursoft developer center"
                 },
                 new MonitorRule
@@ -53,7 +54,7 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft account center",
+                    ProjectName = "Aiursoft Account Center",
                     CheckAddress = $"{serviceLocation.Account}/?show=direct",
                     ExpectedContent = "Unlock the power of your"
                 },
@@ -67,7 +68,7 @@ namespace Aiursoft.Status.Data
                 {
                     ProjectName = "Aiursoft wiki center",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
-                    ExpectedContent = "Aiursoft Wiki Center"
+                    ExpectedContent = "Wiki Center"
                 },
                 new MonitorRule
                 {

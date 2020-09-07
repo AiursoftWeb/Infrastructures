@@ -47,7 +47,7 @@
                 <button class="btn btn-primary btn-block" data-disable-with="Signing up..." type="submit">@Localizer["Sign up"]</button>
                 <label class="w-100 mt-3 mb-0">
                     @Localizer["By register, you agree to our "]
-                    <a href="@Values.Footer["Terms"]" target="_blank">
+                    <a href="@(ServiceLocation.WWW + Values.TermsAfterWWW)" target="_blank">
                         @Localizer["Terms"].
                     </a>
                 </label>

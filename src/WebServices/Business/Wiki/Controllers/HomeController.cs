@@ -22,20 +22,17 @@ namespace Aiursoft.Wiki.Controllers
     {
         private readonly SignInManager<WikiUser> _signInManager;
         private readonly WikiDbContext _dbContext;
-        private readonly Seeder _seeder;
         private readonly GatewayLocator _serviceLocation;
         private readonly IConfiguration _configuration;
 
         public HomeController(
             SignInManager<WikiUser> signInManager,
             WikiDbContext context,
-            Seeder seeder,
             GatewayLocator serviceLocation,
             IConfiguration configuration)
         {
             _signInManager = signInManager;
             _dbContext = context;
-            _seeder = seeder;
             _serviceLocation = serviceLocation;
             _configuration = configuration;
         }
@@ -43,7 +40,11 @@ namespace Aiursoft.Wiki.Controllers
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
         public async Task<IActionResult> Index()//Title
         {
-            var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstAsync();
+            var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstOrDefaultAsync();
+            if (firstArticle == null)
+            {
+                return NotFound();
+            }
             return Redirect($"/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
         }
 
@@ -94,22 +95,6 @@ namespace Aiursoft.Wiki.Controllers
         {
             var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
             return Json(database);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Seed(string secret)
-        {
-            var secretInConfig = _configuration["ContentUpdateSecret"];
-            if (!string.Equals(secret, secretInConfig) || string.IsNullOrWhiteSpace(secretInConfig))
-            {
-                return NotFound();
-            }
-            await _seeder.Seed();
-            return Json(new AiurProtocol
-            {
-                Code = ErrorType.Success,
-                Message = "Seeded"
-            });
         }
 
         [HttpPost]

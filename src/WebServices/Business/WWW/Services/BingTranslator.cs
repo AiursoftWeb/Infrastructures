@@ -3,6 +3,7 @@ using Aiursoft.WWW.Services.BingModels;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Aiursoft.WWW.Services
 {
@@ -10,7 +11,7 @@ namespace Aiursoft.WWW.Services
     {
         public static string APIKey;
 
-        private string CallTranslateAPI(string inputJson, string targetLanguage)
+        private async Task<string> CallTranslateAPI(string inputJson, string targetLanguage)
         {
             var apiAddress = $"https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={targetLanguage}";
             var client = new RestClient(apiAddress);
@@ -20,17 +21,17 @@ namespace Aiursoft.WWW.Services
                 .AddHeader("Content-Type", "application/json")
                 .AddParameter("undefined", inputJson, ParameterType.RequestBody);
 
-            var json = client.Execute(request).Content;
+            var json = (await client.ExecuteAsync(request)).Content;
             return json;
         }
 
-        public string CallTranslate(string input, string targetLanguage)
+        public async Task<string> CallTranslate(string input, string targetLanguage)
         {
             var inputSource = new List<Translation>
             {
                 new Translation { Text = input }
             };
-            var bingResponse = CallTranslateAPI(JsonConvert.SerializeObject(inputSource), targetLanguage);
+            var bingResponse = await CallTranslateAPI(JsonConvert.SerializeObject(inputSource), targetLanguage);
             var result = JsonConvert.DeserializeObject<List<BingResponse>>(bingResponse);
             return result[0].Translations[0].Text;
         }

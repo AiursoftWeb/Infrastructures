@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Identity.Views.Shared.Components.ChinaRegister
+namespace Aiursoft.SDK.Views.Shared.Components.ChinaRegister
 {
     public class ChinaRegister : ViewComponent
     {
@@ -11,7 +11,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.ChinaRegister
             var requestCulture = requestCultureFeature.RequestCulture.UICulture.IetfLanguageTag;
             var model = new ChinaRegisterViewModel
             {
-                IsInChina = requestCulture == "zh"
+                IsInChina = requestCulture.ToLower().StartsWith("zh")
             };
             return View(model);
         }

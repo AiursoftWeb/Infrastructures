@@ -82,6 +82,11 @@ namespace Aiursoft.Scanner
         /// <returns></returns>
         public static IServiceCollection AddLibraryDependencies(this IServiceCollection services, params Type[] abstracts)
         {
+            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
+            {
+                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
+                return services;
+            }
             var calling = Assembly.GetCallingAssembly();
             var executingTypes = new ClassScanner().AllLibraryClass(calling, false, false);
             Register(executingTypes, services, abstracts);

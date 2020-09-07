@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Identity.Views.Shared.Components.AiurFooter
+namespace Aiursoft.SDK.Views.Shared.Components.AiurFooter
 {
     public class AiurFooter : ViewComponent
     {

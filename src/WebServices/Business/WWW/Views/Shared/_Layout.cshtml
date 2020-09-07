@@ -28,6 +28,7 @@
                 <div class="collapse navbar-collapse" id="aiursoft-navbar">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Kahla">@Localizer["Kahla"]</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Wrap">@Localizer["Wrap"]</a></li>
                         <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Colossus">@Localizer["Colossus"]</a></li>
                         <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Tracer">@Localizer["Tracer"]</a></li>
                     </ul>
@@ -92,7 +93,7 @@
     <vc:scroll-to-top></vc:scroll-to-top>
     <vc:aiur-logout></vc:aiur-logout>
     <vc:aiur-market-js></vc:aiur-market-js>
-@await RenderSectionAsync("js", required: false)
-<script src="~/js/site.js"></script>
+    @await RenderSectionAsync("js", required: false)
+    <script src="~/js/site.js"></script>
 </body>
 </html>

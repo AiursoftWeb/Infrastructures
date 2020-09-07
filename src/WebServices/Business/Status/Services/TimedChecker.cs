@@ -71,12 +71,17 @@ namespace Aiursoft.Status.Services
                     item.LastCheckTime = DateTime.UtcNow;
                     dbContext.Update(item);
                 }
-                catch
+                catch (Exception e)
                 {
+                    var errorMessage = $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got error: {e.Message}";
+                    _logger.LogError(errorMessage);
                     item.LastHealthStatus = false;
                     item.LastCheckTime = DateTime.UtcNow;
                 }
-                await dbContext.SaveChangesAsync();
+                finally
+                {
+                    await dbContext.SaveChangesAsync();
+                }
             }
         }
 

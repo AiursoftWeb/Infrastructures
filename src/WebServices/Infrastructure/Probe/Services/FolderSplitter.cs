@@ -12,6 +12,8 @@ namespace Aiursoft.Probe.Services
         public string[] SplitToFolders(string folderNames) =>
             folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
 
+        private string[] InvalidStrings = new string[] { "+" };
+
         public (string[] folders, string fileName) SplitToFoldersAndFile(string folderNames)
         {
             if (folderNames == null || folderNames.Length == 0)
@@ -30,6 +32,11 @@ namespace Aiursoft.Probe.Services
             while (fileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
             {
                 expectedFileName = "_" + expectedFileName;
+            }
+            expectedFileName = expectedFileName.ToLower();
+            foreach(var invalidChar in InvalidStrings)
+            {
+                expectedFileName = expectedFileName.Replace(invalidChar, string.Empty);
             }
             return expectedFileName;
         }

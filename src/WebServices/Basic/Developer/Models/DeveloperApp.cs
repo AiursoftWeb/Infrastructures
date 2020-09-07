@@ -9,8 +9,8 @@ namespace Aiursoft.Developer.Models
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public DeveloperApp() { }
-        public DeveloperApp(string name, string description, Category category, Platform platform, string iconPath = null, string forceAppId = null, string forceAppSecret = null)
-            : base(name, description, category, platform, iconPath, forceAppId, forceAppSecret) { }
+        public DeveloperApp(string name, string description, Category category, Platform platform, string iconPath = null)
+            : base(name, description, category, platform, iconPath) { }
 
         public string CreatorId { get; set; }
         [ForeignKey(nameof(CreatorId))]

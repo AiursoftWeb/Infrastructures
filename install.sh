@@ -5,14 +5,34 @@ nexus_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
 
+archonAppId=$(uuidgen)
+archonAppSecret=$(uuidgen)
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
-
 gatewayAppId=$(uuidgen)
 gatewayAppSecret=$(uuidgen)
-
 stargateAppId=$(uuidgen)
 stargateAppSecret=$(uuidgen)
+observerAppId=$(uuidgen)
+observerAppSecret=$(uuidgen)
+probeAppId=$(uuidgen)
+probeAppSecret=$(uuidgen)
+wrapgateAppId=$(uuidgen)
+wrapgateAppSecret=$(uuidgen)
+wwwAppId=$(uuidgen)
+wwwAppSecret=$(uuidgen)
+wikiAppId=$(uuidgen)
+wikiAppSecret=$(uuidgen)
+accountAppId=$(uuidgen)
+accountAppSecret=$(uuidgen)
+statusAppId=$(uuidgen)
+statusAppSecret=$(uuidgen)
+colossusAppId=$(uuidgen)
+colossusAppSecret=$(uuidgen)
+wrapAppId=$(uuidgen)
+wrapAppSecret=$(uuidgen)
+eeAppId=$(uuidgen)
+eeAppSecret=$(uuidgen)
 
 archon_code="$nexus_code/src/WebServices/Basic/Archon"
 gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
@@ -55,6 +75,8 @@ set_env()
     aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ProbeConnection" "https://probe.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.WrapgateConnection" "https://wrapgate.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "Dependencies.DeveloperPath" "https://developer.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "Dependencies.GatewayPath" "https://gateway.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.AccountPath" "https://account.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.UIPath" "https://ui.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.ColossusPath" "https://colossus.$domain" $dist_path/appsettings.Production.json
@@ -101,7 +123,7 @@ install_nexus()
 
     if [[ $instance_name == "" ]];
     then
-        $instance_name="Aiursoft"
+        instance_name="Aiursoft"
         echo "Using instance name: $instance_name"
     else
         echo "Instance name is: $instance_name"
@@ -175,15 +197,37 @@ install_nexus()
     aiur text/edit_json "PlayerPattern" "https://probe.$1/download/video/{0}" $probe_path/appsettings.Production.json
     aiur text/edit_json "StargateEndpoint" "https://stargate.$1" $stargate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$1" $wrapgate_path/appsettings.Production.json
-
+    aiur text/edit_json "WrapPattern" "https://wrapgate.$1/wrap/{wrap}" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
+    aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
+    aiur text/edit_json "ArchonAppId" "$archonAppId" $archon_path/appsettings.Production.json
+    aiur text/edit_json "ArchonAppSecret" "$archonAppSecret" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
-
     aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
     aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
-
     aiur text/edit_json "TestAppId" "$stargateAppId" $stargate_path/appsettings.Production.json
     aiur text/edit_json "TestAppSecret" "$stargateAppSecret" $stargate_path/appsettings.Production.json
+    aiur text/edit_json "ObserverAppId" "$observerAppId" $observer_path/appsettings.Production.json
+    aiur text/edit_json "ObserverAppSecret" "$observerAppSecret" $observer_path/appsettings.Production.json
+    aiur text/edit_json "ProbeAppId" "$probeAppId" $probe_path/appsettings.Production.json
+    aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
+    aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
+    aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $www_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppId" "$wikiAppId" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "WikiAppSecret" "$wikiAppSecret" $wiki_path/appsettings.Production.json
+    aiur text/edit_json "AccountAppId" "$accountAppId" $account_path/appsettings.Production.json
+    aiur text/edit_json "AccountAppSecret" "$accountAppSecret" $account_path/appsettings.Production.json
+    aiur text/edit_json "StatusAppId" "$statusAppId" $status_path/appsettings.Production.json
+    aiur text/edit_json "StatusAppSecret" "$statusAppSecret" $status_path/appsettings.Production.json
+    aiur text/edit_json "ColossusAppId" "$colossusAppId" $colossus_path/appsettings.Production.json
+    aiur text/edit_json "ColossusAppSecret" "$colossusAppSecret" $colossus_path/appsettings.Production.json
+    aiur text/edit_json "WrapAppId" "$wrapAppId" $wrap_path/appsettings.Production.json
+    aiur text/edit_json "WrapAppSecret" "$wrapAppSecret" $wrap_path/appsettings.Production.json
+    aiur text/edit_json "EEAppId" "$eeAppId" $ee_path/appsettings.Production.json
+    aiur text/edit_json "EEAppSecret" "$eeAppSecret" $ee_path/appsettings.Production.json
 
     curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
@@ -191,12 +235,34 @@ install_nexus()
     replace_in_file ./temp.sql "{{userId}}" $userId
     replace_in_file ./temp.sql "{{domain}}" $1
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
+    replace_in_file ./temp.sql "{{archonAppId}}" $archonAppId
+    replace_in_file ./temp.sql "{{archonAppSecret}}" $archonAppSecret
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
     replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
     replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
     replace_in_file ./temp.sql "{{stargateAppId}}" $stargateAppId
     replace_in_file ./temp.sql "{{stargateAppSecret}}" $stargateAppSecret
+    replace_in_file ./temp.sql "{{observerAppId}}" $observerAppId
+    replace_in_file ./temp.sql "{{observerAppSecret}}" $observerAppSecret
+    replace_in_file ./temp.sql "{{probeAppId}}" $probeAppId
+    replace_in_file ./temp.sql "{{probeAppSecret}}" $probeAppSecret
+    replace_in_file ./temp.sql "{{wrapgateAppId}}" $wrapgateAppId
+    replace_in_file ./temp.sql "{{wrapgateAppSecret}}" $wrapgateAppSecret
+    replace_in_file ./temp.sql "{{wikiAppId}}" $wikiAppId
+    replace_in_file ./temp.sql "{{wikiAppSecret}}" $wikiAppSecret
+    replace_in_file ./temp.sql "{{wwwAppId}}" $wwwAppId
+    replace_in_file ./temp.sql "{{wwwAppSecret}}" $wwwAppSecret
+    replace_in_file ./temp.sql "{{accountAppId}}" $accountAppId
+    replace_in_file ./temp.sql "{{accountAppSecret}}" $accountAppSecret
+    replace_in_file ./temp.sql "{{statusAppId}}" $statusAppId
+    replace_in_file ./temp.sql "{{statusAppSecret}}" $statusAppSecret
+    replace_in_file ./temp.sql "{{colossusAppId}}" $colossusAppId
+    replace_in_file ./temp.sql "{{colossusAppSecret}}" $colossusAppSecret
+    replace_in_file ./temp.sql "{{wrapAppId}}" $wrapAppId
+    replace_in_file ./temp.sql "{{wrapAppSecret}}" $wrapAppSecret
+    replace_in_file ./temp.sql "{{eeAppId}}" $eeAppId
+    replace_in_file ./temp.sql "{{eeAppSecret}}" $eeAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
     add_service "archon" $archon_path "Aiursoft.Archon" $1
@@ -214,10 +280,9 @@ install_nexus()
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
-    echo 'Waitting for all services to start and init database...'
-    sleep 10
-
-    curl -d '' https://wiki.$1/home/seed?secret=yourStrongSecretMY0TMG
+    echo 'Waitting for all services to start and config certificate...'
+    
+    sleep 30
 
     # Finish the installation
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"

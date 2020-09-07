@@ -12,6 +12,7 @@ namespace Aiursoft.Wiki
             CreateHostBuilder(args)
                 .Build()
                 .MigrateDbContext<WikiDbContext>()
+                .Seed()
                 .Run();
         }
 

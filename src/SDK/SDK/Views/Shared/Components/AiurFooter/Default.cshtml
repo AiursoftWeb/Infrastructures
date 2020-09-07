@@ -1,0 +1,32 @@
+﻿@using Aiursoft.SDK.Services
+@using Aiursoft.SDK 
+@using Aiursoft.XelNaga.Models
+@model Aiursoft.SDK.Views.Shared.Components.AiurFooter.AiurFooterViewModel
+@inject ServiceLocation ServiceLocation
+@{
+    var classText = string.Empty;
+    if (!string.IsNullOrWhiteSpace(Model.Class))
+    {
+        classText = $" class=\"{Model.Class}\"";
+    }
+
+    string GetRenderedFooter(string link, string text)
+    {
+        var templateHead = $"<{Model.Template}{classText}>";
+        var templateTail = $"</{Model.Template}>";
+        var templateLink = $"<a href=\"{link}\">{text}</a>";
+        return $"{templateHead}{templateLink}{templateTail}\n";
+    }
+}
+
+@{
+    var langLink = new AiurUrl(ServiceLocation.Gateway, "Api", "SetLang", new { });
+}
+@Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Status, "Status"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.Developer, "Developer"))
+@Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "Company"))
+@Html.Raw(GetRenderedFooter("https://github.com/AiursoftWeb", "GitHub"))
+@Html.Raw(GetRenderedFooter(ServiceLocation.WWW + Values.TermsAfterWWW, "Terms"))
+@Html.Raw(GetRenderedFooter(langLink.ToString(), "Language").Replace("<a", "<a data-language-change-link"))

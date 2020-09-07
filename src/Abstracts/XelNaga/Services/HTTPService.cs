@@ -34,7 +34,7 @@ namespace Aiursoft.XelNaga.Services
             };
 
             request.Headers.Add("X-Forwarded-Proto", "https");
-            request.Headers.Add("accept", "application/json");
+            request.Headers.Add("accept", "application/json, text/html");
 
             var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
