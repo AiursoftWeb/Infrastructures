@@ -59,6 +59,37 @@ namespace Aiursoft.Gateway.Controllers
             {
                 _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
             }
+            return View(new EmailConfirmViewModel
+            {
+                Code = code,
+                UserId = userId,
+                Mail = mailObject.EmailAddress
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmailConfirmed(EmailConfirmViewModel model)
+        {
+            var user = await _dbContext
+                .Users
+                .Include(t => t.Emails)
+                .SingleOrDefaultAsync(t => t.Id == model.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var mailObject = await _dbContext
+                .UserEmails
+                .SingleOrDefaultAsync(t => t.ValidateToken == model.Code);
+
+            if (mailObject == null || mailObject.OwnerId != user.Id)
+            {
+                return NotFound();
+            }
+            if (!mailObject.Validated)
+            {
+                _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
+            }
             mailObject.Validated = true;
             await _dbContext.SaveChangesAsync();
             return View();
