@@ -1,17 +1,17 @@
-# Aiursoft unified web projects
+# Aiursoft Infrastructures
 
-[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/All%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
-[![Issues](https://img.shields.io/github/issues/AiursoftWeb/All.svg)](https://github.com/AiursoftWeb/All/issues)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Infrastructures%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
+[![Issues](https://img.shields.io/github/issues/AiursoftWeb/Infrastructures.svg)](https://github.com/AiursoftWeb/Infrastructures/issues)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
 ## What is Aiursoft unified web projects
 
-Aiursoft unified web projects is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+Aiursoft Infrastructures is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
 
-Aiursoft unified web projects provides many useful services and simplifies web application development.
+Aiursoft Infrastructures provides many useful services and simplifies web application development.
 
-Aiursoft unified web projects provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
+Aiursoft Infrastructures provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
 
 ## Features
 
@@ -53,7 +53,7 @@ Create a wildcard domian record to your server's IP.
 Execute the following command on the server (Replace the `instance.name` to your own brand name.):
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/All/raw/master/install.sh | sudo bash -s aiur.io instance.name
+$ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh | sudo bash -s aiur.io instance.name
 ```
 
 ### Upgrade your server
@@ -61,7 +61,7 @@ $ curl -sL https://github.com/AiursoftWeb/All/raw/master/install.sh | sudo bash 
 If we release a newer version, and you can upgrade your server via:
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/All/raw/master/upgrade.sh | sudo bash -s instance.name
+$ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name
 ```
 
 ### Basic Services
