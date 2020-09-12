@@ -1,17 +1,17 @@
-# Aiursoft Nexus
+# Aiursoft unified web projects
 
-[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
-[![Issues](https://img.shields.io/github/issues/AiursoftWeb/Nexus.svg)](https://github.com/AiursoftWeb/Nexus/issues)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/All%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
+[![Issues](https://img.shields.io/github/issues/AiursoftWeb/All.svg)](https://github.com/AiursoftWeb/All/issues)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
-## What is Nexus
+## What is Aiursoft unified web projects
 
-Nexus is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+Aiursoft unified web projects is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
 
-Nexus provides many useful services and simplifies web application development.
+Aiursoft unified web projects provides many useful services and simplifies web application development.
 
-Nexus provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
+Aiursoft unified web projects provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
 
 ## Features
 
@@ -53,7 +53,7 @@ Create a wildcard domian record to your server's IP.
 Execute the following command on the server (Replace the `instance.name` to your own brand name.):
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/install.sh | sudo bash -s aiur.io instance.name
+$ curl -sL https://github.com/AiursoftWeb/All/raw/master/install.sh | sudo bash -s aiur.io instance.name
 ```
 
 ### Upgrade your server
@@ -61,30 +61,8 @@ $ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/install.sh | sudo bas
 If we release a newer version, and you can upgrade your server via:
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/upgrade.sh | sudo bash -s instance.name
+$ curl -sL https://github.com/AiursoftWeb/All/raw/master/upgrade.sh | sudo bash -s instance.name
 ```
-
-## Layers
-
-Nexus code structure has 4 layers:
-
-* Abstract layer - Contains basic interfaces and code style abstracts.
-  * [Scanner.Abstract](./Scanner.Abstract/Readme.md) - Abstract layer for `Aiursoft.Scanner`.
-* Basic tools layer - Contains basic tools for C#.
-  * [Handler](./Handler/Readme.md) - An error handle framework for ASP.NET Core
-  * [DocGenerator](./DocGenerator/Readme.md) - A basic API document generator for ASP.NET Core applications.
-  * [Scanner](./Scanner/Readme.md) - An Automatic dependencies management system for ASP.NET Core.
-  * [XelNaga](./XelNaga/Readme.md) - Some other C# tools.
-* SDK layer
-  * SDK - Contains Aiursoft interface defination and abstract.
-  * Identity - ASP.NET Core toolset. Contains tools for building web apps for Aiursoft.
-* Web apps layer
-
-Nexus architect has three layers for web applications:
-
-* Basic Services
-* Infrastructures
-* Applications
 
 ### Basic Services
 
