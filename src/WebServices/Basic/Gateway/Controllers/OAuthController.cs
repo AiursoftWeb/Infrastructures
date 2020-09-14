@@ -343,7 +343,8 @@ namespace Aiursoft.Gateway.Controllers
                 {
                     EmailAddress = model.Email.ToLower(),
                     OwnerId = user.Id,
-                    ValidateToken = Guid.NewGuid().ToString("N")
+                    ValidateToken = Guid.NewGuid().ToString("N"),
+                    LastSendTime = DateTime.UtcNow
                 };
                 await _dbContext.UserEmails.AddAsync(primaryMail);
                 await _dbContext.SaveChangesAsync();
