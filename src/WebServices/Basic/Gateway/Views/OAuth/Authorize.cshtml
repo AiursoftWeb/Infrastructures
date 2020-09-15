@@ -19,21 +19,24 @@
                   asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]" tabindex="1">
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="w-100">
-                        @Localizer["Password"]
-                        <a class="d-block float-right" asp-controller="Password" asp-action="ForgotpasswordFor" target="_blank" tabindex="5">
-                            @Localizer["Forgot Password?"]
-                        </a>
-                    </label>
-                    <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
-                </div>
-                <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
-                <hr class="mb-1" />
+                @if (Model.AllowPasswordSignIn)
+                {
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]" tabindex="1">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="w-100">
+                            @Localizer["Password"]
+                            <a class="d-block float-right" asp-controller="Password" asp-action="ForgotpasswordFor" target="_blank" tabindex="5">
+                                @Localizer["Forgot Password?"]
+                            </a>
+                        </label>
+                        <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
+                    </div>
+                    <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
+                    <hr class="mb-1" />
+                }
                 <p class="text-muted mb-2">Sign in by</p>
                 <div class="row">
                     @{

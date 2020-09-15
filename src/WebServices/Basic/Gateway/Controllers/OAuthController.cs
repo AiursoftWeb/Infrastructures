@@ -39,6 +39,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly UserAppAuthManager _authManager;
         private readonly AuthLogger _authLogger;
         private readonly bool _allowRegistering;
+        private readonly bool _allowPasswordSignIn;
 
         public OAuthController(
             UserManager<GatewayUser> userManager,
@@ -62,6 +63,7 @@ namespace Aiursoft.Gateway.Controllers
             _authManager = authManager;
             _authLogger = authLogger;
             _allowRegistering = configuration["AllowSelfRegistering"].Trim().ToLower() == true.ToString().ToLower();
+            _allowPasswordSignIn = configuration["AllowPasswordSignIn"].Trim().ToLower() == true.ToString().ToLower();
         }
 
         [HttpGet]
@@ -92,7 +94,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath, _allowRegistering);
+            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath, _allowRegistering, _allowPasswordSignIn);
             return View(viewModel);
         }
 
@@ -100,10 +102,14 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
+            if(_allowPasswordSignIn)
+            {
+                return Unauthorized();
+            }
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
-                model.Recover(app.AppName, app.IconPath, _allowRegistering);
+                model.Recover(app.AppName, app.IconPath, _allowRegistering, _allowPasswordSignIn);
                 return View(model);
             }
             var mail = await _dbContext
@@ -113,7 +119,7 @@ namespace Aiursoft.Gateway.Controllers
             if (mail == null)
             {
                 ModelState.AddModelError(string.Empty, "Unknown user email.");
-                model.Recover(app.AppName, app.IconPath, _allowRegistering);
+                model.Recover(app.AppName, app.IconPath, _allowRegistering, _allowPasswordSignIn);
                 return View(model);
             }
             var user = mail.Owner;
@@ -136,7 +142,7 @@ namespace Aiursoft.Gateway.Controllers
                 result.IsLockedOut
                     ? "The account is locked for too many attempts."
                     : "The password does not match our records.");
-            model.Recover(app.AppName, app.IconPath, _allowRegistering);
+            model.Recover(app.AppName, app.IconPath, _allowRegistering, _allowPasswordSignIn);
             return View(model);
         }
 
