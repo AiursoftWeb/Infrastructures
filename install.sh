@@ -1,7 +1,7 @@
 aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/AiursoftWeb/AiurScript/raw/master/$1.sh | sudo bash -s $arg; }
 
-infs_code="./Nexus"
-infs_path="/opt/apps/Nexus"
+infs_code="./Infrastructures"
+infs_path="/opt/apps/Infrastructures"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
 
