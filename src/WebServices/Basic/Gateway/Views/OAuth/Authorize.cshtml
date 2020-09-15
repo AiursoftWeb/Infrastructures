@@ -37,25 +37,28 @@
                     <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
                     <hr class="mb-1" />
                 }
-                <p class="text-muted mb-2">Sign in by</p>
-                <div class="row">
-                    @{
-                        var oauthInfo = new FinishAuthInfo
-                        {
-                            AppId = Model.AppId,
-                            RedirectUri = Model.RedirectUri,
-                            State = Model.State,
-                        };
-                        @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
-                        {
-                            <div class="col-lg-6 pb-3">
-                                <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))">
-                                    <i class="@provider.GetButtonIcon() mr-1"></i>@provider.GetName()
-                                </a>
-                            </div>
+                @if(AuthProviders.Where(t => t.IsEnabled()).Any())
+                { 
+                    <p class="text-muted mb-2">Sign in by</p>
+                    <div class="row">
+                        @{
+                            var oauthInfo = new FinishAuthInfo
+                            {
+                                AppId = Model.AppId,
+                                RedirectUri = Model.RedirectUri,
+                                State = Model.State,
+                            };
+                            @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
+                            {
+                                <div class="col-lg-6 pb-3">
+                                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))">
+                                        <i class="@provider.GetButtonIcon() mr-1"></i>@provider.GetName()
+                                    </a>
+                                </div>
+                            }
                         }
-                    }
-                </div>
+                    </div>
+                }
             </form>
         </div>
         @if (Model.AllowRegistering)
