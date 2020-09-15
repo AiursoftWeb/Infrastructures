@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace Aiursoft.Gateway.Controllers
         private readonly ISessionBasedCaptcha _captcha;
         private readonly UserAppAuthManager _authManager;
         private readonly AuthLogger _authLogger;
+        private readonly bool _allowRegistering;
 
         public OAuthController(
             UserManager<GatewayUser> userManager,
@@ -47,7 +49,8 @@ namespace Aiursoft.Gateway.Controllers
             ConfirmationEmailSender emailSender,
             ISessionBasedCaptcha sessionBasedCaptcha,
             UserAppAuthManager authManager,
-            AuthLogger authLogger)
+            AuthLogger authLogger,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,6 +61,7 @@ namespace Aiursoft.Gateway.Controllers
             _captcha = sessionBasedCaptcha;
             _authManager = authManager;
             _authLogger = authLogger;
+            _allowRegistering = configuration["AllowSelfRegistering"].Trim().ToLower() == true.ToString().ToLower();
         }
 
         [HttpGet]
@@ -88,7 +92,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
+            var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath, _allowRegistering);
             return View(viewModel);
         }
 
@@ -99,7 +103,7 @@ namespace Aiursoft.Gateway.Controllers
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
-                model.Recover(app.AppName, app.IconPath);
+                model.Recover(app.AppName, app.IconPath, _allowRegistering);
                 return View(model);
             }
             var mail = await _dbContext
@@ -109,7 +113,7 @@ namespace Aiursoft.Gateway.Controllers
             if (mail == null)
             {
                 ModelState.AddModelError(string.Empty, "Unknown user email.");
-                model.Recover(app.AppName, app.IconPath);
+                model.Recover(app.AppName, app.IconPath, _allowRegistering);
                 return View(model);
             }
             var user = mail.Owner;
@@ -132,7 +136,7 @@ namespace Aiursoft.Gateway.Controllers
                 result.IsLockedOut
                     ? "The account is locked for too many attempts."
                     : "The password does not match our records.");
-            model.Recover(app.AppName, app.IconPath);
+            model.Recover(app.AppName, app.IconPath, _allowRegistering);
             return View(model);
         }
 
@@ -286,6 +290,10 @@ namespace Aiursoft.Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
+            if(!_allowRegistering)
+            {
+                return Unauthorized();
+            }
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
@@ -299,6 +307,10 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (!_allowRegistering)
+            {
+                return Unauthorized();
+            }
             if (!_captcha.ValidateCaptchaCode(model.CaptchaCode, HttpContext.Session))
             {
                 ModelState.AddModelError(string.Empty, "Invalid captcha code!");

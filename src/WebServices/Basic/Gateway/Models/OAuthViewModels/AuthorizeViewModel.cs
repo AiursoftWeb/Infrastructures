@@ -9,23 +9,25 @@ namespace Aiursoft.Gateway.Models.OAuthViewModels
     {
         [Obsolete("This method is only for framework!", true)]
         public AuthorizeViewModel() { }
-        public AuthorizeViewModel(string redirectUri, string state, string appId, string appName, string appImageUrl)
+        public AuthorizeViewModel(string redirectUri, string state, string appId, string appName, string appImageUrl, bool allowRegistering)
         {
             RedirectUri = redirectUri;
             State = state;
             AppId = appId;
-            Recover(appName, appImageUrl);
+            Recover(appName, appImageUrl, allowRegistering);
         }
 
-        public void Recover(string appName, string appImageUrl)
+        public void Recover(string appName, string appImageUrl, bool allowRegistering)
         {
             AppName = appName;
             AppImageUrl = appImageUrl;
+            AllowRegistering = allowRegistering;
         }
 
         // Display part:
         public string AppName { get; set; }
         public string AppImageUrl { get; set; }
+        public bool AllowRegistering { get; set; }
 
         // Submit part:
         [Required(ErrorMessage = "Email is required.")]

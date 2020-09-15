@@ -55,14 +55,17 @@
                 </div>
             </form>
         </div>
-        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
-           asp-route-appId="@Model.AppId"
-           asp-route-redirect_uri="@Model.RedirectUri"
-           asp-route-state="@Model.State">
-            <span class="float-left">@Localizer["Sign up"]</span>
-            <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-            </span>
-        </a>
+        @if (Model.AllowRegistering)
+        {
+            <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
+                asp-route-appId="@Model.AppId"
+                asp-route-redirect_uri="@Model.RedirectUri"
+                asp-route-state="@Model.State">
+                <span class="float-left">@Localizer["Sign up"]</span>
+                <span class="float-right">
+                    <i class="fa fa-angle-right"></i>
+                </span>
+            </a>
+        }
     </div>
 </div>
