@@ -38,7 +38,7 @@
                 </p>
             </div>
             <ul class="list-group list-group-flush">
-                @foreach (var provider in Model.Providers)
+                @foreach (var provider in Model.Providers.Where(t => t.IsEnabled()))
                 {
                     var main = Model.Accounts.FirstOrDefault(t => t.ProviderName == provider.GetName());
                     <li class="list-group-item">

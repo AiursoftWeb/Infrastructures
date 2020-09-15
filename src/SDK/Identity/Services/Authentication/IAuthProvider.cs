@@ -6,6 +6,7 @@ namespace Aiursoft.Identity.Services.Authentication
 {
     public interface IAuthProvider : IScopedDependency
     {
+        bool IsEnabled();
         string GetName();
         string GetSettingsPage();
         string GetButtonColor();

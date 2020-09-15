@@ -42,6 +42,11 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
             }
         }
 
+        public bool IsEnabled()
+        {
+            return !string.IsNullOrWhiteSpace(_clientId) && !string.IsNullOrWhiteSpace(_clientSecret);
+        }
+
         public string GetName() => "Microsoft";
 
         public string GetSettingsPage() => "https://account.microsoft.com/";

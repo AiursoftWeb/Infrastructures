@@ -39,6 +39,11 @@ namespace Aiursoft.Identity.Services.Authentication.ToGitHubServer
             }
         }
 
+        public bool IsEnabled()
+        {
+            return !string.IsNullOrWhiteSpace(_clientId) && !string.IsNullOrWhiteSpace(_clientSecret);
+        }
+
         public string GetName() => "GitHub";
 
         public string GetSettingsPage() => $"https://github.com/settings/connections/applications/{_clientId}";

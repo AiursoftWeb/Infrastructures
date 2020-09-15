@@ -39,6 +39,11 @@ namespace Aiursoft.Identity.Services.Authentication.ToGoogleServer
             }
         }
 
+        public bool IsEnabled()
+        {
+            return !string.IsNullOrWhiteSpace(_clientId) && !string.IsNullOrWhiteSpace(_clientSecret);
+        }
+
         public string GetName() => "Google";
 
         public string GetSettingsPage() => "https://myaccount.google.com/permissions";

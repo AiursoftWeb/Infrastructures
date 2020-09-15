@@ -43,7 +43,7 @@
                             RedirectUri = Model.RedirectUri,
                             State = Model.State,
                         };
-                        @foreach (var provider in AuthProviders)
+                        @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
                         {
                             <div class="col-lg-6 pb-3">
                                 <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurUrl("", oauthInfo))">

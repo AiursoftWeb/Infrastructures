@@ -39,6 +39,11 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
             }
         }
 
+        public bool IsEnabled()
+        {
+            return !string.IsNullOrWhiteSpace(_clientId) && !string.IsNullOrWhiteSpace(_clientSecret);
+        }
+
         public string GetName() => "FaceBook";
 
         public string GetSettingsPage() => "https://www.facebook.com/settings?tab=applications";
