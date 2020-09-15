@@ -53,9 +53,9 @@ namespace Aiursoft.Developer.Controllers
         {
             return RedirectToAction(nameof(AllApps));
             // We did not implement the report page.
-            //var currentUser = await GetCurrentUserAsync();
-            //var model = new IndexViewModel(currentUser);
-            //return View(model);
+            // var currentUser = await GetCurrentUserAsync();
+            // var model = new IndexViewModel(currentUser);
+            // return View(model);
         }
 
         [Route("Apps")]
@@ -143,7 +143,7 @@ namespace Aiursoft.Developer.Controllers
             target.LicenseUrl = model.LicenseUrl;
             target.AppDomain = model.AppDomain;
             target.AppFailCallbackUrl = model.AppFailCallbackUrl;
-            //Permissions
+            // Permissions
             bool permissionAdded = false;
             target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionAdded);
             target.ViewPhoneNumber = _ChangePermission(target.ViewPhoneNumber, model.ViewPhoneNumber, ref permissionAdded);
@@ -165,18 +165,18 @@ namespace Aiursoft.Developer.Controllers
 
         private bool _ChangePermission(bool inDatabase, bool newValue, ref bool changeMark)
         {
-            //More permission
+            // More permission
             if (inDatabase == false && newValue)
             {
                 changeMark = true;
                 return true;
             }
-            //Less permission
+            // Less permission
             else if (inDatabase && newValue == false)
             {
                 return false;
             }
-            //Not changed
+            // Not changed
             else
             {
                 return newValue;
