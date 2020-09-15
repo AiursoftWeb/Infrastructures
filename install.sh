@@ -109,7 +109,7 @@ replace_in_file()
     cat $file | sed "s/$from/$to/g" | sponge $file
 }
 
-install_nexus()
+install_infrastructures()
 {
     if [[ $(curl -sL ifconfig.me) == "$(dig +short $(uuidgen).$1)" ]]; 
     then
@@ -229,7 +229,7 @@ install_nexus()
     aiur text/edit_json "EEAppId" "$eeAppId" $ee_path/appsettings.Production.json
     aiur text/edit_json "EEAppSecret" "$eeAppSecret" $ee_path/appsettings.Production.json
 
-    curl -sL https://github.com/AiursoftWeb/Nexus/raw/master/seed.sql --output - > ./temp.sql
+    curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
     replace_in_file ./temp.sql "{{Instance}}" $instance_name
     replace_in_file ./temp.sql "{{userId}}" $userId
@@ -287,9 +287,9 @@ install_nexus()
     # Finish the installation
     echo "The port 1433 is not opened. You can open your database to public via: sudo ufw allow 1433/tcp"
     echo ""
-    echo "Successfully installed Nexus as a service in your machine!"
+    echo "Successfully installed Infrastructures as a service in your machine!"
     echo "Database identity: $1:1433 with username: sa and password: $dbPassword."
     echo "Aiursoft identity: https://www.$1 with username: admin@$1 and password: admin123."
 }
 
-install_nexus "$@"
+install_infrastructures "$@"
