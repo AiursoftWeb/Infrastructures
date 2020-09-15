@@ -1,7 +1,7 @@
 # ASP.NET Core API Document Generator
 
 [![NuGet version (Aiursoft.DocGenerator)](https://img.shields.io/nuget/v/Aiursoft.DocGenerator.svg?style=flat-square)](https://www.nuget.org/packages/Aiursoft.DocGenerator/)
-[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Infrastructures%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
 
 A basic API document generator for ASP.NET Core applications. Open source, offline and free.
 

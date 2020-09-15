@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Version>3.2.7</Version>
+    <Version>3.2.8</Version>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
@@ -8,9 +8,9 @@
     <Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
     <PackageTags>base-class shared-component aiursoft Identity</PackageTags>
     <PackageIcon>Identity.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Infrastructures</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
@@ -19,7 +19,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />
   </ItemGroup>
   
   <ItemGroup>

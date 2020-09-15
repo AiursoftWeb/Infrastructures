@@ -1,7 +1,7 @@
 aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/AiursoftWeb/AiurScript/raw/master/$1.sh | sudo bash -s $arg; }
 
-nexus_code="./Nexus"
-nexus_path="/opt/apps/Nexus"
+infs_code="./Nexus"
+infs_path="/opt/apps/Nexus"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
 
@@ -34,35 +34,35 @@ wrapAppSecret=$(uuidgen)
 eeAppId=$(uuidgen)
 eeAppSecret=$(uuidgen)
 
-archon_code="$nexus_code/src/WebServices/Basic/Archon"
-gateway_code="$nexus_code/src/WebServices/Basic/Gateway"
-developer_code="$nexus_code/src/WebServices/Basic/Developer"
-observer_code="$nexus_code/src/WebServices/Infrastructure/Observer"
-probe_code="$nexus_code/src/WebServices/Infrastructure/Probe"
-stargate_code="$nexus_code/src/WebServices/Infrastructure/Stargate"
-wrapgate_code="$nexus_code/src/WebServices/Infrastructure/Wrapgate"
-www_code="$nexus_code/src/WebServices/Business/WWW"
-wiki_code="$nexus_code/src/WebServices/Business/Wiki"
-status_code="$nexus_code/src/WebServices/Business/Status"
-account_code="$nexus_code/src/WebServices/Business/Account"
-colossus_code="$nexus_code/src/WebServices/Business/Colossus"
-wrap_code="$nexus_code/src/WebServices/Business/Wrap"
-ee_code="$nexus_code/src/WebServices/Business/EE"
+archon_code="$infs_code/src/WebServices/Basic/Archon"
+gateway_code="$infs_code/src/WebServices/Basic/Gateway"
+developer_code="$infs_code/src/WebServices/Basic/Developer"
+observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
+probe_code="$infs_code/src/WebServices/Infrastructure/Probe"
+stargate_code="$infs_code/src/WebServices/Infrastructure/Stargate"
+wrapgate_code="$infs_code/src/WebServices/Infrastructure/Wrapgate"
+www_code="$infs_code/src/WebServices/Business/WWW"
+wiki_code="$infs_code/src/WebServices/Business/Wiki"
+status_code="$infs_code/src/WebServices/Business/Status"
+account_code="$infs_code/src/WebServices/Business/Account"
+colossus_code="$infs_code/src/WebServices/Business/Colossus"
+wrap_code="$infs_code/src/WebServices/Business/Wrap"
+ee_code="$infs_code/src/WebServices/Business/EE"
 
-archon_path="$nexus_path/Archon"
-gateway_path="$nexus_path/Gateway"
-developer_path="$nexus_path/Developer"
-observer_path="$nexus_path/Observer"
-probe_path="$nexus_path/Probe"
-stargate_path="$nexus_path/Stargate"
-wrapgate_path="$nexus_path/Wrapgate"
-www_path="$nexus_path/WWW"
-wiki_path="$nexus_path/Wiki"
-status_path="$nexus_path/Status"
-account_path="$nexus_path/Account"
-colossus_path="$nexus_path/Colossus"
-wrap_path="$nexus_path/Wrap"
-ee_path="$nexus_path/EE"
+archon_path="$infs_path/Archon"
+gateway_path="$infs_path/Gateway"
+developer_path="$infs_path/Developer"
+observer_path="$infs_path/Observer"
+probe_path="$infs_path/Probe"
+stargate_path="$infs_path/Stargate"
+wrapgate_path="$infs_path/Wrapgate"
+www_path="$infs_path/WWW"
+wiki_path="$infs_path/Wiki"
+status_path="$infs_path/Status"
+account_path="$infs_path/Account"
+colossus_path="$infs_path/Colossus"
+wrap_path="$infs_path/Wrap"
+ee_path="$infs_path/EE"
 
 set_env()
 {
@@ -137,9 +137,9 @@ install_nexus()
     aiur install/sql_server
     aiur mssql/config_password $dbPassword
 
-    aiur git/clone_to AiursoftWeb/Nexus $nexus_code
-    sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $nexus_code/src/SDK/SDK/Values.cs
-    dotnet restore $nexus_code/Nexus.sln
+    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code
+    sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
+    dotnet restore $infs_code/Aiursoft.Infrastructures.sln
     cp $archon_code/appsettings.json $archon_code/appsettings.Production.json
     aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
     aiur dotnet/seeddb $developer_code "Developer" $dbPassword
@@ -170,7 +170,7 @@ install_nexus()
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
 
-    rm $nexus_code -rf
+    rm $infs_code -rf
 
     set_env $archon_path $1
     set_env $gateway_path $1

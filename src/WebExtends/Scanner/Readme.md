@@ -1,7 +1,7 @@
 # Aiursoft Scanner
 
 [![NuGet version (Aiursoft.Scanner)](https://img.shields.io/nuget/v/Aiursoft.Scanner.svg?style=flat-square)](https://www.nuget.org/packages/Aiursoft.Scanner/)
-[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Nexus%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
+[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Infrastructures%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
 
 An Automatic dependencies management system for ASP.NET Core and powers Aiursoft.
 

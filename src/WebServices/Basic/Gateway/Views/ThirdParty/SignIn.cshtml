@@ -52,11 +52,10 @@
                 </p>
                 <hr />
                 <div class="form-row">
-                    <div class="col-md-6 pr-3" style="border-right: 1px solid #000000; border-right: 1px solid rgba(0,0,0,.1)">
-                        <h5>Yes. I already have an @Values.ProjectName account.</h5>
+                    <div class="col-md-6 pr-3 pt-3" style="border-right: 1px solid #000000; border-right: 1px solid rgba(0,0,0,.1)">
+                        <h5>I already have an @Values.ProjectName account.</h5>
                         <p class="text-muted">You need to link your @Model.ProviderName account first before signing in with it.</p>
-                        <a class="btn btn-success btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank">
-                            <i class="@Model.Provider.GetButtonIcon() mr-1"></i>
+                        <a class="btn btn-warning btn-block" href="@ServiceLocation.Account/Account/Social" target="_blank">
                             Sign in and link @Model.ProviderName with it
                         </a>
                         <a class="btn btn-secondary btn-block" href="javascript:window.location.reload()">
@@ -76,7 +75,7 @@
                         <input asp-for="UserDetail.Id" type="hidden" />
                         <input asp-for="UserDetail.AvatarUrl" type="hidden" />
                         <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
-                        <h5>No. Sign in by @Model.ProviderName now.</h5>
+                        <h5>Sign in by @Model.ProviderName now.</h5>
                         <p class="text-muted">We will automatically create a new @Values.ProjectName account with the following information:</p>
                         <div class="form-group">
                             <label asp-for="UserDetail.Email"></label>
@@ -86,7 +85,10 @@
                             <label asp-for="UserDetail.Name"></label>
                             <input class="form-control" type="text" asp-for="UserDetail.Name" placeholder="@Localizer["Enter your nickname"]" tabindex="1">
                         </div>
-                        <button type="submit" class="btn btn-@Model.Provider.GetButtonColor() btn-block" href="#" data-disable-with="Creating account...">Create account and continue sign in</button>
+                        <button type="submit" class="btn btn-success btn-block" href="#" data-disable-with="Creating account...">
+                            <i class="@Model.Provider.GetButtonIcon() mr-1"></i>
+                            Create account and continue sign in
+                        </button>
                         <p class="w-100 mt-3 mb-0">
                             @Localizer["If you continue, you agree to our "]
                             <a href="@(ServiceLocation.WWW + Values.TermsAfterWWW)" target="_blank">

@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>3.2.7</Version>
+    <Version>3.2.8</Version>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Company>Aiursoft</Company>
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>Basic tools and extends for all ASP.NET Core web apps</Description>
     <PackageTags>extends tools</PackageTags>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/Nexus</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/Infrastructures</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/Nexus.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

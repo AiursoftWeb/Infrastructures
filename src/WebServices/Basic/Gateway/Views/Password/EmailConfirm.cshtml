@@ -1,16 +1,24 @@
+@model Aiursoft.Gateway.Models.PasswordViewModels.EmailConfirmViewModel
 @{
-    ViewData["Title"] = Localizer["Email Confirmed!"];
+    ViewData["Title"] = Localizer["Email Confirm"];
 }
-
 
 <div class="container">
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">@Localizer["Confirm Email"]</div>
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
-                <p>@Localizer["Your email address has been successfully set."]</p>
+                <p>@Localizer["Click the button to confirm your email."]</p>
             </div>
-            <a class="btn btn-primary btn-block" href="@ServiceLocation.WWW">@Localizer["Back to"] Aiursoft.com</a>
+            <form asp-controller="Password" asp-action="EmailConfirmed" method="post">
+                <div class="form-group">
+                    <label asp-for="Mail"></label>
+                    <input asp-for="Mail" type="text" class="form-control" readonly="readonly">
+                </div>
+                <input type="hidden" asp-for="UserId" />
+                <input type="hidden" asp-for="Code" />
+                <button type="submit" class="btn btn-success btn-block">Confirm</button>
+            </form>
         </div>
     </div>
 </div>
