@@ -115,8 +115,8 @@
             },
             {
                 "articleTitle": "Before connecting",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/servers.md"
-            }
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Design.md"
+            },
             {
                 "articleTitle": "How to build Kahla server",
                 "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.Server/Readme.md"
