@@ -110,11 +110,16 @@
         "collectionTitle": "Kahla",
         "articles": [
             {
-                "articleTitle": "What is Kahla"
+                "articleTitle": "What is Kahla",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Readme.md"
             },
             {
+                "articleTitle": "Before connecting",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/servers.md"
+            }
+            {
                 "articleTitle": "How to build Kahla server",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Readme.md"
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.Server/Readme.md"
             },
             {
                 "articleTitle": "How to build Kahla.App",
@@ -123,9 +128,6 @@
             {
                 "articleTitle": "How to write a bot for Kahla",
                 "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.SDK/Readme.md"
-            },
-            {
-                "articleTitle": "Before connecting"
             }
         ],
         "docAPIAddress": "https://staging.server.kahla.app/doc"
