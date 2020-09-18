@@ -6,7 +6,7 @@ using System.Linq;
 namespace Aiursoft.XelNaga.Tests.Tools
 {
     [TestClass]
-    public class ListExtends
+    public class ListExtendsTests
     {
         [TestMethod]
         public void Shuffle()

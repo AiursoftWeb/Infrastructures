@@ -6,7 +6,7 @@ using System.Text;
 namespace Aiursoft.XelNaga.Tests.Tools
 {
     [TestClass]
-    public class StringOperation
+    public class StringOperationTests
     {
         [TestMethod]
         public void BytesToBase64()
