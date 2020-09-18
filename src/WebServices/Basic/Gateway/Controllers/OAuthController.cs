@@ -102,7 +102,7 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            if(_allowPasswordSignIn)
+            if (!_allowPasswordSignIn)
             {
                 return Unauthorized();
             }
@@ -296,7 +296,7 @@ namespace Aiursoft.Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Register(AuthorizeAddressModel model)
         {
-            if(!_allowRegistering)
+            if (!_allowRegistering)
             {
                 return Unauthorized();
             }
