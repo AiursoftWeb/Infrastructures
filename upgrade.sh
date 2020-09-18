@@ -5,7 +5,7 @@ update()
     instance_name="$1"
     
     # Upgrade AiurUI
-    curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/upgrade.sh | sudo bash
+    #curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/upgrade.sh | sudo bash
 
     infs_code="./Infrastructures"
     infs_path="/opt/apps/Infrastructures"
