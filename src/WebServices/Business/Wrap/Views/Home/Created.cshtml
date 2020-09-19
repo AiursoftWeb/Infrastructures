@@ -1,6 +1,5 @@
 @model Aiursoft.Wrap.Models.HomeViewModels.IndexViewModel
 @using System.Reflection
-@using System.Text.RegularExpressions;
 @using Aiursoft.Wrapgate.SDK.Services
 @inject WrapgateLocator WrapgateLocator
 @{ 
@@ -24,6 +23,7 @@
                     <span class="input-group-append">
                         <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@url">@Localizer["Copy"]</button>
                         <a type="button" class="btn btn-success" href="@url" target="_blank">@Localizer["Open"]</a>
+                        <a type="button" class="btn btn-success" data-toggle="modal" data-target="#qr-modal">@Localizer["Get QR Code"]</a>
                     </span>
                 </div>
             </div>
@@ -42,6 +42,25 @@
             <a class="btn btn-success btn-lg mb-3" asp-controller="Home" asp-action="Index" role="button">
                 @Localizer["Create another one"]
             </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title">QR Code</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" src="@ServiceLocation.Developer/qrcode-build?source=@System.Net.WebUtility.UrlEncode(url)" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
