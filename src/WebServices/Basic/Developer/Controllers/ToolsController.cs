@@ -189,19 +189,11 @@ namespace Aiursoft.Developer.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult QRCode(QRCodeViewModel model)
+        [Route("qrcode-build")]
+        public IActionResult QRCodeBuild(string source)
         {
-            try
-            {
-                model.ResultString = _qrCodeService.ToQRCodeBase64(model.SourceString);
-            }
-            catch (Exception e)
-            {
-                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
-            }
-            return View(model);
+            var qrCode = _qrCodeService.ToQRCodePngBytes(source);
+            return File(qrCode, "image/png");
         }
     }
 }

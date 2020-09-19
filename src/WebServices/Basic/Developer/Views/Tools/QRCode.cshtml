@@ -25,7 +25,7 @@
                 Enter your string
             </div>
             <div class="card-body">
-                <form asp-controller="Tools" asp-action="QRCode" method="post" class="row">
+                <div class="row">
                     <div class="col-md-6">
                         <h4>Enter the string you want to generate a QR Code.</h4>
                         <hr />
@@ -35,17 +35,20 @@
                             <textarea asp-for="SourceString" placeholder="Any string" class="form-control" rows="5"></textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">Get QR Code</button>
+                            <button class="btn btn-success" onclick="generate($('#SourceString').val())">Get QR Code</button>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        @if (!string.IsNullOrWhiteSpace(Model.ResultString))
-                        {
-                            <img class="img-fluid" src="@Html.Raw(Model.ResultString)" />
-                        }
+                        <img class="img-fluid" id="qr-code" src="" />
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    var generate = function (address) {
+        $('#qr-code').attr("src", `/qrcode-build?source=${encodeURIComponent(address)}`);;
+    };
+</script>
