@@ -1,16 +1,12 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using Aiursoft.DBTools;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.WWW.Data;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.DBTools;
 
 namespace Aiursoft.WWW.Services
 {

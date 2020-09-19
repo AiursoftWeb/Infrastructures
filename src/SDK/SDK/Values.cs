@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Aiursoft.SDK
+﻿namespace Aiursoft.SDK
 {
     public static class Values
     {

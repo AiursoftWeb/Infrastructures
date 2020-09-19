@@ -1,16 +1,12 @@
 ﻿using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Tests.Tools
 {
-	[TestClass]
+    [TestClass]
 	public class CounterTests
 	{
 		[TestMethod]

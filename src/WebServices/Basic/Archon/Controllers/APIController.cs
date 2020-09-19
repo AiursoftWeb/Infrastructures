@@ -5,7 +5,6 @@ using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
