@@ -515,7 +515,7 @@
                                                 </td>
                                                 <td>@record.TargetUrl.OTake(60)</td>
                                                 <td>@record.Type</td>
-                                                <td data-utc-time="@record.CreationTime"></td>
+                                                <td data-utc-time="@record.CreationTime" data-order="@record.CreationTime.Ticks"></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-recordName="@record.RecordUniqueName" class="btn btn-danger">@Localizer["Delete"]</a>
