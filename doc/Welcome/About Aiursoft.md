@@ -77,3 +77,9 @@ Website: [www.aiursoft.com](https://www.aiursoft.com)
 * GitHub: [Shen Jimei](https://github.com/shenjimei)
 * Blog: [http://shenjimei.info/](http://shenjimei.info/)
 
+### A.F.Kay
+
+![A.F.Kay](https://github.com/mesolonely.png?size=70)
+
+* Email: [afkey@aiursoft.com](mailto:afkey@aiursoft.com)
+* GitHub: [MESOLONELY](https://github.com/MESOLONELY)
