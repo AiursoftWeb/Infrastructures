@@ -10,7 +10,10 @@ Aiursoft works without boundaries and bounty. Only powered by interests and love
 
 ## Code Principle
 
-> The world is simple. So code simple.
+* The world is simple. So code simple.
+* Follow best practice, as always.
+* Do not use, until totally understand.
+* Work smart, not hard.
 
 Website: [www.aiursoft.com](https://www.aiursoft.com)
 
@@ -74,3 +77,9 @@ Website: [www.aiursoft.com](https://www.aiursoft.com)
 * GitHub: [Shen Jimei](https://github.com/shenjimei)
 * Blog: [http://shenjimei.info/](http://shenjimei.info/)
 
+### A.F.Kay
+
+![A.F.Kay](https://github.com/mesolonely.png?size=70)
+
+* Email: [afkey@aiursoft.com](mailto:afkey@aiursoft.com)
+* GitHub: [MESOLONELY](https://github.com/MESOLONELY)

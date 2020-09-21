@@ -268,7 +268,6 @@ namespace Aiursoft.SDK
                 var list = await new WebClient().DownloadStringTaskAsync(address);
                 var provider = new BlackListPorivder(list.Split('\n'));
                 services.AddSingleton(provider);
-
             });
             return services;
         }
