@@ -8,7 +8,7 @@ Aiursoft Intern Project 是完全由个人的兴趣爱好驱动，以无回报�
 
 参加 Aiursoft Intern Project 将有机会获得：
 
-* Aiursoft Inter Project 参与证书
+* Aiursoft Intern Project 参与证书
 * 至少价值 500 元的 Steam\Battle.net\Origin\Uplay\XBox 平台游戏
 * Microsoft Office 365 开发者版（含2TB OneDrive）
 * Aiursoft 文化衫和周边
