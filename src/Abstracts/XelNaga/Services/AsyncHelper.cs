@@ -23,7 +23,7 @@ namespace Aiursoft.XelNaga.Services
                     {
                         throw e;
                     }
-                    Thread.Sleep(i * 10 * 1000);
+                    Thread.Sleep(i * 15 * 1000);
                 }
             }
         }
