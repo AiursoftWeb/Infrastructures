@@ -2,7 +2,7 @@
 
 Aiursoft Intern Project，指的是面向中国大陆范围内的学生开放的，关于Aiursoft的一些开放性问题的解决方案征集。
 
-Aiursoft Intern Project是完全由个人的兴趣爱好驱动，以无回报、提升个人知识水平能力和贡献社区为目标、并且能够接触到实际生产的真实业务需求的比赛机会。
+Aiursoft Intern Project 是完全由个人的兴趣爱好驱动，以无回报、提升个人知识水平能力和贡献社区为目标、并且能够接触到实际生产的真实业务需求的机会。
 
 ## 奖励
 
@@ -21,10 +21,7 @@ Aiursoft Intern Project是完全由个人的兴趣爱好驱动，以无回报、
 参加人
 
 * 参加者必须是位于中国大陆的或国籍为中国大陆的学生。
-* 参加者必须同意 [Aiursoft许可协议](https://www.aiursoft.com/docs/terms)。
-
-项目
-
+* 参加者必须同意 [Aiursoft 许可协议](https://www.aiursoft.com/docs/terms)。
 * 单一题目的完成期限不可超过四个月。
 
 ## 报名方式
