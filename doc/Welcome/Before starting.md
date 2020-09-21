@@ -9,8 +9,6 @@ Aiursoft all services are using the following API protocol:
 * HTTP
 * WebSocket
 
-其中，Aiursoft的HTTP协议具有下列特点:
-
 * All services are directly opened to the entire Internet.
 * All communication forced using trusted `HTTPS` certs.
 * All protocol supports `HTTP/2`.
@@ -19,7 +17,7 @@ Aiursoft all services are using the following API protocol:
 * Everything respect English.
 * All APIs' input format is `x-www-form-urlencoded`.
 
-Aiursoft所有HTTP通讯的返回值中，都具有两个参数，也就是`code`和`message`。例如：
+All API response by Aiursoft must contains the following two arguments: `code` and `message`. For example:
 
 ```json
 {
@@ -28,61 +26,61 @@ Aiursoft所有HTTP通讯的返回值中，都具有两个参数，也就是`code
 }
 ```
 
-其中，`code`代表错误码，`message`代表基本提示信息。
+The code is a number for state. And message is some information for caller.
 
-在不同情况下，返回值的形态、结构**可能会发生变化**。但是都会包含这两个属性。因此建议开发者在任何情况下都应当优先检查`code`，仅在`code`符合期待后再进行下一步操作。若`code`是不期待的返回值，则应当进行处理，并在日志中记录`message`的值。
+For different, the response value might change. But always contains the two properties. So we suggest developers check the code first before getting other properties. And always log the message value if unexpected code.
 
-## 示例API
+## Example API
 
-### 检查更新
+### Gateway status API
 
-请求地址：
+Address
 
-    https://api.aiursoft.com/
+    https://gateway.aiursoft.com/
 
-方法
+Method
 
     HTTP GET
 
-接口说明：
+Description
 
-    本接口可以检查当前用户状态、服务器时钟、显示语言。
+    Get current user details and server time.
 
-返回值示例：
+Return value example:
 
 ```json
 {
-    "serverTime": "2018-03-12T10:29:31.2865921+08:00",
-    "signedin": true,
+    "serverTime": "2020-09-21T11:53:18.5895448Z",
+    "signedIn": true,
     "local": "en",
     "user": {
-        "id": "a75dff34-35d0-451d-bae3-af3c206bbc6b",
+        "emailConfirmed": true,
         "email": "anduin@aiursoft.com",
-        "emailConfirmed": false,
-        "bio": null,
+        "id": "6da0802e-18e4-4a76-99a5-47878dd7b8a5",
+        "bio": "https://aka.ms/anduin",
         "nickName": "Anduin Xue",
         "sex": null,
-        "headImgUrl": "https://oss.aiursoft.com/UsersIcon/9XNNIJF9RB.jpg",
-        "preferedLanguage": "en",
-        "accountCreateTime": "2018-02-09T15:09:23.1468265"
+        "iconFilePath": "usericon/2019-10-15/newi-small.png",
+        "preferedLanguage": "en-US",
+        "accountCreateTime": "2018-07-03T23:29:38.9450153Z"
     },
     "code": 0,
     "message": "Server started successfully!"
 }
 ```
 
-## 常见错误分析
+## Code states
 
-| 错误代码        | 错误说明    |  解决方案  |
+| Code        | Description    |  solution  |
 |--|--|--|
-|0|  成功完成了请求  |   不需要进行修正
-|-1|   密钥错误  | 检查是否传入了合法的密钥
-|-2|   请求被挂起  | 已经有一个相同意义的操作正在执行。请稍后再试。
-|-3|   需要注意的警告  | 操作已经完成但是仍然需要注意。请阅读message参数值
-|-4|   未找到  | 操作的目标对象不存在。请确认目标存在
-|-5|   服务器崩溃  | 服务器未知错误。请向服务器团队提交反馈
-|-6|   已经执行过了  | 已经有一个相同意义的操作已经执行完成。不需要进一步解决。
-|-7|   没有足够的资源 | 目前可提供的资源无法满足操作。请检查请求的合理性。
-|-8|   未授权 | 用户无法通过认证或没有进行该操作的权限。请确保用户的权限正常。
-|-10|  输入值类型不符合规范 | 缺少参数，或传入的参数不符合规范。检查参数。
-|-11|  超时 | 请求在处理中等待了很久而无法得到响应。请向服务器团队提交反馈。
+|0 | Request completed successfully | No correction required
+|-1 | Wrong key. | Check whether a legal key is passed
+|-2 | Request pending | An operation with the same meaning is already in progress. Please try again later.
+|-3 | Cautions | The operation has been completed, but still needs attention. Read the value of the message parameter
+|-4 | Not found | The target object of the operation does not exist. Please confirm that the target exists
+|-5 | Server crash | Server unknown error. Please submit feedback to the server team
+|-6 | Has been executed | An operation with the same meaning has been executed. No further resolution is needed.
+|-7 | There are not enough resources | The available resources cannot meet the operation requirements. Please check the rationality of the request.
+|-8 | Unauthorized | The user cannot pass the authentication or does not have the permission to perform the operation. Make sure that the user's permissions are normal.
+|-10 | The input value type is invalid | The parameter is missing, or the parameter passed in does not conform to the specification. Check the parameters.
+|-11 | Timeout | The request has been waiting for a long time in processing and cannot be responded. Please submit feedback to the server team.
