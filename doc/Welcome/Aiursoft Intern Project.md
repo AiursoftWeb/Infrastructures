@@ -8,7 +8,7 @@ Aiursoft Intern Project是完全由个人的兴趣爱好驱动，以无回报、
 
 参加 Aiursoft Intern Project 将有机会获得：
 
-* Aiursoft Inter Project 实习证书
+* Aiursoft Inter Project 参与证书
 * 至少价值 500 元的 Steam\Battle.net\Origin\Uplay\XBox 平台游戏
 * Microsoft Office 365 开发者版（含2TB OneDrive）
 * Aiursoft 文化衫和周边
@@ -70,6 +70,6 @@ Infrastructures 是 Aiursoft 的底层基础结构系统。它由 ASP.NET Core �
 
 * 你必须开发脚本或配置文件，能够在不与 Aiursoft 任何现有服务通信的情况下，快速搭建 Aiursoft Infrastructures。
 * 你的脚本或配置文件必须能够将 Aiursoft Infrastructures 的所有服务都安装在一个特定的 Kubernetes 集群中
-* 你的方案必须尽可能廉价的解决自动化 HTTPS 证书续期问题。（搭建后，在云计算上花费不超过 150 USD/月）
+* 你的方案必须尽可能廉价的解决自动化 HTTPS 证书续期问题。（搭建后，在云计算上最低花费不超过 150 USD/月）
 * 你的方案必须解决 SQL Server 持久化和 Probe 的文件系统持久化。
 
