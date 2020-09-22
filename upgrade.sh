@@ -2,7 +2,25 @@ aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/Aiu
 
 update()
 {
-    instance_name="$1"
+    instance_name=$1;
+
+    if [[ $instance_name == "" ]];
+    then
+        instance_name="Aiursoft"
+        echo "Using instance name: $instance_name"
+    else
+        echo "Instance name is: $instance_name"
+    fi
+    
+    branch_name=$2;
+
+    if [[ $branch_name == "" ]];
+    then
+        branch_name="master"
+        echo "Using branch name: $branch_name"
+    else
+        echo "branch name is: $branch_name"
+    fi
     
     # Upgrade AiurUI
     #curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/upgrade.sh | sudo bash
@@ -40,7 +58,7 @@ update()
     wrap_path="$infs_path/Wrap"
     ee_path="$infs_path/EE"
 
-    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code
+    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
 
     systemctl stop "archon.service"
