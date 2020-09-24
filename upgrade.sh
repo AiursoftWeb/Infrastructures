@@ -63,58 +63,60 @@ update()
 
     systemctl stop "archon.service"
     aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
-    systemctl start "archon.service"
 
     systemctl stop "stargate.service"
     aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj"
-    systemctl start "stargate.service"
 
     systemctl stop "probe.service"
     aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
-    systemctl start "probe.service"
 
     systemctl stop "gateway.service"
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
-    systemctl start "gateway.service"
 
     systemctl stop "wrapgate.service"
     aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj"
-    systemctl start "wrapgate.service"
 
     systemctl stop "observer.service"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
-    systemctl start "observer.service"
 
     systemctl stop "developer.service"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
-    systemctl start "developer.service"
 
     systemctl stop "www.service"
     aiur dotnet/publish $www_path $www_code/"Aiursoft.WWW.csproj"
-    systemctl start "www.service"
 
     systemctl stop "wiki.service"
     aiur dotnet/publish $wiki_path $wiki_code/"Aiursoft.Wiki.csproj"
-    systemctl start "wiki.service"
 
     systemctl stop "account.service"
     aiur dotnet/publish $account_path $account_code/"Aiursoft.Account.csproj"
-    systemctl start "account.service"
 
     systemctl stop "colossus.service"
     aiur dotnet/publish $colossus_path $colossus_code/"Aiursoft.Colossus.csproj"
-    systemctl start "colossus.service"
 
     systemctl stop "wrap.service"
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
-    systemctl start "wrap.service"
 
     systemctl stop "ee.service"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
-    systemctl start "ee.service"
 
     systemctl stop "status.service"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
+
+    systemctl restart mssql.service
+    systemctl start "archon.service"
+    systemctl start "stargate.service"
+    systemctl start "probe.service"
+    systemctl start "gateway.service"
+    systemctl start "wrapgate.service"
+    systemctl start "observer.service"
+    systemctl start "developer.service"
+    systemctl start "www.service"
+    systemctl start "wiki.service"
+    systemctl start "account.service"
+    systemctl start "colossus.service"
+    systemctl start "wrap.service"
+    systemctl start "ee.service"
     systemctl start "status.service"
 
     rm $infs_code -rf
