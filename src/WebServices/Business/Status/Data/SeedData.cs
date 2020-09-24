@@ -32,13 +32,13 @@ namespace Aiursoft.Status.Data
                 {
                     ProjectName = "Aiursoft Developer",
                     CheckAddress = $"{serviceLocation.Developer}/?show=direct",
-                    ExpectedContent = "Welcome to Aiursoft Developer Center"
+                    ExpectedContent = "Welcome to"
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft authentication gateway",
                     CheckAddress = $"{serviceLocation.Gateway}/oauth/authorize?appid=4b43b0aee35624cd95b910189b3dc231&redirect_uri=https%3A%2F%2Fdeveloper.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
-                    ExpectedContent = "Login to Aiursoft developer center"
+                    ExpectedContent = "Login to"
                 },
                 new MonitorRule
                 {
