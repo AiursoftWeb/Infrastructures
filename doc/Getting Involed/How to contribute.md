@@ -12,7 +12,7 @@ No condition. It only requires your passion and love for open-source software.
 
 With your contribution to Aiursoft, please submit a pull request to: 
 
-https://github.com/AiursoftWeb/Home/blob/master/Welcome/About%20Aiursoft.md
+https://github.com/AiursoftWeb/Infrastructures/blob/master/doc/Welcome/About%20Aiursoft.md
 
 And add yourself to this document.
 
