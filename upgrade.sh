@@ -104,20 +104,25 @@ update()
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
 
     systemctl restart mssql.service
-    systemctl start "archon.service"
-    systemctl start "stargate.service"
-    systemctl start "probe.service"
-    systemctl start "gateway.service"
-    systemctl start "wrapgate.service"
-    systemctl start "observer.service"
-    systemctl start "developer.service"
-    systemctl start "www.service"
-    systemctl start "wiki.service"
-    systemctl start "account.service"
-    systemctl start "colossus.service"
-    systemctl start "wrap.service"
-    systemctl start "ee.service"
-    systemctl start "status.service"
+    systemctl restart "archon.service"
+    sleep 30
+    systemctl restart "probe.service"
+    systemctl restart "stargate.service"
+    systemctl restart "wrapgate.service"
+    systemctl restart "observer.service"
+    sleep 30
+    systemctl restart "gateway.service"
+    systemctl restart "developer.service"
+    sleep 30
+    systemctl restart "colossus.service"
+    systemctl restart "www.service"
+    systemctl restart "account.service"
+    systemctl restart "wrap.service"
+    systemctl restart "ee.service"
+    systemctl restart "wiki.service"
+    sleep 30
+    systemctl restart "status.service"
+    systemctl restart "ee.service"
 
     rm $infs_code -rf
 }
