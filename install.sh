@@ -129,6 +129,16 @@ install_infrastructures()
         echo "Instance name is: $instance_name"
     fi
 
+    branch_name=$3;
+
+    if [[ $branch_name == "" ]];
+    then
+        branch_name="master"
+        echo "Using branch name: $branch_name"
+    else
+        echo "branch name is: $branch_name"
+    fi
+
     curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/install.sh | bash -s ui.$1
 
     aiur system/set_aspnet_prod
@@ -137,7 +147,7 @@ install_infrastructures()
     aiur install/sql_server
     aiur mssql/config_password $dbPassword
 
-    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code
+    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
     dotnet restore $infs_code/Aiursoft.Infrastructures.sln
     cp $archon_code/appsettings.json $archon_code/appsettings.Production.json

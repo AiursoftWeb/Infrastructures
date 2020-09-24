@@ -10,10 +10,10 @@ namespace Aiursoft.XelNaga.Services
         {
             lock (_obj)
             {
-                return GetCurrent++;
+                return ++GetCurrent;
             }
         }
 
-        public int GetCurrent { get; private set; }
+        public int GetCurrent { get; private set; } = -1;
     }
 }

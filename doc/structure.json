@@ -9,31 +9,24 @@
                 "articleTitle": "About Aiursoft"
             },
             {
+                "articleTitle": "How to contribute"
+            },
+            {
                 "articleTitle": "Aiursoft Intern Project"
             },
             {
                 "articleTitle": "Before starting"
             },
             {
-                "articleTitle": "How to ask questions about our API",
-                "articleAddress": "https://raw.githubusercontent.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/master/README-zh_CN.md"
-            },
-            {
-                "articleTitle": "What is Aiursoft Platform",
+                "articleTitle": "What is Aiursoft Infrastructures Platform",
                 "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Infrastructures/master/Readme.md"
-            },
-            {
-                "articleTitle": "What is Microservice",
-                "articleAddress": "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/service-fabric/service-fabric-overview-microservices.md"
             }
         ]
     },
     {
         "collectionTitle": "Getting Involed",
         "articles": [
-            {
-                "articleTitle": "How to contribute"
-            },
+
             {
                 "articleTitle": "What is Agile"
             },
@@ -42,20 +35,6 @@
             },
             {
                 "articleTitle": "Commit Regulation"
-            }
-        ]
-    },
-    {
-        "collectionTitle": "Deployment",
-        "articles": [
-            {
-                "articleTitle": "Getting Started"
-            },
-            {
-                "articleTitle": "Requirements"
-            },
-            {
-                "articleTitle": "Preparation"
             }
         ]
     },
