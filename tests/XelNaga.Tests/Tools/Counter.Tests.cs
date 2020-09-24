@@ -32,7 +32,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 				}
 			}
 			await Task.WhenAll(tasksList);
-			Assert.AreEqual(counter.GetCurrent, 10000);
+			Assert.AreEqual(counter.GetCurrent, 9999);
 			Assert.AreEqual(numbers.Max(), 1);
 			Assert.AreEqual(numbers.Min(), 1);
 		}
