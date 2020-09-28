@@ -1,12 +1,12 @@
 ﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.WebTools.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aiursoft.WebTools.Tests.Models
+namespace Aiursoft.XelNaga.Tests.Models
 {
     public class DemoController : IScopedDependency
     {

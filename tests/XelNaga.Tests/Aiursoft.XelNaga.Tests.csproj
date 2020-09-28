@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\..\src\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
 	</ItemGroup>
 
 </Project>

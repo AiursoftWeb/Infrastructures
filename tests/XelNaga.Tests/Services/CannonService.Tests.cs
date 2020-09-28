@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Aiursoft.Scanner;
-using Aiursoft.WebTools.Tests.Models;
+using Aiursoft.XelNaga.Tests.Models;
 
-namespace Aiursoft.WebTools.Tests.Services
+namespace Aiursoft.XelNaga.Tests.Services
 {
 	[TestClass]
 	public class CannonServiceTests

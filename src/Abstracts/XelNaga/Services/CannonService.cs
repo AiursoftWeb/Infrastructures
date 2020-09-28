@@ -7,7 +7,7 @@ using Aiursoft.XelNaga.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Aiursoft.WebTools.Services
+namespace Aiursoft.XelNaga.Services
 {
     public class CannonService : ISingletonDependency
     {

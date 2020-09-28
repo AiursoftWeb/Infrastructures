@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aiursoft.WebTools.Tests.Models
+namespace Aiursoft.XelNaga.Tests.Models
 {
     public class DemoService : ITransientDependency
     {

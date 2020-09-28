@@ -49,7 +49,7 @@ namespace Aiursoft.Stargate.Controllers
                 TotalMemoryMessages = _memory.Messages.Count,
                 Channels = await _dbContext.Channels.CountAsync(),
                 Code = ErrorType.Success,
-                Message = "Welcome to Aiursoft Message queue server!"
+                Message = "Welcome to Aiursoft Stargate server!"
             });
         }
 
