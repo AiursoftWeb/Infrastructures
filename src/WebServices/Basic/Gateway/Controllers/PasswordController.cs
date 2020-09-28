@@ -20,19 +20,16 @@ namespace Aiursoft.Gateway.Controllers
     {
         private readonly ILogger _logger;
         private readonly GatewayDbContext _dbContext;
-        private readonly ConfirmationEmailSender _emailSender;
         private readonly UserManager<GatewayUser> _userManager;
         private readonly CannonService _cannonService;
 
         public PasswordController(
             GatewayDbContext dbContext,
             ILoggerFactory loggerFactory,
-            ConfirmationEmailSender emailSender,
             UserManager<GatewayUser> userManager,
             CannonService cannonService)
         {
             _dbContext = dbContext;
-            _emailSender = emailSender;
             _userManager = userManager;
             _cannonService = cannonService;
             _logger = loggerFactory.CreateLogger<ApiController>();
@@ -160,7 +157,10 @@ namespace Aiursoft.Gateway.Controllers
             {
                 mail.LastSendTime = DateTime.UtcNow;
                 await _dbContext.SaveChangesAsync();
-                await _emailSender.SendResetPassword(code, user.Id, mail.EmailAddress);
+                _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
+                {
+                    await sender.SendResetPassword(code, user.Id, mail.EmailAddress);
+                });
             }
             return RedirectToAction(nameof(ForgotPasswordSent));
         }

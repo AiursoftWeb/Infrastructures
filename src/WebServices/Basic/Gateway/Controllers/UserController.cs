@@ -11,6 +11,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,28 +29,28 @@ namespace Aiursoft.Gateway.Controllers
     {
         private readonly UserManager<GatewayUser> _userManager;
         private readonly GatewayDbContext _dbContext;
-        private readonly ConfirmationEmailSender _emailSender;
         private readonly GrantChecker _grantChecker;
         private readonly TwoFAHelper _twoFAHelper;
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly ServiceLocation _serviceLocation;
+        private readonly CannonService _cannonService;
 
         public UserController(
             UserManager<GatewayUser> userManager,
             GatewayDbContext context,
-            ConfirmationEmailSender emailSender,
             GrantChecker grantChecker,
             TwoFAHelper twoFAHelper,
             IEnumerable<IAuthProvider> authProviders,
-            ServiceLocation serviceLocation)
+            ServiceLocation serviceLocation,
+            CannonService cannonService)
         {
             _userManager = userManager;
             _dbContext = context;
-            _emailSender = emailSender;
             _grantChecker = grantChecker;
             _twoFAHelper = twoFAHelper;
             _authProviders = authProviders;
             _serviceLocation = serviceLocation;
+            _cannonService = cannonService;
         }
 
         [HttpPost]
@@ -189,7 +190,10 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.SaveChangesAsync();
                 try
                 {
-                    await _emailSender.SendConfirmation(user.Id, userEmail.EmailAddress, token);
+                    _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
+                    {
+                        await sender.SendConfirmation(user.Id, userEmail.EmailAddress, token);
+                    });
                 }
                 catch (SmtpException e)
                 {

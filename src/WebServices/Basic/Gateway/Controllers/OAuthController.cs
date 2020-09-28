@@ -11,6 +11,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Identity;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -34,10 +35,10 @@ namespace Aiursoft.Gateway.Controllers
         private readonly ILogger _logger;
         private readonly GatewayDbContext _dbContext;
         private readonly DeveloperApiService _apiService;
-        private readonly ConfirmationEmailSender _emailSender;
         private readonly ISessionBasedCaptcha _captcha;
         private readonly UserAppAuthManager _authManager;
         private readonly AuthLogger _authLogger;
+        private readonly CannonService _cannonService;
         private readonly bool _allowRegistering;
         private readonly bool _allowPasswordSignIn;
 
@@ -47,21 +48,21 @@ namespace Aiursoft.Gateway.Controllers
             ILoggerFactory loggerFactory,
             GatewayDbContext context,
             DeveloperApiService developerApiService,
-            ConfirmationEmailSender emailSender,
             ISessionBasedCaptcha sessionBasedCaptcha,
             UserAppAuthManager authManager,
             AuthLogger authLogger,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            CannonService cannonService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<OAuthController>();
             _dbContext = context;
             _apiService = developerApiService;
-            _emailSender = emailSender;
             _captcha = sessionBasedCaptcha;
             _authManager = authManager;
             _authLogger = authLogger;
+            _cannonService = cannonService;
             _allowRegistering = configuration["AllowSelfRegistering"].Trim().ToLower() == true.ToString().ToLower();
             _allowPasswordSignIn = configuration["AllowPasswordSignIn"].Trim().ToLower() == true.ToString().ToLower();
         }
@@ -367,7 +368,10 @@ namespace Aiursoft.Gateway.Controllers
                 await _dbContext.UserEmails.AddAsync(primaryMail);
                 await _dbContext.SaveChangesAsync();
                 // Send him an confirmation email here:
-                await _emailSender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
+                _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
+                {
+                    await sender.SendConfirmation(user.Id, primaryMail.EmailAddress, primaryMail.ValidateToken);
+                });
                 await _authLogger.LogAuthRecord(user.Id, HttpContext, true, app.AppId);
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
