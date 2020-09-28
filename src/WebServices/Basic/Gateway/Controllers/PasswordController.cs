@@ -3,6 +3,7 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.PasswordViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
+using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +22,19 @@ namespace Aiursoft.Gateway.Controllers
         private readonly GatewayDbContext _dbContext;
         private readonly ConfirmationEmailSender _emailSender;
         private readonly UserManager<GatewayUser> _userManager;
-        private readonly APISMSSender _smsSender;
+        private readonly CannonService _cannonService;
 
         public PasswordController(
             GatewayDbContext dbContext,
             ILoggerFactory loggerFactory,
             ConfirmationEmailSender emailSender,
             UserManager<GatewayUser> userManager,
-            APISMSSender smsSender)
+            CannonService cannonService)
         {
             _dbContext = dbContext;
             _emailSender = emailSender;
             _userManager = userManager;
-            _smsSender = smsSender;
+            _cannonService = cannonService;
             _logger = loggerFactory.CreateLogger<ApiController>();
         }
 
@@ -190,7 +191,10 @@ namespace Aiursoft.Gateway.Controllers
             var code = StringOperation.RandomString(6);
             user.SMSPasswordResetToken = code;
             await _userManager.UpdateAsync(user);
-            await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
+            _cannonService.FireAsync<APISMSSender>(async (sender) =>
+            {
+                await sender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
+            });
             return RedirectToAction(nameof(EnterSmsCode), new { model.Email });
         }
 
