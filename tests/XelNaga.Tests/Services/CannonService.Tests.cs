@@ -1,15 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Aiursoft.Scanner;
+using Aiursoft.XelNaga.Tests.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Scanner;
-using Aiursoft.XelNaga.Tests.Models;
 
 namespace Aiursoft.XelNaga.Tests.Services
 {
-	[TestClass]
+    [TestClass]
 	public class CannonServiceTests
 	{
 		private IServiceProvider _serviceProvider;

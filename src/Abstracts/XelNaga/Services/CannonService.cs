@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Attributes;
+﻿using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Services
 {

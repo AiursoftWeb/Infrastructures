@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Aiursoft.WebTools.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Text;
-using Aiursoft.WebTools.Services;
 
 namespace Aiursoft.WebTools.Tests.Services
 {
