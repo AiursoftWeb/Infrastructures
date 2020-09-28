@@ -24,6 +24,7 @@ namespace Aiursoft.WebTools.Services
 
         public void Fire<T>(Action<T> bullet, Action<Exception> handler = null)
         {
+            _logger.LogInformation("Fired a new action.");
             Task.Run(() =>
             {
                 using var scope = _scopeFactory.CreateScope();
@@ -35,6 +36,32 @@ namespace Aiursoft.WebTools.Services
                 catch (Exception e)
                 {
                     handler?.Invoke(e);
+                }
+                finally
+                {
+                    dependency = default;
+                }
+            });
+        }
+
+        public void FireAsync<T>(Func<T, Task> bullet, Action<Exception> handler = null)
+        {
+            _logger.LogInformation("Fired a new async action.");
+            Task.Run(async () =>
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var dependency = scope.ServiceProvider.GetRequiredService<T>();
+                try
+                {
+                    await bullet(dependency);
+                }
+                catch (Exception e)
+                {
+                    handler?.Invoke(e);
+                }
+                finally
+                {
+                    dependency = default;
                 }
             });
         }
