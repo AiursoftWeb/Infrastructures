@@ -35,6 +35,7 @@ namespace Aiursoft.WebTools.Services
                 }
                 catch (Exception e)
                 {
+                    _logger.LogError(e,"Cannon crashed!");
                     handler?.Invoke(e);
                 }
                 finally
@@ -57,6 +58,7 @@ namespace Aiursoft.WebTools.Services
                 }
                 catch (Exception e)
                 {
+                    _logger.LogError(e,"Cannon crashed!");
                     handler?.Invoke(e);
                 }
                 finally
