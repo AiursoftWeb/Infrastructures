@@ -10,7 +10,7 @@ using Aiursoft.WebTools.Tests.Models;
 namespace Aiursoft.WebTools.Tests.Services
 {
 	[TestClass]
-	public class CannonService
+	public class CannonServiceTests
 	{
 		private IServiceProvider _serviceProvider;
 
