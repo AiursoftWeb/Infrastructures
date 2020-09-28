@@ -7,6 +7,7 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Observer.SDK.Services.ToStatusServer
@@ -22,6 +23,11 @@ namespace Aiursoft.Observer.SDK.Services.ToStatusServer
         {
             _http = http;
             _observerLocator = observerLocator;
+        }
+
+        public Task<AiurProtocol> LogExceptionAsync(string accessToken, Exception e, string path = "Inline")
+        {
+            return LogAsync(accessToken, e.Message,e.StackTrace, EventLevel.Exception, path);
         }
 
         public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel, string path)

@@ -53,7 +53,7 @@ namespace Aiursoft.SDK.Middlewares
                     {
                         _logger.LogError(e, e.Message);
                         var accessToken = _appsContainer.AccessToken();
-                        await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, context.Request.Path);
+                        await _eventService.LogExceptionAsync(await accessToken, e, context.Request.Path);
                     }
                     catch
                     {

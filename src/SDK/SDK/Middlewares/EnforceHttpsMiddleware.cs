@@ -42,7 +42,7 @@ namespace Aiursoft.SDK.Middlewares
             else if (!context.Request.IsHttps)
             {
                 _logger.LogWarning("Insecure HTTP request handled! Redirecting the user...");
-                await HandleNonHttpsRequest(context);
+                HandleNonHttpsRequest(context);
             }
             else
             {
@@ -50,7 +50,7 @@ namespace Aiursoft.SDK.Middlewares
             }
         }
 
-        protected virtual async Task HandleNonHttpsRequest(HttpContext context)
+        protected virtual void HandleNonHttpsRequest(HttpContext context)
         {
             if (!string.Equals(context.Request.Method, "GET", StringComparison.OrdinalIgnoreCase))
             {
@@ -59,26 +59,23 @@ namespace Aiursoft.SDK.Middlewares
             else
             {
                 string newUrl = string.Empty;
-                await Task.Run(() =>
+                var optionsAccessor = context.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
+                var request = context.Request;
+                var host = request.Host;
+                if (optionsAccessor.Value.SslPort.HasValue && optionsAccessor.Value.SslPort > 0)
                 {
-                    var optionsAccessor = context.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
-                    var request = context.Request;
-                    var host = request.Host;
-                    if (optionsAccessor.Value.SslPort.HasValue && optionsAccessor.Value.SslPort > 0)
-                    {
-                        host = new HostString(host.Host, optionsAccessor.Value.SslPort.Value);
-                    }
-                    else
-                    {
-                        host = new HostString(host.Host);
-                    }
-                    newUrl = string.Concat(
-                        "https://",
-                        host.ToUriComponent(),
-                        request.PathBase.ToUriComponent(),
-                        request.Path.ToUriComponent(),
-                        request.QueryString.ToUriComponent());
-                });
+                    host = new HostString(host.Host, optionsAccessor.Value.SslPort.Value);
+                }
+                else
+                {
+                    host = new HostString(host.Host);
+                }
+                newUrl = string.Concat(
+                    "https://",
+                    host.ToUriComponent(),
+                    request.PathBase.ToUriComponent(),
+                    request.Path.ToUriComponent(),
+                    request.QueryString.ToUriComponent());
                 context.Response.Redirect(newUrl, permanent: true);
             }
         }
