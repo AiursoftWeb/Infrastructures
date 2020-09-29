@@ -6,6 +6,7 @@ using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
 using Aiursoft.Wrapgate.SDK.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrapgate.Controllers
@@ -43,7 +44,7 @@ namespace Aiursoft.Wrapgate.Controllers
         public async Task<IActionResult> ViewMyRecords(ViewMyRecordsAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var records = await _recordRepo.GetAllRecordsUnderApp(appid, model.Tags.Split(','));
+            var records = await _recordRepo.GetAllRecordsUnderApp(appid, model.Tags?.Split(',') ?? Array.Empty<string>());
             var viewModel = new ViewMyRecordsViewModel
             {
                 AppId = appid,
