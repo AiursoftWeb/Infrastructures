@@ -130,7 +130,7 @@ namespace Aiursoft.Wiki.Services
             catch (Exception e)
             {
                 var accessToken = await _appsContainer.AccessToken();
-                await _eventService.LogExceptionAsync(accessToken, e, string.Empty);
+                await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
             }

@@ -35,7 +35,7 @@ namespace Aiursoft.Wrapgate.Controllers
             {
                 return this.Protocol(ErrorType.NotEnoughResources, $"There is already a record with name: '{model.NewRecordName}'. Please try another new name.");
             }
-            var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl, model.Enabled);
+            var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl, model.Enabled, model.Tags);
             return this.Protocol(ErrorType.Success, $"Successfully created your new record: '{createdRecord.RecordUniqueName}' at {createdRecord.CreationTime}.");
         }
 
@@ -43,7 +43,7 @@ namespace Aiursoft.Wrapgate.Controllers
         public async Task<IActionResult> ViewMyRecords(ViewMyRecordsAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var records = await _recordRepo.GetAllRecordsUnderApp(appid);
+            var records = await _recordRepo.GetAllRecordsUnderApp(appid, model.Tags.Split(','));
             var viewModel = new ViewMyRecordsViewModel
             {
                 AppId = appid,
@@ -70,6 +70,7 @@ namespace Aiursoft.Wrapgate.Controllers
             record.Type = model.NewType;
             record.TargetUrl= model.NewUrl;
             record.Enabled = model.Enabled;
+            record.Tags = model.Tags;
             await _recordRepo.UpdateRecord(record);
             return this.Protocol(ErrorType.Success, "Successfully updated your Record!");
         }

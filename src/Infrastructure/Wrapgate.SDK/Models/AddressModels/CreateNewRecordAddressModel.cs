@@ -22,5 +22,7 @@ namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
 
         [Required]
         public bool Enabled { get; set; }
+
+        public string Tags { get; set; }
     }
 }
