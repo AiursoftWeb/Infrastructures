@@ -13,6 +13,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 		public async Task TestCounter()
 		{
 			var counter = new Counter();
+			Assert.AreEqual(counter.GetCurrent, -1);
 			var obj = new object();
 			var numbers = new int[10000];
 			var tasksList = new ConcurrentBag<Task>();
