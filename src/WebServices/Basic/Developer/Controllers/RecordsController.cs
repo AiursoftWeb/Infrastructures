@@ -9,6 +9,7 @@ using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -81,7 +82,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Type, model.Enabled);
+                await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Tags.Split(','), model.Type, model.Enabled);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexpectedResponse e)
@@ -93,7 +94,9 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [Route("Apps/{appId}/Records/{recordName}/Edit")]
-        public async Task<IActionResult> Edit(string appId, string recordName)
+        public async Task<IActionResult> Edit(
+            [FromRoute]string appId, 
+            [FromRoute]string recordName)
         {
             var user = await GetCurrentUserAsync();
             var app = await _dbContext.Apps.FindAsync(appId);
@@ -106,7 +109,7 @@ namespace Aiursoft.Developer.Controllers
                 return Unauthorized();
             }
             var accessToken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
-            var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken);
+            var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken, Array.Empty<string>());
             var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
             if (recordDetail == null)
             {
@@ -120,7 +123,8 @@ namespace Aiursoft.Developer.Controllers
                 AppName = app.AppName,
                 Type = recordDetail.Type,
                 URL = recordDetail.TargetUrl,
-                Enabled = recordDetail.Enabled
+                Enabled = recordDetail.Enabled,
+                Tags = recordDetail.Tags
             };
             return View(model);
         }
@@ -148,7 +152,7 @@ namespace Aiursoft.Developer.Controllers
             try
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
-                await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL, model.Enabled);
+                await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL, model.Tags.Split(','), model.Enabled);
                 _cache.Clear($"Record-public-status-{model.OldRecordName}");
                 _cache.Clear($"Record-public-status-{model.NewRecordName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });

@@ -80,6 +80,14 @@
                         </select>
                     </div>
 
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Tags"></label>
+                            <input asp-for="Tags" type="text" class="form-control" placeholder="Enter your tags. Seperate by ','.">
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="col-md-12 margin-top-30">
                         <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
                         @if (!string.IsNullOrEmpty(Model.AppId))

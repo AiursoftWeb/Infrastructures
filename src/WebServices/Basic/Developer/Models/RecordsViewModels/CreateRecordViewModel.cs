@@ -46,5 +46,8 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
 
         [Required]
         public bool Enabled { get; set; }
+
+        [MaxLength(1000)]
+        public string Tags { get; set; }
     }
 }

@@ -42,12 +42,12 @@
                             <div class="input-group mb-3">
                                 <input asp-for="RecordName" type="text" class="form-control">
                                 <div class="input-group-append">
-                                    @{
+                                    @{ 
                                         var httpRegex = new Regex("^https://", RegexOptions.Compiled);
-                                        var ioPath = WrapgateLocator.WrapPattern;
-                                        ioPath = httpRegex.Replace(ioPath, string.Empty);
-                                        ioPath = ioPath.Replace("{wrap}", string.Empty);
-                                    }
+                                                    var ioPath = WrapgateLocator.WrapPattern;
+                                                    ioPath = httpRegex.Replace(ioPath, string.Empty);
+                                                    ioPath = ioPath.Replace("{wrap}", string.Empty);
+                                        }
                                     <span class="input-group-text">@string.Format(ioPath, string.Empty)</span>
                                 </div>
                             </div>
@@ -78,6 +78,14 @@
                             <option value="2">@Localizer["iFrame"]</option>
                             <option value="3">@Localizer["Reverse proxy"]</option>
                         </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Tags"></label>
+                            <input asp-for="Tags" type="text" class="form-control" placeholder="Enter your tags. Seperate by ','.">
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                        </div>
                     </div>
 
                     <div class="col-md-12 margin-top-30">
