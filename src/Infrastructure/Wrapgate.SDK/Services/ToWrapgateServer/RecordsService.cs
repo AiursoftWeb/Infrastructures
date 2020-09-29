@@ -7,6 +7,7 @@ using Aiursoft.Wrapgate.SDK.Models.ViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
@@ -39,7 +40,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
                 TargetUrl = targetUrl,
                 Type = type,
                 Enabled = enabled,
-                Tags = string.Join(',', tags)
+                Tags = string.Join(',', tags.Select(t => t.Trim()))
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
@@ -80,7 +81,7 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
                 NewType = newType,
                 NewUrl = newUrl,
                 Enabled = enabled,
-                Tags = string.Join(',', tags)
+                Tags = string.Join(',', tags.Select(t => t.Trim()))
             });
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
