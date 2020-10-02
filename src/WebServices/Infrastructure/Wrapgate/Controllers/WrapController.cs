@@ -54,7 +54,14 @@ namespace Aiursoft.Wrapgate.Controllers
 
         private string BuildTargetUrl(WrapRecord record, string path)
         {
-            return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString.ToString();
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString.ToString();
+            }
+            else
+            {
+                return record.TargetUrl.TrimEnd('/');
+            }
         }
 
         private async Task<IActionResult> RewriteToUrl(string url)
