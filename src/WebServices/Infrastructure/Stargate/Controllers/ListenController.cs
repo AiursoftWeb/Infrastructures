@@ -1,7 +1,6 @@
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
@@ -79,7 +78,7 @@ namespace Aiursoft.Stargate.Controllers
             try
             {
                 _connectedCountService.AddConnectedCount(channel.Id);
-                await Task.Factory.StartNew(_pusher.PendingClose);
+                await Task.Run(_pusher.PendingClose);
                 _lastAccessService.RecordLastConnectTime(channel.Id);
                 while (_pusher.Connected && _channelLiveJudge.IsAlive(channel.Id))
                 {
@@ -111,7 +110,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 _logger.LogError(e, e.Message);
                 var accessToken = _appsContainer.AccessToken();
-                await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, Request.Path);
+                await _eventService.LogExceptionAsync(await accessToken, e, Request.Path);
             }
             finally
             {

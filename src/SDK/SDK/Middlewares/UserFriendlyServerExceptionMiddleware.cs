@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +52,7 @@ namespace Aiursoft.SDK.Middlewares
                     {
                         _logger.LogError(e, e.Message);
                         var accessToken = _appsContainer.AccessToken();
-                        await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, context.Request.Path);
+                        await _eventService.LogExceptionAsync(await accessToken, e, context.Request.Path);
                     }
                     catch
                     {

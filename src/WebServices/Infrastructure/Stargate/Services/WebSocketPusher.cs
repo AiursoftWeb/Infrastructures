@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
@@ -53,10 +52,11 @@ namespace Aiursoft.Stargate.Services
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception e) when (!e.Message.StartsWith("The remote party closed the WebSocket connection"))
             {
+                _dropped = true;
                 var accessToken = _appsContainer.AccessToken();
-                await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, "InPusher");
+                await _eventService.LogExceptionAsync(await accessToken, e, "InPusher");
             }
         }
     }

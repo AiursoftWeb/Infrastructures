@@ -37,7 +37,7 @@ namespace Aiursoft.Wrapgate.Repositories
             return _table.SingleOrDefaultAsync(t => t.RecordUniqueName == recordName.ToLower());
         }
 
-        public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled)
+        public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled, string tags)
         {
             var newRecord = new WrapRecord
             {
@@ -45,18 +45,29 @@ namespace Aiursoft.Wrapgate.Repositories
                 Type = type,
                 AppId = appid,
                 TargetUrl = targetUrl,
-                Enabled = enabled
+                Enabled = enabled,
+                Tags = tags
             };
             await _table.AddAsync(newRecord);
             await _dbContext.SaveChangesAsync();
             return newRecord;
         }
 
-        public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid)
+        public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid, string[] mustHaveTags)
         {
-            return _table
-                .Where(t => t.AppId == appid)
-                .ToListAsync();
+            if (!mustHaveTags.Any())
+            {
+                return _table
+                    .Where(t => t.AppId == appid)
+                    .ToListAsync();
+            }
+            else
+            {
+                return _table
+                    .Where(t => t.AppId == appid)
+                    .Where(t => mustHaveTags.Any(p => t.Tags.Contains(p)))
+                    .ToListAsync();
+            }
         }
 
         public async Task<WrapRecord> GetRecordByNameUnderApp(string recordName, string appid)

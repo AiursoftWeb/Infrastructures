@@ -491,6 +491,7 @@
                                             <th>@Localizer["Target URL"]</th>
                                             <th>@Localizer["Type"]</th>
                                             <th>@Localizer["Create time"]</th>
+                                            <th>@Localizer["Tags"]</th>
                                             <th>@Localizer["Operation"]</th>
                                         </tr>
                                     </thead>
@@ -516,6 +517,7 @@
                                                 <td>@record.TargetUrl.OTake(60)</td>
                                                 <td>@record.Type</td>
                                                 <td data-utc-time="@record.CreationTime" data-order="@record.CreationTime.Ticks"></td>
+                                                <td>@record.Tags</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a asp-controller="Records" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-recordName="@record.RecordUniqueName" class="btn btn-danger">@Localizer["Delete"]</a>

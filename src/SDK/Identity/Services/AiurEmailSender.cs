@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -62,7 +61,7 @@ namespace Aiursoft.Identity.Services
                 {
                     _logger.LogError(e, e.Message);
                     var accessToken = _appsContainer.AccessToken();
-                    await _eventService.LogAsync(await accessToken, e.Message, e.StackTrace, EventLevel.Exception, string.Empty);
+                    await _eventService.LogExceptionAsync(await accessToken, e);
                 }
                 catch
                 {

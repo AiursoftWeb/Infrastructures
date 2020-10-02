@@ -91,6 +91,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3CD1FC53
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.XelNaga.Tests", "tests\XelNaga.Tests\Aiursoft.XelNaga.Tests.csproj", "{F3A9B2D3-1279-4144-99C3-E2F0153FDC8F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.WebTools.Tests", "tests\WebTools.Tests\Aiursoft.WebTools.Tests.csproj", "{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +235,10 @@ Global
 		{F3A9B2D3-1279-4144-99C3-E2F0153FDC8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A9B2D3-1279-4144-99C3-E2F0153FDC8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A9B2D3-1279-4144-99C3-E2F0153FDC8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -280,6 +286,7 @@ Global
 		{1022A5E1-3334-4988-A056-BF9F57456028} = {094B06AA-B42B-48F3-AC11-825928553517}
 		{6069C445-22CF-4458-B16F-C5F8DC173E21} = {0BA5235B-1F50-48BD-9024-43260AB7C926}
 		{F3A9B2D3-1279-4144-99C3-E2F0153FDC8F} = {3CD1FC53-C629-42BE-B77E-5B9A2290D92E}
+		{4453A1D5-8E04-404F-A856-DC8B6E4D4BFF} = {3CD1FC53-C629-42BE-B77E-5B9A2290D92E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A55376D-2CE7-4C61-8D33-16C3FFEC02DE}

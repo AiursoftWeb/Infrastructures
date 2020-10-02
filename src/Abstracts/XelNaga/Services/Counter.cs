@@ -6,6 +6,10 @@ namespace Aiursoft.XelNaga.Services
     {
         private readonly object _obj = new object();
 
+        /// <summary>
+        /// Get a new scope unique number which is one larger than current.
+        /// </summary>
+        /// <returns></returns>
         public int GetUniqueNo()
         {
             lock (_obj)
@@ -14,6 +18,9 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
+        /// <summary>
+        /// Last returned counter value. If a initial counter, will be -1.
+        /// </summary>
         public int GetCurrent { get; private set; } = -1;
     }
 }

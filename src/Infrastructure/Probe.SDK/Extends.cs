@@ -52,19 +52,22 @@ namespace Aiursoft.Probe.SDK
             var configuration = services.GetService<IConfiguration>();
             var logger = services.GetRequiredService<ILogger<TProvider>>();
             var siteName = getConfig(configuration);
-            var sitesService = services.GetService<SitesService>();
-            var tokenProvider = services.GetService(typeof(TProvider)) as TProvider;
-            Task.Factory.StartNew(async () =>
+            var cannon = services.GetService<CannonService>();
+            cannon.Fire<SitesService>((sitesService) =>
             {
-                // Wait 20 seconds. Dependencies might not be started yet.
-                await Task.Delay(20000);
-                logger.LogInformation("Starting create Probe resources...");
-                var token = await getToken(tokenProvider);
-                var sites = await sitesService.ViewMySitesAsync(token);
-                if (!sites.Sites.Any(s => s.SiteName == siteName))
+                cannon.FireAsync<TProvider>(async (tokenProvider) =>
                 {
-                    await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
-                }
+                    // Wait 20 seconds. Dependencies might not be started yet.
+                    await Task.Delay(20 * 1000);
+                    var token = await getToken(tokenProvider);
+                    logger.LogInformation("Starting create Probe resources...");
+
+                    var sites = await sitesService.ViewMySitesAsync(token);
+                    if (!sites.Sites.Any(s => s.SiteName == siteName))
+                    {
+                        await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
+                    }
+                });
             });
 
             return host;

@@ -103,7 +103,7 @@ update()
     systemctl stop "status.service"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
 
-    systemctl restart mssql.service
+    systemctl restart mssql-server.service
     systemctl restart "archon.service"
     sleep 30
     systemctl restart "probe.service"

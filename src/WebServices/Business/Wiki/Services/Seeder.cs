@@ -3,7 +3,6 @@ using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
-using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Services.ToStatusServer;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wiki.Data;
@@ -131,7 +130,7 @@ namespace Aiursoft.Wiki.Services
             catch (Exception e)
             {
                 var accessToken = await _appsContainer.AccessToken();
-                await _eventService.LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception, string.Empty);
+                await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
             }

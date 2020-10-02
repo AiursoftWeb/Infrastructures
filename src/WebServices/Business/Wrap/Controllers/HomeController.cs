@@ -12,6 +12,7 @@ using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrap.Controllers
@@ -49,9 +50,9 @@ namespace Aiursoft.Wrap.Controllers
             var token = await _appsContainer.AccessToken();
             try
             {
-                await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, RecordType.Redirect, enabled: true);
+                await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, new string[] { "Anonymous" }, RecordType.Redirect, enabled: true);
             }
-            catch(AiurUnexpectedResponse e) when (e.Code == ErrorType.NotEnoughResources)
+            catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotEnoughResources)
             {
                 ModelState.AddModelError(nameof(model.NewRecordName), $"Sorry but the key:'{model.NewRecordName}' already exists. Try another one.");
                 return View(nameof(Index), model);

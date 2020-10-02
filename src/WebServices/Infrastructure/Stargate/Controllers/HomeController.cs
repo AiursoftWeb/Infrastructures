@@ -17,27 +17,27 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class HomeController : Controller
     {
-        private readonly DebugMessageSender _debugger;
         private readonly AppsContainer _appsContainer;
         private readonly ChannelService _channelService;
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
         private readonly StargateDbContext _dbContext;
+        private readonly CannonService _cannonService;
 
         public HomeController(
-            DebugMessageSender debugger,
             AppsContainer appsContainer,
             ChannelService channelService,
             Counter counter,
             StargateMemory memory,
-            StargateDbContext dbContext)
+            StargateDbContext dbContext,
+            CannonService cannonService)
         {
-            _debugger = debugger;
             _appsContainer = appsContainer;
             _channelService = channelService;
             _counter = counter;
             _memory = memory;
             _dbContext = dbContext;
+            _cannonService = cannonService;
         }
 
         public async Task<IActionResult> Index()
@@ -48,7 +48,7 @@ namespace Aiursoft.Stargate.Controllers
                 TotalMemoryMessages = _memory.Messages.Count,
                 Channels = await _dbContext.Channels.CountAsync(),
                 Code = ErrorType.Success,
-                Message = "Welcome to Aiursoft Message queue server!"
+                Message = "Welcome to Aiursoft Stargate server!"
             });
         }
 
@@ -56,9 +56,9 @@ namespace Aiursoft.Stargate.Controllers
         {
             var token = await _appsContainer.AccessToken();
             var result = await _channelService.CreateChannelAsync(token, "Test Channel");
-            await Task.Factory.StartNew(async () =>
+            _cannonService.FireAsync<DebugMessageSender>(async d => 
             {
-                await _debugger.SendDebuggingMessages(token, result.ChannelId);
+                await d.SendDebuggingMessages(token, result.ChannelId);
             });
             var model = new ChannelAddressModel
             {

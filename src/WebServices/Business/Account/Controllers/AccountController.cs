@@ -33,7 +33,6 @@ namespace Aiursoft.Account.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AccountUser> _userManager;
-        private readonly AccountSmsSender _smsSender;
         private readonly UserService _userService;
         private readonly AppsContainer _appsContainer;
         private readonly IConfiguration _configuration;
@@ -42,10 +41,10 @@ namespace Aiursoft.Account.Controllers
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly QRCodeService _qrCodeService;
         private readonly AiurCache _cache;
+        private readonly CannonService _cannonService;
 
         public AccountController(
             UserManager<AccountUser> userManager,
-            AccountSmsSender smsSender,
             UserService userService,
             AppsContainer appsContainer,
             IConfiguration configuration,
@@ -53,10 +52,10 @@ namespace Aiursoft.Account.Controllers
             AuthService<AccountUser> authService,
             IEnumerable<IAuthProvider> authProviders,
             QRCodeService qrCodeService,
-            AiurCache cache)
+            AiurCache cache,
+            CannonService cannonService)
         {
             _userManager = userManager;
-            _smsSender = smsSender;
             _userService = userService;
             _appsContainer = appsContainer;
             _configuration = configuration;
@@ -65,6 +64,7 @@ namespace Aiursoft.Account.Controllers
             _authProviders = authProviders;
             _qrCodeService = qrCodeService;
             _cache = cache;
+            _cannonService = cannonService;
         }
 
         public async Task<IActionResult> Index(bool? justHaveUpdated)
@@ -259,7 +259,10 @@ namespace Aiursoft.Account.Controllers
             }
             var phone = model.ZoneNumber + model.NewPhoneNumber;
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
-            await _smsSender.SendAsync(phone, $"Your Aiursoft verification code is: {code}.");
+            _cannonService.FireAsync<AccountSmsSender>(async (sender) => 
+            {
+                await sender.SendAsync(phone, $"Your Aiursoft verification code is: {code}.");
+            });
             return RedirectToAction(nameof(EnterCode), new { newPhoneNumber = phone });
         }
 
