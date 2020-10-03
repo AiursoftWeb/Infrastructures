@@ -1,8 +1,12 @@
 using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.SDK;
 using Aiursoft.Observer.SDK;
+using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
+using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.Data;
+using Aiursoft.Wrapgate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +33,11 @@ namespace Aiursoft.Status
             services.AddAiurMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+            services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
+            services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
+            services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
+            services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
+
             services.AddBasic();
         }
 

@@ -56,9 +56,9 @@ namespace Aiursoft.Stargate.Controllers
         {
             var token = await _appsContainer.AccessToken();
             var result = await _channelService.CreateChannelAsync(token, "Test Channel");
-            _cannonService.FireAsync<DebugMessageSender>(async d => 
+            _cannonService.FireAsync<DebugMessageSender>(d => 
             {
-                await d.SendDebuggingMessages(token, result.ChannelId);
+                return d.SendDebuggingMessages(token, result.ChannelId);
             });
             var model = new ChannelAddressModel
             {

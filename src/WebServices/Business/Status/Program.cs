@@ -1,6 +1,7 @@
 using Aiursoft.SDK;
 using Aiursoft.Status.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.Status
@@ -11,7 +12,7 @@ namespace Aiursoft.Status
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StatusDbContext>((context, service) => context.Seed(service))
+                .MigrateDbContext<StatusDbContext>((context, service) => service.GetRequiredService<Seeder>().Seed())
                 .Run();
         }
 

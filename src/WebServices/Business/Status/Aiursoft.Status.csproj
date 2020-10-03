@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Description>The status check center for Aiursoft. Monitor Aiursoft service status, submit service request, review source code.</Description>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Description>The status check center for Aiursoft. Monitor Aiursoft service status, submit service request, review source code.</Description>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+		<ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj" />
+	</ItemGroup>
 </Project>
