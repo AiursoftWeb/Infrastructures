@@ -17,16 +17,5 @@ namespace Aiursoft.Status.Data
         }
 
         public DbSet<MonitorRule> MonitorRules { get; set; }
-
-        public void Seed(IServiceProvider services)
-        {
-            MonitorRules.RemoveRange(MonitorRules);
-            SaveChanges();
-            var serviceLocation = services.GetRequiredService<ServiceLocation>();
-            var observerLocator = services.GetRequiredService<ObserverLocator>();
-            var archonLocator = services.GetRequiredService<ArchonLocator>();
-            MonitorRules.Sync(SeedData.GetRules(serviceLocation, observerLocator, archonLocator).ToList());
-            SaveChanges();
-        }
     }
 }

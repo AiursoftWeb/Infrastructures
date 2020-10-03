@@ -1,19 +1,57 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
+using Aiursoft.Probe.SDK.Services;
 using Aiursoft.SDK.Services;
+using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
+using Aiursoft.Wrapgate.SDK.Services;
 using System.Collections.Generic;
+using System.Linq;
+using Aiursoft.DBTools;
+using Aiursoft.Scanner.Interfaces;
 
 namespace Aiursoft.Status.Data
 {
-    public static class SeedData
+    public class Seeder : IScopedDependency
     {
-        public static IEnumerable<MonitorRule> GetRules(
-            ServiceLocation serviceLocation, 
-            ObserverLocator observerLocator, 
-            ArchonLocator archonLocator)
+        private readonly ServiceLocation serviceLocation;
+        private readonly ObserverLocator observerLocator;
+        private readonly StargateLocator stargateLocator;
+        private readonly DeveloperLocator developerLocator;
+        private readonly ArchonLocator archonLocator;
+        private readonly ProbeLocator probeLocator;
+        private readonly WrapgateLocator wrapgateLocator;
+        private readonly StatusDbContext dbContext;
+
+        public Seeder(
+            ServiceLocation serviceLocation,
+            ObserverLocator observerLocator,
+            StargateLocator stargateLocator,
+            DeveloperLocator developerLocator,
+            ArchonLocator archonLocator,
+            ProbeLocator probeLocator,
+            WrapgateLocator wrapgateLocator,
+            StatusDbContext dbContext)
         {
-#warning Prevent hard code address.
+            this.serviceLocation = serviceLocation;
+            this.observerLocator = observerLocator;
+            this.stargateLocator = stargateLocator;
+            this.developerLocator = developerLocator;
+            this.archonLocator = archonLocator;
+            this.probeLocator = probeLocator;
+            this.wrapgateLocator = wrapgateLocator;
+            this.dbContext = dbContext;
+        }
+
+        public void Seed()
+        {
+            dbContext.MonitorRules.Sync(GetRules().ToList());
+            dbContext.SaveChanges();
+        }
+
+        public IEnumerable<MonitorRule> GetRules()
+        {
             return new List<MonitorRule>
             {
                 new MonitorRule
@@ -31,7 +69,7 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Developer",
-                    CheckAddress = $"{serviceLocation.Developer}/?show=direct",
+                    CheckAddress = $"{developerLocator.Endpoint}/?show=direct",
                     ExpectedContent = "Welcome to"
                 },
                 new MonitorRule
@@ -43,14 +81,14 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Probe",
-                    CheckAddress = "https://probe.aiursoft.com",
+                    CheckAddress = probeLocator.Endpoint,
                     ExpectedContent = "Welcome to Probe!"
                 },
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Stargate",
-                    CheckAddress = "https://stargate.aiursoft.com",
-                    ExpectedContent = "Welcome to Aiursoft Message queue server!"
+                    CheckAddress = stargateLocator.Endpoint,
+                    ExpectedContent = "Welcome to"
                 },
                 new MonitorRule
                 {
@@ -91,7 +129,7 @@ namespace Aiursoft.Status.Data
                 new MonitorRule
                 {
                     ProjectName = "Aiursoft Wrapgate",
-                    CheckAddress = "https://wrapgate.aiursoft.com",
+                    CheckAddress = wrapgateLocator.Endpoint,
                     ExpectedContent = "Welcome"
                 },
                 new MonitorRule
