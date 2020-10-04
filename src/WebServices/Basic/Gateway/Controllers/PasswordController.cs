@@ -51,7 +51,7 @@ namespace Aiursoft.Gateway.Controllers
 
             if (mailObject == null || mailObject.OwnerId != user.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
             if (!mailObject.Validated)
             {

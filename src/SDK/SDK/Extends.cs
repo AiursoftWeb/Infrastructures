@@ -94,6 +94,7 @@ namespace Aiursoft.SDK
                 app.UseMiddleware<EnforceHttpsMiddleware>();
                 app.UseMiddleware<UserFriendlyServerExceptionMiddleware>();
                 app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
+                app.UseMiddleware<UserFriendlyBadRequestMiddleware>();
             }
             return app;
         }
