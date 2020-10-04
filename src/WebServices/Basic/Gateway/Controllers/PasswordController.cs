@@ -49,7 +49,7 @@ namespace Aiursoft.Gateway.Controllers
                 .UserEmails
                 .SingleOrDefaultAsync(t => t.ValidateToken == code);
 
-            if (mailObject == null || mailObject.OwnerId != user.Id || !mailObject.Validated)
+            if (mailObject == null || mailObject.OwnerId != user.Id || mailObject.Validated)
             {
                 return BadRequest();
             }
