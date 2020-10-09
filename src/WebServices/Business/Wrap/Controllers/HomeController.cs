@@ -12,7 +12,6 @@ using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrap.Controllers

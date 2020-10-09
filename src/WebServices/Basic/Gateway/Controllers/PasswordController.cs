@@ -49,13 +49,9 @@ namespace Aiursoft.Gateway.Controllers
                 .UserEmails
                 .SingleOrDefaultAsync(t => t.ValidateToken == code);
 
-            if (mailObject == null || mailObject.OwnerId != user.Id)
+            if (mailObject == null || mailObject.OwnerId != user.Id || mailObject.Validated)
             {
-                return NotFound();
-            }
-            if (!mailObject.Validated)
-            {
-                _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
+                return BadRequest();
             }
             return View(new EmailConfirmViewModel
             {
@@ -89,6 +85,7 @@ namespace Aiursoft.Gateway.Controllers
                 _logger.LogWarning($"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
             }
             mailObject.Validated = true;
+            mailObject.ValidateToken = string.Empty;
             await _dbContext.SaveChangesAsync();
             return View();
         }
