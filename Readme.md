@@ -5,7 +5,7 @@
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
-## What is Aiursoft unified web projects
+## What is Aiursoft Infrastructures
 
 Aiursoft Infrastructures provides many useful services and simplifies web application development.
 
@@ -16,6 +16,10 @@ Aiursoft Infrastructures is a project, runs in the application level, using micr
 Aiursoft Infrastructures provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
 
 The enterprise can deploy their own dedicated instance of Aiursoft Infrastructures and build their apps with it.
+
+## Example apps
+
+There is an example app based on Aiursoft Infrastructures. It is [Kahla](https://www.kahla.app).
 
 ## Features
 
