@@ -28,6 +28,29 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
+        public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
+        {
+            var queue = new Queue<Func<Task>>(taskFactories);
+            if (queue.Count == 0)
+            {
+                return;
+            }
+            var tasksInFlight = new List<Task>(maxDegreeOfParallelism);
+            do
+            {
+                while (tasksInFlight.Count < maxDegreeOfParallelism && queue.Count != 0)
+                {
+                    var taskFactory = queue.Dequeue();
+                    tasksInFlight.Add(taskFactory());
+                }
+
+                var completedTask = await Task.WhenAny(tasksInFlight).ConfigureAwait(false);
+                await completedTask.ConfigureAwait(false);
+                tasksInFlight.Remove(completedTask);
+            }
+            while (queue.Count != 0 || tasksInFlight.Count != 0);
+        }
+
         private static readonly TaskFactory TaskFactory = new
             TaskFactory(CancellationToken.None,
                         TaskCreationOptions.None,
