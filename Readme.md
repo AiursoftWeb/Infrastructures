@@ -5,13 +5,21 @@
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
 
-## What is Aiursoft unified web projects
-
-Aiursoft Infrastructures is not a framework, not a tool, nor a library. It was just a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+## What is Aiursoft Infrastructures
 
 Aiursoft Infrastructures provides many useful services and simplifies web application development.
 
+Aiursoft Infrastructures is a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+
+![overview](./doc/overview.png)
+
 Aiursoft Infrastructures provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
+
+The enterprise can deploy their own dedicated instance of Aiursoft Infrastructures and build their apps with it.
+
+## Example apps
+
+There is an example app based on Aiursoft Infrastructures. It is [Kahla](https://www.kahla.app).
 
 ## Features
 
@@ -25,7 +33,7 @@ Aiursoft Infrastructures provides a central platform for an entire enterprise. S
 * Wiki center https://wiki.aiursoft.com (Read document)
 * Cross-platform deployment (Supports Windows, Linux, and docker)
 
-## How to install
+## How to deploy
 
 ### Brief steps
 
@@ -42,7 +50,7 @@ Get a brand new Ubuntu 18.04 server.
 * Server must have a public IP address. (No local VM)
 * Server must have access to the global Internet. (Not Chinese network)
 
-Vultr or DigitalOcean is suggested. [Get it from Vultr](https://www.vultr.com/?ref=7274488).
+[Azure](https://www.azure.com), [Vultr](https://www.vultr.com/?ref=7274488) or [DigitalOcean](https://www.DigitalOcean.com) is suggested.
 
 ### Install on server
 
@@ -64,6 +72,8 @@ If we release a newer version, and you can upgrade your server via:
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
 
+## The design of Infrastructures
+
 ### Basic Services
 
 The basic services are used to support the operation of the entire platform. It is the basis for the expansion of the subsequent infrastructure and user services throughout the platform. The basic services mainly include the user's authentication, authorization, application authentication, authorization, and allow the user's self-registration and self-registration of the application. At the same time, the underlying service is also responsible for the user's underlying data and the underlying data of the application, as well as the user's set of credentials and the set of credentials for the application.
@@ -80,26 +90,12 @@ In addition to the user interface that OAuth itself needs to provide login, this
 
 Any high-level service is built on the micro-service platform. But the requirements they solve are actually based on the decisions of the companies that use the microservices platform. In other words, regardless of the company's decision-making to build search engines, forums, company homepages, feedback centers, recruitment centers, etc., the platform should be able to support. But the entire process of this part should follow the process followed by a separate software system.
 
-## How to run
+## How to run locally
 
 Running the entire micro-service platform is very very complicated and requires a lot of computing resources. Before you try to run the platform, we strongly suggest running only one specific service. Running one service is very easy and simple.
 
-For running the platform, The document is [here](https://wiki.aiursoft.com/ReadDoc/Deployment/Getting%20Started.md).
+To run one service instance locally, simply execute `dotnet run` under which folder with the project file `.csproj` you want to run.
 
 ## How to contribute
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
-
-## View running services in production
-
-If you wanna try the platform, all independent services are deployed under the following link. Click any of it allows you to try viewing a service.
-
-* [Account](https://account.aiursoft.com)
-* [API](https://api.aiursoft.com)
-* [Archon](https://archon.aiursoft.com)
-* [Colossus](https://colossus.aiursoft.com)
-* [Developer](https://developer.aiursoft.com)
-* [EE](https://ee.aiursoft.com)
-* [Stargate](https://stargate.aiursoft.com)
-* [Wiki](https://wiki.aiursoft.com)
-* [WWW](https://www.aiursoft.com)
