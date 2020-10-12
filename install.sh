@@ -224,6 +224,9 @@ install_infrastructures()
     aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "Navbar[1].Link" "https://colossus.$1" $www_path/appsettings.Production.json
+    aiur text/edit_json "Navbar[2].Link" "https://wrap.$1" $www_path/appsettings.Production.json
+    aiur text/edit_json "Navbar[4].Dropdowns[0].Link" "https://wiki.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $www_path/appsettings.Production.json
     aiur text/edit_json "WikiAppId" "$wikiAppId" $wiki_path/appsettings.Production.json
