@@ -108,7 +108,7 @@ namespace Aiursoft.Wiki.Services
                     {
                         var doamin = _configuration["RootDomain"];
                         var docBuilt = collection.DocAPIAddress
-                            .Replace("{{domain}}", doamin);
+                            .Replace("{{rootDomain}}", doamin);
                         // Generate markdown from doc generator
                         var docString = await _http.Get(new AiurUrl(docBuilt), false);
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
