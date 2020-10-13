@@ -87,6 +87,13 @@ namespace Aiursoft.Colossus.Controllers
             }
             try
             {
+                var existing = await _sitesService.ViewMySitesAsync(await AccessToken);
+                if (existing.Sites.Any(t => t.SiteName.ToLower().Trim() == model.SiteName.ToLower().Trim()))
+                {
+                    ModelState.AddModelError(string.Empty, $"The site with name: {model.SiteName} already exists. Please try another name.");
+                    model.Recover(user);
+                    return View(model);
+                }
                 await _sitesService.CreateNewSiteAsync(await AccessToken, model.SiteName, model.OpenToUpload, model.OpenToDownload);
                 user.SiteName = model.SiteName;
                 await _userManager.UpdateAsync(user);
@@ -162,7 +169,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [Route("DeleteFolder/{**path}")]
-        public async Task<IActionResult> DeleteFolder([FromRoute]string path)
+        public async Task<IActionResult> DeleteFolder([FromRoute] string path)
         {
             var user = await GetCurrentUserAsync();
             var model = new DeleteFolderViewModel(user)
@@ -197,7 +204,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [Route("DeleteFile/{**path}")]
-        public async Task<IActionResult> DeleteFile([FromRoute]string path)
+        public async Task<IActionResult> DeleteFile([FromRoute] string path)
         {
             var user = await GetCurrentUserAsync();
             var model = new DeleteFileViewModel(user)
@@ -232,7 +239,7 @@ namespace Aiursoft.Colossus.Controllers
         }
 
         [Route("CloneFile/{**path}")]
-        public async Task<IActionResult> CloneFile([FromRoute]string path)
+        public async Task<IActionResult> CloneFile([FromRoute] string path)
         {
             var user = await GetCurrentUserAsync();
             await _filesService.CopyFileAsync(await AccessToken, user.SiteName, path, user.SiteName, path.DetachPath());
