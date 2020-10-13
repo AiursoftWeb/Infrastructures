@@ -74,5 +74,8 @@ namespace Aiursoft.XelNaga.Services
         public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
             => Task.WhenAll(items
                 .Select(t => function(t)));
+
+        public static Task ForEachInThreadsPool<T>(this IEnumerable<T> items, Func<T, Task> function, int maxDegreeOfParallelism = 8)
+            => InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);
     }
 }
