@@ -8,11 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.EntitySearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="RestSharp" Version="106.11.4" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
   </ItemGroup>
