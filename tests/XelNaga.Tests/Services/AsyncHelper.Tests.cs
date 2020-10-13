@@ -16,7 +16,12 @@ namespace Aiursoft.XelNaga.Tests.Services
         private int[] array;
         // 50 ms and get 200.
         // 1000 ms and get 4000.
-        const int expectedCount = 4000;
+        private int expectedCount = new Random().Next(3000, 5000);
+        private int threads = new Random().Next(150, 250);
+        private int fakeWait = new Random().Next(40, 60);
+        private double expectedTime => (expectedCount * 1.0 * fakeWait) / threads;
+        private double expectedMaxWait => expectedTime * 1.7 ;
+        private double expectedMinWait => expectedTime * 1.1 ;
 
         [TestInitialize]
         public void InitBooks()
@@ -40,12 +45,12 @@ namespace Aiursoft.XelNaga.Tests.Services
             }
 
             var startTime = DateTime.UtcNow;
-            await AsyncHelper.InvokeTasksByQueue(tasksFactories, 200);
+            await AsyncHelper.InvokeTasksByQueue(tasksFactories, threads);
             var endTime = DateTime.UtcNow;
             var executionTime = endTime - startTime;
-
-            Assert.IsTrue(executionTime > TimeSpan.FromSeconds(1.1));
-            Assert.IsTrue(executionTime < TimeSpan.FromSeconds(1.7));
+            
+            Assert.IsTrue(executionTime > TimeSpan.FromSeconds(expectedMinWait / 1000));
+            Assert.IsTrue(executionTime < TimeSpan.FromSeconds(expectedMaxWait / 1000));
             Assert.AreEqual(array.Min(), 1);
             Assert.AreEqual(array.Max(), 1);
         }
@@ -56,14 +61,14 @@ namespace Aiursoft.XelNaga.Tests.Services
             var startTime = DateTime.UtcNow;
             await books.ForEachInThreadsPool(async (book) =>
             {
-                await Task.Delay(50);
+                await Task.Delay(fakeWait);
                 book.Id++;
-            }, 200);
+            }, threads);
             var endTime = DateTime.UtcNow;
             var executionTime = endTime - startTime;
 
-            Assert.IsTrue(executionTime > TimeSpan.FromSeconds(1.1));
-            Assert.IsTrue(executionTime < TimeSpan.FromSeconds(1.7));
+            Assert.IsTrue(executionTime > TimeSpan.FromSeconds(expectedMinWait / 1000));
+            Assert.IsTrue(executionTime < TimeSpan.FromSeconds(expectedMaxWait / 1000));
             Assert.AreEqual(books.Select(t => t.Id).Min(), 1);
             Assert.AreEqual(books.Select(t => t.Id).Max(), 1);
         }
@@ -74,7 +79,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             var startTime = DateTime.UtcNow;
             await books.ForEachParallel(async (book) =>
             {
-                await Task.Delay(50);
+                await Task.Delay(fakeWait);
                 book.Id++;
             });
             var endTime = DateTime.UtcNow;
@@ -88,7 +93,7 @@ namespace Aiursoft.XelNaga.Tests.Services
 
         private async Task SetPosition(int i, int[] array)
         {
-            await Task.Delay(50);
+            await Task.Delay(fakeWait);
             array[i]++;
         }
     }
