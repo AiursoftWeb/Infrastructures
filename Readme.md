@@ -96,6 +96,10 @@ Running the entire micro-service platform is very very complicated and requires 
 
 To run one service instance locally, simply execute `dotnet run` under which folder with the project file `.csproj` you want to run.
 
+As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference for more documents via the official ASP.NET document for how to run:
+
+https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-3.1&tabs=windows#run-the-app
+
 ## How to contribute
 
 The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
