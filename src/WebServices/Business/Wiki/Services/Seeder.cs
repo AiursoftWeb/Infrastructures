@@ -106,11 +106,14 @@ namespace Aiursoft.Wiki.Services
                     // Parse the appended doc.
                     if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
+                        var doamin = _configuration["RootDomain"];
+                        var docBuilt = collection.DocAPIAddress
+                            .Replace("{{domain}}", doamin);
                         // Generate markdown from doc generator
-                        var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
+                        var docString = await _http.Get(new AiurUrl(docBuilt), false);
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                        var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
+                        var apiRoot = docBuilt.ToLower().Replace("/doc", "");
                         foreach (var docController in docGrouped)
                         {
                             var markdown = _markDownGenerator.GenerateMarkDownForAPI(docController, apiRoot);
