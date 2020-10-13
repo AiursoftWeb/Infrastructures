@@ -102,18 +102,25 @@ update()
 
     systemctl stop "status.service"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
-
+    
+    echo "Starting dependencies and Archon..."
     systemctl restart mssql-server.service
     systemctl restart "archon.service"
     sleep 30
+    
+    echo "Starting infrastructurs..."
     systemctl restart "probe.service"
     systemctl restart "stargate.service"
     systemctl restart "wrapgate.service"
     systemctl restart "observer.service"
     sleep 30
+    
+    echo "Starting basic services..."
     systemctl restart "gateway.service"
     systemctl restart "developer.service"
     sleep 30
+    
+    echo "Starting business services..."
     systemctl restart "colossus.service"
     systemctl restart "www.service"
     systemctl restart "account.service"
@@ -121,6 +128,8 @@ update()
     systemctl restart "ee.service"
     systemctl restart "wiki.service"
     sleep 30
+    
+    echo "Starting monitoring services..."
     systemctl restart "status.service"
     systemctl restart "ee.service"
 
