@@ -102,4 +102,4 @@ https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-3.
 
 ## How to contribute
 
-The document is [here](https://wiki.aiursoft.com/ReadDoc/Getting%20Involed/How%20to%20contribute.md).
+The document is [here](https://wiki.aiursoft.com/Welcome/How%20to%20contribute.md).
