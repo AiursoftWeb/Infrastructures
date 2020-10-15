@@ -20,8 +20,8 @@ namespace Aiursoft.XelNaga.Tests.Services
         private int threads = new Random().Next(150, 250);
         private int fakeWait = new Random().Next(40, 60);
         private double expectedTime => (expectedCount * 1.0 * fakeWait) / threads;
-        private double expectedMaxWait => expectedTime * 1.7 ;
-        private double expectedMinWait => expectedTime * 1.1 ;
+        private double expectedMaxWait => expectedTime * 1.7;
+        private double expectedMinWait => expectedTime * 1.1;
 
         [TestInitialize]
         public void InitBooks()
@@ -48,7 +48,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             await AsyncHelper.InvokeTasksByQueue(tasksFactories, threads);
             var endTime = DateTime.UtcNow;
             var executionTime = endTime - startTime;
-            
+
             Assert.IsTrue(executionTime > TimeSpan.FromSeconds(expectedMinWait / 1000));
             Assert.IsTrue(executionTime < TimeSpan.FromSeconds(expectedMaxWait / 1000));
             Assert.AreEqual(array.Min(), 1);
@@ -89,6 +89,30 @@ namespace Aiursoft.XelNaga.Tests.Services
             Assert.IsTrue(executionTime < TimeSpan.FromSeconds(0.6));
             Assert.AreEqual(books.Select(t => t.Id).Min(), 1);
             Assert.AreEqual(books.Select(t => t.Id).Max(), 1);
+        }
+
+        [TestMethod]
+        public void TestRunSync()
+        {
+            int i = 0;
+            AsyncHelper.RunSync(async () =>
+            {
+                await Task.Delay(1);
+                i++;
+            });
+            Assert.AreEqual(i, 1);
+        }
+
+        [TestMethod]
+        public void TestRunSyncWithResult()
+        {
+            var result = AsyncHelper.RunSync(async () =>
+            {
+                int i = 0;
+                await Task.Delay(1);
+                return i + 1;
+            });
+            Assert.AreEqual(result, 1);
         }
 
         private async Task SetPosition(int i, int[] array)
