@@ -7,7 +7,7 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Identity.Attributes;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;

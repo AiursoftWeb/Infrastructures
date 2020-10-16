@@ -3,7 +3,7 @@ using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;

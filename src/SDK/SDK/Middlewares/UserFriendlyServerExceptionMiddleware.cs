@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
