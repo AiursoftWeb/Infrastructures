@@ -19,7 +19,10 @@ The enterprise can deploy their own dedicated instance of Aiursoft Infrastructur
 
 ## Example apps
 
-There is an example app based on Aiursoft Infrastructures. It is [Kahla](https://www.kahla.app).
+There are some example apps based on Aiursoft Infrastructures. 
+
+[Kahla](https://github.com/AiursoftWeb/Kahla)
+[Tracer](https://github.com/AiursoftWeb/Tracer)
 
 ## Features
 
