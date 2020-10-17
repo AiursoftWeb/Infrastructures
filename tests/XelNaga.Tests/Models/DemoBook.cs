@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aiursoft.XelNaga.Tests.Models
+﻿namespace Aiursoft.XelNaga.Tests.Models
 {
     public class DemoBook
     {
