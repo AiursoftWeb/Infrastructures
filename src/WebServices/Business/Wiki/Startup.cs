@@ -59,20 +59,21 @@ namespace Aiursoft.Wiki
             var services = scope.ServiceProvider;
             var logger = services.GetRequiredService<ILogger<Seeder>>();
             var seeder = services.GetService<Seeder>();
-            try
-            {
-                logger.LogInformation($"Seeding...");
-                AsyncHelper.TryAsync(async () =>
+            logger.LogInformation($"Seeding...");
+            AsyncHelper.TryAsync(
+            times: 3,
+            steps:
+                async () =>
                 {
                     await seeder.Seed();
-                }, 3);
-                logger.LogInformation($"Seeded");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"An error occurred while seeding.");
-            }
-
+                },
+            onError: 
+                async (e) => 
+                {
+                    await seeder.HandleException(e);
+                }
+            );
+            logger.LogInformation($"Seeded");
             return host;
         }
     }

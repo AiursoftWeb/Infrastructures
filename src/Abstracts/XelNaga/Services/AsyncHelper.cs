@@ -8,7 +8,7 @@ namespace Aiursoft.XelNaga.Services
 {
     public static class AsyncHelper
     {
-        public static void TryAsync(Func<Task> steps, int times)
+        public static void TryAsync(Func<Task> steps, int times, Action<Exception> onError = null)
         {
             for (int i = 1; i <= times; i++)
             {
@@ -19,6 +19,7 @@ namespace Aiursoft.XelNaga.Services
                 }
                 catch (Exception e)
                 {
+                    onError?.Invoke(e);
                     if (i >= times)
                     {
                         throw e;
@@ -28,7 +29,7 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public static void TryAsyncForever(Func<Task> steps) => TryAsync(steps, int.MaxValue);
+        public static void TryAsyncForever(Func<Task> steps, Action<Exception> onError = null) => TryAsync(steps, int.MaxValue, onError);
 
         public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
         {
