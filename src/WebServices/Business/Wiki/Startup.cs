@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Aiursoft.Wiki
 {
@@ -59,20 +58,21 @@ namespace Aiursoft.Wiki
             var services = scope.ServiceProvider;
             var logger = services.GetRequiredService<ILogger<Seeder>>();
             var seeder = services.GetService<Seeder>();
-            try
-            {
-                logger.LogInformation($"Seeding...");
-                AsyncHelper.TryAsyncThreeTimes(async () =>
-                {
-                    await seeder.Seed();
-                });
-                logger.LogInformation($"Seeded");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"An error occurred while seeding.");
-            }
-
+            logger.LogInformation($"Seeding...");
+            AsyncHelper.TryAsync(
+                times: 3,
+                steps:
+                    async () =>
+                    {
+                        await seeder.Seed();
+                    },
+                onError: 
+                    async (e) => 
+                    {
+                        await seeder.HandleException(e);
+                    }
+            );
+            logger.LogInformation($"Seeded");
             return host;
         }
     }
