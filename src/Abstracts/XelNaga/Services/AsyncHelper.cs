@@ -28,21 +28,7 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public static void TryAsyncForever(Func<Task> steps)
-        {
-            for (int i = 1; ; i++)
-            {
-                try
-                {
-                    RunSync(async () => await steps());
-                    break;
-                }
-                catch (Exception)
-                {
-                    Thread.Sleep(i * 15 * 1000);
-                }
-            }
-        }
+        public static void TryAsyncForever(Func<Task> steps) => TryAsync(steps, int.MaxValue);
 
         public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
         {

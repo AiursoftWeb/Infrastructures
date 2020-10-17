@@ -264,12 +264,12 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection UseBlacklistFromAddress(this IServiceCollection services, string address)
         {
-            AsyncHelper.TryAsync(async () =>
+            AsyncHelper.TryAsyncForever(async () =>
             {
                 var list = await new WebClient().DownloadStringTaskAsync(address);
                 var provider = new BlackListPorivder(list.Split('\n'));
                 services.AddSingleton(provider);
-            }, 3);
+            });
             return services;
         }
     }
