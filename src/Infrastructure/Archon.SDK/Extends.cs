@@ -21,7 +21,7 @@ namespace Aiursoft.Archon.SDK
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            AsyncHelper.TryAsyncForever(async () =>
+            AsyncHelper.TryAsync(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
@@ -31,7 +31,7 @@ namespace Aiursoft.Archon.SDK
                     Exponent = serverModel.Exponent.Base64ToBytes()
                 };
                 services.AddSingleton(new ArchonLocator(serverEndpoint, publicKey));
-            });
+            }, 5);
             services.AddLibraryDependencies();
             return services;
         }

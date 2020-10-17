@@ -61,17 +61,17 @@ namespace Aiursoft.Wiki
             var seeder = services.GetService<Seeder>();
             logger.LogInformation($"Seeding...");
             AsyncHelper.TryAsync(
-            times: 3,
-            steps:
-                async () =>
-                {
-                    await seeder.Seed();
-                },
-            onError: 
-                async (e) => 
-                {
-                    await seeder.HandleException(e);
-                }
+                times: 3,
+                steps:
+                    async () =>
+                    {
+                        await seeder.Seed();
+                    },
+                onError: 
+                    async (e) => 
+                    {
+                        await seeder.HandleException(e);
+                    }
             );
             logger.LogInformation($"Seeded");
             return host;

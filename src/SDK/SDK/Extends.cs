@@ -237,7 +237,10 @@ namespace Aiursoft.SDK
                 {
                     await context.Database.MigrateAsync();
                     seeder?.Invoke(context, services);
-                }, 3);
+                }, 3, (e) => 
+                {
+                    logger.LogCritical(e, "Seed database failed.");
+                });
                 logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
             }
             catch (Exception ex)
@@ -264,12 +267,12 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection UseBlacklistFromAddress(this IServiceCollection services, string address)
         {
-            AsyncHelper.TryAsyncForever(async () =>
+            AsyncHelper.TryAsync(async () =>
             {
                 var list = await new WebClient().DownloadStringTaskAsync(address);
                 var provider = new BlackListPorivder(list.Split('\n'));
                 services.AddSingleton(provider);
-            });
+            }, 3);
             return services;
         }
     }

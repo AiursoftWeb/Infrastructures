@@ -27,7 +27,7 @@ namespace Aiursoft.Probe.SDK
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            AsyncHelper.TryAsyncForever(async () =>
+            AsyncHelper.TryAsync(async () =>
             {
                 var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
                 var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
@@ -35,7 +35,7 @@ namespace Aiursoft.Probe.SDK
                 var downloadFormat = serverConfig.DownloadPattern;
                 var playerFormat = serverConfig.PlayerPattern;
                 services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat, playerFormat));
-            });
+            }, 5);
 
             services.AddLibraryDependencies();
             return services;
