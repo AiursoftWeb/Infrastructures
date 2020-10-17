@@ -27,7 +27,7 @@ namespace Aiursoft.Probe.SDK
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            AsyncHelper.TryAsyncThreeTimes(async () =>
+            AsyncHelper.TryAsyncForever(async () =>
             {
                 var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
                 var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);

@@ -233,11 +233,11 @@ namespace Aiursoft.SDK
             {
                 logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
                 logger.LogInformation($"Connection string is {connectionString}");
-                AsyncHelper.TryAsyncThreeTimes(async () =>
+                AsyncHelper.TryAsync(async () =>
                 {
                     await context.Database.MigrateAsync();
                     seeder?.Invoke(context, services);
-                });
+                }, 3);
                 logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
             }
             catch (Exception ex)
@@ -264,12 +264,12 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection UseBlacklistFromAddress(this IServiceCollection services, string address)
         {
-            AsyncHelper.TryAsyncThreeTimes(async () =>
+            AsyncHelper.TryAsync(async () =>
             {
                 var list = await new WebClient().DownloadStringTaskAsync(address);
                 var provider = new BlackListPorivder(list.Split('\n'));
                 services.AddSingleton(provider);
-            });
+            }, 3);
             return services;
         }
     }

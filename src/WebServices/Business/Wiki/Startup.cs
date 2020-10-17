@@ -62,10 +62,10 @@ namespace Aiursoft.Wiki
             try
             {
                 logger.LogInformation($"Seeding...");
-                AsyncHelper.TryAsyncThreeTimes(async () =>
+                AsyncHelper.TryAsync(async () =>
                 {
                     await seeder.Seed();
-                });
+                }, 3);
                 logger.LogInformation($"Seeded");
             }
             catch (Exception ex)

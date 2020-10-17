@@ -19,7 +19,7 @@ namespace Aiursoft.Wrapgate.SDK
                 Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
                 return services;
             }
-            AsyncHelper.TryAsyncThreeTimes(async () =>
+            AsyncHelper.TryAsyncForever(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(wrapgateEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
