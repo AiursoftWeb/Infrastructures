@@ -75,7 +75,7 @@ namespace Aiursoft.XelNaga.Services
 
         public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool internalRequest)
         {
-            if (internalRequest && url.Address.StartsWith("https://localhost"))
+            if (internalRequest && !url.Address.StartsWith("https://localhost"))
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
