@@ -52,12 +52,11 @@ namespace Aiursoft.Stargate.Controllers
                 await _dbContext.SaveChangesAsync();
             }
             var channels = _stargateMemory
-                .GetChannelsUnderApp(appid)
-                .ToList();
+                .GetChannelsUnderApp(appid);
             var viewModel = new ViewMyChannelsViewModel
             {
-                AppId = appLocal.Id,
-                Channels = channels.ToList(),
+                AppId = appid,
+                Channels = channels,
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };

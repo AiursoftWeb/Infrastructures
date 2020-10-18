@@ -12,7 +12,7 @@ namespace Aiursoft.Stargate.SDK.Models
         public string Description { get; set; }
         public string ConnectKey { get; set; }
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
-        public DateTime LastAccessTime { get; private set; } = DateTime.UtcNow;
+        public DateTime LastAccessTime { get; set; } = DateTime.UtcNow;
         public string AppId { get; set; }
         [JsonIgnore]
         public ConcurrentBag<Message> Messages { get; set; } = new ConcurrentBag<Message>();
