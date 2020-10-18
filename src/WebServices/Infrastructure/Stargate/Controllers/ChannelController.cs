@@ -1,5 +1,4 @@
 using Aiursoft.Archon.SDK.Services;
-using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -8,11 +7,10 @@ using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.Stargate.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,22 +22,19 @@ namespace Aiursoft.Stargate.Controllers
     {
         private readonly StargateDbContext _dbContext;
         private readonly ACTokenValidator _tokenManager;
-        private readonly ConnectedCountService _connectedCountService;
-        private readonly LastAccessService _lastAccessService;
-        private readonly ChannelLiveJudge _channelLiveJudge;
+        private readonly StargateMemory _stargateMemory;
+        private readonly Counter _counter;
 
         public ChannelController(
             StargateDbContext dbContext,
             ACTokenValidator tokenManager,
-            ConnectedCountService connectedCountService,
-            LastAccessService lastAccessService,
-            ChannelLiveJudge channelLiveJudge)
+            StargateMemory stargateMemory,
+            Counter counter)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
-            _connectedCountService = connectedCountService;
-            _lastAccessService = lastAccessService;
-            _channelLiveJudge = channelLiveJudge;
+            _stargateMemory = stargateMemory;
+            _counter = counter;
         }
 
         [APIProduces(typeof(ViewMyChannelsViewModel))]
@@ -51,24 +46,18 @@ namespace Aiursoft.Stargate.Controllers
             {
                 appLocal = new StargateApp
                 {
-                    Id = appid,
-                    Channels = new List<Channel>()
+                    Id = appid
                 };
                 await _dbContext.Apps.AddAsync(appLocal);
                 await _dbContext.SaveChangesAsync();
             }
-            var channels = await _dbContext
-                .Channels
-                .Where(t => t.AppId == appid)
-                .ToListAsync();
+            var channels = _stargateMemory
+                .GetChannelsUnderApp(appid)
+                .ToList();
             var viewModel = new ViewMyChannelsViewModel
             {
                 AppId = appLocal.Id,
-                Channels = channels
-                    .Select(t => new ChannelDetail(t,
-                    _connectedCountService.GetConnectedCount(t.Id),
-                    _lastAccessService.GetLastAccessTime(t.Id)))
-                    .ToList(),
+                Channels = channels.ToList(),
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };
@@ -76,9 +65,9 @@ namespace Aiursoft.Stargate.Controllers
         }
 
         [APIProduces(typeof(AiurValue<string>))]
-        public async Task<IActionResult> ValidateChannel(ChannelAddressModel model)
+        public IActionResult ValidateChannel(ChannelAddressModel model)
         {
-            var channel = await _dbContext.Channels.FindAsync(model.Id);
+            var channel = _stargateMemory.GetChannelById(model.Id);
             if (channel == null)
             {
                 return Ok(new AiurProtocol
@@ -87,7 +76,7 @@ namespace Aiursoft.Stargate.Controllers
                     Message = "Can not find your channel!"
                 });
             }
-            if (!_channelLiveJudge.IsAlive(channel.Id))
+            if (channel.IsDead())
             {
                 return Ok(new AiurProtocol
                 {
@@ -119,29 +108,23 @@ namespace Aiursoft.Stargate.Controllers
         {
             //Update app info
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.Apps.Include(t => t.Channels).SingleOrDefaultAsync(t => t.Id == appid);
+            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp
                 {
-                    Id = appid,
-                    Channels = new List<Channel>()
+                    Id = appid
                 };
                 await _dbContext.Apps.AddAsync(appLocal);
             }
-            //Create and save to database
-            var newChannel = new Channel
-            {
-                Description = model.Description,
-                ConnectKey = Guid.NewGuid().ToString("N")
-            };
-            appLocal.Channels.Add(newChannel);
-            await _dbContext.SaveChangesAsync();
+            var channelId = _counter.GetUniqueNo();
+            var key = Guid.NewGuid().ToString("N");
+            _stargateMemory.CreateChannel(channelId, appid, model.Description, key);
             //return model
             var viewModel = new CreateChannelViewModel
             {
-                ChannelId = newChannel.Id,
-                ConnectKey = newChannel.ConnectKey,
+                ChannelId = channelId,
+                ConnectKey = key,
                 Code = ErrorType.Success,
                 Message = "Successfully created your channel!"
             };
@@ -152,12 +135,12 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> DeleteChannel(DeleteChannelAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var channel = await _dbContext.Channels.FindAsync(model);
+            var channel = _stargateMemory.GetChannelById(model.ChannelId);
             if (channel.AppId != appid)
             {
                 return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
             }
-            _dbContext.Channels.Remove(channel);
+            _stargateMemory.DeleteChannel(channel.Id);
             await _dbContext.SaveChangesAsync();
             return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
         }
@@ -178,7 +161,7 @@ namespace Aiursoft.Stargate.Controllers
             var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
             {
-                _dbContext.Channels.Delete(t => t.AppId == target.Id);
+                _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
                 _dbContext.Apps.Remove(target);
                 await _dbContext.SaveChangesAsync();
                 return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });

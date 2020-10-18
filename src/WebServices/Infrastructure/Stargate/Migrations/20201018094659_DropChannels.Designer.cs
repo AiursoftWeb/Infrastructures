@@ -3,14 +3,16 @@ using Aiursoft.Stargate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Stargate.Migrations
 {
     [DbContext(typeof(StargateDbContext))]
-    partial class StargateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201018094659_DropChannels")]
+    partial class DropChannels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

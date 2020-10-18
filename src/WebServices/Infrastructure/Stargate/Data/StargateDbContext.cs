@@ -9,7 +9,6 @@ namespace Aiursoft.Stargate.Data
         {
         }
 
-        public DbSet<Channel> Channels { get; set; }
         public DbSet<StargateApp> Apps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

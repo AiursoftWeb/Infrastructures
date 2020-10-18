@@ -4,10 +4,10 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace Aiursoft.Stargate.Controllers
 {
@@ -33,19 +33,15 @@ namespace Aiursoft.Stargate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
+        public IActionResult PushMessage(PushMessageAddressModel model)
         {
             //Ensure app
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             //Ensure channel
-            var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
+            var channel = _memoryContext.GetChannelsUnderApp(appid).SingleOrDefault(t => t.Id == model.ChannelId);
             if (channel == null)
             {
-                return Ok(new AiurProtocol
-                {
-                    Code = ErrorType.NotFound,
-                    Message = $"We can not find your channel with id: '{model.ChannelId}'!"
-                });
+                return this.Protocol(ErrorType.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
             }
             //Create Message
             var message = new Message
@@ -54,7 +50,7 @@ namespace Aiursoft.Stargate.Controllers
                 ChannelId = channel.Id,
                 Content = model.MessageContent
             };
-            _memoryContext.Messages.Add(message);
+            channel.Push(message);
             return Ok(new AiurProtocol
             {
                 Code = ErrorType.Success,

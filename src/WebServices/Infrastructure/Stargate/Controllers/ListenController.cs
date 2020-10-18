@@ -28,9 +28,6 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ILogger<ListenController> _logger;
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
-        private readonly ConnectedCountService _connectedCountService;
-        private readonly LastAccessService _lastAccessService;
-        private readonly ChannelLiveJudge _channelLiveJudge;
 
         public ListenController(
             StargateDbContext dbContext,
@@ -39,10 +36,7 @@ namespace Aiursoft.Stargate.Controllers
             ILogger<ListenController> logger,
             Counter counter,
             AppsContainer appsContainer,
-            EventService eventService,
-            ConnectedCountService connectedCountService,
-            LastAccessService lastAccessService,
-            ChannelLiveJudge channelLiveJudge)
+            EventService eventService)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
@@ -51,16 +45,13 @@ namespace Aiursoft.Stargate.Controllers
             _counter = counter;
             _appsContainer = appsContainer;
             _eventService = eventService;
-            _connectedCountService = connectedCountService;
-            _lastAccessService = lastAccessService;
-            _channelLiveJudge = channelLiveJudge;
         }
 
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
             int lastReadId = _counter.GetCurrent;
-            var channel = await _dbContext.Channels.FindAsync(model.Id);
+            var channel = _memoryContext.GetChannelById(model.Id);
             if (channel == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
@@ -77,34 +68,33 @@ namespace Aiursoft.Stargate.Controllers
             int sleepTime = 0;
             try
             {
-                _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
-                _lastAccessService.RecordLastConnectTime(channel.Id);
-                while (_pusher.Connected && _channelLiveJudge.IsAlive(channel.Id))
+                channel.ConnectedUsers++;
+                while (_pusher.Connected && channel.IsAlive())
                 {
-                    var nextMessages = _memoryContext
-                        .Messages
-                        .Where(t => t.ChannelId == model.Id)
-                        .Where(t => t.Id > lastReadId)
+                    channel.RecordLastConnectTime();
+                    var nextMessages = channel
+                        .GetMessages(lastReadId)
                         .ToList();
-                    if (!nextMessages.Any())
+                    if (nextMessages.Any())
                     {
-                        if (sleepTime < 1000)
-                            sleepTime += 5;
-                        await Task.Delay(sleepTime);
-                    }
-                    else
-                    {
-                        var nextMessage = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
-                        if (nextMessage != null)
+                        var messageToPush = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
+                        if (messageToPush != null)
                         {
-                            await _pusher.SendMessage(nextMessage.Content);
-                            lastReadId = nextMessage.Id;
+                            await _pusher.SendMessage(messageToPush.Content);
+                            lastReadId = messageToPush.Id;
                             sleepTime = 0;
                         }
                     }
+                    else
+                    {
+                        if (sleepTime < 1000)
+                        {
+                            sleepTime += 5;
+                        }
+                        await Task.Delay(sleepTime);
+                    }
                 }
-                _lastAccessService.RecordLastConnectTime(channel.Id);
             }
             catch (Exception e)
             {
@@ -114,7 +104,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             finally
             {
-                _connectedCountService.ReduceConnectedCount(channel.Id);
+                channel.ConnectedUsers--;
             }
             return Ok(new { });
         }
