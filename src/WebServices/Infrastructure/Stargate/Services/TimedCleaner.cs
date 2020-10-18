@@ -16,18 +16,15 @@ namespace Aiursoft.Stargate.Services
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly StargateMemory _memoryContext;
-        private readonly ChannelLiveJudge _channelLiveJudge;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
             IServiceScopeFactory scopeFactory,
-            StargateMemory memoryContext,
-            ChannelLiveJudge channelLiveJudge)
+            StargateMemory memoryContext)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
             _memoryContext = memoryContext;
-            _channelLiveJudge = channelLiveJudge;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -39,30 +36,23 @@ namespace Aiursoft.Stargate.Services
             return Task.CompletedTask;
         }
 
-        private async void DoWork(object state)
+        private void DoWork(object state)
         {
             _logger.LogInformation("Cleaner task started!");
             using (var scope = _scopeFactory.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
                 var memoryContext = scope.ServiceProvider.GetRequiredService<StargateMemory>();
-                await AllClean(dbContext, memoryContext);
+                AllClean(memoryContext);
             }
             _logger.LogInformation("Cleaner task finished!");
         }
 
-        private async Task AllClean(StargateDbContext dbContext, StargateMemory memory)
+        private void AllClean(StargateMemory memory)
         {
             try
             {
-                var toDelete = dbContext
-                    .Channels
-                    .ToList()
-                    .Where(t => _channelLiveJudge.IsDead(t.Id))
-                    .ToList();
+                var toDelete = memory.GetDeadChannels();
                 memory.DeleteChannels(toDelete.Select(t => t.Id));
-                dbContext.Channels.RemoveRange(toDelete);
-                await dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {

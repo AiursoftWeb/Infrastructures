@@ -8,6 +8,6 @@ namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
     {
         [IsGuidOrEmpty]
         public string AppId { get; set; }
-        public IEnumerable<ChannelDetail> Channels { get; set; }
+        public IEnumerable<Channel> Channels { get; set; }
     }
 }

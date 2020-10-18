@@ -407,15 +407,15 @@
                                         @foreach (var channel in Model.Channels)
                                         {
                                             <tr>
-                                                <td>@channel.Channel.Id</td>
-                                                <td data-utc-time="@channel.Channel.CreateTime" data-order="@channel.Channel.CreateTime.Ticks"></td>
+                                                <td>@channel.Id</td>
+                                                <td data-utc-time="@channel.CreateTime" data-order="@channel.CreateTime.Ticks"></td>
                                                 <td data-utc-time="@channel.LastAccessTime" data-order="@channel.LastAccessTime.Ticks"></td>
-                                                <td>@channel.ConnectedCount</td>
+                                                <td>@channel.ConnectedUsers</td>
                                                 @{
                                                     var path = new AiurUrl(StargateLocator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
                                                     {
-                                                        Id = channel.Channel.Id,
-                                                        Key = channel.Channel.ConnectKey
+                                                        Id = channel.Id,
+                                                        Key = channel.ConnectKey
                                                     }).ToString();
                                                 }
                                                 <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="Connect path" data-stacktrace="@path">View connect path</a></td>

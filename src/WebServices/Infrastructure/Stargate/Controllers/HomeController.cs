@@ -8,7 +8,6 @@ using Aiursoft.Stargate.Services;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
@@ -40,13 +39,14 @@ namespace Aiursoft.Stargate.Controllers
             _cannonService = cannonService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
+            var (channels, messages) = _memory.GetMonitoringReport();
             return Json(new
             {
                 CurrentId = _counter.GetCurrent,
-                TotalMemoryMessages = _memory.GetTotalMessages(),
-                Channels = await _dbContext.Channels.CountAsync(),
+                TotalMemoryMessages = messages,
+                Channels = channels,
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Stargate server!"
             });

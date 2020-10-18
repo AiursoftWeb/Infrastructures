@@ -8,22 +8,41 @@ namespace Aiursoft.Stargate.Data
 {
     public class StargateMemory : ISingletonDependency
     {
-        public ConcurrentDictionary<int, ConcurrentBag<Message>> Channels = new ConcurrentDictionary<int, ConcurrentBag<Message>>();
+        private ConcurrentDictionary<int, Channel> Channels = new ConcurrentDictionary<int, Channel>();
 
-        public void CreateChannel(int id)
+        public void CreateChannel(int id, string appid, string description, string key)
         {
-            Channels[id] = new ConcurrentBag<Message>();
+            Channels[id] = new Channel
+            {
+                Id = id,
+                AppId = appid,
+                Description = description,
+                ConnectKey = key
+            };
         }
 
-        public bool ChannelExists(int id)
+        private bool ChannelExists(int id)
         {
             return Channels.ContainsKey(id);
         }
 
-        public IEnumerable<Message> GetMessages(int id, int lastReadId)
+        public IEnumerable<Channel> GetChannelsUnderApp(string appid)
         {
-            return Channels[id]
-                .Where(t => t.Id > lastReadId);
+            return Channels.Select(t => t.Value).Where(t => t.AppId == appid);
+        }
+
+        public IEnumerable<Channel> GetDeadChannels()
+        {
+            return Channels.Select(t => t.Value).Where(t => t.IsDead());
+        }
+
+        public Channel GetChannelById(int id)
+        {
+            if (!ChannelExists(id))
+            {
+                return null;
+            }
+            return Channels[id];
         }
 
         public void DeleteChannels(IEnumerable<int> channels)
@@ -37,21 +56,16 @@ namespace Aiursoft.Stargate.Data
             }
         }
 
-        public void DeleteChannel(int channel)
+        public bool DeleteChannel(int id)
         {
-            Channels.Remove(channel, out ConcurrentBag<Message> deleted);
+            return Channels.Remove(id, out _);
         }
 
-        public int GetTotalMessages()
+        public (int channelsCount, int totalMessages) GetMonitoringReport()
         {
-            return Channels
-                .SelectMany(t => t.Value)
-                .Count();
-        }
-
-        public void Push(int id, Message message)
-        {
-            Channels[id].Add(message);
+            return (Channels.Count, Channels
+                .SelectMany(t => t.Value.Messages)
+                .Count());
         }
     }
 }

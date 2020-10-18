@@ -28,9 +28,6 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ILogger<ListenController> _logger;
         private readonly AppsContainer _appsContainer;
         private readonly EventService _eventService;
-        private readonly ConnectedCountService _connectedCountService;
-        private readonly LastAccessService _lastAccessService;
-        private readonly ChannelLiveJudge _channelLiveJudge;
 
         public ListenController(
             StargateDbContext dbContext,
@@ -39,10 +36,7 @@ namespace Aiursoft.Stargate.Controllers
             ILogger<ListenController> logger,
             Counter counter,
             AppsContainer appsContainer,
-            EventService eventService,
-            ConnectedCountService connectedCountService,
-            LastAccessService lastAccessService,
-            ChannelLiveJudge channelLiveJudge)
+            EventService eventService)
         {
             _dbContext = dbContext;
             _memoryContext = memoryContext;
@@ -51,23 +45,16 @@ namespace Aiursoft.Stargate.Controllers
             _counter = counter;
             _appsContainer = appsContainer;
             _eventService = eventService;
-            _connectedCountService = connectedCountService;
-            _lastAccessService = lastAccessService;
-            _channelLiveJudge = channelLiveJudge;
         }
 
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
             int lastReadId = _counter.GetCurrent;
-            var channel = await _dbContext.Channels.FindAsync(model.Id);
+            var channel = _memoryContext.GetChannelById(model.Id);
             if (channel == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
-            }
-            if (!_memoryContext.ChannelExists(model.Id))
-            {
-                return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id + " in memroy.");
             }
             if (channel.ConnectKey != model.Key)
             {
@@ -81,13 +68,13 @@ namespace Aiursoft.Stargate.Controllers
             int sleepTime = 0;
             try
             {
-                _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
-                while (_pusher.Connected && _channelLiveJudge.IsAlive(channel.Id))
+                channel.ConnectedUsers++;
+                while (_pusher.Connected && channel.IsAlive())
                 {
-                    _lastAccessService.RecordLastConnectTime(channel.Id);
-                    var nextMessages = _memoryContext
-                        .GetMessages(model.Id, lastReadId)
+                    channel.RecordLastConnectTime();
+                    var nextMessages = channel
+                        .GetMessages(lastReadId)
                         .ToList();
                     if (nextMessages.Any())
                     {
@@ -117,7 +104,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             finally
             {
-                _connectedCountService.ReduceConnectedCount(channel.Id);
+                channel.ConnectedUsers--;
             }
             return Ok(new { });
         }
