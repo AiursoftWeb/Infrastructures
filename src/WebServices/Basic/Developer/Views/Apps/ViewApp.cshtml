@@ -466,7 +466,7 @@
                                                         <td><span class="badge badge-warning">@log.First.EventLevel.ToString()</span></td>
                                                         break;
                                                 }
-                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@log.First.Message" data-stacktrace="@log.First.StackTrace">View stack trace</a></td>
+                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@log.First.Message" data-stacktrace="@(log.First.Message + "\r\n" + log.First.StackTrace)">View stack trace</a></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -592,7 +592,7 @@
             var message = $(event.relatedTarget).data('message');
             var modal = $(this);
             modal.find('#modal-message').val(message);
-            modal.find('#modal-stacktrace').text(message + '\r\n' + stacktrace);
+            modal.find('#modal-stacktrace').text(stacktrace);
         });
 
         $('.datatable-sites').DataTable().destroy();

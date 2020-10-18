@@ -79,9 +79,9 @@ namespace Aiursoft.Stargate.Controllers
             {
                 _connectedCountService.AddConnectedCount(channel.Id);
                 await Task.Factory.StartNew(_pusher.PendingClose);
-                _lastAccessService.RecordLastConnectTime(channel.Id);
                 while (_pusher.Connected && _channelLiveJudge.IsAlive(channel.Id))
                 {
+                    _lastAccessService.RecordLastConnectTime(channel.Id);
                     var nextMessages = _memoryContext
                         .Messages
                         .Where(t => t.ChannelId == model.Id)
@@ -96,7 +96,6 @@ namespace Aiursoft.Stargate.Controllers
                             lastReadId = nextMessage.Id;
                             sleepTime = 0;
                         }
-                       
                     }
                     else
                     {
@@ -107,7 +106,6 @@ namespace Aiursoft.Stargate.Controllers
                         await Task.Delay(sleepTime);
                     }
                 }
-                _lastAccessService.RecordLastConnectTime(channel.Id);
             }
             catch (Exception e)
             {

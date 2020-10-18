@@ -54,11 +54,12 @@ namespace Aiursoft.Stargate.Services
         {
             try
             {
-                if (_memoryContext.Messages.Any())
-                {
-                    var middleMessage = _memoryContext.Messages.Average(t => t.Id);
-                    _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
-                }
+#warning Temprary keep all messages.
+                //if (_memoryContext.Messages.Any())
+                //{
+                //    var middleMessage = _memoryContext.Messages.Average(t => t.Id);
+                //    _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
+                //}
                 var toDelete = dbContext
                     .Channels
                     .ToList()
