@@ -137,6 +137,7 @@ namespace Aiursoft.Stargate.Controllers
             };
             appLocal.Channels.Add(newChannel);
             await _dbContext.SaveChangesAsync();
+            _lastAccessService.RecordLastConnectTime(newChannel.Id);
             //return model
             var viewModel = new CreateChannelViewModel
             {
