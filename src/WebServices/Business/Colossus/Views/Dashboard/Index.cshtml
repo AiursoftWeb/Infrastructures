@@ -23,6 +23,26 @@
                 </div>
                 <a id="copyButton" class="btn btn-warning text-white" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text="error">@Localizer["Copy Link"]</a>
                 <a id="openButton" class="btn btn-primary" href="#" target="_blank">@Localizer["Open in new page"]</a>
+                <a id="codeButton" class="btn btn-primary" data-toggle="modal" data-target="#qr-modal">@Localizer["QR Code"]</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">QR Code</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">?</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" id="qr-img" data-developer="@ServiceLocation.Developer" src="/qrcode-build" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -30,21 +50,27 @@
 
 <script>
     window.addEventListener('load', function () {
+        var qrImage = $('#qr-img');
+        var developer = qrImage.attr('data-developer');
+
         var updateButtons = function () {
             var value = $(".index-form [name=file]").attr('data-internet-path');
             if (value && value.length > 0) {
                 $('#openButton').show();
                 $('#copyButton').show();
+                $('#codeButton').show();
                 $('#openButton').attr('href', value);
                 $('#copyButton').attr('data-clipboard-text', value);
+                qrImage.attr('src', developer + '/qrcode-build?source=' + encodeURI(value));
             } else {
                 $('#openButton').hide();
                 $('#copyButton').hide();
+                $('#codeButton').hide();
             }
         };
 
         var loopRenderJobs = function () {
-            if($(".index-form [name=file]").length > 0) {
+            if ($(".index-form [name=file]").length > 0) {
                 updateButtons();
                 setTimeout(loopRenderJobs, 100);
             }
