@@ -87,13 +87,7 @@ namespace Aiursoft.Stargate.Controllers
                         .Where(t => t.ChannelId == model.Id)
                         .Where(t => t.Id > lastReadId)
                         .ToList();
-                    if (!nextMessages.Any())
-                    {
-                        if (sleepTime < 1000)
-                            sleepTime += 5;
-                        await Task.Delay(sleepTime);
-                    }
-                    else
+                    if (nextMessages.Any())
                     {
                         var nextMessage = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
                         if (nextMessage != null)
@@ -102,6 +96,15 @@ namespace Aiursoft.Stargate.Controllers
                             lastReadId = nextMessage.Id;
                             sleepTime = 0;
                         }
+                       
+                    }
+                    else
+                    {
+                        if (sleepTime < 1000)
+                        {
+                            sleepTime += 5;
+                        }
+                        await Task.Delay(sleepTime);
                     }
                 }
                 _lastAccessService.RecordLastConnectTime(channel.Id);
