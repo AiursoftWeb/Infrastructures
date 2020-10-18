@@ -4,6 +4,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,11 +42,11 @@ namespace Aiursoft.Stargate.Controllers
             var channel = await _dbContext.Channels.SingleOrDefaultAsync(t => t.Id == model.ChannelId && t.AppId == appid);
             if (channel == null)
             {
-                return Ok(new AiurProtocol
-                {
-                    Code = ErrorType.NotFound,
-                    Message = $"We can not find your channel with id: '{model.ChannelId}'!"
-                });
+                return this.Protocol(ErrorType.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
+            }
+            if (!_memoryContext.ChannelExists(model.ChannelId))
+            {
+                return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.ChannelId + " in memroy.");
             }
             //Create Message
             var message = new Message
@@ -54,7 +55,7 @@ namespace Aiursoft.Stargate.Controllers
                 ChannelId = channel.Id,
                 Content = model.MessageContent
             };
-            _memoryContext.Messages.Add(message);
+            _memoryContext.Push(channel.Id, message);
             return Ok(new AiurProtocol
             {
                 Code = ErrorType.Success,

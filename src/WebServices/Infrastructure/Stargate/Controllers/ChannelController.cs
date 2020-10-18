@@ -27,19 +27,22 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ConnectedCountService _connectedCountService;
         private readonly LastAccessService _lastAccessService;
         private readonly ChannelLiveJudge _channelLiveJudge;
+        private readonly StargateMemory _stargateMemory;
 
         public ChannelController(
             StargateDbContext dbContext,
             ACTokenValidator tokenManager,
             ConnectedCountService connectedCountService,
             LastAccessService lastAccessService,
-            ChannelLiveJudge channelLiveJudge)
+            ChannelLiveJudge channelLiveJudge,
+            StargateMemory stargateMemory)
         {
             _dbContext = dbContext;
             _tokenManager = tokenManager;
             _connectedCountService = connectedCountService;
             _lastAccessService = lastAccessService;
             _channelLiveJudge = channelLiveJudge;
+            _stargateMemory = stargateMemory;
         }
 
         [APIProduces(typeof(ViewMyChannelsViewModel))]
@@ -138,6 +141,7 @@ namespace Aiursoft.Stargate.Controllers
             appLocal.Channels.Add(newChannel);
             await _dbContext.SaveChangesAsync();
             _lastAccessService.RecordLastConnectTime(newChannel.Id);
+            _stargateMemory.CreateChannel(newChannel.Id);
             //return model
             var viewModel = new CreateChannelViewModel
             {

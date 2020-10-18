@@ -45,26 +45,22 @@ namespace Aiursoft.Stargate.Services
             using (var scope = _scopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<StargateDbContext>();
-                await AllClean(dbContext);
+                var memoryContext = scope.ServiceProvider.GetRequiredService<StargateMemory>();
+                await AllClean(dbContext, memoryContext);
             }
             _logger.LogInformation("Cleaner task finished!");
         }
 
-        private async Task AllClean(StargateDbContext dbContext)
+        private async Task AllClean(StargateDbContext dbContext, StargateMemory memory)
         {
             try
             {
-#warning Temprary keep all messages.
-                //if (_memoryContext.Messages.Any())
-                //{
-                //    var middleMessage = _memoryContext.Messages.Average(t => t.Id);
-                //    _memoryContext.Messages.RemoveAll(t => t.Id < middleMessage);
-                //}
                 var toDelete = dbContext
                     .Channels
                     .ToList()
                     .Where(t => _channelLiveJudge.IsDead(t.Id))
                     .ToList();
+                memory.DeleteChannels(toDelete.Select(t => t.Id));
                 dbContext.Channels.RemoveRange(toDelete);
                 await dbContext.SaveChangesAsync();
             }

@@ -45,7 +45,7 @@ namespace Aiursoft.Stargate.Controllers
             return Json(new
             {
                 CurrentId = _counter.GetCurrent,
-                TotalMemoryMessages = _memory.Messages.Count,
+                TotalMemoryMessages = _memory.GetTotalMessages(),
                 Channels = await _dbContext.Channels.CountAsync(),
                 Code = ErrorType.Success,
                 Message = "Welcome to Aiursoft Stargate server!"

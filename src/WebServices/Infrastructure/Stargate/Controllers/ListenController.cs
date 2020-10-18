@@ -65,6 +65,10 @@ namespace Aiursoft.Stargate.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
             }
+            if (!_memoryContext.ChannelExists(model.Id))
+            {
+                return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id + " in memroy.");
+            }
             if (channel.ConnectKey != model.Key)
             {
                 return Ok(new AiurProtocol
@@ -83,17 +87,15 @@ namespace Aiursoft.Stargate.Controllers
                 {
                     _lastAccessService.RecordLastConnectTime(channel.Id);
                     var nextMessages = _memoryContext
-                        .Messages
-                        .Where(t => t.ChannelId == model.Id)
-                        .Where(t => t.Id > lastReadId)
+                        .GetMessages(model.Id, lastReadId)
                         .ToList();
                     if (nextMessages.Any())
                     {
-                        var nextMessage = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
-                        if (nextMessage != null)
+                        var messageToPush = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
+                        if (messageToPush != null)
                         {
-                            await _pusher.SendMessage(nextMessage.Content);
-                            lastReadId = nextMessage.Id;
+                            await _pusher.SendMessage(messageToPush.Content);
+                            lastReadId = messageToPush.Id;
                             sleepTime = 0;
                         }
                     }
