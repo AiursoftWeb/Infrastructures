@@ -1,7 +1,7 @@
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;

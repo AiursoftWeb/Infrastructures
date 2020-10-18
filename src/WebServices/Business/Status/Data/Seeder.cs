@@ -110,18 +110,6 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Kahla",
-                    CheckAddress = "https://server.kahla.app",
-                    ExpectedContent = "Welcome"
-                },
-                new MonitorRule
-                {
-                    ProjectName = "Aiursoft Tracer",
-                    CheckAddress = $"{serviceLocation.Tracer}",
-                    ExpectedContent = "Tracer is a simple network quality testing app."
-                },
-                new MonitorRule
-                {
                     ProjectName = "Aiursoft Observer",
                     CheckAddress = $"{observerLocator.Endpoint}",
                     ExpectedContent = "Welcome"

@@ -45,22 +45,22 @@
                 "articleTitle": "Aiursoft authentication"
             }
         ],
-        "docAPIAddress": "https://gateway.aiursoft.com/doc"
+        "docAPIAddress": "https://gateway.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "App Authentication",
         "articles": [],
-        "docAPIAddress": "https://archon.aiursoft.com/doc"
+        "docAPIAddress": "https://archon.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Development",
         "articles": [],
-        "docAPIAddress": "https://developer.aiursoft.com/doc"
+        "docAPIAddress": "https://developer.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Wrapgate",
         "articles": [],
-        "docAPIAddress": "https://wrapgate.aiursoft.com/doc"
+        "docAPIAddress": "https://wrapgate.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Integrated Website",
@@ -72,7 +72,7 @@
                 "articleTitle": "Advanced API"
             }
         ],
-        "docAPIAddress": "https://probe.aiursoft.com/doc"
+        "docAPIAddress": "https://probe.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Stargate",
@@ -81,12 +81,12 @@
                 "articleTitle": "What is Stargate"
             }
         ],
-        "docAPIAddress": "https://stargate.aiursoft.com/doc"
+        "docAPIAddress": "https://stargate.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Error tracking",
         "articles": [],
-        "docAPIAddress": "https://observer.aiursoft.com/doc"
+        "docAPIAddress": "https://observer.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Kahla",

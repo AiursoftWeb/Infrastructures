@@ -330,7 +330,7 @@ namespace Aiursoft.Account.Controllers
                 Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
             };
             var appsBag = new ConcurrentBag<App>();
-            await model.Grants.ForEachParallel(async grant =>
+            await model.Grants.ForEachInThreadsPool(async grant =>
             {
                 try
                 {
@@ -338,7 +338,7 @@ namespace Aiursoft.Account.Controllers
                     appsBag.Add(appInfo.App);
                 }
                 catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
-            });
+            }, 8);
             model.Apps = appsBag.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
             return View(model);
@@ -368,11 +368,11 @@ namespace Aiursoft.Account.Controllers
             {
                 Logs = logs
             };
-            await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachParallel(async (id) =>
+            await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachInThreadsPool(async (id) =>
             {
                 var appInfo = await _developerApiService.AppInfoAsync(id);
                 model.Apps.Add(appInfo.App);
-            });
+            }, 8);
             return View(model);
         }
 

@@ -15,7 +15,7 @@ namespace Aiursoft.Archon.Services
             _rsa = rsa;
         }
 
-        public (string, DateTime) GenerateAccessToken(string appId)
+        public (string tokenString, DateTime expireTime) GenerateAccessToken(string appId)
         {
             var token = new ACToken
             {

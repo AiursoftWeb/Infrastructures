@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace Aiursoft.WWW
 {
@@ -27,6 +28,7 @@ namespace Aiursoft.WWW
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+            services.Configure<List<Navbar>>(Configuration.GetSection("Navbar"));
 
             services.AddIdentity<WWWUser, IdentityRole>()
                 .AddEntityFrameworkStores<WWWDbContext>()

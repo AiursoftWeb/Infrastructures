@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.Extensions.Options.IOptions<List<Navbar>> optionsAccessor
+<!DOCTYPE html>
 <html>
 <head>
     <vc:aiur-header></vc:aiur-header>
@@ -26,12 +27,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="aiursoft-navbar">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Kahla">@Localizer["Kahla"]</a></li>
-                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Wrap">@Localizer["Wrap"]</a></li>
-                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Colossus">@Localizer["Colossus"]</a></li>
-                        <li class="nav-item"><a class="nav-link" href="@ServiceLocation.Tracer">@Localizer["Tracer"]</a></li>
-                    </ul>
+                    <vc:navbar-control configuration="@optionsAccessor.Value"></vc:navbar-control>
                     <div class="form-inline">
                         <ul class="navbar-nav mr-auto">
                             @if (SignInManager.IsSignedIn(User))

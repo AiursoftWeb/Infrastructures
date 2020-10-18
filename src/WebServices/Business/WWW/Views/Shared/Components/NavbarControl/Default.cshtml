@@ -1,0 +1,28 @@
+﻿@model List<Navbar>
+@inject Counter Counter
+
+<ul class="navbar-nav mr-auto">
+    @foreach (var navbar in Model)
+    {
+        @if (!navbar.Dropdowns.Any())
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@navbar.Link">@navbar.Title</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="dropdown@(Counter.GetUniqueNo())" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @navbar.Title
+                </a>
+                <div class="dropdown-menu" aria-labelledby="@(Counter.GetCurrent)">
+                    @foreach (var drop in navbar.Dropdowns)
+                    {
+                        <a class="dropdown-item" href="@drop.Link">@drop.Title</a>
+                    }
+                </div>
+            </li>
+        }
+    }
+</ul>

@@ -37,8 +37,8 @@ namespace Aiursoft.Archon.Controllers
                 {
                     Code = ErrorType.Success,
                     Message = "Successfully get access token.",
-                    AccessToken = token.Item1,
-                    DeadTime = token.Item2
+                    AccessToken = token.tokenString,
+                    DeadTime = token.expireTime
                 });
             }
             else

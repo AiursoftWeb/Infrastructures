@@ -40,7 +40,6 @@ namespace Aiursoft.XelNaga.Services
             return requestMessage;
         }
 
-
         public static async Task CopyProxyHttpResponse(this HttpContext context, HttpResponseMessage responseMessage)
         {
             if (responseMessage == null)

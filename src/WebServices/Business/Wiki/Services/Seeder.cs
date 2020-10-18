@@ -3,7 +3,7 @@ using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
-using Aiursoft.Observer.SDK.Services.ToStatusServer;
+using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
@@ -106,11 +106,14 @@ namespace Aiursoft.Wiki.Services
                     // Parse the appended doc.
                     if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
+                        var doamin = _configuration["RootDomain"];
+                        var docBuilt = collection.DocAPIAddress
+                            .Replace("{{rootDomain}}", doamin);
                         // Generate markdown from doc generator
-                        var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress), false);
+                        var docString = await _http.Get(new AiurUrl(docBuilt), false);
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                        var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
+                        var apiRoot = docBuilt.ToLower().Replace("/doc", "");
                         foreach (var docController in docGrouped)
                         {
                             var markdown = _markDownGenerator.GenerateMarkDownForAPI(docController, apiRoot);
@@ -127,17 +130,18 @@ namespace Aiursoft.Wiki.Services
                     }
                 }
             }
-            catch (Exception e)
-            {
-                var accessToken = await _appsContainer.AccessToken();
-                await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-            }
             finally
             {
                 SemaphoreSlim.Release();
             }
+        }
+
+        public async Task HandleException(Exception e)
+        {
+            var accessToken = await _appsContainer.AccessToken();
+            await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
+            Console.WriteLine(e.Message);
+            Console.WriteLine(e.StackTrace);
         }
     }
 }

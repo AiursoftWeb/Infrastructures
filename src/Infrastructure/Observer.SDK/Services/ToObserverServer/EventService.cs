@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Observer.SDK.Services.ToStatusServer
+namespace Aiursoft.Observer.SDK.Services.ToObserverServer
 {
     public class EventService : IScopedDependency
     {
