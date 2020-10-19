@@ -13,7 +13,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 		public async Task TestCounter()
 		{
 			var counter = new Counter();
-			Assert.AreEqual(counter.GetCurrent, -1);
+			Assert.AreEqual(counter.GetCurrent, 0);
 			var obj = new object();
 			var numbers = new int[10000];
 			var tasksList = new ConcurrentBag<Task>();
@@ -24,7 +24,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 					for (int k = 0; k < 100; k++)
 					{
 						var uniqueNo = counter.GetUniqueNo();
-						numbers[uniqueNo]++;
+						numbers[uniqueNo - 1]++;
 					}
 				});
 				lock (obj)
@@ -33,7 +33,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
 				}
 			}
 			await Task.WhenAll(tasksList);
-			Assert.AreEqual(counter.GetCurrent, 9999);
+			Assert.AreEqual(counter.GetCurrent, 10000);
 			Assert.AreEqual(numbers.Max(), 1);
 			Assert.AreEqual(numbers.Min(), 1);
 		}
