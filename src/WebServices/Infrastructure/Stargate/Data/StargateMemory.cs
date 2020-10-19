@@ -9,6 +9,10 @@ namespace Aiursoft.Stargate.Data
     public class StargateMemory : ISingletonDependency
     {
         private ConcurrentDictionary<int, Channel> Channels = new ConcurrentDictionary<int, Channel>();
+        private bool ChannelExists(int id)
+        {
+            return Channels.ContainsKey(id);
+        }
 
         public void CreateChannel(int id, string appid, string description, string key)
         {
@@ -21,9 +25,16 @@ namespace Aiursoft.Stargate.Data
             };
         }
 
-        private bool ChannelExists(int id)
+        public Channel this[int id]
         {
-            return Channels.ContainsKey(id);
+            get
+            {
+                if (!ChannelExists(id))
+                {
+                    return null;
+                }
+                return Channels[id];
+            }
         }
 
         public IEnumerable<Channel> GetChannelsUnderApp(string appid)
@@ -34,15 +45,6 @@ namespace Aiursoft.Stargate.Data
         public IEnumerable<Channel> GetDeadChannels()
         {
             return Channels.Select(t => t.Value).Where(t => t.IsDead());
-        }
-
-        public Channel GetChannelById(int id)
-        {
-            if (!ChannelExists(id))
-            {
-                return null;
-            }
-            return Channels[id];
         }
 
         public void DeleteChannels(IEnumerable<int> channels)
@@ -58,6 +60,7 @@ namespace Aiursoft.Stargate.Data
 
         public bool DeleteChannel(int id)
         {
+            Channels[id] = null;
             return Channels.Remove(id, out _);
         }
 

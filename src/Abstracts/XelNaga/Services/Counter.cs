@@ -21,6 +21,6 @@ namespace Aiursoft.XelNaga.Services
         /// <summary>
         /// Last returned counter value. If a initial counter, will be -1.
         /// </summary>
-        public int GetCurrent { get; private set; } = -1;
+        public int GetCurrent { get; private set; }
     }
 }

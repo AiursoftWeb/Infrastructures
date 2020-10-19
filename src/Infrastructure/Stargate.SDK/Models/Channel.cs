@@ -12,7 +12,7 @@ namespace Aiursoft.Stargate.SDK.Models
         public string Description { get; set; }
         public string ConnectKey { get; set; }
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
-        public DateTime LastAccessTime { get; private set; } = DateTime.UtcNow;
+        public DateTime LastAccessTime { get; set; } = DateTime.UtcNow;
         public string AppId { get; set; }
         [JsonIgnore]
         public ConcurrentBag<Message> Messages { get; set; } = new ConcurrentBag<Message>();
@@ -20,7 +20,7 @@ namespace Aiursoft.Stargate.SDK.Models
         public TimeSpan MaxIdleLife { get; private set; } = TimeSpan.FromDays(10);
         public int ConnectedUsers { get; set; }
 
-        public IEnumerable<Message> GetMessages(int lastReadId)
+        public IEnumerable<Message> GetMessagesFrom(int lastReadId)
         {
             return Messages.Where(t => t.Id > lastReadId);
         }
@@ -28,11 +28,6 @@ namespace Aiursoft.Stargate.SDK.Models
         public void Push(Message message)
         {
             Messages.Add(message);
-        }
-
-        public void RecordLastConnectTime()
-        {
-            this.LastAccessTime = DateTime.UtcNow;
         }
 
         public bool IsAlive()

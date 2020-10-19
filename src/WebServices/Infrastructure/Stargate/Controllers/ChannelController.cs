@@ -52,12 +52,11 @@ namespace Aiursoft.Stargate.Controllers
                 await _dbContext.SaveChangesAsync();
             }
             var channels = _stargateMemory
-                .GetChannelsUnderApp(appid)
-                .ToList();
+                .GetChannelsUnderApp(appid);
             var viewModel = new ViewMyChannelsViewModel
             {
-                AppId = appLocal.Id,
-                Channels = channels.ToList(),
+                AppId = appid,
+                Channels = channels,
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };
@@ -67,7 +66,7 @@ namespace Aiursoft.Stargate.Controllers
         [APIProduces(typeof(AiurValue<string>))]
         public IActionResult ValidateChannel(ChannelAddressModel model)
         {
-            var channel = _stargateMemory.GetChannelById(model.Id);
+            var channel = _stargateMemory[model.Id];
             if (channel == null)
             {
                 return Ok(new AiurProtocol
@@ -135,7 +134,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> DeleteChannel(DeleteChannelAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var channel = _stargateMemory.GetChannelById(model.ChannelId);
+            var channel = _stargateMemory[model.ChannelId];
             if (channel.AppId != appid)
             {
                 return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
