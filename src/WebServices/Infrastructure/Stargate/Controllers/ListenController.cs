@@ -51,7 +51,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
             int lastReadId = _counter.GetCurrent;
-            var channel = _memoryContext.GetChannelById(model.Id);
+            var channel = _memoryContext[model.Id];
             if (channel == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
@@ -72,9 +72,9 @@ namespace Aiursoft.Stargate.Controllers
                 channel.ConnectedUsers++;
                 while (_pusher.Connected && channel.IsAlive())
                 {
-                    channel.RecordLastConnectTime();
+                    channel.LastAccessTime = DateTime.UtcNow;
                     var nextMessages = channel
-                        .GetMessages(lastReadId)
+                        .GetMessagesFrom(lastReadId)
                         .ToList();
                     if (nextMessages.Any())
                     {
