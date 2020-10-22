@@ -9,7 +9,6 @@ using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,18 +20,15 @@ namespace Aiursoft.Wiki.Controllers
         private readonly SignInManager<WikiUser> _signInManager;
         private readonly WikiDbContext _dbContext;
         private readonly GatewayLocator _serviceLocation;
-        private readonly IConfiguration _configuration;
 
         public HomeController(
             SignInManager<WikiUser> signInManager,
             WikiDbContext context,
-            GatewayLocator serviceLocation,
-            IConfiguration configuration)
+            GatewayLocator serviceLocation)
         {
             _signInManager = signInManager;
             _dbContext = context;
             _serviceLocation = serviceLocation;
-            _configuration = configuration;
         }
 
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]

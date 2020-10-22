@@ -15,18 +15,15 @@ namespace Aiursoft.Stargate.Controllers
     [APIModelStateChecker]
     public class MessageController : ControllerBase
     {
-        private readonly StargateDbContext _dbContext;
         private readonly StargateMemory _memoryContext;
         private readonly Counter _counter;
         private readonly ACTokenValidator _tokenManager;
 
         public MessageController(
-            StargateDbContext dbContext,
             StargateMemory memoryContext,
             Counter counter,
             ACTokenValidator tokenManager)
         {
-            _dbContext = dbContext;
             _memoryContext = memoryContext;
             _counter = counter;
             _tokenManager = tokenManager;

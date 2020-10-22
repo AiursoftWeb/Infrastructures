@@ -6,8 +6,8 @@ namespace Aiursoft.XelNaga.Tests.Models
 {
     public class DemoService : ITransientDependency
     {
-        public static bool Done = false;
-        public static bool DoneAsync = false;
+        public static bool Done;
+        public static bool DoneAsync;
 
         public void DoSomethingSlow()
         {

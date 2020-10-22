@@ -40,7 +40,6 @@ namespace Aiursoft.Account.Controllers
         private readonly AuthService<AccountUser> _authService;
         private readonly IEnumerable<IAuthProvider> _authProviders;
         private readonly QRCodeService _qrCodeService;
-        private readonly AiurCache _cache;
         private readonly CannonService _cannonService;
 
         public AccountController(
@@ -52,7 +51,6 @@ namespace Aiursoft.Account.Controllers
             AuthService<AccountUser> authService,
             IEnumerable<IAuthProvider> authProviders,
             QRCodeService qrCodeService,
-            AiurCache cache,
             CannonService cannonService)
         {
             _userManager = userManager;
@@ -63,7 +61,6 @@ namespace Aiursoft.Account.Controllers
             _authService = authService;
             _authProviders = authProviders;
             _qrCodeService = qrCodeService;
-            _cache = cache;
             _cannonService = cannonService;
         }
 
@@ -338,7 +335,7 @@ namespace Aiursoft.Account.Controllers
                     appsBag.Add(appInfo.App);
                 }
                 catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
-            }, 8);
+            });
             model.Apps = appsBag.OrderBy(app =>
                 model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
             return View(model);
@@ -372,7 +369,7 @@ namespace Aiursoft.Account.Controllers
             {
                 var appInfo = await _developerApiService.AppInfoAsync(id);
                 model.Apps.Add(appInfo.App);
-            }, 8);
+            });
             return View(model);
         }
 

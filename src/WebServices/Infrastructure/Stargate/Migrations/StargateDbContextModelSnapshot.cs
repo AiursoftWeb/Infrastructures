@@ -3,12 +3,11 @@ using Aiursoft.Stargate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aiursoft.Stargate.Migrations
 {
     [DbContext(typeof(StargateDbContext))]
-    partial class StargateDbContextModelSnapshot : ModelSnapshot
+    class StargateDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

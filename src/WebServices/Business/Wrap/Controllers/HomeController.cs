@@ -49,7 +49,7 @@ namespace Aiursoft.Wrap.Controllers
             var token = await _appsContainer.AccessToken();
             try
             {
-                await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, new string[] { "Anonymous" }, RecordType.Redirect, enabled: true);
+                await _recordsService.CreateNewRecordAsync(token, model.NewRecordName, model.Url, new[] { "Anonymous" }, RecordType.Redirect, enabled: true);
             }
             catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotEnoughResources)
             {

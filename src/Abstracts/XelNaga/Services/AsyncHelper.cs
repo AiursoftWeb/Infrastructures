@@ -10,7 +10,7 @@ namespace Aiursoft.XelNaga.Services
     {
         public static void TryAsync(Func<Task> steps, int times, Action<Exception> onError = null)
         {
-            for (int i = 1; i <= times; i++)
+            for (var i = 1; i <= times; i++)
             {
                 try
                 {
@@ -22,7 +22,7 @@ namespace Aiursoft.XelNaga.Services
                     onError?.Invoke(e);
                     if (i >= times)
                     {
-                        throw e;
+                        throw;
                     }
                     Thread.Sleep(i * 15 * 1000);
                 }
@@ -76,7 +76,7 @@ namespace Aiursoft.XelNaga.Services
 
         public static Task ForEachParallel<T>(this IEnumerable<T> items, Func<T, Task> function)
             => Task.WhenAll(items
-                .Select(t => function(t)));
+                .Select(function));
 
         public static Task ForEachInThreadsPool<T>(this IEnumerable<T> items, Func<T, Task> function, int maxDegreeOfParallelism = 8)
             => InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);

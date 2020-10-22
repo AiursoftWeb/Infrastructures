@@ -20,7 +20,6 @@ namespace Aiursoft.Stargate.Controllers
         private readonly ChannelService _channelService;
         private readonly Counter _counter;
         private readonly StargateMemory _memory;
-        private readonly StargateDbContext _dbContext;
         private readonly CannonService _cannonService;
 
         public HomeController(
@@ -28,14 +27,12 @@ namespace Aiursoft.Stargate.Controllers
             ChannelService channelService,
             Counter counter,
             StargateMemory memory,
-            StargateDbContext dbContext,
             CannonService cannonService)
         {
             _appsContainer = appsContainer;
             _channelService = channelService;
             _counter = counter;
             _memory = memory;
-            _dbContext = dbContext;
             _cannonService = cannonService;
         }
 

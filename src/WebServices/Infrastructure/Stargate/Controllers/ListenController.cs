@@ -22,7 +22,6 @@ namespace Aiursoft.Stargate.Controllers
     public class ListenController : ControllerBase
     {
         private readonly Counter _counter;
-        private readonly StargateDbContext _dbContext;
         private readonly StargateMemory _memoryContext;
         private readonly WebSocketPusher _pusher;
         private readonly ILogger<ListenController> _logger;
@@ -30,7 +29,6 @@ namespace Aiursoft.Stargate.Controllers
         private readonly EventService _eventService;
 
         public ListenController(
-            StargateDbContext dbContext,
             StargateMemory memoryContext,
             WebSocketPusher pusher,
             ILogger<ListenController> logger,
@@ -38,7 +36,6 @@ namespace Aiursoft.Stargate.Controllers
             AppsContainer appsContainer,
             EventService eventService)
         {
-            _dbContext = dbContext;
             _memoryContext = memoryContext;
             _pusher = pusher;
             _logger = logger;
