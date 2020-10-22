@@ -51,7 +51,7 @@
         "collectionTitle": "App Authentication",
         "articles": [
             {
-                "articleTitle": "What is app"
+                "articleTitle": "What is app authentication"
             }
         ],
         "docAPIAddress": "https://archon.{{rootDomain}}/doc"
