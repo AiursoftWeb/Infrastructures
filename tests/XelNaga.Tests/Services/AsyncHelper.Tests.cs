@@ -20,7 +20,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         private int fakeWait = new Random().Next(40, 60);
         private double expectedTime => (expectedCount * 1.0 * fakeWait) / threads;
         private double expectedMaxWait => expectedTime * 2.0;
-        private double expectedMinWait => expectedTime * 1.1;
+        private double expectedMinWait => expectedTime * 1.01;
 
         [TestInitialize]
         public void InitBooks()
