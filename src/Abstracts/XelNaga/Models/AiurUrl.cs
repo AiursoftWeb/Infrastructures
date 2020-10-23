@@ -11,7 +11,7 @@ namespace Aiursoft.XelNaga.Models
     public class AiurUrl
     {
         public string Address { get; set; }
-        public Dictionary<string, string> Params { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Params { get; } = new Dictionary<string, string>();
         public AiurUrl(string address)
         {
             Address = address;
@@ -46,8 +46,9 @@ namespace Aiursoft.XelNaga.Models
         public AiurUrl(string host, string controllerName, string actionName, object param) : this(host, $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param) { }
         public override string ToString()
         {
-            var appendPart = this.Params.Aggregate("?", (current, param) => current + (param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&"));
-            return this.Address + appendPart.TrimEnd('?', '&');
+            var appendPart = Params.Aggregate("?", (c, p) => 
+                $"{c}{p.Key.ToLower()}={p.Value.ToUrlEncoded()}&");
+            return Address + appendPart.TrimEnd('?', '&');
         }
         
         public bool IsLocalhost()
