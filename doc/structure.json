@@ -14,14 +14,15 @@
             {
                 "articleTitle": "Aiursoft Intern Project"
             },
-            {
-                "articleTitle": "Before starting"
-            }
+
         ]
     },
     {
         "collectionTitle": "Aiursoft Infrastructures",
         "articles": [
+            {
+                "articleTitle": "API regulation"
+            },
             {
                 "articleTitle": "About Aiursoft Infrastructures",
                 "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Infrastructures/master/Readme.md"

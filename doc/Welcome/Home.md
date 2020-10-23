@@ -9,15 +9,15 @@ Here is the documentation center of all learning, access, and contribution to th
 If you are new to Aiursoft and want to learn and contribute, please refer:
 
 * [What is Aiursoft](./About%20Aiursoft.md)
-* [Before Starting](./Before%20starting.md)
-* [How to contribute](../Getting%20Involed/How%20to%20contribute.md)
-* [Join as intern](./Aiursoft%20Intern%20Project)
+* [How to contribute](./How%20to%20contribute.md)
+* [Join as intern](./Aiursoft%20Intern%20Project.md)
 
 ## Aiursoft Infrastructures
 
 If you want to use the Aiursoft Infrastructures as your own instance. Please read:
 
 * [Aiursoft Infrastructures](../Aiursoft%20Infrastructures/About%20Aiursoft%20Infrastructures)
+* [API regulations](./API%20regulations.md)
 
 ## Aiursoft Platform
 
