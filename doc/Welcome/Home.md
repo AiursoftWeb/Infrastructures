@@ -16,7 +16,7 @@ If you are new to Aiursoft and want to learn and contribute, please refer:
 
 If you want to use the Aiursoft Infrastructures as your own instance. Please read:
 
-* [Aiursoft Infrastructures](../Aiursoft%20Infrastructures/About%20Aiursoft%20Infrastructures)
+* [Aiursoft Infrastructures](../Aiursoft%20Infrastructures/About%20Aiursoft%20Infrastructures.md)
 * [API regulations](../Aiursoft%20Infrastructures/API%20regulations.md)
 
 ## Aiursoft Platform
