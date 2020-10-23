@@ -1,25 +1,31 @@
 ﻿@using Aiursoft.SDK.Services
 @using System.Reflection
-
 @inject ServiceLocation ServiceLocation
-@{ var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
-                var description = string.Empty; }
-
-@if (!string.IsNullOrWhiteSpace(ViewBag.Des))
-{
-    // View set des. Do nothing.
-    description = ViewBag.Des as string;
-}
-else if (!string.IsNullOrEmpty(descriptionAttribute))
-{
-    // View not set des. Set to project description.
-    description = descriptionAttribute;
+@{
+    var description = string.Empty;
+    if (!string.IsNullOrWhiteSpace(ViewBag.Des))
+    {
+        // View set des. Do nothing.
+        description = ViewBag.Des as string;
+    }
+    else
+    {
+        var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+        if (!string.IsNullOrEmpty(descriptionAttribute))
+        {
+            // View not set des. Set to project description.
+            description = descriptionAttribute;
+        }
+    }
 }
 <!--Aiur header-->
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<meta name="description" content="@description" />
+@if (!string.IsNullOrWhiteSpace(description))
+{
+    <meta name="description" content="@description" />    
+}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/x-icon" href="@ServiceLocation.UI/favicon.ico">
 

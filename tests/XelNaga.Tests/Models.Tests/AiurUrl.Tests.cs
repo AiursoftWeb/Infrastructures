@@ -1,9 +1,5 @@
-﻿using Aiursoft.XelNaga.Tests.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.XelNaga.Tests.Models.Tests

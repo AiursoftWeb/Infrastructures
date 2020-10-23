@@ -5,6 +5,7 @@ using Aiursoft.Identity.Attributes;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Tools;
 using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -82,6 +83,7 @@ namespace Aiursoft.Wiki.Controllers
                 CurrentArticle = currentArticle,
                 RenderedContent = Markdown.ToHtml(currentArticle.ArticleContent, pipeline)
             };
+            ViewBag.Des = Markdown.ToPlainText(currentArticle.ArticleContent).OTake(1000);
             return View(model);
         }
 
