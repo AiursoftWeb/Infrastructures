@@ -11,13 +11,20 @@ If you are new to Aiursoft and want to learn and contribute, please refer:
 * [What is Aiursoft](./About%20Aiursoft.md)
 * [Before Starting](./Before%20starting.md)
 * [How to contribute](../Getting%20Involed/How%20to%20contribute.md)
+* [Join as intern](./Aiursoft%20Intern%20Project)
+
+## Aiursoft Infrastructures
+
+If you want to use the Aiursoft Infrastructures as your own instance. Please read:
+
+* [Aiursoft Infrastructures](../Aiursoft%20Infrastructures/About%20Aiursoft%20Infrastructures)
 
 ## Aiursoft Platform
 
-The Aiursoft platform is a microservices platform consisting of a number of components. If you need to use Aiursoft as an authentication layr, please refer:
+The Aiursoft platform is a microservices platform consisting of a number of components. If you need to use Aiursoft as an authentication layer, please refer:
 
 * [App Authentication](../App%20Authentication/What%20is%20app%20authentication.md)
-* [User Authentication](../Authentication/OAuth.md)
+* [User Authentication](../User%20Authentication/Aiursoft%20authentication.md)
 
 ## Aiursoft API Services
 
