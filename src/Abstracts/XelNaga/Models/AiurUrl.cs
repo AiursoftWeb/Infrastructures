@@ -21,26 +21,24 @@ namespace Aiursoft.XelNaga.Models
             var t = param.GetType();
             foreach (var prop in t.GetProperties())
             {
-                if (prop.GetValue(param) != null)
+                if (prop.GetValue(param) == null) continue;
+                var propName = prop.Name;
+                var propValue = prop.GetValue(param).ToString();
+                var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
+                if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
                 {
-                    var propName = prop.Name;
-                    var propValue = prop.GetValue(param).ToString();
-                    var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-                    if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
+                    propName = nameProvider.Name;
+                }
+                if (prop.PropertyType == typeof(DateTime))
+                {
+                    if (prop.GetValue(param) is DateTime time)
                     {
-                        propName = nameProvider.Name;
+                        propValue = time.ToString("o", CultureInfo.InvariantCulture);
                     }
-                    if (prop.PropertyType == typeof(DateTime))
-                    {
-                        if (prop.GetValue(param) is DateTime time)
-                        {
-                            propValue = time.ToString("o", CultureInfo.InvariantCulture);
-                        }
-                    }
-                    if (!string.IsNullOrWhiteSpace(propValue))
-                    {
-                        Params.Add(propName, propValue);
-                    }
+                }
+                if (!string.IsNullOrWhiteSpace(propValue))
+                {
+                    Params.Add(propName, propValue);
                 }
             }
         }
@@ -48,12 +46,18 @@ namespace Aiursoft.XelNaga.Models
         public AiurUrl(string host, string controllerName, string actionName, object param) : this(host, $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param) { }
         public override string ToString()
         {
-            string appendPart = "?";
-            foreach (var param in this.Params)
-            {
-                appendPart += param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&";
-            }
+            var appendPart = this.Params.Aggregate("?", (current, param) => current + (param.Key.ToLower() + "=" + param.Value.ToUrlEncoded() + "&"));
             return this.Address + appendPart.TrimEnd('?', '&');
+        }
+        
+        public bool IsLocalhost()
+        {
+            return Address.StartsWith("http://localhost") ||
+                   Address.StartsWith("https://localhost") ||
+                   Address.StartsWith("http://127.0.0.1") ||
+                   Address.StartsWith("https://127.0.0.1") ||
+                   Address.StartsWith("http://::1") ||
+                   Address.StartsWith("https://::1");
         }
     }
 }

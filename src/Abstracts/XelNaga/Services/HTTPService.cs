@@ -23,7 +23,7 @@ namespace Aiursoft.XelNaga.Services
 
         public async Task<string> Get(AiurUrl url, bool internalRequest)
         {
-            if (internalRequest && !url.Address.StartsWith("https://localhost"))
+            if (internalRequest && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
@@ -49,7 +49,7 @@ namespace Aiursoft.XelNaga.Services
 
         public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest)
         {
-            if (internalRequest && !url.Address.StartsWith("https://localhost"))
+            if (internalRequest && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
@@ -75,7 +75,7 @@ namespace Aiursoft.XelNaga.Services
 
         public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool internalRequest)
         {
-            if (internalRequest && !url.Address.StartsWith("https://localhost"))
+            if (internalRequest && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
