@@ -6,6 +6,7 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Developer.Controllers
@@ -21,6 +22,11 @@ namespace Aiursoft.Developer.Controllers
             DeveloperDbContext context)
         {
             _dbContext = context;
+        }
+
+        public IActionResult Error()
+        {
+            throw new Exception("This is a test API error for debugging.");
         }
 
         public async Task<IActionResult> IsValidApp(IsValidateAppAddressModel model)
