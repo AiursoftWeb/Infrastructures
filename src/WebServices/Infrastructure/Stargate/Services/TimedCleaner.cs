@@ -15,16 +15,13 @@ namespace Aiursoft.Stargate.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly StargateMemory _memoryContext;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory,
-            StargateMemory memoryContext)
+            IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _memoryContext = memoryContext;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

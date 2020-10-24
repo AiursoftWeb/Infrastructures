@@ -6,7 +6,6 @@ using Aiursoft.Gateway.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -19,18 +18,15 @@ namespace Aiursoft.Gateway.Services
         private readonly GatewayDbContext _dbContext;
         private readonly DeveloperApiService _developerApiService;
         private readonly ACTokenValidator _tokenManager;
-        private readonly AiurCache _aiurCache;
 
         public GrantChecker(
             GatewayDbContext context,
             DeveloperApiService developerApiService,
-            ACTokenValidator tokenManager,
-            AiurCache aiurCache)
+            ACTokenValidator tokenManager)
         {
             _dbContext = context;
             _developerApiService = developerApiService;
             _tokenManager = tokenManager;
-            _aiurCache = aiurCache;
         }
 
         public async Task<GatewayUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)

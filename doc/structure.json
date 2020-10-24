@@ -14,27 +14,18 @@
             {
                 "articleTitle": "Aiursoft Intern Project"
             },
-            {
-                "articleTitle": "Before starting"
-            },
-            {
-                "articleTitle": "What is Aiursoft Infrastructures Platform",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Infrastructures/master/Readme.md"
-            }
+
         ]
     },
     {
-        "collectionTitle": "Getting Involed",
+        "collectionTitle": "Aiursoft Infrastructures",
         "articles": [
-
             {
-                "articleTitle": "What is Agile"
+                "articleTitle": "API regulations"
             },
             {
-                "articleTitle": "What is Scrum"
-            },
-            {
-                "articleTitle": "Commit Regulation"
+                "articleTitle": "About Aiursoft Infrastructures",
+                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Infrastructures/master/Readme.md"
             }
         ]
     },
@@ -49,11 +40,15 @@
     },
     {
         "collectionTitle": "App Authentication",
-        "articles": [],
+        "articles": [
+            {
+                "articleTitle": "What is app authentication"
+            }
+        ],
         "docAPIAddress": "https://archon.{{rootDomain}}/doc"
     },
     {
-        "collectionTitle": "Development",
+        "collectionTitle": "App Info",
         "articles": [],
         "docAPIAddress": "https://developer.{{rootDomain}}/doc"
     },

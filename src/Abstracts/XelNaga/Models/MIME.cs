@@ -7,7 +7,7 @@ namespace Aiursoft.XelNaga.Models
     {
         private static bool HasKey(string extension)
         {
-            string lower = extension.ToLower().TrimStart('.');
+            var lower = extension.ToLower().TrimStart('.');
             return MimeTypesDictionary.ContainsKey(lower);
         }
 
@@ -22,7 +22,7 @@ namespace Aiursoft.XelNaga.Models
         {
             var extension = Path.GetExtension(fileName).Trim('.');
             var contentType = GetContentType(extension);
-            return contentType.StartsWith("video"); ;
+            return contentType.StartsWith("video");
         }
 
         public static string GetContentType(string extenstion)

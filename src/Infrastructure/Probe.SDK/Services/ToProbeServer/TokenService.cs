@@ -30,6 +30,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
         /// <param name="siteName"></param>
         /// <param name="permissions">Upload, Download</param>
         /// <param name="underPath"></param>
+        /// <param name="lifespan"></param>
         /// <returns></returns>
         public async Task<string> GetTokenAsync(
             string accessToken, 

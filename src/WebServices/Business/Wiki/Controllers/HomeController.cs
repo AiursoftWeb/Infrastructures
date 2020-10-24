@@ -5,11 +5,11 @@ using Aiursoft.Identity.Attributes;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Tools;
 using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,18 +21,15 @@ namespace Aiursoft.Wiki.Controllers
         private readonly SignInManager<WikiUser> _signInManager;
         private readonly WikiDbContext _dbContext;
         private readonly GatewayLocator _serviceLocation;
-        private readonly IConfiguration _configuration;
 
         public HomeController(
             SignInManager<WikiUser> signInManager,
             WikiDbContext context,
-            GatewayLocator serviceLocation,
-            IConfiguration configuration)
+            GatewayLocator serviceLocation)
         {
             _signInManager = signInManager;
             _dbContext = context;
             _serviceLocation = serviceLocation;
-            _configuration = configuration;
         }
 
         [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
@@ -86,6 +83,7 @@ namespace Aiursoft.Wiki.Controllers
                 CurrentArticle = currentArticle,
                 RenderedContent = Markdown.ToHtml(currentArticle.ArticleContent, pipeline)
             };
+            ViewBag.Des = Markdown.ToPlainText(currentArticle.ArticleContent).OTake(1000);
             return View(model);
         }
 

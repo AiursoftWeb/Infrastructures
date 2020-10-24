@@ -8,7 +8,7 @@ using System;
 namespace Aiursoft.Wrap.Migrations
 {
     [DbContext(typeof(WrapDbContext))]
-    partial class WrapDbContextModelSnapshot : ModelSnapshot
+    class WrapDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

@@ -70,7 +70,10 @@ namespace Aiursoft.Colossus.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            var model = new CreateSiteViewModel(user);
+            var model = new CreateSiteViewModel(user)
+            {
+                SiteName = user.NickName.Replace(" ", "").ToLower() + "s-site"
+            };
             return View(model);
         }
 

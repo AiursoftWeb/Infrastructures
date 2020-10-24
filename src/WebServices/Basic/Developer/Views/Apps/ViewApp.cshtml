@@ -76,7 +76,12 @@
                                         <span asp-validation-for="AppId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group mb-1">
-                                        <label asp-for="AppSecret">@Localizer["AppSecret"]</label>
+                                        <label asp-for="AppSecret" class="w-100">
+                                            @Localizer["AppSecret"]
+                                            <a class="d-block float-right" href="@ServiceLocation.Wiki/App%20Authentication/What%20is%20app%20authentication.md" target="_blank">
+                                                @Localizer["What's that for?"]
+                                            </a>
+                                        </label>
                                     </div>
                                     <div class="input-group mb-3">
                                         <input asp-for="AppSecret" type="password" class="form-control" readonly="readonly" value="*************************">
@@ -206,6 +211,9 @@
                         <div class="card-header">
                             <i class="far fa-chart-bar"></i>
                             @Localizer["OAuth Settings"]
+                            <a href="@ServiceLocation.Wiki/User%20Authentication/Aiursoft%20authentication.md" class="d-block float-right text-muted" data-toggle="tooltip" data-placement="top" title="How to use the authentication system?">
+                                <i class="far fa-question-circle"></i>
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -238,7 +246,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>@Localizer["Force the user to confirm to grant your app even when he is already granted your app."] </p>
+                                    <p>@Localizer["Force the user to confirm to grant your app even when he already granted your app."] </p>
                                 </div>
                             </div>
                             <div class="row">
@@ -252,17 +260,20 @@
                                     <p>@Localizer["Debug mode allows any domain accessible to authenticate your app."]</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-check">
-                                        <input type="checkbox" asp-for="Trusted" readonly="readonly" disabled="disabled">
-                                        <label asp-for="Trusted">@Localizer["Trusted App"]</label>
+                            @if (Model.Trusted)
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input type="checkbox" asp-for="Trusted" readonly="readonly" disabled="disabled">
+                                            <label asp-for="Trusted">@Localizer["Trusted App"]</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>@Localizer["Trusted app is verified by Aiursoft and don't require user prompt to access all permissions."]</p>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <p>@Localizer["Trusted app is verified by Aiursoft and don't require user prompt to access all permissions."]</p>
-                                </div>
-                            </div>
+                            }
                             <div class="form-group">
                                 <label asp-for="AppDomain"></label>
                                 <input asp-for="AppDomain" type="text" class="form-control" placeholder="Enter your valid app domain. For example: google.com">

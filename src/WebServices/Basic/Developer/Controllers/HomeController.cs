@@ -38,7 +38,7 @@ namespace Aiursoft.Developer.Controllers
         [AiurForceAuth("", "", justTry: true)]
         public IActionResult Error()
         {
-            throw new NotImplementedException("This is a test error.");
+            throw new Exception("This is a test view error for debugging.");
         }
 
         [HttpPost]

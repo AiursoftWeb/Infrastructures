@@ -20,7 +20,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         private int fakeWait = new Random().Next(40, 60);
         private double expectedTime => (expectedCount * 1.0 * fakeWait) / threads;
         private double expectedMaxWait => expectedTime * 2.0;
-        private double expectedMinWait => expectedTime * 1.1;
+        private double expectedMinWait => expectedTime * 1.01;
 
         [TestInitialize]
         public void InitBooks()
@@ -93,7 +93,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         [TestMethod]
         public void TestRunSync()
         {
-            int i = 0;
+            var i = 0;
             AsyncHelper.RunSync(async () =>
             {
                 await Task.Delay(1);
@@ -107,17 +107,17 @@ namespace Aiursoft.XelNaga.Tests.Services
         {
             var result = AsyncHelper.RunSync(async () =>
             {
-                int i = 0;
+                var i = new Random().Next(0, 1);
                 await Task.Delay(1);
-                return i + 1;
+                return i + new Random().Next(1,10);
             });
-            Assert.AreEqual(result, 1);
+            Assert.IsTrue(result >= 1);
         }
 
-        private async Task SetPosition(int i, int[] array)
+        private async Task SetPosition(int i, IList<int> arrayToChange)
         {
             await Task.Delay(fakeWait);
-            array[i]++;
+            arrayToChange[i]++;
         }
     }
 }
