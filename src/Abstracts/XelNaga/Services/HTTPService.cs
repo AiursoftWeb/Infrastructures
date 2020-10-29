@@ -36,7 +36,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json, text/html");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -62,7 +62,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -90,7 +90,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
