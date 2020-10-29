@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
 {
+    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class HomeController : Controller
@@ -49,6 +50,7 @@ namespace Aiursoft.Stargate.Controllers
             });
         }
 
+        [LimitPerMin(2)]
         public async Task<IActionResult> IntegratedTest()
         {
             var token = await _appsContainer.AccessToken();
