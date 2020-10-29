@@ -54,7 +54,7 @@ namespace Aiursoft.XelNaga.Services
                 url.Address = _regex.Replace(url.Address, "http://");
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
+            var request = new HttpRequestMessage(HttpMethod.Post, url.ToString())
             {
                 Content = new FormUrlEncodedContent(postDataStr.Params)
             };

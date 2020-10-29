@@ -63,5 +63,45 @@ namespace Aiursoft.XelNaga.Tests.Services
             Assert.AreEqual(resultObject.args.a.ToString(), random);
             Assert.IsTrue(resultObject.url.ToString().StartsWith("https://"));
         }
+
+        [TestMethod]
+        public async Task TestPostInternal()
+        {
+            var http = _serviceProvider.GetRequiredService<HTTPService>();
+            var random = StringOperation.RandomString(100);
+            var random2 = StringOperation.RandomString(100);
+            var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new 
+            {
+                a = random
+            }), new AiurUrl("", new
+            {
+                c = random2
+            }), true);
+
+            dynamic resultObject = JObject.Parse(result);
+            Assert.AreEqual(resultObject.args.a.ToString(), random);
+            Assert.AreEqual(resultObject.form.c.ToString(), random2);
+            Assert.IsTrue(resultObject.url.ToString().StartsWith("http://"));
+        }
+
+        [TestMethod]
+        public async Task TestPostOutter()
+        {
+            var http = _serviceProvider.GetRequiredService<HTTPService>();
+            var random = StringOperation.RandomString(100);
+            var random2 = StringOperation.RandomString(100);
+            var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new
+            {
+                a = random
+            }), new AiurUrl("", new
+            {
+                c = random2
+            }), false);
+
+            dynamic resultObject = JObject.Parse(result);
+            Assert.AreEqual(resultObject.args.a.ToString(), random);
+            Assert.AreEqual(resultObject.form.c.ToString(), random2);
+            Assert.IsTrue(resultObject.url.ToString().StartsWith("https://"));
+        }
     }
 }
