@@ -98,13 +98,6 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft AiurDrive",
-                    #warning Hard code here.
-                    CheckAddress = $"https://drive.aiursoft.com/?show=direct",
-                    ExpectedContent = "AiurDrive is a file store for all kinds of users."
-                },
-                new MonitorRule
-                {
                     ProjectName = "Aiursoft wiki center",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
                     ExpectedContent = "Wiki Center"
