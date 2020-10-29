@@ -14,7 +14,6 @@ namespace Aiursoft.SDK.Services
         private readonly HttpClient _client;
         public string Account { get; private set; }
         public string UI { get; private set; }
-        public string Colossus { get; private set; }
         public string Developer { get; private set; }
         public string Gateway { get; private set; }
         public string EE { get; private set; }
@@ -31,7 +30,6 @@ namespace Aiursoft.SDK.Services
             var section = configuration.GetSection("Dependencies");
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
             UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
-            Colossus = TrySet(section["ColossusPath"], "https://colossus.aiursoft.com");
             Wrap = TrySet(section["WrapPath"], "https://wrap.aiursoft.com");
             Gateway = TrySet(section["GatewayPath"], "https://gateway.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");

@@ -98,9 +98,10 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Colossus",
-                    CheckAddress = $"{serviceLocation.Colossus}/?show=direct",
-                    ExpectedContent = "Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."
+                    ProjectName = "Aiursoft AiurDrive",
+                    #warning Hard code here.
+                    CheckAddress = $"https://drive.aiursoft.com/?show=direct",
+                    ExpectedContent = "AiurDrive is a file store for all kinds of users."
                 },
                 new MonitorRule
                 {

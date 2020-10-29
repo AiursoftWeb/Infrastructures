@@ -40,7 +40,7 @@ Email 中请注明：
 
 ### 1. 用户可能想访问
 
-Aiursoft 的业务系统中有大量名词，例如：`Developer`, `Colossus`, `Wiki`等。用户在输入这些名词的时候极可能会打错。例如将`Developer`打成：`Developers`、`dev`或`devloper`等。你需要开发一个组件，其输入一个词汇，输出其是否是Aiursoft的业务系统名词和是否输入精准。这个组件能够容忍常见错误，并且正确匹配到真正的名词上。Aiursoft的业务系统名词可能会变更，但是不会太频繁。
+Aiursoft 的业务系统中有大量名词，例如：`Developer`, `AiurDrive`, `Wiki`等。用户在输入这些名词的时候极可能会打错。例如将`Developer`打成：`Developers`、`dev`或`devloper`等。你需要开发一个组件，其输入一个词汇，输出其是否是Aiursoft的业务系统名词和是否输入精准。这个组件能够容忍常见错误，并且正确匹配到真正的名词上。Aiursoft的业务系统名词可能会变更，但是不会太频繁。
 
 * 你的组件必须基于 .NET Core 构建。
 * 你的方案提供的组件，在判定时不得使用IO操作（例如调用第三方API）。并且它必须在10ms内返回。
