@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.Stargate.Controllers
 {
-    [LimitPerMin]
     [APIExpHandler]
     [APIModelStateChecker]
     public class HomeController : Controller
