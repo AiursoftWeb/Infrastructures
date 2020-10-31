@@ -21,9 +21,9 @@ namespace Aiursoft.XelNaga.Services
             _client = clientFactory.CreateClient();
         }
 
-        public async Task<string> Get(AiurUrl url, bool internalRequest)
+        public async Task<string> Get(AiurUrl url, bool forceHttp = false)
         {
-            if (internalRequest && !url.IsLocalhost())
+            if (forceHttp && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
@@ -36,7 +36,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json, text/html");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -47,14 +47,14 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool internalRequest)
+        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool forceHttp = false)
         {
-            if (internalRequest && !url.IsLocalhost())
+            if (forceHttp && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
+            var request = new HttpRequestMessage(HttpMethod.Post, url.ToString())
             {
                 Content = new FormUrlEncodedContent(postDataStr.Params)
             };
@@ -62,7 +62,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -73,9 +73,9 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool internalRequest)
+        public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool forceHttp = false)
         {
-            if (internalRequest && !url.IsLocalhost())
+            if (forceHttp && !url.IsLocalhost())
             {
                 url.Address = _regex.Replace(url.Address, "http://");
             }
@@ -90,7 +90,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            var response = await _client.SendAsync(request);
+            using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();

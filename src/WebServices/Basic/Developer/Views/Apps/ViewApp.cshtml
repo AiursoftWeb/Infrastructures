@@ -411,7 +411,7 @@
                                             <th>@Localizer["Channel Creation time"]</th>
                                             <th>@Localizer["Last access time"]</th>
                                             <th>@Localizer["Connected Users"]</th>
-                                            <th>@Localizer["Connect"]</th>
+                                            <th>@Localizer["Listen"]</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -423,13 +423,13 @@
                                                 <td data-utc-time="@channel.LastAccessTime" data-order="@channel.LastAccessTime.Ticks"></td>
                                                 <td>@channel.ConnectedUsers</td>
                                                 @{
-                                                    var path = new AiurUrl(StargateLocator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
+                                                    var path = new AiurUrl(StargateLocator.Endpoint, "Home", "ListenTo", new ChannelAddressModel
                                                     {
                                                         Id = channel.Id,
                                                         Key = channel.ConnectKey
                                                     }).ToString();
                                                 }
-                                                <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="Connect path" data-stacktrace="@path">View connect path</a></td>
+                                                <td><a href="@path" target="_blank">Listen</a></td>
                                             </tr>
                                         }
                                     </tbody>

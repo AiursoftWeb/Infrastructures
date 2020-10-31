@@ -50,26 +50,6 @@
                 "${workspaceFolder}/src/Web Services/Business/WWW/Aiursoft.WWW.csproj"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "buildColossus",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/src/Web Services/Business/Colossus/Aiursoft.Colossus.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "buildColossus",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/src/Web Services/Business/Aiursoft.Colossus/Aiursoft.Colossus.csproj"
-            ],
-            "problemMatcher": "$msCompile"
         }
     ]
 }

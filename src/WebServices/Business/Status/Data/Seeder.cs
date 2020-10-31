@@ -98,12 +98,6 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Colossus",
-                    CheckAddress = $"{serviceLocation.Colossus}/?show=direct",
-                    ExpectedContent = "Colossus produce a very pure online storage experience, which helps you share any file and transfer between any device."
-                },
-                new MonitorRule
-                {
                     ProjectName = "Aiursoft wiki center",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
                     ExpectedContent = "Wiki Center"
