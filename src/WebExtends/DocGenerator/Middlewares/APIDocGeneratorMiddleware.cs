@@ -62,7 +62,10 @@ namespace Aiursoft.DocGenerator.Middlewares
             }
             context.Response.StatusCode = 200;
             var actionsMatches = new List<API>();
-            var possibleControllers = Assembly.GetEntryAssembly()?.GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type));
+            var possibleControllers = Assembly
+                .GetEntryAssembly()?
+                .GetTypes()
+                .Where(type => typeof(ControllerBase).IsAssignableFrom(type));
             foreach (var controller in possibleControllers ?? new List<Type>())
             {
                 if (!IsController(controller))
