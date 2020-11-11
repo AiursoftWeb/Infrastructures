@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>3.2.11</Version>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Description>The base class, tools and extends for Aiursoft web apps.</Description>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Description>Aiursoft EE is a learning platform inspired by the way developers work. From open source to business, you can host and review videos, manage presentations, and build courses alongside other engineers.</Description>
   </PropertyGroup>
 
