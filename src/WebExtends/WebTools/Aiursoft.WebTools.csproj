@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>3.2.11</Version>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<Version>5.0.0</Version>
+		<TargetFramework>net5.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>
 		<Authors>Anduin</Authors>
@@ -16,7 +16,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
 	</ItemGroup>
 

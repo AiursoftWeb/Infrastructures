@@ -22,6 +22,7 @@ The enterprise can deploy their own dedicated instance of Aiursoft Infrastructur
 There are some example apps based on Aiursoft Infrastructures. 
 
 * [Kahla](https://github.com/AiursoftWeb/Kahla)
+* [AiurDrive](http://github.com/AiursoftWeb/AiurDrive)
 * [Tracer](https://github.com/AiursoftWeb/Tracer)
 
 ## Features
@@ -102,6 +103,14 @@ To run one service instance locally, simply execute `dotnet run` under which fol
 As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference for more documents via the official ASP.NET document for how to run:
 
 https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-3.1&tabs=windows#run-the-app
+
+### Database
+
+In debugging environment, we are using [Microsoft SQL Server LocalDb](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15) by default. You can change the connection string in `appsettings.json` to use your own `SQL Server` instance.
+
+In our production environment, we are using [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server).
+
+We are using [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) to control our database. It supports different type of database. So our services can switch between different databases easily.
 
 ## How to contribute
 

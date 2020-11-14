@@ -39,7 +39,6 @@ update()
     wiki_code="$infs_code/src/WebServices/Business/Wiki"
     status_code="$infs_code/src/WebServices/Business/Status"
     account_code="$infs_code/src/WebServices/Business/Account"
-    colossus_code="$infs_code/src/WebServices/Business/Colossus"
     wrap_code="$infs_code/src/WebServices/Business/Wrap"
     ee_code="$infs_code/src/WebServices/Business/EE"
 
@@ -54,7 +53,6 @@ update()
     wiki_path="$infs_path/Wiki"
     status_path="$infs_path/Status"
     account_path="$infs_path/Account"
-    colossus_path="$infs_path/Colossus"
     wrap_path="$infs_path/Wrap"
     ee_path="$infs_path/EE"
 
@@ -91,9 +89,6 @@ update()
     systemctl stop "account.service"
     aiur dotnet/publish $account_path $account_code/"Aiursoft.Account.csproj"
 
-    systemctl stop "colossus.service"
-    aiur dotnet/publish $colossus_path $colossus_code/"Aiursoft.Colossus.csproj"
-
     systemctl stop "wrap.service"
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
 
@@ -121,7 +116,6 @@ update()
     sleep 30
     
     echo "Starting business services..."
-    systemctl restart "colossus.service"
     systemctl restart "www.service"
     systemctl restart "account.service"
     systemctl restart "wrap.service"

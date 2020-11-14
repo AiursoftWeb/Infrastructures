@@ -381,16 +381,6 @@ namespace Aiursoft.Gateway.Controllers
             return View(model);
         }
 
-        [Authorize]
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> SignOut()
-        {
-            await _signInManager.SignOutAsync();
-            return this.Protocol(ErrorType.Success, "Successfully signed out!");
-        }
-
         public async Task<IActionResult> UserSignOut(UserSignOutAddressModel model)
         {
             await _signInManager.SignOutAsync();

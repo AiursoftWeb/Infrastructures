@@ -14,6 +14,8 @@ Aiursoft works without boundaries and bounty. Only powered by interests and love
 * Follow best practice, as always.
 * Do not use, until totally understand.
 * Work smart, not hard.
+* Keep the code clean is our first priority.
+  * If a name cannot clearly and accurately describe its actual function, rename it immediately.
 
 Website: [www.aiursoft.com](https://www.aiursoft.com)
 

@@ -49,6 +49,7 @@ namespace Aiursoft.Stargate.Controllers
             });
         }
 
+        [LimitPerMin(2)]
         public async Task<IActionResult> IntegratedTest()
         {
             var token = await _appsContainer.AccessToken();

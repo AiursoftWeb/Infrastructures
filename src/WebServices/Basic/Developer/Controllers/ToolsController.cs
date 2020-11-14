@@ -14,6 +14,7 @@ namespace Aiursoft.Developer.Controllers
     [LimitPerMin]
     public class ToolsController : Controller
     {
+        private readonly string[] _validUuidFormats = new string[] { "N", "D", "B", "P", "X" };
         private readonly QRCodeService _qrCodeService;
 
         public ToolsController(QRCodeService qrCodeService)
@@ -194,6 +195,23 @@ namespace Aiursoft.Developer.Controllers
         {
             var qrCode = _qrCodeService.ToQRCodePngBytes(source);
             return File(qrCode, "image/png");
+        }
+
+        public IActionResult Uuid()
+        {
+            var model = new UuidViewModel();
+            return View(model);
+        }
+
+        [Route("uuid-build")]
+        public IActionResult UuidBuild(string format = "D")
+        {
+            if (!_validUuidFormats.Contains(format))
+            {
+                format = "D";
+            }
+            var uuid = Guid.NewGuid().ToString(format);
+            return View(model: uuid);
         }
     }
 }

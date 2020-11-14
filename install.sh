@@ -27,8 +27,6 @@ accountAppId=$(uuidgen)
 accountAppSecret=$(uuidgen)
 statusAppId=$(uuidgen)
 statusAppSecret=$(uuidgen)
-colossusAppId=$(uuidgen)
-colossusAppSecret=$(uuidgen)
 wrapAppId=$(uuidgen)
 wrapAppSecret=$(uuidgen)
 eeAppId=$(uuidgen)
@@ -45,7 +43,6 @@ www_code="$infs_code/src/WebServices/Business/WWW"
 wiki_code="$infs_code/src/WebServices/Business/Wiki"
 status_code="$infs_code/src/WebServices/Business/Status"
 account_code="$infs_code/src/WebServices/Business/Account"
-colossus_code="$infs_code/src/WebServices/Business/Colossus"
 wrap_code="$infs_code/src/WebServices/Business/Wrap"
 ee_code="$infs_code/src/WebServices/Business/EE"
 
@@ -60,7 +57,6 @@ www_path="$infs_path/WWW"
 wiki_path="$infs_path/Wiki"
 status_path="$infs_path/Status"
 account_path="$infs_path/Account"
-colossus_path="$infs_path/Colossus"
 wrap_path="$infs_path/Wrap"
 ee_path="$infs_path/EE"
 
@@ -79,7 +75,6 @@ set_env()
     aiur text/edit_json "Dependencies.GatewayPath" "https://gateway.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.AccountPath" "https://account.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.UIPath" "https://ui.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "Dependencies.ColossusPath" "https://colossus.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.WrapPath" "https://wrap.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.EEPath" "https://ee.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.WikiPath" "https://wiki.$domain" $dist_path/appsettings.Production.json
@@ -161,7 +156,6 @@ install_infrastructures()
     aiur dotnet/seeddb $wiki_code "Wiki" $dbPassword
     aiur dotnet/seeddb $status_code "Status" $dbPassword
     aiur dotnet/seeddb $account_code "Account" $dbPassword
-    aiur dotnet/seeddb $colossus_code "Colossus" $dbPassword
     aiur dotnet/seeddb $wrap_code "Wrap" $dbPassword
     aiur dotnet/seeddb $ee_code "EE" $dbPassword
 
@@ -176,7 +170,6 @@ install_infrastructures()
     aiur dotnet/publish $wiki_path $wiki_code/"Aiursoft.Wiki.csproj"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
     aiur dotnet/publish $account_path $account_code/"Aiursoft.Account.csproj"
-    aiur dotnet/publish $colossus_path $colossus_code/"Aiursoft.Colossus.csproj"
     aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"
 
@@ -193,7 +186,6 @@ install_infrastructures()
     set_env $wiki_path $1
     set_env $status_path $1
     set_env $account_path $1
-    set_env $colossus_path $1
     set_env $wrap_path $1
     set_env $ee_path $1
 
@@ -224,7 +216,7 @@ install_infrastructures()
     aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
     aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
-    aiur text/edit_json "Navbar[1].Link" "https://colossus.$1" $www_path/appsettings.Production.json
+    aiur text/edit_json "Navbar[1].Link" "https://drive.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "Navbar[2].Link" "https://wrap.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "Navbar[4].Dropdowns[0].Link" "https://wiki.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
@@ -235,8 +227,6 @@ install_infrastructures()
     aiur text/edit_json "AccountAppSecret" "$accountAppSecret" $account_path/appsettings.Production.json
     aiur text/edit_json "StatusAppId" "$statusAppId" $status_path/appsettings.Production.json
     aiur text/edit_json "StatusAppSecret" "$statusAppSecret" $status_path/appsettings.Production.json
-    aiur text/edit_json "ColossusAppId" "$colossusAppId" $colossus_path/appsettings.Production.json
-    aiur text/edit_json "ColossusAppSecret" "$colossusAppSecret" $colossus_path/appsettings.Production.json
     aiur text/edit_json "WrapAppId" "$wrapAppId" $wrap_path/appsettings.Production.json
     aiur text/edit_json "WrapAppSecret" "$wrapAppSecret" $wrap_path/appsettings.Production.json
     aiur text/edit_json "EEAppId" "$eeAppId" $ee_path/appsettings.Production.json
@@ -270,8 +260,6 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{accountAppSecret}}" $accountAppSecret
     replace_in_file ./temp.sql "{{statusAppId}}" $statusAppId
     replace_in_file ./temp.sql "{{statusAppSecret}}" $statusAppSecret
-    replace_in_file ./temp.sql "{{colossusAppId}}" $colossusAppId
-    replace_in_file ./temp.sql "{{colossusAppSecret}}" $colossusAppSecret
     replace_in_file ./temp.sql "{{wrapAppId}}" $wrapAppId
     replace_in_file ./temp.sql "{{wrapAppSecret}}" $wrapAppSecret
     replace_in_file ./temp.sql "{{eeAppId}}" $eeAppId
@@ -289,7 +277,6 @@ install_infrastructures()
     add_service "wiki" $wiki_path "Aiursoft.Wiki" $1
     add_service "status" $status_path "Aiursoft.Status" $1
     add_service "account" $account_path "Aiursoft.Account" $1
-    add_service "colossus" $colossus_path "Aiursoft.Colossus" $1
     add_service "wrap" $wrap_path "Aiursoft.Wrap" $1
     add_service "ee" $ee_path "Aiursoft.EE" $1
 
