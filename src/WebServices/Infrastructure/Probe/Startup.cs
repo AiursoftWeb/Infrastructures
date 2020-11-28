@@ -34,7 +34,7 @@ namespace Aiursoft.Probe
             services.AddAiurAPIMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddBasic();
+            services.AddAiursoftSDK();
             services.AddScoped<IStorageProvider, DiskAccess>();
             services.AddSingleton(new ProbeLocator(
                 endpoint: Configuration["ProbeEndpoint"],

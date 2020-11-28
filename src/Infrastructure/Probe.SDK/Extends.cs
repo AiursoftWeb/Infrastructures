@@ -22,11 +22,6 @@ namespace Aiursoft.Probe.SDK
             this IServiceCollection services,
             string serverEndpoint)
         {
-            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             AsyncHelper.TryAsync(async () =>
             {
                 var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);

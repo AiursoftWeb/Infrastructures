@@ -37,7 +37,7 @@ namespace Aiursoft.Developer
             services.AddAiurMvc();
             services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
             services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
-            services.AddAiurDependenciesWithIdentity<DeveloperUser>(
+            services.AddAiursoftIdentity<DeveloperUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),

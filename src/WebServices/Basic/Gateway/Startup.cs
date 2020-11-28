@@ -51,7 +51,7 @@ namespace Aiursoft.Gateway
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
-            services.AddBasic(abstracts: typeof(IAuthProvider));
+            services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<GatewayUser>>();
             services.AddSessionBasedCaptcha();
         }

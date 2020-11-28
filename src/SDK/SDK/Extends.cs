@@ -7,6 +7,7 @@ using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -206,18 +207,20 @@ namespace Aiursoft.SDK
             return app;
         }
 
-        public static IServiceCollection AddBasic(this IServiceCollection services, params Type[] abstracts)
+        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
-            if (Assembly.GetEntryAssembly()?.FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             var abstractsList = abstracts.ToList();
             abstractsList.Add(typeof(IHostedService));
-            services.AddScannedDependencies(abstractsList.ToArray());
+            if (EnvExtends.IsRunning())
+            {
+                services.AddScannedDependencies(abstractsList.ToArray());
+            }
+            else
+            {
+                services.AddLibraryDependencies(abstractsList.ToArray());
+            }
             return services;
         }
 
@@ -237,7 +240,7 @@ namespace Aiursoft.SDK
                 {
                     await context.Database.MigrateAsync();
                     seeder?.Invoke(context, services);
-                }, 3, (e) => 
+                }, 3, (e) =>
                 {
                     logger.LogCritical(e, "Seed database failed.");
                 });

@@ -35,7 +35,7 @@ namespace Aiursoft.WWW
                 .AddDefaultTokenProviders();
             services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<WWWUser>(
+            services.AddAiursoftIdentity<WWWUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),

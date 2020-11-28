@@ -16,11 +16,6 @@ namespace Aiursoft.Archon.SDK
     {
         public static IServiceCollection AddArchonServer(this IServiceCollection services, string serverEndpoint)
         {
-            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             AsyncHelper.TryAsync(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);

@@ -32,27 +32,17 @@ namespace Aiursoft.Identity
         public static string GetUserId(this ClaimsPrincipal user) =>
             user.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public static IServiceCollection AddAiurDependenciesWithIdentity<TUser>(this IServiceCollection services,
+        public static IServiceCollection AddAiursoftIdentity<TUser>(this IServiceCollection services,
             string archonEndpoint,
             string observerEndpoint,
             string probeEndpoint,
             string gateEndpoint) where TUser : AiurUserBase, new()
         {
-            var entry = Assembly.GetEntryAssembly();
-            if (entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry));
-            }
-            if (entry.FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             services.AddObserverServer(observerEndpoint); // For error reporting.
             services.AddArchonServer(archonEndpoint); // For token exchanging.
             services.AddProbeServer(probeEndpoint); // For file storaging.
             services.AddGatewayServer(gateEndpoint); // For authentication.
-            services.AddBasic(abstracts: typeof(IAuthProvider));
+            services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
             return services;

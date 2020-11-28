@@ -36,7 +36,7 @@ namespace Aiursoft.Wiki
 
             services.AddAiurMvc();
 
-            services.AddAiurDependenciesWithIdentity<WikiUser>(
+            services.AddAiursoftIdentity<WikiUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
