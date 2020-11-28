@@ -81,7 +81,7 @@ namespace Aiursoft.SDK
 
         public static IApplicationBuilder UseAiurUserHandler(this IApplicationBuilder app, bool isDevelopment)
         {
-            if (isDevelopment)
+            if (isDevelopment || !EntryExtends.IsProgramEntry())
             {
                 app.UseDeveloperExceptionPage();
             }
