@@ -87,5 +87,12 @@ namespace Aiursoft.Scanner
             Register(executingTypes, services, abstracts);
             return services;
         }
+
+        public static IServiceCollection AddAssemblyDependencies(this IServiceCollection services, Assembly entry, params Type[] abstracts)
+        {
+            var executingTypes = new ClassScanner().AllLibraryClass(entry, false, false);
+            Register(executingTypes, services, abstracts);
+            return services;
+        }
     }
 }

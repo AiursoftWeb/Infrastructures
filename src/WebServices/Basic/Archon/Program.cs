@@ -7,16 +7,27 @@ namespace Aiursoft.Archon
     {
         public static void Main(string[] args)
         {
-            BuildHost(args).Run();
+            BuildHost(args)
+                .Run();
         }
 
-        public static IHost BuildHost(string[] args)
+        public static IHost BuildHost(string[] args, int port = -1)
         {
-            var host = Host.CreateDefaultBuilder(args)
-                 .ConfigureWebHostDefaults(t => t.UseStartup<Startup>())
-                 .Build();
+            return CreateHostBuilder(args, port)
+                .Build();
+        }
 
-            return host;
+        private static IHostBuilder CreateHostBuilder(string[] args, int port)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    if (port > 0)
+                    {
+                        webBuilder.UseUrls($"http://localhost:{port}");
+                    }
+                    webBuilder.UseStartup<Startup>();
+                });
         }
     }
 }

@@ -3,6 +3,7 @@ using Aiursoft.DocGenerator.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner;
+using Aiursoft.Scanner.Services;
 using Aiursoft.Scanner.Tools;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
@@ -62,17 +63,22 @@ namespace Aiursoft.SDK
                 });
         }
 
-        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, params Type[] abstracts)
+        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, Assembly assembly = null, params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
+            var abstractsArray = abstracts.AddWith(typeof(IHostedService)).ToArray();
             if (EntryExtends.IsProgramEntry())
             {
-                services.AddScannedDependencies(abstracts.AddWith(typeof(IHostedService)).ToArray());
+                services.AddScannedDependencies(abstractsArray);
+            }
+            else if (assembly != null)
+            {
+                services.AddAssemblyDependencies(assembly, abstractsArray);
             }
             else
             {
-                services.AddLibraryDependencies(abstracts.AddWith(typeof(IHostedService)).ToArray());
+                services.AddLibraryDependencies(abstractsArray);
             }
             return services;
         }
