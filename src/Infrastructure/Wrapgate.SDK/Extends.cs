@@ -14,11 +14,6 @@ namespace Aiursoft.Wrapgate.SDK
     {
         public static IServiceCollection AddWrapgateServer(this IServiceCollection services, string wrapgateEndpoint)
         {
-            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             AsyncHelper.TryAsync(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(wrapgateEndpoint);
