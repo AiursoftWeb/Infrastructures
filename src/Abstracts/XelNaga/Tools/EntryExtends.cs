@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Tools
 {
-    public static class EnvExtends
+    public static class EntryExtends
     {
         public static bool IsInEF()
         {
@@ -19,7 +19,7 @@ namespace Aiursoft.XelNaga.Tools
             return Assembly.GetEntryAssembly().GetName().Name.ToLower().Trim().StartsWith("test");
         }
 
-        public static bool IsRunning(bool log = true)
+        public static bool IsProgramEntry(bool log = true)
         {
             var inEF = IsInEF();
             var inUT = IsInUT();

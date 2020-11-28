@@ -213,7 +213,7 @@ namespace Aiursoft.SDK
             services.AddMemoryCache();
             var abstractsList = abstracts.ToList();
             abstractsList.Add(typeof(IHostedService));
-            if (EnvExtends.IsRunning())
+            if (EntryExtends.IsProgramEntry())
             {
                 services.AddScannedDependencies(abstractsList.ToArray());
             }
