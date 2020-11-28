@@ -27,7 +27,8 @@ namespace Aiursoft.XelNaga.Tools
             {
                 var textEF = inEF ? "Entity Framework" : string.Empty;
                 var textUT = inUT ? "Unit Test" : string.Empty;
-                Console.WriteLine($"Environment status: [{textEF}{textUT}]");
+                var program = Assembly.GetEntryAssembly().GetName().Name;
+                Console.WriteLine($"Environment status: [{textEF}{textUT}] [{program}]");
                 if (inEF || inUT)
                 {
                     Console.Beep();

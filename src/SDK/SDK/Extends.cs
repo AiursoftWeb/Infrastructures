@@ -102,7 +102,7 @@ namespace Aiursoft.SDK
 
         public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment)
         {
-            if (isDevelopment)
+            if (isDevelopment || !EntryExtends.IsProgramEntry())
             {
                 app.UseDeveloperExceptionPage();
             }
