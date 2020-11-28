@@ -1,6 +1,8 @@
 ﻿using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.WebTools
@@ -50,6 +52,14 @@ namespace Aiursoft.WebTools
                 Code = errorType,
                 Message = errorMessage
             });
+        }
+
+        public static void SetClientLang(this ControllerBase controller, string culture)
+        {
+            controller.HttpContext.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
         }
     }
 }
