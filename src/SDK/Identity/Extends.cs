@@ -1,4 +1,3 @@
-using System.Reflection;
 using Aiursoft.Archon.SDK;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
@@ -11,6 +10,7 @@ using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace Aiursoft.Identity
