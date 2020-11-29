@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.SDK;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 

@@ -1,6 +1,5 @@
 using Aiursoft.Observer.Data;
 using Aiursoft.SDK;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 
