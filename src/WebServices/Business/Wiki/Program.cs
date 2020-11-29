@@ -2,6 +2,7 @@
 using Aiursoft.Wiki.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Wiki
 {
@@ -9,17 +10,16 @@ namespace Aiursoft.Wiki
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<WikiDbContext>()
+            App<Startup>(args)
+                .Update<WikiDbContext>()
                 .Seed()
                 .Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

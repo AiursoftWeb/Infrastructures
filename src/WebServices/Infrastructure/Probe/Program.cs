@@ -2,6 +2,7 @@
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Probe
 {
@@ -9,16 +10,13 @@ namespace Aiursoft.Probe
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<ProbeDbContext>()
-                .Run();
+            App<Startup>(args).Update<ProbeDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

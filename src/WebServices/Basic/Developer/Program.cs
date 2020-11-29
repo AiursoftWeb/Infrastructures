@@ -4,6 +4,7 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Developer
 {
@@ -11,18 +12,17 @@ namespace Aiursoft.Developer
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<DeveloperDbContext>()
+            App<Startup>(args)
+                .Update<DeveloperDbContext>()
                 .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.AccessToken())
                 .InitSite<AppsContainer>(c => c["SampleSiteName"], a => a.AccessToken())
                 .Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

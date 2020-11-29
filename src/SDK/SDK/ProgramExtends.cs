@@ -10,7 +10,7 @@ namespace Aiursoft.SDK
 {
     public static class ProgramExtends
     {
-        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
+        public static IHost Update<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;

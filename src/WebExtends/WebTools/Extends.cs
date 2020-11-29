@@ -64,7 +64,7 @@ namespace Aiursoft.WebTools
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
         }
 
-        public static IHost App<T>(string[] args = null, int port = -1) where T : class
+        public static IHostBuilder BareApp<T>(string[] args = null, int port = -1) where T : class
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -74,8 +74,12 @@ namespace Aiursoft.WebTools
                         webBuilder.UseUrls($"http://localhost:{port}");
                     }
                     webBuilder.UseStartup<T>();
-                })
-                .Build();
+                });
+        }
+
+        public static IHost App<T>(string[] args = null, int port = -1) where T : class
+        {
+            return BareApp<T>(args, port).Build();
         }
     }
 }
