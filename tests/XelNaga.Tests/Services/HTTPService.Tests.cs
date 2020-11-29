@@ -1,11 +1,9 @@
 ﻿using Aiursoft.Scanner;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tests.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
@@ -57,7 +55,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             var result = await http.Get(new AiurUrl("https://postman-echo.com/get", new
             {
                 a = random
-            }), false);
+            }));
 
             dynamic resultObject = JObject.Parse(result);
             Assert.AreEqual(resultObject.args.a.ToString(), random);
@@ -96,7 +94,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             }), new AiurUrl("", new
             {
                 c = random2
-            }), false);
+            }));
 
             dynamic resultObject = JObject.Parse(result);
             Assert.AreEqual(resultObject.args.a.ToString(), random);

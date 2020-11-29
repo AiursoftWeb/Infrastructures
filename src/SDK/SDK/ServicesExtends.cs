@@ -1,33 +1,16 @@
-﻿using Aiursoft.DocGenerator.Attributes;
-using Aiursoft.DocGenerator.Services;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
-using Aiursoft.Scanner;
-using Aiursoft.Scanner.Services;
+﻿using Aiursoft.Scanner;
 using Aiursoft.Scanner.Tools;
-using Aiursoft.SDK.Attributes;
-using Aiursoft.SDK.Middlewares;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using EFCoreSecondLevelCacheInterceptor;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -63,7 +46,9 @@ namespace Aiursoft.SDK
                 });
         }
 
-        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, Assembly assembly = null, params Type[] abstracts)
+        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, 
+            Assembly assembly = null,
+            params Type[] abstracts)
         {
             services.AddHttpClient();
             services.AddMemoryCache();
@@ -78,7 +63,7 @@ namespace Aiursoft.SDK
             }
             else
             {
-                services.AddLibraryDependencies(abstractsArray);
+                services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsArray);
             }
             return services;
         }

@@ -1,12 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Aiursoft.Scanner;
-using System.Threading.Tasks;
+﻿using Aiursoft.Scanner;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tests.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Tests.Services
 {

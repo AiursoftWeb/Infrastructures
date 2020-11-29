@@ -1,33 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Tools
 {
     public static class EntryExtends
     {
-        public static bool IsInEF()
+        private static bool? _cache;
+
+        private static bool IsInEF()
         {
-            return Assembly.GetEntryAssembly().GetName().Name.ToLower().Trim().StartsWith("ef");
+            return Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim().StartsWith("ef") ?? false;
         }
 
-        public static bool IsInUT()
+        private static bool IsInUT()
         {
-            return Assembly.GetEntryAssembly().GetName().Name.ToLower().Trim().StartsWith("test");
+            var name = Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim() ?? string.Empty; 
+            return name.StartsWith("test") || name.StartsWith("resharpertestrunner");
         }
 
         public static bool IsProgramEntry(bool log = true)
         {
+            if (_cache != null)
+            {
+                return _cache.Value;
+            }
             var inEF = IsInEF();
             var inUT = IsInUT();
             if (log)
             {
                 var textEF = inEF ? "Entity Framework" : string.Empty;
                 var textUT = inUT ? "Unit Test" : string.Empty;
-                var program = Assembly.GetEntryAssembly().GetName().Name;
+                var program = Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
                 Console.WriteLine($"Environment status: [{textEF}{textUT}] [{program}]");
                 if (inEF || inUT)
                 {
@@ -35,7 +38,8 @@ namespace Aiursoft.XelNaga.Tools
                     Console.WriteLine("This environment is only for development!");
                 }
             }
-            return !inEF && !inUT;
+            _cache = !inEF && !inUT;
+            return _cache.Value;
         }
     }
 }

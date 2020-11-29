@@ -4,14 +4,11 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Services;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
 
 namespace Aiursoft.Stargate
 {

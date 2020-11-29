@@ -7,10 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Archon.Tests
 {
@@ -27,7 +26,7 @@ namespace Aiursoft.Archon.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = Program.BuildHost(null, _port);
+            _server = App<Startup>(port: _port);
             _http = new HttpClient();
             _services = new ServiceCollection();
             _services.AddHttpClient();
@@ -62,7 +61,7 @@ namespace Aiursoft.Archon.Tests
             try
             {
                 var archon = _serviceProvider.GetRequiredService<ArchonApiService>();
-                var result = await archon.AccessTokenAsync(string.Empty, string.Empty);
+                await archon.AccessTokenAsync(string.Empty, string.Empty);
                 Assert.Fail("Empty request should not success.");
             }
             catch (AiurUnexpectedResponse e)

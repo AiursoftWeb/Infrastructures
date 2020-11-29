@@ -58,7 +58,7 @@ namespace Aiursoft.Wiki.Services
             {
                 await SemaphoreSlim.WaitAsync();
                 await AllClear();
-                var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"), false);
+                var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"));
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
 
                 // Get all collections
@@ -83,7 +83,7 @@ namespace Aiursoft.Wiki.Services
                             {
                                 ArticleTitle = article.ArticleTitle,
                                 ArticleAddress = article.ArticleAddress,
-                                ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress), false),
+                                ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress)),
                                 CollectionId = newCollection.CollectionId
                             };
                             await _dbContext.Article.AddAsync(newArticle);
@@ -95,7 +95,7 @@ namespace Aiursoft.Wiki.Services
                             var newArticle = new Article
                             {
                                 ArticleTitle = article.ArticleTitle,
-                                ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"), false),
+                                ArticleContent = await _http.Get(new AiurUrl($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md")),
                                 CollectionId = newCollection.CollectionId
                             };
                             await _dbContext.Article.AddAsync(newArticle);
@@ -110,7 +110,7 @@ namespace Aiursoft.Wiki.Services
                         var docBuilt = collection.DocAPIAddress
                             .Replace("{{rootDomain}}", doamin);
                         // Generate markdown from doc generator
-                        var docString = await _http.Get(new AiurUrl(docBuilt), false);
+                        var docString = await _http.Get(new AiurUrl(docBuilt));
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
                         var apiRoot = docBuilt.ToLower().Replace("/doc", "");

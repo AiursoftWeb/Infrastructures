@@ -1,7 +1,9 @@
 ﻿using Aiursoft.Handler.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Text.RegularExpressions;
 
@@ -60,6 +62,20 @@ namespace Aiursoft.WebTools
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+        }
+
+        public static IHost App<T>(string[] args = null, int port = -1) where T : class
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    if (port > 0)
+                    {
+                        webBuilder.UseUrls($"http://localhost:{port}");
+                    }
+                    webBuilder.UseStartup<T>();
+                })
+                .Build();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Reflection;
 using Aiursoft.Archon.SDK;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
@@ -10,8 +11,6 @@ using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
 using System.Security.Claims;
 
 namespace Aiursoft.Identity
@@ -42,7 +41,7 @@ namespace Aiursoft.Identity
             services.AddArchonServer(archonEndpoint); // For token exchanging.
             services.AddProbeServer(probeEndpoint); // For file storaging.
             services.AddGatewayServer(gateEndpoint); // For authentication.
-            services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
+            services.AddAiursoftSDK(Assembly.GetCallingAssembly(), abstracts: typeof(IAuthProvider));
             services.AddScoped<UserImageGenerator<TUser>>();
             services.AddScoped<AuthService<TUser>>();
             return services;

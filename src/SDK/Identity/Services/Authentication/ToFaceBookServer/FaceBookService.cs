@@ -96,17 +96,17 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
             });
             try
             {
-                var json = await _http.Post(url, form, false);
+                var json = await _http.Post(url, form);
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {
-                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook credential");
                 }
                 return response.AccessToken;
             }
             catch (WebException)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook crenditial");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook credential");
             }
         }
 

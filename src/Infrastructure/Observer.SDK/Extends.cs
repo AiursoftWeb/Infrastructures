@@ -1,8 +1,6 @@
 ﻿using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
 
 namespace Aiursoft.Observer.SDK
 {

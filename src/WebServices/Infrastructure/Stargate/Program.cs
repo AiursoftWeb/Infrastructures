@@ -2,8 +2,6 @@
 using Aiursoft.Stargate.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
 
 namespace Aiursoft.Stargate
 {

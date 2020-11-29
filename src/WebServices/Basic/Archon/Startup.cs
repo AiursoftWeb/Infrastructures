@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
 
 namespace Aiursoft.Archon
 {
@@ -32,7 +31,7 @@ namespace Aiursoft.Archon
             services.AddSingleton(new ArchonLocator(Configuration["ArchonEndpoint"], KeyStore.GetPrivateKey()));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-            services.AddAiursoftSDK(Assembly.GetExecutingAssembly());
+            services.AddAiursoftSDK();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
