@@ -101,7 +101,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
             });
             try
             {
-                var json = await _http.Post(url, form, false);
+                var json = await _http.Post(url, form);
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {

@@ -31,7 +31,7 @@ namespace Aiursoft.Archon
             services.AddSingleton(new ArchonLocator(Configuration["ArchonEndpoint"], KeyStore.GetPrivateKey()));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-            services.AddBasic();
+            services.AddAiursoftSDK();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

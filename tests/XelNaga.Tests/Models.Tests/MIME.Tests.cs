@@ -1,8 +1,5 @@
 ﻿using Aiursoft.XelNaga.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aiursoft.XelNaga.Tests.Models.Tests
 {

@@ -1,7 +1,7 @@
 using Aiursoft.Observer.Data;
 using Aiursoft.SDK;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Observer
 {
@@ -9,16 +9,13 @@ namespace Aiursoft.Observer
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<ObserverDbContext>()
-                .Run();
+            App<Startup>(args).Update<ObserverDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

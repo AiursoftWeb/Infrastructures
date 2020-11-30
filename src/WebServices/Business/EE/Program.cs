@@ -1,7 +1,7 @@
 ﻿using Aiursoft.EE.Data;
 using Aiursoft.SDK;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.EE
 {
@@ -9,16 +9,13 @@ namespace Aiursoft.EE
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<EEDbContext>()
-                .Run();
+            App<Startup>(args).Update<EEDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

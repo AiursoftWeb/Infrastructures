@@ -97,7 +97,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToGoogleServer
             });
             try
             {
-                var json = await _http.Post(url, form, false);
+                var json = await _http.Post(url, form);
                 var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
                 if (string.IsNullOrWhiteSpace(response.AccessToken))
                 {

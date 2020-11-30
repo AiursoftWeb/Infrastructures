@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Gateway.Data;
 using Aiursoft.SDK;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Gateway
 {
@@ -9,16 +9,13 @@ namespace Aiursoft.Gateway
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<GatewayDbContext>()
-                .Run();
+            App<Startup>(args).Update<GatewayDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

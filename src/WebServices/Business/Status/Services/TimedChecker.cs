@@ -60,7 +60,7 @@ namespace Aiursoft.Status.Services
                 _logger.LogInformation($"Checking status for: {item.ProjectName}");
                 try
                 {
-                    var content = await http.Get(new AiurUrl(item.CheckAddress), false);
+                    var content = await http.Get(new AiurUrl(item.CheckAddress));
                     var success = content.Contains(item.ExpectedContent);
                     if (!success)
                     {

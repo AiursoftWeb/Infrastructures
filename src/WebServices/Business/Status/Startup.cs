@@ -38,7 +38,7 @@ namespace Aiursoft.Status
             services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
             services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
 
-            services.AddBasic();
+            services.AddAiursoftSDK();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

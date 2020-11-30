@@ -1,7 +1,7 @@
 ﻿using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.WWW
 {
@@ -9,16 +9,13 @@ namespace Aiursoft.WWW
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<WWWDbContext>()
-                .Run();
+            App<Startup>(args).Update<WWWDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

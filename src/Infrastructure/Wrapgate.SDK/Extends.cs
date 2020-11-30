@@ -4,9 +4,7 @@ using Aiursoft.Wrapgate.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System;
 using System.Net;
-using System.Reflection;
 
 namespace Aiursoft.Wrapgate.SDK
 {
@@ -14,11 +12,6 @@ namespace Aiursoft.Wrapgate.SDK
     {
         public static IServiceCollection AddWrapgateServer(this IServiceCollection services, string wrapgateEndpoint)
         {
-            if (Assembly.GetEntryAssembly().FullName?.StartsWith("ef") ?? false)
-            {
-                Console.WriteLine("Calling from Entity Framework! Skipped dependencies management!");
-                return services;
-            }
             AsyncHelper.TryAsync(async () =>
             {
                 var response = await new WebClient().DownloadStringTaskAsync(wrapgateEndpoint);

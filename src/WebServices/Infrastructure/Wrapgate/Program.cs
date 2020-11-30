@@ -1,7 +1,7 @@
 using Aiursoft.SDK;
 using Aiursoft.Wrapgate.Data;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Wrapgate
 {
@@ -9,16 +9,13 @@ namespace Aiursoft.Wrapgate
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<WrapgateDbContext>()
-                .Run();
+            App<Startup>(args).Update<WrapgateDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }

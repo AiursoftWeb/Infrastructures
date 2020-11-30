@@ -34,7 +34,7 @@ namespace Aiursoft.Account
 
             services.AddAiurMvc();
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-            services.AddAiurDependenciesWithIdentity<AccountUser>(
+            services.AddAiursoftIdentity<AccountUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),

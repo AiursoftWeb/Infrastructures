@@ -86,7 +86,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToGitHubServer
                 ClientSecret = clientSecret,
                 Code = code
             });
-            var json = await _http.Get(url, false);
+            var json = await _http.Get(url);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
             if (string.IsNullOrWhiteSpace(response.AccessToken))
             {

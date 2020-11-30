@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Aiursoft.XelNaga.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.XelNaga.Tests.Models.Tests
 {

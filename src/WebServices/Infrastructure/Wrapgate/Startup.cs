@@ -32,7 +32,7 @@ namespace Aiursoft.Wrapgate
             services.AddSingleton(new WrapgateLocator(
                 Configuration["WrapgateEndpoint"], 
                 Configuration["WrapPattern"]));
-            services.AddBasic();
+            services.AddAiursoftSDK();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

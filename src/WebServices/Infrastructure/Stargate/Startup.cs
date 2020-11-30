@@ -26,11 +26,10 @@ namespace Aiursoft.Stargate
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-
             services.AddAiurAPIMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddBasic();
+            services.AddAiursoftSDK();
             services.AddSingleton(new StargateLocator(endpoint: Configuration["StargateEndpoint"]));
         }
 

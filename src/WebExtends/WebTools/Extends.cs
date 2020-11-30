@@ -1,6 +1,10 @@
 ﻿using Aiursoft.Handler.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.WebTools
@@ -50,6 +54,32 @@ namespace Aiursoft.WebTools
                 Code = errorType,
                 Message = errorMessage
             });
+        }
+
+        public static void SetClientLang(this ControllerBase controller, string culture)
+        {
+            controller.HttpContext.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+        }
+
+        public static IHostBuilder BareApp<T>(string[] args = null, int port = -1) where T : class
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    if (port > 0)
+                    {
+                        webBuilder.UseUrls($"http://localhost:{port}");
+                    }
+                    webBuilder.UseStartup<T>();
+                });
+        }
+
+        public static IHost App<T>(string[] args = null, int port = -1) where T : class
+        {
+            return BareApp<T>(args, port).Build();
         }
     }
 }

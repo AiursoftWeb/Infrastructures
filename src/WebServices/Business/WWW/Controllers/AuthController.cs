@@ -2,7 +2,7 @@ using Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.Identity.Services;
-using Aiursoft.SDK;
+using Aiursoft.WebTools;
 using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

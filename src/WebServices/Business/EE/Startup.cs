@@ -31,7 +31,7 @@ namespace Aiursoft.EE
                 .AddDefaultTokenProviders();
 
             services.AddAiurMvc();
-            services.AddAiurDependenciesWithIdentity<EEUser>(
+            services.AddAiursoftIdentity<EEUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
                 observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
                 probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),

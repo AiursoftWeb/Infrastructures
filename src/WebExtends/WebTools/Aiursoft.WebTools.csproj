@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>5.0.0</Version>
+		<Version>5.0.1</Version>
 		<TargetFramework>net5.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>
@@ -14,9 +14,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+	<ItemGroup>
 		<PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
 	</ItemGroup>
 

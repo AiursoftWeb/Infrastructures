@@ -1,8 +1,7 @@
 using Aiursoft.SDK;
 using Aiursoft.Status.Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Status
 {
@@ -10,16 +9,13 @@ namespace Aiursoft.Status
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args)
-                .Build()
-                .MigrateDbContext<StatusDbContext>((context, service) => service.GetRequiredService<Seeder>().Seed())
-                .Run();
+            App<Startup>(args).Update<StatusDbContext>().Run();
         }
 
+        // For EF
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+            return BareApp<Startup>(args);
         }
     }
 }
