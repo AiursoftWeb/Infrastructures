@@ -27,7 +27,7 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             _cache = cache;
         }
 
-        public Task<bool> IsValidAppAsync(string appId, string appSecret)
+        public virtual Task<bool> IsValidAppAsync(string appId, string appSecret)
         {
             if (!new IsGuidOrEmpty().IsValid(appId))
             {

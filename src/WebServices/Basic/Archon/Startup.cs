@@ -24,7 +24,7 @@ namespace Aiursoft.Archon
             KeyStore = new PrivateKeyStore();
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddAiurAPIMvc();
             services.AddSingleton(KeyStore);
