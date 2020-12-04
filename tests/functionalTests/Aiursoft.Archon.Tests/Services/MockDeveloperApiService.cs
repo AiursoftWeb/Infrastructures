@@ -1,9 +1,6 @@
 ﻿using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.XelNaga.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Archon.Tests.Services

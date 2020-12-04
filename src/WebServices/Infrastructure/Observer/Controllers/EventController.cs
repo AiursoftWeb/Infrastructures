@@ -10,7 +10,6 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Observer.Controllers
