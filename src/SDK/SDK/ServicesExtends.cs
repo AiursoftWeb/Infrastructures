@@ -46,7 +46,7 @@ namespace Aiursoft.SDK
                 });
         }
 
-        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, 
+        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services,
             Assembly assembly = null,
             params Type[] abstracts)
         {
@@ -81,10 +81,20 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection AddDbContextWithCache<T>(this IServiceCollection services, string connectionString) where T : DbContext
         {
-            services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
+            if (EntryExtends.IsInUT())
+            {
+                services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
                     optionsBuilder
-                        .UseSqlServer(connectionString)
+                        .UseInMemoryDatabase("InMemory")
                         .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            }
+            else
+            {
+                services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
+                        optionsBuilder
+                            .UseSqlServer(connectionString)
+                            .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            }
             services.AddEFSecondLevelCache(options =>
             {
                 options.UseMemoryCacheProvider().DisableLogging(true);

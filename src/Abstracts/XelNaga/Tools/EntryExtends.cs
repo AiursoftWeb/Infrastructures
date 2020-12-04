@@ -12,7 +12,7 @@ namespace Aiursoft.XelNaga.Tools
             return Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim().StartsWith("ef") ?? false;
         }
 
-        private static bool IsInUT()
+        public static bool IsInUT()
         {
             var name = Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim() ?? string.Empty; 
             return name.StartsWith("test") || name.StartsWith("resharpertestrunner");
