@@ -589,13 +589,14 @@
             }
         };
 
-        var loopRenderJobs = function () {
+        var detectFileUpdateTimer = setInterval(detectFileUpdate, 100);
+
+        var detectFileUpdate = function () {
             if ($(".icon-form [name=iconFile]").length > 0) {
+                clearInterval(detectFileUpdateTimer);
                 updateButtons();
-                setTimeout(loopRenderJobs, 100);
             }
         };
-        loopRenderJobs();
 
         // View error stack trace modal
         $('#error-detail-modal').on('show.bs.modal', function (event) {
