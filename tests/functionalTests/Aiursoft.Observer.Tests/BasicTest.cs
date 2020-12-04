@@ -1,18 +1,26 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Observer;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
+using Aiursoft.Observer.Tests.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Archon.Tests
+namespace Aiursoft.Observer.Tests
 {
+
+
     [TestClass]
     public class BasicTests
     {
@@ -20,19 +28,19 @@ namespace Aiursoft.Archon.Tests
         private const int _port = 15999;
         private IHost _server;
         private HttpClient _http;
-        private ServiceCollection _services;
         private ServiceProvider _serviceProvider;
 
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<Startup>(port: _port);
+            _server = App<TestStartup>(port: _port);
             _http = new HttpClient();
-            _services = new ServiceCollection();
-            _services.AddHttpClient();
             await _server.StartAsync();
-            _services.AddObserverServer(_endpointUrl);
-            _serviceProvider = _services.BuildServiceProvider();
+
+            var services = new ServiceCollection();
+            services.AddHttpClient();
+            services.AddObserverServer(_endpointUrl);
+            _serviceProvider = services.BuildServiceProvider();
         }
 
         [TestCleanup]
@@ -67,6 +75,14 @@ namespace Aiursoft.Archon.Tests
             {
                 Assert.AreEqual(e.Code, ErrorType.Unauthorized);
             }
+        }
+
+        [TestMethod]
+        public async Task ViewLogsTest()
+        {
+            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
+            var observer = _serviceProvider.GetRequiredService<EventService>();
+            await observer.ViewAsync("mock-access-token");
         }
     }
 }
