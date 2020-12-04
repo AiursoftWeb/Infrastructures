@@ -58,7 +58,6 @@ namespace Aiursoft.SDK.Middlewares
             }
             else
             {
-                string newUrl = string.Empty;
                 var optionsAccessor = context.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
                 var request = context.Request;
                 var host = request.Host;
@@ -70,7 +69,7 @@ namespace Aiursoft.SDK.Middlewares
                 {
                     host = new HostString(host.Host);
                 }
-                newUrl = string.Concat(
+                string newUrl = string.Concat(
                     "https://",
                     host.ToUriComponent(),
                     request.PathBase.ToUriComponent(),

@@ -83,10 +83,8 @@ namespace Aiursoft.SDK
         {
             if (EntryExtends.IsInUT())
             {
-                services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-                    optionsBuilder
-                        .UseInMemoryDatabase("InMemory")
-                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+                services.AddDbContext<T>((optionsBuilder) =>
+                    optionsBuilder.UseInMemoryDatabase("InMemory"));
             }
             else
             {
