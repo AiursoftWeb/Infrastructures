@@ -84,7 +84,7 @@ namespace Aiursoft.SDK
             if (EntryExtends.IsInUT())
             {
                 services.AddDbContext<T>((optionsBuilder) =>
-                    optionsBuilder.UseInMemoryDatabase("InMemory"));
+                    optionsBuilder.UseInMemoryDatabase("inmemory"));
             }
             else
             {

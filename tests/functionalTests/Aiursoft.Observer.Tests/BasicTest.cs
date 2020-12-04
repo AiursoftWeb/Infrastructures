@@ -1,9 +1,11 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Observer.Tests.Services;
+using Aiursoft.SDK;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -33,7 +35,7 @@ namespace Aiursoft.Observer.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port);
+            _server = App<TestStartup>(port: _port).Update<ObserverDbContext>(); ;
             _http = new HttpClient();
             await _server.StartAsync();
 
@@ -82,7 +84,38 @@ namespace Aiursoft.Observer.Tests
         {
             Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
-            await observer.ViewAsync("mock-access-token");
+            var logs = await observer.ViewAsync("mock-access-token");
+            Assert.IsTrue(!logs.Logs.Any());
+        }
+
+        [TestMethod]
+        public async Task SubmitLogsTest()
+        {
+            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
+            var observer = _serviceProvider.GetRequiredService<EventService>();
+            await observer.LogExceptionAsync("mock-access-token",
+                new Exception("Test"));
+            var logs = await observer.ViewAsync("mock-access-token");
+            Assert.AreEqual(logs.Logs.SingleOrDefault().Message, "Test");
+        }
+
+        [TestMethod]
+        public async Task MultipleThreadSubmitLogsTest()
+        {
+            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
+            var observer = _serviceProvider.GetRequiredService<EventService>();
+            await Task.WhenAll(
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
+                observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString()))
+            );
+            var logs = await observer.ViewAsync("mock-access-token");
+            Assert.AreEqual(8, logs.Logs.Count);
         }
     }
 }

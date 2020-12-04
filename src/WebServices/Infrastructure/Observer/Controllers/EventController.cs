@@ -10,6 +10,7 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Observer.Controllers
@@ -21,6 +22,7 @@ namespace Aiursoft.Observer.Controllers
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
+        private readonly static SemaphoreSlim readLock = new SemaphoreSlim(1, 1);
 
         public EventController(
             ACTokenValidator tokenManager,
@@ -34,15 +36,23 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
+            await readLock.WaitAsync();
+            try
             {
-                appLocal = new ObserverApp
+                var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
+                if (appLocal == null)
                 {
-                    AppId = appid
-                };
-                await _dbContext.ObserverApps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
+                    appLocal = new ObserverApp
+                    {
+                        AppId = appid
+                    };
+                    await _dbContext.ObserverApps.AddAsync(appLocal);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            finally
+            {
+                readLock.Release();
             }
             var newEvent = new ErrorLog
             {

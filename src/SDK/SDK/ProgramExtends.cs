@@ -1,4 +1,5 @@
 ﻿using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,21 +17,25 @@ namespace Aiursoft.SDK
             var services = scope.ServiceProvider;
             var logger = services.GetRequiredService<ILogger<TContext>>();
             var context = services.GetService<TContext>();
-            var configuration = services.GetService<IConfiguration>();
-            var connectionString = configuration.GetConnectionString("DatabaseConnection");
             try
             {
                 logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
-                logger.LogInformation($"Connection string is {connectionString}");
                 AsyncHelper.TryAsync(async () =>
                 {
-                    await context.Database.MigrateAsync();
+                    if (EntryExtends.IsInUT())
+                    {
+                        await context.Database.EnsureDeletedAsync();
+                    }
+                    else
+                    {
+                        await context.Database.MigrateAsync();
+                    }
                     seeder?.Invoke(context, services);
                 }, 3, (e) =>
                 {
-                    logger.LogCritical(e, "Seed database failed.");
+                    logger.LogCritical(e, "Update database failed.");
                 });
-                logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
+                logger.LogInformation($"Updated database associated with context {typeof(TContext).Name}");
             }
             catch (Exception ex)
             {
