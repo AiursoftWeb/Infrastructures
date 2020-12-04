@@ -22,7 +22,6 @@ namespace Aiursoft.Observer.Controllers
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
-        private readonly static SemaphoreSlim readLock = new SemaphoreSlim(1, 1);
 
         public EventController(
             ACTokenValidator tokenManager,
@@ -36,24 +35,6 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            await readLock.WaitAsync();
-            try
-            {
-                var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
-                if (appLocal == null)
-                {
-                    appLocal = new ObserverApp
-                    {
-                        AppId = appid
-                    };
-                    await _dbContext.ObserverApps.AddAsync(appLocal);
-                    await _dbContext.SaveChangesAsync();
-                }
-            }
-            finally
-            {
-                readLock.Release();
-            }
             var newEvent = new ErrorLog
             {
                 AppId = appid,
@@ -71,17 +52,6 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> View(ViewAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
-            {
-                appLocal = new ObserverApp
-                {
-                    AppId = appid
-                };
-                await _dbContext.ObserverApps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
-
             var logs = (await _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
@@ -96,7 +66,7 @@ namespace Aiursoft.Observer.Controllers
                 .ToList();
             var viewModel = new ViewLogViewModel
             {
-                AppId = appLocal.AppId,
+                AppId = appid,
                 Logs = logs,
                 Code = ErrorType.Success,
                 Message = "Successfully get your logs!"

@@ -10,10 +10,6 @@ namespace Aiursoft.Observer.SDK.Models
         public int Id { get; set; }
 
         public string AppId { get; set; }
-        [ForeignKey(nameof(AppId))]
-        [JsonIgnore]
-        public ObserverApp Context { get; set; }
-
         public string Message { get; set; }
         public string StackTrace { get; set; }
         public EventLevel EventLevel { get; set; }

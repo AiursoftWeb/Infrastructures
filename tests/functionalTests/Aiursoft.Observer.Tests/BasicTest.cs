@@ -80,7 +80,7 @@ namespace Aiursoft.Observer.Tests
         }
 
         [TestMethod]
-        public async Task ViewLogsTest()
+        public async Task ViewEmptyLogsTest()
         {
             Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
@@ -89,7 +89,7 @@ namespace Aiursoft.Observer.Tests
         }
 
         [TestMethod]
-        public async Task SubmitLogsTest()
+        public async Task SubmitAndCheckLogTest()
         {
             Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
