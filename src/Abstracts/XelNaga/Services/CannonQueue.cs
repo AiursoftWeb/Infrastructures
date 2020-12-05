@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,41 +14,50 @@ namespace Aiursoft.XelNaga.Services
     {
         private readonly SafeQueue<Func<Task>> _pendingTaskFactories = new SafeQueue<Func<Task>>();
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ILogger<CannonQueue> _logger;
         private readonly object loc = new object();
         private Task _engine = Task.CompletedTask;
 
-        public CannonQueue(IServiceScopeFactory serviceScopeFactory)
+        public CannonQueue(
+            IServiceScopeFactory serviceScopeFactory,
+            ILogger<CannonQueue> logger)
         {
             _scopeFactory = serviceScopeFactory;
+            _logger = logger;
         }
 
         public void QueueNew(Func<Task> taskFactory)
         {
             _pendingTaskFactories.Enqueue(taskFactory);
-            lock (loc)
+            Task.Factory.StartNew(() => 
             {
-                if (_engine.IsCompleted)
+                lock (loc)
                 {
-                    Console.WriteLine("Engine is sleeping. Trying to wake it up.");
-                    _engine = RunTasksInQueue();
+                    if (_engine.IsCompleted)
+                    {
+                        Console.WriteLine("Engine is sleeping. Trying to wake it up.");
+                        _engine = RunTasksInQueue();
+                    }
                 }
-            }
+            });
         }
 
         public void QueueWithDependency<T>(Func<T, Task> bullet)
         {
             QueueNew(() =>
             {
-                using var scope = _scopeFactory.CreateScope();
-                var dependency = scope.ServiceProvider.GetRequiredService<T>();
-                try
+                using (var scope = _scopeFactory.CreateScope())
                 {
-                    var task = bullet(dependency);
-                    return task;
-                }
-                catch
-                {
-
+                    var dependency = scope.ServiceProvider.GetRequiredService<T>();
+                    try
+                    {
+                        var task = bullet(dependency);
+                        return task;
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e, $"An error occurred with Cannon. Dependency: {typeof(T).Name}.");
+                    }
                 }
                 return Task.CompletedTask;
             });

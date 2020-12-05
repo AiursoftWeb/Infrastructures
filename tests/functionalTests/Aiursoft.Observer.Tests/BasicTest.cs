@@ -87,8 +87,7 @@ namespace Aiursoft.Observer.Tests
         {
             Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
-            await observer.LogExceptionAsync("mock-access-token",
-                new Exception("Test"));
+            await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
             await Task.Delay(200);
             var logs = await observer.ViewAsync("mock-access-token");
             Assert.AreEqual(logs.Logs.SingleOrDefault().Message, "Test");
