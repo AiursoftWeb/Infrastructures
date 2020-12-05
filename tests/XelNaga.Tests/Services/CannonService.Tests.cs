@@ -21,6 +21,14 @@ namespace Aiursoft.XelNaga.Tests.Services
 				.BuildServiceProvider();
 		}
 
+
+		[TestCleanup]
+		public void Clean()
+		{
+			DemoService.Done = false;
+			DemoService.DoneAsync = false;
+		}
+
 		[TestMethod]
 		public async Task TestCannon()
 		{

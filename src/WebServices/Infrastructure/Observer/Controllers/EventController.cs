@@ -6,9 +6,15 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,29 +27,36 @@ namespace Aiursoft.Observer.Controllers
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
+        private readonly CannonQueue queue;
 
         public EventController(
             ACTokenValidator tokenManager,
-            ObserverDbContext dbContext)
+            ObserverDbContext dbContext,
+            CannonQueue queue)
         {
             _tokenManager = tokenManager;
             _dbContext = dbContext;
+            this.queue = queue;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Log(LogAddressModel model)
+        public IActionResult Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var newEvent = new ErrorLog
+            queue.QueueWithDependency<ObserverDbContext>(async dbContext =>
             {
-                AppId = appid,
-                Message = model.Message,
-                StackTrace = model.StackTrace,
-                EventLevel = model.EventLevel,
-                Path = model.Path
-            };
-            await _dbContext.ErrorLogs.AddAsync(newEvent);
-            await _dbContext.SaveChangesAsync();
+                var newEvent = new ErrorLog
+                {
+                    AppId = appid,
+                    Message = model.Message,
+                    StackTrace = model.StackTrace,
+                    EventLevel = model.EventLevel,
+                    Path = model.Path
+                };
+                await dbContext.ErrorLogs.AddAsync(newEvent);
+                await dbContext.SaveChangesAsync();
+            });
+
             return this.Protocol(ErrorType.Success, "Successfully logged your event.");
         }
 

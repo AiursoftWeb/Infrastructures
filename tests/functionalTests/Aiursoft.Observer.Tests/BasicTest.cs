@@ -17,8 +17,6 @@ using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Observer.Tests
 {
-
-
     [TestClass]
     public class BasicTests
     {
@@ -91,6 +89,7 @@ namespace Aiursoft.Observer.Tests
             var observer = _serviceProvider.GetRequiredService<EventService>();
             await observer.LogExceptionAsync("mock-access-token",
                 new Exception("Test"));
+            await Task.Delay(200);
             var logs = await observer.ViewAsync("mock-access-token");
             Assert.AreEqual(logs.Logs.SingleOrDefault().Message, "Test");
         }
@@ -110,6 +109,7 @@ namespace Aiursoft.Observer.Tests
                 observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
                 observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString()))
             );
+            await Task.Delay(200);
             var logs = await observer.ViewAsync("mock-access-token");
             Assert.AreEqual(8, logs.Logs.Count);
         }

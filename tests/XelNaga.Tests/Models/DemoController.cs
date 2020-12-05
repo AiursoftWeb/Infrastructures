@@ -7,11 +7,14 @@ namespace Aiursoft.XelNaga.Tests.Models
     public class DemoController : IScopedDependency
     {
         private readonly CannonService _cannonService;
+        private readonly CannonQueue _cannonQueue;
 
         public DemoController(
-            CannonService cannonService)
+            CannonService cannonService,
+            CannonQueue cannonQueue)
         {
             _cannonService = cannonService;
+            _cannonQueue = cannonQueue;
         }
 
         public IActionResult DemoAction()
@@ -23,6 +26,15 @@ namespace Aiursoft.XelNaga.Tests.Models
         public IActionResult DemoActionAsync()
         {
             _cannonService.FireAsync<DemoService>(d => d.DoSomethingSlowAsync());
+            return null;
+        }
+
+        public IActionResult QueueActionAsync()
+        {
+            for (int i = 0; i < 32; i++)
+            {
+                _cannonQueue.QueueWithDependency<DemoService>(d => d.DoSomethingSlowAsync());
+            }
             return null;
         }
     }
