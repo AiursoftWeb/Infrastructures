@@ -3,39 +3,39 @@ using Aiursoft.XelNaga.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Aiursoft.XelNaga.Tools
 {
-    public  class CSVGenerator : ITransientDependency
+    public class CSVGenerator : ITransientDependency
     {
-        public byte[] BuildFromList<T>(IEnumerable<T> items) where T : new()
+        public byte[] BuildFromCollection<T>(IEnumerable<T> items) where T : new()
         {
-            List<string> csv = new (items.Count() + 1);
+            var csv = new StringBuilder();
             var type = typeof(T);
-            List<string> title = new ();
-            List<PropertyInfo> properties = new ();
+            var properties = new List<PropertyInfo>();
+            var title = new StringBuilder();
             foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
             {
                 properties.Add(prop);
                 var attribute = prop.GetCustomAttributes(typeof(CSVProperty), true).FirstOrDefault();
-                title.Add($@"""{(attribute as CSVProperty)?.Name}""");
+                title.Append($@"""{(attribute as CSVProperty)?.Name}"",");
             }
-
-            csv.Add(string.Join(",", title));
+            csv.AppendLine(title.ToString().Trim(','));
             foreach (var item in items)
             {
-                List<string> newLine = new (properties.Count);
-                foreach(var prop in properties)
+                var newLine = new StringBuilder();
+                foreach (var prop in properties)
                 {
                     var propValue = prop.GetValue(item)?.ToString() ?? "null";
-                    propValue = propValue.Replace("\r", "").Replace("\n", "").Replace("\\", "");
-                    newLine.Add($@"""{propValue}""");
+                    propValue = propValue.Replace("\r", "").Replace("\n", "").Replace("\\", "").Replace("\"", "");
+                    newLine.Append($@"""{propValue}"",");
                 }
 
-                csv.Add(string.Join(",", newLine));
+                csv.AppendLine(newLine.ToString().Trim(','));
             }
 
-            return string.Join("\r\n", csv).ToUTF8WithDom();
+            return csv.ToString().StringToBytes();
         }
     }
 }
