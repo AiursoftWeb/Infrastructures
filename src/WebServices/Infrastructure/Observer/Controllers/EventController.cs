@@ -27,23 +27,23 @@ namespace Aiursoft.Observer.Controllers
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
-        private readonly CannonQueue queue;
+        private readonly CannonService _cannon;
 
         public EventController(
             ACTokenValidator tokenManager,
             ObserverDbContext dbContext,
-            CannonQueue queue)
+            CannonService cannon)
         {
             _tokenManager = tokenManager;
             _dbContext = dbContext;
-            this.queue = queue;
+            _cannon = cannon;
         }
 
         [HttpPost]
         public IActionResult Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            queue.QueueWithDependency<ObserverDbContext>(async dbContext =>
+            _cannon.FireAsync<ObserverDbContext>(async dbContext =>
             {
                 var newEvent = new ErrorLog
                 {
@@ -53,7 +53,7 @@ namespace Aiursoft.Observer.Controllers
                     EventLevel = model.EventLevel,
                     Path = model.Path
                 };
-                await dbContext.ErrorLogs.AddAsync(newEvent);
+                dbContext.ErrorLogs.Add(newEvent);
                 await dbContext.SaveChangesAsync();
             });
 
