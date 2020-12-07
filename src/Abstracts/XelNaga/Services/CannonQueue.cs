@@ -44,22 +44,20 @@ namespace Aiursoft.XelNaga.Services
 
         public void QueueWithDependency<T>(Func<T, Task> bullet)
         {
-            QueueNew(() =>
+            QueueNew(async () =>
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dependency = scope.ServiceProvider.GetRequiredService<T>();
                     try
                     {
-                        var task = bullet(dependency);
-                        return task;
+                        await bullet(dependency);
                     }
                     catch (Exception e)
                     {
                         _logger.LogError(e, $"An error occurred with Cannon. Dependency: {typeof(T).Name}.");
                     }
                 }
-                return Task.CompletedTask;
             });
         }
 
