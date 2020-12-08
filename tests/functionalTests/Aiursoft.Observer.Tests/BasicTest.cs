@@ -69,14 +69,13 @@ namespace Aiursoft.Observer.Tests
             }
             catch (AiurUnexpectedResponse e)
             {
-                Assert.AreEqual(e.Code, ErrorType.Unauthorized);
+                Assert.AreEqual(e.Code, ErrorType.InvalidInput);
             }
         }
 
         [TestMethod]
         public async Task ViewEmptyLogsTest()
         {
-            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
             var logs = await observer.ViewAsync("mock-access-token");
             Assert.IsTrue(!logs.Logs.Any());
@@ -85,7 +84,6 @@ namespace Aiursoft.Observer.Tests
         [TestMethod]
         public async Task SubmitAndCheckLogTest()
         {
-            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
             await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
             await Task.Delay(200);
@@ -96,7 +94,6 @@ namespace Aiursoft.Observer.Tests
         [TestMethod]
         public async Task MultipleThreadSubmitLogsTest()
         {
-            Console.WriteLine(Assembly.GetEntryAssembly().FullName);
             var observer = _serviceProvider.GetRequiredService<EventService>();
             await Task.WhenAll(
                 observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),

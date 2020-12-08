@@ -2,7 +2,7 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Observer.Tests.Services
+namespace Aiursoft.SDK.Tests.Services
 {
     public class MockAcTokenValidator : ACTokenValidator
     {

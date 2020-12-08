@@ -3,8 +3,9 @@ using Aiursoft.SDK.Tests.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 
-namespace Aiursoft.Observer.Tests
+namespace Aiursoft.Stargate.Tests
 {
     public class TestStartup : Startup
     {

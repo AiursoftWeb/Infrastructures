@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\src\WebServices\Basic\Archon\Aiursoft.Archon.csproj" />
+	  <ProjectReference Include="..\..\..\src\WebServices\Infrastructure\Stargate\Aiursoft.Stargate.csproj" />
 	  <ProjectReference Include="..\..\SDK.Tests\Aiursoft.SDK.Tests.csproj" />
 	</ItemGroup>
 

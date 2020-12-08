@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
@@ -11,9 +11,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\src\WebServices\Basic\Archon\Aiursoft.Archon.csproj" />
-	  <ProjectReference Include="..\..\SDK.Tests\Aiursoft.SDK.Tests.csproj" />
+	  <ProjectReference Include="..\..\src\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+	  <ProjectReference Include="..\..\src\SDK\SDK\Aiursoft.SDK.csproj" />
 	</ItemGroup>
-
 
 </Project>

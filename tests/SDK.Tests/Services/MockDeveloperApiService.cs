@@ -3,13 +3,13 @@ using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.XelNaga.Services;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Archon.Tests.Services
+namespace Aiursoft.SDK.Tests.Services
 {
     public class MockDeveloperApiService : DeveloperApiService
     {
         public MockDeveloperApiService(
-            DeveloperLocator serviceLocation, 
-            HTTPService http, 
+            DeveloperLocator serviceLocation,
+            HTTPService http,
             AiurCache cache) : base(serviceLocation, http, cache)
         {
         }
