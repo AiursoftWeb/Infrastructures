@@ -15,9 +15,14 @@ namespace Aiursoft.XelNaga.Tests.Services
         [TestInitialize]
         public void Init()
         {
+            var dbContext = new SqlDbContext();
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+
             _serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .AddLibraryDependencies()
+                .AddDbContext<SqlDbContext>()
                 .BuildServiceProvider();
         }
 
@@ -55,7 +60,7 @@ namespace Aiursoft.XelNaga.Tests.Services
                 Console.WriteLine($"Waitted for {DateTime.UtcNow - startTime}. And {DemoService.DoneTimes} tasks are finished.");
             }
             endTime = DateTime.UtcNow;
-            Assert.IsTrue(endTime - startTime < TimeSpan.FromMilliseconds(1500), "All actions should finish in 1.5 second.");
+            Assert.IsTrue(endTime - startTime < TimeSpan.FromMilliseconds(3000), "All actions should finish in 3 seconds.");
         }
     }
 }

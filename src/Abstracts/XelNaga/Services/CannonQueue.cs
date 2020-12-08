@@ -46,17 +46,15 @@ namespace Aiursoft.XelNaga.Services
         {
             QueueNew(async () =>
             {
-                using (var scope = _scopeFactory.CreateScope())
+                using var scope = _scopeFactory.CreateScope();
+                var dependency = scope.ServiceProvider.GetRequiredService<T>();
+                try
                 {
-                    var dependency = scope.ServiceProvider.GetRequiredService<T>();
-                    try
-                    {
-                        await bullet(dependency);
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogError(e, $"An error occurred with Cannon. Dependency: {typeof(T).Name}.");
-                    }
+                    await bullet(dependency);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, $"An error occurred with Cannon. Dependency: {typeof(T).Name}.");
                 }
             });
         }
