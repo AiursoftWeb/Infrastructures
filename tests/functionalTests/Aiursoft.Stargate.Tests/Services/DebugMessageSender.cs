@@ -3,7 +3,7 @@ using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.Stargate.Services
+namespace Aiursoft.Stargate.Tests.Services
 {
     public class DebugMessageSender : IScopedDependency
     {
@@ -15,7 +15,7 @@ namespace Aiursoft.Stargate.Services
 
         public async Task SendDebuggingMessages(string accessToken, int channelId)
         {
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 await _messageService.PushMessageAsync(accessToken, channelId, new
                 {
@@ -23,7 +23,7 @@ namespace Aiursoft.Stargate.Services
                     Time = DateTime.UtcNow,
                     Id = i
                 });
-                await Task.Delay(10);
+                await Task.Delay(1);
             }
         }
     }

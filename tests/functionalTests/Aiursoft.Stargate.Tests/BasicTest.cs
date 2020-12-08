@@ -1,16 +1,27 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.SDK.Tests;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
+using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
+using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
+using Aiursoft.Stargate.Services;
+using Aiursoft.Stargate.Tests.Services;
+using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
@@ -40,6 +51,7 @@ namespace Aiursoft.Stargate.Tests
 
             var services = new ServiceCollection();
             services.AddHttpClient();
+            services.AddLibraryDependencies();
             services.AddStargateServer(_endpointUrl);
             _serviceProvider = services.BuildServiceProvider();
         }
@@ -114,6 +126,57 @@ namespace Aiursoft.Stargate.Tests
             await Task.Delay(200);
             var channels = await channel.ViewMyChannelsAsync("mock-access-token");
             Assert.AreEqual(8, channels.Channels.Count());
+        }
+
+        private static int MessageCount = 0;
+        private static async Task Monitor(ClientWebSocket socket)
+        {
+            var buffer = new ArraySegment<byte>(new byte[2048]);
+            while (true)
+            {
+                var result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                if (result.MessageType == WebSocketMessageType.Text)
+                {
+                    MessageCount++;
+                    string message = Encoding.UTF8.GetString(
+                        buffer.Skip(buffer.Offset).Take(buffer.Count).ToArray())
+                        .Trim('\0')
+                        .Trim();
+                    Console.WriteLine(message);
+                }
+                else
+                {
+                    Console.WriteLine($"[WebSocket Event] Remote wrong message. [{result.MessageType}].");
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task TestConnect()
+        {
+            var locator = _serviceProvider.GetRequiredService<StargateLocator>();
+            var channelService = _serviceProvider.GetRequiredService<ChannelService>();
+            var messageSender = _serviceProvider.GetRequiredService<DebugMessageSender>();
+            var channel = await channelService.CreateChannelAsync("mock-access-token", "Connect test channel");
+
+            var wsPath = new AiurUrl(locator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
+            {
+                Id = channel.ChannelId,
+                Key = channel.ConnectKey
+            }).ToString();
+
+            using (var socket = new ClientWebSocket())
+            {
+                await socket.ConnectAsync(new Uri(wsPath), CancellationToken.None);
+                Console.WriteLine("Websocket connected!");
+                await Task.Factory.StartNew(async () => await Monitor(socket));
+                await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
+                await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+            }
+
+            await Task.Delay(10);
+            Assert.AreEqual(100, MessageCount);
         }
     }
 }
