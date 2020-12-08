@@ -55,14 +55,17 @@ namespace Aiursoft.SDK
             var abstractsArray = abstracts.AddWith(typeof(IHostedService)).ToArray();
             if (EntryExtends.IsProgramEntry())
             {
+                // Program is starting itself.
                 services.AddScannedDependencies(abstractsArray);
             }
             else if (assembly != null)
             {
+                // Program is started in UT or EF. Method called from extension.
                 services.AddAssemblyDependencies(assembly, abstractsArray);
             }
             else
             {
+                // Program is started in UT or EF. Method called from web project.
                 services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsArray);
             }
             return services;

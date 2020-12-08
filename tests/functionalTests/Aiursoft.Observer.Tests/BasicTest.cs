@@ -4,6 +4,7 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK;
+using Aiursoft.SDK.Tests;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,11 +21,17 @@ namespace Aiursoft.Observer.Tests
     [TestClass]
     public class BasicTests
     {
-        private readonly string _endpointUrl = $"http://localhost:{_port}";
-        private const int _port = 15999;
+        private readonly string _endpointUrl;
+        private readonly int _port;
         private IHost _server;
         private HttpClient _http;
         private ServiceProvider _serviceProvider;
+
+        public BasicTests()
+        {
+            _port = Network.GetAvailablePort();
+            _endpointUrl = $"http://localhost:{_port}";
+        }
 
         [TestInitialize]
         public async Task CreateServer()

@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.SDK;
+using Aiursoft.SDK.Tests;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
@@ -18,11 +19,17 @@ namespace Aiursoft.Stargate.Tests
     [TestClass]
     public class BasicTests
     {
-        private readonly string _endpointUrl = $"http://localhost:{_port}";
-        private const int _port = 15999;
+        private readonly int _port;
+        private readonly string _endpointUrl;
         private IHost _server;
         private HttpClient _http;
         private ServiceProvider _serviceProvider;
+
+        public BasicTests()
+        {
+            _port = Network.GetAvailablePort();
+            _endpointUrl = $"http://localhost:{_port}";
+        }
 
         [TestInitialize]
         public async Task CreateServer()

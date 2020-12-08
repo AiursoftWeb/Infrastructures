@@ -4,6 +4,7 @@ using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Archon.SDK.Services.ToArchonServer;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.SDK.Tests;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,12 +19,18 @@ namespace Aiursoft.Archon.Tests
     [TestClass]
     public class BasicTests
     {
-        private readonly string _endpointUrl = $"http://localhost:{_port}";
-        private const int _port = 15999;
+        private readonly int _port;
+        private readonly string _endpointUrl;
         private IHost _server;
         private HttpClient _http;
         private ServiceCollection _services;
         private ServiceProvider _serviceProvider;
+
+        public BasicTests()
+        {
+            _port = Network.GetAvailablePort();
+            _endpointUrl = $"http://localhost:{_port}";
+        }
 
         [TestInitialize]
         public async Task CreateServer()

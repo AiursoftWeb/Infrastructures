@@ -28,14 +28,13 @@ namespace Aiursoft.XelNaga.Tools
             var inUT = IsInUT();
             if (log)
             {
-                var textEF = inEF ? "Entity Framework" : string.Empty;
-                var textUT = inUT ? "Unit Test" : string.Empty;
+                var textEF = inEF ? "[Entity Framework]" : string.Empty;
+                var textUT = inUT ? "[Unit Test]" : string.Empty;
                 var program = Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
-                Console.WriteLine($"Environment status: [{textEF}{textUT}] [{program}]");
+                Console.WriteLine($"Environment status: {textEF}{textUT} [{program}]");
                 if (inEF || inUT)
                 {
-                    Console.Beep();
-                    Console.WriteLine("This environment is only for development!");
+                    Console.WriteLine("This environment is only for test!");
                 }
             }
             _cache = !inEF && !inUT;
