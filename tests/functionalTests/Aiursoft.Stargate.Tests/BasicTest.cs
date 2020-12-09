@@ -171,12 +171,13 @@ namespace Aiursoft.Stargate.Tests
             {
                 await socket.ConnectAsync(new Uri(wsPath), CancellationToken.None);
                 Console.WriteLine("Websocket connected!");
+                await Task.Delay(50);
                 await Task.Factory.StartNew(async () => await Monitor(socket));
                 await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
 
-            await Task.Delay(10);
+            await Task.Delay(50);
             Assert.AreEqual(100, MessageCount);
         }
     }

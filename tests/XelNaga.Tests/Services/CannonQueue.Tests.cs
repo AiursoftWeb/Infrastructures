@@ -60,7 +60,7 @@ namespace Aiursoft.XelNaga.Tests.Services
                 Console.WriteLine($"Waitted for {DateTime.UtcNow - startTime}. And {DemoService.DoneTimes} tasks are finished.");
             }
             endTime = DateTime.UtcNow;
-            Assert.IsTrue(endTime - startTime < TimeSpan.FromMilliseconds(3000), "All actions should finish in 3 seconds.");
+            Assert.IsTrue(endTime - startTime < TimeSpan.FromMilliseconds(5000), "All actions should finish in 5 seconds.");
         }
     }
 }
