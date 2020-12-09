@@ -1,6 +1,7 @@
 # Aiursoft Infrastructures
 
 [![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Infrastructures%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
+![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/aiursoft/Star/5)
 [![Issues](https://img.shields.io/github/issues/AiursoftWeb/Infrastructures.svg)](https://github.com/AiursoftWeb/Infrastructures/issues)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
