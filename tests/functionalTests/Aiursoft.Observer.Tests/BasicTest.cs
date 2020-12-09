@@ -93,9 +93,9 @@ namespace Aiursoft.Observer.Tests
         {
             var observer = _serviceProvider.GetRequiredService<EventService>();
             await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
-            await Task.Delay(200);
+            await Task.Delay(500);
             var logs = await observer.ViewAsync("mock-access-token");
-            Assert.AreEqual(logs.Logs.SingleOrDefault().Message, "Test");
+            Assert.AreEqual(logs.Logs.SingleOrDefault()?.Message, "Test", "Submitted error message shall be queried.");
         }
 
         [TestMethod]
