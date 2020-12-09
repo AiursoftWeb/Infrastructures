@@ -12,6 +12,7 @@ using Aiursoft.Stargate.Services;
 using Aiursoft.Stargate.Tests.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

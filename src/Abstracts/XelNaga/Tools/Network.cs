@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace Aiursoft.SDK.Tests
+namespace Aiursoft.XelNaga.Tools
 {
     public static class Network
     {
