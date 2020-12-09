@@ -55,7 +55,7 @@ namespace Aiursoft.XelNaga.Tests.Services
 			var endTime = DateTime.UtcNow;
 			Assert.IsTrue(endTime - startTime < TimeSpan.FromMilliseconds(1000), "Demo action should finish very fast.");
 			Assert.AreEqual(false, DemoService.DoneAsync, "When demo action finished, work is not over yet.");
-			await Task.Delay(300);
+			await Task.Delay(600);
 			Assert.AreEqual(true, DemoService.DoneAsync, "After a while, the async job is done.");
 		}
 	}
