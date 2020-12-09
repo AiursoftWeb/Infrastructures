@@ -580,22 +580,19 @@
 
 <script>
     window.addEventListener('load', function () {
-        // Auto submit icon change
-        var updateButtons = function () {
-            var value = $(".icon-form [name=iconFile]").attr('data-internet-path');
-            if (value && value.length > 0) {
-                $(".icon-form [name=iconFile]").attr('data-internet-path', '');
-                $(".icon-form").submit();
-            }
-        };
+        var detectFileUpdateTimer = setInterval(detectFileUpdate, 100);
 
-        var loopRenderJobs = function () {
+        function detectFileUpdate () {
+            console.log('Detect!')
             if ($(".icon-form [name=iconFile]").length > 0) {
-                updateButtons();
-                setTimeout(loopRenderJobs, 100);
+                var value = $(".icon-form [name=iconFile]").attr('data-internet-path');
+                if (value && value.length > 0) {
+                    $(".icon-form [name=iconFile]").attr('data-internet-path', '');
+                    $(".icon-form").submit();
+                    clearInterval(detectFileUpdateTimer);
+                }
             }
         };
-        loopRenderJobs();
 
         // View error stack trace modal
         $('#error-detail-modal').on('show.bs.modal', function (event) {

@@ -7,6 +7,7 @@ using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -21,39 +22,36 @@ namespace Aiursoft.Observer.Controllers
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly ObserverDbContext _dbContext;
+        private readonly CannonQueue _cannon;
 
         public EventController(
             ACTokenValidator tokenManager,
-            ObserverDbContext dbContext)
+            ObserverDbContext dbContext,
+            CannonQueue cannon)
         {
             _tokenManager = tokenManager;
             _dbContext = dbContext;
+            _cannon = cannon;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Log(LogAddressModel model)
+        public IActionResult Log(LogAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
+            _cannon.QueueWithDependency<ObserverDbContext>(async dbContext =>
             {
-                appLocal = new ObserverApp
+                var newEvent = new ErrorLog
                 {
-                    AppId = appid
+                    AppId = appid,
+                    Message = model.Message,
+                    StackTrace = model.StackTrace,
+                    EventLevel = model.EventLevel,
+                    Path = model.Path
                 };
-                await _dbContext.ObserverApps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
-            var newEvent = new ErrorLog
-            {
-                AppId = appid,
-                Message = model.Message,
-                StackTrace = model.StackTrace,
-                EventLevel = model.EventLevel,
-                Path = model.Path
-            };
-            await _dbContext.ErrorLogs.AddAsync(newEvent);
-            await _dbContext.SaveChangesAsync();
+                dbContext.ErrorLogs.Add(newEvent);
+                await dbContext.SaveChangesAsync();
+            });
+
             return this.Protocol(ErrorType.Success, "Successfully logged your event.");
         }
 
@@ -61,17 +59,6 @@ namespace Aiursoft.Observer.Controllers
         public async Task<IActionResult> View(ViewAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.ObserverApps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
-            {
-                appLocal = new ObserverApp
-                {
-                    AppId = appid
-                };
-                await _dbContext.ObserverApps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
-
             var logs = (await _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
@@ -86,7 +73,7 @@ namespace Aiursoft.Observer.Controllers
                 .ToList();
             var viewModel = new ViewLogViewModel
             {
-                AppId = appLocal.AppId,
+                AppId = appid,
                 Logs = logs,
                 Code = ErrorType.Success,
                 Message = "Successfully get your logs!"

@@ -1,12 +1,16 @@
 ﻿using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Archon.SDK.Services.ToArchonServer;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.SDK.Tests;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
@@ -16,17 +20,23 @@ namespace Aiursoft.Archon.Tests
     [TestClass]
     public class BasicTests
     {
-        private readonly string _endpointUrl = $"http://localhost:{_port}";
-        private const int _port = 15999;
+        private readonly int _port;
+        private readonly string _endpointUrl;
         private IHost _server;
         private HttpClient _http;
         private ServiceCollection _services;
         private ServiceProvider _serviceProvider;
 
+        public BasicTests()
+        {
+            _port = Network.GetAvailablePort();
+            _endpointUrl = $"http://localhost:{_port}";
+        }
+
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<Startup>(port: _port);
+            _server = App<TestStartup>(port: _port);
             _http = new HttpClient();
             _services = new ServiceCollection();
             _services.AddHttpClient();
@@ -68,6 +78,19 @@ namespace Aiursoft.Archon.Tests
             {
                 Assert.AreEqual(e.Code, ErrorType.InvalidInput);
             }
+        }
+
+        [TestMethod]
+        public async Task GetTokenTest()
+        {
+            var archon = _serviceProvider.GetRequiredService<ArchonApiService>();
+            var guid = Guid.NewGuid().ToString();
+            var token = await archon.AccessTokenAsync(guid, guid);
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(token.AccessToken));
+
+            var validator = _serviceProvider.GetRequiredService<ACTokenValidator>();
+            var appId = validator.ValidateAccessToken(token.AccessToken);
+            Assert.AreEqual(appId, guid);
         }
     }
 }

@@ -68,11 +68,11 @@ namespace Aiursoft.Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             if (!ModelState.IsValid)
             {
                 return View("AuthError");
             }
+            var app = (await _apiService.AppInfoAsync(model.AppId)).App;
             var url = new Uri(model.RedirectUri);
             var user = await GetCurrentUserAsync();
             // Wrong domain

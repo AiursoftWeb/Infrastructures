@@ -37,9 +37,9 @@ namespace Aiursoft.Scanner.Services
                 .ToList();
         }
 
-        public List<Type> AllLibraryClass(Assembly calling, bool includeSystem, bool includeMicrosoft)
+        public List<Type> AllClassUnder(Assembly assembly, bool includeSystem, bool includeMicrosoft)
         {
-            return ScanAssemblies(calling, !includeSystem, !includeMicrosoft)
+            return ScanAssemblies(assembly, !includeSystem, !includeMicrosoft)
                 .Distinct()
                 .SelectMany(t => t.GetTypes())
                 .Where(t => !t.IsAbstract)

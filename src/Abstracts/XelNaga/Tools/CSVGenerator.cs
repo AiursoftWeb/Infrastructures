@@ -2,34 +2,40 @@
 using Aiursoft.XelNaga.Attributes;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace Aiursoft.XelNaga.Tools
 {
     public class CSVGenerator : ITransientDependency
     {
-        public byte[] BuildFromList<T>(IEnumerable<T> items) where T : new()
+        public byte[] BuildFromCollection<T>(IEnumerable<T> items) where T : new()
         {
-            var csv = "";
+            var csv = new StringBuilder();
             var type = typeof(T);
+            var properties = new List<PropertyInfo>();
+            var title = new StringBuilder();
             foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
             {
+                properties.Add(prop);
                 var attribute = prop.GetCustomAttributes(typeof(CSVProperty), true).FirstOrDefault();
-                csv += $@"""{(attribute as CSVProperty)?.Name}"",";
+                title.Append($@"""{(attribute as CSVProperty)?.Name}"",");
             }
-            csv = csv.Trim(',') + "\r\n";
+            csv.AppendLine(title.ToString().Trim(','));
             foreach (var item in items)
             {
-                string newLine = "";
-                foreach (var prop in type.GetProperties().Where(t => t.GetCustomAttributes(typeof(CSVProperty), true).Any()))
+                var newLine = new StringBuilder();
+                foreach (var prop in properties)
                 {
                     var propValue = prop.GetValue(item)?.ToString() ?? "null";
-                    propValue = propValue.Replace("\r", "").Replace("\n", "").Replace("\\", "");
-                    newLine += $@"""{propValue }"",";
+                    propValue = propValue.Replace("\r", "").Replace("\n", "").Replace("\\", "").Replace("\"", "");
+                    newLine.Append($@"""{propValue}"",");
                 }
-                newLine = newLine.Trim(',') + "\r\n";
-                csv += newLine;
+
+                csv.AppendLine(newLine.ToString().Trim(','));
             }
-            return csv.ToUTF8WithDom();
+
+            return csv.ToString().StringToBytes();
         }
     }
 }

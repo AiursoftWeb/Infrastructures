@@ -46,7 +46,7 @@ namespace Aiursoft.SDK
                 });
         }
 
-        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services, 
+        public static IServiceCollection AddAiursoftSDK(this IServiceCollection services,
             Assembly assembly = null,
             params Type[] abstracts)
         {
@@ -55,14 +55,17 @@ namespace Aiursoft.SDK
             var abstractsArray = abstracts.AddWith(typeof(IHostedService)).ToArray();
             if (EntryExtends.IsProgramEntry())
             {
+                // Program is starting itself.
                 services.AddScannedDependencies(abstractsArray);
             }
             else if (assembly != null)
             {
+                // Program is started in UT or EF. Method called from extension.
                 services.AddAssemblyDependencies(assembly, abstractsArray);
             }
             else
             {
+                // Program is started in UT or EF. Method called from web project.
                 services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsArray);
             }
             return services;
@@ -81,10 +84,18 @@ namespace Aiursoft.SDK
 
         public static IServiceCollection AddDbContextWithCache<T>(this IServiceCollection services, string connectionString) where T : DbContext
         {
-            services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-                    optionsBuilder
-                        .UseSqlServer(connectionString)
-                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            if (EntryExtends.IsInUT())
+            {
+                services.AddDbContext<T>((optionsBuilder) =>
+                    optionsBuilder.UseInMemoryDatabase("inmemory"));
+            }
+            else
+            {
+                services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
+                        optionsBuilder
+                            .UseSqlServer(connectionString)
+                            .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            }
             services.AddEFSecondLevelCache(options =>
             {
                 options.UseMemoryCacheProvider().DisableLogging(true);

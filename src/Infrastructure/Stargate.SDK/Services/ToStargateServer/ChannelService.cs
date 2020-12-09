@@ -32,6 +32,8 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewMyChannelsViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
 

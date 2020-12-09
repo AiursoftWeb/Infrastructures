@@ -23,7 +23,7 @@ namespace Aiursoft.Stargate
             AppsContainer.CurrentAppSecret = configuration["TestAppSecret"];
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
             services.AddAiurAPIMvc();

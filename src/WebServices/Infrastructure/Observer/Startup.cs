@@ -22,7 +22,7 @@ namespace Aiursoft.Observer
             AppsContainer.CurrentAppSecret = configuration["ObserverAppSecret"];
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<ObserverDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 

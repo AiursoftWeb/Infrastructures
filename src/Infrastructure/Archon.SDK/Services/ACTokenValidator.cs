@@ -16,7 +16,7 @@ namespace Aiursoft.Archon.SDK.Services
             _rsa = rsa;
         }
 
-        public string ValidateAccessToken(string value)
+        public virtual string ValidateAccessToken(string value)
         {
             ACToken token;
             try

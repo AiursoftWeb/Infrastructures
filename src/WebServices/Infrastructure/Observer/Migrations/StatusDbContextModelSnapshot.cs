@@ -2,31 +2,30 @@
 using Aiursoft.Observer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 
 namespace Aiursoft.Observer.Migrations
 {
     [DbContext(typeof(ObserverDbContext))]
-    class StatusDbContextModelSnapshot : ModelSnapshot
+    partial class StatusDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Aiursoft.Observer.SDK.Models.ErrorLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("AppId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EventLevel")
                         .HasColumnType("int");
@@ -45,26 +44,7 @@ namespace Aiursoft.Observer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppId");
-
                     b.ToTable("ErrorLogs");
-                });
-
-            modelBuilder.Entity("Aiursoft.Observer.SDK.Models.ObserverApp", b =>
-                {
-                    b.Property<string>("AppId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("AppId");
-
-                    b.ToTable("ObserverApps");
-                });
-
-            modelBuilder.Entity("Aiursoft.Observer.SDK.Models.ErrorLog", b =>
-                {
-                    b.HasOne("Aiursoft.Observer.SDK.Models.ObserverApp", "Context")
-                        .WithMany("ErrorLogs")
-                        .HasForeignKey("AppId");
                 });
 #pragma warning restore 612, 618
         }

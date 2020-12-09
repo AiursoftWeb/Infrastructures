@@ -10,6 +10,5 @@ namespace Aiursoft.Observer.Data
         }
 
         public DbSet<ErrorLog> ErrorLogs { get; set; }
-        public DbSet<ObserverApp> ObserverApps { get; set; }
     }
 }
