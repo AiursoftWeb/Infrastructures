@@ -24,7 +24,7 @@ namespace Aiursoft.XelNaga.Services
                     {
                         throw;
                     }
-                    Thread.Sleep(ExponentialBackoffTime(i) * 1000);
+                    Thread.Sleep(ExponentialBackoffTimeSlot(i) * 1000);
                 }
             }
         }
@@ -34,18 +34,18 @@ namespace Aiursoft.XelNaga.Services
         /// </summary>
         /// <param name="time">the time of trial</param>
         /// <returns>Time slot to wait.</returns>
-        private static int ExponentialBackoffTime(int time)
+        private static int ExponentialBackoffTimeSlot(int time)
         {
-            int TwoPower(int n)
+            int TwoPower(int power)
             {
-                int a = 2;
-                int f = 1;
-                for (int i = n; i > 0; i--)
+                int @base = 2;
+                int result = 1;
+                for (int i = power; i > 0; i--)
                 {
-                    f *= a;
+                    result *= @base;
                 }
 
-                return f;
+                return result;
             }
 
             int max = TwoPower(time);
