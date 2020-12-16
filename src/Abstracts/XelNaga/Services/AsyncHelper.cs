@@ -24,9 +24,33 @@ namespace Aiursoft.XelNaga.Services
                     {
                         throw;
                     }
-                    Thread.Sleep(i * 15 * 1000);
+                    Thread.Sleep(ExponentialBackoffTime(i) * 1000);
                 }
             }
+        }
+
+        /// <summary>
+        /// <see href="https://en.wikipedia.org/wiki/Exponential_backoff">Exponetial backoff </see> time slot. 
+        /// </summary>
+        /// <param name="time">the time of trial</param>
+        /// <returns>Time slot to wait.</returns>
+        private static int ExponentialBackoffTime(int time)
+        {
+            int TwoPower(int n)
+            {
+                int a = 2;
+                int f = 1;
+                for (int i = n; i > 0; i--)
+                {
+                    f *= a;
+                }
+
+                return f;
+            }
+
+            int max = TwoPower(time);
+            Random rnd = new Random();
+            return rnd.Next(0, max);
         }
 
         public static void TryAsyncForever(Func<Task> steps, Action<Exception> onError = null) => TryAsync(steps, int.MaxValue, onError);

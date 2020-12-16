@@ -119,5 +119,45 @@ namespace Aiursoft.XelNaga.Tests.Services
             await Task.Delay(fakeWait);
             arrayToChange[i]++;
         }
+
+        [TestMethod]
+        public void TestTryAsyncSuccess()
+        {
+            bool invoked = false;
+            AsyncHelper.TryAsync(()=>Task.CompletedTask, 3, (e) => { invoked = true; });
+            Assert.IsFalse(invoked);
+        }
+
+        [TestMethod]
+        public void TestTryAsyncRetrySuccess()
+        {
+            bool called = false;
+            bool invoked = false;
+
+            AsyncHelper.TryAsync(()=>{
+                if (called)
+                {
+                    return Task.CompletedTask;
+                }
+                else
+                {
+                    called = true;
+                    throw new Exception("");
+                }
+            }, 3, (e) => { invoked = true;});
+            Assert.IsTrue(called);
+            Assert.IsTrue(invoked);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void TestTryAsyncFailed()
+        {
+            bool invoked = false;
+            AsyncHelper.TryAsync(()=>{
+                throw new Exception("");   
+            }, 2, (e) => { invoked = true;});
+            Assert.IsTrue(invoked);
+        }
     }
 }
