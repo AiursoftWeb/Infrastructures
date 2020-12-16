@@ -39,13 +39,13 @@ namespace Aiursoft.XelNaga.Services
             int TwoPower(int power)
             {
                 int @base = 2;
-                int result = 1;
+                int exponentiation = 1;
                 for (int i = power; i > 0; i--)
                 {
-                    result *= @base;
+                    exponentiation *= @base;
                 }
 
-                return result;
+                return exponentiation;
             }
 
             int max = TwoPower(time);
