@@ -1,10 +1,11 @@
 ﻿using Aiursoft.Scanner.Interfaces;
+using System.Threading;
 
 namespace Aiursoft.XelNaga.Services
 {
     public class Counter : ISingletonDependency
     {
-        private readonly object _obj = new object();
+        private int _current = -1;
 
         /// <summary>
         /// Get a new scope unique number which is one larger than current.
@@ -12,15 +13,22 @@ namespace Aiursoft.XelNaga.Services
         /// <returns></returns>
         public int GetUniqueNo()
         {
-            lock (_obj)
-            {
-                return ++GetCurrent;
-            }
+            return Interlocked.Increment(ref this._current);
         }
 
         /// <summary>
         /// Last returned counter value. If a initial counter, will be -1.
         /// </summary>
-        public int GetCurrent { get; private set; }
+        public int GetCurrent 
+        {
+            get
+            {
+                return this._current;
+            }
+            private set
+            {
+                this._current = value;
+            }
+        }
     }
 }
