@@ -5,7 +5,7 @@ namespace Aiursoft.XelNaga.Services
 {
     public class Counter : ISingletonDependency
     {
-        private int _current = -1;
+        private int _current = 0;
 
         /// <summary>
         /// Get a new scope unique number which is one larger than current.
