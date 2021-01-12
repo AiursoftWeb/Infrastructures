@@ -35,7 +35,7 @@ namespace Aiursoft.Probe.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port);
+            _server = App<TestStartup>(port: _port).Update<ProbeDbContext>();
             _http = new HttpClient();
             await _server.StartAsync();
 

@@ -92,13 +92,15 @@ namespace Aiursoft.SDK
                     optionsBuilder
                         .UseInMemoryDatabase("inmemory")
                         .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
-                }
+
+                // Consider some new EF technology like use memory cache.
+            }
             else
             {
                 services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-                        optionsBuilder
-                            .UseSqlServer(connectionString)
-                            .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+                    optionsBuilder
+                        .UseSqlServer(connectionString)
+                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
             }
             services.AddEFSecondLevelCache(options =>
             {
