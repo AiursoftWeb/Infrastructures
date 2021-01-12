@@ -36,11 +36,25 @@ namespace Aiursoft.DBTools
             dbSet.RemoveRange(dbSet.Where(predicate));
         }
 
-        public static async Task EnsureUnique<T, V>(this DbSet<T> dbSet, Expression<Func<T, V>> predicate, V value) 
+        public static async Task EnsureUnique<T, V>(this IQueryable<T> query, Expression<Func<T, V>> predicate, V value)
             where T : class
             where V : class
         {
-            var conflict = await dbSet.Select(predicate).AnyAsync(v => v == value);
+            var conflict = await query.Select(predicate).AnyAsync(v => v == value);
+            if (conflict)
+            {
+                throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");
+            }
+        }
+
+        public static async Task EnsureUnique<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate, string value, bool ensureUnique)
+            where T : class
+        {
+            var options = ensureUnique ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture;
+            var conflict = await query.Select(predicate).AnyAsync(v => v.Equals(value, options));
+
+            var qstring = query.Select(predicate).Where(v => v.Equals(value, options)).ToQueryString();
+
             if (conflict)
             {
                 throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");

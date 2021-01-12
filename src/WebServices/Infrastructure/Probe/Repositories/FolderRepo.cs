@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
@@ -63,23 +64,18 @@ namespace Aiursoft.Probe.Repositories
             return await GetFolderFromPath(folderNames, rootFolder, recursiveCreate);
         }
 
-        public Task<bool> FolderExists(int contextId, string newFolderName)
+        public async Task CreateNewFolder(int contextId, string name)
         {
-            return _dbContext
-                .Folders
+            await _dbContext.Folders
                 .Where(t => t.ContextId == contextId)
-                .AnyAsync(t => t.FolderName == newFolderName.ToLower());
-        }
-
-        public Task CreateNewFolder(int contextId, string name)
-        {
+                .EnsureUnique(t => t.FolderName, name.ToLower());
             var newFolder = new Folder
             {
                 ContextId = contextId,
                 FolderName = name.ToLower(),
             };
             _dbContext.Folders.Add(newFolder);
-            return _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)
