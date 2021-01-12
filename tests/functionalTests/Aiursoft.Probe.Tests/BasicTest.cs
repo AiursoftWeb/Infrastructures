@@ -1,6 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
+using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.XelNaga.Tools;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
@@ -60,6 +63,73 @@ namespace Aiursoft.Stargate.Tests
             var content = await response.Content.ReadAsStringAsync();
             var contentObject = JsonConvert.DeserializeObject<AiurProtocol>(content);
             Assert.AreEqual(contentObject.Code, ErrorType.Success);
+        }
+
+        [TestMethod]
+        public async Task CallWithInvalidAccessToken()
+        {
+            try
+            {
+                var siteService = _serviceProvider.GetRequiredService<SitesService>();
+                await siteService.ViewMySitesAsync(string.Empty);
+                Assert.Fail("Empty request should not success.");
+            }
+            catch (AiurUnexpectedResponse e)
+            {
+                Assert.AreEqual(e.Code, ErrorType.InvalidInput);
+            }
+        }
+
+        [TestMethod]
+        public async Task ViewEmptySitesTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var sites = await siteService.ViewMySitesAsync("mock-access-token");
+            Assert.IsTrue(!sites.Sites.Any());
+        }
+
+        [TestMethod]
+        public async Task CreateSitesTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var response = await siteService.CreateNewSiteAsync(
+                accessToken: "mock-access-token",
+                newSiteName: "my-site",
+                openToDownload: true,
+                openToUpload: true);
+            Assert.AreEqual(ErrorType.Success, response.Code);
+
+            var sites = await siteService.ViewMySitesAsync("mock-access-token");
+            Assert.AreEqual("my-site", sites.Sites.FirstOrDefault().SiteName);
+        }
+
+        [TestMethod]
+        public async Task CreateDuplicateSitesTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var response = await siteService.CreateNewSiteAsync(
+                accessToken: "mock-access-token",
+                newSiteName: "my-site",
+                openToDownload: true,
+                openToUpload: true);
+            Assert.AreEqual(ErrorType.Success, response.Code);
+
+            try
+            {
+                await siteService.CreateNewSiteAsync(
+                    accessToken: "mock-access-token",
+                    newSiteName: "my-site",
+                    openToDownload: true,
+                    openToUpload: true);
+                Assert.Fail("Duplicate request should not success.");
+            }
+            catch (AiurUnexpectedResponse e)
+            {
+                Assert.AreEqual(ErrorType.NotEnoughResources, e.Code);
+            }
+
+            var sites = await siteService.ViewMySitesAsync("mock-access-token");
+            Assert.AreEqual("my-site", sites.Sites.SingleOrDefault().SiteName);
         }
     }
 }

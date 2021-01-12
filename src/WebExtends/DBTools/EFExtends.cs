@@ -1,9 +1,12 @@
-﻿using Aiursoft.Handler.Interfaces;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Interfaces;
+using Aiursoft.Handler.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Aiursoft.DBTools
 {
@@ -31,6 +34,17 @@ namespace Aiursoft.DBTools
         public static void Delete<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
         {
             dbSet.RemoveRange(dbSet.Where(predicate));
+        }
+
+        public static async Task EnsureUnique<T, V>(this DbSet<T> dbSet, Expression<Func<T, V>> predicate, V value) 
+            where T : class
+            where V : class
+        {
+            var conflict = await dbSet.Select(predicate).AnyAsync(v => v == value);
+            if (conflict)
+            {
+                throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");
+            }
         }
 
         public static void Sync<T, M>(this DbSet<T> dbSet,

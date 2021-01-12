@@ -33,11 +33,6 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var conflict = await _siteRepo.GetSiteByName(model.NewSiteName) != null;
-            if (conflict)
-            {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
-            }
             var createdSite = await _siteRepo.CreateSite(model.NewSiteName, model.OpenToUpload, model.OpenToDownload, appid);
             return this.Protocol(ErrorType.Success, $"Successfully created your new site: '{createdSite.SiteName}' at {createdSite.CreationTime}.");
         }
