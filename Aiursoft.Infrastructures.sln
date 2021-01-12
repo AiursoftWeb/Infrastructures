@@ -101,6 +101,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Stargate.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.SDK.Tests", "tests\SDK.Tests\Aiursoft.SDK.Tests.csproj", "{E9BB0D8A-2E45-443E-9288-50A6226C0C4B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.Tests", "tests\functionalTests\Aiursoft.Probe.Tests\Aiursoft.Probe.Tests.csproj", "{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -259,6 +261,10 @@ Global
 		{E9BB0D8A-2E45-443E-9288-50A6226C0C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9BB0D8A-2E45-443E-9288-50A6226C0C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9BB0D8A-2E45-443E-9288-50A6226C0C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -311,6 +317,7 @@ Global
 		{E5184013-9A1F-46DF-AE0D-58084BBCF155} = {E67F9B78-45AC-411F-83A1-76BEA742C0E3}
 		{B5C211BC-C458-47FF-9537-AAB2AD6ACF4E} = {E67F9B78-45AC-411F-83A1-76BEA742C0E3}
 		{E9BB0D8A-2E45-443E-9288-50A6226C0C4B} = {3CD1FC53-C629-42BE-B77E-5B9A2290D92E}
+		{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484} = {E67F9B78-45AC-411F-83A1-76BEA742C0E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A55376D-2CE7-4C61-8D33-16C3FFEC02DE}
