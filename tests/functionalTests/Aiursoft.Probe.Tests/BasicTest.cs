@@ -15,7 +15,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Stargate.Tests
+namespace Aiursoft.Probe.Tests
 {
     [TestClass]
     public class BasicTests
@@ -35,7 +35,7 @@ namespace Aiursoft.Stargate.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port).Update<ProbeDbContext>(); ;
+            _server = App<TestStartup>(port: _port);
             _http = new HttpClient();
             await _server.StartAsync();
 

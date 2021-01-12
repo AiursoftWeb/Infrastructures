@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Aiursoft.Stargate.Tests
+namespace Aiursoft.Probe.Tests
 {
     public class TestStartup : Startup
     {

@@ -46,7 +46,7 @@ namespace Aiursoft.Stargate.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port).Update<StargateDbContext>(); ;
+            _server = App<TestStartup>(port: _port).Update<StargateDbContext>();
             _http = new HttpClient();
             await _server.StartAsync();
 

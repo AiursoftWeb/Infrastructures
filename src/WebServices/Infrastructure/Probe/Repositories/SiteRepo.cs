@@ -46,7 +46,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)
         {
-            await _dbContext.Sites.EnsureUnique(t => t.SiteName, newSiteName);
+            await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
             var newRootFolder = new Folder
             {
                 FolderName = "blob"

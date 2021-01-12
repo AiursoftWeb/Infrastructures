@@ -47,14 +47,10 @@ namespace Aiursoft.DBTools
             }
         }
 
-        public static async Task EnsureUnique<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate, string value, bool ensureUnique)
+        public static async Task EnsureUniqueString<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate, string value)
             where T : class
         {
-            var options = ensureUnique ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture;
-            var conflict = await query.Select(predicate).AnyAsync(v => v.Equals(value, options));
-
-            var qstring = query.Select(predicate).Where(v => v.Equals(value, options)).ToQueryString();
-
+            var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
             if (conflict)
             {
                 throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");
