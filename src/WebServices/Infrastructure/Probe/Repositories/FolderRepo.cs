@@ -116,7 +116,7 @@ namespace Aiursoft.Probe.Repositories
                 .ToListAsync();
             foreach (var file in localFiles)
             {
-                await _fileRepo.DeleteFileObject(file);
+                await _fileRepo.DeleteFile(file);
             }
             _dbContext.Folders.Remove(folder);
         }
