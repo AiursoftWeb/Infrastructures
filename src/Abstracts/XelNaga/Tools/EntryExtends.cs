@@ -15,7 +15,7 @@ namespace Aiursoft.XelNaga.Tools
         public static bool IsInUT()
         {
             var name = Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim() ?? string.Empty; 
-            return name.StartsWith("test") || name.StartsWith("resharpertestrunner");
+            return name.StartsWith("test") || name.EndsWith("testrunner");
         }
 
         public static bool IsProgramEntry()

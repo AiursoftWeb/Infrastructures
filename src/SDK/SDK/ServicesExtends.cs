@@ -3,9 +3,11 @@ using Aiursoft.Scanner.Tools;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
+using CacheManager.Core.Logging;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -86,15 +88,19 @@ namespace Aiursoft.SDK
         {
             if (EntryExtends.IsInUT())
             {
-                services.AddDbContext<T>((optionsBuilder) =>
-                    optionsBuilder.UseInMemoryDatabase("inmemory"));
+                services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
+                    optionsBuilder
+                        .UseInMemoryDatabase("inmemory")
+                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+
+                // Consider some new EF technology like use memory cache.
             }
             else
             {
                 services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-                        optionsBuilder
-                            .UseSqlServer(connectionString)
-                            .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+                    optionsBuilder
+                        .UseSqlServer(connectionString)
+                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
             }
             services.AddEFSecondLevelCache(options =>
             {

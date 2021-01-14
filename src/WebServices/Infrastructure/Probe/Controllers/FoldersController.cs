@@ -55,11 +55,6 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
             }
-            var conflict = await _folderRepo.FolderExists(folder.Id, model.NewFolderName);
-            if (conflict)
-            {
-                return this.Protocol(ErrorType.HasDoneAlready, $"Folder name: '{model.NewFolderName}' conflict!");
-            }
             await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
             return this.Protocol(ErrorType.Success, "Successfully created your new folder!");
         }

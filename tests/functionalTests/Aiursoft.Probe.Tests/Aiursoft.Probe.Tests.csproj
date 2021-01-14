@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\src\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+	  <ProjectReference Include="..\..\..\src\WebServices\Infrastructure\Probe\Aiursoft.Probe.csproj" />
+	  <ProjectReference Include="..\..\SDK.Tests\Aiursoft.SDK.Tests.csproj" />
+	</ItemGroup>
+
+
+</Project>

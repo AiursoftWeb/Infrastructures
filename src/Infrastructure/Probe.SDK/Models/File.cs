@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Probe.SDK.Models
 {
+    [Index(nameof(HardwareId), IsUnique = true)]
     public class File
     {
         [JsonIgnore]

@@ -36,7 +36,7 @@ namespace Aiursoft.Observer.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port).Update<ObserverDbContext>(); ;
+            _server = App<TestStartup>(port: _port).Update<ObserverDbContext>();
             _http = new HttpClient();
             await _server.StartAsync();
 
