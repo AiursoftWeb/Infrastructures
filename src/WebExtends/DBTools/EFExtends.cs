@@ -80,8 +80,7 @@ namespace Aiursoft.DBTools
                     .AsEnumerable()
                     .Where(t => item.EqualsInDb(t))
                     .ToList();
-                var itemCount = items
-                    .Count();
+                var itemCount = items.Count;
 
                 if (itemCount > itemCountShallBe)
                 {

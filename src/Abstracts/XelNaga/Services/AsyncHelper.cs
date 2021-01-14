@@ -49,7 +49,7 @@ namespace Aiursoft.XelNaga.Services
             }
 
             int max = TwoPower(time);
-            Random rnd = new Random();
+            var rnd = new Random();
             return rnd.Next(0, max);
         }
 
