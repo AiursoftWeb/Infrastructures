@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Probe.SDK.Models
 {
-    [Index(nameof(HardwareId), IsUnique = true)]
     public class File
     {
         [JsonIgnore]
