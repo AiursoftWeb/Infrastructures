@@ -31,11 +31,6 @@ namespace Aiursoft.Wrapgate.Controllers
         public async Task<IActionResult> CreateNewRecord(CreateNewRecordAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var conflict = await _recordRepo.GetRecordByName(model.NewRecordName) != null;
-            if (conflict)
-            {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a record with name: '{model.NewRecordName}'. Please try another new name.");
-            }
             var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl, model.Enabled, model.Tags);
             return this.Protocol(ErrorType.Success, $"Successfully created your new record: '{createdRecord.RecordUniqueName}' at {createdRecord.CreationTime}.");
         }

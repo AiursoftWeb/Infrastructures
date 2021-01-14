@@ -68,7 +68,7 @@ namespace Aiursoft.Probe.Repositories
         {
             await _dbContext.Folders
                 .Where(t => t.ContextId == contextId)
-                .EnsureUniqueString(t => t.FolderName, name.ToLower());
+                .EnsureUniqueString(t => t.FolderName, name);
             var newFolder = new Folder
             {
                 ContextId = contextId,

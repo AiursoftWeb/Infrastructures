@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.DBTools;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Wrapgate.Data;
@@ -39,6 +40,7 @@ namespace Aiursoft.Wrapgate.Repositories
 
         public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled, string tags)
         {
+            await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
             var newRecord = new WrapRecord
             {
                 RecordUniqueName = newRecordName.ToLower(),
@@ -79,7 +81,7 @@ namespace Aiursoft.Wrapgate.Repositories
             }
             if (record.AppId != appid)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "The site you tried to access is not your app's site.");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, "The record you tried to access is not your app's record.");
             }
             return record;
         }
