@@ -7,17 +7,17 @@ Probe is the basic storage service for all Aiursoft apps.
 Probe structure:
 
 * Probe
-    * App A
-        * Site A
-            * Folder A
-                * File A
+  * App A
+    * Site A
+      * Folder A
+        * File A
 
 ## Use Probe
 
 If you plan to use Probe in your project, please follow the steps below
 
-* [Create a new app in the Aiursoft Developer Center](https://developer.aiursoft.com)
-* Access Probe API via `AccessToken`
+* [Integrate Aiursoft App Authentication](../App%20Authentication/What%20is%20app%20authentication.md)
+* [Access Probe API](./Advanced%20API.md)
 
 ## Size limit and price
 

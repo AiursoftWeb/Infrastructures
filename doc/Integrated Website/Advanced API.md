@@ -54,24 +54,20 @@ The file download feature does **NOT** support image compressing and EXIF cleari
 * The route `/download/open` will try to open the file. If fail, then download.
 * The route `/download/file` will download the source file by force.
 
-## Short domain (Under development)
+## Short domain
 
 For a file in Probe:
 
 > https://probe.aiursoft.com/Download/Open/{SiteName}/{FilePath}
 
-Can be download via:
+Can be downloaded via:
 
-> https://{SiteName}.aiursoft.io/{FilePath}
+> https://{SiteName}.aiur.site/{FilePath}
 
 For example, the file in Probe with address:
 
-> https://probe.aiursoft.com/Download/Open/mysite/512x512.png
+> https://probe.aiursoft.com/Download/Open/aiursoft-app-icons/8c716dde448109f940929844b41a39a0/e0abd2118b9f4381bb490211c1d9e722.png
 
-Can be download via:
+Can be downloaded via:
 
-> https://mysite.aiursoft.io/512x512.png
-
-## Upload token and download token
-
-Under consideration.
+> https://aiursoft-app-icons.aiur.site/8c716dde448109f940929844b41a39a0/e0abd2118b9f4381bb490211c1d9e722.png

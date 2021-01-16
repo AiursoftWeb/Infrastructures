@@ -10,6 +10,7 @@ namespace Aiursoft.Probe.SDK.Models
         [JsonIgnore]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int ContextId { get; set; }
         [JsonIgnore]
         [ForeignKey(nameof(ContextId))]
