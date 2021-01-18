@@ -2,6 +2,7 @@
 using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +29,11 @@ namespace Aiursoft.Status.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (!EntryExtends.IsProgramEntry())
+            {
+                _logger.LogInformation("Skip cleaner in development environment.");
+                return Task.CompletedTask;
+            }
             _logger.LogInformation("Timed Background Service is starting.");
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(5), TimeSpan.FromMinutes(10));
             return Task.CompletedTask;
