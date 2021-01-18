@@ -7,6 +7,7 @@ using Aiursoft.Wrapgate.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrapgate.Repositories
@@ -15,6 +16,7 @@ namespace Aiursoft.Wrapgate.Repositories
     {
         private readonly WrapgateDbContext _dbContext;
         private readonly DbSet<WrapRecord> _table;
+        private static SemaphoreSlim _createRecordLock = new SemaphoreSlim(1, 1);
 
         public RecordRepo(WrapgateDbContext dbContext)
         {
@@ -40,6 +42,7 @@ namespace Aiursoft.Wrapgate.Repositories
 
         public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled, string tags)
         {
+            await _createRecordLock.WaitAsync();
             await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
             var newRecord = new WrapRecord
             {
@@ -52,6 +55,7 @@ namespace Aiursoft.Wrapgate.Repositories
             };
             await _table.AddAsync(newRecord);
             await _dbContext.SaveChangesAsync();
+            _createRecordLock.Release();
             return newRecord;
         }
 

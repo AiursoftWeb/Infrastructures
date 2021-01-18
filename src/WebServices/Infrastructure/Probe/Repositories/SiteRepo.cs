@@ -7,6 +7,7 @@ using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
@@ -15,6 +16,7 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderRepo _folderRepo;
+        private static SemaphoreSlim _createSiteLock = new SemaphoreSlim(1, 1);
 
         public SiteRepo(
             ProbeDbContext dbContext,
@@ -46,6 +48,7 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)
         {
+            await _createSiteLock.WaitAsync();
             await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
             var newRootFolder = new Folder
             {
@@ -63,6 +66,7 @@ namespace Aiursoft.Probe.Repositories
             };
             await _dbContext.Sites.AddAsync(site);
             await _dbContext.SaveChangesAsync();
+            _createSiteLock.Release();
             return site;
         }
 

@@ -47,6 +47,15 @@ namespace Aiursoft.DBTools
             }
         }
 
+        /// <summary>
+        /// If there already exists one with your condition, will create a new AiurAPIModelException to generate a response.
+        /// Suggest using a lock when using this.
+        /// </summary>
+        /// <typeparam name="T">Type of elements of the query.</typeparam>
+        /// <param name="query">Query.</param>
+        /// <param name="predicate">Condition predicate.</param>
+        /// <param name="value">Unique value.</param>
+        /// <returns>Task.</returns>
         public static async Task EnsureUniqueString<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate, string value)
             where T : class
         {
