@@ -69,17 +69,23 @@ namespace Aiursoft.Probe.Repositories
         public async Task CreateNewFolder(int contextId, string name)
         {
             await _folderCreateLock.WaitAsync();
-            await _dbContext.Folders
-                .Where(t => t.ContextId == contextId)
-                .EnsureUniqueString(t => t.FolderName, name);
-            var newFolder = new Folder
+            try
             {
-                ContextId = contextId,
-                FolderName = name.ToLower(),
-            };
-            _dbContext.Folders.Add(newFolder);
-            await _dbContext.SaveChangesAsync();
-            _folderCreateLock.Release();
+                await _dbContext.Folders
+                    .Where(t => t.ContextId == contextId)
+                    .EnsureUniqueString(t => t.FolderName, name);
+                var newFolder = new Folder
+                {
+                    ContextId = contextId,
+                    FolderName = name.ToLower(),
+                };
+                _dbContext.Folders.Add(newFolder);
+                await _dbContext.SaveChangesAsync();
+            }
+            finally
+            {
+                _folderCreateLock.Release();
+            }
         }
 
         public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)

@@ -49,25 +49,31 @@ namespace Aiursoft.Probe.Repositories
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)
         {
             await _createSiteLock.WaitAsync();
-            await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
-            var newRootFolder = new Folder
+            try
             {
-                FolderName = "blob"
-            };
-            await _dbContext.Folders.AddAsync(newRootFolder);
-            await _dbContext.SaveChangesAsync();
-            var site = new Site
+                await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
+                var newRootFolder = new Folder
+                {
+                    FolderName = "blob"
+                };
+                await _dbContext.Folders.AddAsync(newRootFolder);
+                await _dbContext.SaveChangesAsync();
+                var site = new Site
+                {
+                    AppId = appid,
+                    SiteName = newSiteName.ToLower(),
+                    RootFolderId = newRootFolder.Id,
+                    OpenToUpload = openToUpload,
+                    OpenToDownload = openToDownload
+                };
+                await _dbContext.Sites.AddAsync(site);
+                await _dbContext.SaveChangesAsync();
+                return site;
+            }
+            finally
             {
-                AppId = appid,
-                SiteName = newSiteName.ToLower(),
-                RootFolderId = newRootFolder.Id,
-                OpenToUpload = openToUpload,
-                OpenToDownload = openToDownload
-            };
-            await _dbContext.Sites.AddAsync(site);
-            await _dbContext.SaveChangesAsync();
-            _createSiteLock.Release();
-            return site;
+                _createSiteLock.Release();
+            }
         }
 
         public Task<List<Site>> GetAllSitesUnderApp(string appid)

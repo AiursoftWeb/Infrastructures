@@ -43,20 +43,26 @@ namespace Aiursoft.Wrapgate.Repositories
         public async Task<WrapRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl, bool enabled, string tags)
         {
             await _createRecordLock.WaitAsync();
-            await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
-            var newRecord = new WrapRecord
+            try
             {
-                RecordUniqueName = newRecordName.ToLower(),
-                Type = type,
-                AppId = appid,
-                TargetUrl = targetUrl,
-                Enabled = enabled,
-                Tags = tags
-            };
-            await _table.AddAsync(newRecord);
-            await _dbContext.SaveChangesAsync();
-            _createRecordLock.Release();
-            return newRecord;
+                await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
+                var newRecord = new WrapRecord
+                {
+                    RecordUniqueName = newRecordName.ToLower(),
+                    Type = type,
+                    AppId = appid,
+                    TargetUrl = targetUrl,
+                    Enabled = enabled,
+                    Tags = tags
+                };
+                await _table.AddAsync(newRecord);
+                await _dbContext.SaveChangesAsync();
+                return newRecord;
+            }
+            finally
+            {
+                _createRecordLock.Release();
+            }
         }
 
         public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid, string[] mustHaveTags)
