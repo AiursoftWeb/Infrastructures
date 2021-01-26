@@ -1,5 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Stargate.Data;
+using Aiursoft.XelNaga.Tools;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,17 +17,25 @@ namespace Aiursoft.Stargate.Services
         private Timer _timer;
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IWebHostEnvironment _env;
 
         public TimedCleaner(
             ILogger<TimedCleaner> logger,
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            IWebHostEnvironment env)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
+            _env = env;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
+            {
+                _logger.LogInformation("Skip cleaner in development environment.");
+                return Task.CompletedTask;
+            }
             _logger.LogInformation("Timed Background Service is starting.");
             // Start cleaner after one day.
             // Because when stargate starts, all channels are treated dead.

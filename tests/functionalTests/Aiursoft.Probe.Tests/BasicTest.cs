@@ -131,5 +131,60 @@ namespace Aiursoft.Probe.Tests
             var sites = await siteService.ViewMySitesAsync("mock-access-token");
             Assert.AreEqual("my-site", sites.Sites.SingleOrDefault().SiteName);
         }
+
+        [TestMethod]
+        public async Task ViewSiteDetailTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var response = await siteService.CreateNewSiteAsync(
+                accessToken: "mock-access-token",
+                newSiteName: "my-site",
+                openToDownload: false,
+                openToUpload: true);
+            Assert.AreEqual(ErrorType.Success, response.Code);
+
+            var sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site");
+            Assert.AreEqual(sites.Site.SiteName, "my-site");
+            Assert.AreEqual(sites.Site.OpenToDownload, false);
+            Assert.AreEqual(sites.Site.OpenToUpload, true);
+        }
+
+        [TestMethod]
+        public async Task UpdateSiteTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var response = await siteService.CreateNewSiteAsync(
+                accessToken: "mock-access-token",
+                newSiteName: "my-site",
+                openToDownload: false,
+                openToUpload: true);
+            Assert.AreEqual(ErrorType.Success, response.Code);
+
+            var sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site");
+            Assert.AreEqual(sites.Site.SiteName, "my-site");
+            Assert.AreEqual(sites.Site.OpenToDownload, false);
+            Assert.AreEqual(sites.Site.OpenToUpload, true);
+
+            var updateResponse = await siteService.UpdateSiteInfoAsync(
+                accessToken: "mock-access-token",
+                oldSiteName: "my-site",
+                newSiteName: "my-site",
+                openToDownload: true,
+                openToUpload: false);
+            Assert.AreEqual(ErrorType.Success, updateResponse.Code);
+
+            updateResponse = await siteService.UpdateSiteInfoAsync(
+                accessToken: "mock-access-token",
+                oldSiteName: "my-site",
+                newSiteName: "my-site2",
+                openToDownload: true,
+                openToUpload: false);
+            Assert.AreEqual(ErrorType.Success, updateResponse.Code);
+
+            sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site2");
+            Assert.AreEqual(sites.Site.SiteName, "my-site2");
+            Assert.AreEqual(sites.Site.OpenToDownload, true);
+            Assert.AreEqual(sites.Site.OpenToUpload, false);
+        }
     }
 }

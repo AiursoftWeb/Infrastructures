@@ -13,7 +13,7 @@ namespace Aiursoft.Probe.Services
         private readonly string _path;
         private readonly string _trashPath;
         private readonly AiurCache _cache;
-
+        
         public DiskAccess(
             IConfiguration configuration,
             AiurCache aiurCache)
@@ -43,7 +43,7 @@ namespace Aiursoft.Probe.Services
             var target = _trashPath + $"{hardwareUuid}.dat";
             if (File.Exists(path))
             {
-                if (Directory.Exists(_trashPath) == false)
+                if (!Directory.Exists(_trashPath))
                 {
                     Directory.CreateDirectory(_trashPath);
                 }
@@ -59,6 +59,10 @@ namespace Aiursoft.Probe.Services
 
         public string[] GetAllFileNamesInHardware()
         {
+            if (!Directory.Exists(_path))
+            {
+                Directory.CreateDirectory(_path);
+            }
             return Directory.GetFiles(_path).Select(t => Path.GetFileNameWithoutExtension(t)).ToArray();
         }
 
@@ -81,7 +85,7 @@ namespace Aiursoft.Probe.Services
         public async Task Save(string hardwareUuid, IFormFile file)
         {
             //Try saving file.
-            if (Directory.Exists(_path) == false)
+            if (!Directory.Exists(_path))
             {
                 Directory.CreateDirectory(_path);
             }

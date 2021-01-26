@@ -8,6 +8,7 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
@@ -18,6 +19,7 @@ namespace Aiursoft.Probe.Repositories
         private readonly FileRepo _fileRepo;
         private readonly IStorageProvider _storageProvider;
         private readonly ACTokenValidator _tokenManager;
+        private static SemaphoreSlim _folderCreateLock = new SemaphoreSlim(1, 1);
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
@@ -66,16 +68,24 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task CreateNewFolder(int contextId, string name)
         {
-            await _dbContext.Folders
-                .Where(t => t.ContextId == contextId)
-                .EnsureUniqueString(t => t.FolderName, name);
-            var newFolder = new Folder
+            await _folderCreateLock.WaitAsync();
+            try
             {
-                ContextId = contextId,
-                FolderName = name.ToLower(),
-            };
-            _dbContext.Folders.Add(newFolder);
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.Folders
+                    .Where(t => t.ContextId == contextId)
+                    .EnsureUniqueString(t => t.FolderName, name);
+                var newFolder = new Folder
+                {
+                    ContextId = contextId,
+                    FolderName = name.ToLower(),
+                };
+                _dbContext.Folders.Add(newFolder);
+                await _dbContext.SaveChangesAsync();
+            }
+            finally
+            {
+                _folderCreateLock.Release();
+            }
         }
 
         public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)
