@@ -39,7 +39,7 @@ The open mode will try to return the file with a supported MIME type. So you can
 
 If we can't detect the MIME type, the open mode will be switched to download mode automatically.
 
-If you are trying to load a photo in `Open mode`, it will be switched to `Image mode` to do some compression and EXIF clearing. Read more [here](./Image%20Mode).
+If you are trying to load a photo in `Open mode`, it will be switched to `Image mode` to do some compression and EXIF clearing. Read more [here](./Image%20Mode.md).
 
 ### Download mode
 
