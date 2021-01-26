@@ -12,10 +12,10 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
 {
     public class PushMessageService : IScopedDependency
     {
-        private readonly HTTPService _httpService;
+        private readonly APIProxyService _httpService;
         private readonly StargateLocator _stargateLocator;
         public PushMessageService(
-            HTTPService httpService,
+            APIProxyService httpService,
             StargateLocator serviceLocation)
         {
             _httpService = httpService;

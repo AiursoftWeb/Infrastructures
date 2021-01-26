@@ -15,14 +15,14 @@ namespace Aiursoft.Identity.Services.Authentication.ToGitHubServer
 {
     public class GitHubService : IAuthProvider
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
 
         public GitHubService(
-            HTTPService http,
+            APIProxyService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
             GatewayLocator serviceLocation,

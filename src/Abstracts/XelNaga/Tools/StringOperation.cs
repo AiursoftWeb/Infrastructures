@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Aiursoft.XelNaga.Tools
 {
@@ -215,6 +216,33 @@ namespace Aiursoft.XelNaga.Tools
                 size /= 1024;
             }
             return $"{size:0.##} {sizes[order]}";
+        }
+
+        public static bool IsValidJson(this string strInput)
+        {
+            if (string.IsNullOrWhiteSpace(strInput))
+            {
+                return false;
+            }
+            strInput = strInput.Trim();
+            if (strInput.StartsWith("{") && strInput.EndsWith("}") || //For object.
+                strInput.StartsWith("\"") && strInput.EndsWith("\"") || // For string.
+                strInput.StartsWith("[") && strInput.EndsWith("]")) //For array.
+            {
+                try
+                {
+                    return JsonDocument.Parse(strInput) != null;
+                }
+                catch
+                {
+
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

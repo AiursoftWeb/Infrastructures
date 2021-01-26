@@ -1,5 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.XelNaga.Tools;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -9,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Services
 {
-    public class HTTPService : IScopedDependency
+    public class APIProxyService : IScopedDependency
     {
         private readonly HttpClient _client;
         private readonly Regex _regex;
 
-        public HTTPService(
+        public APIProxyService(
             IHttpClientFactory clientFactory)
         {
             _regex = new Regex("^https://", RegexOptions.Compiled);
@@ -37,13 +39,21 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("accept", "application/json, text/html");
 
             using var response = await _client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+            if (content.IsValidJson())
             {
-                return await response.Content.ReadAsStringAsync();
+                return content;
             }
             else
             {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                if(response.IsSuccessStatusCode)
+                {
+                    throw new InvalidOperationException($"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                }
+                else
+                {
+                    throw new WebException($"The remote server returned unexpected content: {content.OTake(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+                }
             }
         }
 
@@ -63,13 +73,21 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("accept", "application/json");
 
             using var response = await _client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+            if (content.IsValidJson())
             {
-                return await response.Content.ReadAsStringAsync();
+                return content;
             }
             else
             {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                if (response.IsSuccessStatusCode)
+                {
+                    throw new InvalidOperationException($"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                }
+                else
+                {
+                    throw new WebException($"The remote server returned unexpected content: {content.OTake(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+                }
             }
         }
 
@@ -91,13 +109,21 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("accept", "application/json");
 
             using var response = await _client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+            if (content.IsValidJson())
             {
-                return await response.Content.ReadAsStringAsync();
+                return content;
             }
             else
             {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
+                if (response.IsSuccessStatusCode)
+                {
+                    throw new InvalidOperationException($"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                }
+                else
+                {
+                    throw new WebException($"The remote server returned unexpected content: {content.OTake(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+                }
             }
         }
     }

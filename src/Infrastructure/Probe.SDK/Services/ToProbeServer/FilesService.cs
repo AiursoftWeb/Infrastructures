@@ -14,10 +14,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 {
     public class FilesService : IScopedDependency
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly ProbeLocator _serviceLocation;
         public FilesService(
-            HTTPService http,
+            APIProxyService http,
             ProbeLocator serviceLocation)
         {
             _http = http;

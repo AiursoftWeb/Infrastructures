@@ -12,11 +12,11 @@ namespace Aiursoft.Archon.SDK.Services.ToArchonServer
     public class ArchonApiService : IScopedDependency
     {
         private readonly ArchonLocator _archonLocator;
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
 
         public ArchonApiService(
             ArchonLocator serviceLocation,
-            HTTPService http)
+            APIProxyService http)
         {
             _archonLocator = serviceLocation;
             _http = http;

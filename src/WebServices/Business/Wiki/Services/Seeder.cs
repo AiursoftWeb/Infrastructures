@@ -24,7 +24,7 @@ namespace Aiursoft.Wiki.Services
         private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly MarkDownDocGenerator _markDownGenerator;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
@@ -32,7 +32,7 @@ namespace Aiursoft.Wiki.Services
         public Seeder(
             WikiDbContext dbContext,
             IConfiguration configuration,
-            HTTPService http,
+            APIProxyService http,
             MarkDownDocGenerator markDownGenerator,
             EventService eventService,
             AppsContainer appsContainer)
