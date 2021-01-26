@@ -47,7 +47,7 @@ namespace Aiursoft.Status.Services
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<StatusDbContext>();
-                    var http = scope.ServiceProvider.GetRequiredService<APIProxyService>();
+                    var http = scope.ServiceProvider.GetRequiredService<HttpService>();
                     await AllCheck(dbContext, http);
                 }
                 _logger.LogInformation("Cleaner task finished!");
@@ -58,7 +58,7 @@ namespace Aiursoft.Status.Services
             }
         }
 
-        private async Task AllCheck(StatusDbContext dbContext, APIProxyService http)
+        private async Task AllCheck(StatusDbContext dbContext, HttpService http)
         {
             var items = await dbContext.MonitorRules.ToListAsync();
             foreach (var item in items)
