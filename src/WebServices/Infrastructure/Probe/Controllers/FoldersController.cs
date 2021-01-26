@@ -71,7 +71,7 @@ namespace Aiursoft.Probe.Controllers
             }
             if (folder.ContextId == null)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
+                return this.Protocol(ErrorType.Conflict, "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
             }
             await _folderRepo.DeleteFolder(folder.Id);
             return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");

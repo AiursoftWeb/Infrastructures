@@ -126,7 +126,7 @@ namespace Aiursoft.Gateway.Controllers
             var emailExists = await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
             if (emailExists)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"An user has already bind email: {model.NewEmail}!");
+                return this.Protocol(ErrorType.Conflict, $"An user has already bind email: {model.NewEmail}!");
             }
             var mail = new UserEmail
             {
@@ -152,7 +152,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (await userEmails.CountAsync() == 1)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
+                return this.Protocol(ErrorType.Conflict, $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
             }
             _dbContext.UserEmails.Remove(userEmail);
             await _dbContext.SaveChangesAsync();
@@ -174,12 +174,12 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (userEmail.Validated)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, $"The email: {model.Email} was already validated!");
+                return this.Protocol(ErrorType.HasSuccessAlready, $"The email: {model.Email} was already validated!");
             }
             var byProvider = _authProviders.FirstOrDefault(t => user.Email.ToLower().Contains($"@from.{t.GetName().ToLower()}"));
             if (byProvider != null)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
+                return this.Protocol(ErrorType.UnknownError, $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
             }
             // limit the sending frenquency to 3 minutes.
             if (DateTime.UtcNow > userEmail.LastSendTime + new TimeSpan(0, 1, 0))
@@ -201,7 +201,7 @@ namespace Aiursoft.Gateway.Controllers
                 }
                 return this.Protocol(ErrorType.Success, "Successfully sent the validation email.");
             }
-            return this.Protocol(ErrorType.RequireAttention, "We have just sent you an Email in an minute.");
+            return this.Protocol(ErrorType.HasSuccessAlready, "We have just sent you an Email in an minute.");
         }
 
         [HttpPost]
@@ -219,7 +219,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             if (!userEmail.Validated)
             {
-                return this.Protocol(ErrorType.Pending, $"The email :{model.Email} was not validated!");
+                return this.Protocol(ErrorType.InsufficientPermissions, $"The email :{model.Email} was not validated!");
             }
             userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
             await _dbContext.SaveChangesAsync();

@@ -139,7 +139,7 @@ namespace Aiursoft.EE.Controllers
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "You have successfully subscribed this course!");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "This course you have already subscribed!");
+            return this.Protocol(ErrorType.HasSuccessAlready, "This course you have already subscribed!");
         }
 
         [HttpPost]
@@ -166,7 +166,7 @@ namespace Aiursoft.EE.Controllers
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "Successfully unsubscribed this course!");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "You did not subscribe this course!");
+            return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
         }
 
         private async Task<EEUser> GetCurrentUserAsync()

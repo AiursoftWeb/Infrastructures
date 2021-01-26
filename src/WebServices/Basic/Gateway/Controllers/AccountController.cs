@@ -51,7 +51,7 @@ namespace Aiursoft.Gateway.Controllers
             // Use time is more than 10 seconds from now.
             if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + TimeSpan.FromSeconds(10) < DateTime.UtcNow)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, "Code is used already!");
+                return this.Protocol(ErrorType.Unauthorized, "Code is used already!");
             }
             if (targetPack.ApplyAppId != appId)
             {

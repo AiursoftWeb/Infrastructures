@@ -125,7 +125,7 @@ namespace Aiursoft.Probe.Tests
             }
             catch (AiurUnexpectedResponse e)
             {
-                Assert.AreEqual(ErrorType.NotEnoughResources, e.Code);
+                Assert.AreEqual(ErrorType.Conflict, e.Code);
             }
 
             var sites = await siteService.ViewMySitesAsync("mock-access-token");

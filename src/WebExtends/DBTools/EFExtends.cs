@@ -43,7 +43,7 @@ namespace Aiursoft.DBTools
             var conflict = await query.Select(predicate).AnyAsync(v => v == value);
             if (conflict)
             {
-                throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");
+                throw new AiurAPIModelException(ErrorType.Conflict, $"There is already a record with name: '{value}'. Please try another new name.");
             }
         }
 
@@ -62,7 +62,7 @@ namespace Aiursoft.DBTools
             var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
             if (conflict)
             {
-                throw new AiurAPIModelException(ErrorType.NotEnoughResources, $"There is already a record with name: '{value}'. Please try another new name.");
+                throw new AiurAPIModelException(ErrorType.Conflict, $"There is already a record with name: '{value}'. Please try another new name.");
             }
         }
 

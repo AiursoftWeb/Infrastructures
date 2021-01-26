@@ -13,18 +13,18 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
     public class SitesService : IScopedDependency
     {
         private readonly APIProxyService _http;
-        private readonly ProbeLocator _serviceLocation;
+        private readonly ProbeLocator _probeLocator;
         public SitesService(
             APIProxyService http,
             ProbeLocator serviceLocation)
         {
             _http = http;
-            _serviceLocation = serviceLocation;
+            _probeLocator = serviceLocation;
         }
 
         public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload, bool openToDownload)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "CreateNewSite", new { });
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "CreateNewSite", new { });
             var form = new AiurUrl(string.Empty, new CreateNewSiteAddressModel
             {
                 AccessToken = accessToken,
@@ -41,7 +41,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<ViewMySitesViewModel> ViewMySitesAsync(string accessToken)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "ViewMySites", new ViewMySitesAddressModel
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "ViewMySites", new ViewMySitesAddressModel
             {
                 AccessToken = accessToken
             });
@@ -54,7 +54,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<ViewSiteDetailViewModel> ViewSiteDetailAsync(string accessToken, string siteName)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
             {
                 AccessToken = accessToken,
                 SiteName = siteName
@@ -68,7 +68,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<AiurProtocol> UpdateSiteInfoAsync(string accessToken, string oldSiteName, string newSiteName, bool openToUpload, bool openToDownload)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "UpdateSiteInfo", new { });
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "UpdateSiteInfo", new { });
             var form = new AiurUrl(string.Empty, new UpdateSiteInfoAddressModel
             {
                 AccessToken = accessToken,
@@ -86,7 +86,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<AiurProtocol> DeleteSiteAsync(string accessToken, string siteName)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "DeleteSite", new { });
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "DeleteSite", new { });
             var form = new AiurUrl(string.Empty, new DeleteSiteAddressModel
             {
                 AccessToken = accessToken,
@@ -101,7 +101,7 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 
         public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Sites", "DeleteApp", new { });
+            var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "DeleteApp", new { });
             var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
             {
                 AccessToken = accessToken,

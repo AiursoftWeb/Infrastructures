@@ -78,7 +78,7 @@ namespace Aiursoft.Probe.Controllers
                 await _siteRepo.GetSiteByName(model.NewSiteName) != null;
             if (conflict)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
+                return this.Protocol(ErrorType.Conflict, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
             }
             site.SiteName = model.NewSiteName;
             site.OpenToDownload = model.OpenToDownload;
@@ -105,7 +105,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
             }
             await _appRepo.DeleteApp(app);
-            return this.Protocol(ErrorType.HasDoneAlready, "That app do not exists in our database.");
+            return this.Protocol(ErrorType.HasSuccessAlready, "That app do not exists in our database.");
         }
     }
 }

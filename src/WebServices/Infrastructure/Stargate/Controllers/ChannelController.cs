@@ -79,7 +79,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 return Ok(new AiurProtocol
                 {
-                    Code = ErrorType.Pending,
+                    Code = ErrorType.Gone,
                     Message = "Your channel is out dated and about to be deleted!"
                 });
             }
@@ -165,7 +165,7 @@ namespace Aiursoft.Stargate.Controllers
                 await _dbContext.SaveChangesAsync();
                 return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
             }
-            return Ok(new AiurProtocol { Code = ErrorType.HasDoneAlready, Message = "That app do not exists in our database." });
+            return Ok(new AiurProtocol { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
         }
     }
 }
