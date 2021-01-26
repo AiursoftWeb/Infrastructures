@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
-    [GenerateDoc]
     [ProtocolNotFoundHandler]
     public class OAuthController : Controller
     {

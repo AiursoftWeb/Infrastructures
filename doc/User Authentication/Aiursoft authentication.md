@@ -1,13 +1,13 @@
-# Use Aiursoft authentication gateway in your application
+# Use Aiursoft authentication in your web application
 
 Brief steps:
 
 * Create an App
 * Redirect the user
-* Get the code
-* Get an access token
-* Transfer the code to user's openId
-* Get user info from the user's openId (Optional)
+* Get the `Code`
+* Get an `Access token`
+* Transfer the `Code` to user's `Open Id`
+* Get user info from the user's `Open Id` (Optional)
 
 ## Create an App
 
@@ -27,7 +27,34 @@ Copy your **App Id** and **App Secret**.
 
 When the user requires login via Aiursoft authentication, redirect the user to the authentication page.
 
-Redirect the user to: [OAuth page](./OAuth.md#Authorize)
+Redirect the user to the OAuth page.
+
+**Do NOT call this like an API! This is a web page!**
+
+
+<h3 id="Authorize"><span class="badge badge-pill badge-success">GET</span>  Authorize </h3>
+
+Request path:
+
+<p><kbd>https://gateway.aiursoft.com/OAuth/Authorize</kbd></p>
+
+Request example:
+
+<pre>
+<code class="hljs pf">
+https://gateway.aiursoft.com/OAuth/Authorize?appid=yourappid&amp;redirect_uri=yourredirect_uri&amp;state=yourstate
+</code>
+</pre>
+
+Request arguments:
+
+| Name          | Required     | Type    |
+|---------------|--------------|---------|
+| appid         | Required     | Text    |
+| redirect_uri  | Required     | Text    |
+| state         | Not required | Text    |
+| force-confirm | Not required | Boolean |
+| try-auth      | Not required | Boolean |
 
 ## Get the code
 
@@ -40,21 +67,23 @@ Like:
 
 > https://yourapp.com/sign-in-aiursoft?code=12345&state=aaaaa
 
-State is the value you passed in the last step. **Code** is what you need.
+`State` is the value you passed in the last step. 
+
+**Code** represents the identity of the user.
 
 ## Get an access token
 
 You need an access token to authenticate your app.
 
-Get one [here](../App%20Authentication/API.md#AccessToken) with your app id and app secret.
+Read [here](../App%20Authentication/API.md#AccessToken) to get your app id and app secret.
 
-## Transfer the code to user's open ID
+## Transfer the code to the user's open ID
 
-Code is one time used. Can only be used in 5 minutes. It doesn't represent the user's identity.
+`Code` is one time used. Can only be used in 5 minutes. It doesn't represent the user's identity.
 
-Open ID is static. One user can only have one unique open Id. It never change.
+Open ID is always the unique ID of that user. It never change.
 
-To get open ID from code, call API [here](./Account.md#CodeToOpenId).
+To get the `Open ID` from `Code`, call our API [here](./Account.md#CodeToOpenId).
 
 Now you can focus on your own logic.
 
