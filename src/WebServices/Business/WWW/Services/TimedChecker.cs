@@ -62,7 +62,7 @@ namespace Aiursoft.WWW.Services
         private Task Clean(WWWDbContext dbContext)
         {
             var toDeleteTime = DateTime.UtcNow - TimeSpan.FromDays(90);
-            dbContext.SearchHistories.Delete(t => t.SearchTime > toDeleteTime);
+            dbContext.SearchHistories.Delete(t => t.SearchTime < toDeleteTime);
             return dbContext.SaveChangesAsync();
         }
 
