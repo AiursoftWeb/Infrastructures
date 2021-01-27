@@ -3,6 +3,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
+using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
@@ -13,6 +14,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Net.Http;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
@@ -65,6 +67,23 @@ namespace Aiursoft.Probe.Tests
             var content = await response.Content.ReadAsStringAsync();
             var contentObject = JsonConvert.DeserializeObject<AiurProtocol>(content);
             Assert.AreEqual(contentObject.Code, ErrorType.Success);
+        }
+
+        [TestMethod]
+        public async Task StatusCodeTest()
+        {
+            var probeLocator = _serviceProvider.GetRequiredService<ProbeLocator>();
+            var client = new HttpClient();
+            var url = probeLocator.Endpoint + "/sites/viewmysites";
+            var request = new HttpRequestMessage(HttpMethod.Get, url) { };
+            request.Headers.Add("accept", "application/json");
+            var response = await client.SendAsync(request);
+            Assert.AreEqual((int)response.StatusCode, 400);
+
+            var request2 = new HttpRequestMessage(HttpMethod.Get, url + "?accesstoken=Invalid") { };
+            request.Headers.Add("accept", "application/json");
+            var response2 = await client.SendAsync(request2);
+            Assert.AreEqual((int)response2.StatusCode, 401);
         }
 
         [TestMethod]
