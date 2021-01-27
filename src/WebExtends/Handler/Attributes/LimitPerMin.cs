@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Tools;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace Aiursoft.Handler.Attributes
     {
         public static Dictionary<string, int> MemoryDictionary = new Dictionary<string, int>();
         public static DateTime LastClearTime = DateTime.UtcNow;
+        public bool ReturnJson { get; set; } = true;
 
         private readonly int _limit;
         private static readonly object _obj = new object();
@@ -47,7 +50,7 @@ namespace Aiursoft.Handler.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            if (IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress))
+            if (IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress) && !EntryExtends.IsInUT())
             {
                 return;
             }
@@ -65,7 +68,8 @@ namespace Aiursoft.Handler.Attributes
                 if (tempDictionary[ip + path] > _limit)
                 {
                     context.HttpContext.Response.Headers.Add("retry-after", (60 - (int)(DateTime.UtcNow - LastClearTime).TotalSeconds).ToString());
-                    context.Result = new StatusCodeResult((int)HttpStatusCode.TooManyRequests);
+                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
+                    context.Result = new JsonResult(new AiurProtocol { Code = ErrorType.TooManyRequests, Message = "You are requesting our API too frequently and your IP is blocked." });
                 }
             }
             else

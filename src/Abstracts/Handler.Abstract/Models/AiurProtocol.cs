@@ -32,6 +32,8 @@ namespace Aiursoft.Handler.Models
                     return HttpStatusCode.BadRequest;
                 case ErrorType.Timeout:
                     return HttpStatusCode.RequestTimeout;
+                case ErrorType.TooManyRequests:
+                    return HttpStatusCode.TooManyRequests;
                 default:
                     return HttpStatusCode.InternalServerError;
             }

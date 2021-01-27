@@ -13,5 +13,6 @@
         Unauthorized = -8,
         Timeout = -9,
         InvalidInput = -10,
+        TooManyRequests = -11
     }
 }

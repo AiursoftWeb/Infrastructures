@@ -89,6 +89,26 @@ namespace Aiursoft.Probe.Tests
         }
 
         [TestMethod]
+        public async Task TooFrequentTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            for (int i = 0; i < 31; i++)
+            {
+                await siteService.ViewMySitesAsync("mock-access-token");
+            }
+            try
+            {
+                await siteService.ViewMySitesAsync("mock-access-token");
+            }
+            catch (AiurUnexpectedResponse e)
+            {
+                Assert.AreEqual(ErrorType.TooManyRequests, e.Code);
+                return;
+            }
+            Assert.Fail("Too many requests shall not success.");
+        }
+
+        [TestMethod]
         public async Task CreateSitesTest()
         {
             var siteService = _serviceProvider.GetRequiredService<SitesService>();
