@@ -145,7 +145,7 @@ namespace Aiursoft.EE.Controllers
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "You have successfully followed the target user!");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "You have already followed the target user!");
+            return this.Protocol(ErrorType.HasSuccessAlready, "You have already followed the target user!");
         }
 
         [HttpPost]
@@ -167,7 +167,7 @@ namespace Aiursoft.EE.Controllers
                 await _dbContext.SaveChangesAsync();
                 return this.Protocol(ErrorType.Success, "You have successfully unfollowed the target user!");
             }
-            return this.Protocol(ErrorType.HasDoneAlready, "You did not follow the target user and can not unFollow him!");
+            return this.Protocol(ErrorType.HasSuccessAlready, "You did not follow the target user and can not unFollow him!");
         }
 
         [AiurForceAuth]

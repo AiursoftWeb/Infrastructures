@@ -2,28 +2,27 @@
 using Aiursoft.Probe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 
 namespace Aiursoft.Probe.Migrations
 {
     [DbContext(typeof(ProbeDbContext))]
-    class ProbeDbContextModelSnapshot : ModelSnapshot
+    partial class ProbeDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("Aiursoft.Probe.SDK.Models.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContextId")
                         .HasColumnType("int");
@@ -52,7 +51,7 @@ namespace Aiursoft.Probe.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int?>("ContextId")
                         .HasColumnType("int");
@@ -82,7 +81,7 @@ namespace Aiursoft.Probe.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("AppId")
                         .HasColumnType("nvarchar(450)");
@@ -100,13 +99,17 @@ namespace Aiursoft.Probe.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SiteName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppId");
 
                     b.HasIndex("RootFolderId");
+
+                    b.HasIndex("SiteName")
+                        .IsUnique()
+                        .HasFilter("[SiteName] IS NOT NULL");
 
                     b.ToTable("Sites");
                 });
@@ -118,6 +121,8 @@ namespace Aiursoft.Probe.Migrations
                         .HasForeignKey("ContextId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Context");
                 });
 
             modelBuilder.Entity("Aiursoft.Probe.SDK.Models.Folder", b =>
@@ -125,6 +130,8 @@ namespace Aiursoft.Probe.Migrations
                     b.HasOne("Aiursoft.Probe.SDK.Models.Folder", "Context")
                         .WithMany("SubFolders")
                         .HasForeignKey("ContextId");
+
+                    b.Navigation("Context");
                 });
 
             modelBuilder.Entity("Aiursoft.Probe.SDK.Models.Site", b =>
@@ -138,6 +145,22 @@ namespace Aiursoft.Probe.Migrations
                         .HasForeignKey("RootFolderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Context");
+
+                    b.Navigation("Root");
+                });
+
+            modelBuilder.Entity("Aiursoft.Probe.SDK.Models.Folder", b =>
+                {
+                    b.Navigation("Files");
+
+                    b.Navigation("SubFolders");
+                });
+
+            modelBuilder.Entity("Aiursoft.Probe.SDK.Models.ProbeApp", b =>
+                {
+                    b.Navigation("Sites");
                 });
 #pragma warning restore 612, 618
         }

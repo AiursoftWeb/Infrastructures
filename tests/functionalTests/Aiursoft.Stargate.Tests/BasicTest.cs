@@ -2,16 +2,13 @@
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
-using Aiursoft.SDK.Tests;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
-using Aiursoft.Stargate.Services;
 using Aiursoft.Stargate.Tests.Services;
 using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -46,7 +43,7 @@ namespace Aiursoft.Stargate.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port).Update<StargateDbContext>(); ;
+            _server = App<TestStartup>(port: _port).Update<StargateDbContext>();
             _http = new HttpClient();
             await _server.StartAsync();
 
@@ -176,8 +173,14 @@ namespace Aiursoft.Stargate.Tests
                 await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
-
-            await Task.Delay(50);
+            for (int i = 0; i < 10; i++)
+            {
+                if (MessageCount == 100)
+                {
+                    break;
+                }
+                await Task.Delay(20);
+            }
             Assert.AreEqual(100, MessageCount);
         }
     }

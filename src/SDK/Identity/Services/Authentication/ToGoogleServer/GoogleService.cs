@@ -15,14 +15,14 @@ namespace Aiursoft.Identity.Services.Authentication.ToGoogleServer
 {
     public class GoogleService : IAuthProvider
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
         private readonly string _clientSecret;
 
         public GoogleService(
-            HTTPService http,
+            APIProxyService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
             GatewayLocator serviceLocation,

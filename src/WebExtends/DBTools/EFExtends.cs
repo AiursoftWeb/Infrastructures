@@ -1,9 +1,12 @@
-﻿using Aiursoft.Handler.Interfaces;
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Interfaces;
+using Aiursoft.Handler.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Aiursoft.DBTools
 {
@@ -33,6 +36,36 @@ namespace Aiursoft.DBTools
             dbSet.RemoveRange(dbSet.Where(predicate));
         }
 
+        public static async Task EnsureUnique<T, V>(this IQueryable<T> query, Expression<Func<T, V>> predicate, V value)
+            where T : class
+            where V : class
+        {
+            var conflict = await query.Select(predicate).AnyAsync(v => v == value);
+            if (conflict)
+            {
+                throw new AiurAPIModelException(ErrorType.Conflict, $"There is already a record with name: '{value}'. Please try another new name.");
+            }
+        }
+
+        /// <summary>
+        /// If there already exists one with your condition, will create a new AiurAPIModelException to generate a response.
+        /// Suggest using a lock when using this.
+        /// </summary>
+        /// <typeparam name="T">Type of elements of the query.</typeparam>
+        /// <param name="query">Query.</param>
+        /// <param name="predicate">Condition predicate.</param>
+        /// <param name="value">Unique value.</param>
+        /// <returns>Task.</returns>
+        public static async Task EnsureUniqueString<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate, string value)
+            where T : class
+        {
+            var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
+            if (conflict)
+            {
+                throw new AiurAPIModelException(ErrorType.Conflict, $"There is already a record with name: '{value}'. Please try another new name.");
+            }
+        }
+
         public static void Sync<T, M>(this DbSet<T> dbSet,
             IList<M> collection)
             where T : class
@@ -56,8 +89,7 @@ namespace Aiursoft.DBTools
                     .AsEnumerable()
                     .Where(t => item.EqualsInDb(t))
                     .ToList();
-                var itemCount = items
-                    .Count();
+                var itemCount = items.Count;
 
                 if (itemCount > itemCountShallBe)
                 {

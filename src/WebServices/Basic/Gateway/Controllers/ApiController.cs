@@ -77,7 +77,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             catch (CultureNotFoundException)
             {
-                return Json(new AiurProtocol { Message = "Not a language.", Code = ErrorType.InvalidInput });
+                return this.Protocol(new AiurProtocol { Message = "Not a language.", Code = ErrorType.InvalidInput });
             }
             var user = await GetCurrentUserAsync();
             if (user != null)
@@ -109,7 +109,7 @@ namespace Aiursoft.Gateway.Controllers
                 model,
                 ErrorType.Success,
                 "Successfully get all your users");
-            return Json(result);
+            return this.Protocol(result);
         }
 
         [HttpPost]

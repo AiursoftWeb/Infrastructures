@@ -18,13 +18,14 @@ namespace Aiursoft.Handler.Attributes
             {
                 case AiurUnexpectedResponse exp:
                     context.ExceptionHandled = true;
+                    context.HttpContext.Response.StatusCode = (int)exp.Response.ConvertToHttpStatusCode();
                     context.Result = new JsonResult(new AiurProtocol { Code = exp.Code, Message = exp.Message });
                     break;
                 case AiurAPIModelException exp:
                     context.ExceptionHandled = true;
+                    context.HttpContext.Response.StatusCode = (int)new AiurProtocol { Code = exp.Code }.ConvertToHttpStatusCode();
                     context.Result = new JsonResult(new AiurProtocol { Code = exp.Code, Message = exp.Message });
                     break;
-                    // For other exception types will throw it directly.
             }
         }
     }

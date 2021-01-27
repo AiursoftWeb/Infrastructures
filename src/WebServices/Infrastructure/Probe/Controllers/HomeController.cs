@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
+using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -18,7 +19,7 @@ namespace Aiursoft.Probe.Controllers
 
         public IActionResult Index()
         {
-            return Ok(new IndexViewModel
+            return this.Protocol(new IndexViewModel
             {
                 OpenPattern = _configuration["OpenPattern"],
                 DownloadPattern = _configuration["DownloadPattern"],

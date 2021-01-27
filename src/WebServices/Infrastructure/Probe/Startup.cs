@@ -24,7 +24,7 @@ namespace Aiursoft.Probe
             AppsContainer.CurrentAppSecret = configuration["ProbeAppSecret"];
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 

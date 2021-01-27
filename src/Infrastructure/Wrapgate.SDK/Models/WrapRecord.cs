@@ -1,4 +1,5 @@
 ﻿using Aiursoft.SDKTools.Attributes;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -6,25 +7,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Wrapgate.SDK.Models
 {
+#warning IP is not supported!
     public enum RecordType
     {
         /// <summary>
-        /// Support HTTP, HTTPS, IP.
+        /// Supports HTTP, HTTPS, IP.
         /// </summary>
         Redirect,
         /// <summary>
-        /// Support HTTP, HTTPS, IP
+        /// Supports HTTP, HTTPS, IP
         /// </summary>
         PermanentRedirect,
         /// <summary>
-        /// Support HTTPS
+        /// Supports HTTPS
         /// </summary>
         IFrame,
         /// <summary>
-        /// Support HTTP, HTTPS, IP
+        /// Supports HTTP, HTTPS, IP
         /// </summary>
         ReverseProxy
     }
+
+    [Index(nameof(RecordUniqueName), IsUnique = true)]
     public class WrapRecord
     {
         [Key]

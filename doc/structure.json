@@ -13,8 +13,7 @@
             },
             {
                 "articleTitle": "Aiursoft Intern Project"
-            },
-
+            }
         ]
     },
     {
@@ -64,7 +63,7 @@
                 "articleTitle": "Getting Started"
             },
             {
-                "articleTitle": "Advanced API"
+                "articleTitle": "Image Mode"
             }
         ],
         "docAPIAddress": "https://probe.{{rootDomain}}/doc"

@@ -2,28 +2,27 @@
 using Aiursoft.Wrapgate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 
 namespace Aiursoft.Wrapgate.Migrations
 {
     [DbContext(typeof(WrapgateDbContext))]
-    public class WrapgateDbContextModelSnapshot : ModelSnapshot
+    partial class WrapgateDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WrapRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("AppId")
                         .HasColumnType("nvarchar(450)");
@@ -35,7 +34,7 @@ namespace Aiursoft.Wrapgate.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RecordUniqueName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
@@ -49,6 +48,10 @@ namespace Aiursoft.Wrapgate.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppId");
+
+                    b.HasIndex("RecordUniqueName")
+                        .IsUnique()
+                        .HasFilter("[RecordUniqueName] IS NOT NULL");
 
                     b.ToTable("Records");
                 });
@@ -68,6 +71,13 @@ namespace Aiursoft.Wrapgate.Migrations
                     b.HasOne("Aiursoft.Wrapgate.SDK.Models.WrapgateApp", "App")
                         .WithMany("WrapRecords")
                         .HasForeignKey("AppId");
+
+                    b.Navigation("App");
+                });
+
+            modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WrapgateApp", b =>
+                {
+                    b.Navigation("WrapRecords");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,6 +14,6 @@ namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels
         /// Starts from 0.
         /// </summary>
         [Range(1, int.MaxValue)]
-        public int PageNumber { get; set; }
+        public int PageNumber { get; set; } = 1;
     }
 }

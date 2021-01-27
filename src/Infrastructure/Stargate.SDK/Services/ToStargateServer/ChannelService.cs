@@ -14,11 +14,11 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer
     public class ChannelService : IScopedDependency
     {
         private readonly StargateLocator _stargateLocator;
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
 
         public ChannelService(
             StargateLocator serviceLocation,
-            HTTPService http)
+            APIProxyService http)
         {
             _stargateLocator = serviceLocation;
             _http = http;

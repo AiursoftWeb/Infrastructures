@@ -92,7 +92,7 @@ namespace Aiursoft.Probe.Controllers
             var newFileHardwareId = await _fileRepo.SaveFileToDb(fileName, folder.Id, file.Length);
             await _storageProvider.Save(newFileHardwareId, file);
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), fileName);
-            return Ok(new UploadFileViewModel
+            return this.Protocol(new UploadFileViewModel
             {
                 InternetPath = _probeLocator.GetProbeOpenAddress(filePath),
                 DownloadPath = _probeLocator.GetProbeDownloadAddress(filePath),
@@ -120,7 +120,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
-            await _fileRepo.DeleteFile(file.Id);
+            await _fileRepo.DeleteFileById(file.Id);
             return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
         }
 
@@ -151,7 +151,7 @@ namespace Aiursoft.Probe.Controllers
             await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
             var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
             var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
-            return Ok(new UploadFileViewModel
+            return this.Protocol(new UploadFileViewModel
             {
                 InternetPath = internetPath,
                 SiteName = model.TargetSiteName,

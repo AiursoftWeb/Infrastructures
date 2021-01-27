@@ -17,7 +17,7 @@ namespace Aiursoft.Gateway.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly DeveloperApiService _apiService;
@@ -51,7 +51,7 @@ namespace Aiursoft.Gateway.Controllers
             // Use time is more than 10 seconds from now.
             if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + TimeSpan.FromSeconds(10) < DateTime.UtcNow)
             {
-                return this.Protocol(ErrorType.HasDoneAlready, "Code is used already!");
+                return this.Protocol(ErrorType.Unauthorized, "Code is used already!");
             }
             if (targetPack.ApplyAppId != appId)
             {
@@ -71,7 +71,7 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get user openid",
                 Code = ErrorType.Success
             };
-            return Json(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [APIProduces(typeof(UserInfoViewModel))]
@@ -93,7 +93,7 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get target user info.",
                 User = user
             };
-            return Json(viewModel);
+            return this.Protocol(viewModel);
         }
     }
 }

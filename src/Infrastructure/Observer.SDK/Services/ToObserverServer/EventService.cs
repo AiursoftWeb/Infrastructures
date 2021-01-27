@@ -14,11 +14,11 @@ namespace Aiursoft.Observer.SDK.Services.ToObserverServer
 {
     public class EventService : IScopedDependency
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly ObserverLocator _observerLocator;
 
         public EventService(
-            HTTPService http,
+            APIProxyService http,
             ObserverLocator observerLocator)
         {
             _http = http;

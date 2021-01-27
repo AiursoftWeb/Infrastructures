@@ -15,7 +15,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
 {
     public class MicrosoftService : IAuthProvider
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly GatewayLocator _serviceLocation;
         private readonly HttpClient _client;
         private readonly string _clientId;
@@ -23,7 +23,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer
         private readonly string _tenant;
 
         public MicrosoftService(
-            HTTPService http,
+            APIProxyService http,
             IHttpClientFactory clientFactory,
             IConfiguration configuration,
             GatewayLocator serviceLocation,

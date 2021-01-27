@@ -33,11 +33,6 @@ namespace Aiursoft.Probe.Controllers
         public async Task<IActionResult> CreateNewSite(CreateNewSiteAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
-            var conflict = await _siteRepo.GetSiteByName(model.NewSiteName) != null;
-            if (conflict)
-            {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
-            }
             var createdSite = await _siteRepo.CreateSite(model.NewSiteName, model.OpenToUpload, model.OpenToDownload, appid);
             return this.Protocol(ErrorType.Success, $"Successfully created your new site: '{createdSite.SiteName}' at {createdSite.CreationTime}.");
         }
@@ -54,7 +49,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your sites!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [APIProduces(typeof(ViewSiteDetailViewModel))]
@@ -70,7 +65,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your site!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [HttpPost]
@@ -83,7 +78,7 @@ namespace Aiursoft.Probe.Controllers
                 await _siteRepo.GetSiteByName(model.NewSiteName) != null;
             if (conflict)
             {
-                return this.Protocol(ErrorType.NotEnoughResources, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
+                return this.Protocol(ErrorType.Conflict, $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
             }
             site.SiteName = model.NewSiteName;
             site.OpenToDownload = model.OpenToDownload;
@@ -110,7 +105,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
             }
             await _appRepo.DeleteApp(app);
-            return this.Protocol(ErrorType.HasDoneAlready, "That app do not exists in our database.");
+            return this.Protocol(ErrorType.HasSuccessAlready, "That app do not exists in our database.");
         }
     }
 }

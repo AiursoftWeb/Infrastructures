@@ -14,12 +14,12 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
     public class DeveloperApiService : IScopedDependency
     {
         private readonly DeveloperLocator _serviceLocation;
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly AiurCache _cache;
 
         public DeveloperApiService(
             DeveloperLocator serviceLocation,
-            HTTPService http,
+            APIProxyService http,
             AiurCache cache)
         {
             _serviceLocation = serviceLocation;

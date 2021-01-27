@@ -15,9 +15,8 @@ Aiursoft works without boundaries and bounty. Only powered by interests and love
 * Do not use, until totally understand.
 * Work smart, not hard.
 * Keep the code clean is our first priority.
-  * If a name cannot clearly and accurately describe its actual function, rename it immediately.
 
-Website: [www.aiursoft.com](https://www.aiursoft.com)
+Website: [https://www.aiursoft.com](https://www.aiursoft.com)
 
 ## Design Principle
 
@@ -47,7 +46,7 @@ Website: [www.aiursoft.com](https://www.aiursoft.com)
 
 * Email: [edgeneko@aiusoft.com](mailto:edgeneko@aiursoft.com) 
 * GitHub: [hv0905](https://github.com/hv0905)
-* Blog: [https://edgeneko.tk/](https://edgeneko.aiursoft.com/)
+* Blog: [https://edgeneko.aiursoft.com/](https://edgeneko.aiursoft.com/)
 
 ### Xiangrui
 
@@ -85,3 +84,26 @@ Website: [www.aiursoft.com](https://www.aiursoft.com)
 
 * Email: [afkey@aiursoft.com](mailto:afkey@aiursoft.com)
 * GitHub: [MESOLONELY](https://github.com/MESOLONELY)
+
+### gaufung
+![gaufung](https://github.com/gaufung.png?size=70)
+
+* Email: [gaufung@aiursoft.com](mailto:gaufung@aiursoft.com)
+* Github: [Feng Gao](https://github.com/gaufung)
+* Blog: [http://gaufung.medium.com/](https://fenga.medium.com/)
+
+## How to join
+
+Joining Aiursoft and your name will be shown in the members' list. You can enjoy our benefits like free Microsoft Office, access our staging environment and internal meetings.
+
+To join Aiursoft, there are two ways for you.
+
+### Community member
+
+If you are well skilled and want to contribute in your spare time, you can contribute to any of the repositories under organization: [AiursoftWeb](https://github.com/AiursoftWeb). You need to have at least **3** pull requests merged to our code base.
+
+### Join as intern
+
+If you are a student and want to complete your school mission with Aiursoft, we suggest you join as an intern.
+
+[Join as intern now!](./Aiursoft%20Intern%20Project.md)

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Aiursoft.XelNaga.Tools
 {
     public static class EntryExtends
     {
-        private static bool? _cache;
+        private static bool? _isProgramCache;
 
         private static bool IsInEF()
         {
@@ -15,30 +14,17 @@ namespace Aiursoft.XelNaga.Tools
         public static bool IsInUT()
         {
             var name = Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim() ?? string.Empty; 
-            return name.StartsWith("test") || name.StartsWith("resharpertestrunner");
+            return name.StartsWith("test") || name.EndsWith("testrunner");
         }
 
-        public static bool IsProgramEntry(bool log = true)
+        public static bool IsProgramEntry()
         {
-            if (_cache != null)
+            if (_isProgramCache != null)
             {
-                return _cache.Value;
+                return _isProgramCache.Value;
             }
-            var inEF = IsInEF();
-            var inUT = IsInUT();
-            if (log)
-            {
-                var textEF = inEF ? "[Entity Framework]" : string.Empty;
-                var textUT = inUT ? "[Unit Test]" : string.Empty;
-                var program = Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
-                Console.WriteLine($"Environment status: {textEF}{textUT} [{program}]");
-                if (inEF || inUT)
-                {
-                    Console.WriteLine("This environment is only for test!");
-                }
-            }
-            _cache = !inEF && !inUT;
-            return _cache.Value;
+            _isProgramCache = !IsInEF() && !IsInUT();
+            return _isProgramCache.Value;
         }
     }
 }

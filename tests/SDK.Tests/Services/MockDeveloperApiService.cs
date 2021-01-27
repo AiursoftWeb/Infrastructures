@@ -9,7 +9,7 @@ namespace Aiursoft.SDK.Tests.Services
     {
         public MockDeveloperApiService(
             DeveloperLocator serviceLocation,
-            HTTPService http,
+            APIProxyService http,
             AiurCache cache) : base(serviceLocation, http, cache)
         {
         }

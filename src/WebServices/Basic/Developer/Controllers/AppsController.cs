@@ -232,7 +232,7 @@ namespace Aiursoft.Developer.Controllers
             }
             catch (AiurUnexpectedResponse e)
             {
-                if (e.Response.Code != ErrorType.HasDoneAlready) throw;
+                if (e.Response.Code != ErrorType.HasSuccessAlready) throw;
             }
             _dbContext.Apps.Remove(target);
             await _dbContext.SaveChangesAsync();

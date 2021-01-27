@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
@@ -7,6 +8,7 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
@@ -17,6 +19,7 @@ namespace Aiursoft.Probe.Repositories
         private readonly FileRepo _fileRepo;
         private readonly IStorageProvider _storageProvider;
         private readonly ACTokenValidator _tokenManager;
+        private static SemaphoreSlim _folderCreateLock = new SemaphoreSlim(1, 1);
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
@@ -63,23 +66,26 @@ namespace Aiursoft.Probe.Repositories
             return await GetFolderFromPath(folderNames, rootFolder, recursiveCreate);
         }
 
-        public Task<bool> FolderExists(int contextId, string newFolderName)
+        public async Task CreateNewFolder(int contextId, string name)
         {
-            return _dbContext
-                .Folders
-                .Where(t => t.ContextId == contextId)
-                .AnyAsync(t => t.FolderName == newFolderName.ToLower());
-        }
-
-        public Task CreateNewFolder(int contextId, string name)
-        {
-            var newFolder = new Folder
+            await _folderCreateLock.WaitAsync();
+            try
             {
-                ContextId = contextId,
-                FolderName = name.ToLower(),
-            };
-            _dbContext.Folders.Add(newFolder);
-            return _dbContext.SaveChangesAsync();
+                await _dbContext.Folders
+                    .Where(t => t.ContextId == contextId)
+                    .EnsureUniqueString(t => t.FolderName, name);
+                var newFolder = new Folder
+                {
+                    ContextId = contextId,
+                    FolderName = name.ToLower(),
+                };
+                _dbContext.Folders.Add(newFolder);
+                await _dbContext.SaveChangesAsync();
+            }
+            finally
+            {
+                _folderCreateLock.Release();
+            }
         }
 
         public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)
@@ -120,7 +126,7 @@ namespace Aiursoft.Probe.Repositories
                 .ToListAsync();
             foreach (var file in localFiles)
             {
-                await _fileRepo.DeleteFileObject(file);
+                await _fileRepo.DeleteFile(file);
             }
             _dbContext.Folders.Remove(folder);
         }

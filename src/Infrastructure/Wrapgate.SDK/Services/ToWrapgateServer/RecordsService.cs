@@ -14,10 +14,10 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
 {
     public class RecordsService : IScopedDependency
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly WrapgateLocator _serviceLocation;
         public RecordsService(
-            HTTPService http,
+            APIProxyService http,
             WrapgateLocator serviceLocation)
         {
             _http = http;

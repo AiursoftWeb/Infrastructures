@@ -12,7 +12,7 @@ namespace Aiursoft.SDK.Tests.Services
 
         public override string ValidateAccessToken(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("mock"))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Mock token was not in a valid format and can not be verified!");
             }

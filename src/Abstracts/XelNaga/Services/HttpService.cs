@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Services
 {
-    public class HTTPService : IScopedDependency
+    /// <summary>
+    /// An HTTP client which only returns success data.
+    /// </summary>
+    public class HttpService : IScopedDependency
     {
         private readonly HttpClient _client;
         private readonly Regex _regex;
 
-        public HTTPService(
+        public HttpService(
             IHttpClientFactory clientFactory)
         {
             _regex = new Regex("^https://", RegexOptions.Compiled);

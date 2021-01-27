@@ -12,11 +12,11 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
 {
     public class TokenService : IScopedDependency
     {
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
         private readonly ProbeLocator _serviceLocation;
 
         public TokenService(
-            HTTPService http,
+            APIProxyService http,
             ProbeLocator serviceLocation)
         {
             _http = http;

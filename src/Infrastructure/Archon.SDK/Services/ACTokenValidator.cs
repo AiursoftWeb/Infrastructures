@@ -26,7 +26,7 @@ namespace Aiursoft.Archon.SDK.Services
                 token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
                 if (DateTime.UtcNow > token.Expires)
                 {
-                    throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
                 }
                 if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
                 {

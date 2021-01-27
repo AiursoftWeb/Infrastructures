@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>5.0.2</Version>
+    <Version>5.0.3</Version>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <ProjectReference Include="..\..\Abstracts\DocGenerator.Abstract\Aiursoft.DocGenerator.Abstract.csproj" />
-    <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
-    <ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
-    <ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
-    <ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
-  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Abstracts\DocGenerator.Abstract\Aiursoft.DocGenerator.Abstract.csproj" />
+		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
+		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
+		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
+	</ItemGroup>
 </Project>

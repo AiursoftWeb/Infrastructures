@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Probe.Data;
 using Aiursoft.Scanner.Interfaces;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,7 @@ namespace Aiursoft.Probe.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            if (_env.IsDevelopment())
+            if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
             {
                 _logger.LogInformation("Skip cleaner in development environment.");
                 return Task.CompletedTask;

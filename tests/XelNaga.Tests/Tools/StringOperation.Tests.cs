@@ -40,5 +40,17 @@ namespace Aiursoft.XelNaga.Tests.Tools
             Assert.AreEqual(result, "0a4112dd96480d0f3eec8ce5b42082a6");
         }
 
+        [TestMethod]
+        public void IsValidJsonTest()
+        {
+            Assert.AreEqual(false, "my_test_string_(17)[]@$".IsValidJson());
+            Assert.AreEqual(true, @"[""a"",""b""]".IsValidJson());
+            Assert.AreEqual(true, @"[]".IsValidJson());
+            Assert.AreEqual(true, @"{}".IsValidJson());
+            Assert.AreEqual(true, @"""""".IsValidJson());
+            Assert.AreEqual(false, @"""aaaaa,aaa""ddddddddd""".IsValidJson());
+            Assert.AreEqual(false, @"{""a"":""a"",""b"":""b""]".IsValidJson());
+            Assert.AreEqual(true, @"{""a"":""a"",""b"":""b""}".IsValidJson());
+        }
     }
 }

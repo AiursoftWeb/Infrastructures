@@ -7,6 +7,7 @@ using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +61,7 @@ namespace Aiursoft.Stargate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your channels!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [APIProduces(typeof(AiurValue<string>))]
@@ -69,7 +70,7 @@ namespace Aiursoft.Stargate.Controllers
             var channel = _stargateMemory[model.Id];
             if (channel == null)
             {
-                return Ok(new AiurProtocol
+                return this.Protocol(new AiurProtocol
                 {
                     Code = ErrorType.NotFound,
                     Message = "Can not find your channel!"
@@ -77,15 +78,15 @@ namespace Aiursoft.Stargate.Controllers
             }
             if (channel.IsDead())
             {
-                return Ok(new AiurProtocol
+                return this.Protocol(new AiurProtocol
                 {
-                    Code = ErrorType.Pending,
+                    Code = ErrorType.Gone,
                     Message = "Your channel is out dated and about to be deleted!"
                 });
             }
             if (channel.ConnectKey != model.Key)
             {
-                return Ok(new AiurProtocol
+                return this.Protocol(new AiurProtocol
                 {
                     Code = ErrorType.Unauthorized,
                     Message = "Wrong connection key!"
@@ -93,7 +94,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             else
             {
-                return Ok(new AiurValue<string>(channel.AppId)
+                return this.Protocol(new AiurValue<string>(channel.AppId)
                 {
                     Code = ErrorType.Success,
                     Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
@@ -127,7 +128,7 @@ namespace Aiursoft.Stargate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully created your channel!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [HttpPost]
@@ -137,11 +138,11 @@ namespace Aiursoft.Stargate.Controllers
             var channel = _stargateMemory[model.ChannelId];
             if (channel.AppId != appid)
             {
-                return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
+                return this.Protocol(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!" });
             }
             _stargateMemory.DeleteChannel(channel.Id);
             await _dbContext.SaveChangesAsync();
-            return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
+            return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace Aiursoft.Stargate.Controllers
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
             if (appid != model.AppId)
             {
-                return Ok(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
+                return this.Protocol(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
             }
             var target = await _dbContext.Apps.FindAsync(appid);
             if (target != null)
@@ -163,9 +164,9 @@ namespace Aiursoft.Stargate.Controllers
                 _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
                 _dbContext.Apps.Remove(target);
                 await _dbContext.SaveChangesAsync();
-                return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
+                return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
             }
-            return Ok(new AiurProtocol { Code = ErrorType.HasDoneAlready, Message = "That app do not exists in our database." });
+            return this.Protocol(new AiurProtocol { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Aiursoft.Probe.Repositories
             return file;
         }
 
-        public async Task DeleteFileObject(File file)
+        public async Task DeleteFile(File file)
         {
             _dbContext.Files.Remove(file);
             var haveDaemon = await _dbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
@@ -44,12 +44,12 @@ namespace Aiursoft.Probe.Repositories
             }
         }
 
-        public async Task DeleteFile(int fileId)
+        public async Task DeleteFileById(int fileId)
         {
             var file = await _dbContext.Files.SingleOrDefaultAsync(t => t.Id == fileId);
             if (file != null)
             {
-                await DeleteFileObject(file);
+                await DeleteFile(file);
             }
             await _dbContext.SaveChangesAsync();
         }

@@ -13,11 +13,11 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
     public class CoreApiService : IScopedDependency
     {
         private readonly GatewayLocator _serviceLocation;
-        private readonly HTTPService _http;
+        private readonly APIProxyService _http;
 
         public CoreApiService(
             GatewayLocator serviceLocation,
-            HTTPService http)
+            APIProxyService http)
         {
             _serviceLocation = serviceLocation;
             _http = http;

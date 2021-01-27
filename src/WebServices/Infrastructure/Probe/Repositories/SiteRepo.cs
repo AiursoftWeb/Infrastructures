@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.DBTools;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
@@ -6,6 +7,7 @@ using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
@@ -14,6 +16,7 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderRepo _folderRepo;
+        private static SemaphoreSlim _createSiteLock = new SemaphoreSlim(1, 1);
 
         public SiteRepo(
             ProbeDbContext dbContext,
@@ -45,23 +48,32 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<Site> CreateSite(string newSiteName, bool openToUpload, bool openToDownload, string appid)
         {
-            var newRootFolder = new Folder
+            await _createSiteLock.WaitAsync();
+            try
             {
-                FolderName = "blob"
-            };
-            await _dbContext.Folders.AddAsync(newRootFolder);
-            await _dbContext.SaveChangesAsync();
-            var site = new Site
+                await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
+                var newRootFolder = new Folder
+                {
+                    FolderName = "blob"
+                };
+                await _dbContext.Folders.AddAsync(newRootFolder);
+                await _dbContext.SaveChangesAsync();
+                var site = new Site
+                {
+                    AppId = appid,
+                    SiteName = newSiteName.ToLower(),
+                    RootFolderId = newRootFolder.Id,
+                    OpenToUpload = openToUpload,
+                    OpenToDownload = openToDownload
+                };
+                await _dbContext.Sites.AddAsync(site);
+                await _dbContext.SaveChangesAsync();
+                return site;
+            }
+            finally
             {
-                AppId = appid,
-                SiteName = newSiteName.ToLower(),
-                RootFolderId = newRootFolder.Id,
-                OpenToUpload = openToUpload,
-                OpenToDownload = openToDownload
-            };
-            await _dbContext.Sites.AddAsync(site);
-            await _dbContext.SaveChangesAsync();
-            return site;
+                _createSiteLock.Release();
+            }
         }
 
         public Task<List<Site>> GetAllSitesUnderApp(string appid)

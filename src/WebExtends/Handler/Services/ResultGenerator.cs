@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
+using System.Net;
 
 namespace Aiursoft.Handler.Services
 {
     internal static class ResultGenerator
     {
-        internal static JsonResult GetInvalidModelStateErrorResponse(ModelStateDictionary modelState)
+        internal static (JsonResult result, HttpStatusCode code) GetInvalidModelStateErrorResponse(ModelStateDictionary modelState)
         {
             var list = (from value in modelState from error in value.Value.Errors select error.ErrorMessage).ToList();
             var arg = new AiurCollection<string>(list)
@@ -15,7 +16,8 @@ namespace Aiursoft.Handler.Services
                 Code = ErrorType.InvalidInput,
                 Message = "Your input contains several errors!"
             };
-            return new JsonResult(arg);
+            var code = arg.ConvertToHttpStatusCode();
+            return (new JsonResult(arg), code);
         }
     }
 }

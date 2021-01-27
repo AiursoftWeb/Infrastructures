@@ -4,7 +4,6 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK;
-using Aiursoft.SDK.Tests;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +35,7 @@ namespace Aiursoft.Observer.Tests
         [TestInitialize]
         public async Task CreateServer()
         {
-            _server = App<TestStartup>(port: _port).Update<ObserverDbContext>(); ;
+            _server = App<TestStartup>(port: _port).Update<ObserverDbContext>();
             _http = new HttpClient();
             await _server.StartAsync();
 

@@ -4,6 +4,7 @@ using Aiursoft.Developer.SDK.Models.ApiViewModels;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,15 +35,15 @@ namespace Aiursoft.Developer.Controllers
             var target = await _dbContext.Apps.FindAsync(model.AppId);
             if (target == null)
             {
-                return Ok(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
+                return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
             }
             else if (target.AppSecret != model.AppSecret)
             {
-                return Ok(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+                return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
             }
             else
             {
-                return Ok(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
+                return this.Protocol(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
             }
         }
 
@@ -55,9 +56,9 @@ namespace Aiursoft.Developer.Controllers
 
             if (target == null)
             {
-                return Ok(new AiurProtocol { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
+                return this.Protocol(new AiurProtocol { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
             }
-            return Ok(new AppInfoViewModel
+            return this.Protocol(new AppInfoViewModel
             {
                 Message = "Successfully get target app info.",
                 Code = ErrorType.Success,

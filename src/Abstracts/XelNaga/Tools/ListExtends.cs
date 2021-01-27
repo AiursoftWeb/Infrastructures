@@ -5,7 +5,7 @@ namespace Aiursoft.XelNaga.Tools
 {
     public static class ListExtends
     {
-        private static Random _rng = new Random();
+        private static readonly Random _rng = new Random();
         public static IList<T> Shuffle<T>(this IList<T> list)
         {
             int n = list.Count;
