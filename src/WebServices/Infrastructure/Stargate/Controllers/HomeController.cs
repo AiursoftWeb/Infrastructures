@@ -27,7 +27,7 @@ namespace Aiursoft.Stargate.Controllers
         public IActionResult Index()
         {
             var (channels, messages) = _memory.GetMonitoringReport();
-            return Json(new IndexViewModel
+            return this.Protocol(new IndexViewModel
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = messages,
