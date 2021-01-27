@@ -1,5 +1,4 @@
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
-using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.OAuthViewModels;

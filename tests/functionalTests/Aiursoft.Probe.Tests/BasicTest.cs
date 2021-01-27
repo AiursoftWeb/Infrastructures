@@ -14,7 +14,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Net.Http;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
@@ -97,7 +96,7 @@ namespace Aiursoft.Probe.Tests
             }
             catch (AiurUnexpectedResponse e)
             {
-                Assert.AreEqual(e.Code, ErrorType.InvalidInput);
+                Assert.AreEqual(e.Code, ErrorType.Unauthorized);
             }
         }
 

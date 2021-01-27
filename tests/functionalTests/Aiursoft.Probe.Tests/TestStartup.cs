@@ -1,5 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Probe;
 using Aiursoft.SDK.Tests.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

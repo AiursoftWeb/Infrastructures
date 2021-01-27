@@ -4,7 +4,6 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK;
-using Aiursoft.SDK.Tests;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
