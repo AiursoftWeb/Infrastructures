@@ -46,7 +46,7 @@ namespace Aiursoft.XelNaga.Services
             }
             else
             {
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     throw new InvalidOperationException($"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
                 }

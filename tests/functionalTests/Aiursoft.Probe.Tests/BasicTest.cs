@@ -73,7 +73,7 @@ namespace Aiursoft.Probe.Tests
             try
             {
                 var siteService = _serviceProvider.GetRequiredService<SitesService>();
-                await siteService.ViewMySitesAsync(string.Empty);
+                await siteService.ViewMySitesAsync("Invalid token");
                 Assert.Fail("Empty request should not success.");
             }
             catch (AiurUnexpectedResponse e)

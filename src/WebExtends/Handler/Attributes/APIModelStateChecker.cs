@@ -13,7 +13,9 @@ namespace Aiursoft.Handler.Attributes
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = ResultGenerator.GetInvalidModelStateErrorResponse(context.ModelState);
+                var (result, code) = ResultGenerator.GetInvalidModelStateErrorResponse(context.ModelState);
+                context.Result = result;
+                context.HttpContext.Response.StatusCode = (int)code;
             }
             base.OnActionExecuting(context);
         }

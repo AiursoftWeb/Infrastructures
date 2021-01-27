@@ -60,7 +60,7 @@ namespace Aiursoft.WebTools
         public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
         {
             controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
-            return controller.Ok(model);
+            return new JsonResult(model);
         }
 
         public static void SetClientLang(this ControllerBase controller, string culture)
