@@ -48,7 +48,7 @@ namespace Aiursoft.Stargate.Controllers
                 Content = model.MessageContent
             };
             channel.Push(message);
-            return Ok(new AiurProtocol
+            return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Success,
                 Message = $"You have successfully pushed a new message to channel: {channel.Id}!"

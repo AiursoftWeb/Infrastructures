@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.SDK.Models.HomeViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
@@ -26,7 +27,7 @@ namespace Aiursoft.Stargate.Controllers
         public IActionResult Index()
         {
             var (channels, messages) = _memory.GetMonitoringReport();
-            return Json(new
+            return Json(new IndexViewModel
             {
                 CurrentId = _counter.GetCurrent,
                 TotalMemoryMessages = messages,

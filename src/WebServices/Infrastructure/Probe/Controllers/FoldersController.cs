@@ -38,7 +38,7 @@ namespace Aiursoft.Probe.Controllers
             {
                 return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
             }
-            return Ok(new AiurValue<Folder>(folder)
+            return this.Protocol(new AiurValue<Folder>(folder)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get your folder!"

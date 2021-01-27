@@ -49,7 +49,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your sites!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [APIProduces(typeof(ViewSiteDetailViewModel))]
@@ -65,7 +65,7 @@ namespace Aiursoft.Probe.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your site!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [HttpPost]

@@ -50,11 +50,17 @@ namespace Aiursoft.WebTools
 
         public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
         {
-            return controller.Ok(new AiurProtocol
+            return controller.Protocol(new AiurProtocol
             {
                 Code = errorType,
                 Message = errorMessage
             });
+        }
+
+        public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
+        {
+            controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
+            return controller.Ok(model);
         }
 
         public static void SetClientLang(this ControllerBase controller, string culture)

@@ -4,6 +4,7 @@ using Aiursoft.Gateway.Models.HomeViewModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.SDK.Attributes;
+using Aiursoft.WebTools;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly IStringLocalizer<HomeController> _localizer;
         private readonly GatewayDbContext _dbContext;
@@ -35,7 +36,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await GetCurrentUserAsync();
-            return Json(new IndexViewModel
+            return this.Protocol(new IndexViewModel
             {
                 SignedIn = User.Identity.IsAuthenticated,
                 ServerTime = DateTime.UtcNow,
@@ -46,53 +47,53 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
-        public async Task<IActionResult> Report()
-        {
-            var oneYearBefore = DateTime.UtcNow - TimeSpan.FromDays(90);
-            var severnDaysBefore = DateTime.UtcNow - TimeSpan.FromDays(7);
-            var oneDayBefore = DateTime.UtcNow - TimeSpan.FromDays(1);
-            return Json(new
-            {
-                ActiveUsers7Days = await _dbContext.AuditLogs
-                    .Where(t => t.HappenTime > severnDaysBefore)
-                    .Select(t => t.UserId)
-                    .Distinct()
-                    .CountAsync(),
-                ActiveUsers1Day = await _dbContext.AuditLogs
-                    .Where(t => t.HappenTime > oneDayBefore)
-                    .Select(t => t.UserId)
-                    .Distinct()
-                    .CountAsync(),
-                NewUsers7Days = await _dbContext.Users
-                    .Where(t => t.AccountCreateTime > severnDaysBefore)
-                    .CountAsync(),
-                NewUsers1Day = await _dbContext.Users
-                    .Where(t => t.AccountCreateTime > oneDayBefore)
-                    .CountAsync(),
-                LongTermUsers = _dbContext.AuditLogs
-                    .GroupBy(t => t.UserId)
-                    .Select(t => t.Max(a => a.HappenTime) - t.Min(a => a.HappenTime))
-                    .AsEnumerable()
-                    .Count(t => t.TotalDays > 15),
-                SpamUsers = await _dbContext.Users
-                    .Where(t => !t.Emails.Any(p => p.Validated))
-                    .Where(t => !t.AuditLogs.Any(p => p.HappenTime > oneYearBefore))
-                    .CountAsync(),
-                TotalUsers = await _dbContext.Users.CountAsync(),
-                TotalEmailAddress = await _dbContext.UserEmails.CountAsync(),
-                TotalVerifiedEmailAddress = await _dbContext
-                    .UserEmails
-                    .Where(t => t.Validated)
-                    .CountAsync(),
-                AverageUserGrantedApps = await _dbContext
-                    .LocalAppGrant.CountAsync() * 1.0 /
-                    await _dbContext.Users.CountAsync(),
-                SocialAccounts = await _dbContext.ThirdPartyAccounts
-                    .GroupBy(t => t.ProviderName)
-                    .Select(t => KeyValuePair.Create(t.Key, t.Count()))
-                    .ToListAsync()
-            });
-        }
+        //public async Task<IActionResult> Report()
+        //{
+        //    var oneYearBefore = DateTime.UtcNow - TimeSpan.FromDays(90);
+        //    var severnDaysBefore = DateTime.UtcNow - TimeSpan.FromDays(7);
+        //    var oneDayBefore = DateTime.UtcNow - TimeSpan.FromDays(1);
+        //    return this.Protocol(new
+        //    {
+        //        ActiveUsers7Days = await _dbContext.AuditLogs
+        //            .Where(t => t.HappenTime > severnDaysBefore)
+        //            .Select(t => t.UserId)
+        //            .Distinct()
+        //            .CountAsync(),
+        //        ActiveUsers1Day = await _dbContext.AuditLogs
+        //            .Where(t => t.HappenTime > oneDayBefore)
+        //            .Select(t => t.UserId)
+        //            .Distinct()
+        //            .CountAsync(),
+        //        NewUsers7Days = await _dbContext.Users
+        //            .Where(t => t.AccountCreateTime > severnDaysBefore)
+        //            .CountAsync(),
+        //        NewUsers1Day = await _dbContext.Users
+        //            .Where(t => t.AccountCreateTime > oneDayBefore)
+        //            .CountAsync(),
+        //        LongTermUsers = _dbContext.AuditLogs
+        //            .GroupBy(t => t.UserId)
+        //            .Select(t => t.Max(a => a.HappenTime) - t.Min(a => a.HappenTime))
+        //            .AsEnumerable()
+        //            .Count(t => t.TotalDays > 15),
+        //        SpamUsers = await _dbContext.Users
+        //            .Where(t => !t.Emails.Any(p => p.Validated))
+        //            .Where(t => !t.AuditLogs.Any(p => p.HappenTime > oneYearBefore))
+        //            .CountAsync(),
+        //        TotalUsers = await _dbContext.Users.CountAsync(),
+        //        TotalEmailAddress = await _dbContext.UserEmails.CountAsync(),
+        //        TotalVerifiedEmailAddress = await _dbContext
+        //            .UserEmails
+        //            .Where(t => t.Validated)
+        //            .CountAsync(),
+        //        AverageUserGrantedApps = await _dbContext
+        //            .LocalAppGrant.CountAsync() * 1.0 /
+        //            await _dbContext.Users.CountAsync(),
+        //        SocialAccounts = await _dbContext.ThirdPartyAccounts
+        //            .GroupBy(t => t.ProviderName)
+        //            .Select(t => KeyValuePair.Create(t.Key, t.Count()))
+        //            .ToListAsync()
+        //    });
+        //}
 
         private Task<GatewayUser> GetCurrentUserAsync()
         {

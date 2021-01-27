@@ -17,7 +17,7 @@ namespace Aiursoft.Gateway.Controllers
 {
     [APIExpHandler]
     [APIModelStateChecker]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly ACTokenValidator _tokenManager;
         private readonly DeveloperApiService _apiService;
@@ -71,7 +71,7 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get user openid",
                 Code = ErrorType.Success
             };
-            return Json(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [APIProduces(typeof(UserInfoViewModel))]
@@ -93,7 +93,7 @@ namespace Aiursoft.Gateway.Controllers
                 Message = "Successfully get target user info.",
                 User = user
             };
-            return Json(viewModel);
+            return this.Protocol(viewModel);
         }
     }
 }

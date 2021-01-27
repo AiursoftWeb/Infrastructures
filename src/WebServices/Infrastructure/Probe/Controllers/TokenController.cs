@@ -49,7 +49,7 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.Unauthorized, $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
             }
             var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions, TimeSpan.FromSeconds(model.LifespanSeconds));
-            return Ok(new AiurValue<string>(pbToken)
+            return this.Protocol(new AiurValue<string>(pbToken)
             {
                 Code = ErrorType.Success,
                 Message = $"Successfully get your PBToken! Use it before {deadline} UTC!"

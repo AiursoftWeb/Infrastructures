@@ -2,6 +2,7 @@
 using Aiursoft.Archon.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace Aiursoft.Archon.Controllers
 
         public IActionResult Index()
         {
-            return Ok(new IndexViewModel
+            return this.Protocol(new IndexViewModel
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Archon server!",

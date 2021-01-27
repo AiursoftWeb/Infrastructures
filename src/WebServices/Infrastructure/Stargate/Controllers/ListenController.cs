@@ -55,7 +55,7 @@ namespace Aiursoft.Stargate.Controllers
             }
             if (channel.ConnectKey != model.Key)
             {
-                return Ok(new AiurProtocol
+                return this.Protocol(new AiurProtocol
                 {
                     Code = ErrorType.Unauthorized,
                     Message = "Wrong connection key!"
@@ -103,7 +103,7 @@ namespace Aiursoft.Stargate.Controllers
             {
                 channel.ConnectedUsers--;
             }
-            return Ok(new { });
+            return this.Protocol(new AiurProtocol { Code = ErrorType.UnknownError, Message = "You shouldn't be here." });
         }
     }
 }

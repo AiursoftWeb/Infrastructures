@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using Aiursoft.Handler.Attributes;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
@@ -49,6 +50,7 @@ namespace Aiursoft.Probe.Tests
         [TestCleanup]
         public async Task CleanServer()
         {
+            LimitPerMin.ClearMemory();
             await _server.StopAsync();
             _server.Dispose();
         }

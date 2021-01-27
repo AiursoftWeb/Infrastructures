@@ -78,7 +78,7 @@ namespace Aiursoft.Observer.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get your logs!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
     }
 }

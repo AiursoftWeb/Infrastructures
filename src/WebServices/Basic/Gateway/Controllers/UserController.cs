@@ -61,7 +61,7 @@ namespace Aiursoft.Gateway.Controllers
             user.IconFilePath = model.NewIconFilePathName;
             user.Bio = model.NewBio;
             await _dbContext.SaveChangesAsync();
-            return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
+            return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
         }
 
         [HttpPost]
@@ -72,11 +72,11 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return Ok(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed your password!" });
+                return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully changed your password!" });
             }
             else
             {
-                return Ok(new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
+                return this.Protocol(new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
             }
         }
 
@@ -84,7 +84,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
-            return Ok(new AiurValue<string>(user.PhoneNumber)
+            return this.Protocol(new AiurValue<string>(user.PhoneNumber)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's phone number."
@@ -112,7 +112,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
             var emails = await _dbContext.UserEmails.Where(t => t.OwnerId == user.Id).ToListAsync();
-            return Ok(new AiurCollection<UserEmail>(emails)
+            return this.Protocol(new AiurCollection<UserEmail>(emails)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's emails."
@@ -231,7 +231,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
             var applications = await _dbContext.LocalAppGrant.Where(t => t.GatewayUserId == user.Id).ToListAsync();
-            return Ok(new AiurCollection<AppGrant>(applications)
+            return this.Protocol(new AiurCollection<AppGrant>(applications)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your granted apps!"
@@ -264,7 +264,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.HappenTime);
 
-            return Ok(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
+            return this.Protocol(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
                 query,
                 model,
                 ErrorType.Success,
@@ -280,7 +280,7 @@ namespace Aiursoft.Gateway.Controllers
                 .Where(t => t.OwnerId == user.Id)
                 .OrderByDescending(t => t.BindTime)
                 .ToListAsync();
-            return Ok(new AiurCollection<ThirdPartyAccount>(accounts)
+            return this.Protocol(new AiurCollection<ThirdPartyAccount>(accounts)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get all your audit log!"
@@ -307,7 +307,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool key = user.Has2FAKey;
-            return Ok(new AiurValue<bool>(key)
+            return this.Protocol(new AiurValue<bool>(key)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's Has2FAkey."
@@ -320,7 +320,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             bool enabled = user.TwoFactorEnabled;
-            return Ok(new AiurValue<bool>(enabled)
+            return this.Protocol(new AiurValue<bool>(enabled)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully get the target user's TwoFactorEnabled."
@@ -333,7 +333,7 @@ namespace Aiursoft.Gateway.Controllers
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
             var (twoFAKey, twoFAQRUri) = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user);
-            return Ok(new View2FAKeyViewModel
+            return this.Protocol(new View2FAKeyViewModel
             {
                 TwoFAKey = twoFAKey,
                 TwoFAQRUri = twoFAQRUri,
@@ -353,7 +353,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.UpdateAsync(user);
             }
             var hasKey = user.Has2FAKey;
-            return Ok(new AiurValue<bool>(hasKey)
+            return this.Protocol(new AiurValue<bool>(hasKey)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully set the user's TwoFAKey!"
@@ -390,7 +390,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.UpdateAsync(user);
             }
 
-            return Ok(new AiurValue<bool>(is2FATokenValid)
+            return this.Protocol(new AiurValue<bool>(is2FATokenValid)
             {
                 Code = ErrorType.Success,
                 Message = "Sucess Verified code."
@@ -413,7 +413,7 @@ namespace Aiursoft.Gateway.Controllers
             }
             bool success = disable2FAResult.Succeeded;
 
-            return Ok(new AiurValue<bool>(success)
+            return this.Protocol(new AiurValue<bool>(success)
             {
                 Code = ErrorType.Success,
                 Message = "Successfully called DisableTwoFA method!"
@@ -429,7 +429,7 @@ namespace Aiursoft.Gateway.Controllers
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
 
-            return Ok(new AiurCollection<string>(recoveryCodes.ToList())
+            return this.Protocol(new AiurCollection<string>(recoveryCodes.ToList())
             {
                 Code = ErrorType.Success,
                 Message = "Sucess regenerate recovery Codes!."

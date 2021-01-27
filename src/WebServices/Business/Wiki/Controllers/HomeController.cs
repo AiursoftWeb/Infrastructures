@@ -87,12 +87,6 @@ namespace Aiursoft.Wiki.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ToJson()
-        {
-            var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
-            return Json(database);
-        }
-
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {

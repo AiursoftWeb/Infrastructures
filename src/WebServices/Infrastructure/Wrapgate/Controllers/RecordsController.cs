@@ -47,7 +47,7 @@ namespace Aiursoft.Wrapgate.Controllers
                 Code = ErrorType.Success,
                 Message = "Successfully get all your records!"
             };
-            return Ok(viewModel);
+            return this.Protocol(viewModel);
         }
 
         [HttpPost]

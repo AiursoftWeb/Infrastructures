@@ -33,7 +33,7 @@ namespace Aiursoft.Archon.Controllers
             if (correctApp)
             {
                 var token = _tokenManager.GenerateAccessToken(model.AppId);
-                return Ok(new AccessTokenViewModel
+                return this.Protocol(new AccessTokenViewModel
                 {
                     Code = ErrorType.Success,
                     Message = "Successfully get access token.",

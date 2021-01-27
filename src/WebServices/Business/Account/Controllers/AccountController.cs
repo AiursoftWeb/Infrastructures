@@ -141,7 +141,7 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
             var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
-            return Json(result);
+            return this.Protocol(result);
         }
 
         [HttpPost]
@@ -152,7 +152,7 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
             var result = await _userService.DeleteEmailAsync(user.Id, email, token);
-            return Json(result);
+            return this.Protocol(result);
         }
 
         [HttpPost]
@@ -163,7 +163,7 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
             var result = await _userService.SetPrimaryEmailAsync(token, user.Id, email);
-            return Json(result);
+            return this.Protocol(result);
         }
 
         public async Task<IActionResult> Avatar(bool justHaveUpdated)
@@ -353,7 +353,7 @@ namespace Aiursoft.Account.Controllers
                 return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
             }
             var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
-            return Json(result);
+            return this.Protocol(result);
         }
 
         public async Task<IActionResult> AuditLog(int page = 1)
@@ -495,7 +495,7 @@ namespace Aiursoft.Account.Controllers
             var user = await GetCurrentUserAsync();
             var token = await _appsContainer.AccessToken();
             var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
-            return Json(result);
+            return this.Protocol(result);
         }
 
         private async Task<AccountUser> GetCurrentUserAsync()
