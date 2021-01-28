@@ -40,7 +40,7 @@ namespace Aiursoft.Probe.Repositories
             var haveDaemon = await _dbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
             if (!haveDaemon)
             {
-                _storageProvider.Delete(file.HardwareId);
+                _storageProvider.DeleteToTrash(file.HardwareId);
             }
         }
 

@@ -60,5 +60,20 @@ namespace Aiursoft.Observer.SDK.Services.ToObserverServer
                 throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
+
+        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+        {
+            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "DeleteApp", new { });
+            var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
+            {
+                AccessToken = accessToken,
+                AppId = appId
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
+        }
     }
 }

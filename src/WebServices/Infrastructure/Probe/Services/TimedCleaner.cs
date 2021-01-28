@@ -79,7 +79,7 @@ namespace Aiursoft.Probe.Services
             {
                 if (files.All(t => t.HardwareId != file))
                 {
-                    _logger.LogWarning($"Cleaner message: File with hardware Id: {file} was found on disk but not found in database! Consider Delete that file on disk!");
+                    _logger.LogWarning($"Cleaner message: File with hardware Id: {file} was found on disk but not found in database! Consider delete that file on disk!");
                     // delete file in disk
                     storageProvider.DeleteToTrash(file);
                 }
