@@ -1,22 +1,29 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using System;
 
 namespace Aiursoft.SDK.Tests.Services
 {
     public class MockAcTokenValidator : ACTokenValidator
     {
+        public static string MockAppId = Guid.NewGuid().ToString();
+        public static string Mock2AppId = Guid.NewGuid().ToString();
         public MockAcTokenValidator(RSAService rsa) : base(rsa)
         {
         }
 
         public override string ValidateAccessToken(string value)
         {
-            if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("mock"))
+            if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock-"))
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Mock token was not in a valid format and can not be verified!");
+                return MockAppId;
             }
-            return "mock-app-id";
+            if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock2-"))
+            {
+                return Mock2AppId;
+            }
+            throw new AiurAPIModelException(ErrorType.Unauthorized, "Mock token was not in a valid format and can not be verified!");
         }
     }
 }

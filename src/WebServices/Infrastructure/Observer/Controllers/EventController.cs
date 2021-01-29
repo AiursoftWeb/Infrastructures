@@ -1,4 +1,5 @@
 ﻿using Aiursoft.Archon.SDK.Services;
+using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -79,6 +80,19 @@ namespace Aiursoft.Observer.Controllers
                 Message = "Successfully get your logs!"
             };
             return this.Protocol(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
+        {
+            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+            if (appid != model.AppId)
+            {
+                return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
+            }
+            _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "App deleted.");
         }
     }
 }

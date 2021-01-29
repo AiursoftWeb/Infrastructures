@@ -229,11 +229,9 @@ namespace Aiursoft.Developer.Controllers
                 var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
                 await _siteService.DeleteAppAsync(token, target.AppId);
                 await _recordsService.DeleteAppAsync(token, target.AppId);
+                await _eventService.DeleteAppAsync(token, target.AppId);
             }
-            catch (AiurUnexpectedResponse e)
-            {
-                if (e.Response.Code != ErrorType.HasSuccessAlready) throw;
-            }
+            catch (AiurUnexpectedResponse e) when (e.Response.Code == ErrorType.HasSuccessAlready) { }
             _dbContext.Apps.Remove(target);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(AllApps));

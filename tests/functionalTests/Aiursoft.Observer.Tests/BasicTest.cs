@@ -4,6 +4,7 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK;
+using Aiursoft.SDK.Tests.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -114,6 +115,26 @@ namespace Aiursoft.Observer.Tests
             await Task.Delay(200);
             var logs = await observer.ViewAsync("mock-access-token");
             Assert.AreEqual(8, logs.Logs.Count);
+        }
+
+        [TestMethod]
+        public async Task DeleteAppTest()
+        {
+            var observer = _serviceProvider.GetRequiredService<EventService>();
+            await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
+            await observer.DeleteAppAsync("mock-access-token", MockAcTokenValidator.MockAppId);
+            await Task.Delay(500);
+            var logs = await observer.ViewAsync("mock-access-token");
+            Assert.AreEqual(0, logs.Logs.Count);
+            try
+            {
+                await observer.DeleteAppAsync("mock2-access-token", MockAcTokenValidator.MockAppId);
+                Assert.Fail("Wrong access token should not success.");
+            }
+            catch (AiurUnexpectedResponse e)
+            {
+                Assert.AreEqual(ErrorType.Unauthorized, e.Code);
+            }
         }
     }
 }

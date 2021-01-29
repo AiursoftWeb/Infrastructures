@@ -69,7 +69,14 @@ namespace Aiursoft.Handler.Attributes
                 {
                     context.HttpContext.Response.Headers.Add("retry-after", (60 - (int)(DateTime.UtcNow - LastClearTime).TotalSeconds).ToString());
                     context.HttpContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
-                    context.Result = new JsonResult(new AiurProtocol { Code = ErrorType.TooManyRequests, Message = "You are requesting our API too frequently and your IP is blocked." });
+                    if (ReturnJson)
+                    {
+                        context.Result = new JsonResult(new AiurProtocol { Code = ErrorType.TooManyRequests, Message = "You are requesting our API too frequently and your IP is blocked." });
+                    }
+                    else
+                    {
+                        context.Result = new StatusCodeResult((int)HttpStatusCode.TooManyRequests);
+                    }
                 }
             }
             else

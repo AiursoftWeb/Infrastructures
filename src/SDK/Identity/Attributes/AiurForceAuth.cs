@@ -12,6 +12,7 @@ namespace Aiursoft.Identity.Attributes
     /// <summary>
     /// Request the signed in token or throw a NotAiurSignedInException
     /// </summary>
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
     {
         private string _preferController { get; }
@@ -54,19 +55,19 @@ namespace Aiursoft.Identity.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            if (!(context.Controller is Controller controller))
+            if (context.Controller is not ControllerBase controller)
             {
                 // If goes here, it seems we are not using it on a controller.
                 throw new InvalidOperationException();
             }
-            var show = context.HttpContext.Request.Query[AuthValues.DirectShowString.Key];
             //Not signed in
             if (!controller.User.Identity.IsAuthenticated)
             {
                 if (_hasAPreferPage)
                 {
                     // Just redirected back, leave him here.
-                    if (show == AuthValues.DirectShowString.Value && _justTry == true)
+                    var show = context.HttpContext.Request.Query[AuthValues.DirectShowString.Key];
+                    if (_justTry == true && show == AuthValues.DirectShowString.Value)
                     {
                         return;
                     }
