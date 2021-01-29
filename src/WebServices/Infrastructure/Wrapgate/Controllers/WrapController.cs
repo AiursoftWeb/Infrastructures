@@ -54,7 +54,7 @@ namespace Aiursoft.Wrapgate.Controllers
 
         private string BuildTargetUrl(WrapRecord record, string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
+            if (!string.IsNullOrWhiteSpace(path))
             {
                 return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString.ToString();
             }
