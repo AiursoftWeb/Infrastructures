@@ -33,9 +33,9 @@ namespace Aiursoft.Archon.SDK.Services
                     throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid signature! Token could not be authorized!");
                 }
             }
-            catch
+            catch (Exception e)
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was not in a valid format and can not be verified!");
+                throw new AiurAPIModelException(ErrorType.Unauthorized, $"Token was not in a valid format and can not be verified! Details: {e.Message}");
             }
             return token.AppId;
         }
