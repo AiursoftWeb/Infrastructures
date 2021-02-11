@@ -213,5 +213,27 @@ namespace Aiursoft.Developer.Controllers
             var uuid = Guid.NewGuid().ToString(format);
             return View(model: uuid);
         }
+
+
+        public IActionResult Hash()
+        {
+            var model = new HashViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Hash(HashViewModel model)
+        {
+            try
+            {
+                model.ResultString = (model.SourceString ?? string.Empty).GetHashCode().ToString();
+            }
+            catch (Exception e)
+            {
+                model.ResultString = $"Invalid input! Error message: \r\n{e.Message} \r\n {e.StackTrace}";
+            }
+            return View(model);
+        }
     }
 }
