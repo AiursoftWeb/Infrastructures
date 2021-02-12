@@ -583,7 +583,6 @@
         var detectFileUpdateTimer = setInterval(detectFileUpdate, 100);
 
         function detectFileUpdate () {
-            console.log('Detect!')
             if ($(".icon-form [name=iconFile]").length > 0) {
                 var value = $(".icon-form [name=iconFile]").attr('data-internet-path');
                 if (value && value.length > 0) {
