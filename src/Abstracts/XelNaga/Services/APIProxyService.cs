@@ -23,6 +23,19 @@ namespace Aiursoft.XelNaga.Services
             _client = clientFactory.CreateClient();
         }
 
+        public Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
+        {
+            return AsyncHelper.Try(async () =>
+            {
+                var response = await _client.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.BadGateway)
+                {
+                    throw new WebException("Api proxy failed bacause bad gateway. (This error will trigger auto retry)");
+                }
+                return response;
+            }, times: 5);
+        }
+
         public async Task<string> Get(AiurUrl url, bool forceHttp = false)
         {
             if (forceHttp && !url.IsLocalhost())

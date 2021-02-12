@@ -8,11 +8,11 @@ namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer
 {
     public class GitHubRenderer : ViewComponent
     {
-        private readonly APIProxyService _http;
+        private readonly HttpService _http;
         private readonly AiurCache _cache;
 
         public GitHubRenderer(
-            APIProxyService http,
+            HttpService http,
             AiurCache cache)
         {
             _http = http;

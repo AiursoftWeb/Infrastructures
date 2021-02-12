@@ -8,13 +8,35 @@ namespace Aiursoft.XelNaga.Services
 {
     public static class AsyncHelper
     {
-        public static void TryAsync(Func<Task> steps, int times, Action<Exception> onError = null)
+        public static async Task<T> Try<T>(Func<Task<T>> taskFactory, int times, Action<Exception> onError = null)
         {
             for (var i = 1; i <= times; i++)
             {
                 try
                 {
-                    RunSync(async () => await steps());
+                    var response = await taskFactory();
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    onError?.Invoke(e);
+                    if (i >= times)
+                    {
+                        throw;
+                    }
+                    await Task.Delay(ExponentialBackoffTimeSlot(i) * 1000);
+                }
+            }
+            throw new NotImplementedException("Code shall not reach here.");
+        }
+
+        public static void TryAsync(Func<Task> fastFactory, int times, Action<Exception> onError = null)
+        {
+            for (var i = 1; i <= times; i++)
+            {
+                try
+                {
+                    RunSync(fastFactory);
                     break;
                 }
                 catch (Exception e)
@@ -52,8 +74,6 @@ namespace Aiursoft.XelNaga.Services
             var rnd = new Random();
             return rnd.Next(0, max);
         }
-
-        public static void TryAsyncForever(Func<Task> steps, Action<Exception> onError = null) => TryAsync(steps, int.MaxValue, onError);
 
         public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
         {
