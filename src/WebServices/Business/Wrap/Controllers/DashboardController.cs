@@ -59,6 +59,15 @@ namespace Aiursoft.Wrap.Controllers
             return View("Created", model);
         }
 
+        public async Task<IActionResult> Records()
+        {
+            var user = await GetCurrentUserAsync();
+            var token = await _appsContainer.AccessToken();
+            var records = await _recordsService.ViewMyRecordsAsync(token, user.Id);
+            var model = new RecordsViewModel(user, records.Records);
+            return View(model);
+        }
+
         private async Task<WrapUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(User);

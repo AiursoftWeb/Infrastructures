@@ -63,7 +63,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             var channels = await channelService.ViewMyChannelsAsync(token);
             Channels = channels.Channels;
 
-            var records = await recordsService.ViewMyRecordsAsync(token, Array.Empty<string>());
+            var records = await recordsService.ViewMyRecordsAsync(token);
             Records = records.Records;
 
             Trusted = appInDb.TrustedApp;

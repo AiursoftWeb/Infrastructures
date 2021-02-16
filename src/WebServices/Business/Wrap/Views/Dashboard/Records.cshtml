@@ -1,0 +1,69 @@
+﻿@model Aiursoft.Wrap.Models.DashboardViewModels.RecordsViewModel
+@{ 
+    ViewData["Title"] = Model.Title;
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-upload ico"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="form-group index-form">
+                    <div class="table-responsive">
+                        <table class="table table-striped datatable-records">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Record name"]</th>
+                                    <th>@Localizer["Enabled"]</th>
+                                    <th>@Localizer["Target URL"]</th>
+                                    <th>@Localizer["Type"]</th>
+                                    <th>@Localizer["Create time"]</th>
+                                    <th>@Localizer["Operation"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.Records)
+                                {
+                                    <tr>
+                                        <td>@record.RecordUniqueName</td>
+                                        <td>
+                                            @if (record.Enabled)
+                                            {
+                                                <label class="text-success">
+                                                    <i class="fa fa-check"></i>
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="text-danger">
+                                                    <i class="fa fa-times"></i>
+                                                </label>
+                                            }
+                                        </td>
+                                        <td>@record.TargetUrl.OTake(60)</td>
+                                        <td>@record.Type</td>
+                                        <td data-utc-time="@record.CreationTime" data-order="@record.CreationTime.Ticks"></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-controller="Records" asp-action="Delete" asp-route-recordName="@record.RecordUniqueName" class="btn btn-danger">@Localizer["Delete"]</a>
+                                                <a asp-controller="Records" asp-action="Edit" asp-route-recordName="@record.RecordUniqueName" class="btn btn-secondary">@Localizer["Edit"]</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

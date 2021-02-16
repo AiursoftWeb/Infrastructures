@@ -65,21 +65,14 @@ namespace Aiursoft.Wrapgate.Repositories
             }
         }
 
-        public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid, string[] mustHaveTags)
+        public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid, string mustHaveTags)
         {
-            if (!mustHaveTags.Any())
+            var query = _table.Where(t => t.AppId == appid);
+            if(!string.IsNullOrWhiteSpace(mustHaveTags))
             {
-                return _table
-                    .Where(t => t.AppId == appid)
-                    .ToListAsync();
+                query = query.Where(t => t.Tags.Split(',', System.StringSplitOptions.None).Any(split => split == mustHaveTags));
             }
-            else
-            {
-                return _table
-                    .Where(t => t.AppId == appid)
-                    .Where(t => mustHaveTags.Any(p => t.Tags.Contains(p)))
-                    .ToListAsync();
-            }
+            return query.ToListAsync();
         }
 
         public async Task<WrapRecord> GetRecordByNameUnderApp(string recordName, string appid)
