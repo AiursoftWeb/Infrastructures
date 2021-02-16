@@ -71,7 +71,7 @@ namespace Aiursoft.Wrapgate.Repositories
             if (!string.IsNullOrWhiteSpace(mustHaveTags))
             {
                 return query.AsEnumerable()
-                    .Where(t => t.Tags.Split(",").Any(s => s == mustHaveTags))
+                    .Where(t => t.Tags?.Split(",").Any(s => s == mustHaveTags) ?? false)
                     .ToList();
             }
             return await query.ToListAsync();
