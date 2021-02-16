@@ -68,9 +68,9 @@ namespace Aiursoft.Wrapgate.Repositories
         public Task<List<WrapRecord>> GetAllRecordsUnderApp(string appid, string mustHaveTags)
         {
             var query = _table.Where(t => t.AppId == appid);
-            if(!string.IsNullOrWhiteSpace(mustHaveTags))
+            if (!string.IsNullOrWhiteSpace(mustHaveTags))
             {
-                query = query.Where(t => t.Tags.Split(',', System.StringSplitOptions.None).Any(split => split == mustHaveTags));
+                query = query.Where(t => t.Tags.Contains(mustHaveTags));
             }
             return query.ToListAsync();
         }
