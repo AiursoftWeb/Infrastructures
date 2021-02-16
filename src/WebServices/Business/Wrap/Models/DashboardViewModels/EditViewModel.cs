@@ -9,6 +9,11 @@ namespace Aiursoft.Wrap.Models.DashboardViewModels
 {
     public class EditViewModel : LayoutViewModel
     {
+        [Obsolete(error: true, message: "This method is only for framework!")]
+        public EditViewModel()
+        {
+        }
+
         public EditViewModel(WrapUser user) : base(user, "Edit record")
         {
         }

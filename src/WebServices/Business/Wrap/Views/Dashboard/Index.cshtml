@@ -16,49 +16,47 @@
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-upload ico"></i>
+            <i class="fas fa-plus-circle ico"></i>
             @ViewData["Title"]
         </div>
         <div class="card-body">
             <div class="col-12">
-                <div class="form-group index-form">
-                    <form asp-controller="Dashboard" asp-action="Create" method="post">
-                        @if (!ViewData.ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger alert-dismissible mt-3" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
-                                <strong>@Localizer["Invalid Input!"]</strong>
-                                <div asp-validation-summary="All"></div>
-                            </div>
-                        }
-                        <div class="col-12 mb-3 mt-5">
-                            <div class="form-group">
-                                <input type="url" id="url" asp-for="Url" class="form-control form-control-lg" placeholder="@Localizer["Input the long url. Example: https://github.com/AiursoftWeb/Infrastructures"]" />
-                                <span asp-validation-for="Url" class="text-danger"></span>
-                            </div>
+                <form asp-controller="Dashboard" asp-action="Create" method="post">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+                            <strong>@Localizer["Invalid Input!"]</strong>
+                            <div asp-validation-summary="All"></div>
+                        </div>
+                    }
+                    <div class="col-12 mb-3 mt-5">
+                        <div class="form-group">
+                            <input type="url" id="url" asp-for="Url" class="form-control form-control-lg" placeholder="@Localizer["Input the long url. Example: https://github.com/AiursoftWeb/Infrastructures"]" />
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                        </div>
 
-                            <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0 d-none" id="record-name-part">
-                                <label asp-for="NewRecordName">Shorten URL (You can edit it below)</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">https://</span>
-                                    </div>
-                                    <input asp-for="NewRecordName" type="text" class="form-control form-control-lg" placeholder="Enter a valid domain">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@pattern</span>
-                                    </div>
+                        <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0 d-none" id="record-name-part">
+                            <label asp-for="NewRecordName">Shorten URL (You can edit it below)</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">https://</span>
                                 </div>
-                                <span asp-validation-for="NewRecordName" class="text-danger"></span>
+                                <input asp-for="NewRecordName" type="text" class="form-control form-control-lg" placeholder="Enter a valid domain">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">@pattern</span>
+                                </div>
                             </div>
+                            <span asp-validation-for="NewRecordName" class="text-danger"></span>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-lg btn-success mb-3">
-                                <i class="fab fa-rebelndom"></i> Create
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-lg btn-success mb-3">
+                            <i class="fas fa-random"></i> Create
+                        </button>
+                    </div>
+                </form>
 
-                </div>
             </div>
         </div>
     </div>

@@ -58,8 +58,8 @@ namespace Aiursoft.Wrap.Controllers
                 model.Recover(user);
                 return View(nameof(Index), model);
             }
-#warning No Created view!
 #warning Index is ugly!
+            model.Recover(user);
             return View("Created", model);
         }
 

@@ -1,7 +1,6 @@
 ﻿@model Aiursoft.Wrap.Models.DashboardViewModels.IndexViewModel
 @{ 
     ViewData["Title"] = "Home";
-    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
     var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
     var url = pattern.Replace("{wrap}", Model.NewRecordName);
 }
@@ -14,15 +13,18 @@
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-upload ico"></i>
+            <i class="fas fa-plus-circle ico"></i>
             @ViewData["Title"]
         </div>
         <div class="card-body">
             <div class="col-12">
                 <div class="form-group index-form">
-                    <div class="col-12">
-                        <h3>Your link was created!</h3>
-                        <p>@Localizer[description]</p>
+
+                    <div class="container-fluid">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <strong>Your link was created!</strong>
+                        </div>
                     </div>
 
                     <div class="col-12 mb-3 mt-5">
@@ -42,14 +44,8 @@
                         </p>
                     </div>
                     <div class="col-12">
-                        <p class="text-muted">
-                            Enjoy our service? Want to edit your records? <a asp-controller="Dashboard" asp-action="Index">Sign in</a>.
-                        </p>
-                        <a class="btn btn-primary btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
-                            <i class="fas fa-pencil-alt"></i>
-                            @Localizer["Sign in to your personal URL database"]
-                        </a>
-                        <a class="btn btn-success btn-lg mb-3" asp-controller="Home" asp-action="Index" role="button">
+                        <a class="btn btn-success btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
+                            <i class="fas fa-random"></i>
                             @Localizer["Create another one"]
                         </a>
                     </div>
