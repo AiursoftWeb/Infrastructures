@@ -8,6 +8,9 @@
         <li class="breadcrumb-item">
             <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
         </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Records">@Localizer["My records"]</a>
+        </li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
 
@@ -18,7 +21,7 @@
 
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-trash-alt ico"></i>
+            <i class="fas fa-fw fa-trash-alt ico"></i>
             @Localizer["Delete record"]
         </div>
         <div class="card-body">

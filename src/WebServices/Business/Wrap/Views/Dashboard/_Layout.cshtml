@@ -18,34 +18,20 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item">
                     <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
-                        <i class="fas fa-random"></i>
+                        <i class="fas fa-fw fa-random"></i>
                         <span class="nav-link-text">@Localizer["Redirect records"]</span>
                     </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti1">
+                    <ul class="sidenav-second-level collapse show" id="collapseMulti1">
                         <li>
                             <a asp-controller="Dashboard" asp-action="Index">
-                                <i class="fas fa-plus-circle"></i>
+                                <i class="fas fa-fw fa-plus-circle"></i>
                                 Create new
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Dashboard" asp-action="Records">
-                                <i class="fas fa-clipboard-list"></i>
+                                <i class="fas fa-fw fa-clipboard-list"></i>
                                 My records
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="nav-link-text">@Localizer["Settings"]</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti2">
-                        <li>
-                            <a asp-controller="Dashboard" asp-action="Settings">
-                                <i class="fas fa-sliders-h"></i>
-                                @Localizer["Overview"]
                             </a>
                         </li>
                     </ul>

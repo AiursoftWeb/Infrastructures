@@ -11,7 +11,7 @@
     </ol>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-clipboard-list"></i>
+            <i class="fas fa-fw fa-clipboard-list"></i>
             @ViewData["Title"]
         </div>
         <div class="card-body p-0 pl-3">
@@ -71,3 +71,12 @@
         </div>
     </div>
 </div>
+
+@section js{ 
+<script>
+    $('.datatable-records').DataTable().destroy();
+    $('.datatable-records').DataTable({
+        "order": [[4, "desc"]]
+    });
+</script>
+} 
