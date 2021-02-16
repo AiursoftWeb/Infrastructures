@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Developer.Models.AppsViewModels;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Wrapgate.SDK.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,9 +23,11 @@ namespace Aiursoft.Developer.Models.RecordsViewModels
         }
 
         [Required]
+        [FromRoute]
         public string AppId { get; set; }
 
         [Required]
+        [FromRoute]
         [MaxLength(50)]
         [MinLength(5)]
         [ValidDomainName]

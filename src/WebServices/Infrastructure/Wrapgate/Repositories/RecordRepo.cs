@@ -70,7 +70,8 @@ namespace Aiursoft.Wrapgate.Repositories
             var query = _table.Where(t => t.AppId == appid);
             if (!string.IsNullOrWhiteSpace(mustHaveTags))
             {
-                return query.AsEnumerable()
+                var loadInMemoryResults = await query.ToListAsync();
+                return loadInMemoryResults
                     .Where(t => t.Tags?.Split(",").Any(s => s == mustHaveTags) ?? false)
                     .ToList();
             }

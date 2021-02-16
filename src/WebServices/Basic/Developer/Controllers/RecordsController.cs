@@ -153,8 +153,6 @@ namespace Aiursoft.Developer.Controllers
             {
                 var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
                 await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL, model.Tags?.Split(',') ?? Array.Empty<string>(), model.Enabled);
-                _cache.Clear($"Record-public-status-{model.OldRecordName}");
-                _cache.Clear($"Record-public-status-{model.NewRecordName}");
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
             catch (AiurUnexpectedResponse e)
@@ -167,7 +165,9 @@ namespace Aiursoft.Developer.Controllers
         }
 
         [Route("Apps/{appId}/Records/{recordName}/Delete")]
-        public async Task<IActionResult> Delete(string appId, string recordName)
+        public async Task<IActionResult> Delete(
+            [FromRoute] string appId,
+            [FromRoute] string recordName)
         {
             var user = await GetCurrentUserAsync();
             var app = await _dbContext.Apps.FindAsync(appId);
