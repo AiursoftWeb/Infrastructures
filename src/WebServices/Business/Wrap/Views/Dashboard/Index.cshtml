@@ -1,0 +1,26 @@
+﻿@model Aiursoft.Wrap.Models.DashboardViewModels.IndexViewModel
+@{ 
+    ViewData["Title"] = Model.Title;
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-upload ico"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="form-group index-form">
+                    <label>Do something!</label>
+                    <p class="text-muted">Your file will be uploaded to your root folder of your site.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

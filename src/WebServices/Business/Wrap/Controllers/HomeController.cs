@@ -36,7 +36,7 @@ namespace Aiursoft.Wrap.Controllers
             this._appsContainer = appsContainer;
         }
 
-        [AiurForceAuth("", "", justTry: true)]
+        [AiurForceAuth(preferController: "Dashboard", preferAction: "Index", justTry: true)]
         public IActionResult Index()
         {
             var model = new IndexViewModel();
