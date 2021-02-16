@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.XelNaga.Services
 {
