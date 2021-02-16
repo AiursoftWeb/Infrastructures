@@ -233,9 +233,8 @@ namespace Aiursoft.XelNaga.Tools
                 {
                     return JsonDocument.Parse(strInput) != null;
                 }
-                catch
+                catch (JsonException)
                 {
-
                 }
                 return false;
             }

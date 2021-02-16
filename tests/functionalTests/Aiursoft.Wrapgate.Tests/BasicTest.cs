@@ -6,7 +6,6 @@ using Aiursoft.Wrapgate.Data;
 using Aiursoft.Wrapgate.SDK;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,9 +14,6 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
@@ -108,8 +104,8 @@ namespace Aiursoft.Wrapgate.Tests
         public async Task TagSystemTest()
         {
             var recordsService = _serviceProvider.GetRequiredService<RecordsService>();
-            await recordsService.CreateNewRecordAsync("mock-access-token", "stack1", "https://stackoverflow.com", new string[] { "a", "b"}, RecordType.Redirect, true);
-            await recordsService.CreateNewRecordAsync("mock-access-token", "stack2", "https://stackoverflow.com", new string[] { "a", "c" }, RecordType.Redirect, true);
+            await recordsService.CreateNewRecordAsync("mock-access-token", "stack1", "https://stackoverflow.com", new[] { "a", "b"}, RecordType.Redirect, true);
+            await recordsService.CreateNewRecordAsync("mock-access-token", "stack2", "https://stackoverflow.com", new[] { "a", "c" }, RecordType.Redirect, true);
             var records = await recordsService.ViewMyRecordsAsync("mock-access-token", "b");
             Assert.AreEqual(records.Records.SingleOrDefault().RecordUniqueName, "stack1");
         }

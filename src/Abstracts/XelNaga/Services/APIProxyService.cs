@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.XelNaga.Services
 {
@@ -15,15 +16,18 @@ namespace Aiursoft.XelNaga.Services
     {
         private readonly HttpClient _client;
         private readonly Regex _regex;
+        ILogger<APIProxyService> _logger;
 
         public APIProxyService(
-            IHttpClientFactory clientFactory)
+            IHttpClientFactory clientFactory,
+            ILogger<APIProxyService> logger)
         {
             _regex = new Regex("^https://", RegexOptions.Compiled);
             _client = clientFactory.CreateClient();
+            _logger = logger;
         }
 
-        public Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
+        private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
         {
             return AsyncHelper.Try(async () =>
             {
@@ -33,7 +37,10 @@ namespace Aiursoft.XelNaga.Services
                     throw new WebException("Api proxy failed bacause bad gateway. (This error will trigger auto retry)");
                 }
                 return response;
-            }, times: 5);
+            }, times: 5, onError: (e) =>
+            {
+                _logger.LogCritical(e, e.Message);                
+            });
         }
 
         public async Task<string> Get(AiurUrl url, bool forceHttp = false)
@@ -51,7 +58,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json, text/html");
 
-            using var response = await _client.SendAsync(request);
+            using var response = await SendWithRetry(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {
@@ -85,7 +92,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            using var response = await _client.SendAsync(request);
+            using var response = await SendWithRetry(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {
@@ -121,7 +128,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            using var response = await _client.SendAsync(request);
+            using var response = await SendWithRetry(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {

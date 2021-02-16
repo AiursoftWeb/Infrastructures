@@ -126,7 +126,7 @@ namespace Aiursoft.Stargate.Tests
             Assert.AreEqual(8, channels.Channels.Count());
         }
 
-        private static int MessageCount = 0;
+        private static int MessageCount;
         private static async Task Monitor(ClientWebSocket socket)
         {
             var buffer = new ArraySegment<byte>(new byte[2048]);

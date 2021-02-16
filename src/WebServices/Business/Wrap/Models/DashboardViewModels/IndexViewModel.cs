@@ -1,9 +1,6 @@
 ﻿using Aiursoft.SDKTools.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Wrap.Models.DashboardViewModels
 {
@@ -21,7 +18,7 @@ namespace Aiursoft.Wrap.Models.DashboardViewModels
 
         public void Recover(WrapUser user)
         {
-            base.RootRecover(user, "Create new record");
+            RootRecover(user, "Create new record");
         }
 
         [Display(Name = "Your shorten URL")]

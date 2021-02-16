@@ -9,9 +9,6 @@ using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Wrap.Controllers
@@ -56,6 +53,7 @@ namespace Aiursoft.Wrap.Controllers
                 model.Recover(user);
                 return View(nameof(Index), model);
             }
+            #warning  No Created view!
             return View("Created", model);
         }
 
