@@ -74,12 +74,12 @@ namespace Aiursoft.Probe.Tests
             var probeLocator = _serviceProvider.GetRequiredService<ProbeLocator>();
             var client = new HttpClient();
             var url = probeLocator.Endpoint + "/sites/viewmysites";
-            var request = new HttpRequestMessage(HttpMethod.Get, url) { };
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("accept", "application/json");
             var response = await client.SendAsync(request);
             Assert.AreEqual((int)response.StatusCode, 400);
 
-            var request2 = new HttpRequestMessage(HttpMethod.Get, url + "?accesstoken=Invalid") { };
+            var request2 = new HttpRequestMessage(HttpMethod.Get, url + "?accesstoken=Invalid");
             request.Headers.Add("accept", "application/json");
             var response2 = await client.SendAsync(request2);
             Assert.AreEqual((int)response2.StatusCode, 401);

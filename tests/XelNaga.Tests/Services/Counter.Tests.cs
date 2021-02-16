@@ -28,7 +28,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             Thread[] threads = new Thread[3];
             for (int i = 0; i < 3; i++)
             {
-                Thread t = new Thread(new ParameterizedThreadStart(ThreadProc));
+                Thread t = new Thread(ThreadProc);
                 t.Start(counter);
                 threads[i] = t;
             }

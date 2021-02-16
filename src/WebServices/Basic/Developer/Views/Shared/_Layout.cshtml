@@ -20,20 +20,14 @@
                         <span class="nav-link-text">@Localizer["Developer Center"]</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" asp-controller="Apps" asp-action="AllApps">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="nav-link-text">@Localizer["Dashboard"]</span>
                     </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti1">
-                        <li>
-                            <a asp-controller="Apps" asp-action="AllApps">
-                                <i class="fas fa-sliders-h"></i>
-                                Overview
-                            </a>
-                        </li>
-                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
                         <i class="fa fa-desktop"></i>
@@ -68,21 +62,6 @@
                                 </a>
                             </li>
                         }
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti3" data-parent="#exampleAccordion">
-                        <i class="fa fa-magic"></i>
-                        <span class="nav-link-text">@Localizer["Features"]</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti3">
-                        <li>
-                            <a asp-controller="Sites" asp-action="Index">
-                                <i class="fa fa-sitemap"></i>
-                                @Localizer["Sites storage"]
-                            </a>
-                        </li>
                     </ul>
                 </li>
 

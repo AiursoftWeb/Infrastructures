@@ -25,7 +25,6 @@ namespace Aiursoft.Gateway.Controllers
     [GenerateDoc]
     [LimitPerMin]
     [Route("Third-party")]
-    [ProtocolNotFoundHandler]
     public class ThirdPartyController : Controller
     {
         private readonly IEnumerable<IAuthProvider> _authProviders;

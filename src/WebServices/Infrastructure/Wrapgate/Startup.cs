@@ -22,7 +22,7 @@ namespace Aiursoft.Wrapgate
             AppsContainer.CurrentAppSecret = configuration["WrapgateAppSecret"];
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextWithCache<WrapgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 

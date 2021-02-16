@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,15 +16,34 @@ namespace Aiursoft.XelNaga.Services
     {
         private readonly HttpClient _client;
         private readonly Regex _regex;
+        ILogger<APIProxyService> _logger;
 
         public APIProxyService(
-            IHttpClientFactory clientFactory)
+            IHttpClientFactory clientFactory,
+            ILogger<APIProxyService> logger)
         {
             _regex = new Regex("^https://", RegexOptions.Compiled);
             _client = clientFactory.CreateClient();
+            _logger = logger;
         }
 
-        public async Task<string> Get(AiurUrl url, bool forceHttp = false)
+        private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
+        {
+            return AsyncHelper.Try(async () =>
+            {
+                var response = await _client.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.BadGateway || response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    throw new WebException($"Api proxy failed bacause bad gateway [{response.StatusCode}]. (This error will trigger auto retry)");
+                }
+                return response;
+            }, times: 5, onError: (e) =>
+            {
+                _logger.LogCritical(e, e.Message);                
+            });
+        }
+
+        public async Task<string> Get(AiurUrl url, bool forceHttp = false, bool autoRetry = true)
         {
             if (forceHttp && !url.IsLocalhost())
             {
@@ -38,7 +58,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json, text/html");
 
-            using var response = await _client.SendAsync(request);
+            using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {
@@ -57,7 +77,7 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool forceHttp = false)
+        public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool forceHttp = false, bool autoRetry = true)
         {
             if (forceHttp && !url.IsLocalhost())
             {
@@ -72,7 +92,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            using var response = await _client.SendAsync(request);
+            using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {
@@ -91,7 +111,7 @@ namespace Aiursoft.XelNaga.Services
             }
         }
 
-        public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool forceHttp = false)
+        public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool forceHttp = false, bool autoRetry = true)
         {
             if (forceHttp && !url.IsLocalhost())
             {
@@ -108,7 +128,7 @@ namespace Aiursoft.XelNaga.Services
             request.Headers.Add("X-Forwarded-Proto", "https");
             request.Headers.Add("accept", "application/json");
 
-            using var response = await _client.SendAsync(request);
+            using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
             if (content.IsValidJson())
             {

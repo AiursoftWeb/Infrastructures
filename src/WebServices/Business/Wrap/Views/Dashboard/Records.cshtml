@@ -1,0 +1,82 @@
+﻿@model Aiursoft.Wrap.Models.DashboardViewModels.RecordsViewModel
+@{ 
+    ViewData["Title"] = Model.Title;
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-fw fa-clipboard-list"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body p-0 pl-3">
+            <div class="col-12 p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped datatable-records">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Record name"]</th>
+                                    <th>@Localizer["Enabled"]</th>
+                                    <th>@Localizer["Target URL"]</th>
+                                    <th>@Localizer["Type"]</th>
+                                    <th>@Localizer["Create time"]</th>
+                                    <th>@Localizer["Operation"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.Records)
+                                {
+                                    <tr>
+                                        <td>@record.RecordUniqueName</td>
+                                        <td>
+                                            @if (record.Enabled)
+                                            {
+                                                <label class="text-success">
+                                                    <i class="fa fa-check"></i>
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="text-danger">
+                                                    <i class="fa fa-times"></i>
+                                                </label>
+                                            }
+                                        </td>
+                                        <td>@record.TargetUrl.OTake(60)</td>
+                                        <td>@record.Type</td>
+                                        <td data-utc-time="@record.CreationTime" data-order="@record.CreationTime.Ticks"></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-controller="Dashboard" asp-action="Delete" asp-route-recordName="@record.RecordUniqueName" class="btn btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                    @Localizer["Delete"]
+                                                </a>
+                                                <a asp-controller="Dashboard" asp-action="Edit" asp-route-recordName="@record.RecordUniqueName" class="btn btn-secondary">
+                                                    <i class="fas fa-edit"></i>
+                                                    @Localizer["Edit"]
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{ 
+<script>
+    $('.datatable-records').DataTable().destroy();
+    $('.datatable-records').DataTable({
+        "order": [[4, "desc"]]
+    });
+</script>
+} 

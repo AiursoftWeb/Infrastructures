@@ -7,6 +7,6 @@ namespace Aiursoft.Wrapgate.SDK.Models.AddressModels
         [Required]
         public string AccessToken { get; set; }
 
-        public string Tags { get; set; }
+        public string Tag { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Aiursoft.XelNaga.Tests.Models
     {
         public static bool Done;
         public static bool DoneAsync;
-        public static int DoneTimes = 0;
+        public static int DoneTimes;
         private static object obj = new object();
         private readonly SqlDbContext _dbContext;
 

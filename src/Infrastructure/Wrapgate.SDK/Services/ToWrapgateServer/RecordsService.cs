@@ -49,12 +49,12 @@ namespace Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer
             return jResult;
         }
 
-        public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string[] tags)
+        public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
         {
             var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
             {
                 AccessToken = accessToken,
-                Tags = string.Join(',', tags)
+                Tag = tag
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);

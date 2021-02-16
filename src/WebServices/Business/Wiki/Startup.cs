@@ -61,7 +61,7 @@ namespace Aiursoft.Wiki
             logger.LogInformation($"Seeding...");
             AsyncHelper.TryAsync(
                 times: 3,
-                steps:
+                fastFactory:
                     async () =>
                     {
                         await seeder.Seed();

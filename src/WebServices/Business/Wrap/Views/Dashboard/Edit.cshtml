@@ -1,0 +1,101 @@
+﻿@using System.Text.RegularExpressions;
+@model Aiursoft.Wrap.Models.DashboardViewModels.EditViewModel
+@{
+    ViewData["Title"] = "Edit record - " + Model.RecordName;
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Records">@Localizer["My records"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-fw fa-edit"></i>
+            @Localizer["Edit record Info"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Dashboard" asp-action="Edit" asp-route-recordName="@Model.RecordName" method="post" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="NewRecordName"></label>
+                            <div class="input-group mb-3">
+                                <input asp-for="NewRecordName" type="text" class="form-control">
+                                <div class="input-group-append">
+                                    @{
+                                        var httpRegex = new Regex("^https://", RegexOptions.Compiled);
+                                        var ioPath = WrapgateLocator.WrapPattern;
+                                        ioPath = httpRegex.Replace(ioPath, string.Empty);
+                                        ioPath = ioPath.Replace("{wrap}", string.Empty);
+                                    }
+                                    <span class="input-group-text">@string.Format(ioPath, string.Empty)</span>
+                                </div>
+                            </div>
+                            <span asp-validation-for="NewRecordName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-check col-12 pl-5">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="Enabled" />
+                            <label asp-for="Enabled"></label>
+                        </label>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="URL"></label>
+                            <input asp-for="URL" type="text" class="form-control" placeholder="Enter your new record url...">
+                            <span asp-validation-for="URL" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label asp-for="Type"></label>
+                        <select class="form-control" asp-for="Type">
+                            <option value="0">@Localizer["Redirect"]</option>
+                            <option value="1">@Localizer["Permanent redirect"]</option>
+                            <option value="2">@Localizer["iFrame"]</option>
+                            <option value="3">@Localizer["Reverse proxy"]</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn"><i class="fas fa-fw fa-save"></i>@Localizer["Update"]</button>
+                        <a class="btn btn-info btn" asp-controller="Dashboard" asp-action="Records">@Localizer["Back to all records"]</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header text-danger">
+            <i class="fa fa-inbox"></i>
+            @Localizer["Danger zone"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <a asp-controller="Dashboard" asp-action="Delete" asp-route-recordName="@Model.RecordName" class="btn btn-danger">
+                    <i class="far fa-trash-alt"></i>
+                    Delete the record
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

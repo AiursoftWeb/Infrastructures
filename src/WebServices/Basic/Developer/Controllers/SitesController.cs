@@ -43,14 +43,6 @@ namespace Aiursoft.Developer.Controllers
             _cache = cache;
         }
 
-        [Route("Sites")]
-        public async Task<IActionResult> Index()
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new IndexViewModel(user);
-            return View(model);
-        }
-
         [Route("Apps/{id}/CreateSite")]
         public async Task<IActionResult> CreateSite([FromRoute]string id)// app id
         {

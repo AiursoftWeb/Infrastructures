@@ -1,0 +1,45 @@
+﻿@model Aiursoft.Developer.Models.ToolsViewModels.HashViewModel
+@{
+    ViewData["Title"] = "Hash code calculator";
+    ViewData["Des"] = "Get the hash code from your string online.";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+        <p>@ViewBag.Des</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="https://github.com/AiursoftWeb/Infrastructures/blob/master/src/WebServices/Basic/Developer/Views/Tools/Hash.cshtml" target="_blank" role="button">
+                <i class="fab fa-github"></i>
+                View it on github
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-lg-12 col-md-12">
+        <div class="card mb-5 mt-4">
+            <div class="card-header">
+                <i class="fa fa-network"></i>
+                Enter your string
+            </div>
+            <div class="card-body">
+                <form asp-controller="Tools" asp-action="Hash" method="post">
+                    <h4>Enter the string you wanna generate its hash code.</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="SourceString"></label>
+                        <textarea asp-for="SourceString" placeholder="Any string" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" name="Decrypt" value="false" type="submit">Get Hash</button>
+                    </div>
+                    <textarea readonly="readonly" class="form-control" rows="5">@Model.ResultString</textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

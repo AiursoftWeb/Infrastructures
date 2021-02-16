@@ -1,15 +1,11 @@
 @model Aiursoft.Wrap.Models.HomeViewModels.IndexViewModel
-@using System.Reflection
-@using System.Text.RegularExpressions;
-@using Aiursoft.Wrapgate.SDK.Services
-@inject WrapgateLocator WrapgateLocator
 @{ 
     ViewData["Title"] = "Home";
-    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
     var httpRegex = new Regex("^https://", RegexOptions.Compiled);
     var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
     pattern = httpRegex.Replace(pattern, string.Empty);
     pattern = pattern.Replace("{wrap}", string.Empty);
+    var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 }
 <div class="jumbotron">
     <form class="container" asp-controller="Home" asp-action="Create" method="post">
@@ -48,7 +44,7 @@
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-lg btn-success mb-3">
-                <i class="fab fa-rebelndom"></i> Create redirect
+                <i class="fas fa-random"></i> Create redirect
             </button>
             <a class="btn btn-primary btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
                 <i class="fas fa-pencil-alt"></i>
@@ -59,17 +55,5 @@
 </div>
 
 @section js{
-    <script>
-        $(document).ready(function () {
-            $('#url').on('input', function (e) {
-                var urlInput = $(this);
-                var urlValue = urlInput.val();
-                if (urlValue) {
-                    $('#record-name-part').removeClass('d-none');
-                } else {
-                    $('#record-name-part').addClass('d-none');
-                }
-            });
-        });
-    </script>
+    <script src="~/site.js"></script>
 }

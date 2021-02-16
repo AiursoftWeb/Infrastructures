@@ -8,7 +8,10 @@
 @using Aiursoft.Probe.SDK.Services;
 @using Aiursoft.XelNaga.Tools;
 @using Aiursoft.XelNaga.Models;
+@using Aiursoft.Wrapgate.SDK.Services
 @using Microsoft.AspNetCore.Mvc.Localization
+@using System.Reflection
+@using System.Text.RegularExpressions;
 
 @inject SignInManager<WrapUser> SignInManager
 @inject UserManager<WrapUser> UserManager
@@ -16,6 +19,7 @@
 @inject ProbeLocator ProbeLocator
 @inject IViewLocalizer Localizer
 @inject UserImageGenerator<WrapUser> UserImageGenerator
+@inject WrapgateLocator WrapgateLocator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Aiursoft.Identity
 @addTagHelper *, Aiursoft.SDK
