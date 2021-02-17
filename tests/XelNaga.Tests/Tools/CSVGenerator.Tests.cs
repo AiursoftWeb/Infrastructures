@@ -39,7 +39,9 @@ namespace Aiursoft.XelNaga.Tests.Tools
                 new Person { Id = 1, Name = "Alice Li" },
                 new Person { Id = 2, Name = "我能吞下玻璃而不伤身体。" },
             };
-            var expect = "\"Person Name\",\"Id\"\r\n\"Alice Li\",\"1\"\r\n\"我能吞下玻璃而不伤身体。\",\"2\"".Trim();
+
+            string newLine = Environment.NewLine;
+            var expect = "\"Person Name\",\"Id\"" + newLine +  "\"Alice Li\",\"1\"" + newLine + "\"我能吞下玻璃而不伤身体。\",\"2\"".Trim();
             var generator = new CSVGenerator();
             var generated = generator.BuildFromCollection(persons).BytesToString();
             Assert.AreEqual(expect, generated.Trim());
