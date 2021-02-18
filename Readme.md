@@ -61,11 +61,11 @@ Get a brand new Ubuntu 18.04 server.
 
 ### Install on server
 
-Create a wildcard domian record to your server's IP.
+Create a wildcard domian record to your server's public IP.
 
 > Example: Resolve *.aiur.io to 123.123.123.123
 
-Execute the following command on the server (Replace the `instance.name` to your own brand name.):
+Execute the following command on the server (Replace the `instance.name` to your own brand name):
 
 ```bash
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh | sudo bash -s aiur.io instance.name master
@@ -73,11 +73,13 @@ $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh 
 
 ### Upgrade your server
 
-If we release a newer version, and you can upgrade your server via:
+If we released a newer version, and you can upgrade your server via:
 
 ```bash
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
+
+Also you can run that upgrade script to repair some issues with your Infrastructures instance.
 
 ## The design of Infrastructures
 
