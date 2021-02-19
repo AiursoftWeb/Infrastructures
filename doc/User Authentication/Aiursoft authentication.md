@@ -40,11 +40,9 @@ Request path:
 
 Request example:
 
-<pre>
-<code class="hljs pf">
+```
 https://gateway.aiursoft.com/OAuth/Authorize?appid=yourappid&amp;redirect_uri=yourredirect_uri&amp;state=yourstate
-</code>
-</pre>
+```
 
 Request arguments:
 
