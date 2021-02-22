@@ -30,13 +30,13 @@ namespace Aiursoft.XelNaga.Services
             throw new NotImplementedException("Code shall not reach here.");
         }
 
-        public static void TryAsync(Func<Task> fastFactory, int times, Action<Exception> onError = null)
+        public static void TryAsync(Func<Task> taskFactory, int times, Action<Exception> onError = null)
         {
             for (var i = 1; i <= times; i++)
             {
                 try
                 {
-                    RunSync(fastFactory);
+                    RunSync(taskFactory);
                     break;
                 }
                 catch (Exception e)
