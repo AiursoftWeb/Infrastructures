@@ -39,7 +39,6 @@ update()
     wiki_code="$infs_code/src/WebServices/Business/Wiki"
     status_code="$infs_code/src/WebServices/Business/Status"
     account_code="$infs_code/src/WebServices/Business/Account"
-    wrap_code="$infs_code/src/WebServices/Business/Wrap"
     ee_code="$infs_code/src/WebServices/Business/EE"
 
     archon_path="$infs_path/Archon"
@@ -53,7 +52,6 @@ update()
     wiki_path="$infs_path/Wiki"
     status_path="$infs_path/Status"
     account_path="$infs_path/Account"
-    wrap_path="$infs_path/Wrap"
     ee_path="$infs_path/EE"
 
     aiur git/clone_to AiursoftWeb/Infrastructures $infs_code $branch_name
@@ -88,9 +86,6 @@ update()
 
     systemctl stop "account.service"
     aiur dotnet/publish $account_path $account_code/"Aiursoft.Account.csproj"
-
-    systemctl stop "wrap.service"
-    aiur dotnet/publish $wrap_path $wrap_code/"Aiursoft.Wrap.csproj"
 
     systemctl stop "ee.service"
     aiur dotnet/publish $ee_path $ee_code/"Aiursoft.EE.csproj"

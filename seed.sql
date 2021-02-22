@@ -42,7 +42,5 @@ values('{{accountAppId}}','{{accountAppSecret}}','{{Instance}} Account Center','
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
 values('{{statusAppId}}','{{statusAppSecret}}','{{Instance}} Status Center','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Status Center',0,7,1,0,0,0,'status.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
-values('{{wrapAppId}}','{{wrapAppSecret}}','{{Instance}} Wrap','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Wrap',0,7,1,0,0,0,'wrap.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
-insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
 values('{{eeAppId}}','{{eeAppSecret}}','{{Instance}} EE','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft EE',0,7,1,0,0,0,'ee.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
 
