@@ -173,7 +173,7 @@ namespace Aiursoft.Stargate.Tests
                 await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 100; i++)
             {
                 if (MessageCount == 100)
                 {
