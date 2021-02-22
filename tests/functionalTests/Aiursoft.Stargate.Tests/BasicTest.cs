@@ -175,7 +175,7 @@ namespace Aiursoft.Stargate.Tests
             }
             for (int i = 0; i < 100; i++)
             {
-                if (MessageCount == 100)
+                if (MessageCount > 98)
                 {
                     break;
                 }
