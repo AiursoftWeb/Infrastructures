@@ -3,7 +3,7 @@
 @using Aiursoft.Wrapgate.SDK.Services
 @inject WrapgateLocator WrapgateLocator
 @{ 
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Created";
     var description = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
     var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
     var url = pattern.Replace("{wrap}", Model.NewRecordName); 
@@ -40,6 +40,7 @@
                 @Localizer["Sign in to your personal URL database"]
             </a>
             <a class="btn btn-success btn-lg mb-3" asp-controller="Home" asp-action="Index" role="button">
+                <i class="fas fa-random"></i>
                 @Localizer["Create another one"]
             </a>
         </div>

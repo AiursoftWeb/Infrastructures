@@ -1,0 +1,75 @@
+﻿@model Aiursoft.Wrap.Models.DashboardViewModels.IndexViewModel
+@{ 
+    ViewData["Title"] = "Home";
+    var pattern = WrapgateLocator.WrapPattern; // https://{wrap}.aiurs.co
+    var url = pattern.Replace("{wrap}", Model.NewRecordName);
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Dashboard" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-fw fa-plus-circle ico"></i>
+            @ViewData["Title"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="form-group index-form">
+
+                    <div class="container-fluid">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <strong>Your link was created!</strong>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3 mt-5">
+                        <div class="form-group col-lg-4 col-md-6 col-sm-8 col-12 p-0">
+                            <label>Shorten URL</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" readonly="readonly" value="@url">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-trigger="click" title="copied!" data-clipboard-text="@url">@Localizer["Copy"]</button>
+                                    <a type="button" class="btn btn-success" href="@url" target="_blank">@Localizer["Open"]</a>
+                                </span>
+                                <a class="btn btn-primary ml-2" data-toggle="modal" data-target="#qr-modal">@Localizer["QR Code"]</a>
+                            </div>
+                        </div>
+                        <p class="text-muted">
+                            By clicking it, you will be redirected to <a href="@Model.Url">@Model.Url</a>.
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-success btn-lg mb-3" asp-controller="Dashboard" asp-action="Index" role="button">
+                            <i class="fas fa-fw fa-random"></i>
+                            @Localizer["Create another one"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">QR Code</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">?</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" src="@ServiceLocation.Developer/qrcode-build?source=@System.Net.WebUtility.UrlEncode(url)" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

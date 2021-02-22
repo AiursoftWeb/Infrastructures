@@ -104,6 +104,7 @@ namespace Aiursoft.Wrapgate.Tests
         public async Task TagSystemTest()
         {
             var recordsService = _serviceProvider.GetRequiredService<RecordsService>();
+            await recordsService.CreateNewRecordAsync("mock-access-token", "stack0", "https://stackoverflow.com", Array.Empty<string>(), RecordType.Redirect, true);
             await recordsService.CreateNewRecordAsync("mock-access-token", "stack1", "https://stackoverflow.com", new[] { "a", "b"}, RecordType.Redirect, true);
             await recordsService.CreateNewRecordAsync("mock-access-token", "stack2", "https://stackoverflow.com", new[] { "a", "c" }, RecordType.Redirect, true);
             var records = await recordsService.ViewMyRecordsAsync("mock-access-token", "b");

@@ -27,12 +27,12 @@ namespace Aiursoft.XelNaga.Tools
 
         public static byte[] StringToBytes(this string input)
         {
-            return new UTF8Encoding().GetBytes(input);
+            return Encoding.UTF8.GetBytes(input);
         }
 
         public static string BytesToString(this byte[] input)
         {
-            return new UTF8Encoding().GetString(input, 0, input.Length);
+            return Encoding.UTF8.GetString(input, 0, input.Length);
         }
 
         public static string StringToBase64(this string input)
@@ -47,7 +47,7 @@ namespace Aiursoft.XelNaga.Tools
 
         public static byte[] ToUTF8WithDom(this string content)
         {
-            byte[] encoded = new UTF8Encoding().GetBytes(content);
+            byte[] encoded = Encoding.UTF8.GetBytes(content);
             var bom = new byte[] { 0xEF, 0xBB, 0xBF };
             var all = new byte[bom.Length + encoded.Length];
             Array.Copy(bom, all, bom.Length);
@@ -231,7 +231,8 @@ namespace Aiursoft.XelNaga.Tools
             {
                 try
                 {
-                    return JsonDocument.Parse(strInput) != null;
+                    JsonDocument.Parse(strInput); // throw exception for illegal json format.
+                    return true;
                 }
                 catch (JsonException)
                 {
