@@ -108,7 +108,7 @@ To run one service instance locally, simply execute `dotnet run` under which fol
 
 As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference for more documents via the official ASP.NET document for how to run:
 
-https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-3.1&tabs=windows#run-the-app
+https://docs.microsoft.com/en-us/aspnet/core/getting-started/?tabs=windows#run-the-app
 
 ### Database
 
