@@ -1,14 +1,23 @@
 root = true
 [*]
 
+# Some CSS Resharper doesn't know how to load.
 resharper_unknown_css_class_highlighting=none
+
+# Some JS Resharper doesn't know how to load.
 resharper_undeclared_global_variable_using_highlighting=none
+
+# Some HTML reference Resharper doesn't know how to load.
 resharper_html_path_error_highlighting=none
+
+# Allow JS global var.
 resharper_use_of_implicit_global_in_function_scope_highlighting=none
 
-resharper_not_overridden_in_specific_culture_highlighting=suggestion
-# resharper_possible_null_reference_exception_highlighting=suggestion
-resharper_inconsistent_naming_highlighting=suggestion
-
-resharper_access_to_modified_closure_highlighting=suggestion
+# Stop suggesting IE compatibility.
 resharper_css_browser_compatibility_highlighting=none
+
+# Localization might not be finished.
+resharper_not_overridden_in_specific_culture_highlighting=suggestion
+
+# Allow names like `IPAddress`.
+resharper_inconsistent_naming_highlighting=suggestion
