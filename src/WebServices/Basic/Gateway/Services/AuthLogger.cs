@@ -24,7 +24,7 @@ namespace Aiursoft.Gateway.Services
                 var log = new AuditLogLocal
                 {
                     UserId = userId,
-                    IPAddress = httpContext.Connection.RemoteIpAddress.ToString(),
+                    IPAddress = httpContext.Connection.RemoteIpAddress?.ToString(),
                     Success = success,
                     AppId = appId
                 };

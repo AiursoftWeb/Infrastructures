@@ -6,7 +6,6 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,18 +22,15 @@ namespace Aiursoft.Developer.Controllers
         public DeveloperDbContext _dbContext;
         private readonly AppsContainer _appsContainer;
         private readonly RecordsService _recordsService;
-        private readonly AiurCache _cache;
 
         public RecordsController(
             DeveloperDbContext dbContext,
             AppsContainer appsContainer,
-            RecordsService recordsService,
-            AiurCache cache)
+            RecordsService recordsService)
         {
             _dbContext = dbContext;
             _appsContainer = appsContainer;
             _recordsService = recordsService;
-            _cache = cache;
         }
 
 

@@ -64,7 +64,7 @@ namespace Aiursoft.DocGenerator.Middlewares
             var actionsMatches = new List<API>();
             var possibleControllers = Assembly
                 .GetEntryAssembly()
-                .GetTypes()
+                ?.GetTypes()
                 .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
                 .ToList();
             foreach (var controller in possibleControllers ?? new List<Type>())

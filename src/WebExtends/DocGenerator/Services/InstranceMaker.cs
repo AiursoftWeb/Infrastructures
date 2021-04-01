@@ -15,6 +15,10 @@ namespace Aiursoft.DocGenerator.Services
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(itemType);
             var instance = (IList)Activator.CreateInstance(constructedListType);
+            if (instance == null)
+            {
+                return new List<object>();
+            }
             if (!itemType.IsAbstract)
             {
                 instance.Add(Make(itemType));
@@ -33,7 +37,7 @@ namespace Aiursoft.DocGenerator.Services
                 !type.GetConstructors()[0].GetParameters().Any() &&
                 !type.IsAbstract)
             {
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty);
+                return Assembly.GetAssembly(type)?.CreateInstance(type.FullName ?? string.Empty);
             }
             else if (type.GetConstructors().Any(t => t.IsPublic) && !type.IsAbstract)
             {
@@ -46,7 +50,7 @@ namespace Aiursoft.DocGenerator.Services
                     var requirement = args[i].ParameterType;
                     parameters[i] = Make(requirement);
                 }
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty, true, BindingFlags.Default, null, parameters, null, null);
+                return Assembly.GetAssembly(type)?.CreateInstance(type.FullName ?? string.Empty, true, BindingFlags.Default, null, parameters, null, null);
             }
             else if (type.IsAbstract)
             {
@@ -58,7 +62,7 @@ namespace Aiursoft.DocGenerator.Services
             }
             else
             {
-                return Assembly.GetAssembly(type).CreateInstance(type.FullName ?? string.Empty);
+                return Assembly.GetAssembly(type)?.CreateInstance(type.FullName ?? string.Empty);
             }
         }
 
@@ -99,7 +103,7 @@ namespace Aiursoft.DocGenerator.Services
                 return GetArrayWithInstanceInherts(itemType);
             }
             // Array
-            else if (type.GetInterface(typeof(IEnumerable<>).FullName) != null)
+            else if (type.GetInterface(typeof(IEnumerable<>).FullName ?? string.Empty) != null)
             {
                 var itemType = type.GetElementType();
                 var list = GetArrayWithInstanceInherts(itemType);

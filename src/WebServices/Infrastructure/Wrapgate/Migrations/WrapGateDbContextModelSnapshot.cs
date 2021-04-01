@@ -7,7 +7,7 @@ using System;
 namespace Aiursoft.Wrapgate.Migrations
 {
     [DbContext(typeof(WrapgateDbContext))]
-    partial class WrapgateDbContextModelSnapshot : ModelSnapshot
+    public class WrapgateDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
