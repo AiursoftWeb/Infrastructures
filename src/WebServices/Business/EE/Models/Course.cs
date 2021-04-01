@@ -8,12 +8,12 @@ namespace Aiursoft.EE.Models
     {
         public int Id { get; set; }
         public string CourseImage { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string WhatYouWillLearn { get; set; } = string.Empty;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string WhatYouWillLearn { get; set; }
         public bool Finished { get; set; } = false;
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
-        public double Price { get; set; } = 0;
+        public double Price { get; set; }
         public bool DisplayOwnerInfo { get; set; }
 
 

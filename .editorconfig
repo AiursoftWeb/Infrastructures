@@ -21,3 +21,6 @@ resharper_not_overridden_in_specific_culture_highlighting=suggestion
 
 # Allow names like `IPAddress`.
 resharper_inconsistent_naming_highlighting=suggestion
+
+# Allow unused auto property get.
+resharper_unused_auto_property_accessor_global_highlighting=suggestion

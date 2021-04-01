@@ -13,6 +13,6 @@ namespace Aiursoft.Probe.SDK.Models.FoldersAddressModels
         [Required]
         [ValidFolderName]
         public string NewFolderName { get; set; }
-        public bool RecursiveCreate { get; set; } = false;
+        public bool RecursiveCreate { get; set; }
     }
 }
