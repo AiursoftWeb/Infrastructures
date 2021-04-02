@@ -37,7 +37,7 @@ namespace Aiursoft.XelNaga.Services
                 }
                 finally
                 {
-                    dependency = default;
+                    (dependency as IDisposable)?.Dispose();
                 }
             });
         }
@@ -60,7 +60,7 @@ namespace Aiursoft.XelNaga.Services
                 }
                 finally
                 {
-                    dependency = default;
+                    (dependency as IDisposable)?.Dispose();
                 }
             });
         }

@@ -102,7 +102,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             ManageSocialAccount = thisApp.ManageSocialAccount;
         }
 
-        public bool JustHaveUpdated { get; set; } = false;
+        public bool JustHaveUpdated { get; set; }
         public string AppId { get; set; }
         public string AppSecret { get; set; }
         [Url]

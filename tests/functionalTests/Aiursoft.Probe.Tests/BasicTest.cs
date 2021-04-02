@@ -140,7 +140,7 @@ namespace Aiursoft.Probe.Tests
             Assert.AreEqual(ErrorType.Success, response.Code);
 
             var sites = await siteService.ViewMySitesAsync("mock-access-token");
-            Assert.AreEqual("my-site", sites.Sites.FirstOrDefault().SiteName);
+            Assert.AreEqual("my-site", sites.Sites.First().SiteName);
         }
 
         [TestMethod]
@@ -169,7 +169,7 @@ namespace Aiursoft.Probe.Tests
             }
 
             var sites = await siteService.ViewMySitesAsync("mock-access-token");
-            Assert.AreEqual("my-site", sites.Sites.SingleOrDefault().SiteName);
+            Assert.AreEqual("my-site", sites.Sites.Single().SiteName);
         }
 
         [TestMethod]

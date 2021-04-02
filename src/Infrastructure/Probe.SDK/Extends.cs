@@ -46,7 +46,7 @@ namespace Aiursoft.Probe.SDK
             var configuration = services.GetService<IConfiguration>();
             var logger = services.GetRequiredService<ILogger<TProvider>>();
             var siteName = getConfig(configuration);
-            var cannon = services.GetService<CannonService>();
+            var cannon = services.GetRequiredService<CannonService>();
             cannon.Fire<SitesService>((sitesService) =>
             {
                 cannon.FireAsync<TProvider>(async (tokenProvider) =>

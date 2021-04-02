@@ -15,7 +15,7 @@ namespace Aiursoft.SDK
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var logger = services.GetRequiredService<ILogger<TContext>>();
-            var context = services.GetService<TContext>();
+            var context = services.GetRequiredService<TContext>();
             try
             {
                 logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");

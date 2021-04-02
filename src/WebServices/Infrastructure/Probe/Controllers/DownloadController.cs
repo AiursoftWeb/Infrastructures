@@ -76,11 +76,11 @@ namespace Aiursoft.Probe.Controllers
                 }
                 var path = _storageProvider.GetFilePath(file.HardwareId);
                 var extension = _storageProvider.GetExtension(file.FileName);
-                if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "File")
+                if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "File")
                 {
                     return this.WebFile(path, "do-not-open");
                 }
-                else if (ControllerContext.ActionDescriptor.AttributeRouteInfo.Name == "Video")
+                else if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "Video")
                 {
                     return VideoPlayerWithFile(
                         probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName),

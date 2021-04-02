@@ -124,7 +124,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         public void TestTryAsyncSuccess()
         {
             bool invoked = false;
-            AsyncHelper.TryAsync(()=>Task.CompletedTask, 3, (e) => { invoked = true; });
+            AsyncHelper.TryAsync(()=>Task.CompletedTask, 3, _ => { invoked = true; });
             Assert.IsFalse(invoked);
         }
 
@@ -144,7 +144,7 @@ namespace Aiursoft.XelNaga.Tests.Services
                     called = true;
                     throw new Exception("");
                 }
-            }, 3, (e) => { invoked = true;});
+            }, 3, _ => { invoked = true;});
             Assert.IsTrue(called);
             Assert.IsTrue(invoked);
         }
@@ -156,7 +156,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             bool invoked = false;
             AsyncHelper.TryAsync(()=>{
                 throw new Exception("");   
-            }, 2, (e) => { invoked = true;});
+            }, 2, _ => { invoked = true;});
             Assert.IsTrue(invoked);
         }
     }

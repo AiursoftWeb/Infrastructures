@@ -104,7 +104,7 @@ namespace Aiursoft.Stargate.Tests
             Assert.IsFalse(string.IsNullOrWhiteSpace(created.ConnectKey));
             Assert.IsFalse(string.IsNullOrWhiteSpace(created.ChannelId.ToString()));
             var channels = await channel.ViewMyChannelsAsync("mock-access-token");
-            Assert.AreEqual(channels.Channels.SingleOrDefault().Description, "Test");
+            Assert.AreEqual(channels.Channels.Single().Description, "Test");
         }
 
         [TestMethod]

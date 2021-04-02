@@ -126,7 +126,7 @@ namespace Aiursoft.Gateway.Controllers
                 NickName = model.UserDetail.Name,
                 PreferedLanguage = model.PreferedLanguage,
                 IconFilePath = AuthValues.DefaultImagePath,
-                RegisterIPAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+                RegisterIPAddress = HttpContext.Connection.RemoteIpAddress?.ToString()
             };
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
