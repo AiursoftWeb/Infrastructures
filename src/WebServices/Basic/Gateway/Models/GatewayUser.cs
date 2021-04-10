@@ -32,12 +32,13 @@ namespace Aiursoft.Gateway.Models
         [JsonProperty]
         [NotMapped]
         public override bool EmailConfirmed => Emails?.Any(t => t.Validated) ?? false;
+
         [JsonProperty]
         [NotMapped]
         public override string Email => Emails?
             .OrderByDescending(t => t.Validated)
             .ThenByDescending(t => t.Priority)
-            .First()?
+            .First()
             .EmailAddress ?? string.Empty;
     }
 
