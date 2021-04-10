@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aiursoft.Wrapgate.SDK.Models
 {
-#warning IP is not supported!
     public enum RecordType
     {
         /// <summary>

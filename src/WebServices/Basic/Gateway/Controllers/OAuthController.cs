@@ -331,7 +331,7 @@ namespace Aiursoft.Gateway.Controllers
                 return View(model);
             }
             var countStart = DateTime.UtcNow - TimeSpan.FromDays(1);
-            var requestIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            var requestIp = HttpContext.Connection.RemoteIpAddress?.ToString();
             if (await _dbContext.Users
                 .Where(t => t.RegisterIPAddress == requestIp)
                 .Where(t => t.AccountCreateTime > countStart)

@@ -10,9 +10,9 @@
             <a asp-controller="Home" asp-action="Index">@Values.ProjectName EE</a>
         </li>
         <li class="breadcrumb-item active">
-            <label>@ViewContext.RouteData.Values["controller"].ToString()</label>
+            <label>@ViewContext.RouteData.Values["controller"]?.ToString()</label>
         </li>
-        <li class="breadcrumb-item active">@ViewContext.RouteData.Values["action"].ToString()</li>
+        <li class="breadcrumb-item active">@ViewContext.RouteData.Values["action"]?.ToString()</li>
     </ol>
     <div class="row">
         <div class="col-sm-6">

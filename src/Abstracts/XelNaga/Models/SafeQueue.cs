@@ -18,7 +18,7 @@ namespace Aiursoft.XelNaga.Models
 
         public T Dequeue()
         {
-            T item = default;
+            T item;
             lock (loc)
             {
                 item = queue.Dequeue();
@@ -28,7 +28,7 @@ namespace Aiursoft.XelNaga.Models
 
         public bool Any()
         {
-            bool any = false;
+            bool any;
             lock (loc)
             {
                 any = queue.Any();

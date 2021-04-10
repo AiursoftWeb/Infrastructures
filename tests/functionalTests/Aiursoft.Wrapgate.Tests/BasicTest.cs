@@ -97,7 +97,7 @@ namespace Aiursoft.Wrapgate.Tests
             var created = await recordsService.CreateNewRecordAsync("mock-access-token", "stack", "https://stackoverflow.com", Array.Empty<string>(), RecordType.Redirect, true);
             Assert.AreEqual(created.Code, ErrorType.Success);
             var records = await recordsService.ViewMyRecordsAsync("mock-access-token");
-            Assert.AreEqual(records.Records.SingleOrDefault().RecordUniqueName, "stack");
+            Assert.AreEqual(records.Records.Single().RecordUniqueName, "stack");
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace Aiursoft.Wrapgate.Tests
             await recordsService.CreateNewRecordAsync("mock-access-token", "stack1", "https://stackoverflow.com", new[] { "a", "b"}, RecordType.Redirect, true);
             await recordsService.CreateNewRecordAsync("mock-access-token", "stack2", "https://stackoverflow.com", new[] { "a", "c" }, RecordType.Redirect, true);
             var records = await recordsService.ViewMyRecordsAsync("mock-access-token", "b");
-            Assert.AreEqual(records.Records.SingleOrDefault().RecordUniqueName, "stack1");
+            Assert.AreEqual(records.Records.Single().RecordUniqueName, "stack1");
         }
     }
 }

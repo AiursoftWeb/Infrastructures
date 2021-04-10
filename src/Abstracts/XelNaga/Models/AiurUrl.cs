@@ -23,7 +23,7 @@ namespace Aiursoft.XelNaga.Models
             {
                 if (prop.GetValue(param) == null) continue;
                 var propName = prop.Name;
-                var propValue = prop.GetValue(param).ToString();
+                var propValue = prop.GetValue(param)?.ToString();
                 var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
                 if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
                 {

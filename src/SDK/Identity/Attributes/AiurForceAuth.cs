@@ -61,7 +61,7 @@ namespace Aiursoft.Identity.Attributes
                 throw new InvalidOperationException();
             }
             //Not signed in
-            if (!controller.User.Identity.IsAuthenticated)
+            if (!controller.User.Identity?.IsAuthenticated ?? false)
             {
                 if (_hasAPreferPage)
                 {
@@ -86,7 +86,7 @@ namespace Aiursoft.Identity.Attributes
                 }
             }
             //Signed in, let him go to preferred page directly.
-            else if (_hasAPreferPage && !controller.Request.Path.Value.ToLower().StartsWith(_preferPage.ToLower()))
+            else if (_hasAPreferPage && !(controller.Request.Path.Value?.ToLower().StartsWith(_preferPage.ToLower()) ?? true))
             {
                 context.HttpContext.Response.Redirect(_preferPage);
             }
@@ -98,7 +98,7 @@ namespace Aiursoft.Identity.Attributes
 
         private RedirectResult Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
         {
-            var urlConverter = context.HttpContext.RequestServices.GetService<UrlConverter>();
+            var urlConverter = context.HttpContext.RequestServices.GetRequiredService<UrlConverter>();
             string serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
             string url = urlConverter.UrlWithAuth(serverPosition, AppsContainer.CurrentAppId, page, justTry, register);
             return new RedirectResult(url);

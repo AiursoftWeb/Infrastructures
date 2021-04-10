@@ -8,6 +8,6 @@ namespace Aiursoft.Gateway.SDK.Models.API
         public int Id { get; set; }
         [EmailAddress]
         public string EmailAddress { get; set; }
-        public bool Validated { get; set; } = false;
+        public bool Validated { get; set; }
     }
 }

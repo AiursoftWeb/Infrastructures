@@ -13,8 +13,8 @@ namespace Aiursoft.Scanner.Services
             yield return entry;
             var references = entry
                 .GetReferencedAssemblies()
-                .Filter(removeSystem, t => !t.Name.StartsWith("System"))
-                .Filter(removeMicrosoft, t => !t.Name.StartsWith("Microsoft"));
+                .Filter(removeSystem, t => !t.Name?.StartsWith("System") ?? false)
+                .Filter(removeMicrosoft, t => !t.Name?.StartsWith("Microsoft") ?? false);
             foreach (var referenced in references)
             {
                 foreach (var scanned in ScanAssemblies(Assembly.Load(referenced), removeSystem, removeMicrosoft))

@@ -11,7 +11,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
             RootRecover(user, title);
         }
 
-        public virtual bool JustHaveUpdated { get; set; } = false;
+        public virtual bool JustHaveUpdated { get; set; }
 
         public void RootRecover(AccountUser user, string title)
         {

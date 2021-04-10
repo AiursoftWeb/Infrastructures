@@ -29,7 +29,7 @@ namespace Aiursoft.Scanner
                     if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface))
                     {
                         abstractImplementation(inputInterface, service);
-                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
                     }
                 }
             }
@@ -40,14 +40,14 @@ namespace Aiursoft.Scanner
                     if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
                     {
                         abstractImplementation(inputAbstractClass, service);
-                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
+                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
                     }
                 }
             }
             if (!services.Any(t => t.ServiceType == service && t.ImplementationType == service))
             {
                 realisticImplementation(service);
-                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName.Split(',')[0]}\t\tsuccess");
+                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess");
             }
         }
 

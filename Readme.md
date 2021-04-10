@@ -25,7 +25,8 @@ The enterprise can deploy their own dedicated instance of Aiursoft Infrastructur
 There are some example apps based on Aiursoft Infrastructures. 
 
 * [Kahla](https://github.com/AiursoftWeb/Kahla)
-* [AiurDrive](http://github.com/AiursoftWeb/AiurDrive)
+* [AiurDrive](https://github.com/AiursoftWeb/AiurDrive)
+* [Wrap](https://github.com/AiursoftWeb/Wrap)
 * [Tracer](https://github.com/AiursoftWeb/Tracer)
 
 ## Features
@@ -61,11 +62,11 @@ Get a brand new Ubuntu 18.04 server.
 
 ### Install on server
 
-Create a wildcard domian record to your server's IP.
+Create a wildcard domian record to your server's public IP.
 
 > Example: Resolve *.aiur.io to 123.123.123.123
 
-Execute the following command on the server (Replace the `instance.name` to your own brand name.):
+Execute the following command on the server (Replace the `instance.name` to your own brand name):
 
 ```bash
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh | sudo bash -s aiur.io instance.name master
@@ -73,11 +74,13 @@ $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh 
 
 ### Upgrade your server
 
-If we release a newer version, and you can upgrade your server via:
+If we released a newer version, and you can upgrade your server via:
 
 ```bash
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
+
+Also you can run that upgrade script to repair some issues with your Infrastructures instance.
 
 ## The design of Infrastructures
 
@@ -105,7 +108,7 @@ To run one service instance locally, simply execute `dotnet run` under which fol
 
 As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference for more documents via the official ASP.NET document for how to run:
 
-https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-3.1&tabs=windows#run-the-app
+https://docs.microsoft.com/en-us/aspnet/core/getting-started/?tabs=windows#run-the-app
 
 ### Database
 

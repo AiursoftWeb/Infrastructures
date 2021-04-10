@@ -57,20 +57,12 @@ namespace Aiursoft.Wiki
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var logger = services.GetRequiredService<ILogger<Seeder>>();
-            var seeder = services.GetService<Seeder>();
+            var seeder = services.GetRequiredService<Seeder>();
             logger.LogInformation($"Seeding...");
             AsyncHelper.TryAsync(
                 times: 3,
-                fastFactory:
-                    async () =>
-                    {
-                        await seeder.Seed();
-                    },
-                onError: 
-                    async (e) => 
-                    {
-                        await seeder.HandleException(e);
-                    }
+                taskFactory: () => seeder.Seed(),
+                onError: async (e) => await seeder.HandleException(e)
             );
             logger.LogInformation($"Seeded");
             return host;

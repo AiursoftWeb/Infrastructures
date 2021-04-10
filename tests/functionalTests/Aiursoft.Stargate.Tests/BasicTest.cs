@@ -104,7 +104,7 @@ namespace Aiursoft.Stargate.Tests
             Assert.IsFalse(string.IsNullOrWhiteSpace(created.ConnectKey));
             Assert.IsFalse(string.IsNullOrWhiteSpace(created.ChannelId.ToString()));
             var channels = await channel.ViewMyChannelsAsync("mock-access-token");
-            Assert.AreEqual(channels.Channels.SingleOrDefault().Description, "Test");
+            Assert.AreEqual(channels.Channels.Single().Description, "Test");
         }
 
         [TestMethod]
@@ -136,8 +136,7 @@ namespace Aiursoft.Stargate.Tests
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     MessageCount++;
-                    string message = Encoding.UTF8.GetString(
-                        buffer.Skip(buffer.Offset).Take(buffer.Count).ToArray())
+                    string message = Encoding.UTF8.GetString(buffer.Skip(buffer.Offset).Take(buffer.Count).ToArray())
                         .Trim('\0')
                         .Trim();
                     Console.WriteLine(message);
@@ -169,13 +168,14 @@ namespace Aiursoft.Stargate.Tests
                 await socket.ConnectAsync(new Uri(wsPath), CancellationToken.None);
                 Console.WriteLine("Websocket connected!");
                 await Task.Delay(50);
-                await Task.Factory.StartNew(async () => await Monitor(socket));
+                await Task.Factory.StartNew(() => Monitor(socket));
+                await Task.Delay(50);
                 await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 100; i++)
             {
-                if (MessageCount == 100)
+                if (MessageCount > 98)
                 {
                     break;
                 }
