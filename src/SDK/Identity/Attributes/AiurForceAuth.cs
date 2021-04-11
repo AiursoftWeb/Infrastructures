@@ -47,7 +47,7 @@ namespace Aiursoft.Identity.Attributes
         {
             _preferController = preferController;
             _preferAction = preferAction;
-            _justTry = justTry ? true : (bool?)null;
+            _justTry = justTry ? true : null;
             _preferPageSet = true;
             _register = register;
         }
