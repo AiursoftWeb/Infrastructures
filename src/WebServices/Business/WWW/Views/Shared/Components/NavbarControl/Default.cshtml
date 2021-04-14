@@ -4,7 +4,7 @@
 <ul class="navbar-nav mr-auto">
     @foreach (var navbar in Model)
     {
-        @if (!navbar.Dropdowns.Any())
+        @if (navbar.Dropdowns == null)
         {
             <li class="nav-item">
                 <a class="nav-link" href="@navbar.Link">@navbar.Title</a>
