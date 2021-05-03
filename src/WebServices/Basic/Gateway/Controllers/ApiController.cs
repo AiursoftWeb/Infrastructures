@@ -85,7 +85,7 @@ namespace Aiursoft.Gateway.Controllers
                 user.PreferedLanguage = model.Culture;
                 await _userManager.UpdateAsync(user);
             }
-            var toGo = new AiurUrl(model.Host, "switch-language", new
+            var toGo = new AiurUrl(model.Host, "/switch-language", new
             {
                 model.Culture,
                 ReturnUrl = model.Path
