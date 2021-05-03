@@ -54,7 +54,7 @@ namespace Aiursoft.Gateway.Controllers
                 });
         }
 
-        [HttpGet]
+        [HttpGet("set-language")]
         public IActionResult SetLang(SetLangAddressModel model)
         {
             return View(new SetLangViewModel
@@ -64,7 +64,7 @@ namespace Aiursoft.Gateway.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("set-language")]
         public async Task<IActionResult> SetLang(SetLangViewModel model)
         {
             if (!ModelState.IsValid)
@@ -85,12 +85,12 @@ namespace Aiursoft.Gateway.Controllers
                 user.PreferedLanguage = model.Culture;
                 await _userManager.UpdateAsync(user);
             }
-            string toGo = new AiurUrl(model.Host, "Api", "SetSonLang", new
+            var toGo = new AiurUrl(model.Host, "switch-language", new
             {
                 model.Culture,
                 ReturnUrl = model.Path
-            }).ToString();
-            return Redirect(toGo);
+            });
+            return Redirect(toGo.ToString());
         }
 
         [APIExpHandler]

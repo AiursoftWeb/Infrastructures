@@ -16,7 +16,7 @@ namespace Aiursoft.SDK.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            if (string.Equals(context.Request.Path, "/api/setsonlang", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(context.Request.Path, "/switch-language", StringComparison.OrdinalIgnoreCase))
             {
                 var culture = context.Request.Query["culture"];
                 var returnUrl = context.Request.Query["returnUrl"];
