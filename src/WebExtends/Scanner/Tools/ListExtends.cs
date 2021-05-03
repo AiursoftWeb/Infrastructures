@@ -8,9 +8,11 @@ namespace Aiursoft.Scanner.Tools
     {
         public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toAdd)
         {
-            var list = input.ToList();
-            list.Add(toAdd);
-            return list;
+            foreach(var item in input)
+            {
+                yield return item;
+            }
+            yield return toAdd;
         }
 
         public static IEnumerable<T> Filter<T>(this IEnumerable<T> dbSet, bool enabled, Func<T, bool> predicate) where T : class

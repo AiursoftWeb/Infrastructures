@@ -25,8 +25,7 @@ namespace Aiursoft.SDK.Middlewares
                     CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                     new CookieOptions
                     {
-                        Expires = DateTimeOffset.UtcNow.AddYears(1),
-                        SameSite = SameSiteMode.None,
+                        Expires = DateTimeOffset.UtcNow.AddYears(1)
                     });
                 context.Response.Redirect(returnUrl);
             }
