@@ -16,7 +16,7 @@ namespace Aiursoft.SDK.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            if (string.Equals(context.Request.Path, "/api/setsonlang", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(context.Request.Path, "/switch-language", StringComparison.OrdinalIgnoreCase))
             {
                 var culture = context.Request.Query["culture"];
                 var returnUrl = context.Request.Query["returnUrl"];
@@ -25,8 +25,7 @@ namespace Aiursoft.SDK.Middlewares
                     CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                     new CookieOptions
                     {
-                        Expires = DateTimeOffset.UtcNow.AddYears(1),
-                        SameSite = SameSiteMode.None,
+                        Expires = DateTimeOffset.UtcNow.AddYears(1)
                     });
                 context.Response.Redirect(returnUrl);
             }

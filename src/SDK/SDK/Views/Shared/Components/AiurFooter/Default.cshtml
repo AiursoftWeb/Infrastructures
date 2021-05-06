@@ -20,7 +20,7 @@
 }
 
 @{
-    var langLink = new AiurUrl(ServiceLocation.Gateway, "Api", "SetLang", new { });
+    var langLink = new AiurUrl(ServiceLocation.Gateway, "/set-language", new { });
 }
 @Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))

@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Archon.SDK.Services;
 using Aiursoft.DBTools;
+using Aiursoft.DBTools.Models;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Probe.SDK.Services;
@@ -13,7 +14,7 @@ using System.Linq;
 
 namespace Aiursoft.Status.Data
 {
-    public class Seeder : IScopedDependency
+    public class Seeder : IScopedDependency, ISeeder
     {
         private readonly ServiceLocation serviceLocation;
         private readonly ObserverLocator observerLocator;
