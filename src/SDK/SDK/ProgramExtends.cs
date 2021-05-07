@@ -1,4 +1,5 @@
-﻿using Aiursoft.XelNaga.Services;
+﻿using Aiursoft.DBTools.Models;
+using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,7 @@ namespace Aiursoft.SDK
 {
     public static class ProgramExtends
     {
-        public static IHost Update<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder = null) where TContext : DbContext
+        public static IHost Update<TContext>(this IHost host) where TContext : DbContext
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
@@ -29,7 +30,8 @@ namespace Aiursoft.SDK
                     {
                         await context.Database.MigrateAsync();
                     }
-                    seeder?.Invoke(context, services);
+                    var seeder = services.GetService<ISeeder>();
+                    seeder?.Seed();
                 }, 3, (e) =>
                 {
                     logger.LogCritical(e, "Update database failed.");

@@ -58,19 +58,7 @@ namespace Aiursoft.XelNaga.Services
         /// <returns>Time slot to wait.</returns>
         private static int ExponentialBackoffTimeSlot(int time)
         {
-            int TwoPower(int power)
-            {
-                int @base = 2;
-                int exponentiation = 1;
-                for (int i = power; i > 0; i--)
-                {
-                    exponentiation *= @base;
-                }
-
-                return exponentiation;
-            }
-
-            int max = TwoPower(time);
+            int max = (int)Math.Pow(2, time);
             var rnd = new Random();
             return rnd.Next(0, max);
         }

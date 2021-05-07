@@ -313,7 +313,7 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return Unauthorized();
             }
-            if (!_captcha.ValidateCaptchaCode(model.CaptchaCode, HttpContext.Session))
+            if (!_captcha.Validate(model.CaptchaCode, HttpContext.Session))
             {
                 ModelState.AddModelError(string.Empty, "Invalid captcha code!");
             }

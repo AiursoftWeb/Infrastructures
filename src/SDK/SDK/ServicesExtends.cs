@@ -1,4 +1,5 @@
-﻿using Aiursoft.Scanner;
+﻿using Aiursoft.DBTools.Models;
+using Aiursoft.Scanner;
 using Aiursoft.Scanner.Tools;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
@@ -52,7 +53,10 @@ namespace Aiursoft.SDK
         {
             services.AddHttpClient();
             services.AddMemoryCache();
-            var abstractsArray = abstracts.AddWith(typeof(IHostedService)).ToArray();
+            var abstractsArray = abstracts
+                .AddWith(typeof(IHostedService))
+                .AddWith(typeof(ISeeder))
+                .ToArray();
             if (EntryExtends.IsProgramEntry())
             {
                 // Program is starting itself.
