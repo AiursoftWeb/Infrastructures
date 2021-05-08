@@ -60,7 +60,7 @@
         <div class="col-md-8">
             <div class="text-muted">
                 @{
-                    var langLink = new AiurUrl(GatewayLocator.Endpoint, "Api", "SetLang", new { });
+                    var langLink = new AiurUrl(GatewayLocator.Endpoint, "/set-language", new { });
                 }
                 @Localizer["Current search language:"]
                 <a href="@langLink" data-language-change-link>
