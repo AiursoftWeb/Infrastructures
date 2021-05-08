@@ -20,7 +20,7 @@ using static Aiursoft.WebTools.Extends;
 namespace Aiursoft.Probe.Tests
 {
     [TestClass]
-    public class BasicTests
+    public class SiteTests
     {
         private readonly int _port;
         private readonly string _endpointUrl;
@@ -28,7 +28,7 @@ namespace Aiursoft.Probe.Tests
         private HttpClient _http;
         private ServiceProvider _serviceProvider;
 
-        public BasicTests()
+        public SiteTests()
         {
             _port = Network.GetAvailablePort();
             _endpointUrl = $"http://localhost:{_port}";
@@ -225,6 +225,24 @@ namespace Aiursoft.Probe.Tests
             Assert.AreEqual(sites.Site.SiteName, "my-site2");
             Assert.AreEqual(sites.Site.OpenToDownload, true);
             Assert.AreEqual(sites.Site.OpenToUpload, false);
+        }
+
+        [TestMethod]
+        public async Task DeleteSiteTest()
+        {
+            var siteService = _serviceProvider.GetRequiredService<SitesService>();
+            var createNewSiteResponse = await siteService.CreateNewSiteAsync(
+                accessToken: "mock-access-token",
+                newSiteName: "my-site",
+                openToDownload: false,
+                openToUpload: true);
+            Assert.AreEqual(ErrorType.Success, createNewSiteResponse.Code);
+
+            var deleteSiteResult = await siteService.DeleteSiteAsync("mock-access-token", "my-site");
+            Assert.AreEqual(ErrorType.Success, deleteSiteResult.Code);
+
+            var sites = await siteService.ViewMySitesAsync("mock-access-token");
+            Assert.AreEqual(0, sites.Sites.Count);
         }
     }
 }

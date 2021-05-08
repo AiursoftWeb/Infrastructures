@@ -19,7 +19,7 @@ using static Aiursoft.WebTools.Extends;
 namespace Aiursoft.Observer.Tests
 {
     [TestClass]
-    public class BasicTests
+    public class EventTests
     {
         private readonly string _endpointUrl;
         private readonly int _port;
@@ -27,7 +27,7 @@ namespace Aiursoft.Observer.Tests
         private HttpClient _http;
         private ServiceProvider _serviceProvider;
 
-        public BasicTests()
+        public EventTests()
         {
             _port = Network.GetAvailablePort();
             _endpointUrl = $"http://localhost:{_port}";
