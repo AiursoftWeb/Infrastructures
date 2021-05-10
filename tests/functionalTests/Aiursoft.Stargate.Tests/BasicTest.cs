@@ -136,10 +136,9 @@ namespace Aiursoft.Stargate.Tests
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     MessageCount++;
-                    string message = Encoding.UTF8.GetString(buffer.Skip(buffer.Offset).Take(buffer.Count).ToArray())
+                    var _ = Encoding.UTF8.GetString(buffer.Skip(buffer.Offset).Take(buffer.Count).ToArray())
                         .Trim('\0')
                         .Trim();
-                    Console.WriteLine(message);
                 }
                 else
                 {
@@ -171,15 +170,14 @@ namespace Aiursoft.Stargate.Tests
                 await Task.Factory.StartNew(() => Monitor(socket));
                 await Task.Delay(50);
                 await messageSender.SendDebuggingMessages("mock-access-token", channel.ChannelId);
+                await Task.Delay(50);
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
-            for (int i = 0; i < 100; i++)
+
+            // Wait for complete
+            for (int i = 0; i < 10; i++)
             {
-                if (MessageCount > 98)
-                {
-                    break;
-                }
-                await Task.Delay(20);
+                await Task.Delay(200);
             }
             Assert.AreEqual(100, MessageCount);
         }

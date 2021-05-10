@@ -102,6 +102,7 @@ namespace Aiursoft.Stargate.Controllers
             finally
             {
                 channel.ConnectedUsers--;
+                await _pusher.Close();
             }
             return this.Protocol(new AiurProtocol { Code = ErrorType.UnknownError, Message = "You shouldn't be here." });
         }
