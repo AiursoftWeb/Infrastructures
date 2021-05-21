@@ -16,7 +16,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Observer.Tests
+namespace Aiursoft.Observer.Tests.FunctionalTests
 {
     [TestClass]
     public class EventTests

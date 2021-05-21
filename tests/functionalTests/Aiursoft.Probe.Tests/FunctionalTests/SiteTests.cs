@@ -17,7 +17,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Probe.Tests
+namespace Aiursoft.Probe.Tests.FunctionalTests
 {
     [TestClass]
     public class SiteTests
