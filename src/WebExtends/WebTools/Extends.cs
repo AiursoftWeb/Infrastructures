@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.WebTools
@@ -58,8 +59,13 @@ namespace Aiursoft.WebTools
 
         public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
         {
-            controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
-            return new JsonResult(model);
+            if (!controller.HttpContext.Response.HasStarted)
+            {
+                controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
+                return new JsonResult(model);
+            }
+
+            return new EmptyResult();
         }
 
         public static void SetClientLang(this ControllerBase controller, string culture)
@@ -81,6 +87,11 @@ namespace Aiursoft.WebTools
                     }
                     webBuilder.UseStartup<T>();
                 });
+        }
+
+        public static string ToHtmlDateTime(this DateTime source)
+        {
+            return source.ToString(CultureInfo.InvariantCulture);
         }
 
         public static IHost App<T>(string[] args = null, int port = -1) where T : class

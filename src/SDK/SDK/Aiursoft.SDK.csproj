@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <Version>5.0.7</Version>
+    <Version>5.0.8</Version>
     <TargetFramework>net5.0</TargetFramework>
     <Description>The base class, tools and extends for Aiursoft web apps.</Description>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -11,8 +11,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
-    <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="2.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
+    <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.0.0" />
     <PackageReference Include="DnsClient" Version="1.4.0" />
   </ItemGroup>
 

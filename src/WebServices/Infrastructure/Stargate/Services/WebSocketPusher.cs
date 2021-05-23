@@ -59,5 +59,14 @@ namespace Aiursoft.Stargate.Services
                 await _eventService.LogExceptionAsync(await accessToken, e, "InPusher");
             }
         }
+
+        public Task Close()
+        {
+            if (_ws.State == WebSocketState.Open)
+            {
+                return _ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Close because of error.", CancellationToken.None);
+            }
+            return Task.CompletedTask;
+        }
     }
 }

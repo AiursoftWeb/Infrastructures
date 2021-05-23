@@ -100,7 +100,7 @@
                                         </a>
                                     </td>
                                     <td data-order="@file.FileSize">@file.FileSize.HumanReadableSize()</td>
-                                    <td data-utc-time="@file.UploadTime" data-order="@file.UploadTime.Ticks"></td>
+                                    <td data-utc-time="@file.UploadTime.ToHtmlDateTime()" data-order="@file.UploadTime.Ticks"></td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -114,6 +114,10 @@
                                                 <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
                                                     <i class="fas fa-trash-alt"></i>
                                                     Delete
+                                                </a>
+                                                <a class="dropdown-item" asp-controller="Sites" asp-action="RenameFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Rename
                                                 </a>
                                             </div>
                                         </div>

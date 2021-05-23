@@ -57,7 +57,7 @@
                                     <h5>@app.AppName</h5>
                                     <p>
                                         Attempt to log in to @app.AppName
-                                        <lable class="text-muted" data-utc-time="@log.HappenTime"></lable>
+                                        <lable class="text-muted" data-utc-time="@log.HappenTime.ToHtmlDateTime()"></lable>
                                         <br>
                                         Result:
                                         @if (log.Success)

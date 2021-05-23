@@ -16,10 +16,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Observer.Tests
+namespace Aiursoft.Observer.Tests.FunctionalTests
 {
     [TestClass]
-    public class BasicTests
+    public class EventTests
     {
         private readonly string _endpointUrl;
         private readonly int _port;
@@ -27,7 +27,7 @@ namespace Aiursoft.Observer.Tests
         private HttpClient _http;
         private ServiceProvider _serviceProvider;
 
-        public BasicTests()
+        public EventTests()
         {
             _port = Network.GetAvailablePort();
             _endpointUrl = $"http://localhost:{_port}";
@@ -125,7 +125,7 @@ namespace Aiursoft.Observer.Tests
             await observer.DeleteAppAsync("mock-access-token", MockAcTokenValidator.MockAppId);
             await Task.Delay(500);
             var logs = await observer.ViewAsync("mock-access-token");
-            Assert.AreEqual(0, logs.Logs.Count);
+            Assert.AreEqual(0, logs.Logs.Count, "Shouldn't get any error log after app deleted on Observer!");
             try
             {
                 await observer.DeleteAppAsync("mock2-access-token", MockAcTokenValidator.MockAppId);

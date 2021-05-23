@@ -50,7 +50,6 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("UploadFile/{SiteName}/{**FolderNames}")]
-        [APIModelStateChecker]
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
@@ -105,7 +104,6 @@ namespace Aiursoft.Probe.Controllers
         }
 
         [HttpPost]
-        [APIModelStateChecker]
         [Route("DeleteFile/{SiteName}/{**FolderNames}")]
         public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
         {
@@ -126,7 +124,6 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("CopyFile/{SiteName}/{**FolderNames}")]
-        [APIModelStateChecker]
         [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> CopyFile(CopyFileAddressModel model)
         {
@@ -155,6 +152,35 @@ namespace Aiursoft.Probe.Controllers
             {
                 InternetPath = internetPath,
                 SiteName = model.TargetSiteName,
+                FilePath = filePath,
+                FileSize = file.FileSize,
+                Code = ErrorType.Success,
+                Message = "Successfully copied your file."
+            });
+        }
+
+        [HttpPost]
+        [Route("RenameFile/{SiteName}/{**Foldernames}")]
+        [APIProduces(typeof(UploadFileViewModel))]
+        public async Task<IActionResult> RenameFile(RenameFileAddressModel model)
+        {
+            var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
+            var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
+            var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
+            if (file == null)
+            {
+                return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+            }
+            
+            var newFileName = _folderSplitter.GetValidFileName(sourceFolder.Files.Select(t => t.FileName), model.TargetFileName);
+            await _fileRepo.UpdateName(file.Id , newFileName);
+
+            var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', sourceFileName), newFileName);
+            var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
+            return this.Protocol(new UploadFileViewModel
+            {
+                InternetPath = internetPath,
+                SiteName = model.SiteName,
                 FilePath = filePath,
                 FileSize = file.FileSize,
                 Code = ErrorType.Success,

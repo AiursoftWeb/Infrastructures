@@ -303,6 +303,63 @@ namespace Aiursoft.Developer.Controllers
             }
         }
 
+        [Route("Apps/{appId}/Sites/{siteName}/RenameFile/{**path}")]
+        public async Task<IActionResult> RenameFile([FromRoute] string appId, [FromRoute] string siteName, [FromRoute] string path)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(appId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            var model = new RenameFileViewModel(user)
+            {
+                AppId = appId,
+                SiteName = siteName,
+                Path = path,
+                AppName = app.AppName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Apps/{appId}/Sites/{siteName}/RenameFile/{**path}")]
+        public async Task<IActionResult> RenameFile(RenameFileViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            var app = await _dbContext.Apps.FindAsync(model.AppId);
+            if (app == null)
+            {
+                return NotFound();
+            }
+            if (app.CreatorId != user.Id)
+            {
+                return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+            try
+            {
+                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                await _filesService.RenameFileAsync(token, model.SiteName, model.Path, model.NewName);
+                return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
+            }
+            catch (AiurUnexpectedResponse e)
+            {
+                ModelState.AddModelError(string.Empty, e.Response.Message);
+                model.Recover(user, app.AppName);
+                return View(model);
+            }
+        }
+
         [Route("Apps/{appId}/Sites/{siteName}/Edit")]
         public async Task<IActionResult> Edit(string appId, string siteName)
         {
