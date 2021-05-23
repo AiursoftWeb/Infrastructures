@@ -31,6 +31,8 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         [DataRow("asdfasdfadfasdfasdfadf___^&(ad*")]
         [DataRow(@"
 ")]
+        [DataRow("\u2029\u2028")]
+        [DataRow("\u2028\u2029")]
         [DataRow("")]
         [DataRow("    ")]
         public void FailingTests(object inputValue)
