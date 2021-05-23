@@ -1,6 +1,8 @@
 ﻿using Aiursoft.SDKTools.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Aiursoft.SDKTools.Tests.AttributesTests
 {
@@ -8,6 +10,7 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
     public class ValidFolderNameTests
     {
         private ValidFolderName _validator;
+        private byte[] hexValues = { 0x0d, 0x0A };
 
         [TestInitialize]
         public void CreateValidator()
@@ -33,6 +36,13 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         public void FailingTests(object inputValue)
         {
             Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(inputValue));
+        }
+
+        [TestMethod]
+        public void FailingHexTests()
+        {
+            var hex = Encoding.ASCII.GetString(this.hexValues);
+            Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(hex));
         }
     }
 }
