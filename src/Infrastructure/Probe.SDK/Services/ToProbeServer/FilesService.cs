@@ -71,5 +71,20 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
                 throw new AiurUnexpectedResponse(jResult);
             return jResult;
         }
+
+        public async Task<UploadFileViewModel> RenameFileAsync(string accessToken, string siteName, string folderNames, string targetFileName)
+        {
+            var url = new AiurUrl(_serviceLocation.Endpoint, $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
+            var form = new AiurUrl(string.Empty, new RenameFileAddressModel
+            {
+                AccessToken = accessToken,
+                TargetFileName = targetFileName
+            });
+            var result = await _http.Post(url, form, true);
+            var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
+            if (jResult.Code != ErrorType.Success)
+                throw new AiurUnexpectedResponse(jResult);
+            return jResult;
+        }
     }
 }

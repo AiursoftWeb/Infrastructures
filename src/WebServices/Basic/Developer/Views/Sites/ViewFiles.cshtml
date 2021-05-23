@@ -115,6 +115,10 @@
                                                     <i class="fas fa-trash-alt"></i>
                                                     Delete
                                                 </a>
+                                                <a class="dropdown-item" asp-controller="Sites" asp-action="RenameFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                    Rename
+                                                </a>
                                             </div>
                                         </div>
                                     </td>

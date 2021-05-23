@@ -161,6 +161,7 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("RenameFile/{SiteName}/{**Foldernames}")]
+        [APIProduces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> RenameFile(RenameFileAddressModel model)
         {
             var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
