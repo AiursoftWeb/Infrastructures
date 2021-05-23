@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Text;
 
 namespace Aiursoft.SDKTools.Tests.AttributesTests
@@ -19,6 +20,7 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         }
 
         [TestMethod]
+        [DataRow(nameof(HttpStatusCode))]
         [DataRow("aaaa.txt")]
         [DataRow("aaaatxt")]
         [DataRow("asdfasdfadfasdfasdfadf___^&(ad")]
@@ -28,6 +30,9 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         }
 
         [TestMethod]
+        [DataRow(typeof(HttpStatusCode))]
+        [DataRow(HttpStatusCode.OK)]
+        [DataRow(5)]
         [DataRow("asdfasdfadfasdfasdfadf___^&(ad*")]
         [DataRow(@"
 ")]
