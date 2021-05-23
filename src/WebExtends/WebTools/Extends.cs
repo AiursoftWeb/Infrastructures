@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.WebTools
@@ -86,6 +87,11 @@ namespace Aiursoft.WebTools
                     }
                     webBuilder.UseStartup<T>();
                 });
+        }
+
+        public static string ToHtmlDateTime(this DateTime source)
+        {
+            return source.ToString(CultureInfo.InvariantCulture);
         }
 
         public static IHost App<T>(string[] args = null, int port = -1) where T : class

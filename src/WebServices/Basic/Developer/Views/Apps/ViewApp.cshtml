@@ -312,7 +312,7 @@
                                         {
                                             <tr>
                                                 <td>@site.SiteName</td>
-                                                <td data-order="@site.CreationTime.Ticks" data-utc-time="@site.CreationTime.ToString(CultureInfo.InvariantCulture)"></td>
+                                                <td data-order="@site.CreationTime.Ticks" data-utc-time="@site.CreationTime.ToHtmlDateTime()"></td>
                                                 <td>
                                                     @if (site.OpenToUpload)
                                                     {
@@ -382,7 +382,7 @@
                                             <tr>
                                                 <td>@grant.UserInfo.Id</td>
                                                 <td>@grant.UserInfo.NickName</td>
-                                                <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime"></td>
+                                                <td data-order="@grant.GrantTime.Ticks" data-utc-time="@grant.GrantTime.ToHtmlDateTime()"></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -419,8 +419,8 @@
                                         {
                                             <tr>
                                                 <td>@channel.Id</td>
-                                                <td data-utc-time="@channel.CreateTime.ToString(CultureInfo.InvariantCulture)" data-order="@channel.CreateTime.Ticks"></td>
-                                                <td data-utc-time="@channel.LastAccessTime" data-order="@channel.LastAccessTime.Ticks"></td>
+                                                <td data-utc-time="@channel.CreateTime.ToHtmlDateTime()" data-order="@channel.CreateTime.Ticks"></td>
+                                                <td data-utc-time="@channel.LastAccessTime.ToHtmlDateTime()" data-order="@channel.LastAccessTime.Ticks"></td>
                                                 <td>@channel.ConnectedUsers</td>
                                                 @{
                                                     var path = new AiurUrl(StargateLocator.Endpoint, "Home", "ListenTo", new ChannelAddressModel
@@ -464,7 +464,7 @@
                                                 <td>@log.Message.OTake(60)</td>
                                                 <td>@log.First.Path</td>
                                                 <td>@log.Count</td>
-                                                <td data-utc-time="@log.First.LogTime.ToString(CultureInfo.InvariantCulture)" data-order="@log.First.LogTime.Ticks"></td>
+                                                <td data-utc-time="@log.First.LogTime.ToHtmlDateTime()" data-order="@log.First.LogTime.Ticks"></td>
                                                 @switch (log.First.EventLevel)
                                                 {
                                                     case EventLevel.Exception:
@@ -527,7 +527,7 @@
                                                 </td>
                                                 <td>@record.TargetUrl.OTake(60)</td>
                                                 <td>@record.Type</td>
-                                                <td data-utc-time="@record.CreationTime.ToString(CultureInfo.InvariantCulture)" data-order="@record.CreationTime.Ticks"></td>
+                                                <td data-utc-time="@record.CreationTime.ToHtmlDateTime()" data-order="@record.CreationTime.Ticks"></td>
                                                 <td>@record.Tags</td>
                                                 <td>
                                                     <div class="btn-group">
