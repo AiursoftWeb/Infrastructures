@@ -79,5 +79,13 @@ namespace Aiursoft.Probe.Repositories
             await _dbContext.Files.AddAsync(newFile);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateName(int id, string newFileName)
+        {
+            var file = await _dbContext.Files.SingleAsync(t => t.Id == id);
+            file.FileName = newFileName;
+            _dbContext.Files.Update(file);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
