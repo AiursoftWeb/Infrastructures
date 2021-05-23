@@ -58,7 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="403 - Auth error" xml:space="preserve"><value>403-auth 错误</value></data>
+  <data name="403 - Auth error" xml:space="preserve"><value>403 - 认证错误</value></data>
 <data name="This app can not use our authentication system!" xml:space="preserve"><value>这个程序不能使用我们的身份验证系统!</value></data>
 <data name="Sorry about it. Please try again and try to contact the app producer." xml:space="preserve"><value>对此我很抱歉。请重试, 然后尝试与应用提供商联系。</value></data>
 <data name="Back to Aiursoft.com" xml:space="preserve"><value>返回到 aiursoft. com</value></data>

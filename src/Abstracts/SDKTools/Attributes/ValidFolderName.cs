@@ -11,7 +11,7 @@ namespace Aiursoft.SDKTools.Attributes
             {
                 return val.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
             }
-            return true;
+            return !string.IsNullOrWhiteSpace(value as string);
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

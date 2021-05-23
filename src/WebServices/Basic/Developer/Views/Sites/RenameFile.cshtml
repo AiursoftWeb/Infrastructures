@@ -36,6 +36,14 @@
         </li>
     </ol>
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-trash-alt ico"></i>
