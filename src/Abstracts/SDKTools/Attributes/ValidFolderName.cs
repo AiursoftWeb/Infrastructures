@@ -9,9 +9,11 @@ namespace Aiursoft.SDKTools.Attributes
         {
             if (value is string val)
             {
-                return val.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+                return
+                    val.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 &&
+                    !string.IsNullOrWhiteSpace(val);
             }
-            return !string.IsNullOrWhiteSpace(value as string);
+            return false;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -22,6 +24,11 @@ namespace Aiursoft.SDKTools.Attributes
             }
             else
             {
+                if (string.IsNullOrWhiteSpace(value as string))
+                {
+                    return new ValidationResult($"Empty string is not a valid file name!");
+                }
+
                 var invalidCharacters = string.Empty;
                 foreach (var invalidChar in Path.GetInvalidFileNameChars())
                 {
@@ -32,6 +39,11 @@ namespace Aiursoft.SDKTools.Attributes
                 }
                 return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid characters{invalidCharacters.TrimEnd(',')}!");
             }
+        }
+
+        public ValidationResult TestEntry(object value)
+        {
+            return this.IsValid(value, new ValidationContext(value) { DisplayName = "Mock-display-name" });
         }
     }
 }
