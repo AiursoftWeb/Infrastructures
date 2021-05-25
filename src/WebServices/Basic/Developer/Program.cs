@@ -14,7 +14,6 @@ namespace Aiursoft.Developer
             App<Startup>(args)
                 .Update<DeveloperDbContext>()
                 .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.AccessToken())
-                .InitSite<AppsContainer>(c => c["SampleSiteName"], a => a.AccessToken())
                 .Run();
         }
 
