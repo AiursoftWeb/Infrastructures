@@ -93,6 +93,7 @@ namespace Aiursoft.Probe.Controllers
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), fileName);
             return this.Protocol(new UploadFileViewModel
             {
+                BrowserOpenablePath = _probeLocator.GetProbeBrowserOpenablePath(siteName: model.SiteName, path: model.FolderNames, file.FileName),
                 InternetPath = _probeLocator.GetProbeOpenAddress(filePath),
                 DownloadPath = _probeLocator.GetProbeDownloadAddress(filePath),
                 SiteName = model.SiteName,

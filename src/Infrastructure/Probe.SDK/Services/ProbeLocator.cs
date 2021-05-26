@@ -1,5 +1,6 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using System;
 using System.Linq;
@@ -46,6 +47,22 @@ namespace Aiursoft.Probe.SDK.Services
         {
             var fullPath = GetProbeFullPath(siteName, path, fileName);
             return GetProbeOpenAddress(fullPath);
+        }
+
+        public string GetProbeBrowserOpenablePath(string siteName, string path, string fileName)
+        {
+            if (MIME.CanHandle(fileName))
+            {
+                if (MIME.IsVideo(fileName))
+                {
+                    return GetProbePlayerAddress(siteName, path, fileName);
+                }
+                else
+                {
+                    return GetProbeOpenAddress(siteName, path, fileName);
+                }
+            }
+            return GetProbeDownloadAddress(siteName, path, fileName);
         }
 
         public string GetProbeDownloadAddress(string siteName, string path, string fileName)
