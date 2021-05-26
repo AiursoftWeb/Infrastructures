@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Text;
 
 namespace Aiursoft.SDKTools.Tests.AttributesTests
 {

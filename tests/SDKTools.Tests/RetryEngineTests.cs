@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Aiursoft.SDKTools.Services;
+﻿using Aiursoft.SDKTools.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading.Tasks;
 
-namespace Microsoft.Office.Datacenter.CapacityDeployment.EmergencyPatch.API.UnitTests
+namespace Aiursoft.SDKTools.Tests
 {
+    // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
     [TestClass]
     public class RetryEngineTests
     {
@@ -37,8 +38,7 @@ namespace Microsoft.Office.Datacenter.CapacityDeployment.EmergencyPatch.API.Unit
         {
             try
             {
-                var result = await retryEngine.RunWithTry(
-                attempts =>
+                await retryEngine.RunWithTry(attempts =>
                 {
                     if (attempts == 1)
                     {

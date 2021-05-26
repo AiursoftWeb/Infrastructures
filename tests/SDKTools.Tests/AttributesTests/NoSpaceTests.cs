@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Text;
 
 namespace Aiursoft.SDKTools.Tests.AttributesTests
 {
@@ -10,7 +9,6 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
     public class NoSpaceTests
     {
         private NoSpace _validator;
-        private byte[] hexValues = { 0x0d, 0x0A };
 
         [TestInitialize]
         public void CreateValidator()
