@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.SDKTools.Attributes
 {
-    public class IsGuidOrEmpty : ValidationAttribute
+    public class IsGuidOrEmpty : TestableValidationAttribute
     {
         public override bool IsValid(object value)
         {
@@ -15,7 +15,7 @@ namespace Aiursoft.SDKTools.Attributes
                 }
                 return Guid.TryParse(val, out _);
             }
-            return true;
+            return false;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

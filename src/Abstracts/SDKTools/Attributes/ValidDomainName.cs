@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Aiursoft.SDKTools.Attributes
 {
-    public class ValidDomainName : ValidationAttribute
+    public class ValidDomainName : TestableValidationAttribute
     {
         private readonly string _domainRegex = @"^[-a-z0-9_.]+$";
 
@@ -14,7 +14,7 @@ namespace Aiursoft.SDKTools.Attributes
             {
                 return regex.IsMatch(val);
             }
-            return true;
+            return false;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
