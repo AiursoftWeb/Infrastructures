@@ -2,6 +2,8 @@
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
+using Aiursoft.SDKTools.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +14,19 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly IStorageProvider _storageProvider;
+        private readonly FileDeleter _fileDeleteService;
+        private readonly CannonQueue _cannonQueue;
 
         public FileRepo(
             ProbeDbContext dbContext,
-            IStorageProvider storageProvider)
+            IStorageProvider storageProvider,
+            FileDeleter fileDeleteService,
+            CannonQueue cannonQueue)
         {
             _dbContext = dbContext;
             _storageProvider = storageProvider;
+            this._fileDeleteService = fileDeleteService;
+            this._cannonQueue = cannonQueue;
         }
 
         public async Task<File> GetFileInFolder(Folder context, string fileName)
@@ -34,14 +42,13 @@ namespace Aiursoft.Probe.Repositories
             return file;
         }
 
-        public async Task DeleteFile(File file)
+        public void DeleteFile(File file)
         {
             _dbContext.Files.Remove(file);
-            var haveDaemon = await _dbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
-            if (!haveDaemon)
+            _cannonQueue.QueueWithDependency<FileDeleter>(async fileDeleteService =>
             {
-                _storageProvider.DeleteToTrash(file.HardwareId);
-            }
+                await fileDeleteService.DeleteOnDisk(file);
+            });
         }
 
         public async Task DeleteFileById(int fileId)
@@ -49,7 +56,7 @@ namespace Aiursoft.Probe.Repositories
             var file = await _dbContext.Files.SingleOrDefaultAsync(t => t.Id == fileId);
             if (file != null)
             {
-                await DeleteFile(file);
+                DeleteFile(file);
             }
             await _dbContext.SaveChangesAsync();
         }
