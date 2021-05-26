@@ -8,7 +8,6 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.Repositories
@@ -19,18 +18,20 @@ namespace Aiursoft.Probe.Repositories
         private readonly FileRepo _fileRepo;
         private readonly IStorageProvider _storageProvider;
         private readonly ACTokenValidator _tokenManager;
-        private static SemaphoreSlim _folderCreateLock = new SemaphoreSlim(1, 1);
+        private readonly FolderLockDictionary lockDictionary;
 
         public FolderRepo(
             ProbeDbContext probeDbContext,
             FileRepo fileRepo,
             IStorageProvider storageProvider,
-            ACTokenValidator tokenManager)
+            ACTokenValidator tokenManager,
+            FolderLockDictionary lockDictionary)
         {
             _dbContext = probeDbContext;
             _fileRepo = fileRepo;
             _storageProvider = storageProvider;
             _tokenManager = tokenManager;
+            this.lockDictionary = lockDictionary;
         }
 
         private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
@@ -68,7 +69,8 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task CreateNewFolder(int contextId, string name)
         {
-            await _folderCreateLock.WaitAsync();
+            var folderLock = lockDictionary.GetLock(contextId);
+            await folderLock.WaitAsync();
             try
             {
                 await _dbContext.Folders
@@ -84,7 +86,7 @@ namespace Aiursoft.Probe.Repositories
             }
             finally
             {
-                _folderCreateLock.Release();
+                folderLock.Release();
             }
         }
 
@@ -164,16 +166,28 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task DeleteFolder(int folderId, bool saveChanges = true)
         {
-            var folder = await _dbContext
-                .Folders
-                .SingleOrDefaultAsync(t => t.Id == folderId);
-            if (folder != null)
+            var folderLock = lockDictionary.GetLock(folderId);
+            await folderLock.WaitAsync();
+            try
             {
+                var folder = await _dbContext
+                    .Folders
+                    .SingleOrDefaultAsync(t => t.Id == folderId);
+
+                if (folder == null)
+                {
+                    return;
+                }
+
                 await DeleteFolderObject(folder);
                 if (saveChanges)
                 {
                     await _dbContext.SaveChangesAsync();
                 }
+            }
+            finally
+            {
+                folderLock.Release();
             }
         }
     }
