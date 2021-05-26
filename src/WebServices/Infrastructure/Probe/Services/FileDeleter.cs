@@ -29,7 +29,7 @@ namespace Aiursoft.Probe.Services
             var haveDaemon = await _probeDbContext.Files.Where(f => f.Id != file.Id).AnyAsync(f => f.HardwareId == file.HardwareId);
             if (!haveDaemon)
             {
-                await this._retryEngine.RunWithTry(taskFactory: attempt =>
+                await this._retryEngine.RunWithTry(taskFactory: _ =>
                 {
                     _storageProvider.DeleteToTrash(file.HardwareId);
                     return Task.FromResult(0);

@@ -2,7 +2,6 @@
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDKTools.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -13,20 +12,14 @@ namespace Aiursoft.Probe.Repositories
     public class FileRepo : IScopedDependency
     {
         private readonly ProbeDbContext _dbContext;
-        private readonly IStorageProvider _storageProvider;
-        private readonly FileDeleter _fileDeleteService;
         private readonly CannonQueue _cannonQueue;
 
         public FileRepo(
             ProbeDbContext dbContext,
-            IStorageProvider storageProvider,
-            FileDeleter fileDeleteService,
             CannonQueue cannonQueue)
         {
             _dbContext = dbContext;
-            _storageProvider = storageProvider;
-            this._fileDeleteService = fileDeleteService;
-            this._cannonQueue = cannonQueue;
+            _cannonQueue = cannonQueue;
         }
 
         public async Task<File> GetFileInFolder(Folder context, string fileName)

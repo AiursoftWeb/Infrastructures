@@ -35,7 +35,7 @@ namespace Aiursoft.Probe.Repositories
 
         private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
         {
-            return (await GetFolderFromId(rootFolderId)).SubFolders.SingleOrDefault(f => f.FolderName == subFolderName);
+            return (await GetFolderFromId(rootFolderId)).SubFolders.FirstOrDefault(f => f.FolderName == subFolderName);
         }
 
         public Task<Folder> GetFolderFromId(int folderId)
