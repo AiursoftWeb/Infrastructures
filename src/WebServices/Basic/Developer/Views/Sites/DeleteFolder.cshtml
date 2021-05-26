@@ -36,6 +36,14 @@
             </li>
         </ol>
 
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>@Localizer["Invalid Input!"]</strong>
+                <div asp-validation-summary="All"></div>
+            </div>
+        }
+
         <div class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
             <strong>@Localizer["Caution!"]</strong> You are about to delete folder "@Model.Path" in site "@Model.SiteName"! If you are confirmed to continue, you will lose all<strong> folders and files</strong> in it. @Localizer["and this process is not recoverable!"]
