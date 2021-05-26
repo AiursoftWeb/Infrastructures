@@ -1,8 +1,10 @@
 ﻿using Aiursoft.Handler.Attributes;
+using Aiursoft.Handler.Models;
 using Aiursoft.Wrapgate.Repositories;
 using Aiursoft.Wrapgate.SDK.Models;
 using Aiursoft.Wrapgate.SDK.Models.AddressModels;
 using Aiursoft.XelNaga.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
@@ -66,6 +68,15 @@ namespace Aiursoft.Wrapgate.Controllers
 
         private async Task<IActionResult> RewriteToUrl(string url)
         {
+            if (!string.Equals(HttpContext.Request.Method, "GET", StringComparison.OrdinalIgnoreCase))
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new AiurProtocol
+                {
+                    Message = "We can only proxy HTTP GET requests!",
+                    Code = ErrorType.InvalidInput
+                });
+            }
+
             var request = HttpContext.CreateProxyHttpRequest(new Uri(url));
             var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
             await HttpContext.CopyProxyHttpResponse(response);

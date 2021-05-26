@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 namespace Aiursoft.Gateway.Controllers
 {
     [LimitPerMin]
+    [UserFriendlyNotFoundHandler]
     public class OAuthController : Controller
     {
         private readonly UserManager<GatewayUser> _userManager;

@@ -67,11 +67,13 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             {
                 AppId = appId
             });
-            var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<AppInfoViewModel>(result);
-            if (jResult.Code != ErrorType.Success)
-                throw new AiurUnexpectedResponse(jResult);
-            return jResult;
+            var json = await _http.Get(url, true);
+            var result = JsonConvert.DeserializeObject<AppInfoViewModel>(json);
+            if (result.Code != ErrorType.Success)
+            {
+                throw new AiurUnexpectedResponse(result);
+            }
+            return result;
         }
     }
 }
