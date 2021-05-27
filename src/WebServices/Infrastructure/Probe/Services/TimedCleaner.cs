@@ -93,9 +93,6 @@ namespace Aiursoft.Probe.Services
             return Task.CompletedTask;
         }
 
-        public void Dispose()
-        {
-            _timer?.Dispose();
-        }
+        public void Dispose() => _timer?.Dispose();
     }
 }
