@@ -18,9 +18,6 @@ namespace Aiursoft.Probe.SDK.Models.FilesViewModels
         /// This property is encoded URL and you can access it directly. Browser will try to open it.
         /// </summary>
         public string InternetPath { get; set; }
-
-        public string BrowserOpenablePath { get; set; }
-
         /// <summary>
         /// This property is encoded URL and you can access it directly. Browser will download it.
         /// </summary>
