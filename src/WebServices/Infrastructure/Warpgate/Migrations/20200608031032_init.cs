@@ -8,14 +8,14 @@ namespace Aiursoft.Warpgate.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "WarpApps",
+                name: "WrapApps",
                 columns: table => new
                 {
                     AppId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WarpApps", x => x.AppId);
+                    table.PrimaryKey("PK_WrapApps", x => x.AppId);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,9 +34,9 @@ namespace Aiursoft.Warpgate.Migrations
                 {
                     table.PrimaryKey("PK_Records", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Records_WarpApps_AppId",
+                        name: "FK_Records_WrapApps_AppId",
                         column: x => x.AppId,
-                        principalTable: "WarpApps",
+                        principalTable: "WrapApps",
                         principalColumn: "AppId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -53,7 +53,7 @@ namespace Aiursoft.Warpgate.Migrations
                 name: "Records");
 
             migrationBuilder.DropTable(
-                name: "WarpApps");
+                name: "WrapApps");
         }
     }
 }

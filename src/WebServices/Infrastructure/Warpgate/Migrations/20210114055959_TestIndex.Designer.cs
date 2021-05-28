@@ -65,7 +65,7 @@ namespace Aiursoft.Warpgate.Migrations
 
                     b.HasKey("AppId");
 
-                    b.ToTable("WarpApps");
+                    b.ToTable("WrapApps");
                 });
 
             modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WarpRecord", b =>
