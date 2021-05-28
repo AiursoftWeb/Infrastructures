@@ -19,7 +19,7 @@ namespace Aiursoft.Warpgate.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("Aiursoft.Warpgate.SDK.Models.WarpRecord", b =>
+            modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WarpRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace Aiursoft.Warpgate.Migrations
                     b.ToTable("Records");
                 });
 
-            modelBuilder.Entity("Aiursoft.Warpgate.SDK.Models.WarpgateApp", b =>
+            modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WrapgateApp", b =>
                 {
                     b.Property<string>("AppId")
                         .HasColumnType("nvarchar(450)");
@@ -68,16 +68,16 @@ namespace Aiursoft.Warpgate.Migrations
                     b.ToTable("WarpApps");
                 });
 
-            modelBuilder.Entity("Aiursoft.Warpgate.SDK.Models.WarpRecord", b =>
+            modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WarpRecord", b =>
                 {
-                    b.HasOne("Aiursoft.Warpgate.SDK.Models.WarpgateApp", "App")
+                    b.HasOne("Aiursoft.Wrapgate.SDK.Models.WrapgateApp", "App")
                         .WithMany("WarpRecords")
                         .HasForeignKey("AppId");
 
                     b.Navigation("App");
                 });
 
-            modelBuilder.Entity("Aiursoft.Warpgate.SDK.Models.WarpgateApp", b =>
+            modelBuilder.Entity("Aiursoft.Wrapgate.SDK.Models.WrapgateApp", b =>
                 {
                     b.Navigation("WarpRecords");
                 });
