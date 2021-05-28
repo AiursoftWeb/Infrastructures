@@ -2,7 +2,7 @@
 
 namespace Aiursoft.SDKTools.Attributes
 {
-    public class NoDot : ValidationAttribute
+    public class NoDot : TestableValidationAttribute
     {
         public override bool IsValid(object value)
         {
@@ -10,7 +10,7 @@ namespace Aiursoft.SDKTools.Attributes
             {
                 return !val.Contains(".");
             }
-            return true;
+            return false;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

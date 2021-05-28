@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Aiursoft.SDKTools.Attributes
 {
-    public class ValidFolderName : ValidationAttribute
+    public class ValidFolderName : TestableValidationAttribute
     {
         public override bool IsValid(object value)
         {
@@ -39,11 +39,6 @@ namespace Aiursoft.SDKTools.Attributes
                 }
                 return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid characters{invalidCharacters.TrimEnd(',')}!");
             }
-        }
-
-        public ValidationResult TestEntry(object value)
-        {
-            return this.IsValid(value, new ValidationContext(value) { DisplayName = "Mock-display-name" });
         }
     }
 }

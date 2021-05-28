@@ -34,7 +34,7 @@ update()
     observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
     probe_code="$infs_code/src/WebServices/Infrastructure/Probe"
     stargate_code="$infs_code/src/WebServices/Infrastructure/Stargate"
-    wrapgate_code="$infs_code/src/WebServices/Infrastructure/Wrapgate"
+    warpgate_code="$infs_code/src/WebServices/Infrastructure/Warpgate"
     www_code="$infs_code/src/WebServices/Business/WWW"
     wiki_code="$infs_code/src/WebServices/Business/Wiki"
     status_code="$infs_code/src/WebServices/Business/Status"
@@ -47,7 +47,7 @@ update()
     observer_path="$infs_path/Observer"
     probe_path="$infs_path/Probe"
     stargate_path="$infs_path/Stargate"
-    wrapgate_path="$infs_path/Wrapgate"
+    warpgate_path="$infs_path/Warpgate"
     www_path="$infs_path/WWW"
     wiki_path="$infs_path/Wiki"
     status_path="$infs_path/Status"
@@ -69,8 +69,8 @@ update()
     systemctl stop "gateway.service"
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
 
-    systemctl stop "wrapgate.service"
-    aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj"
+    systemctl stop "warpgate.service"
+    aiur dotnet/publish $warpgate_path $warpgate_code/"Aiursoft.Warpgate.csproj"
 
     systemctl stop "observer.service"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
@@ -101,7 +101,7 @@ update()
     echo "Starting infrastructurs..."
     systemctl restart "probe.service"
     systemctl restart "stargate.service"
-    systemctl restart "wrapgate.service"
+    systemctl restart "warpgate.service"
     systemctl restart "observer.service"
     sleep 30
     
@@ -113,7 +113,7 @@ update()
     echo "Starting business services..."
     systemctl restart "www.service"
     systemctl restart "account.service"
-    systemctl restart "wrap.service"
+    systemctl restart "warp.service"
     systemctl restart "ee.service"
     systemctl restart "wiki.service"
     sleep 30

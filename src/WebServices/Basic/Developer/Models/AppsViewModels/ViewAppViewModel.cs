@@ -9,8 +9,8 @@ using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
-using Aiursoft.Wrapgate.SDK.Models;
-using Aiursoft.Wrapgate.SDK.Services.ToWrapgateServer;
+using Aiursoft.Warpgate.SDK.Models;
+using Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -150,7 +150,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
         public IEnumerable<Site> Sites { get; set; }
         public IEnumerable<LogCollection> ErrorLogs { get; set; }
         public IEnumerable<Channel> Channels { get; set; }
-        public IEnumerable<WrapRecord> Records { get; set; }
+        public IEnumerable<WarpRecord> Records { get; set; }
         public bool Trusted { get; internal set; }
         public AiurPagedCollection<Grant> Grants { get; set; }
     }

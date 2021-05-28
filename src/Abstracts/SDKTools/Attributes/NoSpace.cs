@@ -2,15 +2,15 @@
 
 namespace Aiursoft.SDKTools.Attributes
 {
-    public class NoSpace : ValidationAttribute
+    public class NoSpace : TestableValidationAttribute
     {
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
-                return !val.Contains(" ");
+                return !val.Contains(" ") && !val.Contains("\r") && !val.Contains("\n");
             }
-            return true;
+            return false;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
