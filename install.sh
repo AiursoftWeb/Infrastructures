@@ -17,8 +17,8 @@ observerAppId=$(uuidgen)
 observerAppSecret=$(uuidgen)
 probeAppId=$(uuidgen)
 probeAppSecret=$(uuidgen)
-wrapgateAppId=$(uuidgen)
-wrapgateAppSecret=$(uuidgen)
+warpgateAppId=$(uuidgen)
+warpgateAppSecret=$(uuidgen)
 wwwAppId=$(uuidgen)
 wwwAppSecret=$(uuidgen)
 wikiAppId=$(uuidgen)
@@ -36,7 +36,7 @@ developer_code="$infs_code/src/WebServices/Basic/Developer"
 observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
 probe_code="$infs_code/src/WebServices/Infrastructure/Probe"
 stargate_code="$infs_code/src/WebServices/Infrastructure/Stargate"
-wrapgate_code="$infs_code/src/WebServices/Infrastructure/Wrapgate"
+warpgate_code="$infs_code/src/WebServices/Infrastructure/Warpgate"
 www_code="$infs_code/src/WebServices/Business/WWW"
 wiki_code="$infs_code/src/WebServices/Business/Wiki"
 status_code="$infs_code/src/WebServices/Business/Status"
@@ -49,7 +49,7 @@ developer_path="$infs_path/Developer"
 observer_path="$infs_path/Observer"
 probe_path="$infs_path/Probe"
 stargate_path="$infs_path/Stargate"
-wrapgate_path="$infs_path/Wrapgate"
+warpgate_path="$infs_path/Warpgate"
 www_path="$infs_path/WWW"
 wiki_path="$infs_path/Wiki"
 status_path="$infs_path/Status"
@@ -66,12 +66,12 @@ set_env()
     aiur text/edit_json "ConnectionStrings.StargateConnection" "https://stargate.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ProbeConnection" "https://probe.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.WrapgateConnection" "https://wrapgate.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.WarpgateConnection" "https://warpgate.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.DeveloperPath" "https://developer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.GatewayPath" "https://gateway.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.AccountPath" "https://account.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.UIPath" "https://ui.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "Dependencies.WrapPath" "https://wrap.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "Dependencies.WarpPath" "https://warp.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.EEPath" "https://ee.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.WikiPath" "https://wiki.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.WWWPath" "https://www.$domain" $dist_path/appsettings.Production.json
@@ -147,7 +147,7 @@ install_infrastructures()
     aiur dotnet/seeddb $observer_code "Observer" $dbPassword
     aiur dotnet/seeddb $probe_code "Probe" $dbPassword
     aiur dotnet/seeddb $stargate_code "Stargate" $dbPassword
-    aiur dotnet/seeddb $wrapgate_code "Wrapgate" $dbPassword
+    aiur dotnet/seeddb $warpgate_code "Warpgate" $dbPassword
     aiur dotnet/seeddb $www_code "WWW" $dbPassword
     aiur dotnet/seeddb $wiki_code "Wiki" $dbPassword
     aiur dotnet/seeddb $status_code "Status" $dbPassword
@@ -160,7 +160,7 @@ install_infrastructures()
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
     aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
     aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj"
-    aiur dotnet/publish $wrapgate_path $wrapgate_code/"Aiursoft.Wrapgate.csproj"
+    aiur dotnet/publish $warpgate_path $warpgate_code/"Aiursoft.Warpgate.csproj"
     aiur dotnet/publish $www_path $www_code/"Aiursoft.WWW.csproj"
     aiur dotnet/publish $wiki_path $wiki_code/"Aiursoft.Wiki.csproj"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
@@ -175,7 +175,7 @@ install_infrastructures()
     set_env $observer_path $1
     set_env $probe_path $1
     set_env $stargate_path $1
-    set_env $wrapgate_path $1
+    set_env $warpgate_path $1
     set_env $www_path $1
     set_env $wiki_path $1
     set_env $status_path $1
@@ -191,8 +191,8 @@ install_infrastructures()
     aiur text/edit_json "DownloadPattern" "https://probe.$1/download/file/{0}" $probe_path/appsettings.Production.json
     aiur text/edit_json "PlayerPattern" "https://probe.$1/download/video/{0}" $probe_path/appsettings.Production.json
     aiur text/edit_json "StargateEndpoint" "https://stargate.$1" $stargate_path/appsettings.Production.json
-    aiur text/edit_json "WrapgateEndpoint" "https://wrapgate.$1" $wrapgate_path/appsettings.Production.json
-    aiur text/edit_json "WrapPattern" "https://wrapgate.$1/wrap/{wrap}" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WarpgateEndpoint" "https://warpgate.$1" $warpgate_path/appsettings.Production.json
+    aiur text/edit_json "WarpPattern" "https://warpgate.$1/warp/{warp}" $warpgate_path/appsettings.Production.json
     aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
     aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
     aiur text/edit_json "ArchonAppId" "$archonAppId" $archon_path/appsettings.Production.json
@@ -207,10 +207,10 @@ install_infrastructures()
     aiur text/edit_json "ObserverAppSecret" "$observerAppSecret" $observer_path/appsettings.Production.json
     aiur text/edit_json "ProbeAppId" "$probeAppId" $probe_path/appsettings.Production.json
     aiur text/edit_json "ProbeAppSecret" "$probeAppSecret" $probe_path/appsettings.Production.json
-    aiur text/edit_json "WrapgateAppId" "$wrapgateAppId" $wrapgate_path/appsettings.Production.json
-    aiur text/edit_json "WrapgateAppSecret" "$wrapgateAppSecret" $wrapgate_path/appsettings.Production.json
+    aiur text/edit_json "WarpgateAppId" "$warpgateAppId" $warpgate_path/appsettings.Production.json
+    aiur text/edit_json "WarpgateAppSecret" "$warpgateAppSecret" $warpgate_path/appsettings.Production.json
     aiur text/edit_json "Navbar[1].Link" "https://drive.$1" $www_path/appsettings.Production.json
-    aiur text/edit_json "Navbar[2].Link" "https://wrap.$1" $www_path/appsettings.Production.json
+    aiur text/edit_json "Navbar[2].Link" "https://warp.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "Navbar[4].Dropdowns[0].Link" "https://wiki.$1" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppId" "$wwwAppId" $www_path/appsettings.Production.json
     aiur text/edit_json "WWWAppSecret" "$wwwAppSecret" $www_path/appsettings.Production.json
@@ -241,8 +241,8 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{observerAppSecret}}" $observerAppSecret
     replace_in_file ./temp.sql "{{probeAppId}}" $probeAppId
     replace_in_file ./temp.sql "{{probeAppSecret}}" $probeAppSecret
-    replace_in_file ./temp.sql "{{wrapgateAppId}}" $wrapgateAppId
-    replace_in_file ./temp.sql "{{wrapgateAppSecret}}" $wrapgateAppSecret
+    replace_in_file ./temp.sql "{{warpgateAppId}}" $warpgateAppId
+    replace_in_file ./temp.sql "{{warpgateAppSecret}}" $warpgateAppSecret
     replace_in_file ./temp.sql "{{wikiAppId}}" $wikiAppId
     replace_in_file ./temp.sql "{{wikiAppSecret}}" $wikiAppSecret
     replace_in_file ./temp.sql "{{wwwAppId}}" $wwwAppId
@@ -261,7 +261,7 @@ install_infrastructures()
     add_service "observer" $observer_path "Aiursoft.Observer" $1
     add_service "probe" $probe_path "Aiursoft.Probe" $1
     add_service "stargate" $stargate_path "Aiursoft.Stargate" $1
-    add_service "wrapgate" $wrapgate_path "Aiursoft.Wrapgate" $1
+    add_service "warpgate" $warpgate_path "Aiursoft.Warpgate" $1
     add_service "www" $www_path "Aiursoft.WWW" $1
     add_service "wiki" $wiki_path "Aiursoft.Wiki" $1
     add_service "status" $status_path "Aiursoft.Status" $1

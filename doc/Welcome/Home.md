@@ -27,7 +27,7 @@ If you want to write an app which depends on its API services, please read:
 * [Storage System](../Integrated%20Website/Getting%20Started.md)
 * [Push System](../Stargate/What%20is%20Stargate.md)
 * [Error Tracking System](../Error%20tracking/Event.md)
-* [Redirect System](../Wrapgate/Records.md)
+* [Redirect System](../Warpgate/Records.md)
 
 ## Contribute to Aiursoft
 

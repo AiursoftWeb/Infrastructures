@@ -5,7 +5,7 @@ using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Wrapgate.SDK;
+using Aiursoft.Warpgate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -35,7 +35,7 @@ namespace Aiursoft.Developer
                 .AddDefaultTokenProviders();
             services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
             services.AddAiurMvc();
-            services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
+            services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
             services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
             services.AddAiursoftIdentity<DeveloperUser>(
                 archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
