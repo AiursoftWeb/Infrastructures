@@ -52,9 +52,9 @@
         "docAPIAddress": "https://developer.{{rootDomain}}/doc"
     },
     {
-        "collectionTitle": "Wrapgate",
+        "collectionTitle": "Warpgate",
         "articles": [],
-        "docAPIAddress": "https://wrapgate.{{rootDomain}}/doc"
+        "docAPIAddress": "https://warpgate.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "Integrated Website",

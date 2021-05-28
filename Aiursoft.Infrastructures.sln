@@ -77,9 +77,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Observer.SDK", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Status", "src\WebServices\Business\Status\Aiursoft.Status.csproj", "{08B3F8D4-DD14-42D4-B276-4155D3E116A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wrapgate", "src\WebServices\Infrastructure\Wrapgate\Aiursoft.Wrapgate.csproj", "{DAD46BA5-09C8-49AE-9119-5179AAD718F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Warpgate", "src\WebServices\Infrastructure\Warpgate\Aiursoft.Warpgate.csproj", "{DAD46BA5-09C8-49AE-9119-5179AAD718F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wrapgate.SDK", "src\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj", "{1022A5E1-3334-4988-A056-BF9F57456028}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Warpgate.SDK", "src\Infrastructure\Warpgate.SDK\Aiursoft.Warpgate.SDK.csproj", "{1022A5E1-3334-4988-A056-BF9F57456028}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97502EDA-8E78-490B-A1CF-8E012735826B}"
 EndProject
@@ -101,7 +101,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.SDK.Tests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.Tests", "tests\functionalTests\Aiursoft.Probe.Tests\Aiursoft.Probe.Tests.csproj", "{AC49715F-04E4-4DBE-B4CE-2D9F5FD1B484}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Wrapgate.Tests", "tests\functionalTests\Aiursoft.Wrapgate.Tests\Aiursoft.Wrapgate.Tests.csproj", "{5D8FA7AE-30A2-4536-86A2-4EDD07753314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Warpgate.Tests", "tests\functionalTests\Aiursoft.Warpgate.Tests\Aiursoft.Warpgate.Tests.csproj", "{5D8FA7AE-30A2-4536-86A2-4EDD07753314}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34C5A675-D47B-41E2-B28B-F60BC738AF16}"
 	ProjectSection(SolutionItems) = preProject

@@ -10,6 +10,6 @@
 		<ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
 		<ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
 		<ProjectReference Include="..\..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />
-		<ProjectReference Include="..\..\..\Infrastructure\Wrapgate.SDK\Aiursoft.Wrapgate.SDK.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Warpgate.SDK\Aiursoft.Warpgate.SDK.csproj" />
 	</ItemGroup>
 </Project>

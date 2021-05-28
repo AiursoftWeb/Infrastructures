@@ -6,7 +6,7 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.Data;
-using Aiursoft.Wrapgate.SDK;
+using Aiursoft.Warpgate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +35,7 @@ namespace Aiursoft.Status
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
             services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-            services.AddWrapgateServer(Configuration.GetConnectionString("WrapgateConnection"));
+            services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
             services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
 
             services.AddAiursoftSDK();

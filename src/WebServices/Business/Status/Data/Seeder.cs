@@ -8,7 +8,7 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
-using Aiursoft.Wrapgate.SDK.Services;
+using Aiursoft.Warpgate.SDK.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +22,7 @@ namespace Aiursoft.Status.Data
         private readonly DeveloperLocator developerLocator;
         private readonly ArchonLocator archonLocator;
         private readonly ProbeLocator probeLocator;
-        private readonly WrapgateLocator wrapgateLocator;
+        private readonly WarpgateLocator warpgateLocator;
         private readonly StatusDbContext dbContext;
 
         public Seeder(
@@ -32,7 +32,7 @@ namespace Aiursoft.Status.Data
             DeveloperLocator developerLocator,
             ArchonLocator archonLocator,
             ProbeLocator probeLocator,
-            WrapgateLocator wrapgateLocator,
+            WarpgateLocator warpgateLocator,
             StatusDbContext dbContext)
         {
             this.serviceLocation = serviceLocation;
@@ -41,7 +41,7 @@ namespace Aiursoft.Status.Data
             this.developerLocator = developerLocator;
             this.archonLocator = archonLocator;
             this.probeLocator = probeLocator;
-            this.wrapgateLocator = wrapgateLocator;
+            this.warpgateLocator = warpgateLocator;
             this.dbContext = dbContext;
         }
 
@@ -111,14 +111,14 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Wrapgate",
-                    CheckAddress = wrapgateLocator.Endpoint,
+                    ProjectName = "Aiursoft Warpgate",
+                    CheckAddress = warpgateLocator.Endpoint,
                     ExpectedContent = "Welcome"
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Wrap",
-                    CheckAddress = $"{serviceLocation.Wrap}",
+                    ProjectName = "Aiursoft Warp",
+                    CheckAddress = $"{serviceLocation.Warp}",
                     ExpectedContent = "shorten your URL"
                 },
                 new MonitorRule
