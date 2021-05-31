@@ -172,7 +172,10 @@ namespace Aiursoft.Probe.Controllers
                 return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
             }
             
-            var newFileName = _folderSplitter.GetValidFileName(sourceFolder.Files.Select(t => t.FileName), model.TargetFileName);
+            var newFileName = _folderSplitter.GetValidFileName(existingFileNames: sourceFolder
+                .Files
+                .Where(t => t.Id != file.Id)
+                .Select(t => t.FileName), expectedFileName: model.TargetFileName);
             await _fileRepo.UpdateName(file.Id , newFileName);
 
             var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', sourceFileName), newFileName);
