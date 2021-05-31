@@ -117,12 +117,6 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft Warp",
-                    CheckAddress = $"{serviceLocation.Warp}",
-                    ExpectedContent = "shorten your URL"
-                },
-                new MonitorRule
-                {
                     ProjectName = "Aiursoft UI",
                     CheckAddress = $"{serviceLocation.UI}/index.html",
                     ExpectedContent = "Welcome"

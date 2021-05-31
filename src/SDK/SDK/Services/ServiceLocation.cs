@@ -18,7 +18,6 @@ namespace Aiursoft.SDK.Services
         public string Gateway { get; private set; }
         public string EE { get; private set; }
         public string Wiki { get; private set; }
-        public string Warp { get; private set; }
         public string WWW { get; private set; }
         public string Status { get; private set; }
 
@@ -30,7 +29,6 @@ namespace Aiursoft.SDK.Services
             var section = configuration.GetSection("Dependencies");
             Account = TrySet(section["AccountPath"], "https://account.aiursoft.com");
             UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
-            Warp = TrySet(section["WarpPath"], "https://warp.aiursoft.com");
             Gateway = TrySet(section["GatewayPath"], "https://gateway.aiursoft.com");
             Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
             EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
