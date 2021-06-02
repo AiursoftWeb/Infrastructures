@@ -5,7 +5,6 @@ namespace Aiursoft.Status.Models
 {
     public class MonitorRule : ISyncable<MonitorRule>
     {
-        public int Id { get; set; }
         public string ProjectName { get; set; }
         public string CheckAddress { get; set; }
         public bool LastHealthStatus { get; set; }

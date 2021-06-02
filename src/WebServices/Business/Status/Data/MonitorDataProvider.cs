@@ -1,6 +1,4 @@
 ﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.DBTools;
-using Aiursoft.DBTools.Models;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Probe.SDK.Services;
@@ -9,12 +7,13 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Aiursoft.Status.Data
 {
-    public class Seeder : IScopedDependency, ISeeder
+    public class MonitorDataProvider : ISingletonDependency
     {
         private readonly ServiceLocation serviceLocation;
         private readonly ObserverLocator observerLocator;
@@ -23,9 +22,11 @@ namespace Aiursoft.Status.Data
         private readonly ArchonLocator archonLocator;
         private readonly ProbeLocator probeLocator;
         private readonly WarpgateLocator warpgateLocator;
-        private readonly StatusDbContext dbContext;
+        private readonly List<MonitorRule> customRules;
 
-        public Seeder(
+        public IReadOnlyCollection<MonitorRule> MonitorRules { get; init; }
+
+        public MonitorDataProvider(
             ServiceLocation serviceLocation,
             ObserverLocator observerLocator,
             StargateLocator stargateLocator,
@@ -33,7 +34,7 @@ namespace Aiursoft.Status.Data
             ArchonLocator archonLocator,
             ProbeLocator probeLocator,
             WarpgateLocator warpgateLocator,
-            StatusDbContext dbContext)
+            IOptions<List<MonitorRule>> customRules)
         {
             this.serviceLocation = serviceLocation;
             this.observerLocator = observerLocator;
@@ -42,22 +43,17 @@ namespace Aiursoft.Status.Data
             this.archonLocator = archonLocator;
             this.probeLocator = probeLocator;
             this.warpgateLocator = warpgateLocator;
-            this.dbContext = dbContext;
+            this.customRules = customRules.Value;
+            MonitorRules = BuildDefaultRules().ToArray();
         }
 
-        public void Seed()
+        private IEnumerable<MonitorRule> BuildDefaultRules()
         {
-            dbContext.MonitorRules.Sync(GetRules().ToList());
-            dbContext.SaveChanges();
-        }
-
-        public IEnumerable<MonitorRule> GetRules()
-        {
-            return new List<MonitorRule>
+            var defaultList = new List<MonitorRule>
             {
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft home page",
+                    ProjectName = "Aiursoft Home Page",
                     CheckAddress = $"{serviceLocation.WWW}/?show=direct",
                     ExpectedContent = "Free training, tools, and community to help you grow your skills, career, or business."
                 },
@@ -99,7 +95,7 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft wiki center",
+                    ProjectName = "Aiursoft Wiki",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
                     ExpectedContent = "Wiki Center"
                 },
@@ -122,6 +118,8 @@ namespace Aiursoft.Status.Data
                     ExpectedContent = "Welcome"
                 }
             };
+            defaultList.AddRange(customRules);
+            return defaultList;
         }
     }
 }

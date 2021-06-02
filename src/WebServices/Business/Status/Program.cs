@@ -1,5 +1,3 @@
-using Aiursoft.SDK;
-using Aiursoft.Status.Data;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 
@@ -9,7 +7,7 @@ namespace Aiursoft.Status
     {
         public static void Main(string[] args)
         {
-            App<Startup>(args).Update<StatusDbContext>().Run();
+            App<Startup>(args).Run();
         }
 
         // For EF
