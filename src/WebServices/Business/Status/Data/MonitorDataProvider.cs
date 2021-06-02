@@ -9,12 +9,13 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Aiursoft.Status.Data
 {
-    public class Seeder : IScopedDependency, ISeeder
+    public class MonitorDataProvider : ISingletonDependency
     {
         private readonly ServiceLocation serviceLocation;
         private readonly ObserverLocator observerLocator;
@@ -23,17 +24,17 @@ namespace Aiursoft.Status.Data
         private readonly ArchonLocator archonLocator;
         private readonly ProbeLocator probeLocator;
         private readonly WarpgateLocator warpgateLocator;
-        private readonly StatusDbContext dbContext;
 
-        public Seeder(
+        public IReadOnlyCollection<MonitorRule> MonitorRules { get; init; }
+
+        public MonitorDataProvider(
             ServiceLocation serviceLocation,
             ObserverLocator observerLocator,
             StargateLocator stargateLocator,
             DeveloperLocator developerLocator,
             ArchonLocator archonLocator,
             ProbeLocator probeLocator,
-            WarpgateLocator warpgateLocator,
-            StatusDbContext dbContext)
+            WarpgateLocator warpgateLocator)
         {
             this.serviceLocation = serviceLocation;
             this.observerLocator = observerLocator;
@@ -42,16 +43,10 @@ namespace Aiursoft.Status.Data
             this.archonLocator = archonLocator;
             this.probeLocator = probeLocator;
             this.warpgateLocator = warpgateLocator;
-            this.dbContext = dbContext;
+            MonitorRules = BuildDefaultRules().ToArray();
         }
 
-        public void Seed()
-        {
-            dbContext.MonitorRules.Sync(GetRules().ToList());
-            dbContext.SaveChanges();
-        }
-
-        public IEnumerable<MonitorRule> GetRules()
+        private IEnumerable<MonitorRule> BuildDefaultRules()
         {
             return new List<MonitorRule>
             {

@@ -28,8 +28,6 @@ namespace Aiursoft.Status
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-
             services.AddAiurMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
@@ -37,7 +35,6 @@ namespace Aiursoft.Status
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
             services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
-
             services.AddAiursoftSDK();
         }
 

@@ -9,7 +9,7 @@ namespace Aiursoft.Status
     {
         public static void Main(string[] args)
         {
-            App<Startup>(args).Update<StatusDbContext>().Run();
+            App<Startup>(args).Run();
         }
 
         // For EF
