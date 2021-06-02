@@ -9,6 +9,7 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
+using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace Aiursoft.Status.Data
         private readonly ArchonLocator archonLocator;
         private readonly ProbeLocator probeLocator;
         private readonly WarpgateLocator warpgateLocator;
+        private readonly List<MonitorRule> customRules;
 
         public IReadOnlyCollection<MonitorRule> MonitorRules { get; init; }
 
@@ -34,7 +36,8 @@ namespace Aiursoft.Status.Data
             DeveloperLocator developerLocator,
             ArchonLocator archonLocator,
             ProbeLocator probeLocator,
-            WarpgateLocator warpgateLocator)
+            WarpgateLocator warpgateLocator,
+            IOptions<List<MonitorRule>> customRules)
         {
             this.serviceLocation = serviceLocation;
             this.observerLocator = observerLocator;
@@ -43,16 +46,17 @@ namespace Aiursoft.Status.Data
             this.archonLocator = archonLocator;
             this.probeLocator = probeLocator;
             this.warpgateLocator = warpgateLocator;
+            this.customRules = customRules.Value;
             MonitorRules = BuildDefaultRules().ToArray();
         }
 
         private IEnumerable<MonitorRule> BuildDefaultRules()
         {
-            return new List<MonitorRule>
+            var defaultList = new List<MonitorRule>
             {
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft home page",
+                    ProjectName = "Aiursoft Home Page",
                     CheckAddress = $"{serviceLocation.WWW}/?show=direct",
                     ExpectedContent = "Free training, tools, and community to help you grow your skills, career, or business."
                 },
@@ -94,7 +98,7 @@ namespace Aiursoft.Status.Data
                 },
                 new MonitorRule
                 {
-                    ProjectName = "Aiursoft wiki center",
+                    ProjectName = "Aiursoft Wiki",
                     CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
                     ExpectedContent = "Wiki Center"
                 },
@@ -117,6 +121,8 @@ namespace Aiursoft.Status.Data
                     ExpectedContent = "Welcome"
                 }
             };
+            defaultList.AddRange(customRules);
+            return defaultList;
         }
     }
 }
