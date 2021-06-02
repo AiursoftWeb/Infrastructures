@@ -5,7 +5,6 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Status.Data;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK;
 using Microsoft.AspNetCore.Builder;

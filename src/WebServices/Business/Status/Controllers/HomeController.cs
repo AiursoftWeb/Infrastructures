@@ -1,8 +1,6 @@
 ﻿using Aiursoft.Status.Data;
 using Aiursoft.Status.Models.HomeViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Status.Controllers
 {
