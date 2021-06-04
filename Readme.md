@@ -10,15 +10,15 @@ Aiursoft micro-services platform. Powered by ASP.NET Core.
 
 ## What is Aiursoft Infrastructures
 
-Aiursoft Infrastructures provides many useful services and simplifies web application development.
+Aiursoft Infrastructures provides many valuable services and simplifies web application development.
 
-Aiursoft Infrastructures is a project, runs in the application level, using micro-services design and powers all Aiursoft applications.
+Aiursoft Infrastructures is a project, runs at the application level, using micro-services design and powers all Aiursoft applications.
 
 ![overview](./doc/overview.png)
 
 Aiursoft Infrastructures provides a central platform for an entire enterprise. So the enterprise can focus on business app development.
 
-The enterprise can deploy their own dedicated instance of Aiursoft Infrastructures and build their apps with it.
+The enterprise can deploy their dedicated instance of Aiursoft Infrastructures and build their apps with it.
 
 ## Example apps
 
@@ -33,13 +33,13 @@ There are some example apps based on Aiursoft Infrastructures.
 
 * Integrated user authentication https://gateway.aiursoft.com (OAuth, Social authenticate, password reset)
 * Integrated app authentication https://archon.aiursoft.com (Token assign, token validation, app authorization)
-* Account management center https://account.aiursoft.com (Profile editting, Two-FA, social account, switch email)
+* Account management center https://account.aiursoft.com (Profile editing, Two-FA, social account, switch email)
 * Developer center https://developer.aiursoft.com (App creation and permission management, basic debugging tools)
 * File storage system https://probe.aiursoft.com (Compress, Clear EXIF, customize domain-name)
 * Message queue https://stargate.aiursoft.com (Auto message clear, WebSocket push, channel authentication)
 * Home web page https://www.aiursoft.com (Terms, privacy)
 * Wiki center https://wiki.aiursoft.com (Read document)
-* Cross-platform deployment (Supports Windows, Linux, and docker)
+* Cross-platform deployment (Supports Windows, Linux, and Docker)
 
 ## How to deploy
 
@@ -60,9 +60,9 @@ Get a brand new Ubuntu 18.04 server.
 
 [Azure](https://www.azure.com), [Vultr](https://www.vultr.com/?ref=7274488) or [DigitalOcean](https://www.DigitalOcean.com) is suggested.
 
-### Install on server
+### Install on a server
 
-Create a wildcard domian record to your server's public IP.
+Create a wildcard domain record to your server's public IP.
 
 > Example: Resolve *.aiur.io to 123.123.123.123
 
@@ -80,7 +80,7 @@ If we released a newer version, and you can upgrade your server via:
 $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
 
-Also you can run that upgrade script to repair some issues with your Infrastructures instance.
+Also, you can run that upgrade script to repair some issues with your Infrastructures instance.
 
 ## The design of Infrastructures
 
@@ -94,19 +94,19 @@ Infrastructure refers to some common software tools that the platform can provid
 
 ### Applications
 
-Before discussing the user service layer, all of the underlying services and infrastructure we discussed were oriented toward other subservices rather than user-oriented, but only provided data interfaces for other service calls. Obviously, as a mature platform, developers and users should not implement the registration of services and the management of permissions by calling interfaces. Therefore, we need to develop additional programs that provide such a user-oriented terminal that allows users to operate through a concise interface and logic.
+Before discussing the user service layer, all of the underlying services and infrastructure we discussed were oriented toward other sub-services rather than user-oriented. Still, they only provided data interfaces for other service calls. Obviously, as a mature platform, developers and users should not implement the registration of services and the management of permissions by calling interfaces. Therefore, we need to develop additional programs that provide such a user-oriented terminal that allows users to operate through a concise interface and logic.
 
-In addition to the user interface that OAuth itself needs to provide login, this layer should also provide a more basic service in the microservice platform. According to the results of the needs analysis, there are account management services and developer center services in this layer. Both services rely on the infrastructure of the previous layer and provide user-oriented functionality.
+In addition to the user interface that OAuth itself needs to provide login, this layer should also provide more basic service in the microservice platform. According to the results of the needs analysis, there are account management services and developer center services in this layer. Both services rely on the infrastructure of the previous layer and provide user-oriented functionality.
 
 Any high-level service is built on the micro-service platform. But the requirements they solve are actually based on the decisions of the companies that use the microservices platform. In other words, regardless of the company's decision-making to build search engines, forums, company homepages, feedback centers, recruitment centers, etc., the platform should be able to support. But the entire process of this part should follow the process followed by a separate software system.
 
 ## How to run locally
 
-Running the entire micro-service platform is very very complicated and requires a lot of computing resources. Before you try to run the platform, we strongly suggest running only one specific service. Running one service is very easy and simple.
+Running the entire micro-service platform is very complicated and requires a lot of computing resources. Before you try to run the platform, we strongly suggest running only one specific service. Running one service is very easy and simple.
 
-To run one service instance locally, simply execute `dotnet run` under which folder with the project file `.csproj` you want to run.
+To run one service instance locally, execute `dotnet run` under which folder with the project file `.csproj` you want to run.
 
-As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference for more documents via the official ASP.NET document for how to run:
+As for each one of the sub-projects in it is a simple ASP.NET Core web project. You can reference more documents via the official ASP.NET document for how to run:
 
 https://docs.microsoft.com/en-us/aspnet/core/getting-started/?tabs=windows#run-the-app
 
@@ -116,7 +116,7 @@ In debugging environment, we are using [Microsoft SQL Server LocalDb](https://do
 
 In our production environment, we are using [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server).
 
-We are using [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) to control our database. It supports different type of database. So our services can switch between different databases easily.
+We are using [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) to control our database. It supports different types of databases. So our services can switch between different databases easily.
 
 ## How to contribute
 
