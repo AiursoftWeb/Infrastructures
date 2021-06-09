@@ -1,23 +1,21 @@
 ﻿using Aiursoft.Status.Data;
 using Aiursoft.Status.Models.HomeViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Aiursoft.Status.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly StatusDbContext _dbContext;
+        private readonly MonitorDataProvider dataProvider;
 
-        public HomeController(StatusDbContext dbContext)
+        public HomeController(MonitorDataProvider dbContext)
         {
-            _dbContext = dbContext;
+            dataProvider = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var data = await _dbContext.MonitorRules.ToListAsync();
+            var data = dataProvider.MonitorRules;
             var model = new IndexViewModel
             {
                 Data = data

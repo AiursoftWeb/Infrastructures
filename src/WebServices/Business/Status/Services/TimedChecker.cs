@@ -3,7 +3,6 @@ using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -46,7 +45,7 @@ namespace Aiursoft.Status.Services
                 _logger.LogInformation("Cleaner task started!");
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<StatusDbContext>();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<MonitorDataProvider>();
                     var http = scope.ServiceProvider.GetRequiredService<HttpService>();
                     await AllCheck(dbContext, http);
                 }
@@ -58,10 +57,9 @@ namespace Aiursoft.Status.Services
             }
         }
 
-        private async Task AllCheck(StatusDbContext dbContext, HttpService http)
+        private async Task AllCheck(MonitorDataProvider dbContext, HttpService http)
         {
-            var items = await dbContext.MonitorRules.ToListAsync();
-            foreach (var item in items)
+            foreach (var item in dbContext.MonitorRules)
             {
                 _logger.LogInformation($"Checking status for: {item.ProjectName}");
                 try
@@ -75,7 +73,6 @@ namespace Aiursoft.Status.Services
                     }
                     item.LastHealthStatus = success;
                     item.LastCheckTime = DateTime.UtcNow;
-                    dbContext.Update(item);
                 }
                 catch (Exception e)
                 {
@@ -83,10 +80,6 @@ namespace Aiursoft.Status.Services
                     _logger.LogError(errorMessage);
                     item.LastHealthStatus = false;
                     item.LastCheckTime = DateTime.UtcNow;
-                }
-                finally
-                {
-                    await dbContext.SaveChangesAsync();
                 }
             }
         }

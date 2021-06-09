@@ -5,13 +5,14 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Status.Data;
+using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace Aiursoft.Status
 {
@@ -28,8 +29,7 @@ namespace Aiursoft.Status
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextWithCache<StatusDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-
+            services.Configure<List<MonitorRule>>(Configuration.GetSection("CustomRules"));
             services.AddAiurMvc();
             services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
             services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
@@ -37,7 +37,6 @@ namespace Aiursoft.Status
             services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
             services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
             services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
-
             services.AddAiursoftSDK();
         }
 
