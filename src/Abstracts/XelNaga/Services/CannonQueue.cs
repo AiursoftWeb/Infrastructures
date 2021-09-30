@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Services
@@ -24,20 +25,20 @@ namespace Aiursoft.XelNaga.Services
             _logger = logger;
         }
 
-        public void QueueNew(Func<Task> taskFactory)
+        public void QueueNew(Func<Task> taskFactory, bool startTheEngine = true)
         {
             _pendingTaskFactories.Enqueue(taskFactory);
-            Task.Factory.StartNew(() => 
+            if (startTheEngine)
             {
                 lock (loc)
                 {
                     if (_engine.IsCompleted)
                     {
-                        Console.WriteLine("Engine is sleeping. Trying to wake it up.");
+                        this._logger.LogDebug("Engine is sleeping. Trying to wake it up.");
                         _engine = RunTasksInQueue();
                     }
                 }
-            });
+            }
         }
 
         public void QueueWithDependency<T>(Func<T, Task> bullet)
@@ -59,19 +60,21 @@ namespace Aiursoft.XelNaga.Services
             });
         }
 
-        private async Task RunTasksInQueue(int maxDegreeOfParallelism = 8)
+        public async Task RunTasksInQueue(int maxDegreeOfParallelism = 8)
         {
             var tasksInFlight = new List<Task>(maxDegreeOfParallelism);
-            while (_pendingTaskFactories.Any())
+            while (_pendingTaskFactories.Any() || tasksInFlight.Any())
             {
                 while (tasksInFlight.Count < maxDegreeOfParallelism && _pendingTaskFactories.Any())
                 {
                     Func<Task> taskFactory = _pendingTaskFactories.Dequeue();
                     tasksInFlight.Add(taskFactory());
+                    this._logger.LogDebug($"Engine selected one job to run. Currently there are still {_pendingTaskFactories.Count()} jobs remaining. {tasksInFlight.Count} jobs running.");
                 }
 
                 Task completedTask = await Task.WhenAny(tasksInFlight).ConfigureAwait(false);
                 await completedTask.ConfigureAwait(false);
+                this._logger.LogInformation($"Engine finished one job. Currently there are still {_pendingTaskFactories.Count()} jobs remaining. {tasksInFlight.Count} jobs running.");
                 tasksInFlight.Remove(completedTask);
             }
         }

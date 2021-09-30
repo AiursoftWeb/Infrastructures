@@ -30,6 +30,12 @@ namespace Aiursoft.XelNaga.Services
             throw new NotImplementedException("Code shall not reach here.");
         }
 
+        /// <summary>
+        /// Run with retry. This is only a light-weight method for pool retry. For complicated requirements with dependency, please consider RetryEngine.
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="times"></param>
+        /// <param name="onError"></param>
         public static void TryAsync(Func<Task> taskFactory, int times, Action<Exception> onError = null)
         {
             for (var i = 1; i <= times; i++)
@@ -110,6 +116,14 @@ namespace Aiursoft.XelNaga.Services
             => Task.WhenAll(items
                 .Select(function));
 
+        /// <summary>
+        /// Foreach in a threads pool. This is only a light-weight method for pool a threading. For complicated requirements with dependency, please consider CannonQueue.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="function"></param>
+        /// <param name="maxDegreeOfParallelism"></param>
+        /// <returns></returns>
         public static Task ForEachInThreadsPool<T>(this IEnumerable<T> items, Func<T, Task> function, int maxDegreeOfParallelism = 8)
             => InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);
     }
