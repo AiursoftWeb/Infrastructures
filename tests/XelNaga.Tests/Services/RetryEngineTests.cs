@@ -1,9 +1,10 @@
-﻿using Aiursoft.SDKTools.Services;
+﻿using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
 
-namespace Aiursoft.SDKTools.Tests
+namespace Aiursoft.XelNaga.Tests
 {
     // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
     [TestClass]
@@ -14,7 +15,8 @@ namespace Aiursoft.SDKTools.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            retryEngine = new RetryEngine();
+            var logger = LoggerFactory.Create(l => { }).CreateLogger<RetryEngine>();
+            retryEngine = new RetryEngine(logger);
         }
 
         [TestMethod]
