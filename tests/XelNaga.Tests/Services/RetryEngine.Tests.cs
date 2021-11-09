@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Scanner;
 using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -76,6 +75,7 @@ namespace Aiursoft.XelNaga.Tests.Services
                     return Task.FromResult(12345);
                 }, attempts: 2, when: e => e is InvalidOperationException);
 
+                Assert.AreEqual(result, 12345);
                 Assert.Fail("Shouldn't suppress NotImplementedException.");
             }
             catch (NotImplementedException)

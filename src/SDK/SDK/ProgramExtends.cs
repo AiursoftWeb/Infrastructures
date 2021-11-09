@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.SDK
 {
@@ -35,6 +36,7 @@ namespace Aiursoft.SDK
                 }, 3, (e) =>
                 {
                     logger.LogCritical(e, "Update database failed.");
+                    return Task.CompletedTask;
                 });
                 logger.LogInformation($"Updated database associated with context {typeof(TContext).Name}");
             }
