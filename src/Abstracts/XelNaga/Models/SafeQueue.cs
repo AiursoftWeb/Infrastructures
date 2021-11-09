@@ -38,10 +38,10 @@ namespace Aiursoft.XelNaga.Models
 
         public int Count()
         {
-            int count = 0;
+            int count;
             lock (loc)
             {
-                count = queue.Count();
+                count = queue.Count;
             }
             return count;
         }
