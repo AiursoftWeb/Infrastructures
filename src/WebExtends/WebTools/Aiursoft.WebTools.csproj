@@ -18,7 +18,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
+		<PackageReference Include="QRCoder" Version="1.4.2" />
 	</ItemGroup>
 
 	<ItemGroup>

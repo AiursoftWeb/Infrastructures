@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<Version>6.0.0</Version>
-	<TargetFramework>net6.0</TargetFramework>
-    <Company>Aiursoft</Company>
-    <Product>AiursoftWeb</Product>
-    <Authors>Anduin</Authors>
-    <Description>Some basic C# tools for everyone and powers Aiursoft</Description>
-    <PackageTags>base-class tools aiursoft xelnaga</PackageTags>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/XelNaga</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/XelNaga.git</RepositoryUrl>
-    <PackageIcon>xelnaga.png</PackageIcon>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="xelnaga.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<Company>Aiursoft</Company>
+		<Product>AiursoftWeb</Product>
+		<Authors>Anduin</Authors>
+		<Description>Some basic C# tools for everyone and powers Aiursoft</Description>
+		<PackageTags>base-class tools aiursoft xelnaga</PackageTags>
+		<PackageProjectUrl>https://github.com/AiursoftWeb/XelNaga</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/AiursoftWeb/XelNaga.git</RepositoryUrl>
+		<PackageIcon>xelnaga.png</PackageIcon>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="xelnaga.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
+	</ItemGroup>
 </Project>
