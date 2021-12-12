@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Scanner;
 using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -46,7 +45,7 @@ namespace Aiursoft.XelNaga.Tests.Services
                     throw new InvalidOperationException("Fake Exception.");
                 }
 
-                return Task.FromResult(12345);
+                return Task.FromResult(12343 + attempts);
             }, attempts: 2, when: e => e is InvalidOperationException);
             Assert.AreEqual(12345, result);
         }
@@ -73,9 +72,10 @@ namespace Aiursoft.XelNaga.Tests.Services
                         throw new NotImplementedException("Fake Exception.");
                     }
 
-                    return Task.FromResult(12345);
+                    return Task.FromResult(12345 + attempts);
                 }, attempts: 2, when: e => e is InvalidOperationException);
 
+                Assert.AreEqual(result, 12345);
                 Assert.Fail("Shouldn't suppress NotImplementedException.");
             }
             catch (NotImplementedException)

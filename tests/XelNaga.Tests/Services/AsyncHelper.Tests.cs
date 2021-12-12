@@ -109,7 +109,7 @@ namespace Aiursoft.XelNaga.Tests.Services
             {
                 var i = new Random().Next(0, 1);
                 await Task.Delay(1);
-                return i + new Random().Next(1,10);
+                return i + new Random().Next(1, 10);
             });
             Assert.IsTrue(result >= 1);
         }
@@ -124,7 +124,11 @@ namespace Aiursoft.XelNaga.Tests.Services
         public void TestTryAsyncSuccess()
         {
             bool invoked = false;
-            AsyncHelper.TryAsync(()=>Task.CompletedTask, 3, _ => { invoked = true; });
+            AsyncHelper.TryAsync(() => Task.CompletedTask, 3, _ =>
+              {
+                  invoked = true;
+                  return Task.CompletedTask;
+              });
             Assert.IsFalse(invoked);
         }
 
@@ -134,7 +138,8 @@ namespace Aiursoft.XelNaga.Tests.Services
             bool called = false;
             bool invoked = false;
 
-            AsyncHelper.TryAsync(()=>{
+            AsyncHelper.TryAsync(() =>
+            {
                 if (called)
                 {
                     return Task.CompletedTask;
@@ -144,7 +149,11 @@ namespace Aiursoft.XelNaga.Tests.Services
                     called = true;
                     throw new Exception("");
                 }
-            }, 3, _ => { invoked = true;});
+            }, 3, _ =>
+            {
+                invoked = true;
+                return Task.CompletedTask;
+            });
             Assert.IsTrue(called);
             Assert.IsTrue(invoked);
         }
@@ -154,9 +163,14 @@ namespace Aiursoft.XelNaga.Tests.Services
         public void TestTryAsyncFailed()
         {
             bool invoked = false;
-            AsyncHelper.TryAsync(()=>{
-                throw new Exception("");   
-            }, 2, _ => { invoked = true;});
+            AsyncHelper.TryAsync(() =>
+            {
+                throw new Exception("");
+            }, 2, _ =>
+            {
+                invoked = true;
+                return Task.CompletedTask;
+            });
             Assert.IsTrue(invoked);
         }
     }
