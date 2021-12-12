@@ -16,7 +16,7 @@ namespace Aiursoft.Archon.SDK
         {
             AsyncHelper.TryAsync(async () =>
             {
-                var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
+                var response = await SimpleHttp.DownloadAsString(serverEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
                 var publicKey = new RSAParameters
                 {

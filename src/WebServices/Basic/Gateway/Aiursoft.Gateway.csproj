@@ -6,12 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Twilio" Version="5.61.0" />
-    <PackageReference Include="Edi.Captcha" Version="3.2.0" />
+    <PackageReference Include="Twilio" Version="5.68.2" />
+    <PackageReference Include="Edi.Captcha" Version="3.7.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
