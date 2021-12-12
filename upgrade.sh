@@ -113,7 +113,6 @@ update()
     echo "Starting business services..."
     systemctl restart "www.service"
     systemctl restart "account.service"
-    systemctl restart "warp.service"
     systemctl restart "ee.service"
     systemctl restart "wiki.service"
     sleep 30
