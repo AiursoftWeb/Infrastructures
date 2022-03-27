@@ -116,6 +116,10 @@ namespace Aiursoft.Wiki.Services
                         // Generate markdown from doc generator
                         var docString = await _http.Get(new AiurUrl(docBuilt));
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                        if (docModel == null)
+                        {
+                            continue;
+                        }
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
                         var apiRoot = docBuilt.ToLower().Replace("/doc", "");
                         foreach (var docController in docGrouped)

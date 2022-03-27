@@ -4,7 +4,6 @@ using Aiursoft.Warpgate.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace Aiursoft.Warpgate.SDK
 {
