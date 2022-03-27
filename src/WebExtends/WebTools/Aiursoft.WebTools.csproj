@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>5.0.9</Version>
-		<TargetFramework>net5.0</TargetFramework>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>
 		<Authors>Anduin</Authors>
@@ -18,7 +18,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Anduin.QRCoder.NET" Version="1.0.0" />
+		<PackageReference Include="QRCoder" Version="1.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Developer.Data
 {
-
-
     public class DeveloperDbContext : IdentityDbContext<DeveloperUser>
     {
         public DeveloperDbContext(DbContextOptions<DeveloperDbContext> options)

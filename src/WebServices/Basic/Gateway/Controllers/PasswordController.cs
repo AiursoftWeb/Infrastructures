@@ -291,14 +291,14 @@ namespace Aiursoft.Gateway.Controllers
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
+                return RedirectToAction(nameof(Confirmation));
             }
             AddErrors(result);
             return View();
         }
 
         [HttpGet]
-        public IActionResult ResetPasswordConfirmation()
+        public IActionResult Confirmation()
         {
             return View();
         }

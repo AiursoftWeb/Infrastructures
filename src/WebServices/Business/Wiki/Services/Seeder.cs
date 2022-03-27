@@ -10,6 +10,7 @@ using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Aiursoft.Wiki.Services
         private readonly MarkDownDocGenerator _markDownGenerator;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
+        private readonly ILogger<Seeder> logger;
 
         public Seeder(
             WikiDbContext dbContext,
@@ -35,7 +37,8 @@ namespace Aiursoft.Wiki.Services
             HttpService http,
             MarkDownDocGenerator markDownGenerator,
             EventService eventService,
-            AppsContainer appsContainer)
+            AppsContainer appsContainer,
+            ILogger<Seeder> logger)
         {
             _dbContext = dbContext;
             _configuration = configuration;
@@ -43,6 +46,7 @@ namespace Aiursoft.Wiki.Services
             _markDownGenerator = markDownGenerator;
             _eventService = eventService;
             _appsContainer = appsContainer;
+            this.logger = logger;
         }
 
         private Task AllClear()
@@ -112,6 +116,10 @@ namespace Aiursoft.Wiki.Services
                         // Generate markdown from doc generator
                         var docString = await _http.Get(new AiurUrl(docBuilt));
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                        if (docModel == null)
+                        {
+                            continue;
+                        }
                         var docGrouped = docModel.GroupBy(t => t.ControllerName);
                         var apiRoot = docBuilt.ToLower().Replace("/doc", "");
                         foreach (var docController in docGrouped)
@@ -140,8 +148,7 @@ namespace Aiursoft.Wiki.Services
         {
             var accessToken = await _appsContainer.AccessToken();
             await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
+            this.logger.LogCritical(e, e.Message);
         }
     }
 }

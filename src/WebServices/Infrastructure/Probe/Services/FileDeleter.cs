@@ -3,7 +3,7 @@ using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Interfaces;
-using Aiursoft.SDKTools.Services;
+using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

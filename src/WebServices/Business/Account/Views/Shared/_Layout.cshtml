@@ -1,16 +1,19 @@
 ﻿@model AccountViewModel
+@{
+	var title = $"{ViewData["Title"] ?? string.Empty} - {Values.ProjectName ?? string.Empty} {Localizer["Account"].ToString() ?? string.Empty}";
+}
 <!DOCTYPE html>
 <html>
 <head>
     <vc:aiur-header></vc:aiur-header>
-    <title>@ViewData["Title"] - @Values.ProjectName @Localizer["Account"]</title>
+    <title>@title</title>
     <vc:aiur-market-css></vc:aiur-market-css>
     @await RenderSectionAsync("css", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName]</a>
+            <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName ?? string.Empty]</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

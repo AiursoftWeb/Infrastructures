@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 
 namespace Aiursoft.SDK
@@ -79,7 +78,7 @@ namespace Aiursoft.SDK
         {
             AsyncHelper.TryAsync(async () =>
             {
-                var list = await new WebClient().DownloadStringTaskAsync(address);
+                var list = await SimpleHttp.DownloadAsString(address);
                 var provider = new BlackListPorivder(list.Split('\n'));
                 services.AddSingleton(provider);
             }, 3);

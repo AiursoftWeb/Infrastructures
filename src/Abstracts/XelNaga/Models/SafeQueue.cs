@@ -35,5 +35,15 @@ namespace Aiursoft.XelNaga.Models
             }
             return any;
         }
+
+        public int Count()
+        {
+            int count;
+            lock (loc)
+            {
+                count = queue.Count;
+            }
+            return count;
+        }
     }
 }

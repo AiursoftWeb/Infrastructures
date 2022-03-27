@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>5.0.9</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
-    <ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
-    <ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
-    <ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
-  </ItemGroup>
-  
-  
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
+		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
+		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
+	</ItemGroup>
+
+
 </Project>

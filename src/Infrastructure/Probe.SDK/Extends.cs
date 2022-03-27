@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Aiursoft.Probe.SDK
@@ -23,7 +22,7 @@ namespace Aiursoft.Probe.SDK
         {
             AsyncHelper.TryAsync(async () =>
             {
-                var serverConfigString = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
+                var serverConfigString = await SimpleHttp.DownloadAsString(serverEndpoint);
                 var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
                 var openFormat = serverConfig.OpenPattern;
                 var downloadFormat = serverConfig.DownloadPattern;

@@ -1,32 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-  <PropertyGroup>
-    <Version>5.0.9</Version>
-    <TargetFramework>net5.0</TargetFramework>
-    <Company>Aiursoft</Company>
-    <Product>AiursoftWeb</Product>
-    <Authors>Anduin</Authors>
-    <Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
-    <PackageTags>base-class shared-component aiursoft Identity</PackageTags>
-    <PackageIcon>Identity.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/Infrastructures</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="Identity.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
-  </ItemGroup>
-  
+	<PropertyGroup>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<Company>Aiursoft</Company>
+		<Product>AiursoftWeb</Product>
+		<Authors>Anduin</Authors>
+		<Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
+		<PackageTags>base-class shared-component aiursoft Identity</PackageTags>
+		<PackageIcon>Identity.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/AiursoftWeb/Infrastructures</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="Identity.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+	</ItemGroup>
+
 
 </Project>

@@ -62,7 +62,7 @@ namespace Aiursoft.Wiki
             AsyncHelper.TryAsync(
                 times: 3,
                 taskFactory: () => seeder.Seed(),
-                onError: async (e) => await seeder.HandleException(e)
+                onError: (e) => seeder.HandleException(e)
             );
             logger.LogInformation($"Seeded");
             return host;

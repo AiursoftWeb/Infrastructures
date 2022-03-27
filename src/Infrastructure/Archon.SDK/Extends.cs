@@ -5,7 +5,6 @@ using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Net;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Archon.SDK
@@ -16,7 +15,7 @@ namespace Aiursoft.Archon.SDK
         {
             AsyncHelper.TryAsync(async () =>
             {
-                var response = await new WebClient().DownloadStringTaskAsync(serverEndpoint);
+                var response = await SimpleHttp.DownloadAsString(serverEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
                 var publicKey = new RSAParameters
                 {

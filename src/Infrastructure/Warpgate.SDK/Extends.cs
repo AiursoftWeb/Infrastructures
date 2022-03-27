@@ -4,7 +4,6 @@ using Aiursoft.Warpgate.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace Aiursoft.Warpgate.SDK
 {
@@ -14,7 +13,7 @@ namespace Aiursoft.Warpgate.SDK
         {
             AsyncHelper.TryAsync(async () =>
             {
-                var response = await new WebClient().DownloadStringTaskAsync(warpgateEndpoint);
+                var response = await SimpleHttp.DownloadAsString(warpgateEndpoint);
                 var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
                 services.AddSingleton(new WarpgateLocator(warpgateEndpoint, serverModel.WarpPattern));
             }, 5);

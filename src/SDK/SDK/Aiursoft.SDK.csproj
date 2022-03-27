@@ -1,32 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <Version>5.0.9</Version>
-    <TargetFramework>net5.0</TargetFramework>
-    <Description>The base class, tools and extends for Aiursoft web apps.</Description>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-  </PropertyGroup>
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
-    <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.0.0" />
-    <PackageReference Include="DnsClient" Version="1.4.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.4.0" />
+		<PackageReference Include="DnsClient" Version="1.6.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
-    <ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
-    <ProjectReference Include="..\..\WebExtends\Handler\Aiursoft.Handler.csproj" />
-    <ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
-    <ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Infrastructure\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
+		<ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
+		<ProjectReference Include="..\..\WebExtends\Handler\Aiursoft.Handler.csproj" />
+		<ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
+		<ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
+	</ItemGroup>
 
 </Project>
