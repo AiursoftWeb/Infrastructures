@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 
 namespace Aiursoft.SDK
