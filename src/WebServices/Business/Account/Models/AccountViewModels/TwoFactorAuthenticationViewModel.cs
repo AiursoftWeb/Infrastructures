@@ -2,8 +2,6 @@
 
 namespace Aiursoft.Account.Models.AccountViewModels
 {
-
-
     public class TwoFactorAuthenticationViewModel : AccountViewModel
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
