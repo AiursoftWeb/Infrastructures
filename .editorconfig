@@ -29,4 +29,4 @@ resharper_unused_auto_property_accessor_global_highlighting=suggestion
 resharper_possible_null_reference_exception_highlighting=suggestion
 
 # Suppress id not resolved because resharper can't understand
-resharper_html_id_not_resolved_highlighting=suggesting
+resharper_html_id_not_resolved_highlighting=suggestion
