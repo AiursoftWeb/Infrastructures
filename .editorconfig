@@ -24,3 +24,6 @@ resharper_inconsistent_naming_highlighting=suggestion
 
 # Allow unused auto property get.
 resharper_unused_auto_property_accessor_global_highlighting=suggestion
+
+# Suppress Null reference warning
+resharper_possible_null_reference_exception_highlighting=suggestion
