@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <vc:aiur-header></vc:aiur-header>
-    <title>@Localizer[ViewData["Title"].ToString()] - @Localizer["Developer Center"]</title>
+    <title>@Localizer[ViewData["Title"]?.ToString() ?? string.Empty] - @Localizer["Developer Center"]</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
