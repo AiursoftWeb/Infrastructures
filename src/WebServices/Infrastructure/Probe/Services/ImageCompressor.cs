@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -52,6 +53,7 @@ namespace Aiursoft.Probe.Services
             var fileCanRead = FileCanBeRead(saveTarget);
             if (fileExists && fileCanRead)
             {
+                // Return. Because we have already cleared it.
                 return;
             }
             if (fileExists)
@@ -65,7 +67,7 @@ namespace Aiursoft.Probe.Services
             {
                 lock (ObjClearLock)
                 {
-                    using var stream = File.OpenWrite(saveTarget);
+                    using var stream = File.OpenWrite(saveTarget ?? throw new ArgumentException("Save target is null!", nameof(saveTarget)));
                     var image = Image.Load(sourceImage, out IImageFormat format);
                     image.Mutate(x => x.AutoOrient());
                     image.Metadata.ExifProfile = null;
@@ -102,6 +104,7 @@ namespace Aiursoft.Probe.Services
             var fileCanRead = FileCanBeRead(saveTarget);
             if (fileExists && fileCanRead)
             {
+                // Return. Because we have already cleared it.
                 return;
             }
             if (fileExists)
@@ -116,7 +119,7 @@ namespace Aiursoft.Probe.Services
                 lock (ObjCompareLock)
                 {
                     // Create file
-                    using var stream = File.OpenWrite(saveTarget);
+                    using var stream = File.OpenWrite(saveTarget ?? throw new ArgumentException("Save target is null!", nameof(saveTarget)));
                     // Load and compress file
                     var image = Image.Load(sourceImage, out IImageFormat format);
                     image.Mutate(x => x.AutoOrient());
