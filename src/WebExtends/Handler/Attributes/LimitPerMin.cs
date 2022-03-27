@@ -50,7 +50,7 @@ namespace Aiursoft.Handler.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            if (IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress) && !EntryExtends.IsInUT())
+            if (IPAddress.IsLoopback(context.HttpContext?.Connection?.RemoteIpAddress) && !EntryExtends.IsInUT())
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace Aiursoft.Handler.Attributes
             }
             var tempDictionary = Copy();
             var path = context.HttpContext.Request.Path.ToString().ToLower();
-            var ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ip = context.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "unknown";
             if (tempDictionary.ContainsKey(ip + path))
             {
                 WriteMemory(ip + path, tempDictionary[ip + path] + 1);

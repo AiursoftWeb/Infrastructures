@@ -21,7 +21,6 @@ namespace Aiursoft.WWW.Services
                 .AddHeader("Content-Type", "application/json")
                 .AddParameter("undefined", inputJson, ParameterType.RequestBody);
 
-#warning Replace RestSharp with pure HTTP Client.
             var json = (await client.PostAsync(request)).Content;
             return json;
         }
