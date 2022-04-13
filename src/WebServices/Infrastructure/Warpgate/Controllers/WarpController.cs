@@ -6,6 +6,7 @@ using Aiursoft.Warpgate.SDK.Models.AddressModels;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,10 +18,12 @@ namespace Aiursoft.Warpgate.Controllers
     [APIModelStateChecker]
     public class WarpController : Controller
     {
+        private readonly ILogger<WarpController> _logger;
         private readonly HttpClient _client;
         private readonly RecordRepo _recordRepo;
 
         public WarpController(
+            ILogger<WarpController> logger,
             RecordRepo recordRepo)
         {
             _client = new HttpClient(new HttpClientHandler()
@@ -29,12 +32,14 @@ namespace Aiursoft.Warpgate.Controllers
                 UseCookies = false
             });
             _recordRepo = recordRepo;
+            _logger = logger;
         }
 
         [Route(template: "Warp/{RecordName}/{**Path}", Name = "Warp")]
         public async Task<IActionResult> Warp(WarpAddressModel model)
         {
             var record = await _recordRepo.GetRecordByName(model.RecordName);
+            _logger.LogInformation($"New request coming with name: {model.RecordName}, path: {model.Path}.");
             if (record == null)
             {
                 return NotFound();
@@ -44,6 +49,7 @@ namespace Aiursoft.Warpgate.Controllers
                 return NotFound();
             }
             var builtUrl = BuildTargetUrl(record, model.Path);
+            _logger.LogInformation($"Target {record.Type} url is: {builtUrl}.");
             return record.Type switch
             {
                 RecordType.IFrame => View("Iframe", builtUrl),
