@@ -19,7 +19,6 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         }
 
         [TestMethod]
-        [DataRow("www.baidu.com")]
         [DataRow("aaaa.txt")]
         [DataRow("aaaatxt")]
         [DataRow("asdfasdfadfasdfasdfadf___ad")]
@@ -36,6 +35,7 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         [DataRow(@"
 ")]
         [DataRow("\u2029\u2028")]
+        [DataRow("www.baidu.com")]
         [DataRow("\u2028\u2029")]
         [DataRow("")]
         [DataRow("    ")]
