@@ -131,7 +131,6 @@ install_infrastructures()
 
     curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/install.sh | bash -s ui.$1
 
-    aiur system/set_aspnet_prod
     aiur install/dotnet
     aiur install/jq
     aiur install/sql_server

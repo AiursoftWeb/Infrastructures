@@ -24,7 +24,7 @@
             },
             {
                 "articleTitle": "About Aiursoft Infrastructures",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Infrastructures/master/Readme.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Infrastructures/raw/dev/Readme.md"
             }
         ]
     },
@@ -87,25 +87,25 @@
         "articles": [
             {
                 "articleTitle": "What is Kahla",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Readme.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Kahla/raw/dev/Readme.md"
             },
             {
                 "articleTitle": "Before connecting",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Design.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Kahla/raw/dev/Design.md"
             },
             {
                 "articleTitle": "How to build Kahla server",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.Server/Readme.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Kahla/raw/dev/Kahla.Server/Readme.md"
             },
             {
                 "articleTitle": "How to build Kahla.App",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla.App/dev/README.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Kahla.App/raw/dev/README.md"
             },
             {
                 "articleTitle": "How to write a bot for Kahla",
-                "articleAddress": "https://raw.githubusercontent.com/AiursoftWeb/Kahla/dev/Kahla.SDK/Readme.md"
+                "articleAddress": "https://git.aiursoft.com/Aiursoft/Kahla/raw/dev/Kahla.SDK/Readme.md"
             }
         ],
-        "docAPIAddress": "https://staging.server.kahla.app/doc"
+        "docAPIAddress": "https://server.kahla.app/doc"
     }
 ]
