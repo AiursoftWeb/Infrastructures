@@ -19,7 +19,6 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests
         }
 
         [TestMethod]
-        [DataRow("aaaa.txt")]
         [DataRow("aaaatxt")]
         [DataRow("asdfasdfadfasdfasdfadf___ad")]
         public void PassingTests(object inputValue)
