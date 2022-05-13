@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>6.0.0</Version>
+		<Version>6.0.5</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>
@@ -18,7 +18,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="QRCoder" Version="1.4.1" />
+		<PackageReference Include="QRCoder" Version="1.4.3" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -9,6 +9,6 @@
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.28.0" />
+    <PackageReference Include="Markdig" Version="0.30.2" />
   </ItemGroup>
 </Project>
