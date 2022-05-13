@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Twilio" Version="5.75.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
   </ItemGroup>
   
   <ItemGroup>
