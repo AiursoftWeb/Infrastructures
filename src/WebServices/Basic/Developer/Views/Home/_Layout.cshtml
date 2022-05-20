@@ -68,12 +68,12 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Apps" asp-action="Index" target="_top">
+                                <a class="nav-link" asp-controller="Apps" asp-action="Index">
                                     @Localizer["Dashboard"]
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Apps" asp-action="CreateApp" target="_top">
+                                <a class="nav-link" asp-controller="Apps" asp-action="CreateApp">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </li>
