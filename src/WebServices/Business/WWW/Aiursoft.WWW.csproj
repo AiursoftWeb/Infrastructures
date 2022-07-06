@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.EntitySearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
-    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.3" />
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
   </ItemGroup>
