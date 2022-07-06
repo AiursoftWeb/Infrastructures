@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Twilio" Version="5.75.1" />
-    <PackageReference Include="Edi.Captcha" Version="3.10.0" />
+    <PackageReference Include="Edi.Captcha" Version="3.11.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
