@@ -1,16 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<Version>6.0.6</Version>
+		<Version>6.0.7</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
-		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.6.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.6.3" />
 		<PackageReference Include="DnsClient" Version="1.6.1" />
 	</ItemGroup>
 
@@ -23,7 +23,7 @@
 		<ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
 		<ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
 		<ProjectReference Include="..\..\WebExtends\Handler\Aiursoft.Handler.csproj" />
-		<ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
+		
 		<ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
 	</ItemGroup>
 

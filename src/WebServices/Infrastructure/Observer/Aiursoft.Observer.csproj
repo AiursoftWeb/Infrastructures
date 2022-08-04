@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
+    
     <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
   </ItemGroup>
 </Project>

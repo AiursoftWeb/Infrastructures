@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup>
-		<Version>6.0.6</Version>
+		<Version>6.0.7</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>
@@ -14,11 +14,11 @@
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="Identity.png" Pack="true" PackagePath="\" />
+		<None Include="Identity.png" Pack="true" PackagePath="\"></None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>
