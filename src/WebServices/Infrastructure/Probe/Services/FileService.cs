@@ -10,7 +10,7 @@ namespace Aiursoft.Probe.Services
         private static (string etag, long length) GetFileHTTPProperties(string path)
         {
             var fileInfo = new FileInfo(path);
-            long etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
+            var etagHash = fileInfo.LastWriteTime.ToUniversalTime().ToFileTime() ^ fileInfo.Length;
             var etag = Convert.ToString(etagHash, 16);
             return (etag, fileInfo.Length);
         }

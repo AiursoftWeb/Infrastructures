@@ -144,7 +144,7 @@ namespace Aiursoft.Developer.Controllers
             target.AppDomain = model.AppDomain;
             target.AppFailCallbackUrl = model.AppFailCallbackUrl;
             // Permissions
-            bool permissionAdded = false;
+            var permissionAdded = false;
             target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionAdded);
             target.ViewPhoneNumber = _ChangePermission(target.ViewPhoneNumber, model.ViewPhoneNumber, ref permissionAdded);
             target.ChangePhoneNumber = _ChangePermission(target.ChangePhoneNumber, model.ChangePhoneNumber, ref permissionAdded);

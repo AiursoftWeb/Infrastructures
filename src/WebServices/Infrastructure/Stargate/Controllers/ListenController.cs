@@ -47,7 +47,7 @@ namespace Aiursoft.Stargate.Controllers
         [AiurForceWebSocket]
         public async Task<IActionResult> Channel(ChannelAddressModel model)
         {
-            int lastReadId = _counter.GetCurrent;
+            var lastReadId = _counter.GetCurrent;
             var channel = _memoryContext[model.Id];
             if (channel == null)
             {
@@ -62,7 +62,7 @@ namespace Aiursoft.Stargate.Controllers
                 });
             }
             await _pusher.Accept(HttpContext);
-            int sleepTime = 0;
+            var sleepTime = 0;
             try
             {
                 await Task.Factory.StartNew(_pusher.PendingClose);
@@ -75,7 +75,7 @@ namespace Aiursoft.Stargate.Controllers
                         .ToList();
                     if (nextMessages.Any())
                     {
-                        var messageToPush = nextMessages.OrderBy(t => t.Id).FirstOrDefault();
+                        var messageToPush = nextMessages.MinBy(t => t.Id);
                         if (messageToPush != null)
                         {
                             await _pusher.SendMessage(messageToPush.Content);

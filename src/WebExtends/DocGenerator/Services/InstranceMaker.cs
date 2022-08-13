@@ -44,8 +44,8 @@ namespace Aiursoft.DocGenerator.Services
                 // Has a constructor, and constructor has some arguments.
                 var constructor = type.GetConstructors()[0];
                 var args = constructor.GetParameters();
-                object[] parameters = new object[args.Length];
-                for (int i = 0; i < args.Length; i++)
+                var parameters = new object[args.Length];
+                for (var i = 0; i < args.Length; i++)
                 {
                     var requirement = args[i].ParameterType;
                     parameters[i] = Make(requirement);

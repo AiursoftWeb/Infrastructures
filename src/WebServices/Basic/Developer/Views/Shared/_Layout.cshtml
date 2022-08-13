@@ -39,7 +39,7 @@
                     <ul class="sidenav-second-level collapse" id="collapseMulti2">
                         @foreach (var app in Model.AllApps.OrderBy(t => t.AppCreateTime))
                         {
-                            string icon = "";
+                            var icon = "";
                             switch (Math.Abs(app.AppId.GetHashCode()) % 4)
                             {
                                 case 0:
@@ -94,7 +94,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">@Localizer["New Messages:"]</h6>
                         <div class="dropdown-divider"></div>
-                        @for (int i = 0; i < 7; i++)
+                        @for (var i = 0; i < 7; i++)
                         {
                             <a class="dropdown-item" href="#">
                                 <strong>@Localizer["David Miller"]</strong>
@@ -120,7 +120,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">@Localizer["New Alerts:"]</h6>
                         <div class="dropdown-divider"></div>
-                        @for (int i = 0; i < 7; i++)
+                        @for (var i = 0; i < 7; i++)
                         {
                             <a class="dropdown-item" href="#">
                                 <span class="text-success">

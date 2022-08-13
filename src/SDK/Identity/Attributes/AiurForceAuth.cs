@@ -99,8 +99,8 @@ namespace Aiursoft.Identity.Attributes
         private RedirectResult Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
         {
             var urlConverter = context.HttpContext.RequestServices.GetRequiredService<UrlConverter>();
-            string serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
-            string url = urlConverter.UrlWithAuth(serverPosition, AppsContainer.CurrentAppId, page, justTry, register);
+            var serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
+            var url = urlConverter.UrlWithAuth(serverPosition, AppsContainer.CurrentAppId, page, justTry, register);
             return new RedirectResult(url);
         }
     }

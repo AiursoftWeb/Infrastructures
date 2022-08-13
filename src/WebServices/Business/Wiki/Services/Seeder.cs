@@ -29,7 +29,7 @@ namespace Aiursoft.Wiki.Services
         private readonly MarkDownDocGenerator _markDownGenerator;
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
-        private readonly ILogger<Seeder> logger;
+        private readonly ILogger<Seeder> _logger;
 
         public Seeder(
             WikiDbContext dbContext,
@@ -46,7 +46,7 @@ namespace Aiursoft.Wiki.Services
             _markDownGenerator = markDownGenerator;
             _eventService = eventService;
             _appsContainer = appsContainer;
-            this.logger = logger;
+            this._logger = logger;
         }
 
         private Task AllClear()
@@ -66,7 +66,7 @@ namespace Aiursoft.Wiki.Services
                 var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
 
                 // Get all collections
-                foreach (var collection in sourceObject)
+                foreach (var collection in sourceObject ?? new List<Collection>())
                 {
                     // Insert collection
                     var newCollection = new Collection
@@ -110,9 +110,9 @@ namespace Aiursoft.Wiki.Services
                     // Parse the appended doc.
                     if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
                     {
-                        var doamin = _configuration["RootDomain"];
+                        var domain = _configuration["RootDomain"];
                         var docBuilt = collection.DocAPIAddress
-                            .Replace("{{rootDomain}}", doamin);
+                            .Replace("{{rootDomain}}", domain);
                         // Generate markdown from doc generator
                         var docString = await _http.Get(new AiurUrl(docBuilt));
                         var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
@@ -124,7 +124,7 @@ namespace Aiursoft.Wiki.Services
                         var apiRoot = docBuilt.ToLower().Replace("/doc", "");
                         foreach (var docController in docGrouped)
                         {
-                            var markdown = _markDownGenerator.GenerateMarkDownForAPI(docController, apiRoot);
+                            var markdown = _markDownGenerator.GenerateMarkDownForApi(docController, apiRoot);
                             var newArticle = new Article
                             {
                                 ArticleTitle = docController.Key.TrimController(),
@@ -148,7 +148,7 @@ namespace Aiursoft.Wiki.Services
         {
             var accessToken = await _appsContainer.AccessToken();
             await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
-            this.logger.LogCritical(e, e.Message);
+            this._logger.LogCritical(e, e.Message);
         }
     }
 }

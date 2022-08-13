@@ -14,9 +14,9 @@ namespace Aiursoft.DocGenerator.Tools
 
         public static string SplitStringUpperCase(this string source)
         {
-            string[] split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
+            var split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
             var b = new StringBuilder();
-            bool first = true;
+            var first = true;
             foreach (var word in split)
             {
                 if (first)

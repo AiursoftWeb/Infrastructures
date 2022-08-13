@@ -26,13 +26,13 @@ namespace Aiursoft.XelNaga.Tests.Services
         {
             var counter = new Counter();
             Thread[] threads = new Thread[3];
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 Thread t = new Thread(ThreadProc);
                 t.Start(counter);
                 threads[i] = t;
             }
-            for(int i = 0; i < 3; i++)
+            for(var i = 0; i < 3; i++)
             {
                 threads[i].Join();
             }

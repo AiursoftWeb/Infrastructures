@@ -324,7 +324,7 @@ namespace Aiursoft.Gateway.Controllers
                 model.Recover(app.AppName, app.IconPath);
                 return View(model);
             }
-            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
+            var exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.Email.ToLower());
             if (exists)
             {
                 ModelState.AddModelError(string.Empty, $"An user with email '{model.Email}' already exists!");

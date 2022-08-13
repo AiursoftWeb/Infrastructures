@@ -112,7 +112,7 @@ namespace Aiursoft.Probe.Tests.FunctionalTests
         public async Task TooFrequentTest()
         {
             var siteService = _serviceProvider.GetRequiredService<SitesService>();
-            for (int i = 0; i < 31; i++)
+            for (var i = 0; i < 31; i++)
             {
                 await siteService.ViewMySitesAsync("mock-access-token");
             }

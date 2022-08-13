@@ -24,7 +24,7 @@ namespace Aiursoft.XelNaga.Services
                     {
                         throw;
                     }
-                    await Task.Delay(ExponentialBackoffTimeSlot(i) * 1000);
+                    await Task.Delay(ExponentialBackOffTimeSlot(i) * 1000);
                 }
             }
             throw new NotImplementedException("Code shall not reach here.");
@@ -55,7 +55,7 @@ namespace Aiursoft.XelNaga.Services
                     {
                         throw;
                     }
-                    Thread.Sleep(ExponentialBackoffTimeSlot(i) * 1000);
+                    Thread.Sleep(ExponentialBackOffTimeSlot(i) * 1000);
                 }
             }
         }
@@ -65,9 +65,9 @@ namespace Aiursoft.XelNaga.Services
         /// </summary>
         /// <param name="time">the time of trial</param>
         /// <returns>Time slot to wait.</returns>
-        private static int ExponentialBackoffTimeSlot(int time)
+        private static int ExponentialBackOffTimeSlot(int time)
         {
-            int max = (int)Math.Pow(2, time);
+            var max = (int)Math.Pow(2, time);
             var rnd = new Random();
             return rnd.Next(0, max);
         }

@@ -110,7 +110,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> CreateAccountAndBind(SignInViewModel model)
         {
             var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-            bool exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
+            var exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
             if (exists)
             {
                 ModelState.AddModelError(string.Empty, $"An user with email '{model.UserDetail.Email}' already exists!");

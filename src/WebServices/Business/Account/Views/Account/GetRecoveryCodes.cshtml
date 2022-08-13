@@ -32,7 +32,7 @@
                     <p>
                         @Localizer["This is your recovery codes. If you can't log in to your account with your authentication app, you can log in with these recovery codes. The code will never show again!"]
                     </p>
-                    @for (int i = 0; i < Model.NewRecoveryCodesKey.Count - 1; i += 2)
+                    @for (var i = 0; i < Model.NewRecoveryCodesKey.Count - 1; i += 2)
                     {
                         <p>
                             <kbd>@Model.NewRecoveryCodesKey[i]</kbd>

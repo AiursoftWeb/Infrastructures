@@ -9,7 +9,7 @@ namespace Aiursoft.Probe.Services
         private IEnumerable<int> GetTwoPowers()
         {
             yield return 0;
-            for (int i = 1; i <= 8192; i *= 2)
+            for (var i = 1; i <= 8192; i *= 2)
             {
                 yield return i;
             }

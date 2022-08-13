@@ -20,7 +20,7 @@ namespace Aiursoft.Identity
         public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress, AiurUrl viewingUrl)
         {
             var request = controller.HttpContext.Request;
-            string serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
+            var serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
             var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignOut", new UserSignOutAddressModel
             {
                 ToRedirect = serverPosition

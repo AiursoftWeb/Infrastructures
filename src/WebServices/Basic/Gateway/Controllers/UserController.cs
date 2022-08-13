@@ -306,7 +306,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewHas2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            bool key = user.Has2FAKey;
+            var key = user.Has2FAKey;
             return this.Protocol(new AiurValue<bool>(key)
             {
                 Code = ErrorType.Success,
@@ -319,7 +319,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-            bool enabled = user.TwoFactorEnabled;
+            var enabled = user.TwoFactorEnabled;
             return this.Protocol(new AiurValue<bool>(enabled)
             {
                 Code = ErrorType.Success,
@@ -411,7 +411,7 @@ namespace Aiursoft.Gateway.Controllers
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 await _userManager.UpdateAsync(user);
             }
-            bool success = disable2FAResult.Succeeded;
+            var success = disable2FAResult.Succeeded;
 
             return this.Protocol(new AiurValue<bool>(success)
             {

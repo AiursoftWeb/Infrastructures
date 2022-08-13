@@ -476,6 +476,8 @@
                                                     case EventLevel.Warning:
                                                         <td><span class="badge badge-warning">@log.First.EventLevel.ToString()</span></td>
                                                         break;
+                                                    default:
+                                                        throw new ArgumentOutOfRangeException();
                                                 }
                                                 <td><a href="#" data-toggle="modal" data-target="#error-detail-modal" data-message="@log.First.Message" data-stacktrace="@(log.First.Message + "\r\n" + log.First.StackTrace)">View stack trace</a></td>
                                             </tr>

@@ -47,7 +47,7 @@ namespace Aiursoft.XelNaga.Tools
 
         public static byte[] ToUTF8WithDom(this string content)
         {
-            byte[] encoded = Encoding.UTF8.GetBytes(content);
+            var encoded = Encoding.UTF8.GetBytes(content);
             var bom = new byte[] { 0xEF, 0xBB, 0xBF };
             var all = new byte[bom.Length + encoded.Length];
             Array.Copy(bom, all, bom.Length);
@@ -68,7 +68,7 @@ namespace Aiursoft.XelNaga.Tools
 
         public static string GetMD5(this string sourceString)
         {
-            string hash = GetMd5Hash(MD5.Create(), sourceString);
+            var hash = GetMd5Hash(MD5.Create(), sourceString);
             return hash;
         }
 
@@ -76,7 +76,7 @@ namespace Aiursoft.XelNaga.Tools
         {
             using MD5 md5 = MD5.Create();
             var hash = md5.ComputeHash(data);
-            string hex = BitConverter.ToString(hash);
+            var hex = BitConverter.ToString(hash);
             return hex.Replace("-", "");
         }
 
@@ -139,9 +139,9 @@ namespace Aiursoft.XelNaga.Tools
         private static Random StaticRan { get; } = new Random();
         public static string RandomString(int count)
         {
-            string checkCode = string.Empty;
+            var checkCode = string.Empty;
             var random = new Random(StaticRan.Next());
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var number = random.Next();
                 number %= 36;
@@ -209,7 +209,7 @@ namespace Aiursoft.XelNaga.Tools
         public static string HumanReadableSize(this long size)
         {
             string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            int order = 0;
+            var order = 0;
             while (size >= 1024 && order < sizes.Length - 1)
             {
                 order++;

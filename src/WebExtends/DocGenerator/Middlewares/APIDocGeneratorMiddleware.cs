@@ -115,10 +115,10 @@ namespace Aiursoft.DocGenerator.Middlewares
             {
                 var generator = new MarkDownDocGenerator();
                 var groupedControllers = actionsMatches.GroupBy(t => t.ControllerName);
-                string finalMarkDown = string.Empty;
+                var finalMarkDown = string.Empty;
                 foreach (var controllerDoc in groupedControllers)
                 {
-                    finalMarkDown += generator.GenerateMarkDownForAPI(controllerDoc, $"{context.Request.Scheme}://{context.Request.Host}") + "\r\n--------\r\n";
+                    finalMarkDown += generator.GenerateMarkDownForApi(controllerDoc, $"{context.Request.Scheme}://{context.Request.Host}") + "\r\n--------\r\n";
                 }
                 await context.Response.WriteAsync(finalMarkDown);
             }

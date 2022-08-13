@@ -12,7 +12,7 @@
     <div class="row">
         @foreach (var app in Model.AllApps.OrderBy(t => t.AppCreateTime))
         {
-            string icon = "";
+            var icon = "";
             switch (Math.Abs(app.AppId.GetHashCode()) % 4)
             {
                 case 0:

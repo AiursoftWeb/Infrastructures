@@ -175,7 +175,7 @@ namespace Aiursoft.Stargate.Tests
             }
 
             // Wait for complete
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 await Task.Delay(200);
             }

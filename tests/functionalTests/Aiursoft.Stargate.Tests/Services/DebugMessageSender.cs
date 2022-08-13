@@ -15,7 +15,7 @@ namespace Aiursoft.Stargate.Tests.Services
 
         public async Task SendDebuggingMessages(string accessToken, int channelId)
         {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 await _messageService.PushMessageAsync(accessToken, channelId, new
                 {

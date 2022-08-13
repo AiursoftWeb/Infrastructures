@@ -11,7 +11,7 @@
         Token = Model.PBToken,
         RecursiveCreate = true
     });
-    string extension = " ";
+    var extension = " ";
     if (!string.IsNullOrWhiteSpace(Model.AllowedExtensions))
     {
         extension += $"data-allowed-file-extensions=\"{Model.AllowedExtensions}\" ";

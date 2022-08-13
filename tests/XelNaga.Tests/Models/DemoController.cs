@@ -31,7 +31,7 @@ namespace Aiursoft.XelNaga.Tests.Models
 
         public IActionResult QueueActionAsync()
         {
-            for (int i = 0; i < 32; i++)
+            for (var i = 0; i < 32; i++)
             {
                 _cannonQueue.QueueWithDependency<DemoService>(d => d.DoSomethingSlowAsync());
             }

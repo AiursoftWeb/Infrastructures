@@ -30,7 +30,7 @@ namespace Aiursoft.XelNaga.Models
             //Not to download the file, and we can process the file, let us process it.
             if (HasKey(extenstion))
             {
-                string lower = extenstion.ToLower().TrimStart('.');
+                var lower = extenstion.ToLower().TrimStart('.');
                 return MimeTypesDictionary[lower];
             }
             return "application/octet-stream";

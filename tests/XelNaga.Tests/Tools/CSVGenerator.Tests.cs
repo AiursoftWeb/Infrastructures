@@ -40,7 +40,7 @@ namespace Aiursoft.XelNaga.Tests.Tools
                 new Person { Id = 2, Name = "我能吞下玻璃而不伤身体。" },
             };
 
-            string newLine = Environment.NewLine;
+            var newLine = Environment.NewLine;
             var expect = "\"Person Name\",\"Id\"" + newLine +  "\"Alice Li\",\"1\"" + newLine + "\"我能吞下玻璃而不伤身体。\",\"2\"".Trim();
             var generator = new CSVGenerator();
             var generated = generator.BuildFromCollection(persons).BytesToString();

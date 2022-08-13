@@ -16,7 +16,7 @@ namespace Aiursoft.WebTools.Services
             using var qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, true);
             using var memoryStream = new MemoryStream();
             qrCodeImage.Save(memoryStream, ImageFormat.Png);
-            byte[] byteBuffer = memoryStream.ToArray();
+            var byteBuffer = memoryStream.ToArray();
             memoryStream.Close();
             return byteBuffer;
         }

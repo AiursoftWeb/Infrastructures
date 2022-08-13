@@ -27,7 +27,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         {
             array = new int[expectedCount];
             books = new List<DemoBook>();
-            for (int i = 0; i < expectedCount; i++)
+            for (var i = 0; i < expectedCount; i++)
             {
                 books.Add(new DemoBook());
             }
@@ -37,9 +37,9 @@ namespace Aiursoft.XelNaga.Tests.Services
         public async Task TestTaskWillFinish()
         {
             var tasksFactories = new List<Func<Task>>();
-            for (int i = 0; i < expectedCount; i++)
+            for (var i = 0; i < expectedCount; i++)
             {
-                int copy = i;
+                var copy = i;
                 tasksFactories.Add(() => SetPosition(copy, array));
             }
 
@@ -123,7 +123,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         [TestMethod]
         public void TestTryAsyncSuccess()
         {
-            bool invoked = false;
+            var invoked = false;
             AsyncHelper.TryAsync(() => Task.CompletedTask, 3, _ =>
               {
                   invoked = true;
@@ -135,8 +135,8 @@ namespace Aiursoft.XelNaga.Tests.Services
         [TestMethod]
         public void TestTryAsyncRetrySuccess()
         {
-            bool called = false;
-            bool invoked = false;
+            var called = false;
+            var invoked = false;
 
             AsyncHelper.TryAsync(() =>
             {
@@ -162,7 +162,7 @@ namespace Aiursoft.XelNaga.Tests.Services
         [ExpectedException(typeof(Exception))]
         public void TestTryAsyncFailed()
         {
-            bool invoked = false;
+            var invoked = false;
             AsyncHelper.TryAsync(() =>
             {
                 throw new Exception("");

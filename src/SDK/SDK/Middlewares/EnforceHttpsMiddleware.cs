@@ -69,7 +69,7 @@ namespace Aiursoft.SDK.Middlewares
                 {
                     host = new HostString(host.Host);
                 }
-                string newUrl = string.Concat(
+                var newUrl = string.Concat(
                     "https://",
                     host.ToUriComponent(),
                     request.PathBase.ToUriComponent(),

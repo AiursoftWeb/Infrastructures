@@ -16,40 +16,30 @@ namespace Aiursoft.DocGenerator.Services
 
         private string ArgTypeConverter(ArgumentType type)
         {
-            switch (type)
+            return type switch
             {
-                case ArgumentType.Boolean:
-                    return "Boolean";
-                case ArgumentType.Text:
-                    return "Text";
-                case ArgumentType.Number:
-                    return "Number";
-                case ArgumentType.Datetime:
-                    return "DateTime";
-                case ArgumentType.Collection:
-                    return "Text Collection";
-                case ArgumentType.Unknown:
-                    return "A magic type!";
-            }
-            throw new InvalidOperationException(type.ToString());
+                ArgumentType.Boolean => "Boolean",
+                ArgumentType.Text => "Text",
+                ArgumentType.Number => "Number",
+                ArgumentType.Datetime => "DateTime",
+                ArgumentType.Collection => "Text Collection",
+                ArgumentType.Unknown => "A magic type!",
+                _ => throw new InvalidOperationException(type.ToString())
+            };
         }
 
         private string GetExampleValue(Argument arg)
         {
-            switch (arg.Type)
+            return arg.Type switch
             {
-                case ArgumentType.Boolean:
-                    return "false";
-                case ArgumentType.Datetime:
-                    return "01/01/2018";
-                case ArgumentType.Number:
-                    return "0";
-                case ArgumentType.Text:
-                case ArgumentType.Collection:
-                    return $"your{arg.Name}";
-                default:
-                    return $"your{arg.Name}";
-            }
+                ArgumentType.Boolean => "false",
+                ArgumentType.Datetime => "01/01/2018",
+                ArgumentType.Number => "0",
+                ArgumentType.Text => $"your{arg.Name}",
+                ArgumentType.Collection => $"your{arg.Name}",
+                ArgumentType.Unknown => $"your{arg.Name}",
+                _ => $"your{arg.Name}"
+            };
         }
 
         private string GenerateQueryParams(List<Argument> args)
@@ -89,7 +79,7 @@ namespace Aiursoft.DocGenerator.Services
             return routeTemplate;
         }
 
-        public string GenerateMarkDownForAPI(IGrouping<string, API> docController, string apiRoot)
+        public string GenerateMarkDownForApi(IGrouping<string, API> docController, string apiRoot)
         {
             var content = $"# {docController.Key.TrimController()}\r\n\r\n";
             content += "## Catalog\r\n\r\n";

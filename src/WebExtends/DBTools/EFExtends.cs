@@ -97,7 +97,7 @@ namespace Aiursoft.DBTools
                 }
                 else if (itemCount < itemCountShallBe)
                 {
-                    for (int i = 0; i < itemCountShallBe - itemCount; i++)
+                    for (var i = 0; i < itemCountShallBe - itemCount; i++)
                     {
                         dbSet.Add(item.Map());
                     }
