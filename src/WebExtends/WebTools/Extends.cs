@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Aiursoft.WebTools
 {
@@ -79,6 +81,14 @@ namespace Aiursoft.WebTools
         public static IHostBuilder BareApp<T>(string[] args = null, int port = -1) where T : class
         {
             return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(config =>
+                {
+                    var currentAppId = config.Build().GetValue<string>("AppId");
+                    config.AddInMemoryCollection(initialData: new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string, string>("SampleConfiguration","SampleValue")
+                    });
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     if (port > 0)
