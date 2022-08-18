@@ -30,7 +30,7 @@ namespace Aiursoft.Archon.SDK.Services
             using IServiceScope scope = scopeFactory.CreateScope();
             var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
             var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
-            _latestAccessToken = serverResult.AccessToken;
+            _latestAccessToken = serverResult.AccessToken ?? throw new NullReferenceException("Server returned access token is null!");
             _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
             return _latestAccessToken;
         }

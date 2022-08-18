@@ -4,9 +4,10 @@
 	<Version>6.0.7</Version>
 	<TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Aiursoft.Handler</RootNamespace>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 

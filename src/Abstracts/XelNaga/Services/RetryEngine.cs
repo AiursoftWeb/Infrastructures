@@ -33,7 +33,7 @@ namespace Aiursoft.XelNaga.Services
         public async Task<T> RunWithTry<T>(
             Func<int, Task<T>> taskFactory,
             int attempts = 3,
-            Predicate<Exception> when = null)
+            Predicate<Exception>? when = null)
         {
             for (var i = 1; i <= attempts; i++)
             {

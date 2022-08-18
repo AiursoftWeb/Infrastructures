@@ -9,10 +9,10 @@ namespace Aiursoft.Archon.SDK.Models
         [Required]
         [IsGuidOrEmpty]
         [FromQuery(Name = "appId")]
-        public virtual string AppId { get; set; }
+        public virtual string? AppId { get; set; }
         [Required]
         [IsGuidOrEmpty]
         [FromQuery(Name = "appSecret")]
-        public virtual string AppSecret { get; set; }
+        public virtual string? AppSecret { get; set; }
     }
 }

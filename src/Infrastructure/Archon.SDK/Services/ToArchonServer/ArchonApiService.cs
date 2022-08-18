@@ -32,7 +32,7 @@ namespace Aiursoft.Archon.SDK.Services.ToArchonServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
-            if (jResult.Code != ErrorType.Success)
+            if (jResult is not { Code: ErrorType.Success })
             {
                 throw new AiurUnexpectedResponse(jResult);
             }

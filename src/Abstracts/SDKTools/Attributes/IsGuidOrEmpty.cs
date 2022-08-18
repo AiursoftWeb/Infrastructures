@@ -5,7 +5,7 @@ namespace Aiursoft.SDKTools.Attributes
 {
     public class IsGuidOrEmpty : TestableValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             if (value is not string val)
             {
@@ -15,11 +15,11 @@ namespace Aiursoft.SDKTools.Attributes
             return string.IsNullOrWhiteSpace(val) || Guid.TryParse(val, out _);
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             if (IsValid(value))
             {
-                return ValidationResult.Success;
+                return ValidationResult.Success ?? throw new NullReferenceException();
             }
             else
             {

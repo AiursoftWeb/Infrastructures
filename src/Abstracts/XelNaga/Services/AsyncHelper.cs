@@ -8,7 +8,7 @@ namespace Aiursoft.XelNaga.Services
 {
     public static class AsyncHelper
     {
-        public static async Task<T> Try<T>(Func<Task<T>> taskFactory, int times, Action<Exception> onError = null)
+        public static async Task<T> Try<T>(Func<Task<T>> taskFactory, int times, Action<Exception>? onError = null)
         {
             for (var i = 1; i <= times; i++)
             {
@@ -36,7 +36,7 @@ namespace Aiursoft.XelNaga.Services
         /// <param name="taskFactory"></param>
         /// <param name="times"></param>
         /// <param name="onError"></param>
-        public static void TryAsync(Func<Task> taskFactory, int times, Func<Exception, Task> onError = null)
+        public static void TryAsync(Func<Task> taskFactory, int times, Func<Exception, Task>? onError = null)
         {
             for (var i = 1; i <= times; i++)
             {

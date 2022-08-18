@@ -1,4 +1,5 @@
-﻿using Aiursoft.Archon.SDK.Models;
+﻿using System;
+using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Archon.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -24,8 +25,8 @@ namespace Aiursoft.Archon.Controllers
             {
                 Code = ErrorType.Success,
                 Message = "Welcome to Archon server!",
-                Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
-                Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64()
+                Exponent = _privateKeyStore.GetPrivateKey().Exponent?.BytesToBase64() ?? throw new NullReferenceException("Private key is null!"),
+                Modulus = _privateKeyStore.GetPrivateKey().Modulus?.BytesToBase64() ?? throw new NullReferenceException("Private key is null!")
             });
         }
     }

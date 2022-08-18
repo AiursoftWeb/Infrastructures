@@ -176,12 +176,12 @@ namespace Aiursoft.XelNaga.Tools
             return Uri.EscapeDataString(input);
         }
 
-        public static string AppendPath(this string root, string folder)
+        public static string AppendPath(this string? root, string folder)
         {
             return root == null ? folder : root + "/" + folder;
         }
 
-        public static string DetachPath(this string path)
+        public static string? DetachPath(this string? path)
         {
             if (path == null || !path.Contains("/"))
             {

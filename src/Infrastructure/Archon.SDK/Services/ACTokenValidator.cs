@@ -18,12 +18,16 @@ namespace Aiursoft.Archon.SDK.Services
 
         public virtual string ValidateAccessToken(string value)
         {
-            ACToken token;
+            ACToken? token;
             try
             {
                 var tokenParts = value.Split('.');
                 string tokenBase64 = tokenParts[0], tokenSign = tokenParts[1];
                 token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
+                if (token == null)
+                {
+                    throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was not valid!");
+                }
                 if (DateTime.UtcNow > token.Expires)
                 {
                     throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
@@ -37,7 +41,7 @@ namespace Aiursoft.Archon.SDK.Services
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, $"Token was not in a valid format and can not be verified! Details: {e.Message}");
             }
-            return token.AppId;
+            return token.AppId ?? throw new NullReferenceException("Token.AppId is null!");
         }
     }
 }

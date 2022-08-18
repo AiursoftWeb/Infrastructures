@@ -9,9 +9,9 @@ namespace Aiursoft.Handler.Exceptions
     /// </summary>
     public class AiurUnexpectedResponse : Exception
     {
-        public AiurProtocol Response { get; set; }
-        public ErrorType Code => Response.Code;
-        public AiurUnexpectedResponse(AiurProtocol response) : base(response.Message)
+        public AiurProtocol? Response { get; set; }
+        public ErrorType Code => Response?.Code ?? throw new NullReferenceException("Response is null!");
+        public AiurUnexpectedResponse(AiurProtocol? response) : base(response?.Message ?? "Response is null!")
         {
             Response = response;
         }

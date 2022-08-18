@@ -30,11 +30,11 @@ namespace Aiursoft.Identity.Attributes
         {
             get
             {
-                if (string.IsNullOrEmpty(_preferController) && string.IsNullOrEmpty(_preferAction))
+                if (!string.IsNullOrEmpty(_preferController) && !string.IsNullOrEmpty(_preferAction))
                 {
-                    return "/";
+                    return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
                 }
-                return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
+                return "/";
             }
         }
 

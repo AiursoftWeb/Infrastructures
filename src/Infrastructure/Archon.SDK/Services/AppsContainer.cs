@@ -1,4 +1,5 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using System;
+using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Aiursoft.Archon.SDK.Services
     /// </summary>
     public class AppsContainer : ISingletonDependency
     {
-        public static string CurrentAppId;
-        public static string CurrentAppSecret;
+        public static string? CurrentAppId;
+        public static string? CurrentAppSecret;
         private readonly List<AppContainer> _allApps;
         private readonly IServiceScopeFactory _scopeFactory;
 
@@ -25,7 +26,9 @@ namespace Aiursoft.Archon.SDK.Services
 
         public async Task<string> AccessToken()
         {
-            return await AccessToken(CurrentAppId, CurrentAppSecret);
+            return await AccessToken(
+                CurrentAppId ?? throw new NullReferenceException($"{nameof(CurrentAppId)} is null!"), 
+                CurrentAppSecret ?? throw new NullReferenceException($"{nameof(CurrentAppSecret)} is null!"));
         }
 
         public async Task<string> AccessToken(string appId, string appSecret)

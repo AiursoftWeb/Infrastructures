@@ -19,7 +19,7 @@ namespace Aiursoft.XelNaga.Services
             _scopeFactory = scopeFactory;
         }
 
-        public void Fire<T>(Action<T> bullet, Action<Exception> handler = null)
+        public void Fire<T>(Action<T> bullet, Action<Exception>? handler = null) where T : notnull
         {
             _logger.LogInformation("Fired a new action.");
             Task.Run(() =>
@@ -42,7 +42,7 @@ namespace Aiursoft.XelNaga.Services
             });
         }
 
-        public void FireAsync<T>(Func<T, Task> bullet, Action<Exception> handler = null)
+        public void FireAsync<T>(Func<T, Task> bullet, Action<Exception>? handler = null) where T : notnull
         {
             _logger.LogInformation("Fired a new async action.");
             Task.Run(async () =>

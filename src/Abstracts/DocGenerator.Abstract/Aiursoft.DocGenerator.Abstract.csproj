@@ -4,6 +4,7 @@
     <Version>6.0.7</Version>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Aiursoft.DocGenerator</RootNamespace>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 
 </Project>
