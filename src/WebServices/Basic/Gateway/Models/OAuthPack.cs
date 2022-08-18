@@ -17,7 +17,7 @@ namespace Aiursoft.Gateway.Models
 
         public virtual DateTime CreateTime { get; set; } = DateTime.UtcNow;
         public virtual DateTime UseTime { get; set; } = DateTime.MinValue;
-        public virtual TimeSpan AliveTime { get; set; } = new TimeSpan(0, 20, 0);
+        public virtual TimeSpan AliveTime { get; set; } = new(0, 20, 0);
         public virtual bool IsAlive => DateTime.UtcNow - CreateTime < AliveTime;
     }
 }

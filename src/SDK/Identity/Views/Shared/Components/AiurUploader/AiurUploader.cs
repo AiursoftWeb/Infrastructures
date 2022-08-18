@@ -35,12 +35,13 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
 
         private async Task<string> GetUploadToken(string siteName, string path)
         {
-            if (!await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
+            if (await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
             {
-                var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
-                return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path, TimeSpan.FromMinutes(100));
+                return string.Empty;
             }
-            return string.Empty;
+
+            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
+            return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path, TimeSpan.FromMinutes(100));
         }
 
         public async Task<IViewComponentResult> InvokeAsync(

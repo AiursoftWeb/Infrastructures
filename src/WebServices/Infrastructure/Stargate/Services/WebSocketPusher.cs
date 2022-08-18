@@ -45,11 +45,9 @@ namespace Aiursoft.Stargate.Services
                 while (true)
                 {
                     await _ws.ReceiveAsync(buffer, CancellationToken.None);
-                    if (_ws.State != WebSocketState.Open)
-                    {
-                        _dropped = true;
-                        return;
-                    }
+                    if (_ws.State == WebSocketState.Open) continue;
+                    _dropped = true;
+                    return;
                 }
             }
             catch (Exception e) when (!e.Message.StartsWith("The remote party closed the WebSocket connection"))

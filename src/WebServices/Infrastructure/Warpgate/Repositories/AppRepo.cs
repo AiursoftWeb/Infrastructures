@@ -32,15 +32,13 @@ namespace Aiursoft.Warpgate.Repositories
         {
             var appid = _acTokenManager.ValidateAccessToken(accessToken);
             var appLocal = await _dbContext.WarpApps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
+            if (appLocal != null) return appLocal;
+            appLocal = new WarpgateApp
             {
-                appLocal = new WarpgateApp
-                {
-                    AppId = appid
-                };
-                await _dbContext.WarpApps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
+                AppId = appid
+            };
+            await _dbContext.WarpApps.AddAsync(appLocal);
+            await _dbContext.SaveChangesAsync();
             return appLocal;
         }
 

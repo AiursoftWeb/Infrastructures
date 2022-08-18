@@ -23,11 +23,9 @@ namespace Aiursoft.DBTools
             var knownKeys = new HashSet<M>();
             foreach (M element in query)
             {
-                if (!knownKeys.Any(k => k.EqualsInDb(element.Map())))
-                {
-                    knownKeys.Add(element);
-                    yield return element;
-                }
+                if (knownKeys.Any(k => k.EqualsInDb(element.Map()))) continue;
+                knownKeys.Add(element);
+                yield return element;
             }
         }
 

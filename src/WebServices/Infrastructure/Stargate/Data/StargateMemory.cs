@@ -8,7 +8,7 @@ namespace Aiursoft.Stargate.Data
 {
     public class StargateMemory : ISingletonDependency
     {
-        private ConcurrentDictionary<int, Channel> Channels = new ConcurrentDictionary<int, Channel>();
+        private ConcurrentDictionary<int, Channel> Channels = new();
         private bool ChannelExists(int id)
         {
             return Channels.ContainsKey(id);

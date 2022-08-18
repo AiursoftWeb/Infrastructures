@@ -76,12 +76,10 @@ namespace Aiursoft.Stargate.Controllers
                     if (nextMessages.Any())
                     {
                         var messageToPush = nextMessages.MinBy(t => t.Id);
-                        if (messageToPush != null)
-                        {
-                            await _pusher.SendMessage(messageToPush.Content);
-                            lastReadId = messageToPush.Id;
-                            sleepTime = 0;
-                        }
+                        if (messageToPush == null) continue;
+                        await _pusher.SendMessage(messageToPush.Content);
+                        lastReadId = messageToPush.Id;
+                        sleepTime = 0;
                     }
                     else
                     {

@@ -28,15 +28,16 @@ namespace Aiursoft.XelNaga.Models
         public static string GetContentType(string extenstion)
         {
             //Not to download the file, and we can process the file, let us process it.
-            if (HasKey(extenstion))
+            if (!HasKey(extenstion))
             {
-                var lower = extenstion.ToLower().TrimStart('.');
-                return MimeTypesDictionary[lower];
+                return "application/octet-stream";
             }
-            return "application/octet-stream";
+
+            var lower = extenstion.ToLower().TrimStart('.');
+            return MimeTypesDictionary[lower];
         }
 
-        private static readonly Dictionary<string, string> MimeTypesDictionary = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> MimeTypesDictionary = new()
         {
             {"wav", "audio/wav"},
             {"mkv", "video/x-matroska"},
@@ -77,7 +78,15 @@ namespace Aiursoft.XelNaga.Models
             {"otf","application/x-font-opentype"},
             {"eot","application/application/vnd.ms-fontobject"},
             {"ts","application/x-typescript"},
-            {"xml", "text/xml"}
+            {"xml", "text/xml"},
+            {"zip", "application/zip"},
+            {"rar", "application/x-rar-compressed"},
+            {"7z", "application/x-7z-compressed"},
+            {"gz", "application/x-gzip"},
+            {"tar", "application/x-tar"},
+            {"bz2", "application/x-bzip2"},
+            {"xls", "application/vnd.ms-excel"},
+            {"xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
         };
     }
 }

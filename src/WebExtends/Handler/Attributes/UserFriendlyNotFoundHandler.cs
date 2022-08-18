@@ -14,12 +14,10 @@ namespace Aiursoft.Handler.Attributes
         public override void OnException(ExceptionContext context)
         {
             base.OnException(context);
-            if (context.Exception is AiurUnexpectedResponse unexpectedResponse && unexpectedResponse.Code == ErrorType.NotFound)
-            {
-                context.ExceptionHandled = true;
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                context.Result = new NotFoundResult();
-            }
+            if (context.Exception is not AiurUnexpectedResponse { Code: ErrorType.NotFound }) return;
+            context.ExceptionHandled = true;
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            context.Result = new NotFoundResult();
         }
     }
 }

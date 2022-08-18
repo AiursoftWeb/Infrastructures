@@ -13,8 +13,8 @@ namespace Aiursoft.Probe.Services
     {
         private readonly SizeCalculator _sizeCalculator;
         private readonly string _tempFilePath;
-        private static readonly object ObjCompareLock = new object();
-        private static readonly object ObjClearLock = new object();
+        private static readonly object ObjCompareLock = new();
+        private static readonly object ObjClearLock = new();
 
         public ImageCompressor(
             IConfiguration configuration,

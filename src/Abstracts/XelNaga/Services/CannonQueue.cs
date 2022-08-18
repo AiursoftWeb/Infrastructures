@@ -11,10 +11,10 @@ namespace Aiursoft.XelNaga.Services
 {
     public class CannonQueue : ISingletonDependency
     {
-        private readonly SafeQueue<Func<Task>> _pendingTaskFactories = new SafeQueue<Func<Task>>();
+        private readonly SafeQueue<Func<Task>> _pendingTaskFactories = new();
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<CannonQueue> _logger;
-        private readonly object loc = new object();
+        private readonly object loc = new();
         private Task _engine = Task.CompletedTask;
 
         public CannonQueue(
@@ -28,16 +28,20 @@ namespace Aiursoft.XelNaga.Services
         public void QueueNew(Func<Task> taskFactory, bool startTheEngine = true)
         {
             _pendingTaskFactories.Enqueue(taskFactory);
-            if (startTheEngine)
+            if (!startTheEngine)
             {
-                lock (loc)
+                return;
+            }
+
+            lock (loc)
+            {
+                if (!_engine.IsCompleted)
                 {
-                    if (_engine.IsCompleted)
-                    {
-                        this._logger.LogDebug("Engine is sleeping. Trying to wake it up.");
-                        _engine = RunTasksInQueue();
-                    }
+                    return;
                 }
+
+                this._logger.LogDebug("Engine is sleeping. Trying to wake it up.");
+                _engine = RunTasksInQueue();
             }
         }
 

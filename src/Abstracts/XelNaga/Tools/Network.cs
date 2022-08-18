@@ -5,7 +5,7 @@ namespace Aiursoft.XelNaga.Tools
 {
     public static class Network
     {
-        private static readonly IPEndPoint DefaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
+        private static readonly IPEndPoint DefaultLoopbackEndpoint = new(IPAddress.Loopback, port: 0);
 
         public static int GetAvailablePort()
         {

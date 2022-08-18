@@ -16,7 +16,7 @@ namespace Aiursoft.Warpgate.Repositories
     {
         private readonly WarpgateDbContext _dbContext;
         private readonly DbSet<WarpRecord> _table;
-        private static SemaphoreSlim _createRecordLock = new SemaphoreSlim(1, 1);
+        private static SemaphoreSlim _createRecordLock = new(1, 1);
 
         public RecordRepo(WarpgateDbContext dbContext)
         {
@@ -68,14 +68,11 @@ namespace Aiursoft.Warpgate.Repositories
         public async Task<List<WarpRecord>> GetAllRecordsUnderApp(string appid, string mustHaveTags)
         {
             var query = _table.Where(t => t.AppId == appid);
-            if (!string.IsNullOrWhiteSpace(mustHaveTags))
-            {
-                var loadInMemoryResults = await query.ToListAsync();
-                return loadInMemoryResults
-                    .Where(t => t.Tags?.Split(",").Any(s => s == mustHaveTags) ?? false)
-                    .ToList();
-            }
-            return await query.ToListAsync();
+            if (string.IsNullOrWhiteSpace(mustHaveTags)) return await query.ToListAsync();
+            var loadInMemoryResults = await query.ToListAsync();
+            return loadInMemoryResults
+                .Where(t => t.Tags?.Split(",").Any(s => s == mustHaveTags) ?? false)
+                .ToList();
         }
 
         public async Task<WarpRecord> GetRecordByNameUnderApp(string recordName, string appid)

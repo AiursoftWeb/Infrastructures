@@ -22,14 +22,16 @@ namespace Aiursoft.Archon.SDK.Services
 
         public async Task<string> AccessToken(IServiceScopeFactory scopeFactory)
         {
-            if (DateTime.UtcNow > _accessTokenDeadTime)
+            if (DateTime.UtcNow <= _accessTokenDeadTime)
             {
-                using IServiceScope scope = scopeFactory.CreateScope();
-                var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
-                var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
-                _latestAccessToken = serverResult.AccessToken;
-                _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
+                return _latestAccessToken;
             }
+
+            using IServiceScope scope = scopeFactory.CreateScope();
+            var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
+            var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
+            _latestAccessToken = serverResult.AccessToken;
+            _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
             return _latestAccessToken;
         }
     }

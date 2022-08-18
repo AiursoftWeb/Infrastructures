@@ -70,11 +70,9 @@ namespace Aiursoft.DocGenerator.Services
         {
             foreach (var arg in args)
             {
-                if (RouteContainsArg(routeTemplate, arg))
-                {
-                    routeTemplate = routeTemplate.ToLower().Replace("{" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
-                    routeTemplate = routeTemplate.ToLower().Replace("{**" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
-                }
+                if (!RouteContainsArg(routeTemplate, arg)) continue;
+                routeTemplate = routeTemplate.ToLower().Replace("{" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
+                routeTemplate = routeTemplate.ToLower().Replace("{**" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
             }
             return routeTemplate;
         }

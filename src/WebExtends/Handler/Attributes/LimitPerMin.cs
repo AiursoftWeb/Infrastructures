@@ -11,12 +11,12 @@ namespace Aiursoft.Handler.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
     public class LimitPerMin : ActionFilterAttribute
     {
-        public static Dictionary<string, int> MemoryDictionary = new Dictionary<string, int>();
+        public static Dictionary<string, int> MemoryDictionary = new();
         public static DateTime LastClearTime = DateTime.UtcNow;
         public bool ReturnJson { get; set; } = true;
 
         private readonly int _limit;
-        private static readonly object _obj = new object();
+        private static readonly object _obj = new();
 
         public LimitPerMin(int limit = 30)
         {

@@ -43,16 +43,14 @@ namespace Aiursoft.WWW.Controllers
             var market = CultureInfo.CurrentCulture.Name;
             var result = await _cache.GetAndCache($"search-content-{market}-{page}-" + question, () => _searchService.DoSearch(question, market, page));
             ViewBag.Entities = await _cache.GetAndCache($"search-entity-{market}-" + question, () => _searchService.EntitySearch(question, market));
-            if (HttpContext.AllowTrack())
+            if (!HttpContext.AllowTrack()) return View(result);
+            await _dbContext.SearchHistories.AddAsync(new SearchHistory
             {
-                await _dbContext.SearchHistories.AddAsync(new SearchHistory
-                {
-                    Question = question,
-                    TriggerUserId = User.GetUserId(),
-                    Page = page
-                });
-                await _dbContext.SaveChangesAsync();
-            }
+                Question = question,
+                TriggerUserId = User.GetUserId(),
+                Page = page
+            });
+            await _dbContext.SaveChangesAsync();
             return View(result);
         }
 

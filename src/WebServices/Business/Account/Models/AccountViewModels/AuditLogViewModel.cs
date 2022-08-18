@@ -14,7 +14,7 @@ namespace Aiursoft.Account.Models.AccountViewModels
         }
         public AuditLogViewModel(AccountUser user) : base(user, "Audit Log") { }
 
-        public ConcurrentBag<App> Apps { get; set; } = new ConcurrentBag<App>();
+        public ConcurrentBag<App> Apps { get; set; } = new();
         public AiurPagedCollection<AuditLog> Logs { get; set; }
     }
 }

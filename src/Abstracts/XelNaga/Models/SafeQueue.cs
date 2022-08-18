@@ -5,8 +5,8 @@ namespace Aiursoft.XelNaga.Models
 {
     public class SafeQueue<T>
     {
-        private readonly Queue<T> queue = new Queue<T>();
-        private readonly object loc = new object();
+        private readonly Queue<T> queue = new();
+        private readonly object loc = new();
 
         public void Enqueue(T item)
         {

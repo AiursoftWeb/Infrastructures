@@ -33,7 +33,10 @@ namespace Aiursoft.Archon.SDK.Services.ToArchonServer
             var jResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
     }

@@ -37,12 +37,14 @@ namespace Aiursoft.Archon.SDK.Services
         private AppContainer GetApp(string appId, string appSecret)
         {
             var exists = _allApps.FirstOrDefault(t => t.AppId == appId);
-            if (exists == null)
+            if (exists != null)
             {
-                var newContainer = new AppContainer(appId, appSecret);
-                _allApps.Add(newContainer);
-                exists = newContainer;
+                return exists;
             }
+
+            var newContainer = new AppContainer(appId, appSecret);
+            _allApps.Add(newContainer);
+            exists = newContainer;
             return exists;
         }
     }

@@ -128,18 +128,16 @@ namespace Aiursoft.EE.Controllers
                 .Subscriptions
                 .AnyAsync(t => t.CourseId == id && t.UserId == user.Id);
 
-            if (!subscribed)
+            if (subscribed)
+                return this.Protocol(ErrorType.HasSuccessAlready, "This course you have already subscribed!");
+            var newSubscription = new Subscription
             {
-                var newSubscription = new Subscription
-                {
-                    UserId = user.Id,
-                    CourseId = id
-                };
-                await _dbContext.Subscriptions.AddAsync(newSubscription);
-                await _dbContext.SaveChangesAsync();
-                return this.Protocol(ErrorType.Success, "You have successfully subscribed this course!");
-            }
-            return this.Protocol(ErrorType.HasSuccessAlready, "This course you have already subscribed!");
+                UserId = user.Id,
+                CourseId = id
+            };
+            await _dbContext.Subscriptions.AddAsync(newSubscription);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "You have successfully subscribed this course!");
         }
 
         [HttpPost]
@@ -160,13 +158,10 @@ namespace Aiursoft.EE.Controllers
                 .Subscriptions
                 .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id);
 
-            if (sub != null)
-            {
-                _dbContext.Subscriptions.Remove(sub);
-                await _dbContext.SaveChangesAsync();
-                return this.Protocol(ErrorType.Success, "Successfully unsubscribed this course!");
-            }
-            return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
+            if (sub == null) return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
+            _dbContext.Subscriptions.Remove(sub);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(ErrorType.Success, "Successfully unsubscribed this course!");
         }
 
         private async Task<EEUser> GetCurrentUserAsync()

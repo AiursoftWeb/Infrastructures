@@ -41,14 +41,12 @@ namespace Aiursoft.Probe.Services
         {
             var path = _path + $"{hardwareUuid}.dat";
             var target = _trashPath + $"{hardwareUuid}.dat";
-            if (File.Exists(path))
+            if (!File.Exists(path)) return;
+            if (!Directory.Exists(_trashPath))
             {
-                if (!Directory.Exists(_trashPath))
-                {
-                    Directory.CreateDirectory(_trashPath);
-                }
-                File.Move(path, target);
+                Directory.CreateDirectory(_trashPath);
             }
+            File.Move(path, target);
         }
 
         public bool ExistInHardware(string hardwareUuid)

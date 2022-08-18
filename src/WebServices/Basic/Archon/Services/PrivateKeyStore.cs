@@ -8,11 +8,9 @@ namespace Aiursoft.Archon.Services
 
         public RSAParameters GetPrivateKey()
         {
-            if (_privateKey == null)
-            {
-                var provider = new RSACryptoServiceProvider();
-                _privateKey = provider.ExportParameters(true);
-            }
+            if (_privateKey != null) return _privateKey.Value;
+            var provider = new RSACryptoServiceProvider();
+            _privateKey = provider.ExportParameters(true);
             return _privateKey.Value;
         }
     }

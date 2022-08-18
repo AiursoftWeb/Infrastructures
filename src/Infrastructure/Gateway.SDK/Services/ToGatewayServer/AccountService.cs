@@ -34,7 +34,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -48,7 +51,10 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
     }

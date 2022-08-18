@@ -1,3 +1,4 @@
+using Aiursoft.Configuration.Data;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
@@ -8,7 +9,7 @@ namespace Aiursoft.Configuration
     {
         public static void Main(string[] args)
         {
-            App<Startup>(args).Update<ObserverDbContext>().Run();
+            App<Startup>(args).Update<ConfigurationDbContext>().Run();
         }
 
         // For EF

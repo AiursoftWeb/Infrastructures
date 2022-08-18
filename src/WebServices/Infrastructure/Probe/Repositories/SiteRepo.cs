@@ -16,7 +16,7 @@ namespace Aiursoft.Probe.Repositories
     {
         private readonly ProbeDbContext _dbContext;
         private readonly FolderRepo _folderRepo;
-        private static SemaphoreSlim _createSiteLock = new SemaphoreSlim(1, 1);
+        private static SemaphoreSlim _createSiteLock = new(1, 1);
 
         public SiteRepo(
             ProbeDbContext dbContext,

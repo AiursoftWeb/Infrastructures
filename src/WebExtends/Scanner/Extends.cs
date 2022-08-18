@@ -24,31 +24,23 @@ namespace Aiursoft.Scanner
             }
             foreach (var inputInterface in abstracts.Where(t => t.IsInterface))
             {
-                if (service.GetInterfaces().Any(t => t == inputInterface))
-                {
-                    if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface))
-                    {
-                        abstractImplementation(inputInterface, service);
-                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
-                    }
-                }
+                if (service.GetInterfaces().All(t => t != inputInterface)) continue;
+                if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface)) continue;
+                abstractImplementation(inputInterface, service);
+                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
             }
             foreach (var inputAbstractClass in abstracts.Where(t => t.IsAbstract))
             {
-                if (service.IsSubclassOf(inputAbstractClass))
-                {
-                    if (!services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
-                    {
-                        abstractImplementation(inputAbstractClass, service);
-                        Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
-                    }
-                }
+                if (!service.IsSubclassOf(inputAbstractClass)) continue;
+                if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
+                    continue;
+                abstractImplementation(inputAbstractClass, service);
+                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
             }
-            if (!services.Any(t => t.ServiceType == service && t.ImplementationType == service))
-            {
-                realisticImplementation(service);
-                Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess");
-            }
+
+            if (services.Any(t => t.ServiceType == service && t.ImplementationType == service)) return;
+            realisticImplementation(service);
+            Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess");
         }
 
         private static void Register(List<Type> types, IServiceCollection services, params Type[] abstracts)

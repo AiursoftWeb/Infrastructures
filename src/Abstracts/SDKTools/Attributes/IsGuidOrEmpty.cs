@@ -7,15 +7,12 @@ namespace Aiursoft.SDKTools.Attributes
     {
         public override bool IsValid(object value)
         {
-            if (value is string val)
+            if (value is not string val)
             {
-                if (string.IsNullOrWhiteSpace(val))
-                {
-                    return true;
-                }
-                return Guid.TryParse(val, out _);
+                return false;
             }
-            return false;
+
+            return string.IsNullOrWhiteSpace(val) || Guid.TryParse(val, out _);
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

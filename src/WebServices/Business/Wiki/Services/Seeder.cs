@@ -22,7 +22,7 @@ namespace Aiursoft.Wiki.Services
 {
     public class Seeder : ITransientDependency
     {
-        private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim SemaphoreSlim = new(1, 1);
         private readonly WikiDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly HttpService _http;
@@ -108,33 +108,31 @@ namespace Aiursoft.Wiki.Services
                     }
 
                     // Parse the appended doc.
-                    if (!string.IsNullOrWhiteSpace(collection.DocAPIAddress))
+                    if (string.IsNullOrWhiteSpace(collection.DocAPIAddress)) continue;
+                    var domain = _configuration["RootDomain"];
+                    var docBuilt = collection.DocAPIAddress
+                        .Replace("{{rootDomain}}", domain);
+                    // Generate markdown from doc generator
+                    var docString = await _http.Get(new AiurUrl(docBuilt));
+                    var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                    if (docModel == null)
                     {
-                        var domain = _configuration["RootDomain"];
-                        var docBuilt = collection.DocAPIAddress
-                            .Replace("{{rootDomain}}", domain);
-                        // Generate markdown from doc generator
-                        var docString = await _http.Get(new AiurUrl(docBuilt));
-                        var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
-                        if (docModel == null)
+                        continue;
+                    }
+                    var docGrouped = docModel.GroupBy(t => t.ControllerName);
+                    var apiRoot = docBuilt.ToLower().Replace("/doc", "");
+                    foreach (var docController in docGrouped)
+                    {
+                        var markdown = _markDownGenerator.GenerateMarkDownForApi(docController, apiRoot);
+                        var newArticle = new Article
                         {
-                            continue;
-                        }
-                        var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                        var apiRoot = docBuilt.ToLower().Replace("/doc", "");
-                        foreach (var docController in docGrouped)
-                        {
-                            var markdown = _markDownGenerator.GenerateMarkDownForApi(docController, apiRoot);
-                            var newArticle = new Article
-                            {
-                                ArticleTitle = docController.Key.TrimController(),
-                                ArticleContent = markdown,
-                                CollectionId = newCollection.CollectionId,
-                                BuiltByJson = true
-                            };
-                            await _dbContext.Article.AddAsync(newArticle);
-                            await _dbContext.SaveChangesAsync();
-                        }
+                            ArticleTitle = docController.Key.TrimController(),
+                            ArticleContent = markdown,
+                            CollectionId = newCollection.CollectionId,
+                            BuiltByJson = true
+                        };
+                        await _dbContext.Article.AddAsync(newArticle);
+                        await _dbContext.SaveChangesAsync();
                     }
                 }
             }

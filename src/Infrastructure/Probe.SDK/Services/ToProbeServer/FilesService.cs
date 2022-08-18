@@ -34,7 +34,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.PostWithFile(url, file, true);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -48,7 +51,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -68,7 +74,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -83,7 +92,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
     }

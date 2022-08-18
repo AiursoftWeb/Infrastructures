@@ -51,7 +51,10 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult.Value;
         }
     }

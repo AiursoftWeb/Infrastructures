@@ -181,27 +181,25 @@ namespace Aiursoft.Gateway.Controllers
             {
                 return this.Protocol(ErrorType.UnknownError, $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
             }
-            // limit the sending frenquency to 3 minutes.
-            if (DateTime.UtcNow > userEmail.LastSendTime + new TimeSpan(0, 1, 0))
+            // limit the sending frequency to 3 minutes.
+            if (DateTime.UtcNow <= userEmail.LastSendTime + new TimeSpan(0, 1, 0))
+                return this.Protocol(ErrorType.HasSuccessAlready, "We have just sent you an Email in an minute.");
+            var token = Guid.NewGuid().ToString("N");
+            userEmail.ValidateToken = token;
+            userEmail.LastSendTime = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+            try
             {
-                var token = Guid.NewGuid().ToString("N");
-                userEmail.ValidateToken = token;
-                userEmail.LastSendTime = DateTime.UtcNow;
-                await _dbContext.SaveChangesAsync();
-                try
+                _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
                 {
-                    _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
-                    {
-                        await sender.SendConfirmation(user.Id, userEmail.EmailAddress, token);
-                    });
-                }
-                catch (SmtpException e)
-                {
-                    return this.Protocol(ErrorType.InvalidInput, e.Message);
-                }
-                return this.Protocol(ErrorType.Success, "Successfully sent the validation email.");
+                    await sender.SendConfirmation(user.Id, userEmail.EmailAddress, token);
+                });
             }
-            return this.Protocol(ErrorType.HasSuccessAlready, "We have just sent you an Email in an minute.");
+            catch (SmtpException e)
+            {
+                return this.Protocol(ErrorType.InvalidInput, e.Message);
+            }
+            return this.Protocol(ErrorType.Success, "Successfully sent the validation email.");
         }
 
         [HttpPost]
@@ -383,17 +381,20 @@ namespace Aiursoft.Gateway.Controllers
             var is2FATokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            if (is2FATokenValid && !user.TwoFactorEnabled)
-            {
-                // enable 2fa.
-                user.TwoFactorEnabled = true;
-                await _userManager.UpdateAsync(user);
-            }
+            if (!is2FATokenValid || user.TwoFactorEnabled)
+                return this.Protocol(new AiurValue<bool>(is2FATokenValid)
+                {
+                    Code = ErrorType.Success,
+                    Message = "Sucess Verified code."
+                });
+            // enable 2fa.
+            user.TwoFactorEnabled = true;
+            await _userManager.UpdateAsync(user);
 
-            return this.Protocol(new AiurValue<bool>(is2FATokenValid)
+            return this.Protocol(new AiurValue<bool>(true)
             {
                 Code = ErrorType.Success,
-                Message = "Sucess Verified code."
+                Message = "Successfully Verified code."
             });
         }
 

@@ -136,7 +136,7 @@ namespace Aiursoft.XelNaga.Tools
             return s + content;
         }
 
-        private static Random StaticRan { get; } = new Random();
+        private static Random StaticRan { get; } = new();
         public static string RandomString(int count)
         {
             var checkCode = string.Empty;

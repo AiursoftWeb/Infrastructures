@@ -29,7 +29,7 @@ namespace Aiursoft.WWW.Services
         {
             var inputSource = new List<Translation>
             {
-                new Translation { Text = input }
+                new() { Text = input }
             };
             var bingResponse = await CallTranslateAPI(JsonConvert.SerializeObject(inputSource), targetLanguage);
             var result = JsonConvert.DeserializeObject<List<BingResponse>>(bingResponse);

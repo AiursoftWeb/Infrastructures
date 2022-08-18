@@ -15,7 +15,7 @@ namespace Aiursoft.Stargate.SDK.Models
         public DateTime LastAccessTime { get; set; } = DateTime.UtcNow;
         public string AppId { get; set; }
         [JsonIgnore]
-        public ConcurrentBag<Message> Messages { get; set; } = new ConcurrentBag<Message>();
+        public ConcurrentBag<Message> Messages { get; set; } = new();
         [JsonIgnore]
         public TimeSpan MaxIdleLife { get; private set; } = TimeSpan.FromDays(10);
         public int ConnectedUsers { get; set; }

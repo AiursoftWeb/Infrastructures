@@ -6,7 +6,7 @@ namespace Aiursoft.Probe.Services
 {
     public class FolderLockDictionary : ISingletonDependency
     {
-        private Dictionary<int, SemaphoreSlim> _dictionary = new Dictionary<int, SemaphoreSlim>();
+        private Dictionary<int, SemaphoreSlim> _dictionary = new();
 
         public SemaphoreSlim GetLock(int contextId)
         {

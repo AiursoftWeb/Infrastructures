@@ -10,7 +10,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
         public string AvatarUrl { get => Picture?.Data?.Url; set => Picture.Data.Url = value; }
 
         [JsonProperty("picture")]
-        public FaceBookPicture Picture { get; set; } = new FaceBookPicture();
+        public FaceBookPicture Picture { get; set; } = new();
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -25,7 +25,7 @@ namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
     public class FaceBookPicture
     {
         [JsonProperty("data")]
-        public FaceBookPictureData Data { get; set; } = new FaceBookPictureData();
+        public FaceBookPictureData Data { get; set; } = new();
     }
 
     public class FaceBookPictureData

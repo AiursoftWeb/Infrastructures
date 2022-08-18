@@ -1,4 +1,3 @@
-using Aiursoft.Observer.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Configuration.Data
@@ -8,6 +7,5 @@ namespace Aiursoft.Configuration.Data
         public ConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options) : base(options)
         {
         }
-
     }
 }

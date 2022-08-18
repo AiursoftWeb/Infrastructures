@@ -95,8 +95,7 @@ namespace Aiursoft.XelNaga.Services
             while (queue.Count != 0 || tasksInFlight.Count != 0);
         }
 
-        private static readonly TaskFactory TaskFactory = new
-            TaskFactory(CancellationToken.None,
+        private static readonly TaskFactory TaskFactory = new(CancellationToken.None,
                         TaskCreationOptions.None,
                         TaskContinuationOptions.None,
                         TaskScheduler.Default);

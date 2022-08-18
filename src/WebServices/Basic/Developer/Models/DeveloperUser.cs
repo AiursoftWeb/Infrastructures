@@ -7,6 +7,6 @@ namespace Aiursoft.Developer.Models
     public class DeveloperUser : AiurUserBase
     {
         [InverseProperty(nameof(DeveloperApp.Creator))]
-        public virtual List<DeveloperApp> MyApps { get; set; } = new List<DeveloperApp>();
+        public virtual List<DeveloperApp> MyApps { get; set; } = new();
     }
 }

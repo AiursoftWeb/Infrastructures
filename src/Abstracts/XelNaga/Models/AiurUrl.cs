@@ -11,7 +11,7 @@ namespace Aiursoft.XelNaga.Models
     public class AiurUrl
     {
         public string Address { get; set; }
-        public Dictionary<string, string> Params { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Params { get; } = new();
         public AiurUrl(string address)
         {
             Address = address;
@@ -21,7 +21,11 @@ namespace Aiursoft.XelNaga.Models
             var t = param.GetType();
             foreach (var prop in t.GetProperties())
             {
-                if (prop.GetValue(param) == null) continue;
+                if (prop.GetValue(param) == null)
+                {
+                    continue;
+                }
+
                 var propName = prop.Name;
                 var propValue = prop.GetValue(param)?.ToString();
                 var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();

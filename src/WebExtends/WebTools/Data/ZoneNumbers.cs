@@ -4,7 +4,7 @@ namespace Aiursoft.WebTools.Data
 {
     public class ZoneNumbers
     {
-        public static readonly Dictionary<string, int> Numbers = new Dictionary<string, int>
+        public static readonly Dictionary<string, int> Numbers = new()
         {
             {
                 "Afghanistan", 93

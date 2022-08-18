@@ -10,7 +10,7 @@ namespace Aiursoft.XelNaga.Services
     /// </summary>
     public class RetryEngine : ITransientDependency
     {
-        private static Random rnd = new Random();
+        private static Random rnd = new();
         private readonly ILogger<RetryEngine> logger;
 
         /// <summary>

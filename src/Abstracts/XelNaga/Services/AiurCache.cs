@@ -16,15 +16,17 @@ namespace Aiursoft.XelNaga.Services
 
         public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue) || resultValue == null)
+            if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
             {
-                resultValue = await backup();
-
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
-
-                _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+                return resultValue;
             }
+
+            resultValue = await backup();
+
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
+
+            _cache.Set(cacheKey, resultValue, cacheEntryOptions);
             return resultValue;
         }
 
@@ -35,15 +37,17 @@ namespace Aiursoft.XelNaga.Services
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue) || resultValue == null)
+            if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
             {
-                resultValue = backup();
-
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
-
-                _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+                return resultValue;
             }
+
+            resultValue = backup();
+
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
+
+            _cache.Set(cacheKey, resultValue, cacheEntryOptions);
             return resultValue;
         }
     }

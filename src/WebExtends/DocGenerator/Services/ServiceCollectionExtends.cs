@@ -29,7 +29,7 @@ namespace Aiursoft.DocGenerator.Services
                 action.CustomAttributes.Any(t => t.AttributeType == typeof(AuthorizeAttribute)) ||
                 controller.CustomAttributes.Any(t => t.AttributeType == typeof(AuthorizeAttribute));
         };
-        public List<object> GlobalPossibleResponse { get; set; } = new List<object>();
+        public List<object> GlobalPossibleResponse { get; set; } = new();
         public DocFormat Format = DocFormat.Json;
         public string DocAddress = "doc";
     }

@@ -159,14 +159,13 @@ namespace Aiursoft.Stargate.Controllers
                 return this.Protocol(new AiurProtocol { Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!" });
             }
             var target = await _dbContext.Apps.FindAsync(appid);
-            if (target != null)
-            {
-                _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
-                _dbContext.Apps.Remove(target);
-                await _dbContext.SaveChangesAsync();
-                return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
-            }
-            return this.Protocol(new AiurProtocol { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
+            if (target == null)
+                return this.Protocol(new AiurProtocol
+                    { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
+            _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
+            _dbContext.Apps.Remove(target);
+            await _dbContext.SaveChangesAsync();
+            return this.Protocol(new AiurProtocol { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
         }
     }
 }

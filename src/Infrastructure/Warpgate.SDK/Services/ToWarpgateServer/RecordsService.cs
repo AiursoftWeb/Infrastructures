@@ -45,7 +45,10 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -59,7 +62,10 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -86,7 +92,10 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -101,7 +110,10 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
 
@@ -116,7 +128,10 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
             var result = await _http.Post(url, form, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
             if (jResult.Code != ErrorType.Success)
+            {
                 throw new AiurUnexpectedResponse(jResult);
+            }
+
             return jResult;
         }
     }

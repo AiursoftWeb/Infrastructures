@@ -32,15 +32,13 @@ namespace Aiursoft.Probe.Repositories
         {
             var appid = _acTokenManager.ValidateAccessToken(accessToken);
             var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
-            if (appLocal == null)
+            if (appLocal != null) return appLocal;
+            appLocal = new ProbeApp
             {
-                appLocal = new ProbeApp
-                {
-                    AppId = appid
-                };
-                await _dbContext.Apps.AddAsync(appLocal);
-                await _dbContext.SaveChangesAsync();
-            }
+                AppId = appid
+            };
+            await _dbContext.Apps.AddAsync(appLocal);
+            await _dbContext.SaveChangesAsync();
             return appLocal;
         }
 

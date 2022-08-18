@@ -100,16 +100,10 @@ namespace Aiursoft.Gateway.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPasswordFor(ForgotPasswordForViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
-                if (mail == null)
-                {
-                    ModelState.AddModelError(nameof(model.Email), $"The account with Email: {model.Email} was not found!");
-                    return View(model);
-                }
-                return RedirectToAction(nameof(MethodSelection), new { id = mail.OwnerId });
-            }
+            if (!ModelState.IsValid) return View(model);
+            var mail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            if (mail != null) return RedirectToAction(nameof(MethodSelection), new { id = mail.OwnerId });
+            ModelState.AddModelError(nameof(model.Email), $"The account with Email: {model.Email} was not found!");
             return View(model);
         }
 
@@ -150,15 +144,14 @@ namespace Aiursoft.Gateway.Controllers
                 .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             // limit the sending frenquency to 3 minutes.
-            if (DateTime.UtcNow > mail.LastSendTime + new TimeSpan(0, 1, 0))
+            if (DateTime.UtcNow <= mail.LastSendTime + new TimeSpan(0, 1, 0))
+                return RedirectToAction(nameof(ForgotPasswordSent));
+            mail.LastSendTime = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+            _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
             {
-                mail.LastSendTime = DateTime.UtcNow;
-                await _dbContext.SaveChangesAsync();
-                _cannonService.FireAsync<ConfirmationEmailSender>(async (sender) =>
-                {
-                    await sender.SendResetPassword(code, user.Id, mail.EmailAddress);
-                });
-            }
+                await sender.SendResetPassword(code, user.Id, mail.EmailAddress);
+            });
             return RedirectToAction(nameof(ForgotPasswordSent));
         }
 

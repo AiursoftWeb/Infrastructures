@@ -287,13 +287,10 @@ namespace Aiursoft.Account.Controllers
             if (correctToken)
             {
                 var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), model.NewPhoneNumber);
-                if (result.Code == ErrorType.Success)
-                {
-                    user.PhoneNumber = model.NewPhoneNumber;
-                    await _userManager.UpdateAsync(user);
-                    return RedirectToAction(nameof(Phone), new { JustHaveUpdated = true });
-                }
-                throw new InvalidOperationException();
+                if (result.Code != ErrorType.Success) throw new InvalidOperationException();
+                user.PhoneNumber = model.NewPhoneNumber;
+                await _userManager.UpdateAsync(user);
+                return RedirectToAction(nameof(Phone), new { JustHaveUpdated = true });
             }
             else
             {
@@ -309,13 +306,10 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), string.Empty);
-            if (result.Code == ErrorType.Success)
-            {
-                user.PhoneNumber = string.Empty;
-                await _userManager.UpdateAsync(user);
-                return RedirectToAction(nameof(Phone));
-            }
-            throw new InvalidOperationException();
+            if (result.Code != ErrorType.Success) throw new InvalidOperationException();
+            user.PhoneNumber = string.Empty;
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(Phone));
         }
 
         public async Task<IActionResult> Applications()

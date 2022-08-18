@@ -92,24 +92,27 @@ namespace Aiursoft.Probe.Repositories
 
         public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)
         {
-            if (root == null) return null;
+            if (root == null)
+            {
+                return null;
+            }
+
             if (!folderNames.Any())
             {
                 return await GetFolderFromId(root.Id);
             }
             var subFolderName = folderNames[0];
             var subFolder = await GetSubFolder(root.Id, subFolderName);
-            if (recursiveCreate && subFolder == null && !string.IsNullOrWhiteSpace(subFolderName))
+            if (!recursiveCreate || subFolder != null || string.IsNullOrWhiteSpace(subFolderName))
+                return await GetFolderFromPath(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+            subFolder = new Folder
             {
-                subFolder = new Folder
-                {
-                    ContextId = root.Id,
-                    FolderName = subFolderName
-                };
-                await _dbContext.Folders.AddAsync(subFolder);
-                await _dbContext.SaveChangesAsync();
-            }
-            return await GetFolderFromPath(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+                ContextId = root.Id,
+                FolderName = subFolderName
+            };
+            await _dbContext.Folders.AddAsync(subFolder);
+            await _dbContext.SaveChangesAsync();
+            return await GetFolderFromPath(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate: true);
         }
 
         private async Task DeleteFolderObject(Folder folder)
