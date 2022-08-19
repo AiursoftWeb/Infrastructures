@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿#nullable enable
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace Aiursoft.SDKTools.Attributes
@@ -7,7 +8,7 @@ namespace Aiursoft.SDKTools.Attributes
     {
         private readonly string _domainRegex = @"^[-a-z0-9_]+$";
 
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             var regex = new Regex(_domainRegex, RegexOptions.Compiled);
             if (value is string val)
@@ -17,7 +18,7 @@ namespace Aiursoft.SDKTools.Attributes
             return false;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (IsValid(value))
             {

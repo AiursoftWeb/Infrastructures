@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
 	  <Description>The developer center and also the app management center for aiursoft.</Description>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<Description>The configuration center for Aiursoft apps.</Description>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>

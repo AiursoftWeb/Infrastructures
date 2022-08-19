@@ -42,7 +42,7 @@ namespace Aiursoft.Stargate.Controllers
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
+            var appLocal = await _dbContext.Apps.FirstOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp
@@ -108,7 +108,7 @@ namespace Aiursoft.Stargate.Controllers
         {
             //Update app info
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
+            var appLocal = await _dbContext.Apps.FirstOrDefaultAsync(t => t.Id == appid);
             if (appLocal == null)
             {
                 appLocal = new StargateApp

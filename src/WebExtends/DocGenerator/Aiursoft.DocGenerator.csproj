@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/AiursoftWeb/DocGenerator</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/DocGenerator.git</RepositoryUrl>
+    <Nullable>enable</Nullable>
   </PropertyGroup> 
 	
   <ItemGroup>

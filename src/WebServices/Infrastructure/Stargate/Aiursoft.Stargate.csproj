@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Description>The core message queue for aiursoft web apps.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

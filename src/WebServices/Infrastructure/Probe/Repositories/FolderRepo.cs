@@ -39,14 +39,14 @@ namespace Aiursoft.Probe.Repositories
             return (await GetFolderFromId(rootFolderId)).SubFolders.FirstOrDefault(f => f.FolderName == subFolderName);
         }
 
-        public Task<Folder> GetFolderFromId(int folderId)
+        public Task<Folder?> GetFolderFromId(int folderId)
         {
             return _dbContext
                 .Folders
                 .AsNoTracking()
                 .Include(t => t.Files)
                 .Include(t => t.SubFolders)
-                .SingleOrDefaultAsync(t => t.Id == folderId);
+                .FirstOrDefaultAsync(t => t.Id == folderId);
         }
 
         public async Task<Folder> GetFolderAsOwner(string accessToken, string siteName, string[] folderNames, bool recursiveCreate = false)
@@ -159,7 +159,7 @@ namespace Aiursoft.Probe.Repositories
         {
             var folder = await _dbContext
                 .Folders
-                .SingleOrDefaultAsync(t => t.Id == folderId);
+                .FirstOrDefaultAsync(t => t.Id == folderId);
             if (folder != null)
             {
                 return await GetFolderObjectSize(folder);
@@ -175,7 +175,7 @@ namespace Aiursoft.Probe.Repositories
             {
                 var folder = await _dbContext
                     .Folders
-                    .SingleOrDefaultAsync(t => t.Id == folderId);
+                    .FirstOrDefaultAsync(t => t.Id == folderId);
 
                 if (folder == null)
                 {

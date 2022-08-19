@@ -9,6 +9,6 @@ namespace Aiursoft.Developer.SDK.Models.ApiAddressModels
         [Required]
         [IsGuidOrEmpty]
         [FromQuery(Name = "appid")]
-        public string AppId { get; set; }
+        public string? AppId { get; set; }
     }
 }

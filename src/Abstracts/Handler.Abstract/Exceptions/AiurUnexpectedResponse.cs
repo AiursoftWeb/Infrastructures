@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Models;
+﻿#nullable enable
+using Aiursoft.Handler.Models;
 using System;
 
 namespace Aiursoft.Handler.Exceptions

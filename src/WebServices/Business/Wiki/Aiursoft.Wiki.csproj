@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
     <Description>The wiki center for aiursoft.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -52,7 +52,7 @@ namespace Aiursoft.Developer.Controllers
         {
             var target = await _dbContext
                 .Apps
-                .SingleOrDefaultAsync(t => t.AppId == model.AppId);
+                .FirstOrDefaultAsync(t => t.AppId == model.AppId);
 
             if (target == null)
             {

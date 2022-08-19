@@ -78,7 +78,7 @@ namespace Aiursoft.Gateway.Controllers
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
+            var user = await _dbContext.Users.Include(t => t.Emails).FirstOrDefaultAsync(t => t.Id == model.OpenId);
             if (user == null)
             {
                 return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);

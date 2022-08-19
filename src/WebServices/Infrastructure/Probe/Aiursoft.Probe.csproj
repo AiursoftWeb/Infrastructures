@@ -4,6 +4,7 @@
 	  <TargetFramework>net6.0</TargetFramework>
     <Description>The core storage service for aiursoft web apps.</Description>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

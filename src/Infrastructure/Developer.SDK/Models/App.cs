@@ -8,7 +8,7 @@ namespace Aiursoft.Developer.SDK.Models
     {
         [Obsolete(error: true, message: "This method is only for framework!")]
         public App() { }
-        public App(string name, string description, Category category, Platform platform, string iconPath = null)
+        public App(string name, string description, Category category, Platform platform, string? iconPath = null)
         {
             this.AppId = Guid.NewGuid().ToString("N");
             this.AppSecret = Guid.NewGuid().ToString("N");
@@ -19,16 +19,16 @@ namespace Aiursoft.Developer.SDK.Models
             this.IconPath = iconPath;
         }
         [Key]
-        public string AppId { get; set; }
+        public string? AppId { get; set; }
         [JsonIgnore]
-        public string AppSecret { get; set; }
-        public string AppName { get; set; }
+        public string? AppSecret { get; set; }
+        public string? AppName { get; set; }
 
         /// <summary>
         /// sitename/filepath/filename.extension
         /// </summary>
-        public string IconPath { get; set; }
-        public string AppDescription { get; set; }
+        public string? IconPath { get; set; }
+        public string? AppDescription { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}")]
         public DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
 
@@ -42,8 +42,8 @@ namespace Aiursoft.Developer.SDK.Models
         public bool ForceInputPassword { get; set; }
         public bool ForceConfirmation { get; set; } = true;
         public bool DebugMode { get; set; }
-        public string AppDomain { get; set; }
-        public string AppFailCallbackUrl { get; set; }
+        public string? AppDomain { get; set; }
+        public string? AppFailCallbackUrl { get; set; }
 
         public bool ViewOpenId { get; set; } = true;
         public bool ViewPhoneNumber { get; set; }
@@ -58,9 +58,9 @@ namespace Aiursoft.Developer.SDK.Models
 
         [Url]
         [Display(Name = "Privacy Statement Url")]
-        public string PrivacyStatementUrl { get; set; }
+        public string? PrivacyStatementUrl { get; set; }
         [Url]
         [Display(Name = "License Url")]
-        public string LicenseUrl { get; set; }
+        public string? LicenseUrl { get; set; }
     }
 }

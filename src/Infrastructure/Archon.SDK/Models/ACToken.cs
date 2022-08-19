@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 
 namespace Aiursoft.Archon.SDK.Models
 {

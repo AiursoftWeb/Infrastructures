@@ -1,4 +1,5 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿#nullable enable
+using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,4 +1,5 @@
-﻿using Aiursoft.Archon.SDK.Models;
+﻿#nullable enable
+using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Aiursoft.Scanner.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;

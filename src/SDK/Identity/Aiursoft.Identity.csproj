@@ -12,6 +12,7 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="Identity.png" Pack="true" PackagePath="\"></None>

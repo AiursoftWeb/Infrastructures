@@ -32,7 +32,7 @@ namespace Aiursoft.Gateway.Services
         public async Task<GatewayUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
         {
             var appid = _tokenManager.ValidateAccessToken(accessToken);
-            var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);
+            var targetUser = await _dbContext.Users.Include(t => t.Emails).FirstOrDefaultAsync(t => t.Id == userId);
             var app = await _developerApiService.AppInfoAsync(appid);
             if (!_dbContext.LocalAppGrant.Any(t => t.AppId == appid && t.GatewayUserId == targetUser.Id))
             {

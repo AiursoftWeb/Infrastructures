@@ -40,7 +40,7 @@ namespace Aiursoft.Gateway.Controllers
             var user = await _dbContext
                 .Users
                 .Include(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.Id == userId);
+                .FirstOrDefaultAsync(t => t.Id == userId);
             if (user == null)
             {
                 return NotFound();

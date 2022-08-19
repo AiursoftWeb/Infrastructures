@@ -58,7 +58,7 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             });
             var result = await _http.Get(url, true);
             var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            return jResult.Code == ErrorType.Success;
+            return jResult != null && jResult.Code == ErrorType.Success;
         }
 
         private async Task<AppInfoViewModel> AppInfoWithoutCacheAsync(string appId)
@@ -69,7 +69,7 @@ namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer
             });
             var json = await _http.Get(url, true);
             var result = JsonConvert.DeserializeObject<AppInfoViewModel>(json);
-            if (result.Code != ErrorType.Success)
+            if (result is not { Code: ErrorType.Success })
             {
                 throw new AiurUnexpectedResponse(result);
             }

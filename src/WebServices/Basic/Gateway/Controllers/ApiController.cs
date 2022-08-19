@@ -123,12 +123,12 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully droped all users granted!");
         }
 
-        private Task<GatewayUser> GetCurrentUserAsync()
+        private Task<GatewayUser?> GetCurrentUserAsync()
         {
             return _dbContext
                 .Users
                 .Include(t => t.Emails)
-                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
+                .SingleOrDefaultAsync(t => User.Identity != null && t.UserName == User.Identity.Name);
         }
     }
 }

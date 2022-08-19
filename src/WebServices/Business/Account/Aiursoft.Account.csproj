@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
     <Description>Account management center for Aiursoft.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

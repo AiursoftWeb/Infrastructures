@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿#nullable enable
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.SDKTools.Attributes
 {
     public class NoDot : TestableValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             if (value is string val)
             {
@@ -13,7 +14,7 @@ namespace Aiursoft.SDKTools.Attributes
             return false;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (IsValid(value))
             {

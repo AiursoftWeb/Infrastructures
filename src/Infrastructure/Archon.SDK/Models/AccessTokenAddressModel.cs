@@ -1,4 +1,5 @@
-﻿using Aiursoft.SDKTools.Attributes;
+﻿#nullable enable
+using Aiursoft.SDKTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

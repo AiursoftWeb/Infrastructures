@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
     <Description>The status check center for aiursoft. Monitor Aiursoft service status, submit service request, review source code.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

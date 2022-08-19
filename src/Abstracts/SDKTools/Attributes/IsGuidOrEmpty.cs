@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.SDKTools.Attributes

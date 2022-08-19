@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
     <Description>Create a more open world. Aiursoft is focusing on open platform and open communication. Free training, tools, and community to help you grow your skills, career, or business.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

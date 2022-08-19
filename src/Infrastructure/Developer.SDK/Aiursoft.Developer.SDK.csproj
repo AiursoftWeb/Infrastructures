@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Version>6.0.7</Version>
 		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.8" />
