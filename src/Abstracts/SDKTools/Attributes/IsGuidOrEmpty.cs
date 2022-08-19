@@ -15,11 +15,11 @@ namespace Aiursoft.SDKTools.Attributes
             return string.IsNullOrWhiteSpace(val) || Guid.TryParse(val, out _);
         }
 
-        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (IsValid(value))
             {
-                return ValidationResult.Success ?? throw new NullReferenceException();
+                return ValidationResult.Success;
             }
             else
             {
