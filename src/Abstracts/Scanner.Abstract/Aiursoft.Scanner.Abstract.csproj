@@ -5,6 +5,7 @@
 	<TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Aiursoft.Scanner</RootNamespace>
 	<Nullable>enable</Nullable>
-  </PropertyGroup>
+  <OutputType>Library</OutputType>
+    </PropertyGroup>
 
 </Project>

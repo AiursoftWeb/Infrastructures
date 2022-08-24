@@ -13,9 +13,10 @@
 		<RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+	<OutputType>Library</OutputType>
+    </PropertyGroup>
 	<ItemGroup>
-		<None Include="Identity.png" Pack="true" PackagePath="\"></None>
+		<None Include="Identity.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>

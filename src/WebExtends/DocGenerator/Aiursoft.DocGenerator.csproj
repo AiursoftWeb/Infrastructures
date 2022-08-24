@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <Version>6.0.7</Version>
@@ -12,7 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/AiursoftWeb/DocGenerator.git</RepositoryUrl>
     <Nullable>enable</Nullable>
-  </PropertyGroup> 
+  <OutputType>Library</OutputType>
+    </PropertyGroup> 
 	
   <ItemGroup>
 	  <FrameworkReference Include="Microsoft.AspNetCore.App" />

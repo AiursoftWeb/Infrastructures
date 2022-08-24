@@ -6,7 +6,8 @@
 		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+	<OutputType>Library</OutputType>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.8" />

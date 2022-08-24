@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Version>6.0.7</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+	<OutputType>Library</OutputType>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
