@@ -18,8 +18,7 @@ A basic API document generator for ASP.NET Core applications. Open source, offli
 
 ## Supports
 
-* ASP.NET Core 3.1
-* ASP.NET Core 3.0
+* ASP.NET Core 6.0
 
 ## How to use
 
