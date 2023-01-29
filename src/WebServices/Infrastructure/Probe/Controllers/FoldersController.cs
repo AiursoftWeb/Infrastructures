@@ -29,7 +29,7 @@ namespace Aiursoft.Probe.Controllers
         }
 
         [Route("ViewContent/{SiteName}/{**FolderNames}")]
-        [APIProduces(typeof(AiurValue<Folder>))]
+        [Produces(typeof(AiurValue<Folder>))]
         public async Task<IActionResult> ViewContent(ViewContentAddressModel model)
         {
             var folders = _folderSplitter.SplitToFolders(model.FolderNames);

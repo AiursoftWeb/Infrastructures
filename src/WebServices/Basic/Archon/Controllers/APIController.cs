@@ -26,7 +26,7 @@ namespace Aiursoft.Archon.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [APIProduces(typeof(AccessTokenViewModel))]
+        [Produces(typeof(AccessTokenViewModel))]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
             var correctApp = await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);

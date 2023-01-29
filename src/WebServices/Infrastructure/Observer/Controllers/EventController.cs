@@ -56,7 +56,7 @@ namespace Aiursoft.Observer.Controllers
             return this.Protocol(ErrorType.Success, "Successfully logged your event.");
         }
 
-        [APIProduces(typeof(ViewLogViewModel))]
+        [Produces(typeof(ViewLogViewModel))]
         public async Task<IActionResult> View(ViewAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);

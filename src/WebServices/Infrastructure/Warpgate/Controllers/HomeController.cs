@@ -18,7 +18,7 @@ namespace Aiursoft.Warpgate.Controllers
             _locator = locator;
         }
 
-        [APIProduces(typeof(IndexViewModel))]
+        [Produces(typeof(IndexViewModel))]
         public IActionResult Index()
         {
             var model = new IndexViewModel

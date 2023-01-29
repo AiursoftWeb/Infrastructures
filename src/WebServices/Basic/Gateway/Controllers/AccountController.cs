@@ -36,7 +36,7 @@ namespace Aiursoft.Gateway.Controllers
             _authManager = authManager;
         }
 
-        [APIProduces(typeof(CodeToOpenIdViewModel))]
+        [Produces(typeof(CodeToOpenIdViewModel))]
         public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -74,7 +74,7 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(viewModel);
         }
 
-        [APIProduces(typeof(UserInfoViewModel))]
+        [Produces(typeof(UserInfoViewModel))]
         public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
         {
             var appId = _tokenManager.ValidateAccessToken(model.AccessToken);

@@ -33,7 +33,7 @@ namespace Aiursoft.Probe.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<string>))]
+        [Produces(typeof(AiurValue<string>))]
         public async Task<IActionResult> GetToken(GetTokenAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);

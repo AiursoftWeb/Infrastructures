@@ -95,7 +95,7 @@ namespace Aiursoft.Gateway.Controllers
 
         [APIExpHandler]
         [APIModelStateChecker]
-        [APIProduces(typeof(AiurPagedCollection<Grant>))]
+        [Produces(typeof(AiurPagedCollection<Grant>))]
         public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);

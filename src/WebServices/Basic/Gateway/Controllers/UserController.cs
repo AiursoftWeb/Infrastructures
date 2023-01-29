@@ -80,7 +80,7 @@ namespace Aiursoft.Gateway.Controllers
             }
         }
 
-        [APIProduces(typeof(AiurValue<string>))]
+        [Produces(typeof(AiurValue<string>))]
         public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
@@ -107,7 +107,7 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
-        [APIProduces(typeof(AiurCollection<UserEmail>))]
+        [Produces(typeof(AiurCollection<UserEmail>))]
         public async Task<IActionResult> ViewAllEmails(ViewAllEmailsAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, null);
@@ -224,7 +224,7 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
         }
 
-        [APIProduces(typeof(AiurCollection<AppGrant>))]
+        [Produces(typeof(AiurCollection<AppGrant>))]
         public async Task<IActionResult> ViewGrantedApps(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
@@ -253,7 +253,7 @@ namespace Aiursoft.Gateway.Controllers
             return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
         }
 
-        [APIProduces(typeof(AiurPagedCollection<AuditLog>))]
+        [Produces(typeof(AiurPagedCollection<AuditLog>))]
         public async Task<IActionResult> ViewAuditLog(ViewAuditLogAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewAuditLog);
@@ -269,7 +269,7 @@ namespace Aiursoft.Gateway.Controllers
                 "Successfully get all your audit log!"));
         }
 
-        [APIProduces(typeof(AiurCollection<AiurThirdPartyAccount>))]
+        [Produces(typeof(AiurCollection<AiurThirdPartyAccount>))]
         public async Task<IActionResult> ViewSocialAccounts(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ManageSocialAccount);
@@ -300,7 +300,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<bool>))]
+        [Produces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> ViewHas2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -313,7 +313,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<bool>))]
+        [Produces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> ViewTwoFactorEnabled(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -326,7 +326,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(View2FAKeyViewModel))]
+        [Produces(typeof(View2FAKeyViewModel))]
         public async Task<IActionResult> View2FAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -341,7 +341,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<bool>))]
+        [Produces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> SetTwoFAKey(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -370,7 +370,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<bool>))]
+        [Produces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> TwoFAVerifyCode(TwoFAVerifyCodeAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -399,7 +399,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurValue<bool>))]
+        [Produces(typeof(AiurValue<bool>))]
         public async Task<IActionResult> DisableTwoFA(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
@@ -422,7 +422,7 @@ namespace Aiursoft.Gateway.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(AiurCollection<string>))]
+        [Produces(typeof(AiurCollection<string>))]
         public async Task<IActionResult> GetRecoveryCodes(UserOperationAddressModel model)
         {
             var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);

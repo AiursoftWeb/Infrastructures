@@ -37,7 +37,7 @@ namespace Aiursoft.Probe.Controllers
             return this.Protocol(ErrorType.Success, $"Successfully created your new site: '{createdSite.SiteName}' at {createdSite.CreationTime}.");
         }
 
-        [APIProduces(typeof(ViewMySitesViewModel))]
+        [Produces(typeof(ViewMySitesViewModel))]
         public async Task<IActionResult> ViewMySites(ViewMySitesAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);
@@ -52,7 +52,7 @@ namespace Aiursoft.Probe.Controllers
             return this.Protocol(viewModel);
         }
 
-        [APIProduces(typeof(ViewSiteDetailViewModel))]
+        [Produces(typeof(ViewSiteDetailViewModel))]
         public async Task<IActionResult> ViewSiteDetail(ViewSiteDetailAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);

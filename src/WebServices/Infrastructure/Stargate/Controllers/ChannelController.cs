@@ -38,7 +38,7 @@ namespace Aiursoft.Stargate.Controllers
             _counter = counter;
         }
 
-        [APIProduces(typeof(ViewMyChannelsViewModel))]
+        [Produces(typeof(ViewMyChannelsViewModel))]
         public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
         {
             var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
@@ -64,7 +64,7 @@ namespace Aiursoft.Stargate.Controllers
             return this.Protocol(viewModel);
         }
 
-        [APIProduces(typeof(AiurValue<string>))]
+        [Produces(typeof(AiurValue<string>))]
         public IActionResult ValidateChannel(ChannelAddressModel model)
         {
             var channel = _stargateMemory[model.Id];
@@ -103,7 +103,7 @@ namespace Aiursoft.Stargate.Controllers
         }
 
         [HttpPost]
-        [APIProduces(typeof(CreateChannelViewModel))]
+        [Produces(typeof(CreateChannelViewModel))]
         public async Task<IActionResult> CreateChannel(CreateChannelAddressModel model)
         {
             //Update app info

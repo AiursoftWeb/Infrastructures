@@ -50,7 +50,7 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("UploadFile/{SiteName}/{**FolderNames}")]
-        [APIProduces(typeof(UploadFileViewModel))]
+        [Produces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
         {
             var site = await _siteRepo.GetSiteByName(model.SiteName);
@@ -124,7 +124,7 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("CopyFile/{SiteName}/{**FolderNames}")]
-        [APIProduces(typeof(UploadFileViewModel))]
+        [Produces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> CopyFile(CopyFileAddressModel model)
         {
             var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
@@ -161,7 +161,7 @@ namespace Aiursoft.Probe.Controllers
 
         [HttpPost]
         [Route("RenameFile/{SiteName}/{**Foldernames}")]
-        [APIProduces(typeof(UploadFileViewModel))]
+        [Produces(typeof(UploadFileViewModel))]
         public async Task<IActionResult> RenameFile(RenameFileAddressModel model)
         {
             var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);

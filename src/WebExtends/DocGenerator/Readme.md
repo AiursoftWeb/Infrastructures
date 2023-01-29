@@ -103,7 +103,7 @@ app.UseAiursoftDocGenerator(options =>
 When you can ensure the possible response for one API, add this line to your action:
 
 ```csharp
-[APIProduces(typeof(ResponseModel))] // <- add this in your controller.
+[Produces(typeof(ResponseModel))] // <- add this in your controller.
 public IActionResult HasOutput()
 {
     var model = new ResponseModel(); // <- your own class and logic

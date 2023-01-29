@@ -34,7 +34,7 @@ namespace Aiursoft.Warpgate.Controllers
             return this.Protocol(ErrorType.Success, $"Successfully created your new record: '{createdRecord.RecordUniqueName}' at {createdRecord.CreationTime}.");
         }
 
-        [APIProduces(typeof(ViewMyRecordsViewModel))]
+        [Produces(typeof(ViewMyRecordsViewModel))]
         public async Task<IActionResult> ViewMyRecords(ViewMyRecordsAddressModel model)
         {
             var appid = await _appRepo.GetAppId(model.AccessToken);

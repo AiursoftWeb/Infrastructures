@@ -126,8 +126,8 @@ namespace Aiursoft.DocGenerator.Middlewares
 
         private string[] GetPossibleResponses(MethodInfo action)
         {
-            var possibleList = action.GetCustomAttributes(typeof(APIProduces))
-                .Select(t => (t as APIProduces)?.PossibleType)
+            var possibleList = action.GetCustomAttributes(typeof(ProducesAttribute))
+                .Select(t => (t as ProducesAttribute)?.Type)
                 .Select(t => t.Make())
                 .Select(JsonConvert.SerializeObject).ToList();
             possibleList.AddRange(
