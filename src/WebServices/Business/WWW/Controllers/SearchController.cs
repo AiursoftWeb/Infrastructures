@@ -66,6 +66,8 @@ namespace Aiursoft.WWW.Controllers
                 ?.Select(t => t.Query)
                 .Take(10)
                 .ToList();
+
+            Response.Headers.Add("access-control-allow-origin", "*");
             return Json(strings);
         }
 
