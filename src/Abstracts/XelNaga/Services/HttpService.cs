@@ -2,6 +2,7 @@
 using Aiursoft.XelNaga.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Aiursoft.XelNaga.Services
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                return await GetResponseContent(response);
             }
             else
             {
@@ -49,7 +50,7 @@ namespace Aiursoft.XelNaga.Services
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                return await GetResponseContent(response);
             }
             else
             {
@@ -70,11 +71,29 @@ namespace Aiursoft.XelNaga.Services
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                return await GetResponseContent(response);
             }
             else
             {
                 throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
+            }
+        }
+
+        private async Task<string> GetResponseContent(HttpResponseMessage response)
+        {
+            var isGZipEncoded = response.Content.Headers.ContentEncoding.Contains("gzip");
+            if (isGZipEncoded)
+            {
+                using var stream = await response.Content.ReadAsStreamAsync();
+                using var decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
+                using var reader = new StreamReader(decompressionStream);
+                var text = await reader.ReadToEndAsync();
+                return text;
+            }
+            else
+            {
+                var text = await response.Content.ReadAsStringAsync();
+                return text;
             }
         }
     }
