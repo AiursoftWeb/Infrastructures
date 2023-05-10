@@ -30,6 +30,7 @@ namespace Aiursoft.Wiki.Services
         private readonly EventService _eventService;
         private readonly AppsContainer _appsContainer;
         private readonly ILogger<Seeder> _logger;
+        private readonly string _domain;
 
         public Seeder(
             WikiDbContext dbContext,
@@ -46,7 +47,8 @@ namespace Aiursoft.Wiki.Services
             _markDownGenerator = markDownGenerator;
             _eventService = eventService;
             _appsContainer = appsContainer;
-            this._logger = logger;
+            _logger = logger;
+            _domain = configuration["RootDomain"];
         }
 
         private Task AllClear()
@@ -72,7 +74,7 @@ namespace Aiursoft.Wiki.Services
                     var newCollection = new Collection
                     {
                         CollectionTitle = collection.CollectionTitle,
-                        DocAPIAddress = collection.DocAPIAddress
+                        DocAPIAddress = collection.DocAPIAddress.Replace("{{rootDomain}}", _domain)
                     };
                     await _dbContext.Collections.AddAsync(newCollection);
                     await _dbContext.SaveChangesAsync();
@@ -109,18 +111,15 @@ namespace Aiursoft.Wiki.Services
 
                     // Parse the appended doc.
                     if (string.IsNullOrWhiteSpace(collection.DocAPIAddress)) continue;
-                    var domain = _configuration["RootDomain"];
-                    var docBuilt = collection.DocAPIAddress
-                        .Replace("{{rootDomain}}", domain);
                     // Generate markdown from doc generator
-                    var docString = await _http.Get(new AiurUrl(docBuilt));
+                    var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress));
                     var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                     if (docModel == null)
                     {
                         continue;
                     }
                     var docGrouped = docModel.GroupBy(t => t.ControllerName);
-                    var apiRoot = docBuilt.ToLower().Replace("/doc", "");
+                    var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
                     foreach (var docController in docGrouped)
                     {
                         var markdown = _markDownGenerator.GenerateMarkDownForApi(docController, apiRoot);
