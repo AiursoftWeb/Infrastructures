@@ -22,12 +22,12 @@ The enterprise can deploy their dedicated instance of Aiursoft Infrastructures a
 
 ## Example apps
 
-There are some example apps based on Aiursoft Infrastructures. 
+There are some example apps based on Aiursoft Infrastructures.
 
-* [Kahla](https://github.com/AiursoftWeb/Kahla)
-* [AiurDrive](https://github.com/AiursoftWeb/AiurDrive)
-* [Warp](https://github.com/AiursoftWeb/Warp)
-* [Tracer](https://github.com/AiursoftWeb/Tracer)
+* [Kahla](https://gitlab.aiursoft.cn/Aiursoft/Kahla)
+* [AiurDrive](https://gitlab.aiursoft.cn/Aiursoft/AiurDrive)
+* [Warp](https://gitlab.aiursoft.cn/Aiursoft/Warp)
+* [Tracer](https://gitlab.aiursoft.cn/Aiursoft/Tracer)
 
 ## Features
 

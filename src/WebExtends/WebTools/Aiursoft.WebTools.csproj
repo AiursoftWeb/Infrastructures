@@ -8,9 +8,9 @@
 		<Authors>Anduin</Authors>
 		<Description>Basic tools and extends for all ASP.NET Core web apps</Description>
 		<PackageTags>extends tools</PackageTags>
-		<PackageProjectUrl>https://github.com/AiursoftWeb/Infrastructures</PackageProjectUrl>
+		<PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/AiursoftWeb/Infrastructures.git</RepositoryUrl>
+		<RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

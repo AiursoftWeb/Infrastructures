@@ -12,7 +12,7 @@ Aiursoft Intern Project 是完全由个人的兴趣爱好驱动，以无回报�
 * 至少价值 500 元的 Steam\Battle.net\Origin\Uplay\XBox 平台游戏
 * Microsoft Office 365 开发者版（含2TB OneDrive）
 * Aiursoft 文化衫和周边
-* GitHub 组织成员权限
+* GitLab 组织成员权限
 
 另外，Aiursoft 允许并鼓励你将 Aiursoft Intern Project 作为你的社区实习、课题设计、毕业设计题目，并愿意为你提供支持材料。
 
@@ -30,7 +30,7 @@ Aiursoft Intern Project 是完全由个人的兴趣爱好驱动，以无回报�
 
 Email 中请注明：
 
-* 你的 GitHub 用户名
+* 你的 GitLab 用户名
 * 你的 Aiursoft 账户名
 * 你选择的题目
 * 计划起止时间

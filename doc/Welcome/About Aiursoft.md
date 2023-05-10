@@ -28,15 +28,15 @@ Website: [https://www.aiursoft.com](https://www.aiursoft.com)
 
 ![Anduin2017](https://github.com/Anduin2017.png?size=70)
 
-* Email: [anduin@aiursoft.com](mailto:anduin@aiursoft.com) 
-* GitHub: [Anduin2017](https://github.com/Anduin2017) 
+* Email: [anduin@aiursoft.com](mailto:anduin@aiursoft.com)
+* GitHub: [Anduin2017](https://github.com/Anduin2017)
 * Blog: [https://anduin.aiursoft.com](https://anduin.aiursoft.com)
 
 ### xxyzz
 
 ![xxyzz](https://github.com/xxyzz.png?size=70)
 
-* Email: [xxyzz@aiursoft.com](mailto:xxyzz@aiursoft.com) 
+* Email: [xxyzz@aiursoft.com](mailto:xxyzz@aiursoft.com)
 * GitHub: [xxyzz](https://github.com/xxyzz)
 * Blog: [https://xxyzz-f0041.web.app/](https://xxyzz-f0041.web.app/)
 
@@ -44,7 +44,7 @@ Website: [https://www.aiursoft.com](https://www.aiursoft.com)
 
 ![EdgeNeko](https://github.com/hv0905.png?size=70)
 
-* Email: [edgeneko@aiusoft.com](mailto:edgeneko@aiursoft.com) 
+* Email: [edgeneko@aiusoft.com](mailto:edgeneko@aiursoft.com)
 * GitHub: [hv0905](https://github.com/hv0905)
 * Blog: [https://edgeneko.aiursoft.com/](https://edgeneko.aiursoft.com/)
 
@@ -59,7 +59,7 @@ Website: [https://www.aiursoft.com](https://www.aiursoft.com)
 
 ![One](https://github.com/jianba.png?size=70)
 
-* Email: [szy@aiursoft.com](mailto:szy@aiursoft.com) 
+* Email: [szy@aiursoft.com](mailto:szy@aiursoft.com)
 * GitHub: [jianba](https://github.com/jianba)
 * Blog: [https://blog.csdn.net/jianbagengmu/](https://blog.csdn.net/jianbagengmu/)
 
@@ -86,6 +86,7 @@ Website: [https://www.aiursoft.com](https://www.aiursoft.com)
 * GitHub: [MESOLONELY](https://github.com/MESOLONELY)
 
 ### gaufung
+
 ![gaufung](https://github.com/gaufung.png?size=70)
 
 * Email: [gaufung@aiursoft.com](mailto:gaufung@aiursoft.com)

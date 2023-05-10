@@ -8,9 +8,9 @@
     <Authors>Anduin, One</Authors>
     <Description>A basic API document generator for ASP.NET Core applications</Description>
     <PackageTags>doc-generator api</PackageTags>
-    <PackageProjectUrl>https://github.com/AiursoftWeb/DocGenerator</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/DocGenerator</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/AiursoftWeb/DocGenerator.git</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/DocGenerator.git</RepositoryUrl>
   </PropertyGroup> 
 	
   <ItemGroup>

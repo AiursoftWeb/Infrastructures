@@ -8,9 +8,9 @@
 		<Authors>Anduin</Authors>
 		<Description>Some basic C# tools for everyone and powers Aiursoft</Description>
 		<PackageTags>base-class tools aiursoft xelnaga</PackageTags>
-		<PackageProjectUrl>https://github.com/AiursoftWeb/XelNaga</PackageProjectUrl>
+		<PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/AiursoftWeb/XelNaga.git</RepositoryUrl>
+		<RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
 		<PackageIcon>xelnaga.png</PackageIcon>
 	</PropertyGroup>
 	<ItemGroup>
