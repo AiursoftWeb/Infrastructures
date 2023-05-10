@@ -1,16 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 
 namespace Aiursoft.SDKTools.Attributes
 {
     public class ValidFolderName : TestableValidationAttribute
     {
+        private char[] GetInvalidFileNameChars()
+        {
+            var systemInvalid = Path.GetInvalidFileNameChars().ToList();
+            systemInvalid.Add('*');
+            return systemInvalid.ToArray();
+        }
+
         public override bool IsValid(object value)
         {
             if (value is string val)
             {
                 return
-                    val.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 &&
+                    val.IndexOfAny(GetInvalidFileNameChars()) < 0 &&
                     !string.IsNullOrWhiteSpace(val);
             }
             return false;
@@ -30,7 +38,7 @@ namespace Aiursoft.SDKTools.Attributes
                 }
 
                 var invalidCharacters = string.Empty;
-                foreach (var invalidChar in Path.GetInvalidFileNameChars())
+                foreach (var invalidChar in GetInvalidFileNameChars())
                 {
                     if (value is string val && val.Contains(invalidChar))
                     {
