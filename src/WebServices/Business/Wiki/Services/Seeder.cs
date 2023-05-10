@@ -74,7 +74,7 @@ namespace Aiursoft.Wiki.Services
                     var newCollection = new Collection
                     {
                         CollectionTitle = collection.CollectionTitle,
-                        DocAPIAddress = collection.DocAPIAddress.Replace("{{rootDomain}}", _domain)
+                        DocAPIAddress = collection.DocAPIAddress?.Replace("{{rootDomain}}", _domain)
                     };
                     await _dbContext.Collections.AddAsync(newCollection);
                     await _dbContext.SaveChangesAsync();
