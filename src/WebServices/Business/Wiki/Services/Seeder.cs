@@ -112,6 +112,8 @@ namespace Aiursoft.Wiki.Services
                     // Parse the appended doc.
                     if (string.IsNullOrWhiteSpace(collection.DocAPIAddress)) continue;
                     // Generate markdown from doc generator
+
+                    _logger.LogInformation($"Requesting doc API: {collection.DocAPIAddress}");
                     var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress));
                     var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                     if (docModel == null)
