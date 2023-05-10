@@ -70,11 +70,12 @@ namespace Aiursoft.Wiki.Services
                 // Get all collections
                 foreach (var collection in sourceObject ?? new List<Collection>())
                 {
+                    collection.DocAPIAddress = collection.DocAPIAddress?.Replace("{{rootDomain}}", _domain);
                     // Insert collection
                     var newCollection = new Collection
                     {
                         CollectionTitle = collection.CollectionTitle,
-                        DocAPIAddress = collection.DocAPIAddress?.Replace("{{rootDomain}}", _domain)
+                        DocAPIAddress = collection.DocAPIAddress
                     };
                     await _dbContext.Collections.AddAsync(newCollection);
                     await _dbContext.SaveChangesAsync();
