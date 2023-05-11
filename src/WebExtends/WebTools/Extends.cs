@@ -55,7 +55,7 @@ public static class Extends
 
     public static bool AllowTrack(this HttpContext httpContext)
     {
-        return httpContext.Request.Headers.TryGetValue("dnt", out var dntFlag) && dntFlag.Trim() != "1";
+        return httpContext.Request.Headers.TryGetValue("dnt", out var dntFlag) && dntFlag.ToString().Trim() != "1";
     }
 
     public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
