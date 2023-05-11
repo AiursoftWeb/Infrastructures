@@ -11,15 +11,14 @@ namespace Aiursoft.XelNaga.Tests.Services;
 [TestClass]
 public class AsyncHelperTests
 {
-    private int[] array;
-
-    private List<DemoBook> books;
-
     // 50 ms and get 200.
     // 1000 ms and get 4000.
     private readonly int expectedCount = new Random().Next(3000, 5000);
     private readonly int fakeWait = new Random().Next(40, 60);
     private readonly int threads = new Random().Next(150, 250);
+    private int[] array;
+
+    private List<DemoBook> books;
     private double expectedTime => expectedCount * 1.0 * fakeWait / threads;
     private double expectedMaxWait => expectedTime * 3.2;
     private double expectedMinWait => expectedTime * 1.01;

@@ -12,10 +12,7 @@ public class FolderLockDictionary : ISingletonDependency
     {
         lock (this)
         {
-            if (_dictionary.ContainsKey(contextId))
-            {
-                return _dictionary[contextId];
-            }
+            if (_dictionary.TryGetValue(contextId, out var result)) return result;
 
             var newLock = new SemaphoreSlim(1, 1);
             _dictionary[contextId] = newLock;

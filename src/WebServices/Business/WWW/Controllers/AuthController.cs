@@ -20,7 +20,7 @@ public class AuthController : Controller
         _authService = authService;
     }
 
-    [AiurForceAuth("", "", false, false)]
+    [AiurForceAuth("", "", false)]
     public IActionResult GoAuth()
     {
         return RedirectToAction("Index", "Home");

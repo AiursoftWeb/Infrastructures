@@ -87,10 +87,8 @@ public class OAuthController : Controller
         // Not signed in but we don't want his info
 
         if (model.TryAutho == true)
-        {
             return Redirect(
                 $"{url.Scheme}://{url.Host}:{url.Port}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}");
-        }
 
         var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath,
             _allowRegistering, _allowPasswordSignIn);

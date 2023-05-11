@@ -119,9 +119,9 @@ public static class AsyncHelper
     /// <param name="maxDegreeOfParallelism"></param>
     /// <returns></returns>
     public static Task ForEachInThreadsPool<T>(this IEnumerable<T> items, Func<T, Task> function,
-        int maxDegreeOfParallelism = 8)
-    // ReSharper disable once RedundantTypeArgumentsOfMethod
+            int maxDegreeOfParallelism = 8)
+        // ReSharper disable once RedundantTypeArgumentsOfMethod
     {
-    return InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);
+        return InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);
     }
 }

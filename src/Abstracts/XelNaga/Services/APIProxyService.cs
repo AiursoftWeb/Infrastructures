@@ -15,8 +15,8 @@ namespace Aiursoft.XelNaga.Services;
 public class APIProxyService : IScopedDependency
 {
     private readonly HttpClient _client;
-    private readonly Regex _regex;
     private readonly ILogger<APIProxyService> _logger;
+    private readonly Regex _regex;
 
     public APIProxyService(
         IHttpClientFactory clientFactory,

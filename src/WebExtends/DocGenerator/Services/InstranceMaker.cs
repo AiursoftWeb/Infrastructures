@@ -89,11 +89,13 @@ public static class InstanceMaker
         var instance = GenerateWithConstructor(type);
         if (instance == null) return null;
         foreach (var property in instance.GetType().GetProperties())
-            if (property.CustomAttributes.Any(t => t.AttributeType == typeof(JsonIgnoreAttribute)) && property.SetMethod != null)
+            if (property.CustomAttributes.Any(t => t.AttributeType == typeof(JsonIgnoreAttribute)) &&
+                property.SetMethod != null)
                 property.SetValue(instance, null);
-            else if (property.CustomAttributes.Any(t => t.AttributeType == typeof(InstanceMakerIgnore)) && property.SetMethod != null)
+            else if (property.CustomAttributes.Any(t => t.AttributeType == typeof(InstanceMakerIgnore)) &&
+                     property.SetMethod != null)
                 property.SetValue(instance, null);
-            else if (property.SetMethod != null && property.SetMethod != null) 
+            else if (property.SetMethod != null && property.SetMethod != null)
                 property.SetValue(instance, Make(property.PropertyType));
         return instance;
     }

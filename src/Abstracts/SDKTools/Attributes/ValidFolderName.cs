@@ -24,10 +24,7 @@ public class ValidFolderName : TestableValidationAttribute
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        if (IsValid(value))
-        {
-            return ValidationResult.Success;
-        }
+        if (IsValid(value)) return ValidationResult.Success;
 
         if (string.IsNullOrWhiteSpace(value as string))
             return new ValidationResult("Empty string is not a valid file name!");

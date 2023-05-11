@@ -9,8 +9,8 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests;
 [TestClass]
 public class ValidFolderNameTests
 {
-    private ValidFolderName _validator;
     private readonly byte[] hexValues = { 0x0d, 0x0A };
+    private ValidFolderName _validator;
 
     [TestInitialize]
     public void CreateValidator()

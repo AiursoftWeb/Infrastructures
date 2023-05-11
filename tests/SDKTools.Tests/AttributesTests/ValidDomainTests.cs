@@ -9,8 +9,8 @@ namespace Aiursoft.SDKTools.Tests.AttributesTests;
 [TestClass]
 public class ValidDomainTests
 {
-    private ValidDomainName _validator;
     private readonly byte[] hexValues = { 0x0d, 0x0A };
+    private ValidDomainName _validator;
 
     [TestInitialize]
     public void CreateValidator()
