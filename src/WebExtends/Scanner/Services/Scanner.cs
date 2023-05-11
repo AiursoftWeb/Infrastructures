@@ -17,7 +17,9 @@ public class ClassScanner
             .Filter(removeMicrosoft, t => !t.Name?.StartsWith("Microsoft") ?? false);
         foreach (var referenced in references)
         foreach (var scanned in ScanAssemblies(Assembly.Load(referenced), removeSystem, removeMicrosoft))
+        {
             yield return scanned;
+        }
     }
 
     public List<Type> AllAccessibleClass(bool includeSystem, bool includeMicrosoft)

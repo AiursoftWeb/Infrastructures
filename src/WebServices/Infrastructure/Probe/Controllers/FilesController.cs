@@ -53,12 +53,24 @@ public class FilesController : ControllerBase
     public async Task<IActionResult> UploadFile(UploadFileAddressModel model)
     {
         var site = await _siteRepo.GetSiteByName(model.SiteName);
-        if (site == null) return this.Protocol(ErrorType.NotFound, $"Can't find a site with name: '{model.SiteName}'!");
-        if (!site.OpenToUpload) _tokenEnsurer.Ensure(model.Token, "Upload", model.SiteName, model.FolderNames);
+        if (site == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"Can't find a site with name: '{model.SiteName}'!");
+        }
+
+        if (!site.OpenToUpload)
+        {
+            _tokenEnsurer.Ensure(model.Token, "Upload", model.SiteName, model.FolderNames);
+        }
+
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
         var rootFolder = await _folderRepo.GetFolderFromId(site.RootFolderId);
         var folder = await _folderRepo.GetFolderFromPath(folders, rootFolder, model.RecursiveCreate);
-        if (folder == null) return this.Protocol(ErrorType.NotFound, "Can't find your folder!");
+        if (folder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Can't find your folder!");
+        }
+
         // Executing here will let the browser upload the file.
         try
         {
@@ -70,10 +82,16 @@ public class FilesController : ControllerBase
         }
 
         if (HttpContext.Request.Form.Files.Count < 1)
+        {
             return this.Protocol(ErrorType.InvalidInput, "Please provide a file!");
+        }
+
         var file = HttpContext.Request.Form.Files.First();
         if (!new ValidFolderName().IsValid(file.FileName))
+        {
             return this.Protocol(ErrorType.InvalidInput, $"Invalid file name: '{file.FileName}'!");
+        }
+
         var fileName = _folderSplitter.GetValidFileName(folder.Files.Select(t => t.FileName), file.FileName);
         var newFileHardwareId = await _fileRepo.SaveFileToDb(fileName, folder.Id, file.Length);
         await _storageProvider.Save(newFileHardwareId, file);
@@ -96,10 +114,17 @@ public class FilesController : ControllerBase
     {
         var (folders, fileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
-        if (folder == null) return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        if (folder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        }
+
         var file = await _fileRepo.GetFileInFolder(folder, fileName);
         if (file == null)
+        {
             return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+        }
+
         await _fileRepo.DeleteFileById(file.Id);
         return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
     }
@@ -114,11 +139,22 @@ public class FilesController : ControllerBase
         var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
         var targetFolder =
             await _folderRepo.GetFolderAsOwner(model.AccessToken, model.TargetSiteName, targetFolders, true);
-        if (sourceFolder == null) return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
-        if (targetFolder == null) return this.Protocol(ErrorType.NotFound, "Locate target folder failed!");
+        if (sourceFolder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
+        }
+
+        if (targetFolder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate target folder failed!");
+        }
+
         var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
         if (file == null)
+        {
             return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+        }
+
         var fileName = _folderSplitter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
         await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
         var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
@@ -143,7 +179,9 @@ public class FilesController : ControllerBase
         var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
         var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
         if (file == null)
+        {
             return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+        }
 
         var newFileName = _folderSplitter.GetValidFileName(sourceFolder
             .Files

@@ -40,9 +40,13 @@ public class ToolsController : Controller
         try
         {
             if (model.Decrypt)
+            {
                 model.ResultString = model.SourceString.Base64ToString();
+            }
             else
+            {
                 model.ResultString = model.SourceString.StringToBase64();
+            }
         }
         catch (Exception e)
         {
@@ -115,9 +119,13 @@ public class ToolsController : Controller
         try
         {
             if (model.Decrypt)
+            {
                 model.ResultString = WebUtility.UrlDecode(model.SourceString);
+            }
             else
+            {
                 model.ResultString = model.SourceString.ToUrlEncoded();
+            }
         }
         catch (Exception e)
         {
@@ -140,9 +148,13 @@ public class ToolsController : Controller
         try
         {
             if (model.Decrypt)
+            {
                 model.ResultString = WebUtility.HtmlDecode(model.SourceString);
+            }
             else
+            {
                 model.ResultString = WebUtility.HtmlEncode(model.SourceString);
+            }
         }
         catch (Exception e)
         {
@@ -205,7 +217,11 @@ public class ToolsController : Controller
     [Route("uuid-build")]
     public IActionResult UuidBuild(string format = "D")
     {
-        if (!_validUuidFormats.Contains(format)) format = "D";
+        if (!_validUuidFormats.Contains(format))
+        {
+            format = "D";
+        }
+
         var uuid = Guid.NewGuid().ToString(format);
         return View(model: uuid);
     }

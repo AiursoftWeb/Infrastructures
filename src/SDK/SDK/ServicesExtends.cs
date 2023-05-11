@@ -58,13 +58,20 @@ public static class ServicesExtends
             .ToArray();
         if (EntryExtends.IsProgramEntry())
             // Program is starting itself.
+        {
             services.AddScannedDependencies(abstractsArray);
+        }
         else if (assembly != null)
             // Program is started in UT or EF. Method called from extension.
+        {
             services.AddAssemblyDependencies(assembly, abstractsArray);
+        }
         else
             // Program is started in UT or EF. Method called from web project.
+        {
             services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsArray);
+        }
+
         return services;
     }
 
@@ -83,16 +90,21 @@ public static class ServicesExtends
         where T : DbContext
     {
         if (EntryExtends.IsInUT())
+        {
             services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
                 optionsBuilder
                     .UseInMemoryDatabase("inmemory")
                     .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+        }
         // Consider some new EF technology like use memory cache.
         else
+        {
             services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
                 optionsBuilder
                     .UseSqlServer(connectionString)
                     .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+        }
+
         services.AddEFSecondLevelCache(options =>
         {
             options.UseMemoryCacheProvider().DisableLogging(true);

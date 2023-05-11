@@ -9,8 +9,8 @@ using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,23 +69,32 @@ public class ChannelController : ControllerBase
     {
         var channel = _stargateMemory[model.Id];
         if (channel == null)
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.NotFound,
                 Message = "Can not find your channel!"
             });
+        }
+
         if (channel.IsDead())
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Gone,
                 Message = "Your channel is out dated and about to be deleted!"
             });
+        }
+
         if (channel.ConnectKey != model.Key)
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Unauthorized,
                 Message = "Wrong connection key!"
             });
+        }
+
         return this.Protocol(new AiurValue<string>(channel.AppId)
         {
             Code = ErrorType.Success,
@@ -129,10 +138,13 @@ public class ChannelController : ControllerBase
         var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
         var channel = _stargateMemory[model.ChannelId];
         if (channel.AppId != appid)
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!"
             });
+        }
+
         _stargateMemory.DeleteChannel(channel.Id);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurProtocol
@@ -149,14 +161,20 @@ public class ChannelController : ControllerBase
     {
         var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
         if (appid != model.AppId)
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!"
             });
+        }
+
         var target = await _dbContext.Apps.FindAsync(appid);
         if (target == null)
+        {
             return this.Protocol(new AiurProtocol
                 { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
+        }
+
         _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
         _dbContext.Apps.Remove(target);
         await _dbContext.SaveChangesAsync();

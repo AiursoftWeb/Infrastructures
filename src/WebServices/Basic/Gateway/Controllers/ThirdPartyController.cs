@@ -57,7 +57,11 @@ public class ThirdPartyController : Controller
     public async Task<IActionResult> SignIn(SignInAddressModel model)
     {
         var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
-        if (provider == null) return NotFound();
+        if (provider == null)
+        {
+            return NotFound();
+        }
+
         var oauthModel = model.BuildOAuthInfo();
         IUserDetail info;
         try
@@ -180,7 +184,11 @@ public class ThirdPartyController : Controller
         }
 
         var provider = _authProviders.SingleOrDefault(t => t.GetName().ToLower() == model.ProviderName.ToLower());
-        if (provider == null) return NotFound();
+        if (provider == null)
+        {
+            return NotFound();
+        }
+
         IUserDetail info;
         try
         {
@@ -194,12 +202,15 @@ public class ThirdPartyController : Controller
 
         if (await _dbContext.ThirdPartyAccounts.AnyAsync(t => t.OpenId == info.Id))
             // The third-party account already bind an account.
+        {
             return View("BindFailed", new BindAccountViewModel
             {
                 UserDetail = info,
                 Provider = provider,
                 User = user
             });
+        }
+
         var link = new ThirdPartyAccount
         {
             OwnerId = user.Id,

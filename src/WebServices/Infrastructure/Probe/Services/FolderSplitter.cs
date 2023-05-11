@@ -19,7 +19,10 @@ public class FolderSplitter : IScopedDependency
     public (string[] folders, string fileName) SplitToFoldersAndFile(string folderNames)
     {
         if (folderNames == null || folderNames.Length == 0)
+        {
             throw new AiurAPIModelException(ErrorType.NotFound, "The root folder isn't a file!");
+        }
+
         var foldersWithFileName = SplitToFolders(folderNames);
         var fileName = foldersWithFileName.Last();
         var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
@@ -29,10 +32,17 @@ public class FolderSplitter : IScopedDependency
     public string GetValidFileName(IEnumerable<string> existingFileNames, string expectedFileName)
     {
         var fileNames = existingFileNames.ToArray();
-        while (fileNames.Any(t => t.ToLower() == expectedFileName.ToLower())) expectedFileName = "_" + expectedFileName;
+        while (fileNames.Any(t => t.ToLower() == expectedFileName.ToLower()))
+        {
+            expectedFileName = "_" + expectedFileName;
+        }
+
         expectedFileName = expectedFileName.ToLower();
         foreach (var invalidChar in InvalidStrings)
+        {
             expectedFileName = expectedFileName.Replace(invalidChar, string.Empty);
+        }
+
         return expectedFileName;
     }
 }

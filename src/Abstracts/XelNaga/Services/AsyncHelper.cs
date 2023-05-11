@@ -16,6 +16,7 @@ public static class AsyncHelper
     public static async Task<T> Try<T>(Func<Task<T>> taskFactory, int times, Action<Exception> onError = null)
     {
         for (var i = 1; i <= times; i++)
+        {
             try
             {
                 var response = await taskFactory();
@@ -24,9 +25,14 @@ public static class AsyncHelper
             catch (Exception e)
             {
                 onError?.Invoke(e);
-                if (i >= times) throw;
+                if (i >= times)
+                {
+                    throw;
+                }
+
                 await Task.Delay(ExponentialBackOffTimeSlot(i) * 1000);
             }
+        }
 
         throw new NotImplementedException("Code shall not reach here.");
     }
@@ -41,6 +47,7 @@ public static class AsyncHelper
     public static void TryAsync(Func<Task> taskFactory, int times, Func<Exception, Task> onError = null)
     {
         for (var i = 1; i <= times; i++)
+        {
             try
             {
                 RunSync(taskFactory);
@@ -48,10 +55,19 @@ public static class AsyncHelper
             }
             catch (Exception e)
             {
-                if (onError != null) RunSync(() => onError(e));
-                if (i >= times) throw;
+                if (onError != null)
+                {
+                    RunSync(() => onError(e));
+                }
+
+                if (i >= times)
+                {
+                    throw;
+                }
+
                 Thread.Sleep(ExponentialBackOffTimeSlot(i) * 1000);
             }
+        }
     }
 
     /// <summary>
@@ -69,7 +85,11 @@ public static class AsyncHelper
     public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
     {
         var queue = new Queue<Func<Task>>(taskFactories);
-        if (queue.Count == 0) return;
+        if (queue.Count == 0)
+        {
+            return;
+        }
+
         var tasksInFlight = new List<Task>(maxDegreeOfParallelism);
         do
         {

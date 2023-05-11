@@ -53,7 +53,11 @@ public class ServiceLocation : ISingletonDependency
         try
         {
             var result = await QueryDNS(combined);
-            if (!result.HasError && result.Answers.Any() && await TryConnect(combined)) return combined;
+            if (!result.HasError && result.Answers.Any() && await TryConnect(combined))
+            {
+                return combined;
+            }
+
             return input;
         }
         catch

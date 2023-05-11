@@ -5,8 +5,8 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
@@ -37,7 +37,10 @@ public class MessageController : ControllerBase
         //Ensure channel
         var channel = _memoryContext.GetChannelsUnderApp(appid).SingleOrDefault(t => t.Id == model.ChannelId);
         if (channel == null)
+        {
             return this.Protocol(ErrorType.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
+        }
+
         //Create Message
         var message = new Message
         {

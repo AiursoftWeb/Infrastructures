@@ -34,7 +34,11 @@ public class HomeController : Controller
     public async Task<IActionResult> Index() //Title
     {
         var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstOrDefaultAsync();
-        if (firstArticle == null) return NotFound();
+        if (firstArticle == null)
+        {
+            return NotFound();
+        }
+
         return Redirect($"/{firstArticle.Collection.CollectionTitle}/{firstArticle.ArticleTitle}.md");
     }
 
@@ -43,10 +47,18 @@ public class HomeController : Controller
     {
         var database = await _dbContext.Collections.Include(t => t.Articles).ToListAsync();
         var currentCollection = database.SingleOrDefault(t => t.CollectionTitle.ToLower() == collectionTitle.ToLower());
-        if (currentCollection == null) return NotFound();
+        if (currentCollection == null)
+        {
+            return NotFound();
+        }
+
         var currentArticle =
             currentCollection.Articles.SingleOrDefault(t => t.ArticleTitle.ToLower() == articleTitle.ToLower());
-        if (currentArticle == null) return NotFound();
+        if (currentArticle == null)
+        {
+            return NotFound();
+        }
+
         var pipeline = new MarkdownPipelineBuilder()
             .UseAbbreviations()
             .UseAutoIdentifiers()

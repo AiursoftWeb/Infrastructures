@@ -78,8 +78,11 @@ public class SitesController : ControllerBase
         var conflict = model.NewSiteName.ToLower() != model.OldSiteName.ToLower() &&
                        await _siteRepo.GetSiteByName(model.NewSiteName) != null;
         if (conflict)
+        {
             return this.Protocol(ErrorType.Conflict,
                 $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
+        }
+
         site.SiteName = model.NewSiteName;
         site.OpenToDownload = model.OpenToDownload;
         site.OpenToUpload = model.OpenToUpload;
@@ -101,8 +104,11 @@ public class SitesController : ControllerBase
     {
         var app = await _appRepo.GetApp(model.AccessToken);
         if (app.AppId != model.AppId)
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 "The app you try to delete is not the access token you granted!");
+        }
+
         await _appRepo.DeleteApp(app);
         return this.Protocol(ErrorType.HasSuccessAlready, "That app do not exists in our database.");
     }

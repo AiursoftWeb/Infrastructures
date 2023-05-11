@@ -32,7 +32,11 @@ public class AppRepo : IScopedDependency
     {
         var appid = _acTokenManager.ValidateAccessToken(accessToken);
         var appLocal = await _dbContext.WarpApps.SingleOrDefaultAsync(t => t.AppId == appid);
-        if (appLocal != null) return appLocal;
+        if (appLocal != null)
+        {
+            return appLocal;
+        }
+
         appLocal = new WarpgateApp
         {
             AppId = appid
@@ -45,7 +49,11 @@ public class AppRepo : IScopedDependency
     public async Task DeleteApp(WarpgateApp app)
     {
         var records = await _recordRepo.GetAllRecords(app.AppId);
-        foreach (var record in records) await _recordRepo.DeleteRecord(record);
+        foreach (var record in records)
+        {
+            await _recordRepo.DeleteRecord(record);
+        }
+
         _dbContext.WarpApps.Remove(app);
         await _dbContext.SaveChangesAsync();
     }

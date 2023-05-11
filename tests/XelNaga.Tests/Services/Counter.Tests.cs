@@ -33,13 +33,19 @@ public class CounterTests
             threads[i] = t;
         }
 
-        for (var i = 0; i < 3; i++) threads[i].Join();
+        for (var i = 0; i < 3; i++)
+        {
+            threads[i].Join();
+        }
 
         Assert.AreEqual(3, counter.GetCurrent);
     }
 
     private static void ThreadProc(object state)
     {
-        if (state is Counter counter) counter.GetUniqueNo();
+        if (state is Counter counter)
+        {
+            counter.GetUniqueNo();
+        }
     }
 }

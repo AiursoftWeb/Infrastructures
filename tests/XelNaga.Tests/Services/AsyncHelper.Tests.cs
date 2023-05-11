@@ -28,7 +28,10 @@ public class AsyncHelperTests
     {
         array = new int[expectedCount];
         books = new List<DemoBook>();
-        for (var i = 0; i < expectedCount; i++) books.Add(new DemoBook());
+        for (var i = 0; i < expectedCount; i++)
+        {
+            books.Add(new DemoBook());
+        }
     }
 
     [TestMethod]
@@ -138,7 +141,10 @@ public class AsyncHelperTests
 
         AsyncHelper.TryAsync(() =>
         {
-            if (called) return Task.CompletedTask;
+            if (called)
+            {
+                return Task.CompletedTask;
+            }
 
             called = true;
             throw new Exception("");

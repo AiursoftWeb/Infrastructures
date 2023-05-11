@@ -26,10 +26,13 @@ public class FileRepo : IScopedDependency
     {
         var file = context.Files?.SingleOrDefault(t => t.FileName == fileName);
         if (file == null)
+        {
             file = await _dbContext
                 .Files
                 .Where(t => t.ContextId == context.Id)
                 .SingleOrDefaultAsync(t => t.FileName == fileName);
+        }
+
         return file;
     }
 
@@ -45,7 +48,11 @@ public class FileRepo : IScopedDependency
     public async Task DeleteFileById(int fileId)
     {
         var file = await _dbContext.Files.SingleOrDefaultAsync(t => t.Id == fileId);
-        if (file != null) DeleteFile(file);
+        if (file != null)
+        {
+            DeleteFile(file);
+        }
+
         await _dbContext.SaveChangesAsync();
     }
 

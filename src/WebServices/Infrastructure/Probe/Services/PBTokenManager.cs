@@ -63,10 +63,15 @@ public class PBTokenManager : ITransientDependency
             var tokenSign = tokenParts[1];
             token = JsonConvert.DeserializeObject<PBToken>(tokenBase64.Base64ToString());
             if (DateTime.UtcNow > token.Expires)
+            {
                 throw new AiurAPIModelException(ErrorType.Timeout, "Token was timed out!");
+            }
+
             if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+            {
                 throw new AiurAPIModelException(ErrorType.Unauthorized,
                     "Invalid signature! Token could not be authorized!");
+            }
         }
         catch
         {

@@ -48,8 +48,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(id);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new CreateSiteViewModel(user)
         {
             AppId = id,
@@ -71,8 +79,16 @@ public class SitesController : Controller
         }
 
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
@@ -93,8 +109,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
@@ -121,8 +145,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new NewFolderViewModel(user)
         {
             AppId = appId,
@@ -140,8 +172,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -169,8 +209,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new DeleteFolderViewModel(user)
         {
             AppId = appId,
@@ -188,8 +236,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -217,8 +273,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new DeleteFileViewModel(user)
         {
             AppId = appId,
@@ -236,8 +300,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -265,8 +337,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new RenameFileViewModel(user)
         {
             AppId = appId,
@@ -284,8 +364,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -312,8 +400,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var accessToken = _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
         var siteDetail = await _sitesService.ViewSiteDetailAsync(await accessToken, siteName);
         var model = new EditViewModel(user)
@@ -336,8 +432,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -368,8 +472,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new DeleteViewModel(user)
         {
             AppId = appId,
@@ -386,8 +498,16 @@ public class SitesController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);

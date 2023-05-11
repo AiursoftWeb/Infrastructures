@@ -7,7 +7,10 @@ public class IsGuidOrEmpty : TestableValidationAttribute
 {
     public override bool IsValid(object value)
     {
-        if (value is not string val) return false;
+        if (value is not string val)
+        {
+            return false;
+        }
 
         return string.IsNullOrWhiteSpace(val) || Guid.TryParse(val, out _);
     }
@@ -15,7 +18,10 @@ public class IsGuidOrEmpty : TestableValidationAttribute
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         if (IsValid(value))
+        {
             return ValidationResult.Success;
+        }
+
         return new ValidationResult($"The {validationContext.DisplayName} is not a valid GUID value!");
     }
 }

@@ -20,16 +20,31 @@ public class AiurUrl
         var t = param.GetType();
         foreach (var prop in t.GetProperties())
         {
-            if (prop.GetValue(param) == null) continue;
+            if (prop.GetValue(param) == null)
+            {
+                continue;
+            }
 
             var propName = prop.Name;
             var propValue = prop.GetValue(param)?.ToString();
             var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-            if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null) propName = nameProvider.Name;
+            if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
+            {
+                propName = nameProvider.Name;
+            }
+
             if (prop.PropertyType == typeof(DateTime))
+            {
                 if (prop.GetValue(param) is DateTime time)
+                {
                     propValue = time.ToString("o", CultureInfo.InvariantCulture);
-            if (!string.IsNullOrWhiteSpace(propValue)) Params.Add(propName, propValue);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(propValue))
+            {
+                Params.Add(propName, propValue);
+            }
         }
     }
 

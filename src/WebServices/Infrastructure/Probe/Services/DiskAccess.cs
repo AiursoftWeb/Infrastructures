@@ -20,7 +20,11 @@ public class DiskAccess : IStorageProvider
     {
         _path = configuration["StoragePath"] + $"{_}Storage{_}";
         var tempFilePath = configuration["TempFileStoragePath"];
-        if (string.IsNullOrWhiteSpace(tempFilePath)) tempFilePath = configuration["StoragePath"];
+        if (string.IsNullOrWhiteSpace(tempFilePath))
+        {
+            tempFilePath = configuration["StoragePath"];
+        }
+
         _trashPath = tempFilePath + $"{_}TrashBin{_}";
         _cache = aiurCache;
     }
@@ -28,15 +32,26 @@ public class DiskAccess : IStorageProvider
     public void Delete(string hardwareUuid)
     {
         var path = _path + $"{hardwareUuid}.dat";
-        if (File.Exists(path)) File.Delete(path);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
     }
 
     public void DeleteToTrash(string hardwareUuid)
     {
         var path = _path + $"{hardwareUuid}.dat";
         var target = _trashPath + $"{hardwareUuid}.dat";
-        if (!File.Exists(path)) return;
-        if (!Directory.Exists(_trashPath)) Directory.CreateDirectory(_trashPath);
+        if (!File.Exists(path))
+        {
+            return;
+        }
+
+        if (!Directory.Exists(_trashPath))
+        {
+            Directory.CreateDirectory(_trashPath);
+        }
+
         File.Move(path, target);
     }
 
@@ -48,7 +63,11 @@ public class DiskAccess : IStorageProvider
 
     public string[] GetAllFileNamesInHardware()
     {
-        if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
+        if (!Directory.Exists(_path))
+        {
+            Directory.CreateDirectory(_path);
+        }
+
         return Directory.GetFiles(_path).Select(t => Path.GetFileNameWithoutExtension(t)).ToArray();
     }
 
@@ -71,7 +90,11 @@ public class DiskAccess : IStorageProvider
     public async Task Save(string hardwareUuid, IFormFile file)
     {
         //Try saving file.
-        if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
+        if (!Directory.Exists(_path))
+        {
+            Directory.CreateDirectory(_path);
+        }
+
         using var fileStream = new FileStream(_path + hardwareUuid + ".dat", FileMode.Create);
         await file.CopyToAsync(fileStream);
         fileStream.Close();
@@ -81,7 +104,10 @@ public class DiskAccess : IStorageProvider
     {
         var path = _path + $"{hardwareUuid}.dat";
         if (File.Exists(path))
+        {
             return new FileInfo(path).Length;
+        }
+
         return 0;
     }
 }

@@ -14,7 +14,11 @@ public class StargateMemory : ISingletonDependency
     {
         get
         {
-            if (!ChannelExists(id)) return null;
+            if (!ChannelExists(id))
+            {
+                return null;
+            }
+
             return Channels[id];
         }
     }
@@ -48,8 +52,12 @@ public class StargateMemory : ISingletonDependency
     public void DeleteChannels(IEnumerable<int> channels)
     {
         foreach (var channel in channels)
+        {
             if (ChannelExists(channel))
+            {
                 DeleteChannel(channel);
+            }
+        }
     }
 
     public bool DeleteChannel(int id)

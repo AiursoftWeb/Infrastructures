@@ -24,9 +24,14 @@ public static class ProgramExtends
             AsyncHelper.TryAsync(async () =>
             {
                 if (EntryExtends.IsInUT())
+                {
                     await context.Database.EnsureDeletedAsync();
+                }
                 else
+                {
                     await context.Database.MigrateAsync();
+                }
+
                 var seeder = services.GetService<ISeeder>();
                 seeder?.Seed();
             }, 3, e =>

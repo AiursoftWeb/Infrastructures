@@ -40,11 +40,13 @@ public class FileDeleter : ITransientDependency
             var haveDaemon = await _probeDbContext.Files.Where(f => f.Id != file.Id)
                 .AnyAsync(f => f.HardwareId == file.HardwareId);
             if (!haveDaemon)
+            {
                 await _retryEngine.RunWithTry(_ =>
                 {
                     _storageProvider.DeleteToTrash(file.HardwareId);
                     return Task.FromResult(0);
                 }, 10);
+            }
         }
         catch (Exception e)
         {

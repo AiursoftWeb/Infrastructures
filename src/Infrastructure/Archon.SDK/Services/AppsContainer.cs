@@ -37,7 +37,10 @@ public class AppsContainer : ISingletonDependency
     private AppContainer GetApp(string appId, string appSecret)
     {
         var exists = _allApps.FirstOrDefault(t => t.AppId == appId);
-        if (exists != null) return exists;
+        if (exists != null)
+        {
+            return exists;
+        }
 
         var newContainer = new AppContainer(appId, appSecret);
         _allApps.Add(newContainer);

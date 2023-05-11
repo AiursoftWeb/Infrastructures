@@ -15,7 +15,11 @@ public class UserFriendlyNotFoundHandler : ExceptionFilterAttribute
     public override void OnException(ExceptionContext context)
     {
         base.OnException(context);
-        if (context.Exception is not AiurUnexpectedResponse { Code: ErrorType.NotFound }) return;
+        if (context.Exception is not AiurUnexpectedResponse { Code: ErrorType.NotFound })
+        {
+            return;
+        }
+
         context.ExceptionHandled = true;
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
         context.Result = new NotFoundResult();

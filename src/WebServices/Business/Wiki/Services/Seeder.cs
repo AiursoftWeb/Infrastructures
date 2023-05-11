@@ -83,6 +83,7 @@ public class Seeder : ITransientDependency
                 // Get markdown from existing documents.
                 foreach (var article in collection.Articles ?? new List<Article>())
                     // markdown http url.
+                {
                     if (!string.IsNullOrEmpty(article.ArticleAddress))
                     {
                         var newArticle = new Article
@@ -108,15 +109,23 @@ public class Seeder : ITransientDependency
                         await _dbContext.Article.AddAsync(newArticle);
                         await _dbContext.SaveChangesAsync();
                     }
+                }
 
                 // Parse the appended doc.
-                if (string.IsNullOrWhiteSpace(collection.DocAPIAddress)) continue;
+                if (string.IsNullOrWhiteSpace(collection.DocAPIAddress))
+                {
+                    continue;
+                }
                 // Generate markdown from doc generator
 
                 _logger.LogInformation($"Requesting doc API: {collection.DocAPIAddress}");
                 var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress));
                 var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
-                if (docModel == null) continue;
+                if (docModel == null)
+                {
+                    continue;
+                }
+
                 var docGrouped = docModel.GroupBy(t => t.ControllerName);
                 var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
                 foreach (var docController in docGrouped)

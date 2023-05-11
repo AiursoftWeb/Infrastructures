@@ -16,7 +16,10 @@ public class AiurCache : ITransientDependency
 
     public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
     {
-        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null) return resultValue;
+        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
+        {
+            return resultValue;
+        }
 
         resultValue = await backup();
 
@@ -34,7 +37,10 @@ public class AiurCache : ITransientDependency
 
     public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
     {
-        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null) return resultValue;
+        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
+        {
+            return resultValue;
+        }
 
         resultValue = backup();
 

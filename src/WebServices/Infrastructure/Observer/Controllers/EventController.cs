@@ -8,8 +8,8 @@ using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -86,8 +86,11 @@ public class EventController : ControllerBase
     {
         var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
         if (appid != model.AppId)
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 "The app you try to delete is not the access token you granted!");
+        }
+
         _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "App deleted.");

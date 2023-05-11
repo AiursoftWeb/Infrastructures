@@ -34,8 +34,10 @@ public class GoogleService : IAuthProvider
         _clientId = configuration["Google:ClientId"];
         _clientSecret = configuration["Google:ClientSecret"];
         if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
+        {
             logger.LogWarning(
                 "Did not set correct Google credential! You can only access the service property but can execute OAuth process!");
+        }
     }
 
     public bool IsEnabled()
@@ -114,7 +116,10 @@ public class GoogleService : IAuthProvider
             var json = await _http.Post(url, form);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid google crenditial");
+            }
+
             return response.AccessToken;
         }
         catch (WebException)
@@ -136,9 +141,16 @@ public class GoogleService : IAuthProvider
         {
             var json = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<GoogleUserDetail>(json);
-            if (string.IsNullOrWhiteSpace(user.Name)) user.Name = Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(user.Name))
+            {
+                user.Name = Guid.NewGuid().ToString();
+            }
+
             if (string.IsNullOrWhiteSpace(user.Email))
+            {
                 user.Email = user.Name.Replace(' ', '_') + $"@from.{GetName().ToLower()}.com";
+            }
+
             return user;
         }
 

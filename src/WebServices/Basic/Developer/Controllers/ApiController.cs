@@ -33,9 +33,15 @@ public class ApiController : ControllerBase
     {
         var target = await _dbContext.Apps.FindAsync(model.AppId);
         if (target == null)
+        {
             return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
+        }
+
         if (target.AppSecret != model.AppSecret)
+        {
             return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+        }
+
         return this.Protocol(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
     }
 
@@ -47,8 +53,11 @@ public class ApiController : ControllerBase
             .SingleOrDefaultAsync(t => t.AppId == model.AppId);
 
         if (target == null)
+        {
             return this.Protocol(new AiurProtocol
                 { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
+        }
+
         return this.Protocol(new AppInfoViewModel
         {
             Message = "Successfully get target app info.",

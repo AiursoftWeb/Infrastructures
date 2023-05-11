@@ -22,7 +22,10 @@ public class AppContainer
 
     public async Task<string> AccessToken(IServiceScopeFactory scopeFactory)
     {
-        if (DateTime.UtcNow <= _accessTokenDeadTime) return _latestAccessToken;
+        if (DateTime.UtcNow <= _accessTokenDeadTime)
+        {
+            return _latestAccessToken;
+        }
 
         using var scope = scopeFactory.CreateScope();
         var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();

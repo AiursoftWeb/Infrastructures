@@ -69,7 +69,11 @@ public class RecordRepo : IScopedDependency
     public async Task<List<WarpRecord>> GetAllRecordsUnderApp(string appid, string mustHaveTags)
     {
         var query = _table.Where(t => t.AppId == appid);
-        if (string.IsNullOrWhiteSpace(mustHaveTags)) return await query.ToListAsync();
+        if (string.IsNullOrWhiteSpace(mustHaveTags))
+        {
+            return await query.ToListAsync();
+        }
+
         var loadInMemoryResults = await query.ToListAsync();
         return loadInMemoryResults
             .Where(t => t.Tags?.Split(",").Any(s => s == mustHaveTags) ?? false)
@@ -80,10 +84,16 @@ public class RecordRepo : IScopedDependency
     {
         var record = await GetRecordByName(recordName);
         if (record == null)
+        {
             throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a record with name: '{recordName}'");
+        }
+
         if (record.AppId != appid)
+        {
             throw new AiurAPIModelException(ErrorType.Unauthorized,
                 "The record you tried to access is not your app's record.");
+        }
+
         return record;
     }
 

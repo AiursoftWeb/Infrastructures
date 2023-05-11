@@ -19,7 +19,11 @@ public static class EntryExtends
 
     public static bool IsProgramEntry()
     {
-        if (_isProgramCache != null) return _isProgramCache.Value;
+        if (_isProgramCache != null)
+        {
+            return _isProgramCache.Value;
+        }
+
         _isProgramCache = !IsInEF() && !IsInUT();
         return _isProgramCache.Value;
     }

@@ -35,14 +35,22 @@ public class SearchController : Controller
     [Route("search")]
     public async Task<IActionResult> DoSearch([FromQuery(Name = "q")] string question, int page = 1)
     {
-        if (string.IsNullOrWhiteSpace(question)) return Redirect("/");
+        if (string.IsNullOrWhiteSpace(question))
+        {
+            return Redirect("/");
+        }
+
         ViewBag.CurrentPage = page;
         var market = CultureInfo.CurrentCulture.Name;
         var result = await _cache.GetAndCache($"search-content-{market}-{page}-" + question,
             () => _searchService.DoSearch(question, market, page));
         ViewBag.Entities = await _cache.GetAndCache($"search-entity-{market}-" + question,
             () => _searchService.EntitySearch(question, market));
-        if (!HttpContext.AllowTrack()) return View(result);
+        if (!HttpContext.AllowTrack())
+        {
+            return View(result);
+        }
+
         await _dbContext.SearchHistories.AddAsync(new SearchHistory
         {
             Question = question,

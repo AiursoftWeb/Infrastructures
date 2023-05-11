@@ -66,7 +66,11 @@ public class OAuthController : Controller
     [HttpGet]
     public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
     {
-        if (!ModelState.IsValid) return View("AuthError");
+        if (!ModelState.IsValid)
+        {
+            return View("AuthError");
+        }
+
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
         var url = new Uri(model.RedirectUri);
         var user = await GetCurrentUserAsync();
@@ -87,8 +91,10 @@ public class OAuthController : Controller
         // Not signed in but we don't want his info
 
         if (model.TryAutho == true)
+        {
             return Redirect(
                 $"{url.Scheme}://{url.Host}:{url.Port}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}");
+        }
 
         var viewModel = new AuthorizeViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath,
             _allowRegistering, _allowPasswordSignIn);
@@ -99,7 +105,11 @@ public class OAuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Authorize(AuthorizeViewModel model)
     {
-        if (!_allowPasswordSignIn) return Unauthorized();
+        if (!_allowPasswordSignIn)
+        {
+            return Unauthorized();
+        }
+
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
         if (!ModelState.IsValid)
         {
@@ -121,14 +131,21 @@ public class OAuthController : Controller
         var user = mail.Owner;
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, true);
         await _authLogger.LogAuthRecord(user.Id, HttpContext, result.Succeeded || result.RequiresTwoFactor, app.AppId);
-        if (result.Succeeded) return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
+        if (result.Succeeded)
+        {
+            return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
+        }
+
         if (result.RequiresTwoFactor)
+        {
             return Redirect(new AiurUrl($"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
                 State = model.State
             }).ToString());
+        }
+
         ModelState.AddModelError(string.Empty,
             result.IsLockedOut
                 ? "The account is locked for too many attempts."
@@ -141,7 +158,11 @@ public class OAuthController : Controller
     [Authorize]
     public async Task<IActionResult> AuthorizeConfirm(FinishAuthInfo model)
     {
-        if (!ModelState.IsValid) return View("AuthError");
+        if (!ModelState.IsValid)
+        {
+            return View("AuthError");
+        }
+
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
         var user = await GetCurrentUserAsync();
         var viewModel = new AuthorizeConfirmViewModel
@@ -173,7 +194,11 @@ public class OAuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AuthorizeConfirm(AuthorizeConfirmViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var user = await GetCurrentUserAsync();
         await _authManager.GrantTargetApp(user, model.AppId);
         return await _authManager.FinishAuth(user, model, false, false);
@@ -182,7 +207,11 @@ public class OAuthController : Controller
     [HttpGet]
     public IActionResult SecondAuth(FinishAuthInfo model)
     {
-        if (!ModelState.IsValid) return View("AuthError");
+        if (!ModelState.IsValid)
+        {
+            return View("AuthError");
+        }
+
         var viewModel = new SecondAuthViewModel
         {
             AppId = model.AppId,
@@ -196,7 +225,10 @@ public class OAuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SecondAuth(SecondAuthViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
 
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
@@ -204,11 +236,19 @@ public class OAuthController : Controller
         var result =
             await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DoNotAskMeOnIt);
         if (result.Succeeded)
+        {
             return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
+        }
+
         if (result.IsLockedOut)
+        {
             ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
+        }
         else
+        {
             ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
+        }
+
         var viewModel = new SecondAuthViewModel
         {
             AppId = model.AppId,
@@ -221,7 +261,11 @@ public class OAuthController : Controller
     [HttpGet]
     public IActionResult RecoveryCodeAuth(FinishAuthInfo model)
     {
-        if (!ModelState.IsValid) return View("AuthError");
+        if (!ModelState.IsValid)
+        {
+            return View("AuthError");
+        }
+
         var viewModel = new RecoveryCodeAuthViewModel
         {
             AppId = model.AppId,
@@ -235,17 +279,29 @@ public class OAuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> RecoveryCodeAuth(RecoveryCodeAuthViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
         var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty).Replace("-", string.Empty);
         var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
         if (result.Succeeded)
+        {
             return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
+        }
+
         if (result.IsLockedOut)
+        {
             ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
+        }
         else
+        {
             ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
+        }
+
         var viewModel = new RecoveryCodeAuthViewModel
         {
             AppId = model.AppId,
@@ -258,9 +314,17 @@ public class OAuthController : Controller
     [HttpGet]
     public async Task<IActionResult> Register(AuthorizeAddressModel model)
     {
-        if (!_allowRegistering) return Unauthorized();
+        if (!_allowRegistering)
+        {
+            return Unauthorized();
+        }
+
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
-        if (!ModelState.IsValid) return View("AuthError");
+        if (!ModelState.IsValid)
+        {
+            return View("AuthError");
+        }
+
         var viewModel = new RegisterViewModel(model.RedirectUri, model.State, model.AppId, app.AppName, app.IconPath);
         return View(viewModel);
     }
@@ -269,9 +333,16 @@ public class OAuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
-        if (!_allowRegistering) return Unauthorized();
+        if (!_allowRegistering)
+        {
+            return Unauthorized();
+        }
+
         if (!_captcha.Validate(model.CaptchaCode, HttpContext.Session))
+        {
             ModelState.AddModelError(string.Empty, "Invalid captcha code!");
+        }
+
         var app = (await _apiService.AppInfoAsync(model.AppId)).App;
         if (!ModelState.IsValid)
         {
@@ -343,7 +414,10 @@ public class OAuthController : Controller
 
     private void AddErrors(IdentityResult result)
     {
-        foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
     }
 
     private Task<GatewayUser> GetCurrentUserAsync()

@@ -299,7 +299,11 @@ public class AccountController : Controller
         {
             var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(),
                 model.NewPhoneNumber);
-            if (result.Code != ErrorType.Success) throw new InvalidOperationException();
+            if (result.Code != ErrorType.Success)
+            {
+                throw new InvalidOperationException();
+            }
+
             user.PhoneNumber = model.NewPhoneNumber;
             await _userManager.UpdateAsync(user);
             return RedirectToAction(nameof(Phone), new { JustHaveUpdated = true });
@@ -317,7 +321,11 @@ public class AccountController : Controller
         var user = await GetCurrentUserAsync();
         var result =
             await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), string.Empty);
-        if (result.Code != ErrorType.Success) throw new InvalidOperationException();
+        if (result.Code != ErrorType.Success)
+        {
+            throw new InvalidOperationException();
+        }
+
         user.PhoneNumber = string.Empty;
         await _userManager.UpdateAsync(user);
         return RedirectToAction(nameof(Phone));
@@ -356,7 +364,10 @@ public class AccountController : Controller
         var user = await GetCurrentUserAsync();
         var token = await _appsContainer.AccessTokenAsync();
         if (_configuration["AccountAppId"] == appId)
+        {
             return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+        }
+
         var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
         return this.Protocol(result);
     }
@@ -435,7 +446,9 @@ public class AccountController : Controller
             .Value;
         if (success)
             // go to recovery codes page
+        {
             return RedirectToAction(nameof(TwoFactorAuthentication), new { success = true });
+        }
 
         ModelState.AddModelError(string.Empty, "Invalid code!");
         model.RootRecover(user, "Two-factor Authentication");
@@ -456,7 +469,10 @@ public class AccountController : Controller
         var user = await GetCurrentUserAsync();
         var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessTokenAsync());
         if (disableResult.Value)
+        {
             return RedirectToAction(nameof(TwoFactorAuthentication));
+        }
+
         throw new InvalidOperationException("Disable two FA crashed!");
     }
 
@@ -487,7 +503,10 @@ public class AccountController : Controller
     public async Task<IActionResult> UnBindAccount(string provider)
     {
         if (string.IsNullOrWhiteSpace(provider))
+        {
             return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
+        }
+
         var user = await GetCurrentUserAsync();
         var token = await _appsContainer.AccessTokenAsync();
         var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);

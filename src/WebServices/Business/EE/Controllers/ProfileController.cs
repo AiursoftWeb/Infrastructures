@@ -33,7 +33,11 @@ public class ProfileController : Controller
     public async Task<IActionResult> Overview(string id)
     {
         var user = await _userManager.FindByNameAsync(id);
-        if (user == null) return NotFound();
+        if (user == null)
+        {
+            return NotFound();
+        }
+
         var courses = _dbContext.Courses.Where(t => t.OwnerId == user.Id).Take(6);
         var model = new OverviewViewModel
         {
@@ -46,7 +50,11 @@ public class ProfileController : Controller
     public async Task<IActionResult> Courses(string id)
     {
         var user = await _userManager.FindByNameAsync(id);
-        if (user == null) return NotFound();
+        if (user == null)
+        {
+            return NotFound();
+        }
+
         var courses = _dbContext.Courses.Where(t => t.OwnerId == user.Id);
         var model = new CoursesViewModel
         {
@@ -59,7 +67,11 @@ public class ProfileController : Controller
     public async Task<IActionResult> Subscriptions(string id)
     {
         var user = await _userManager.FindByNameAsync(id);
-        if (user == null) return NotFound();
+        if (user == null)
+        {
+            return NotFound();
+        }
+
         var mySubs = _dbContext
             .Subscriptions
             .Include(t => t.Course)
@@ -76,7 +88,10 @@ public class ProfileController : Controller
     {
         var currentUser = await GetCurrentUserAsync();
         var user = await _userManager.FindByNameAsync(id);
-        if (user == null) return NotFound();
+        if (user == null)
+        {
+            return NotFound();
+        }
 
         var followings = await _dbContext
             .Follows
@@ -94,7 +109,11 @@ public class ProfileController : Controller
     public async Task<IActionResult> Followers(string id)
     {
         var user = await _userManager.FindByNameAsync(id); //Viewing user name
-        if (user == null) return NotFound();
+        if (user == null)
+        {
+            return NotFound();
+        }
+
         var followers = await _dbContext
             .Follows
             .Include(t => t.Trigger)
@@ -115,12 +134,19 @@ public class ProfileController : Controller
     {
         var currentUser = await GetCurrentUserAsync();
         var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
-        if (user == null) return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+        if (user == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+        }
+
         var follow =
             await _dbContext.Follows.SingleOrDefaultAsync(t =>
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow != null)
+        {
             return this.Protocol(ErrorType.HasSuccessAlready, "You have already followed the target user!");
+        }
+
         await _dbContext.Follows.AddAsync(new Follow
         {
             TriggerId = currentUser.Id,
@@ -138,13 +164,20 @@ public class ProfileController : Controller
     {
         var currentUser = await GetCurrentUserAsync();
         var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
-        if (user == null) return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+        if (user == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+        }
+
         var follow =
             await _dbContext.Follows.SingleOrDefaultAsync(t =>
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow == null)
+        {
             return this.Protocol(ErrorType.HasSuccessAlready,
                 "You did not follow the target user and can not unFollow him!");
+        }
+
         _dbContext.Follows.Remove(follow);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "You have successfully unfollowed the target user!");

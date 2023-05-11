@@ -17,11 +17,23 @@ public class ProbeLocator
         string playerFormat)
     {
         Endpoint = endpoint;
-        if (string.IsNullOrWhiteSpace(openFormat)) openFormat = endpoint + "/download/open/{0}";
+        if (string.IsNullOrWhiteSpace(openFormat))
+        {
+            openFormat = endpoint + "/download/open/{0}";
+        }
+
         OpenFormat = openFormat;
-        if (string.IsNullOrWhiteSpace(downloadFormat)) downloadFormat = endpoint + "/download/file/{0}";
+        if (string.IsNullOrWhiteSpace(downloadFormat))
+        {
+            downloadFormat = endpoint + "/download/file/{0}";
+        }
+
         DownloadFormat = downloadFormat;
-        if (string.IsNullOrWhiteSpace(playerFormat)) playerFormat = endpoint + "/Video/file/{0}";
+        if (string.IsNullOrWhiteSpace(playerFormat))
+        {
+            playerFormat = endpoint + "/Video/file/{0}";
+        }
+
         PlayerFormat = playerFormat;
     }
 
@@ -86,8 +98,11 @@ public class ProbeLocator
     private (string siteName, string[] folders, string fileName) SplitToPath(string fullPath)
     {
         if (fullPath == null || fullPath.Length == 0)
+        {
             throw new AiurAPIModelException(ErrorType.NotFound,
                 $"Can't get your file download address from path: '{fullPath}'!");
+        }
+
         var paths = SplitStrings(fullPath);
         var fileName = paths.Last();
         var siteName = paths.First();

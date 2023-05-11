@@ -35,10 +35,16 @@ public class SectionController : Controller
             .Courses
             .SingleOrDefaultAsync(t => t.Id == id);
 
-        if (course == null) return NotFound();
+        if (course == null)
+        {
+            return NotFound();
+        }
 
         var user = await GetCurrentUserAsync();
-        if (course.OwnerId != user.Id) return NotFound();
+        if (course.OwnerId != user.Id)
+        {
+            return NotFound();
+        }
 
         var model = new CreateViewModel
         {
@@ -57,10 +63,17 @@ public class SectionController : Controller
             .Courses
             .SingleOrDefaultAsync(t => t.Id == model.CourseId);
 
-        if (course == null) return NotFound();
+        if (course == null)
+        {
+            return NotFound();
+        }
 
         var user = await GetCurrentUserAsync();
-        if (course.OwnerId != user.Id) return NotFound();
+        if (course.OwnerId != user.Id)
+        {
+            return NotFound();
+        }
+
         var newSection = new Section
         {
             SectionName = model.NewSectionName,
@@ -80,7 +93,11 @@ public class SectionController : Controller
         var user = await GetCurrentUserAsync();
         var section = await _dbContext.Sections.Where(t => t.Context.OwnerId == user.Id)
             .SingleOrDefaultAsync(t => t.Id == id);
-        if (section == null) return NotFound();
+        if (section == null)
+        {
+            return NotFound();
+        }
+
         _dbContext.Sections.Remove(section);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, $"Successfully deleted the section '{section.SectionName}'!");

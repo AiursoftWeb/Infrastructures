@@ -28,11 +28,17 @@ public class CannonQueue : ISingletonDependency
     public void QueueNew(Func<Task> taskFactory, bool startTheEngine = true)
     {
         _pendingTaskFactories.Enqueue(taskFactory);
-        if (!startTheEngine) return;
+        if (!startTheEngine)
+        {
+            return;
+        }
 
         lock (loc)
         {
-            if (!_engine.IsCompleted) return;
+            if (!_engine.IsCompleted)
+            {
+                return;
+            }
 
             _logger.LogDebug("Engine is sleeping. Trying to wake it up.");
             _engine = RunTasksInQueue();

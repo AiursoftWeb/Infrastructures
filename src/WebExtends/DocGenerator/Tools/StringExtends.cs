@@ -18,6 +18,7 @@ public static class StringExtends
         var b = new StringBuilder();
         var first = true;
         foreach (var word in split)
+        {
             if (first)
             {
                 b.Append(word + " ");
@@ -27,6 +28,7 @@ public static class StringExtends
             {
                 b.Append(word.ToLower() + " ");
             }
+        }
 
         return b.ToString();
     }

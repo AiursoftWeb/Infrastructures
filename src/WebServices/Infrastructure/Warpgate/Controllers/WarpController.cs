@@ -40,8 +40,16 @@ public class WarpController : Controller
     {
         var record = await _recordRepo.GetRecordByName(model.RecordName);
         _logger.LogInformation($"New request coming with name: {model.RecordName}, path: {model.Path}.");
-        if (record == null) return NotFound();
-        if (!record.Enabled) return NotFound();
+        if (record == null)
+        {
+            return NotFound();
+        }
+
+        if (!record.Enabled)
+        {
+            return NotFound();
+        }
+
         var builtUrl = BuildTargetUrl(record, model.Path);
         _logger.LogInformation($"Target {record.Type} url is: {builtUrl}.");
         return record.Type switch
@@ -57,18 +65,23 @@ public class WarpController : Controller
     private string BuildTargetUrl(WarpRecord record, string path)
     {
         if (!string.IsNullOrWhiteSpace(path))
+        {
             return record.TargetUrl.TrimEnd('/') + "/" + path + Request.QueryString;
+        }
+
         return record.TargetUrl.TrimEnd('/');
     }
 
     private async Task<IActionResult> RewriteToUrl(string url)
     {
         if (!string.Equals(HttpContext.Request.Method, "GET", StringComparison.OrdinalIgnoreCase))
+        {
             return StatusCode(StatusCodes.Status403Forbidden, new AiurProtocol
             {
                 Message = "We can only proxy HTTP GET requests!",
                 Code = ErrorType.InvalidInput
             });
+        }
 
         var request = HttpContext.CreateProxyHttpRequest(new Uri(url));
         var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,

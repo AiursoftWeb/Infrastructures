@@ -9,7 +9,10 @@ public class AiurForceWebSocket : ActionFilterAttribute
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         base.OnActionExecuting(context);
-        if (context.HttpContext.WebSockets.IsWebSocketRequest) return;
+        if (context.HttpContext.WebSockets.IsWebSocketRequest)
+        {
+            return;
+        }
 
         var arg = new AiurProtocol
         {

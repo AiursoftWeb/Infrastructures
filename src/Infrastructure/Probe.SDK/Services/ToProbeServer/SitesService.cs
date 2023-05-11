@@ -36,7 +36,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -49,7 +52,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Get(url, true);
         var jResult = JsonConvert.DeserializeObject<ViewMySitesViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -63,7 +69,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Get(url, true);
         var jResult = JsonConvert.DeserializeObject<ViewSiteDetailViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -82,7 +91,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -97,7 +109,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -112,7 +127,10 @@ public class SitesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }

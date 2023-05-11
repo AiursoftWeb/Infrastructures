@@ -56,9 +56,16 @@ public class FolderRepo : IScopedDependency
         var site = await _dbContext
             .Sites
             .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
-        if (site == null) throw new AiurAPIModelException(ErrorType.NotFound, "Not found target site!");
+        if (site == null)
+        {
+            throw new AiurAPIModelException(ErrorType.NotFound, "Not found target site!");
+        }
+
         if (site.AppId != appid)
+        {
             throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
+        }
+
         var rootFolder = await GetFolderFromId(site.RootFolderId);
         return await GetFolderFromPath(folderNames, rootFolder, recursiveCreate);
     }
@@ -88,13 +95,23 @@ public class FolderRepo : IScopedDependency
 
     public async Task<Folder> GetFolderFromPath(string[] folderNames, Folder root, bool recursiveCreate)
     {
-        if (root == null) return null;
+        if (root == null)
+        {
+            return null;
+        }
 
-        if (!folderNames.Any()) return await GetFolderFromId(root.Id);
+        if (!folderNames.Any())
+        {
+            return await GetFolderFromId(root.Id);
+        }
+
         var subFolderName = folderNames[0];
         var subFolder = await GetSubFolder(root.Id, subFolderName);
         if (!recursiveCreate || subFolder != null || string.IsNullOrWhiteSpace(subFolderName))
+        {
             return await GetFolderFromPath(folderNames.Skip(1).ToArray(), subFolder, recursiveCreate);
+        }
+
         subFolder = new Folder
         {
             ContextId = root.Id,
@@ -111,12 +128,20 @@ public class FolderRepo : IScopedDependency
             .Folders
             .Where(t => t.ContextId == folder.Id)
             .ToListAsync();
-        foreach (var subfolder in subfolders) await DeleteFolderObject(subfolder);
+        foreach (var subfolder in subfolders)
+        {
+            await DeleteFolderObject(subfolder);
+        }
+
         var localFiles = await _dbContext
             .Files
             .Where(t => t.ContextId == folder.Id)
             .ToListAsync();
-        foreach (var file in localFiles) _fileRepo.DeleteFile(file);
+        foreach (var file in localFiles)
+        {
+            _fileRepo.DeleteFile(file);
+        }
+
         _dbContext.Folders.Remove(folder);
     }
 
@@ -127,7 +152,11 @@ public class FolderRepo : IScopedDependency
             .Folders
             .Where(t => t.ContextId == folder.Id)
             .ToListAsync();
-        foreach (var subfolder in subfolders) size += await GetFolderObjectSize(subfolder);
+        foreach (var subfolder in subfolders)
+        {
+            size += await GetFolderObjectSize(subfolder);
+        }
+
         var localFiles = await _dbContext
             .Files
             .Where(t => t.ContextId == folder.Id)
@@ -141,7 +170,11 @@ public class FolderRepo : IScopedDependency
         var folder = await _dbContext
             .Folders
             .SingleOrDefaultAsync(t => t.Id == folderId);
-        if (folder != null) return await GetFolderObjectSize(folder);
+        if (folder != null)
+        {
+            return await GetFolderObjectSize(folder);
+        }
+
         return 0;
     }
 
@@ -155,10 +188,16 @@ public class FolderRepo : IScopedDependency
                 .Folders
                 .SingleOrDefaultAsync(t => t.Id == folderId);
 
-            if (folder == null) return;
+            if (folder == null)
+            {
+                return;
+            }
 
             await DeleteFolderObject(folder);
-            if (saveChanges) await _dbContext.SaveChangesAsync();
+            if (saveChanges)
+            {
+                await _dbContext.SaveChangesAsync();
+            }
         }
         finally
         {

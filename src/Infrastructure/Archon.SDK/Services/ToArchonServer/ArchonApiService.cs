@@ -32,7 +32,10 @@ public class ArchonApiService : IScopedDependency
         var result = await _http.Get(url, true);
         var jResult = JsonConvert.DeserializeObject<AccessTokenViewModel>(result);
 
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }

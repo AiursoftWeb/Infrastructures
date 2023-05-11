@@ -40,10 +40,16 @@ public class TokenController : ControllerBase
             .Sites
             .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
         if (site == null)
+        {
             return this.Protocol(ErrorType.NotFound, $"Could not find a site with name: '{model.SiteName}'");
+        }
+
         if (site.AppId != appid)
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
+        }
+
         var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions,
             TimeSpan.FromSeconds(model.LifespanSeconds));
         return this.Protocol(new AiurValue<string>(pbToken)

@@ -28,9 +28,21 @@ public class AccountSmsSender : ITransientDependency
 
     public Task SendAsync(string number, string message)
     {
-        if (string.IsNullOrWhiteSpace(_smsAccountFrom)) throw new ArgumentNullException();
-        if (string.IsNullOrWhiteSpace(_smsAccountIdentification)) throw new ArgumentNullException();
-        if (string.IsNullOrWhiteSpace(_smsAccountPassword)) throw new ArgumentNullException();
+        if (string.IsNullOrWhiteSpace(_smsAccountFrom))
+        {
+            throw new ArgumentNullException();
+        }
+
+        if (string.IsNullOrWhiteSpace(_smsAccountIdentification))
+        {
+            throw new ArgumentNullException();
+        }
+
+        if (string.IsNullOrWhiteSpace(_smsAccountPassword))
+        {
+            throw new ArgumentNullException();
+        }
+
         try
         {
             TwilioClient.Init(_smsAccountIdentification, _smsAccountPassword);

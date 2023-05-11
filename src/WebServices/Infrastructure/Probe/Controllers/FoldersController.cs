@@ -33,7 +33,11 @@ public class FoldersController : ControllerBase
     {
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
-        if (folder == null) return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        if (folder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        }
+
         return this.Protocol(new AiurValue<Folder>(folder)
         {
             Code = ErrorType.Success,
@@ -48,7 +52,11 @@ public class FoldersController : ControllerBase
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
         var folder =
             await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
-        if (folder == null) return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        if (folder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        }
+
         await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
         return this.Protocol(ErrorType.Success, "Successfully created your new folder!");
     }
@@ -59,10 +67,17 @@ public class FoldersController : ControllerBase
     {
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
-        if (folder == null) return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        if (folder == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+        }
+
         if (folder.ContextId == null)
+        {
             return this.Protocol(ErrorType.InvalidInput,
                 "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
+        }
+
         await _folderRepo.DeleteFolder(folder.Id);
         return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");
     }

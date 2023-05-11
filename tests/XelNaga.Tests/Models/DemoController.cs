@@ -31,7 +31,11 @@ public class DemoController : IScopedDependency
 
     public IActionResult QueueActionAsync()
     {
-        for (var i = 0; i < 32; i++) _cannonQueue.QueueWithDependency<DemoService>(d => d.DoSomethingSlowAsync());
+        for (var i = 0; i < 32; i++)
+        {
+            _cannonQueue.QueueWithDependency<DemoService>(d => d.DoSomethingSlowAsync());
+        }
+
         return null;
     }
 }

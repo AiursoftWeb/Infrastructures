@@ -31,7 +31,10 @@ public class HttpService : IScopedDependency
 
         using var response = await _client.SendAsync(request);
         if (response.IsSuccessStatusCode)
+        {
             return await GetResponseContent(response);
+        }
+
         throw new WebException(
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }
@@ -45,7 +48,10 @@ public class HttpService : IScopedDependency
 
         using var response = await _client.SendAsync(request);
         if (response.IsSuccessStatusCode)
+        {
             return await GetResponseContent(response);
+        }
+
         throw new WebException(
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }
@@ -62,7 +68,10 @@ public class HttpService : IScopedDependency
 
         using var response = await _client.SendAsync(request);
         if (response.IsSuccessStatusCode)
+        {
             return await GetResponseContent(response);
+        }
+
         throw new WebException(
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }

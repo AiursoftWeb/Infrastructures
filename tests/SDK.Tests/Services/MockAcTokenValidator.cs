@@ -16,8 +16,16 @@ public class MockAcTokenValidator : ACTokenValidator
 
     public override string ValidateAccessToken(string value)
     {
-        if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock-")) return MockAppId;
-        if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock2-")) return Mock2AppId;
+        if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock-"))
+        {
+            return MockAppId;
+        }
+
+        if (!string.IsNullOrWhiteSpace(value) && value.StartsWith("mock2-"))
+        {
+            return Mock2AppId;
+        }
+
         throw new AiurAPIModelException(ErrorType.Unauthorized,
             "Mock token was not in a valid format and can not be verified!");
     }

@@ -28,7 +28,10 @@ public static class Extends
     public static bool IsMobileBrowser(this HttpRequest request)
     {
         var userAgent = request.UserAgent();
-        if (_mobile.IsMatch(userAgent) || _version.IsMatch(userAgent.Substring(0, 4))) return true;
+        if (_mobile.IsMatch(userAgent) || _version.IsMatch(userAgent.Substring(0, 4)))
+        {
+            return true;
+        }
 
         return false;
     }
@@ -69,7 +72,10 @@ public static class Extends
 
     public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
     {
-        if (controller.HttpContext.Response.HasStarted) return new EmptyResult();
+        if (controller.HttpContext.Response.HasStarted)
+        {
+            return new EmptyResult();
+        }
 
         controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
         return new JsonResult(model);
@@ -97,7 +103,11 @@ public static class Extends
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                if (port > 0) webBuilder.UseUrls($"http://localhost:{port}");
+                if (port > 0)
+                {
+                    webBuilder.UseUrls($"http://localhost:{port}");
+                }
+
                 webBuilder.UseStartup<T>();
             });
     }

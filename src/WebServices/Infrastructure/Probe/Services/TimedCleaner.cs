@@ -80,7 +80,11 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         var files = await dbContext.Files.ToListAsync();
         foreach (var file in files)
         {
-            if (storageProvider.ExistInHardware(file.HardwareId)) continue;
+            if (storageProvider.ExistInHardware(file.HardwareId))
+            {
+                continue;
+            }
+
             _logger.LogWarning(
                 $"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
             // delete file in db.
@@ -91,7 +95,11 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         var storageFiles = storageProvider.GetAllFileNamesInHardware();
         foreach (var file in storageFiles)
         {
-            if (files.Any(t => t.HardwareId == file)) continue;
+            if (files.Any(t => t.HardwareId == file))
+            {
+                continue;
+            }
+
             _logger.LogWarning(
                 $"Cleaner message: File with hardware Id: {file} was found on disk but not found in database! Consider delete that file on disk!");
             // delete file in disk

@@ -20,7 +20,11 @@ public static class StringOperation
 
     public static byte[] Base64ToBytes(this string input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return new byte[0];
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return new byte[0];
+        }
+
         return Convert.FromBase64String(input);
     }
 
@@ -58,7 +62,11 @@ public static class StringOperation
     {
         var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
         var sBuilder = new StringBuilder();
-        foreach (var c in data) sBuilder.Append(c.ToString("x2"));
+        foreach (var c in data)
+        {
+            sBuilder.Append(c.ToString("x2"));
+        }
+
         return sBuilder.ToString();
     }
 
@@ -79,7 +87,10 @@ public static class StringOperation
     public static string OTake(this string source, int count)
     {
         if (source.Length <= count)
+        {
             return source;
+        }
+
         return source.Substring(0, count - 3) + "...";
     }
 
@@ -87,8 +98,13 @@ public static class StringOperation
     {
         var ext = Path.GetExtension(filename);
         foreach (var extension in extensions)
+        {
             if (ext.Trim('.').ToLower() == extension)
+            {
                 return true;
+            }
+        }
+
         return false;
     }
 
@@ -111,7 +127,11 @@ public static class StringOperation
     {
         var s = string.Empty;
         content = WebUtility.HtmlDecode(content);
-        if (!content.Contains(">")) return content;
+        if (!content.Contains(">"))
+        {
+            return content;
+        }
+
         while (content.Contains(">"))
         {
             s += content.Substring(0, content.IndexOf("<", StringComparison.Ordinal));
@@ -130,9 +150,14 @@ public static class StringOperation
             var number = random.Next();
             number %= 36;
             if (number < 10)
+            {
                 number += 48;
+            }
             else
+            {
                 number += 55;
+            }
+
             checkCode += ((char)number).ToString();
         }
 
@@ -141,13 +166,21 @@ public static class StringOperation
 
     public static string EncodePath(this string input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return string.Empty;
+        }
+
         return input.ToUrlEncoded().Replace("%2F", "/");
     }
 
     public static string ToUrlEncoded(this string input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return string.Empty;
+        }
+
         return Uri.EscapeDataString(input);
     }
 
@@ -158,16 +191,30 @@ public static class StringOperation
 
     public static string DetachPath(this string path)
     {
-        if (path == null || !path.Contains("/")) return null;
+        if (path == null || !path.Contains("/"))
+        {
+            return null;
+        }
+
         return path.Replace("/" + path.Split('/').Last(), "");
     }
 
     public static IEnumerable<string> SplitInParts(this string input, int partLength)
     {
-        if (input == null) throw new ArgumentNullException(nameof(input));
-        if (partLength <= 0) throw new ArgumentException("Part length has to be positive.", nameof(partLength));
+        if (input == null)
+        {
+            throw new ArgumentNullException(nameof(input));
+        }
+
+        if (partLength <= 0)
+        {
+            throw new ArgumentException("Part length has to be positive.", nameof(partLength));
+        }
+
         for (var i = 0; i < input.Length; i += partLength)
+        {
             yield return input.Substring(i, Math.Min(partLength, input.Length - i));
+        }
     }
 
     public static string HumanReadableSize(this long size)
@@ -185,7 +232,11 @@ public static class StringOperation
 
     public static bool IsValidJson(this string strInput)
     {
-        if (string.IsNullOrWhiteSpace(strInput)) return false;
+        if (string.IsNullOrWhiteSpace(strInput))
+        {
+            return false;
+        }
+
         strInput = strInput.Trim();
         if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object.
             (strInput.StartsWith("\"") && strInput.EndsWith("\"")) || // For string.

@@ -23,7 +23,11 @@ public static class EFExtends
         var knownKeys = new HashSet<M>();
         foreach (var element in query)
         {
-            if (knownKeys.Any(k => k.EqualsInDb(element.Map()))) continue;
+            if (knownKeys.Any(k => k.EqualsInDb(element.Map())))
+            {
+                continue;
+            }
+
             knownKeys.Add(element);
             yield return element;
         }
@@ -40,8 +44,10 @@ public static class EFExtends
     {
         var conflict = await query.Select(predicate).AnyAsync(v => v == value);
         if (conflict)
+        {
             throw new AiurAPIModelException(ErrorType.Conflict,
                 $"There is already a record with name: '{value}'. Please try another new name.");
+        }
     }
 
     /// <summary>
@@ -59,8 +65,10 @@ public static class EFExtends
     {
         var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
         if (conflict)
+        {
             throw new AiurAPIModelException(ErrorType.Conflict,
                 $"There is already a record with name: '{value}'. Please try another new name.");
+        }
     }
 
     public static void Sync<T, M>(this DbSet<T> dbSet,
@@ -89,10 +97,16 @@ public static class EFExtends
             var itemCount = items.Count;
 
             if (itemCount > itemCountShallBe)
+            {
                 dbSet.RemoveRange(items.Skip(itemCountShallBe));
+            }
             else if (itemCount < itemCountShallBe)
+            {
                 for (var i = 0; i < itemCountShallBe - itemCount; i++)
+                {
                     dbSet.Add(item.Map());
+                }
+            }
         }
 
         var toDelete = dbSet

@@ -9,8 +9,8 @@ using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.Services;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -49,13 +49,20 @@ public class ListenController : ControllerBase
     {
         var lastReadId = _counter.GetCurrent;
         var channel = _memoryContext[model.Id];
-        if (channel == null) return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
+        if (channel == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
+        }
+
         if (channel.ConnectKey != model.Key)
+        {
             return this.Protocol(new AiurProtocol
             {
                 Code = ErrorType.Unauthorized,
                 Message = "Wrong connection key!"
             });
+        }
+
         await _pusher.Accept(HttpContext);
         var sleepTime = 0;
         try
@@ -71,14 +78,22 @@ public class ListenController : ControllerBase
                 if (nextMessages.Any())
                 {
                     var messageToPush = nextMessages.MinBy(t => t.Id);
-                    if (messageToPush == null) continue;
+                    if (messageToPush == null)
+                    {
+                        continue;
+                    }
+
                     await _pusher.SendMessage(messageToPush.Content);
                     lastReadId = messageToPush.Id;
                     sleepTime = 0;
                 }
                 else
                 {
-                    if (sleepTime < 1000) sleepTime += 5;
+                    if (sleepTime < 1000)
+                    {
+                        sleepTime += 5;
+                    }
+
                     await Task.Delay(sleepTime);
                 }
             }

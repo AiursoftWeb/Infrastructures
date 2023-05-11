@@ -66,7 +66,11 @@ public class ApiController : Controller
     [HttpPost("set-language")]
     public async Task<IActionResult> SetLang(SetLangViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         try
         {
             _ApplyCultureCookie(model.Culture);

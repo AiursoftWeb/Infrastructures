@@ -175,7 +175,11 @@ public class BasicTests
         }
 
         // Wait for complete
-        for (var i = 0; i < 10; i++) await Task.Delay(200);
+        for (var i = 0; i < 10; i++)
+        {
+            await Task.Delay(200);
+        }
+
         Assert.AreEqual(100, MessageCount);
     }
 }

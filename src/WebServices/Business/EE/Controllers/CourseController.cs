@@ -44,7 +44,11 @@ public class CourseController : Controller
     public async Task<IActionResult> Create(CreateViewModel model)
     {
         var user = await GetCurrentUserAsync();
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var course = new Course
         {
             Description = ScriptsFilter.FilterString(model.Description),
@@ -85,7 +89,11 @@ public class CourseController : Controller
             .Subscriptions
             .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id) != null;
 
-        if (course == null) return NotFound();
+        if (course == null)
+        {
+            return NotFound();
+        }
+
         var model = new DetailViewModel
         {
             Id = id,
@@ -113,14 +121,20 @@ public class CourseController : Controller
         var course = await _dbContext
             .Courses
             .SingleOrDefaultAsync(t => t.Id == id);
-        if (course == null) return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+        if (course == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+        }
 
         var subscribed = await _dbContext
             .Subscriptions
             .AnyAsync(t => t.CourseId == id && t.UserId == user.Id);
 
         if (subscribed)
+        {
             return this.Protocol(ErrorType.HasSuccessAlready, "This course you have already subscribed!");
+        }
+
         var newSubscription = new Subscription
         {
             UserId = user.Id,
@@ -141,12 +155,20 @@ public class CourseController : Controller
         var course = await _dbContext
             .Courses
             .SingleOrDefaultAsync(t => t.Id == id);
-        if (course == null) return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+        if (course == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+        }
+
         var sub = await _dbContext
             .Subscriptions
             .SingleOrDefaultAsync(t => t.CourseId == id && t.UserId == user.Id);
 
-        if (sub == null) return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
+        if (sub == null)
+        {
+            return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
+        }
+
         _dbContext.Subscriptions.Remove(sub);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "Successfully unsubscribed this course!");

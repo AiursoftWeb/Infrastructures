@@ -16,8 +16,12 @@ public class HandleRobotsMiddleware
     public async Task Invoke(HttpContext context)
     {
         if (string.Equals(context.Request.Path, "/robots.txt", StringComparison.OrdinalIgnoreCase))
+        {
             context.Response.StatusCode = StatusCodes.Status204NoContent;
+        }
         else
+        {
             await _next.Invoke(context);
+        }
     }
 }

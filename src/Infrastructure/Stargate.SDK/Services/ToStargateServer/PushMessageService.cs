@@ -39,7 +39,11 @@ public class PushMessageService : IScopedDependency
         });
         var result = await _httpService.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
+
         return jResult;
     }
 }

@@ -39,7 +39,11 @@ public class APIDocGeneratorMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        if (_isAPIAction == null || _judgeAuthorized == null) throw new ArgumentNullException();
+        if (_isAPIAction == null || _judgeAuthorized == null)
+        {
+            throw new ArgumentNullException();
+        }
+
         if (context.Request.Path.ToString().Trim().Trim('/').ToLower() != _docAddress)
         {
             await _next.Invoke(context);
@@ -67,7 +71,11 @@ public class APIDocGeneratorMiddleware
             .ToList();
         foreach (var controller in possibleControllers ?? new List<Type>())
         {
-            if (!IsController(controller)) continue;
+            if (!IsController(controller))
+            {
+                continue;
+            }
+
             var controllerRoute = controller.GetCustomAttributes(typeof(RouteAttribute), true)
                 .Select(t => t as RouteAttribute)
                 .Select(t => t?.Template)
@@ -75,7 +83,11 @@ public class APIDocGeneratorMiddleware
             foreach (var method in controller.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly |
                                                          BindingFlags.Public))
             {
-                if (!IsAction(method) || !_isAPIAction(method, controller)) continue;
+                if (!IsAction(method) || !_isAPIAction(method, controller))
+                {
+                    continue;
+                }
+
                 var args = GenerateArguments(method);
                 var possibleResponses = GetPossibleResponses(method);
                 var api = new API
@@ -92,7 +104,11 @@ public class APIDocGeneratorMiddleware
                     AuthRequired = _judgeAuthorized(method, controller),
                     PossibleResponses = possibleResponses
                 };
-                if (!api.Routes.Any()) api.Routes.Add($"{api.ControllerName.TrimController()}/{api.ActionName}");
+                if (!api.Routes.Any())
+                {
+                    api.Routes.Add($"{api.ControllerName.TrimController()}/{api.ActionName}");
+                }
+
                 actionsMatches.Add(api);
             }
         }
@@ -108,9 +124,12 @@ public class APIDocGeneratorMiddleware
             var groupedControllers = actionsMatches.GroupBy(t => t.ControllerName);
             var finalMarkDown = string.Empty;
             foreach (var controllerDoc in groupedControllers)
+            {
                 finalMarkDown +=
                     generator.GenerateMarkDownForApi(controllerDoc,
                         $"{context.Request.Scheme}://{context.Request.Host}") + "\r\n--------\r\n";
+            }
+
             await context.Response.WriteAsync(finalMarkDown);
         }
     }
@@ -130,21 +149,30 @@ public class APIDocGeneratorMiddleware
     {
         var args = new List<Argument>();
         foreach (var param in method.GetParameters())
+        {
             if (param.ParameterType.IsClass && param.ParameterType != typeof(string))
+            {
                 foreach (var prop in param.ParameterType.GetProperties())
+                {
                     args.Add(new Argument
                     {
                         Name = GetArgumentName(prop, prop.Name),
                         Required = JudgeRequired(prop.PropertyType, prop.CustomAttributes),
                         Type = ConvertTypeToArgumentType(prop.PropertyType)
                     });
+                }
+            }
             else
+            {
                 args.Add(new Argument
                 {
                     Name = GetArgumentName(param, param.Name),
                     Required = !param.HasDefaultValue && JudgeRequired(param.ParameterType, param.CustomAttributes),
                     Type = ConvertTypeToArgumentType(param.ParameterType)
                 });
+            }
+        }
+
         return args;
     }
 
@@ -152,9 +180,17 @@ public class APIDocGeneratorMiddleware
     {
         var propName = defaultName;
         var fromQuery = property.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-        if (fromQuery == null) return propName;
+        if (fromQuery == null)
+        {
+            return propName;
+        }
+
         var queriedName = (fromQuery as IModelNameProvider)?.Name;
-        if (!string.IsNullOrWhiteSpace(queriedName)) propName = queriedName;
+        if (!string.IsNullOrWhiteSpace(queriedName))
+        {
+            propName = queriedName;
+        }
+
         return propName;
     }
 
@@ -197,7 +233,11 @@ public class APIDocGeneratorMiddleware
 
     private bool JudgeRequired(Type source, IEnumerable<CustomAttributeData> attributes)
     {
-        if (attributes.Any(t => t.AttributeType == typeof(RequiredAttribute))) return true;
+        if (attributes.Any(t => t.AttributeType == typeof(RequiredAttribute)))
+        {
+            return true;
+        }
+
         return
             source == typeof(int) || source == typeof(DateTime) || source == typeof(bool);
     }

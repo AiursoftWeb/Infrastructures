@@ -32,7 +32,11 @@ public class AppRepo : IScopedDependency
     {
         var appid = _acTokenManager.ValidateAccessToken(accessToken);
         var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
-        if (appLocal != null) return appLocal;
+        if (appLocal != null)
+        {
+            return appLocal;
+        }
+
         appLocal = new ProbeApp
         {
             AppId = appid
@@ -45,7 +49,11 @@ public class AppRepo : IScopedDependency
     public async Task DeleteApp(ProbeApp app)
     {
         var sites = await _siteRepo.GetAllSitesUnderApp(app.AppId);
-        foreach (var site in sites) await _siteRepo.DeleteSite(site);
+        foreach (var site in sites)
+        {
+            await _siteRepo.DeleteSite(site);
+        }
+
         _dbContext.Apps.Remove(app);
         await _dbContext.SaveChangesAsync();
     }

@@ -40,7 +40,10 @@ public class RetryEngineTests
         var result = await retryEngine.RunWithTry(
             attempts =>
             {
-                if (attempts == 1) throw new InvalidOperationException("Fake Exception.");
+                if (attempts == 1)
+                {
+                    throw new InvalidOperationException("Fake Exception.");
+                }
 
                 return Task.FromResult(12343 + attempts);
             }, 2, e => e is InvalidOperationException);
@@ -59,9 +62,15 @@ public class RetryEngineTests
             var result = await retryEngine.RunWithTry(
                 attempts =>
                 {
-                    if (attempts == 1) throw new InvalidOperationException("Fake Exception.");
+                    if (attempts == 1)
+                    {
+                        throw new InvalidOperationException("Fake Exception.");
+                    }
 
-                    if (attempts == 2) throw new NotImplementedException("Fake Exception.");
+                    if (attempts == 2)
+                    {
+                        throw new NotImplementedException("Fake Exception.");
+                    }
 
                     return Task.FromResult(12345 + attempts);
                 }, 2, e => e is InvalidOperationException);

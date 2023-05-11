@@ -53,7 +53,10 @@ public class LimitPerMin : ActionFilterAttribute
         base.OnActionExecuting(context);
         if (context.HttpContext.Connection.RemoteIpAddress != null &&
             IPAddress.IsLoopback(context.HttpContext.Connection.RemoteIpAddress) && !EntryExtends.IsInUT())
+        {
             return;
+        }
+
         if (DateTime.UtcNow - LastClearTime > TimeSpan.FromMinutes(1))
         {
             ClearMemory();
@@ -72,13 +75,17 @@ public class LimitPerMin : ActionFilterAttribute
                     (60 - (int)(DateTime.UtcNow - LastClearTime).TotalSeconds).ToString());
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                 if (ReturnJson)
+                {
                     context.Result = new JsonResult(new AiurProtocol
                     {
                         Code = ErrorType.TooManyRequests,
                         Message = "You are requesting our API too frequently and your IP is blocked."
                     });
+                }
                 else
+                {
                     context.Result = new StatusCodeResult((int)HttpStatusCode.TooManyRequests);
+                }
             }
         }
         else

@@ -18,11 +18,23 @@ public static class Extends
         IServiceCollection services,
         params Type[] abstracts)
     {
-        if (!service.GetInterfaces().Contains(condition)) return;
+        if (!service.GetInterfaces().Contains(condition))
+        {
+            return;
+        }
+
         foreach (var inputInterface in abstracts.Where(t => t.IsInterface))
         {
-            if (service.GetInterfaces().All(t => t != inputInterface)) continue;
-            if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface)) continue;
+            if (service.GetInterfaces().All(t => t != inputInterface))
+            {
+                continue;
+            }
+
+            if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputInterface))
+            {
+                continue;
+            }
+
             abstractImplementation(inputInterface, service);
             Console.WriteLine(
                 $"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputInterface.Name}");
@@ -30,15 +42,26 @@ public static class Extends
 
         foreach (var inputAbstractClass in abstracts.Where(t => t.IsAbstract))
         {
-            if (!service.IsSubclassOf(inputAbstractClass)) continue;
-            if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
+            if (!service.IsSubclassOf(inputAbstractClass))
+            {
                 continue;
+            }
+
+            if (services.Any(t => t.ServiceType == service && t.ImplementationType == inputAbstractClass))
+            {
+                continue;
+            }
+
             abstractImplementation(inputAbstractClass, service);
             Console.WriteLine(
                 $"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess as\t{inputAbstractClass.Name}");
         }
 
-        if (services.Any(t => t.ServiceType == service && t.ImplementationType == service)) return;
+        if (services.Any(t => t.ServiceType == service && t.ImplementationType == service))
+        {
+            return;
+        }
+
         realisticImplementation(service);
         Console.WriteLine($"Service:\t{service.Name}\t\t{service.Assembly.FullName?.Split(',')[0]}\t\tsuccess");
     }

@@ -21,7 +21,10 @@ public class ImageCompressor : ITransientDependency
     {
         _sizeCalculator = sizeCalculator;
         _tempFilePath = configuration["TempFileStoragePath"];
-        if (string.IsNullOrWhiteSpace(_tempFilePath)) _tempFilePath = configuration["StoragePath"];
+        if (string.IsNullOrWhiteSpace(_tempFilePath))
+        {
+            _tempFilePath = configuration["StoragePath"];
+        }
     }
 
     public async Task<string> ClearExif(string path)
@@ -30,7 +33,11 @@ public class ImageCompressor : ITransientDependency
         {
             var clearedFolder =
                 _tempFilePath + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
-            if (Directory.Exists(clearedFolder) == false) Directory.CreateDirectory(clearedFolder);
+            if (Directory.Exists(clearedFolder) == false)
+            {
+                Directory.CreateDirectory(clearedFolder);
+            }
+
             var clearedImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
             await ClearImage(path, clearedImagePath);
             return clearedImagePath;
@@ -47,11 +54,19 @@ public class ImageCompressor : ITransientDependency
         var fileCanRead = FileCanBeRead(saveTarget);
         if (fileExists && fileCanRead)
             // Return. Because we have already cleared it.
+        {
             return;
+        }
+
         if (fileExists)
+        {
             while (!FileCanBeRead(saveTarget))
+            {
                 await Task.Delay(500);
+            }
+        }
         else
+        {
             lock (ObjClearLock)
             {
                 using var stream = File.OpenWrite(saveTarget ??
@@ -63,6 +78,7 @@ public class ImageCompressor : ITransientDependency
                 image.Save(stream, format);
                 stream.Close();
             }
+        }
     }
 
     public async Task<string> Compress(string path, int width, int height)
@@ -73,7 +89,11 @@ public class ImageCompressor : ITransientDependency
         {
             var compressedFolder =
                 _tempFilePath + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
-            if (Directory.Exists(compressedFolder) == false) Directory.CreateDirectory(compressedFolder);
+            if (Directory.Exists(compressedFolder) == false)
+            {
+                Directory.CreateDirectory(compressedFolder);
+            }
+
             var compressedImagePath =
                 $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
             await SaveCompressedImage(path, compressedImagePath, width, height);
@@ -91,11 +111,19 @@ public class ImageCompressor : ITransientDependency
         var fileCanRead = FileCanBeRead(saveTarget);
         if (fileExists && fileCanRead)
             // Return. Because we have already cleared it.
+        {
             return;
+        }
+
         if (fileExists)
+        {
             while (!FileCanBeRead(saveTarget))
+            {
                 await Task.Delay(500);
+            }
+        }
         else
+        {
             lock (ObjCompareLock)
             {
                 // Create file
@@ -111,6 +139,7 @@ public class ImageCompressor : ITransientDependency
                 image.Save(stream, format);
                 stream.Close();
             }
+        }
     }
 
     private bool FileCanBeRead(string filepath)

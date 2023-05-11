@@ -77,7 +77,11 @@ public static class MiddlewaresExtends
         Func<IApplicationBuilder, IApplicationBuilder> beforeMvc = null)
     {
         beforeMvc?.Invoke(app);
-        if (addRouting) app.UseRouting();
+        if (addRouting)
+        {
+            app.UseRouting();
+        }
+
         app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         app.UseAiursoftDocGenerator(options =>
         {

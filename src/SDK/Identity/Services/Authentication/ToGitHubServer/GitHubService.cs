@@ -34,8 +34,10 @@ public class GitHubService : IAuthProvider
         _clientId = configuration["GitHub:ClientId"];
         _clientSecret = configuration["GitHub:ClientSecret"];
         if (string.IsNullOrWhiteSpace(_clientId) || string.IsNullOrWhiteSpace(_clientSecret))
+        {
             logger.LogWarning(
                 "Did not set correct GitHub credential! You can only access the service property but can execute OAuth process!");
+        }
     }
 
     public bool IsEnabled()
@@ -102,7 +104,10 @@ public class GitHubService : IAuthProvider
         var json = await _http.Get(url);
         var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
         if (string.IsNullOrWhiteSpace(response.AccessToken))
+        {
             throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github crenditial");
+        }
+
         return response.AccessToken;
     }
 
@@ -119,8 +124,16 @@ public class GitHubService : IAuthProvider
         {
             var json = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<GitHubUserDetail>(json);
-            if (string.IsNullOrWhiteSpace(user.Name)) user.Name = Guid.NewGuid().ToString();
-            if (string.IsNullOrWhiteSpace(user.Email)) user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
+            if (string.IsNullOrWhiteSpace(user.Name))
+            {
+                user.Name = Guid.NewGuid().ToString();
+            }
+
+            if (string.IsNullOrWhiteSpace(user.Email))
+            {
+                user.Email = user.Name + $"@from.{GetName().ToLower()}.com";
+            }
+
             return user;
         }
 

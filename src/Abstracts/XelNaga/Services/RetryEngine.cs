@@ -36,6 +36,7 @@ public class RetryEngine : ITransientDependency
         Predicate<Exception> when = null)
     {
         for (var i = 1; i <= attempts; i++)
+        {
             try
             {
                 logger.LogDebug($"Starting a job with retry. Attempt: {i}. (Starts from 1)");
@@ -70,6 +71,7 @@ public class RetryEngine : ITransientDependency
 
                 await Task.Delay(ExponentialBackoffTimeSlot(i) * 1000);
             }
+        }
 
         throw new InvalidOperationException("Code shall not reach here.");
     }

@@ -41,7 +41,11 @@ public class AuthService<T> where T : AiurUserBase, new()
             if (!result.Succeeded)
             {
                 var message = new StringBuilder();
-                foreach (var error in result.Errors) message.AppendLine(error.Description);
+                foreach (var error in result.Errors)
+                {
+                    message.AppendLine(error.Description);
+                }
+
                 throw new InvalidOperationException(
                     $"The user info ({userInfo.User.Id}) we get could not register to our database because {message}.");
             }

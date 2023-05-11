@@ -44,7 +44,11 @@ public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
     {
         get
         {
-            if (string.IsNullOrEmpty(_preferController) && string.IsNullOrEmpty(_preferAction)) return "/";
+            if (string.IsNullOrEmpty(_preferController) && string.IsNullOrEmpty(_preferAction))
+            {
+                return "/";
+            }
+
             return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
         }
     }
@@ -54,7 +58,10 @@ public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
         base.OnActionExecuting(context);
         if (context.Controller is not ControllerBase controller)
             // If goes here, it seems we are not using it on a controller.
+        {
             throw new InvalidOperationException();
+        }
+
         //Not signed in
         if (!controller.User.Identity?.IsAuthenticated ?? false)
         {
@@ -62,7 +69,11 @@ public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
             {
                 // Just redirected back, leave him here.
                 var show = context.HttpContext.Request.Query[AuthValues.DirectShowString.Key];
-                if (_justTry == true && show == AuthValues.DirectShowString.Value) return;
+                if (_justTry == true && show == AuthValues.DirectShowString.Value)
+                {
+                    return;
+                }
+
                 // Try him.
                 context.Result = Redirect(context, _preferPage, _justTry, _register);
             }

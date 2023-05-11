@@ -36,7 +36,9 @@ public class AiurUploader : ViewComponent
     private async Task<string> GetUploadToken(string siteName, string path)
     {
         if (await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
+        {
             return string.Empty;
+        }
 
         var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessTokenAsync();
         return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path,

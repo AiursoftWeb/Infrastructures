@@ -26,10 +26,15 @@ public class ACTokenValidator : IScopedDependency
             string tokenBase64 = tokenParts[0], tokenSign = tokenParts[1];
             token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
             if (DateTime.UtcNow > token.Expires)
+            {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
+            }
+
             if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+            {
                 throw new AiurAPIModelException(ErrorType.Unauthorized,
                     "Invalid signature! Token could not be authorized!");
+            }
         }
         catch (Exception e)
         {

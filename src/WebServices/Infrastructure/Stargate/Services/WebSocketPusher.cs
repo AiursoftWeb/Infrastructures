@@ -45,7 +45,11 @@ public class WebSocketPusher : IScopedDependency
             while (true)
             {
                 await _ws.ReceiveAsync(buffer, CancellationToken.None);
-                if (_ws.State == WebSocketState.Open) continue;
+                if (_ws.State == WebSocketState.Open)
+                {
+                    continue;
+                }
+
                 _dropped = true;
                 return;
             }
@@ -61,8 +65,11 @@ public class WebSocketPusher : IScopedDependency
     public Task Close()
     {
         if (_ws.State == WebSocketState.Open)
+        {
             return _ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Close because of error.",
                 CancellationToken.None);
+        }
+
         return Task.CompletedTask;
     }
 }

@@ -33,7 +33,10 @@ public class AccountService : IScopedDependency
         var result = await _http.Get(url, true);
         var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -47,7 +50,10 @@ public class AccountService : IScopedDependency
         });
         var result = await _http.Get(url, true);
         var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }

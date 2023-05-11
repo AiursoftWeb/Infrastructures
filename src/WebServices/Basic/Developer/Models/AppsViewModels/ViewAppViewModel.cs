@@ -27,7 +27,11 @@ public class ViewAppViewModel : CreateAppViewModel
 
     private ViewAppViewModel(DeveloperUser user, DeveloperApp thisApp) : base(user)
     {
-        if (thisApp.CreatorId != user.Id) throw new InvalidOperationException("The app is not the user's app!");
+        if (thisApp.CreatorId != user.Id)
+        {
+            throw new InvalidOperationException("The app is not the user's app!");
+        }
+
         AppName = thisApp.AppName;
         AppDescription = thisApp.AppDescription;
         AppCategory = thisApp.AppCategory;

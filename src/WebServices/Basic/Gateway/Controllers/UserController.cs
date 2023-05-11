@@ -71,8 +71,11 @@ public class UserController : ControllerBase
         var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
         await _userManager.UpdateAsync(user);
         if (result.Succeeded)
+        {
             return this.Protocol(new AiurProtocol
                 { Code = ErrorType.Success, Message = "Successfully changed your password!" });
+        }
+
         return this.Protocol(
             new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
     }
@@ -93,9 +96,14 @@ public class UserController : ControllerBase
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePhoneNumber);
         if (string.IsNullOrWhiteSpace(model.Phone))
+        {
             user.PhoneNumber = string.Empty;
+        }
         else
+        {
             user.PhoneNumber = model.Phone;
+        }
+
         await _userManager.UpdateAsync(user);
         return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
     }
@@ -118,7 +126,11 @@ public class UserController : ControllerBase
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
         var emailExists =
             await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
-        if (emailExists) return this.Protocol(ErrorType.Conflict, $"An user has already bind email: {model.NewEmail}!");
+        if (emailExists)
+        {
+            return this.Protocol(ErrorType.Conflict, $"An user has already bind email: {model.NewEmail}!");
+        }
+
         var mail = new UserEmail
         {
             OwnerId = user.Id,
@@ -138,10 +150,17 @@ public class UserController : ControllerBase
         var userEmails = _dbContext.UserEmails.Where(t => t.OwnerId == user.Id);
         var userEmail =
             await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
-        if (userEmail == null) return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+        if (userEmail == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+        }
+
         if (await userEmails.CountAsync() == 1)
+        {
             return this.Protocol(ErrorType.Conflict,
                 $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
+        }
+
         _dbContext.UserEmails.Remove(userEmail);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
@@ -152,20 +171,36 @@ public class UserController : ControllerBase
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
         var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
-        if (userEmail == null) return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+        if (userEmail == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+        }
+
         if (userEmail.OwnerId != user.Id)
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 $"The account you tried to authorize is not an account with id: {model.OpenId}");
+        }
+
         if (userEmail.Validated)
+        {
             return this.Protocol(ErrorType.HasSuccessAlready, $"The email: {model.Email} was already validated!");
+        }
+
         var byProvider =
             _authProviders.FirstOrDefault(t => user.Email.ToLower().Contains($"@from.{t.GetName().ToLower()}"));
         if (byProvider != null)
+        {
             return this.Protocol(ErrorType.UnknownError,
                 $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
+        }
+
         // limit the sending frequency to 3 minutes.
         if (DateTime.UtcNow <= userEmail.LastSendTime + new TimeSpan(0, 1, 0))
+        {
             return this.Protocol(ErrorType.HasSuccessAlready, "We have just sent you an Email in an minute.");
+        }
+
         var token = Guid.NewGuid().ToString("N");
         userEmail.ValidateToken = token;
         userEmail.LastSendTime = DateTime.UtcNow;
@@ -190,12 +225,22 @@ public class UserController : ControllerBase
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ConfirmEmail);
         var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
-        if (userEmail == null) return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+        if (userEmail == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+        }
+
         if (userEmail.OwnerId != user.Id)
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 $"The account you tried to authorize is not an account with id: {model.OpenId}");
+        }
+
         if (!userEmail.Validated)
+        {
             return this.Protocol(ErrorType.InsufficientPermissions, $"The email :{model.Email} was not validated!");
+        }
+
         userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
@@ -222,8 +267,11 @@ public class UserController : ControllerBase
             .Where(t => t.GatewayUserId == user.Id)
             .SingleOrDefaultAsync(t => t.AppId == model.AppIdToDrop);
         if (appToDelete == null)
+        {
             return this.Protocol(ErrorType.NotFound,
                 $"Can not find target grant record with app with id: {model.AppIdToDrop}");
+        }
+
         _dbContext.LocalAppGrant.Remove(appToDelete);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
@@ -359,11 +407,14 @@ public class UserController : ControllerBase
             user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
         if (!is2FATokenValid || user.TwoFactorEnabled)
+        {
             return this.Protocol(new AiurValue<bool>(is2FATokenValid)
             {
                 Code = ErrorType.Success,
                 Message = "Sucess Verified code."
             });
+        }
+
         // enable 2fa.
         user.TwoFactorEnabled = true;
         await _userManager.UpdateAsync(user);

@@ -57,7 +57,9 @@ public static class Extends
 
                 var sites = await sitesService.ViewMySitesAsync(token);
                 if (!sites.Sites.Any(s => s.SiteName == siteName))
+                {
                     await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
+                }
             });
         });
 

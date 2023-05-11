@@ -52,27 +52,52 @@ public class DownloadController : Controller
     public async Task<IActionResult> Open(OpenAddressModel model)
     {
         var site = await _siteRepo.GetSiteByName(model.SiteName);
-        if (site == null) return NotFound();
-        if (!site.OpenToDownload) _tokenEnsurer.Ensure(model.PBToken, "Download", model.SiteName, model.FolderNames);
+        if (site == null)
+        {
+            return NotFound();
+        }
+
+        if (!site.OpenToDownload)
+        {
+            _tokenEnsurer.Ensure(model.PBToken, "Download", model.SiteName, model.FolderNames);
+        }
+
         var (folders, fileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
         try
         {
             var siteRoot = await _folderRepo.GetFolderFromId(site.RootFolderId);
             var folder = await _folderRepo.GetFolderFromPath(folders, siteRoot, false);
-            if (folder == null) return NotFound();
+            if (folder == null)
+            {
+                return NotFound();
+            }
+
             var file = await _fileRepo.GetFileInFolder(folder, fileName);
-            if (file == null) return NotFound();
+            if (file == null)
+            {
+                return NotFound();
+            }
+
             var path = _storageProvider.GetFilePath(file.HardwareId);
             var extension = _storageProvider.GetExtension(file.FileName);
             if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "File")
+            {
                 return this.WebFile(path, "do-not-open");
+            }
+
             if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "Video")
+            {
                 return VideoPlayerWithFile(
                     probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName),
                     model.PBToken,
                     fileName);
+            }
+
             if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
+            {
                 return await FileWithImageCompressor(path, extension);
+            }
+
             return this.WebFile(path, extension);
         }
         catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
@@ -97,7 +122,10 @@ public class DownloadController : Controller
         if (width > 0)
         {
             if (square)
+            {
                 return this.WebFile(await _imageCompressor.Compress(path, width, width), extension);
+            }
+
             return this.WebFile(await _imageCompressor.Compress(path, width, 0), extension);
         }
 

@@ -80,7 +80,10 @@ public static class MIME
     public static string GetContentType(string extenstion)
     {
         //Not to download the file, and we can process the file, let us process it.
-        if (!HasKey(extenstion)) return "application/octet-stream";
+        if (!HasKey(extenstion))
+        {
+            return "application/octet-stream";
+        }
 
         var lower = extenstion.ToLower().TrimStart('.');
         return MimeTypesDictionary[lower];

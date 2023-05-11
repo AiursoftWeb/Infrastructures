@@ -112,7 +112,11 @@ public class SiteTests
     public async Task TooFrequentTest()
     {
         var siteService = _serviceProvider.GetRequiredService<SitesService>();
-        for (var i = 0; i < 31; i++) await siteService.ViewMySitesAsync("mock-access-token");
+        for (var i = 0; i < 31; i++)
+        {
+            await siteService.ViewMySitesAsync("mock-access-token");
+        }
+
         try
         {
             await siteService.ViewMySitesAsync("mock-access-token");

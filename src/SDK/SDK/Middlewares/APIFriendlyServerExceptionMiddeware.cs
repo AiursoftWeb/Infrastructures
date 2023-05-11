@@ -39,7 +39,11 @@ public class APIFriendlyServerExceptionMiddleware
         }
         catch (Exception e)
         {
-            if (context.Response.HasStarted) throw;
+            if (context.Response.HasStarted)
+            {
+                throw;
+            }
+
             context.Response.Clear();
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json; charset=utf-8";

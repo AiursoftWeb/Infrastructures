@@ -103,7 +103,11 @@ public class AppsController : Controller
     public async Task<IActionResult> ViewApp([FromRoute] string id, int page = 1, bool justHaveUpdated = false)
     {
         var app = await _dbContext.Apps.FindAsync(id);
-        if (app == null) return NotFound();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
         var currentUser = await GetCurrentUserAsync();
         var model = await ViewAppViewModel.SelfCreateAsync(currentUser, app, _coreApiService, _appsContainer,
             _siteService, _eventService, _channelService, _recordsService, page);
@@ -126,8 +130,15 @@ public class AppsController : Controller
 
         var target = await _dbContext.Apps.FindAsync(id);
         if (target == null)
+        {
             return NotFound();
-        if (target.CreatorId != currentUser.Id) return new UnauthorizedResult();
+        }
+
+        if (target.CreatorId != currentUser.Id)
+        {
+            return new UnauthorizedResult();
+        }
+
         target.AppName = model.AppName;
         target.AppDescription = model.AppDescription;
         target.AppCategory = model.AppCategory;
@@ -174,7 +185,10 @@ public class AppsController : Controller
         // Less permission
 
         if (inDatabase && newValue == false)
+        {
             return false;
+        }
+
         // Not changed
         return newValue;
     }
@@ -184,8 +198,16 @@ public class AppsController : Controller
     {
         var currentUser = await GetCurrentUserAsync();
         var target = await _dbContext.Apps.FindAsync(id);
-        if (target == null) return NotFound();
-        if (target.CreatorId != currentUser.Id) return new UnauthorizedResult();
+        if (target == null)
+        {
+            return NotFound();
+        }
+
+        if (target.CreatorId != currentUser.Id)
+        {
+            return new UnauthorizedResult();
+        }
+
         var model = new DeleteAppViewModel(currentUser)
         {
             AppId = target.AppId,
@@ -208,8 +230,15 @@ public class AppsController : Controller
 
         var target = await _dbContext.Apps.FindAsync(id);
         if (target == null)
+        {
             return NotFound();
-        if (target.CreatorId != currentUser.Id) return new UnauthorizedResult();
+        }
+
+        if (target.CreatorId != currentUser.Id)
+        {
+            return new UnauthorizedResult();
+        }
+
         try
         {
             var token = await _appsContainer.AccessTokenAsync(target.AppId, target.AppSecret);
@@ -237,7 +266,11 @@ public class AppsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangeIcon([FromRoute] string appId, string iconFile)
     {
-        if (!ModelState.IsValid) return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
+        if (!ModelState.IsValid)
+        {
+            return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
+        }
+
         var appExists = await _dbContext.Apps.FindAsync(appId);
         appExists.IconPath = iconFile;
         await _dbContext.SaveChangesAsync();

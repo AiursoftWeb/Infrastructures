@@ -8,7 +8,11 @@ public class PrivateKeyStore
 
     public RSAParameters GetPrivateKey()
     {
-        if (_privateKey != null) return _privateKey.Value;
+        if (_privateKey != null)
+        {
+            return _privateKey.Value;
+        }
+
         var provider = new RSACryptoServiceProvider();
         _privateKey = provider.ExportParameters(true);
         return _privateKey.Value;

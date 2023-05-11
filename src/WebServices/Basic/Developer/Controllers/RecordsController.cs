@@ -39,8 +39,16 @@ public class RecordsController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new CreateRecordViewModel(user)
         {
             AppId = appId,
@@ -62,8 +70,16 @@ public class RecordsController : Controller
         }
 
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
@@ -87,12 +103,24 @@ public class RecordsController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var accessToken = _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
         var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken);
         var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
-        if (recordDetail == null) return NotFound();
+        if (recordDetail == null)
+        {
+            return NotFound();
+        }
+
         var model = new EditViewModel(user)
         {
             AppId = appId,
@@ -114,8 +142,16 @@ public class RecordsController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);
@@ -146,8 +182,16 @@ public class RecordsController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(appId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         var model = new DeleteViewModel(user)
         {
             AppId = appId,
@@ -164,8 +208,16 @@ public class RecordsController : Controller
     {
         var user = await GetCurrentUserAsync();
         var app = await _dbContext.Apps.FindAsync(model.AppId);
-        if (app == null) return NotFound();
-        if (app.CreatorId != user.Id) return Unauthorized();
+        if (app == null)
+        {
+            return NotFound();
+        }
+
+        if (app.CreatorId != user.Id)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
             model.Recover(user, app.AppName);

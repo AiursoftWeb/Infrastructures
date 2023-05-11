@@ -29,15 +29,27 @@ public class DeveloperApiService : IScopedDependency
 
     public virtual Task<bool> IsValidAppAsync(string appId, string appSecret)
     {
-        if (!new IsGuidOrEmpty().IsValid(appId)) return Task.FromResult(false);
-        if (!new IsGuidOrEmpty().IsValid(appSecret)) return Task.FromResult(false);
+        if (!new IsGuidOrEmpty().IsValid(appId))
+        {
+            return Task.FromResult(false);
+        }
+
+        if (!new IsGuidOrEmpty().IsValid(appSecret))
+        {
+            return Task.FromResult(false);
+        }
+
         return _cache.GetAndCache($"ValidAppWithId-{appId}-Secret-{appSecret}",
             () => IsValidAppWithoutCacheAsync(appId, appSecret));
     }
 
     public Task<AppInfoViewModel> AppInfoAsync(string appId)
     {
-        if (!new IsGuidOrEmpty().IsValid(appId)) throw new AiurAPIModelException(ErrorType.NotFound, "Invalid app Id!");
+        if (!new IsGuidOrEmpty().IsValid(appId))
+        {
+            throw new AiurAPIModelException(ErrorType.NotFound, "Invalid app Id!");
+        }
+
         return _cache.GetAndCache($"app-info-cache-{appId}", () => AppInfoWithoutCacheAsync(appId));
     }
 
@@ -61,7 +73,11 @@ public class DeveloperApiService : IScopedDependency
         });
         var json = await _http.Get(url, true);
         var result = JsonConvert.DeserializeObject<AppInfoViewModel>(json);
-        if (result.Code != ErrorType.Success) throw new AiurUnexpectedResponse(result);
+        if (result.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(result);
+        }
+
         return result;
     }
 }

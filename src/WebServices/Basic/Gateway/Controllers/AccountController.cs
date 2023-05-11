@@ -43,15 +43,28 @@ public class AccountController : ControllerBase
             .OAuthPack
             .SingleOrDefaultAsync(t => t.Code == model.Code);
 
-        if (targetPack == null) return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
+        if (targetPack == null)
+        {
+            return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
+        }
+
         // Use time is more than 10 seconds from now.
         if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + TimeSpan.FromSeconds(10) < DateTime.UtcNow)
+        {
             return this.Protocol(ErrorType.Unauthorized, "Code is used already!");
+        }
+
         if (targetPack.ApplyAppId != appId)
+        {
             return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
+        }
+
         var currentApp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
         if (!currentApp.ViewOpenId)
+        {
             return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
+        }
+
         targetPack.UseTime = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
         var viewModel = new CodeToOpenIdViewModel
@@ -69,10 +82,17 @@ public class AccountController : ControllerBase
     {
         var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
         var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
-        if (user == null) return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);
+        if (user == null)
+        {
+            return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);
+        }
+
         if (!await _authManager.HasAuthorizedApp(user, appId))
+        {
             return this.Protocol(ErrorType.Unauthorized,
                 "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
+        }
+
         var viewModel = new UserInfoViewModel
         {
             Code = 0,

@@ -45,7 +45,11 @@ public class AuthorizeConfirmViewModel : FinishAuthInfo
 
     public string GetRedirectRoot()
     {
-        if (!string.IsNullOrWhiteSpace(FailBackUrl)) return FailBackUrl;
+        if (!string.IsNullOrWhiteSpace(FailBackUrl))
+        {
+            return FailBackUrl;
+        }
+
         var url = new Uri(RedirectUri);
         return $@"{url.Scheme}://{url.Host}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}";
     }

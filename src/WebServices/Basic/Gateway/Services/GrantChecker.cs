@@ -35,9 +35,15 @@ public class GrantChecker : IScopedDependency
         var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);
         var app = await _developerApiService.AppInfoAsync(appid);
         if (!_dbContext.LocalAppGrant.Any(t => t.AppId == appid && t.GatewayUserId == targetUser.Id))
+        {
             throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");
+        }
+
         if (prefix != null && !prefix(app.App))
+        {
             throw new AiurAPIModelException(ErrorType.Unauthorized, "You app is not allowed to do that!");
+        }
+
         return targetUser;
     }
 }

@@ -48,11 +48,18 @@ public class MarkDownDocGenerator : ITransientDependency
     {
         var path = "";
         foreach (var arg in args)
+        {
             if (arg.Type != ArgumentType.Collection)
+            {
                 path += $"{arg.Name}={GetExampleValue(arg)}&";
+            }
             else
+            {
                 path +=
                     $"{arg.Name}[0]={GetExampleValue(arg)}&{arg.Name}[1]={GetExampleValue(arg)}&{arg.Name}[2]={GetExampleValue(arg)}&";
+            }
+        }
+
         return path.Trim('&');
     }
 
@@ -67,7 +74,11 @@ public class MarkDownDocGenerator : ITransientDependency
     {
         foreach (var arg in args)
         {
-            if (!RouteContainsArg(routeTemplate, arg)) continue;
+            if (!RouteContainsArg(routeTemplate, arg))
+            {
+                continue;
+            }
+
             routeTemplate = routeTemplate.ToLower()
                 .Replace("{" + arg.Name.ToLower() + "}", "{" + GetExampleValue(arg) + "}");
             routeTemplate = routeTemplate.ToLower()
@@ -82,7 +93,10 @@ public class MarkDownDocGenerator : ITransientDependency
         var content = $"# {docController.Key.TrimController()}\r\n\r\n";
         content += "## Catalog\r\n\r\n";
         foreach (var docAction in docController)
+        {
             content += $"* [{docAction.ActionName.SplitStringUpperCase()}](#{docAction.ActionName})\r\n";
+        }
+
         content += "\r\n";
         foreach (var docAction in docController)
         {
@@ -107,7 +121,11 @@ public class MarkDownDocGenerator : ITransientDependency
                 // Path Example.
                 content += "Request example:\r\n\r\n";
                 content += $"\t{pathWithArgs}\r\n\r\n";
-                if (docAction.IsPost) continue;
+                if (docAction.IsPost)
+                {
+                    continue;
+                }
+
                 // Add the try button.
                 content +=
                     $"<a class=\"btn btn-sm btn-primary ml-1\" target=\"_blank\" href=\"{pathWithArgs}\">Try</a>";
@@ -133,8 +151,11 @@ public class MarkDownDocGenerator : ITransientDependency
                 content += "| Name | Required | Type |\r\n";
                 content += "|----------|:-------------:|:------:|\r\n";
                 foreach (var arg in docAction.Arguments)
+                {
                     content +=
                         $"|{arg.Name}|{(arg.Required ? "<b class='text-danger'>Required</b>" : "Not required")}|<b class='text-primary'>{ArgTypeConverter(arg.Type)}</b>|\r\n";
+                }
+
                 content += "\r\n";
             }
 

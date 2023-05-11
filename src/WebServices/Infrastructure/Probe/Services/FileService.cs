@@ -21,8 +21,13 @@ public static class FileService
         // Handle etag
         controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
         if (controller.Request.Headers.Keys.Contains("If-None-Match"))
+        {
             if (controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
+            {
                 return new StatusCodeResult(304);
+            }
+        }
+
         // Return file result.
         controller.Response.Headers.Add("Content-Length", length.ToString());
         // Allow cache

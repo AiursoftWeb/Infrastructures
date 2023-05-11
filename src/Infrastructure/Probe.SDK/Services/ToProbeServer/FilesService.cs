@@ -36,7 +36,10 @@ public class FilesService : IScopedDependency
             });
         var result = await _http.PostWithFile(url, file, true);
         var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -51,7 +54,10 @@ public class FilesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -59,7 +65,11 @@ public class FilesService : IScopedDependency
     public async Task<UploadFileViewModel> CopyFileAsync(string accessToken, string siteName, string folderNames,
         string targetSiteName, string targetFolderNames)
     {
-        if (string.IsNullOrWhiteSpace(targetFolderNames)) targetFolderNames = "/";
+        if (string.IsNullOrWhiteSpace(targetFolderNames))
+        {
+            targetFolderNames = "/";
+        }
+
         var url = new AiurUrl(_serviceLocation.Endpoint,
             $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new CopyFileAddressModel
@@ -70,7 +80,10 @@ public class FilesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
@@ -87,7 +100,10 @@ public class FilesService : IScopedDependency
         });
         var result = await _http.Post(url, form, true);
         var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+        if (jResult.Code != ErrorType.Success)
+        {
+            throw new AiurUnexpectedResponse(jResult);
+        }
 
         return jResult;
     }
