@@ -1,10 +1,9 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Services;
-using DnsClient;
 using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.SDK.Services;
@@ -52,8 +51,8 @@ public class ServiceLocation : ISingletonDependency
         var combined = string.Join(".", domains);
         try
         {
-            var result = await QueryDNS(combined);
-            if (!result.HasError && result.Answers.Any() && await TryConnect(combined))
+            var hasDns = await QueryDNS(combined);
+            if (hasDns && await TryConnect(combined))
             {
                 return combined;
             }
@@ -80,14 +79,16 @@ public class ServiceLocation : ISingletonDependency
         }
     }
 
-    private async Task<IDnsQueryResponse> QueryDNS(string host)
+    private async Task<bool> QueryDNS(string host)
     {
-        var httpsRegex = new Regex("^https://", RegexOptions.Compiled);
-        var httpRegex = new Regex("^http://", RegexOptions.Compiled);
-        host = httpsRegex.Replace(host, string.Empty);
-        host = httpRegex.Replace(host, string.Empty);
-        var lookup = new LookupClient();
-        var result = await lookup.QueryAsync(host, QueryType.ANY);
-        return result;
+        try
+        {
+            _ = await Dns.GetHostEntryAsync(host);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
