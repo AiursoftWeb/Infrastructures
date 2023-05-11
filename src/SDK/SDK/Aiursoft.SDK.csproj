@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<Version>6.0.7</Version>
+		<Version>6.0.8</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>

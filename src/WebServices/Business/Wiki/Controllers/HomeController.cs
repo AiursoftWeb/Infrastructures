@@ -32,7 +32,6 @@ namespace Aiursoft.Wiki.Controllers
             _serviceLocation = serviceLocation;
         }
 
-        [AiurForceAuth(preferController: "Home", preferAction: "Index", justTry: true)]
         public async Task<IActionResult> Index()//Title
         {
             var firstArticle = await _dbContext.Article.Include(t => t.Collection).FirstOrDefaultAsync();
