@@ -41,7 +41,7 @@ namespace Aiursoft.SDK
                 {
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
-                app.UseMiddleware<EnforceHttpsMiddleware>();
+                app.UseHttpsRedirection();
                 app.UseMiddleware<APIFriendlyServerExceptionMiddleware>();
             }
             return app;
