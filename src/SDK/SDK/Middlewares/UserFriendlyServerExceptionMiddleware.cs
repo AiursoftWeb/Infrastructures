@@ -50,7 +50,7 @@ namespace Aiursoft.SDK.Middlewares
                 try
                 {
                     _logger.LogError(e, e.Message);
-                    var accessToken = _appsContainer.AccessToken();
+                    var accessToken = _appsContainer.AccessTokenAsync();
                     await _eventService.LogExceptionAsync(await accessToken, e, context.Request.Path);
                 }
                 catch

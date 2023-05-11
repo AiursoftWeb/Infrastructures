@@ -28,7 +28,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
 
         private async Task<bool> OpenUpload(string siteName)
         {
-            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
+            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessTokenAsync();
             var site = await _sitesService.ViewSiteDetailAsync(accessToken, siteName);
             return site.Site.OpenToUpload;
         }
@@ -40,7 +40,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader
                 return string.Empty;
             }
 
-            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessToken();
+            var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessTokenAsync();
             return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path, TimeSpan.FromMinutes(100));
         }
 

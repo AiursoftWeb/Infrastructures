@@ -49,7 +49,7 @@ namespace Aiursoft.Probe.Services
             }
             catch (Exception e)
             {
-                var token = await _appsContainer.AccessToken();
+                var token = await _appsContainer.AccessTokenAsync();
                 await _eventService.LogExceptionAsync(token, e, "Deleter");
             }
         }

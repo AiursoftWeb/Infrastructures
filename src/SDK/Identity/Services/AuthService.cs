@@ -30,8 +30,8 @@ namespace Aiursoft.Identity.Services
 
         public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
         {
-            var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.AccessToken(), model.Code);
-            var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessToken(), openId.OpenId);
+            var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.AccessTokenAsync(), model.Code);
+            var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessTokenAsync(), openId.OpenId);
             var current = await _userManager.FindByIdAsync(userInfo.User.Id);
             if (current == null)
             {
@@ -59,7 +59,7 @@ namespace Aiursoft.Identity.Services
 
         public async Task<T> OnlyUpdate(T user)
         {
-            var userInfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessToken(), openid: user.Id);
+            var userInfo = await _accountService.OpenIdToUserInfo(accessToken: await _appsContainer.AccessTokenAsync(), openid: user.Id);
             user.Update(userInfo);
             await _userManager.UpdateAsync(user);
             return user;

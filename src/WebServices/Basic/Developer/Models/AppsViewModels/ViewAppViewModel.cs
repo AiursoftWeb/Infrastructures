@@ -50,7 +50,7 @@ namespace Aiursoft.Developer.Models.AppsViewModels
             int pageNumber)
         {
             RootRecover(user);
-            var token = await appsContainer.AccessToken(appInDb.AppId, appInDb.AppSecret);
+            var token = await appsContainer.AccessTokenAsync(appInDb.AppId, appInDb.AppSecret);
 
             Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);
 

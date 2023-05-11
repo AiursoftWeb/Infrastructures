@@ -23,12 +23,12 @@ namespace Aiursoft.Archon.SDK.Services
             _scopeFactory = scopeFactory;
         }
 
-        public async Task<string> AccessToken()
+        public async Task<string> AccessTokenAsync()
         {
-            return await AccessToken(CurrentAppId, CurrentAppSecret);
+            return await AccessTokenAsync(CurrentAppId, CurrentAppSecret);
         }
 
-        public async Task<string> AccessToken(string appId, string appSecret)
+        public async Task<string> AccessTokenAsync(string appId, string appSecret)
         {
             var app = GetApp(appId, appSecret);
             return await app.AccessToken(_scopeFactory);

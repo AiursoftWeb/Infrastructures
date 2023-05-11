@@ -77,7 +77,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL, model.Tags?.Split(',') ?? Array.Empty<string>(), model.Type, model.Enabled);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
@@ -104,7 +104,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var accessToken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            var accessToken = _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
             var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken);
             var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
             if (recordDetail == null)
@@ -147,7 +147,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type, model.URL, model.Tags?.Split(',') ?? Array.Empty<string>(), model.Enabled);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
@@ -206,7 +206,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _recordsService.DeleteRecordAsync(token, model.RecordName);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }

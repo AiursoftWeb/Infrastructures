@@ -53,7 +53,7 @@ namespace Aiursoft.Stargate.Services
             catch (Exception e) when (!e.Message.StartsWith("The remote party closed the WebSocket connection"))
             {
                 _dropped = true;
-                var accessToken = _appsContainer.AccessToken();
+                var accessToken = _appsContainer.AccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e, "InPusher");
             }
         }

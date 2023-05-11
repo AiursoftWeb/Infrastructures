@@ -13,7 +13,7 @@ namespace Aiursoft.Account
         {
             App<Startup>(args)
                 .Update<AccountDbContext>()
-                .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessToken())
+                .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessTokenAsync())
                 .Run();
         }
 

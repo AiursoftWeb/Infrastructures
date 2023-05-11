@@ -94,7 +94,7 @@ namespace Aiursoft.Stargate.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                var accessToken = _appsContainer.AccessToken();
+                var accessToken = _appsContainer.AccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e, Request.Path);
             }
             finally

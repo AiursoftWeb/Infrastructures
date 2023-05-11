@@ -146,7 +146,7 @@ namespace Aiursoft.Wiki.Services
 
         public async Task HandleException(Exception e)
         {
-            var accessToken = await _appsContainer.AccessToken();
+            var accessToken = await _appsContainer.AccessTokenAsync();
             await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
             this._logger.LogCritical(e, e.Message);
         }

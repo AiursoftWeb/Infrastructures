@@ -60,7 +60,7 @@ namespace Aiursoft.Identity.Services
                 try
                 {
                     _logger.LogError(e, e.Message);
-                    var accessToken = _appsContainer.AccessToken();
+                    var accessToken = _appsContainer.AccessTokenAsync();
                     await _eventService.LogExceptionAsync(await accessToken, e);
                 }
                 catch

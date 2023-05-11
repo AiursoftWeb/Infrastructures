@@ -86,7 +86,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _sitesService.CreateNewSiteAsync(token, model.SiteName, model.OpenToUpload, model.OpenToDownload);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }
@@ -113,7 +113,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 var data = await _foldersService.ViewContentAsync(token, siteName, path);
                 ViewData["AccessToken"] = token;
                 var model = new ViewFilesViewModel(user)
@@ -177,7 +177,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName, false);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
             }
@@ -234,7 +234,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _foldersService.DeleteFolderAsync(token, model.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
@@ -291,7 +291,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _filesService.DeleteFileAsync(token, model.SiteName, model.Path);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
@@ -348,7 +348,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _filesService.RenameFileAsync(token, model.SiteName, model.Path, model.NewName);
                 return RedirectToAction(nameof(ViewFiles), new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
             }
@@ -373,7 +373,7 @@ namespace Aiursoft.Developer.Controllers
             {
                 return Unauthorized();
             }
-            var accessToken = _appsContainer.AccessToken(app.AppId, app.AppSecret);
+            var accessToken = _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
             var siteDetail = await _sitesService.ViewSiteDetailAsync(await accessToken, siteName);
             var model = new EditViewModel(user)
             {
@@ -410,7 +410,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload, model.OpenToDownload);
                 _cache.Clear($"site-public-status-{model.OldSiteName}");
                 _cache.Clear($"site-public-status-{model.NewSiteName}");
@@ -469,7 +469,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(app.AppId, app.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(app.AppId, app.AppSecret);
                 await _sitesService.DeleteSiteAsync(token, model.SiteName);
                 return RedirectToAction(nameof(AppsController.ViewApp), "Apps", new { id = app.AppId, JustHaveUpdated = true });
             }

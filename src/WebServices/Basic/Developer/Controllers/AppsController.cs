@@ -156,7 +156,7 @@ namespace Aiursoft.Developer.Controllers
             target.ManageSocialAccount = _ChangePermission(target.ManageSocialAccount, model.ManageSocialAccount, ref permissionAdded);
             if (permissionAdded)
             {
-                var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(target.AppId, target.AppSecret);
                 await _coreApiService.DropGrantsAsync(token);
             }
             await _dbContext.SaveChangesAsync();
@@ -226,7 +226,7 @@ namespace Aiursoft.Developer.Controllers
             }
             try
             {
-                var token = await _appsContainer.AccessToken(target.AppId, target.AppSecret);
+                var token = await _appsContainer.AccessTokenAsync(target.AppId, target.AppSecret);
                 await _siteService.DeleteAppAsync(token, target.AppId);
                 await _recordsService.DeleteAppAsync(token, target.AppId);
                 await _eventService.DeleteAppAsync(token, target.AppId);

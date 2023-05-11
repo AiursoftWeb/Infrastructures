@@ -86,7 +86,7 @@ namespace Aiursoft.Account.Controllers
             }
             currentUser.NickName = model.NickName;
             currentUser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessToken(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
             await _userManager.UpdateAsync(currentUser);
             return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
         }
@@ -96,7 +96,7 @@ namespace Aiursoft.Account.Controllers
         {
             var user = await GetCurrentUserAsync();
             user = await _authService.OnlyUpdate(user);
-            var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
+            var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessTokenAsync(), user.Id);
             var model = new EmailViewModel(user)
             {
                 Emails = emails.Items,
@@ -116,7 +116,7 @@ namespace Aiursoft.Account.Controllers
                 model.Recover(user);
                 return View(model);
             }
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             try
             {
                 await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
@@ -125,7 +125,7 @@ namespace Aiursoft.Account.Controllers
             {
                 ModelState.AddModelError(string.Empty, e.Message);
                 model.Recover(user);
-                var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessToken(), user.Id);
+                var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessTokenAsync(), user.Id);
                 model.Emails = emails.Items;
                 model.PrimaryEmail = user.Email;
                 return View(model);
@@ -139,7 +139,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> SendEmail([EmailAddress]string email)
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
             return this.Protocol(result);
         }
@@ -150,7 +150,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> DeleteEmail([EmailAddress]string email)
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var result = await _userService.DeleteEmailAsync(user.Id, email, token);
             return this.Protocol(result);
         }
@@ -161,7 +161,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> SetPrimaryEmail([EmailAddress]string email)
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var result = await _userService.SetPrimaryEmailAsync(token, user.Id, email);
             return this.Protocol(result);
         }
@@ -188,7 +188,7 @@ namespace Aiursoft.Account.Controllers
                 return View(model);
             }
             currentUser.IconFilePath = model.NewIconAddress;
-            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessToken(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
             await _userManager.UpdateAsync(currentUser);
             return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
         }
@@ -215,7 +215,7 @@ namespace Aiursoft.Account.Controllers
             }
             try
             {
-                await _userService.ChangePasswordAsync(currentUser.Id, await _appsContainer.AccessToken(), model.OldPassword, model.NewPassword);
+                await _userService.ChangePasswordAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), model.OldPassword, model.NewPassword);
                 return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
             }
             catch (AiurUnexpectedResponse e)
@@ -229,7 +229,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Phone(bool justHaveUpdated)
         {
             var user = await GetCurrentUserAsync();
-            var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessToken());
+            var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync());
             var model = new PhoneViewModel(user)
             {
                 CurrentPhoneNumber = phone.Value,
@@ -286,7 +286,7 @@ namespace Aiursoft.Account.Controllers
             var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
             if (correctToken)
             {
-                var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), model.NewPhoneNumber);
+                var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), model.NewPhoneNumber);
                 if (result.Code != ErrorType.Success) throw new InvalidOperationException();
                 user.PhoneNumber = model.NewPhoneNumber;
                 await _userManager.UpdateAsync(user);
@@ -305,7 +305,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> UnBind()
         {
             var user = await GetCurrentUserAsync();
-            var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessToken(), string.Empty);
+            var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), string.Empty);
             if (result.Code != ErrorType.Success) throw new InvalidOperationException();
             user.PhoneNumber = string.Empty;
             await _userManager.UpdateAsync(user);
@@ -315,7 +315,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Applications()
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var model = new ApplicationsViewModel(user)
             {
                 Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
@@ -341,7 +341,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> DeleteGrant(string appId)
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             if (_configuration["AccountAppId"] == appId)
             {
                 return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
@@ -353,7 +353,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> AuditLog(int page = 1)
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var logs = await _userService.ViewAuditLogAsync(token, user.Id, page);
             var model = new AuditLogViewModel(user)
             {
@@ -370,8 +370,8 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> TwoFactorAuthentication()
         {
             var user = await GetCurrentUserAsync();
-            var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
-            var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessToken());
+            var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
+            var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessTokenAsync());
             var model = new TwoFactorAuthenticationViewModel(user)
             {
                 NewHas2FAKey = has2FAKey.Value,
@@ -383,7 +383,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> ViewTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
             var model = new View2FAKeyViewModel(user)
             {
                 NewTwoFAKey = key.TwoFAKey,
@@ -396,14 +396,14 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> SetTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
             return RedirectToAction(nameof(ViewTwoFAKey));
         }
 
         public async Task<IActionResult> ResetTwoFAKey()
         {
             var user = await GetCurrentUserAsync();
-            await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessToken());
+            await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
             return RedirectToAction(nameof(ViewTwoFAKey));
         }
 
@@ -419,7 +419,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var success = (await _userService.TwoFAVerifyCodeAsync(user.Id, await _appsContainer.AccessToken(), model.Code)).Value;
+            var success = (await _userService.TwoFAVerifyCodeAsync(user.Id, await _appsContainer.AccessTokenAsync(), model.Code)).Value;
             if (success)
             {
                 // go to recovery codes page
@@ -445,7 +445,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel _)
         {
             var user = await GetCurrentUserAsync();
-            var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessToken());
+            var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessTokenAsync());
             if (disableResult.Value)
             {
                 return RedirectToAction(nameof(TwoFactorAuthentication));
@@ -459,7 +459,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
         {
             var user = await GetCurrentUserAsync();
-            var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessToken());
+            var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessTokenAsync());
             model.NewRecoveryCodesKey = newCodesKey.Items;
             model.RootRecover(user, "Two-factor Authentication");
             return View(model);
@@ -468,7 +468,7 @@ namespace Aiursoft.Account.Controllers
         public async Task<IActionResult> Social()
         {
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var model = new SocialViewModel(user)
             {
                 Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items,
@@ -487,7 +487,7 @@ namespace Aiursoft.Account.Controllers
                 return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
             }
             var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessToken();
+            var token = await _appsContainer.AccessTokenAsync();
             var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
             return this.Protocol(result);
         }
