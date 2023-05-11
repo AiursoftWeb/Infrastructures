@@ -35,10 +35,10 @@
                         <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]" tabindex="2">
                     </div>
                     <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
-                    <hr class="mb-1" />
+                    <hr class="mb-1"/>
                 }
-                @if(AuthProviders.Where(t => t.IsEnabled()).Any())
-                { 
+                @if (AuthProviders.Where(t => t.IsEnabled()).Any())
+                {
                     <p class="text-muted mb-2">Sign in by</p>
                     <div class="row">
                         @{
@@ -46,7 +46,7 @@
                             {
                                 AppId = Model.AppId,
                                 RedirectUri = Model.RedirectUri,
-                                State = Model.State,
+                                State = Model.State
                             };
                             @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
                             {
@@ -64,9 +64,9 @@
         @if (Model.AllowRegistering)
         {
             <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" tabindex="4"
-                asp-route-appId="@Model.AppId"
-                asp-route-redirect_uri="@Model.RedirectUri"
-                asp-route-state="@Model.State">
+               asp-route-appId="@Model.AppId"
+               asp-route-redirect_uri="@Model.RedirectUri"
+               asp-route-state="@Model.State">
                 <span class="float-left">@Localizer["Sign up"]</span>
                 <span class="float-right">
                     <i class="fa fa-angle-right"></i>

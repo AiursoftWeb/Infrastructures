@@ -1,4 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using System;
+using System.Threading.Tasks;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
@@ -7,82 +9,71 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Observer.SDK.Services.ToObserverServer
+namespace Aiursoft.Observer.SDK.Services.ToObserverServer;
+
+public class EventService : IScopedDependency
 {
-    public class EventService : IScopedDependency
+    private readonly APIProxyService _http;
+    private readonly ObserverLocator _observerLocator;
+
+    public EventService(
+        APIProxyService http,
+        ObserverLocator observerLocator)
     {
-        private readonly APIProxyService _http;
-        private readonly ObserverLocator _observerLocator;
+        _http = http;
+        _observerLocator = observerLocator;
+    }
 
-        public EventService(
-            APIProxyService http,
-            ObserverLocator observerLocator)
+    public Task<AiurProtocol> LogExceptionAsync(string accessToken, Exception e, string path = "Inline")
+    {
+        return LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception, path);
+    }
+
+    public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace,
+        EventLevel eventLevel, string path)
+    {
+        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "Log", new { });
+        var form = new AiurUrl(string.Empty, new LogAddressModel
         {
-            _http = http;
-            _observerLocator = observerLocator;
-        }
+            AccessToken = accessToken,
+            Message = message,
+            StackTrace = stackTrace,
+            EventLevel = eventLevel,
+            Path = path
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-        public Task<AiurProtocol> LogExceptionAsync(string accessToken, Exception e, string path = "Inline")
+        return jResult;
+    }
+
+    public async Task<ViewLogViewModel> ViewAsync(string accessToken)
+    {
+        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "View", new ViewAddressModel
         {
-            return LogAsync(accessToken, e.Message,e.StackTrace, EventLevel.Exception, path);
-        }
+            AccessToken = accessToken
+        });
+        var result = await _http.Get(url, true);
+        var jResult = JsonConvert.DeserializeObject<ViewLogViewModel>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-        public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace, EventLevel eventLevel, string path)
+        return jResult;
+    }
+
+    public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+    {
+        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "DeleteApp", new { });
+        var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
         {
-            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "Log", new { });
-            var form = new AiurUrl(string.Empty, new LogAddressModel
-            {
-                AccessToken = accessToken,
-                Message = message,
-                StackTrace = stackTrace,
-                EventLevel = eventLevel,
-                Path = path
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
+            AccessToken = accessToken,
+            AppId = appId
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            return jResult;
-        }
-
-        public async Task<ViewLogViewModel> ViewAsync(string accessToken)
-        {
-            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "View", new ViewAddressModel
-            {
-                AccessToken = accessToken
-            });
-            var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<ViewLogViewModel>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult;
-        }
-
-        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
-        {
-            var url = new AiurUrl(_observerLocator.Endpoint, "Event", "DeleteApp", new { });
-            var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
-            {
-                AccessToken = accessToken,
-                AppId = appId
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult;
-        }
+        return jResult;
     }
 }

@@ -1,33 +1,31 @@
-﻿using Aiursoft.DocGenerator.Attributes;
-using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
-using Aiursoft.WebTools;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
 using Aiursoft.Warpgate.SDK.Services;
+using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Warpgate.Controllers
+namespace Aiursoft.Warpgate.Controllers;
+
+[LimitPerMin]
+public class HomeController : ControllerBase
 {
-    [LimitPerMin]
-    public class HomeController : ControllerBase
+    private readonly WarpgateLocator _locator;
+
+    public HomeController(WarpgateLocator locator)
     {
-        private readonly WarpgateLocator _locator;
+        _locator = locator;
+    }
 
-        public HomeController(WarpgateLocator locator)
+    [Produces(typeof(IndexViewModel))]
+    public IActionResult Index()
+    {
+        var model = new IndexViewModel
         {
-            _locator = locator;
-        }
-
-        [Produces(typeof(IndexViewModel))]
-        public IActionResult Index()
-        {
-            var model = new IndexViewModel
-            {
-                Code = ErrorType.Success,
-                Message = "Welcome to Aiursoft Warpgate!",
-                WarpPattern = _locator.WarpPattern
-            };
-            return this.Protocol(model);
-        }
+            Code = ErrorType.Success,
+            Message = "Welcome to Aiursoft Warpgate!",
+            WarpPattern = _locator.WarpPattern
+        };
+        return this.Protocol(model);
     }
 }

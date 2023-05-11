@@ -1,13 +1,12 @@
-﻿using Aiursoft.Gateway.SDK.Models.API;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Aiursoft.Gateway.SDK.Models.API;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.Gateway.Models
+namespace Aiursoft.Gateway.Models;
+
+public class AuditLogLocal : AuditLog
 {
-    public class AuditLogLocal : AuditLog
-    {
-        [ForeignKey(nameof(UserId))]
-        [JsonIgnore]
-        public GatewayUser User { get; set; }
-    }
+    [ForeignKey(nameof(UserId))]
+    [JsonIgnore]
+    public GatewayUser User { get; set; }
 }

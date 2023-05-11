@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels
+namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels;
+
+public class BindAccountAddressModel
 {
-    public class BindAccountAddressModel
-    {
-        [FromRoute]
-        public string ProviderName { get; set; }
-        [FromQuery(Name = "code")]
-        public string Code { get; set; }
-    }
+    [FromRoute] public string ProviderName { get; set; }
+
+    [FromQuery(Name = "code")] public string Code { get; set; }
 }

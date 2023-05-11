@@ -19,7 +19,9 @@
             @if (Model.CanFindAnAccountWithEmail)
             {
                 <div class="alert alert-success alert-dismissible mt-3" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
                     <strong>@Localizer["Welcome to Aiursoft!"]</strong>
                     <p class="mb-0">
                         There already exists an @Values.ProjectName account with email: <strong>@Model.UserDetail.Email</strong>.
@@ -41,7 +43,9 @@
             else
             {
                 <div class="alert alert-warning alert-dismissible mt-3" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
                     <strong>@Localizer["Welcome to Aiursoft!"]</strong>
                     <p class="mb-0">
                         It seems to be your first time sign in by @Model.ProviderName.
@@ -50,7 +54,7 @@
                 <p>
                     We could not find an account with email: <strong>@Model.UserDetail.Email</strong>. Do you have an @Values.ProjectName account before?
                 </p>
-                <hr />
+                <hr/>
                 <div class="form-row">
                     <div class="col-md-6 pr-3 pt-3" style="border-right: 1px solid #000000; border-right: 1px solid rgba(0,0,0,.1)">
                         <h5>I already have an @Values.ProjectName account.</h5>
@@ -70,11 +74,11 @@
                           asp-route-state="@Model.State">
                         <div asp-validation-summary="All" class="text-danger"></div>
 
-                        <input asp-for="UserDetail.Name" type="hidden" />
-                        <input asp-for="UserDetail.Bio" type="hidden" />
-                        <input asp-for="UserDetail.Id" type="hidden" />
-                        <input asp-for="UserDetail.AvatarUrl" type="hidden" />
-                        <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
+                        <input asp-for="UserDetail.Name" type="hidden"/>
+                        <input asp-for="UserDetail.Bio" type="hidden"/>
+                        <input asp-for="UserDetail.Id" type="hidden"/>
+                        <input asp-for="UserDetail.AvatarUrl" type="hidden"/>
+                        <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value"/>
                         <h5>Sign in by @Model.ProviderName now.</h5>
                         <p class="text-muted">We will automatically create a new @Values.ProjectName account with the following information:</p>
                         <div class="form-group">

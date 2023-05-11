@@ -1,53 +1,52 @@
-﻿using Aiursoft.SDKTools.Attributes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text;
+using Aiursoft.SDKTools.Attributes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Aiursoft.SDKTools.Tests.AttributesTests
+namespace Aiursoft.SDKTools.Tests.AttributesTests;
+
+[TestClass]
+public class ValidDomainTests
 {
-    [TestClass]
-    public class ValidDomainTests
+    private ValidDomainName _validator;
+    private readonly byte[] hexValues = { 0x0d, 0x0A };
+
+    [TestInitialize]
+    public void CreateValidator()
     {
-        private ValidDomainName _validator;
-        private byte[] hexValues = { 0x0d, 0x0A };
+        _validator = new ValidDomainName();
+    }
 
-        [TestInitialize]
-        public void CreateValidator()
-        {
-            _validator = new ValidDomainName();
-        }
+    [TestMethod]
+    [DataRow("aaaatxt")]
+    [DataRow("asdfasdfadfasdfasdfadf___ad")]
+    public void PassingTests(object inputValue)
+    {
+        Assert.AreEqual(ValidationResult.Success, _validator.TestEntry(inputValue));
+    }
 
-        [TestMethod]
-        [DataRow("aaaatxt")]
-        [DataRow("asdfasdfadfasdfasdfadf___ad")]
-        public void PassingTests(object inputValue)
-        {
-            Assert.AreEqual(ValidationResult.Success, _validator.TestEntry(inputValue));
-        }
-
-        [TestMethod]
-        [DataRow(typeof(HttpStatusCode))]
-        [DataRow(HttpStatusCode.OK)]
-        [DataRow(5)]
-        [DataRow("asdfasdfadfasdfasdfadf___^&(ad*")]
-        [DataRow(@"
+    [TestMethod]
+    [DataRow(typeof(HttpStatusCode))]
+    [DataRow(HttpStatusCode.OK)]
+    [DataRow(5)]
+    [DataRow("asdfasdfadfasdfasdfadf___^&(ad*")]
+    [DataRow(@"
 ")]
-        [DataRow("\u2029\u2028")]
-        [DataRow("www.baidu.com")]
-        [DataRow("\u2028\u2029")]
-        [DataRow("")]
-        [DataRow("    ")]
-        public void FailingTests(object inputValue)
-        {
-            Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(inputValue));
-        }
+    [DataRow("\u2029\u2028")]
+    [DataRow("www.baidu.com")]
+    [DataRow("\u2028\u2029")]
+    [DataRow("")]
+    [DataRow("    ")]
+    public void FailingTests(object inputValue)
+    {
+        Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(inputValue));
+    }
 
-        [TestMethod]
-        public void FailingHexTests()
-        {
-            var hex = Encoding.ASCII.GetString(this.hexValues);
-            Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(hex));
-        }
+    [TestMethod]
+    public void FailingHexTests()
+    {
+        var hex = Encoding.ASCII.GetString(hexValues);
+        Assert.AreNotEqual(ValidationResult.Success, _validator.TestEntry(hex));
     }
 }

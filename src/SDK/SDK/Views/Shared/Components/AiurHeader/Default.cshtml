@@ -1,5 +1,5 @@
-﻿@using Aiursoft.SDK.Services
-@using System.Reflection
+﻿@using System.Reflection
+@using Aiursoft.SDK.Services
 @inject ServiceLocation ServiceLocation
 @{
     var description = string.Empty;
@@ -24,7 +24,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 @if (!string.IsNullOrWhiteSpace(description))
 {
-    <meta name="description" content="@description" />    
+    <meta name="description" content="@description"/>
 }
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/x-icon" href="@ServiceLocation.UI/favicon.ico">

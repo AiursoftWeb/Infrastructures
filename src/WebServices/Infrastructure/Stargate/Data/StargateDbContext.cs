@@ -1,19 +1,18 @@
 ﻿using Aiursoft.Stargate.SDK.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Stargate.Data
+namespace Aiursoft.Stargate.Data;
+
+public class StargateDbContext : DbContext
 {
-    public class StargateDbContext : DbContext
+    public StargateDbContext(DbContextOptions<StargateDbContext> options) : base(options)
     {
-        public StargateDbContext(DbContextOptions<StargateDbContext> options) : base(options)
-        {
-        }
+    }
 
-        public DbSet<StargateApp> Apps { get; set; }
+    public DbSet<StargateApp> Apps { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
     }
 }

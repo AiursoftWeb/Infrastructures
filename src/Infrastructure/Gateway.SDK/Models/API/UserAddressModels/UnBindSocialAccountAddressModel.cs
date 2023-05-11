@@ -1,7 +1,6 @@
-﻿namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels
+﻿namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
+
+public class UnBindSocialAccountAddressModel : UserOperationAddressModel
 {
-    public class UnBindSocialAccountAddressModel : UserOperationAddressModel
-    {
-        public string ProviderName { get; set; }
-    }
+    public string ProviderName { get; set; }
 }

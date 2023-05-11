@@ -1,91 +1,85 @@
-﻿using Aiursoft.Probe.Data;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Probe.Repositories
+namespace Aiursoft.Probe.Repositories;
+
+public class FileRepo : IScopedDependency
 {
-    public class FileRepo : IScopedDependency
+    private readonly CannonQueue _cannonQueue;
+    private readonly ProbeDbContext _dbContext;
+
+    public FileRepo(
+        ProbeDbContext dbContext,
+        CannonQueue cannonQueue)
     {
-        private readonly ProbeDbContext _dbContext;
-        private readonly CannonQueue _cannonQueue;
+        _dbContext = dbContext;
+        _cannonQueue = cannonQueue;
+    }
 
-        public FileRepo(
-            ProbeDbContext dbContext,
-            CannonQueue cannonQueue)
-        {
-            _dbContext = dbContext;
-            _cannonQueue = cannonQueue;
-        }
+    public async Task<File> GetFileInFolder(Folder context, string fileName)
+    {
+        var file = context.Files?.SingleOrDefault(t => t.FileName == fileName);
+        if (file == null)
+            file = await _dbContext
+                .Files
+                .Where(t => t.ContextId == context.Id)
+                .SingleOrDefaultAsync(t => t.FileName == fileName);
+        return file;
+    }
 
-        public async Task<File> GetFileInFolder(Folder context, string fileName)
+    public void DeleteFile(File file)
+    {
+        _dbContext.Files.Remove(file);
+        _cannonQueue.QueueWithDependency<FileDeleter>(async fileDeleteService =>
         {
-            var file = context.Files?.SingleOrDefault(t => t.FileName == fileName);
-            if (file == null)
-            {
-                file = await _dbContext
-                    .Files
-                    .Where(t => t.ContextId == context.Id)
-                    .SingleOrDefaultAsync(t => t.FileName == fileName);
-            }
-            return file;
-        }
+            await fileDeleteService.DeleteOnDisk(file);
+        });
+    }
 
-        public void DeleteFile(File file)
-        {
-            _dbContext.Files.Remove(file);
-            _cannonQueue.QueueWithDependency<FileDeleter>(async fileDeleteService =>
-            {
-                await fileDeleteService.DeleteOnDisk(file);
-            });
-        }
+    public async Task DeleteFileById(int fileId)
+    {
+        var file = await _dbContext.Files.SingleOrDefaultAsync(t => t.Id == fileId);
+        if (file != null) DeleteFile(file);
+        await _dbContext.SaveChangesAsync();
+    }
 
-        public async Task DeleteFileById(int fileId)
+    public async Task<string> SaveFileToDb(string fileName, int folderId, long size)
+    {
+        var newFile = new File
         {
-            var file = await _dbContext.Files.SingleOrDefaultAsync(t => t.Id == fileId);
-            if (file != null)
-            {
-                DeleteFile(file);
-            }
-            await _dbContext.SaveChangesAsync();
-        }
+            FileName = fileName, //file.FileName,
+            ContextId = folderId,
+            FileSize = size
+        };
+        await _dbContext.Files.AddAsync(newFile);
+        await _dbContext.SaveChangesAsync();
+        return newFile.HardwareId;
+    }
 
-        public async Task<string> SaveFileToDb(string fileName, int folderId, long size)
+    public async Task CopyFile(string fileName, long fileSize, int contextId, string hardwareId)
+    {
+        var newFile = new File
         {
-            var newFile = new File
-            {
-                FileName = fileName, //file.FileName,
-                ContextId = folderId,
-                FileSize = size
-            };
-            await _dbContext.Files.AddAsync(newFile);
-            await _dbContext.SaveChangesAsync();
-            return newFile.HardwareId;
-        }
+            FileName = fileName,
+            FileSize = fileSize,
+            ContextId = contextId,
+            HardwareId = hardwareId
+        };
+        await _dbContext.Files.AddAsync(newFile);
+        await _dbContext.SaveChangesAsync();
+    }
 
-        public async Task CopyFile(string fileName, long fileSize, int contextId, string hardwareId)
-        {
-            var newFile = new File
-            {
-                FileName = fileName,
-                FileSize = fileSize,
-                ContextId = contextId,
-                HardwareId = hardwareId
-            };
-            await _dbContext.Files.AddAsync(newFile);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateName(int id, string newFileName)
-        {
-            var file = await _dbContext.Files.SingleAsync(t => t.Id == id);
-            file.FileName = newFileName;
-            _dbContext.Files.Update(file);
-            await _dbContext.SaveChangesAsync();
-        }
+    public async Task UpdateName(int id, string newFileName)
+    {
+        var file = await _dbContext.Files.SingleAsync(t => t.Id == id);
+        file.FileName = newFileName;
+        _dbContext.Files.Update(file);
+        await _dbContext.SaveChangesAsync();
     }
 }

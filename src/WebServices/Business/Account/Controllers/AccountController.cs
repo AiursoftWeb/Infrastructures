@@ -1,4 +1,10 @@
-﻿using Aiursoft.Account.Models;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using Aiursoft.Account.Models;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Account.Services;
 using Aiursoft.Archon.SDK.Services;
@@ -19,482 +25,477 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Account.Controllers
+namespace Aiursoft.Account.Controllers;
+
+[LimitPerMin]
+[AiurForceAuth]
+public class AccountController : Controller
 {
-    [LimitPerMin]
-    [AiurForceAuth]
-    public class AccountController : Controller
+    private readonly AppsContainer _appsContainer;
+    private readonly IEnumerable<IAuthProvider> _authProviders;
+    private readonly AuthService<AccountUser> _authService;
+    private readonly CannonService _cannonService;
+    private readonly IConfiguration _configuration;
+    private readonly DeveloperApiService _developerApiService;
+    private readonly QRCodeService _qrCodeService;
+    private readonly UserManager<AccountUser> _userManager;
+    private readonly UserService _userService;
+
+    public AccountController(
+        UserManager<AccountUser> userManager,
+        UserService userService,
+        AppsContainer appsContainer,
+        IConfiguration configuration,
+        DeveloperApiService developerApiService,
+        AuthService<AccountUser> authService,
+        IEnumerable<IAuthProvider> authProviders,
+        QRCodeService qrCodeService,
+        CannonService cannonService)
     {
-        private readonly UserManager<AccountUser> _userManager;
-        private readonly UserService _userService;
-        private readonly AppsContainer _appsContainer;
-        private readonly IConfiguration _configuration;
-        private readonly DeveloperApiService _developerApiService;
-        private readonly AuthService<AccountUser> _authService;
-        private readonly IEnumerable<IAuthProvider> _authProviders;
-        private readonly QRCodeService _qrCodeService;
-        private readonly CannonService _cannonService;
+        _userManager = userManager;
+        _userService = userService;
+        _appsContainer = appsContainer;
+        _configuration = configuration;
+        _developerApiService = developerApiService;
+        _authService = authService;
+        _authProviders = authProviders;
+        _qrCodeService = qrCodeService;
+        _cannonService = cannonService;
+    }
 
-        public AccountController(
-            UserManager<AccountUser> userManager,
-            UserService userService,
-            AppsContainer appsContainer,
-            IConfiguration configuration,
-            DeveloperApiService developerApiService,
-            AuthService<AccountUser> authService,
-            IEnumerable<IAuthProvider> authProviders,
-            QRCodeService qrCodeService,
-            CannonService cannonService)
+    public async Task<IActionResult> Index(bool? justHaveUpdated)
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new IndexViewModel(user)
         {
-            _userManager = userManager;
-            _userService = userService;
-            _appsContainer = appsContainer;
-            _configuration = configuration;
-            _developerApiService = developerApiService;
-            _authService = authService;
-            _authProviders = authProviders;
-            _qrCodeService = qrCodeService;
-            _cannonService = cannonService;
-        }
+            JustHaveUpdated = justHaveUpdated ?? false
+        };
+        return View(model);
+    }
 
-        public async Task<IActionResult> Index(bool? justHaveUpdated)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Index(IndexViewModel model)
+    {
+        var currentUser = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
         {
-            var user = await GetCurrentUserAsync();
-            var model = new IndexViewModel(user)
-            {
-                JustHaveUpdated = justHaveUpdated ?? false
-            };
+            model.Recover(currentUser);
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        currentUser.NickName = model.NickName;
+        currentUser.Bio = model.Bio;
+        await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(),
+            currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+        await _userManager.UpdateAsync(currentUser);
+        return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Email(bool justHaveUpdated)
+    {
+        var user = await GetCurrentUserAsync();
+        user = await _authService.OnlyUpdate(user);
+        var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessTokenAsync(), user.Id);
+        var model = new EmailViewModel(user)
         {
-            var currentUser = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(currentUser);
-                return View(model);
-            }
-            currentUser.NickName = model.NickName;
-            currentUser.Bio = model.Bio;
-            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
-            await _userManager.UpdateAsync(currentUser);
-            return RedirectToAction(nameof(Index), new { JustHaveUpdated = true });
+            Emails = emails.Items,
+            PrimaryEmail = user.Email
+        };
+        model.JustHaveUpdated = justHaveUpdated;
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Email(EmailViewModel model)
+    {
+        var user = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
+        {
+            model.Recover(user);
+            return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Email(bool justHaveUpdated)
+        var token = await _appsContainer.AccessTokenAsync();
+        try
         {
-            var user = await GetCurrentUserAsync();
-            user = await _authService.OnlyUpdate(user);
+            await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
+        }
+        catch (AiurUnexpectedResponse e)
+        {
+            ModelState.AddModelError(string.Empty, e.Message);
+            model.Recover(user);
             var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessTokenAsync(), user.Id);
-            var model = new EmailViewModel(user)
-            {
-                Emails = emails.Items,
-                PrimaryEmail = user.Email
-            };
-            model.JustHaveUpdated = justHaveUpdated;
+            model.Emails = emails.Items;
+            model.PrimaryEmail = user.Email;
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Email(EmailViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(user);
-                return View(model);
-            }
-            var token = await _appsContainer.AccessTokenAsync();
-            try
-            {
-                await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
-            }
-            catch (AiurUnexpectedResponse e)
-            {
-                ModelState.AddModelError(string.Empty, e.Message);
-                model.Recover(user);
-                var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.AccessTokenAsync(), user.Id);
-                model.Emails = emails.Items;
-                model.PrimaryEmail = user.Email;
-                return View(model);
-            }
-            return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
-        }
+        return RedirectToAction(nameof(Email), new { JustHaveUpdated = true });
+    }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> SendEmail([EmailAddress]string email)
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
-            return this.Protocol(result);
-        }
+    [HttpPost]
+    [APIExpHandler]
+    [APIModelStateChecker]
+    public async Task<IActionResult> SendEmail([EmailAddress] string email)
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var result = await _userService.SendConfirmationEmailAsync(token, user.Id, email);
+        return this.Protocol(result);
+    }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> DeleteEmail([EmailAddress]string email)
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var result = await _userService.DeleteEmailAsync(user.Id, email, token);
-            return this.Protocol(result);
-        }
+    [HttpPost]
+    [APIExpHandler]
+    [APIModelStateChecker]
+    public async Task<IActionResult> DeleteEmail([EmailAddress] string email)
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var result = await _userService.DeleteEmailAsync(user.Id, email, token);
+        return this.Protocol(result);
+    }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> SetPrimaryEmail([EmailAddress]string email)
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var result = await _userService.SetPrimaryEmailAsync(token, user.Id, email);
-            return this.Protocol(result);
-        }
+    [HttpPost]
+    [APIExpHandler]
+    [APIModelStateChecker]
+    public async Task<IActionResult> SetPrimaryEmail([EmailAddress] string email)
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var result = await _userService.SetPrimaryEmailAsync(token, user.Id, email);
+        return this.Protocol(result);
+    }
 
-        public async Task<IActionResult> Avatar(bool justHaveUpdated)
+    public async Task<IActionResult> Avatar(bool justHaveUpdated)
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new AvatarViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var model = new AvatarViewModel(user)
-            {
-                JustHaveUpdated = justHaveUpdated,
-                NewIconAddress = user.IconFilePath
-            };
+            JustHaveUpdated = justHaveUpdated,
+            NewIconAddress = user.IconFilePath
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Avatar(AvatarViewModel model)
+    {
+        var currentUser = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
+        {
+            model.Recover(currentUser);
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Avatar(AvatarViewModel model)
-        {
-            var currentUser = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(currentUser);
-                return View(model);
-            }
-            currentUser.IconFilePath = model.NewIconAddress;
-            await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
-            await _userManager.UpdateAsync(currentUser);
-            return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
-        }
+        currentUser.IconFilePath = model.NewIconAddress;
+        await _userService.ChangeProfileAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(),
+            currentUser.NickName, currentUser.IconFilePath, currentUser.Bio);
+        await _userManager.UpdateAsync(currentUser);
+        return RedirectToAction(nameof(Avatar), new { JustHaveUpdated = true });
+    }
 
-        public async Task<IActionResult> Security(bool justHaveUpdated)
+    public async Task<IActionResult> Security(bool justHaveUpdated)
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new SecurityViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var model = new SecurityViewModel(user)
-            {
-                JustHaveUpdated = justHaveUpdated
-            };
+            JustHaveUpdated = justHaveUpdated
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Security(SecurityViewModel model)
+    {
+        var currentUser = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
+        {
+            model.Recover(currentUser);
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Security(SecurityViewModel model)
+        try
         {
-            var currentUser = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(currentUser);
-                return View(model);
-            }
-            try
-            {
-                await _userService.ChangePasswordAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(), model.OldPassword, model.NewPassword);
-                return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
-            }
-            catch (AiurUnexpectedResponse e)
-            {
-                ModelState.AddModelError(string.Empty, e.Message);
-                model.Recover(currentUser);
-            }
+            await _userService.ChangePasswordAsync(currentUser.Id, await _appsContainer.AccessTokenAsync(),
+                model.OldPassword, model.NewPassword);
+            return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
+        }
+        catch (AiurUnexpectedResponse e)
+        {
+            ModelState.AddModelError(string.Empty, e.Message);
+            model.Recover(currentUser);
+        }
+
+        return View(model);
+    }
+
+    public async Task<IActionResult> Phone(bool justHaveUpdated)
+    {
+        var user = await GetCurrentUserAsync();
+        var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        var model = new PhoneViewModel(user)
+        {
+            CurrentPhoneNumber = phone.Value,
+            PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
+            JustHaveUpdated = justHaveUpdated,
+            AvailableZoneNumbers = new SelectList(
+                ZoneNumbers.Numbers.Select(t => new KeyValuePair<string, string>($"+{t.Value} {t.Key}", "+" + t.Value)),
+                nameof(KeyValuePair<string, string>.Value),
+                nameof(KeyValuePair<string, string>.Key),
+                ZoneNumbers.Numbers.First().Value)
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Phone(PhoneViewModel model)
+    {
+        var user = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
+        {
+            model.Recover(user);
             return View(model);
         }
 
-        public async Task<IActionResult> Phone(bool justHaveUpdated)
+        var phone = model.ZoneNumber + model.NewPhoneNumber;
+        var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
+        _cannonService.FireAsync<AccountSmsSender>(async sender =>
         {
-            var user = await GetCurrentUserAsync();
-            var phone = await _userService.ViewPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            var model = new PhoneViewModel(user)
-            {
-                CurrentPhoneNumber = phone.Value,
-                PhoneNumberConfirmed = !string.IsNullOrEmpty(phone.Value),
-                JustHaveUpdated = justHaveUpdated,
-                AvailableZoneNumbers = new SelectList(
-                    ZoneNumbers.Numbers.Select(t => new KeyValuePair<string, string>($"+{t.Value} {t.Key}", "+" + t.Value)),
-                    nameof(KeyValuePair<string, string>.Value),
-                    nameof(KeyValuePair<string, string>.Key),
-                    ZoneNumbers.Numbers.First().Value)
-            };
+            await sender.SendAsync(phone, $"Your Aiursoft verification code is: {code}.");
+        });
+        return RedirectToAction(nameof(EnterCode), new { newPhoneNumber = phone });
+    }
+
+    public async Task<IActionResult> EnterCode(string newPhoneNumber)
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new EnterCodeViewModel(user)
+        {
+            NewPhoneNumber = newPhoneNumber
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EnterCode(EnterCodeViewModel model)
+    {
+        var user = await GetCurrentUserAsync();
+        if (!ModelState.IsValid)
+        {
+            model.Recover(user);
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Phone(PhoneViewModel model)
+        var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
+        if (correctToken)
         {
-            var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(user);
-                return View(model);
-            }
-            var phone = model.ZoneNumber + model.NewPhoneNumber;
-            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
-            _cannonService.FireAsync<AccountSmsSender>(async (sender) => 
-            {
-                await sender.SendAsync(phone, $"Your Aiursoft verification code is: {code}.");
-            });
-            return RedirectToAction(nameof(EnterCode), new { newPhoneNumber = phone });
-        }
-
-        public async Task<IActionResult> EnterCode(string newPhoneNumber)
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new EnterCodeViewModel(user)
-            {
-                NewPhoneNumber = newPhoneNumber
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnterCode(EnterCodeViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                model.Recover(user);
-                return View(model);
-            }
-            var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
-            if (correctToken)
-            {
-                var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), model.NewPhoneNumber);
-                if (result.Code != ErrorType.Success) throw new InvalidOperationException();
-                user.PhoneNumber = model.NewPhoneNumber;
-                await _userManager.UpdateAsync(user);
-                return RedirectToAction(nameof(Phone), new { JustHaveUpdated = true });
-            }
-            else
-            {
-                model.Recover(user);
-                ModelState.AddModelError(string.Empty, "Your token is invalid!");
-                return View(model);
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UnBind()
-        {
-            var user = await GetCurrentUserAsync();
-            var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), string.Empty);
+            var result = await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(),
+                model.NewPhoneNumber);
             if (result.Code != ErrorType.Success) throw new InvalidOperationException();
-            user.PhoneNumber = string.Empty;
+            user.PhoneNumber = model.NewPhoneNumber;
             await _userManager.UpdateAsync(user);
-            return RedirectToAction(nameof(Phone));
+            return RedirectToAction(nameof(Phone), new { JustHaveUpdated = true });
         }
 
-        public async Task<IActionResult> Applications()
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var model = new ApplicationsViewModel(user)
-            {
-                Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
-            };
-            var appsBag = new ConcurrentBag<App>();
-            await model.Grants.ForEachInThreadsPool(async grant =>
-            {
-                try
-                {
-                    var appInfo = await _developerApiService.AppInfoAsync(grant.AppId);
-                    appsBag.Add(appInfo.App);
-                }
-                catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
-            });
-            model.Apps = appsBag.OrderBy(app =>
-                model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
-            return View(model);
-        }
+        model.Recover(user);
+        ModelState.AddModelError(string.Empty, "Your token is invalid!");
+        return View(model);
+    }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> DeleteGrant(string appId)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UnBind()
+    {
+        var user = await GetCurrentUserAsync();
+        var result =
+            await _userService.SetPhoneNumberAsync(user.Id, await _appsContainer.AccessTokenAsync(), string.Empty);
+        if (result.Code != ErrorType.Success) throw new InvalidOperationException();
+        user.PhoneNumber = string.Empty;
+        await _userManager.UpdateAsync(user);
+        return RedirectToAction(nameof(Phone));
+    }
+
+    public async Task<IActionResult> Applications()
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var model = new ApplicationsViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            if (_configuration["AccountAppId"] == appId)
+            Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
+        };
+        var appsBag = new ConcurrentBag<App>();
+        await model.Grants.ForEachInThreadsPool(async grant =>
+        {
+            try
             {
-                return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+                var appInfo = await _developerApiService.AppInfoAsync(grant.AppId);
+                appsBag.Add(appInfo.App);
             }
-            var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
-            return this.Protocol(result);
-        }
-
-        public async Task<IActionResult> AuditLog(int page = 1)
-        {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var logs = await _userService.ViewAuditLogAsync(token, user.Id, page);
-            var model = new AuditLogViewModel(user)
+            catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound)
             {
-                Logs = logs
-            };
-            await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachInThreadsPool(async (id) =>
-            {
-                var appInfo = await _developerApiService.AppInfoAsync(id);
-                model.Apps.Add(appInfo.App);
-            });
-            return View(model);
-        }
-
-        public async Task<IActionResult> TwoFactorAuthentication()
-        {
-            var user = await GetCurrentUserAsync();
-            var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            var twoFactorEnabled = await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            var model = new TwoFactorAuthenticationViewModel(user)
-            {
-                NewHas2FAKey = has2FAKey.Value,
-                NewTwoFactorEnabled = twoFactorEnabled.Value
-            };
-            return View(model);
-        }
-
-        public async Task<IActionResult> ViewTwoFAKey()
-        {
-            var user = await GetCurrentUserAsync();
-            var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            var model = new View2FAKeyViewModel(user)
-            {
-                NewTwoFAKey = key.TwoFAKey,
-                QRCodeBase64 = _qrCodeService.ToQRCodeBase64(key.TwoFAQRUri)
-            };
-            return View(model);
-
-        }
-
-        public async Task<IActionResult> SetTwoFAKey()
-        {
-            var user = await GetCurrentUserAsync();
-            await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            return RedirectToAction(nameof(ViewTwoFAKey));
-        }
-
-        public async Task<IActionResult> ResetTwoFAKey()
-        {
-            var user = await GetCurrentUserAsync();
-            await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            return RedirectToAction(nameof(ViewTwoFAKey));
-        }
-
-        public async Task<IActionResult> VerifyTwoFACode()
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new VerifyTwoFACodeViewModel(user);
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            var success = (await _userService.TwoFAVerifyCodeAsync(user.Id, await _appsContainer.AccessTokenAsync(), model.Code)).Value;
-            if (success)
-            {
-                // go to recovery codes page
-                return RedirectToAction(nameof(TwoFactorAuthentication), new { success = true });
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid code!");
-                model.RootRecover(user, "Two-factor Authentication");
-                return View(model);
-            }
-        }
+        });
+        model.Apps = appsBag.OrderBy(app =>
+            model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
+        return View(model);
+    }
 
-        public async Task<IActionResult> DisableTwoFA()
-        {
-            var user = await GetCurrentUserAsync();
-            var model = new DisableTwoFAViewModel(user);
-            return View(model);
-        }
+    [HttpPost]
+    [APIExpHandler]
+    [APIModelStateChecker]
+    public async Task<IActionResult> DeleteGrant(string appId)
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        if (_configuration["AccountAppId"] == appId)
+            return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+        var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
+        return this.Protocol(result);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel _)
+    public async Task<IActionResult> AuditLog(int page = 1)
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var logs = await _userService.ViewAuditLogAsync(token, user.Id, page);
+        var model = new AuditLogViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            if (disableResult.Value)
-            {
-                return RedirectToAction(nameof(TwoFactorAuthentication));
-            }
-            else
-            {
-                throw new InvalidOperationException("Disable two FA crashed!");
-            }
-        }
+            Logs = logs
+        };
+        await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachInThreadsPool(async id =>
+        {
+            var appInfo = await _developerApiService.AppInfoAsync(id);
+            model.Apps.Add(appInfo.App);
+        });
+        return View(model);
+    }
 
-        public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
+    public async Task<IActionResult> TwoFactorAuthentication()
+    {
+        var user = await GetCurrentUserAsync();
+        var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        var twoFactorEnabled =
+            await _userService.ViewTwoFactorEnabledAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        var model = new TwoFactorAuthenticationViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessTokenAsync());
-            model.NewRecoveryCodesKey = newCodesKey.Items;
-            model.RootRecover(user, "Two-factor Authentication");
-            return View(model);
-        }
+            NewHas2FAKey = has2FAKey.Value,
+            NewTwoFactorEnabled = twoFactorEnabled.Value
+        };
+        return View(model);
+    }
 
-        public async Task<IActionResult> Social()
+    public async Task<IActionResult> ViewTwoFAKey()
+    {
+        var user = await GetCurrentUserAsync();
+        var key = await _userService.View2FAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        var model = new View2FAKeyViewModel(user)
         {
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var model = new SocialViewModel(user)
-            {
-                Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items,
-                Providers = _authProviders
-            };
-            return View(model);
-        }
+            NewTwoFAKey = key.TwoFAKey,
+            QRCodeBase64 = _qrCodeService.ToQRCodeBase64(key.TwoFAQRUri)
+        };
+        return View(model);
+    }
 
-        [HttpPost]
-        [APIExpHandler]
-        [APIModelStateChecker]
-        public async Task<IActionResult> UnBindAccount(string provider)
-        {
-            if (string.IsNullOrWhiteSpace(provider))
-            {
-                return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
-            }
-            var user = await GetCurrentUserAsync();
-            var token = await _appsContainer.AccessTokenAsync();
-            var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
-            return this.Protocol(result);
-        }
+    public async Task<IActionResult> SetTwoFAKey()
+    {
+        var user = await GetCurrentUserAsync();
+        await _userService.SetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        return RedirectToAction(nameof(ViewTwoFAKey));
+    }
 
-        private async Task<AccountUser> GetCurrentUserAsync()
+    public async Task<IActionResult> ResetTwoFAKey()
+    {
+        var user = await GetCurrentUserAsync();
+        await _userService.ResetTwoFAKeyAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        return RedirectToAction(nameof(ViewTwoFAKey));
+    }
+
+    public async Task<IActionResult> VerifyTwoFACode()
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new VerifyTwoFACodeViewModel(user);
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> VerifyTwoFACode(VerifyTwoFACodeViewModel model)
+    {
+        var user = await GetCurrentUserAsync();
+        var success =
+            (await _userService.TwoFAVerifyCodeAsync(user.Id, await _appsContainer.AccessTokenAsync(), model.Code))
+            .Value;
+        if (success)
+            // go to recovery codes page
+            return RedirectToAction(nameof(TwoFactorAuthentication), new { success = true });
+
+        ModelState.AddModelError(string.Empty, "Invalid code!");
+        model.RootRecover(user, "Two-factor Authentication");
+        return View(model);
+    }
+
+    public async Task<IActionResult> DisableTwoFA()
+    {
+        var user = await GetCurrentUserAsync();
+        var model = new DisableTwoFAViewModel(user);
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DisableTwoFA(DisableTwoFAViewModel _)
+    {
+        var user = await GetCurrentUserAsync();
+        var disableResult = await _userService.DisableTwoFAAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        if (disableResult.Value)
+            return RedirectToAction(nameof(TwoFactorAuthentication));
+        throw new InvalidOperationException("Disable two FA crashed!");
+    }
+
+    public async Task<IActionResult> GetRecoveryCodes(GetRecoveryCodesViewModel model)
+    {
+        var user = await GetCurrentUserAsync();
+        var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _appsContainer.AccessTokenAsync());
+        model.NewRecoveryCodesKey = newCodesKey.Items;
+        model.RootRecover(user, "Two-factor Authentication");
+        return View(model);
+    }
+
+    public async Task<IActionResult> Social()
+    {
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var model = new SocialViewModel(user)
         {
-            return await _userManager.GetUserAsync(User);
-        }
+            Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items,
+            Providers = _authProviders
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [APIExpHandler]
+    [APIModelStateChecker]
+    public async Task<IActionResult> UnBindAccount(string provider)
+    {
+        if (string.IsNullOrWhiteSpace(provider))
+            return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
+        var user = await GetCurrentUserAsync();
+        var token = await _appsContainer.AccessTokenAsync();
+        var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
+        return this.Protocol(result);
+    }
+
+    private async Task<AccountUser> GetCurrentUserAsync()
+    {
+        return await _userManager.GetUserAsync(User);
     }
 }

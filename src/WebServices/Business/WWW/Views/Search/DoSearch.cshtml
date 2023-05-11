@@ -1,9 +1,11 @@
-﻿@using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
-@model SearchResponse
+﻿@using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
+@using SearchResponse = Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse
+@using System.Globalization
+@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse
 @{
     ViewData["Title"] = Model.QueryContext.OriginalQuery;
     ViewData["NoNav"] = "true";
-    Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse entities = ViewBag.Entities;
+    SearchResponse entities = ViewBag.Entities;
 }
 <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
     <div class="container">
@@ -64,7 +66,7 @@
                 }
                 @Localizer["Current search language:"]
                 <a href="@langLink" data-language-change-link>
-                    @System.Globalization.CultureInfo.CurrentCulture.NativeName
+                    @CultureInfo.CurrentCulture.NativeName
                 </a>
                 <div class=" float-right">
                     @Localizer["Results: About"] @(Model.WebPages?.TotalEstimatedMatches ?? 0).

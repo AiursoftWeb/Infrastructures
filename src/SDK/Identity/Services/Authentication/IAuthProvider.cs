@@ -1,18 +1,17 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using System.Threading.Tasks;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Identity.Services.Authentication
+namespace Aiursoft.Identity.Services.Authentication;
+
+public interface IAuthProvider : IScopedDependency
 {
-    public interface IAuthProvider : IScopedDependency
-    {
-        bool IsEnabled();
-        string GetName();
-        string GetSettingsPage();
-        string GetButtonColor();
-        string GetButtonIcon();
-        string GetSignInRedirectLink(AiurUrl state);
-        string GetBindRedirectLink();
-        Task<IUserDetail> GetUserDetail(string code, bool isBinding = false);
-    }
+    bool IsEnabled();
+    string GetName();
+    string GetSettingsPage();
+    string GetButtonColor();
+    string GetButtonIcon();
+    string GetSignInRedirectLink(AiurUrl state);
+    string GetBindRedirectLink();
+    Task<IUserDetail> GetUserDetail(string code, bool isBinding = false);
 }

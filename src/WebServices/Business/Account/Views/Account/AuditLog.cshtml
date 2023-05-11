@@ -1,5 +1,5 @@
-@model Aiursoft.Account.Models.AccountViewModels.AuditLogViewModel
 @using Aiursoft.Gateway.SDK.Models.API
+@model AuditLogViewModel
 @{
     ViewData["Title"] = "Audit Log";
 }
@@ -15,14 +15,18 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">@Localizer["x"]</span>
+            </button>
             <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">@Localizer["x"]</span>
+            </button>
             <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
@@ -52,7 +56,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-10 d-flex">
-                                <img class="rounded mr-3" src="@ProbeLocator.GetProbeOpenAddress(app.IconPath)?w=128&square=true" style="width:40px; height:40px;" />
+                                <img class="rounded mr-3" src="@ProbeLocator.GetProbeOpenAddress(app.IconPath)?w=128&square=true" style="width:40px; height:40px;"/>
                                 <div class="d-block">
                                     <h5>@app.AppName</h5>
                                     <p>

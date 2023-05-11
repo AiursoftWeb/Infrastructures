@@ -12,42 +12,42 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Probe
+namespace Aiursoft.Probe;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["ProbeAppId"];
-            AppsContainer.CurrentAppSecret = configuration["ProbeAppSecret"];
-        }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["ProbeAppId"];
+        AppsContainer.CurrentAppSecret = configuration["ProbeAppSecret"];
+    }
 
-        public virtual void ConfigureServices(IServiceCollection services)
-        {
-            services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
+    public IConfiguration Configuration { get; }
 
-            services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+    public virtual void ConfigureServices(IServiceCollection services)
+    {
+        services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
 
-            services.AddCors();
-            services.AddAiurAPIMvc();
-            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddAiursoftSDK();
-            services.AddScoped<IStorageProvider, DiskAccess>();
-            services.AddSingleton(new ProbeLocator(
-                endpoint: Configuration["ProbeEndpoint"],
-                openFormat: Configuration["OpenPattern"],
-                downloadFormat: Configuration["DownloadPattern"],
-                playerFormat: Configuration["PlayerPattern"]));
-        }
+        services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurAPIHandler(env.IsDevelopment());
-            app.UseCors(builder => builder.AllowAnyOrigin());
-            app.UseAiursoftAPIDefault();
-        }
+        services.AddCors();
+        services.AddAiurAPIMvc();
+        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftSDK();
+        services.AddScoped<IStorageProvider, DiskAccess>();
+        services.AddSingleton(new ProbeLocator(
+            Configuration["ProbeEndpoint"],
+            Configuration["OpenPattern"],
+            Configuration["DownloadPattern"],
+            Configuration["PlayerPattern"]));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurAPIHandler(env.IsDevelopment());
+        app.UseCors(builder => builder.AllowAnyOrigin());
+        app.UseAiursoftAPIDefault();
     }
 }

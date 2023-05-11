@@ -1,8 +1,7 @@
-﻿namespace Aiursoft.Stargate.SDK.Models.ListenAddressModels
+﻿namespace Aiursoft.Stargate.SDK.Models.ListenAddressModels;
+
+public class ChannelAddressModel
 {
-    public class ChannelAddressModel
-    {
-        public int Id { get; set; }
-        public string Key { get; set; }
-    }
+    public int Id { get; set; }
+    public string Key { get; set; }
 }

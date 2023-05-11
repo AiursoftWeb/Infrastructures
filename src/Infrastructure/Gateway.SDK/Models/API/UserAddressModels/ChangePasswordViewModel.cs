@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels
+namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
+
+public class ChangePasswordAddressModel : UserOperationAddressModel
 {
-    public class ChangePasswordAddressModel : UserOperationAddressModel
-    {
-        [Required]
-        [DataType(DataType.Password)]
-        [MinLength(6)]
-        [MaxLength(32)]
-        public string OldPassword { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        [MinLength(6)]
-        [MaxLength(32)]
-        public string NewPassword { get; set; }
-    }
+    [Required]
+    [DataType(DataType.Password)]
+    [MinLength(6)]
+    [MaxLength(32)]
+    public string OldPassword { get; set; }
+
+    [Required]
+    [DataType(DataType.Password)]
+    [MinLength(6)]
+    [MaxLength(32)]
+    public string NewPassword { get; set; }
 }

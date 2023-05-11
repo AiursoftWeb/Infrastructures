@@ -1,10 +1,9 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels;
+
+public class CreateChannelViewModel : AiurProtocol
 {
-    public class CreateChannelViewModel : AiurProtocol
-    {
-        public int ChannelId { get; set; }
-        public string ConnectKey { get; set; }
-    }
+    public int ChannelId { get; set; }
+    public string ConnectKey { get; set; }
 }

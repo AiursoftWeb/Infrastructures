@@ -1,181 +1,185 @@
-@model Aiursoft.Account.Models.AccountViewModels.AccountViewModel
+@model AccountViewModel
 <!DOCTYPE html>
 <html>
 <head>
     <vc:aiur-header></vc:aiur-header>
     <title>@Localizer[ViewData["Title"]?.ToString() ?? string.Empty] - @Localizer["Account Management Center"]</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
-    @await RenderSectionAsync("css", required: false)
+    @await RenderSectionAsync("css", false)
 </head>
 <body class="fixed-nav sticky-footer bg-azure" id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-azure bg-azure fixed-top" id="mainNav">
-        <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName + " Account"]</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="nav-link-text">@Localizer["Basic info"]</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti1">
-                        <li>
-                            <a asp-controller="Account" asp-action="Index">
-                                <i class="fas fa-sliders-h"></i>
-                                @Localizer["Profile"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="Avatar">
-                                <i class="far fa-user-circle"></i>
-                                @Localizer["Avatar"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="Email">
-                                <i class="fa fa-envelope"></i>
-                                @Localizer["Email"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="Phone">
-                                <i class="fa fa-phone"></i>
-                                @Localizer["Phone"]
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
-                        <i class="fas fa-shield-alt"></i>
-                        <span class="nav-link-text">@Localizer["Security"]</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti2">
-                        <li>
-                            <a asp-controller="Account" asp-action="Security">
-                                <i class="fa fa-lock"></i>
-                                @Localizer["Password"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="TwoFactorAuthentication">
-                                <i class="fa fa-key"></i>
-                                @Localizer["Two-factor Authentication"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="Social">
-                                <i class="fab fa-github-alt"></i>
-                                @Localizer["Social accounts"]
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Account" asp-action="AuditLog">
-                                <i class="far fa-file-alt"></i>
-                                @Localizer["Audit log"]
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti3" data-parent="#exampleAccordion">
-                        <i class="fab fa-app-store-ios"></i>
-                        <span class="nav-link-text">@Localizer["Applications"]</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMulti3">
-                        <li>
-                            <a asp-controller="Account" asp-action="Applications">
-                                <i class="fa fa-sitemap"></i>
-                                @Localizer["Granted apps"]
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@DeveloperLocator.Endpoint/Dashboard/Apps">
-                                <i class="fa fa-code"></i>
-                                @Localizer["Develope"]
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="navbar-nav sidenav-toggler">
-                <li class="nav-item">
-                    <a class="nav-link text-center" id="sidenavToggler">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-envelope"></i>
-                        <span class="d-lg-none">
-                            @Localizer["Messages"]
-                        </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">@Localizer["New Messages:"]</h6>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item small" href="#">@Localizer["View all messages"]</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-bell"></i>
-                        <span class="d-lg-none">
-                            @Localizer["Alerts"]
-                        </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">@Localizer["New Alerts:"]</h6>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item small" href="#">@Localizer["View all alerts"]</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @await UserImageGenerator.RenderUserImageAsync(User)
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
-                        <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">
-                            @Localizer["Logout"]
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-azure bg-azure fixed-top" id="mainNav">
+    <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName + " Account"]</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti1" data-parent="#exampleAccordion">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="nav-link-text">@Localizer["Basic info"]</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseMulti1">
+                    <li>
+                        <a asp-controller="Account" asp-action="Index">
+                            <i class="fas fa-sliders-h"></i>
+                            @Localizer["Profile"]
                         </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="content-wrapper">
-        @if (!Model.EmailConfirmed)
-        {
-            <div class="container-fluid">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
-                    <strong>@Localizer["Your account email was not confirmed!"]</strong>
-                    <div>@Localizer["Please"] <a asp-controller="Account" asp-action="Email">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]</div>
-                    <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Avatar">
+                            <i class="far fa-user-circle"></i>
+                            @Localizer["Avatar"]
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Email">
+                            <i class="fa fa-envelope"></i>
+                            @Localizer["Email"]
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Phone">
+                            <i class="fa fa-phone"></i>
+                            @Localizer["Phone"]
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2" data-parent="#exampleAccordion">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="nav-link-text">@Localizer["Security"]</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseMulti2">
+                    <li>
+                        <a asp-controller="Account" asp-action="Security">
+                            <i class="fa fa-lock"></i>
+                            @Localizer["Password"]
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="TwoFactorAuthentication">
+                            <i class="fa fa-key"></i>
+                            @Localizer["Two-factor Authentication"]
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Social">
+                            <i class="fab fa-github-alt"></i>
+                            @Localizer["Social accounts"]
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="AuditLog">
+                            <i class="far fa-file-alt"></i>
+                            @Localizer["Audit log"]
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti3" data-parent="#exampleAccordion">
+                    <i class="fab fa-app-store-ios"></i>
+                    <span class="nav-link-text">@Localizer["Applications"]</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseMulti3">
+                    <li>
+                        <a asp-controller="Account" asp-action="Applications">
+                            <i class="fa fa-sitemap"></i>
+                            @Localizer["Granted apps"]
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@DeveloperLocator.Endpoint/Dashboard/Apps">
+                            <i class="fa fa-code"></i>
+                            @Localizer["Develope"]
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a class="nav-link text-center" id="sidenavToggler">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-envelope"></i>
+                    <span class="d-lg-none">
+                        @Localizer["Messages"]
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+                    <h6 class="dropdown-header">@Localizer["New Messages:"]</h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item small" href="#">@Localizer["View all messages"]</a>
                 </div>
-            </div>
-        }
-        @RenderBody()
-        <footer class="sticky-footer">
-            <div class="ml-3">
-                <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
-                <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
-            </div>
-        </footer>
-        <vc:scroll-to-top></vc:scroll-to-top>
-        <vc:aiur-logout></vc:aiur-logout>
-        <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-        <script src="@ServiceLocation.UI/node_modules/qrcodejs/qrcode.min.js"></script>
-        <script src="~/js/site.js"></script>
-        @await RenderSectionAsync("js", required: false)
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bell"></i>
+                    <span class="d-lg-none">
+                        @Localizer["Alerts"]
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+                    <h6 class="dropdown-header">@Localizer["New Alerts:"]</h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item small" href="#">@Localizer["View all alerts"]</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @await UserImageGenerator.RenderUserImageAsync(User)
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown02">
+                    <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">
+                        @Localizer["Logout"]
+                    </a>
+                </div>
+            </li>
+        </ul>
     </div>
+</nav>
+<div class="content-wrapper">
+    @if (!Model.EmailConfirmed)
+    {
+        <div class="container-fluid">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">@Localizer["x"]</span>
+                </button>
+                <strong>@Localizer["Your account email was not confirmed!"]</strong>
+                <div>
+                    @Localizer["Please"] <a asp-controller="Account" asp-action="Email">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]
+                </div>
+                <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>
+            </div>
+        </div>
+    }
+    @RenderBody()
+    <footer class="sticky-footer">
+        <div class="ml-3">
+            <vc:aiur-footer template="small" item-class="mr-2 ml-2"></vc:aiur-footer>
+            <small>Copyright © @Values.ProjectName @DateTime.Now.Year</small>
+        </div>
+    </footer>
+    <vc:scroll-to-top></vc:scroll-to-top>
+    <vc:aiur-logout></vc:aiur-logout>
+    <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
+    <script src="@ServiceLocation.UI/node_modules/qrcodejs/qrcode.min.js"></script>
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("js", false)
+</div>
 </body>
 </html>

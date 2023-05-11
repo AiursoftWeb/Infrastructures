@@ -1,14 +1,13 @@
 using Aiursoft.Handler.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.WWW.Controllers
+namespace Aiursoft.WWW.Controllers;
+
+[LimitPerMin]
+public class DocsController : Controller
 {
-    [LimitPerMin]
-    public class DocsController : Controller
+    public IActionResult Terms()
     {
-        public IActionResult Terms()
-        {
-            return View();
-        }
+        return View();
     }
 }

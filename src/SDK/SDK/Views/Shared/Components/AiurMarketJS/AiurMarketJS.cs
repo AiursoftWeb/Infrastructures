@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Views.Shared.Components.AiurMarketJS
+namespace Aiursoft.SDK.Views.Shared.Components.AiurMarketJS;
+
+public class AiurMarketJS : ViewComponent
 {
-    public class AiurMarketJS : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

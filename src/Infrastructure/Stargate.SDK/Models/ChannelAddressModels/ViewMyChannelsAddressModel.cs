@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Stargate.SDK.Models.ChannelAddressModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
+
+public class ViewMyChannelsAddressModel
 {
-    public class ViewMyChannelsAddressModel
-    {
-        [Required]
-        public string AccessToken { get; set; }
-    }
+    [Required] public string AccessToken { get; set; }
 }

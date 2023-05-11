@@ -10,18 +10,20 @@
                 <h4>@Localizer["Forgot password"]</h4>
                 <p>@Localizer["We have to make sure that you are the owner of the account:"]@Model.AccountName</p>
             </div>
-            @if(!Model.SmsResetAvailable || Model.AvailableEmails.Count() < 1)
+            @if (!Model.SmsResetAvailable || Model.AvailableEmails.Count() < 1)
             {
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
                     <strong>@Localizer["Caution!"]</strong>
                     <div>
                         <ul>
-                            @if(!Model.SmsResetAvailable)
+                            @if (!Model.SmsResetAvailable)
                             {
                                 <li>@Localizer["You did not bind a phone and can not reset your password via sms."]</li>
                             }
-                            @if(Model.AvailableEmails.Count() < 1)
+                            @if (Model.AvailableEmails.Count() < 1)
                             {
                                 <li>@Localizer["You did not bind a email and can not reset your password via email."]</li>
                             }
@@ -29,18 +31,18 @@
                     </div>
                 </div>
             }
-            @if(Model.SmsResetAvailable)
+            @if (Model.SmsResetAvailable)
             {
                 <form class="mt-3" asp-controller="Password" asp-action="ForgotPasswordViaSms" method="post">
-                    <input type="hidden" name="Email" value="@Model.AccountName" />
+                    <input type="hidden" name="Email" value="@Model.AccountName"/>
                     <button class="btn btn-primary btn-block" data-disable-with="Checking..." type="submit">Send SMS to *******@Model.PhoneNumber</button>
                 </form>
             }
 
-            @foreach(var availableMail in Model.AvailableEmails)
+            @foreach (var availableMail in Model.AvailableEmails)
             {
                 <form class="mt-3" asp-controller="Password" asp-action="ForgotPasswordViaEmail" method="post">
-                    <input type="hidden" name="Email" value="@availableMail.EmailAddress" />
+                    <input type="hidden" name="Email" value="@availableMail.EmailAddress"/>
                     <button class="btn btn-primary btn-block" data-disable-with="Sending Email..." type="submit">Send Email to @availableMail.EmailAddress</button>
                 </form>
             }

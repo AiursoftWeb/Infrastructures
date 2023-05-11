@@ -1,7 +1,7 @@
 ﻿@model Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.Thing
 @if (Model.Image != null && Model.Image.ThumbnailUrl != null)
 {
-    <img class="img-fluid mt-3 mb-2" src="@Model.Image.ThumbnailUrl" />
+    <img class="img-fluid mt-3 mb-2" src="@Model.Image.ThumbnailUrl"/>
 }
 @{
     var url = Model.Url;

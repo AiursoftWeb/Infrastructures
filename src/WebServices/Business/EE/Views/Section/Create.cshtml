@@ -13,10 +13,10 @@
             <div class="row">
                 <form class="col-md-9 mt-3" asp-controller="Section" asp-action="Create" method="POST">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="CourseId" />
+                    <input type="hidden" asp-for="CourseId"/>
                     <div class="form-group">
                         <label asp-for="NewSectionName"></label>
-                        <input class="form-control" asp-for="NewSectionName" />
+                        <input class="form-control" asp-for="NewSectionName"/>
                         <span asp-validation-for="NewSectionName" class="text-danger"></span>
                     </div>
                     <input class="btn btn-primary mt-3" type="submit" value="Create" data-disable-with="Creating"/>

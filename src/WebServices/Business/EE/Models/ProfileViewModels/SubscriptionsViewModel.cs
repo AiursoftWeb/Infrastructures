@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.EE.Models.ProfileViewModels
+namespace Aiursoft.EE.Models.ProfileViewModels;
+
+public class SubscriptionsViewModel : ProfileViewModelBase
 {
-    public class SubscriptionsViewModel : ProfileViewModelBase
-    {
-        public IEnumerable<Subscription> MySubscriptions { get; set; }
-    }
+    public IEnumerable<Subscription> MySubscriptions { get; set; }
 }

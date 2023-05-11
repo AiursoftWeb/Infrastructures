@@ -1,28 +1,27 @@
-﻿using Aiursoft.SDKTools.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Aiursoft.SDKTools.Attributes;
 
-namespace Aiursoft.Warpgate.SDK.Models.AddressModels
+namespace Aiursoft.Warpgate.SDK.Models.AddressModels;
+
+public class CreateNewRecordAddressModel
 {
-    public class CreateNewRecordAddressModel
-    {
-        [Required]
-        public string AccessToken { get; set; }
-        [Required]
-        [ValidDomainName]
-        [MaxLength(50)]
-        [MinLength(5)]
-        public string NewRecordName { get; set; }
-        [Required]
-        public RecordType Type { get; set; }
-        [Required]
-        [MaxLength(1000)]
-        [MinLength(5)]
-        [Url]
-        public string TargetUrl { get; set; }
+    [Required] public string AccessToken { get; set; }
 
-        [Required]
-        public bool Enabled { get; set; }
+    [Required]
+    [ValidDomainName]
+    [MaxLength(50)]
+    [MinLength(5)]
+    public string NewRecordName { get; set; }
 
-        public string Tags { get; set; }
-    }
+    [Required] public RecordType Type { get; set; }
+
+    [Required]
+    [MaxLength(1000)]
+    [MinLength(5)]
+    [Url]
+    public string TargetUrl { get; set; }
+
+    [Required] public bool Enabled { get; set; }
+
+    public string Tags { get; set; }
 }

@@ -1,8 +1,7 @@
-﻿namespace Aiursoft.Developer.Models.ToolsViewModels
+﻿namespace Aiursoft.Developer.Models.ToolsViewModels;
+
+public class MarkdownViewModel
 {
-    public class MarkdownViewModel
-    {
-        public string SourceMarkdown { get; set; }
-        public string RenderedHTML { get; set; }
-    }
+    public string SourceMarkdown { get; set; }
+    public string RenderedHTML { get; set; }
 }

@@ -1,4 +1,4 @@
-@model Aiursoft.Account.Models.AccountViewModels.SecurityViewModel
+@model SecurityViewModel
 @{
     ViewData["Title"] = "Security";
 }
@@ -15,14 +15,18 @@
     @if (Model.JustHaveUpdated)
     {
         <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">@Localizer["x"]</span>
+            </button>
             <strong>@Localizer["Well done!"]</strong> @Localizer["You have successfully updated your profile."]
         </div>
     }
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">@Localizer["x"]</span>
+            </button>
             <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
@@ -52,7 +56,7 @@
                             <span asp-validation-for="RepeatPassword" class="text-danger"></span>
                         </div>
                         <button type="submit" data-disable-with="Changing..." class="btn btn-danger">@Localizer["Change Password"]</button>
-                        <input type="reset" class="btn btn-primary" value="@Localizer["Clear"]" />
+                        <input type="reset" class="btn btn-primary" value="@Localizer["Clear"]"/>
                     </form>
                 </div>
             </div>

@@ -1,11 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels
+namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
+
+public class SetPrimaryEmailAddressModel : UserOperationAddressModel
 {
-    public class SetPrimaryEmailAddressModel : UserOperationAddressModel
-    {
-        [EmailAddress]
-        [Required]
-        public string Email { get; set; }
-    }
+    [EmailAddress] [Required] public string Email { get; set; }
 }

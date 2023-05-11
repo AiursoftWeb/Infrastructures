@@ -1,4 +1,5 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using System.Collections.Generic;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
@@ -10,42 +11,41 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
 
-namespace Aiursoft.WWW
+namespace Aiursoft.WWW;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["WWWAppId"];
-            AppsContainer.CurrentAppSecret = configuration["WWWAppSecret"];
-            BingTranslator.APIKey = configuration["TranslateAPIKey"];
-        }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["WWWAppId"];
+        AppsContainer.CurrentAppSecret = configuration["WWWAppSecret"];
+        BingTranslator.APIKey = configuration["TranslateAPIKey"];
+    }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-            services.Configure<List<Navbar>>(Configuration.GetSection("Navbar"));
+    public IConfiguration Configuration { get; }
 
-            services.AddIdentity<WWWUser, IdentityRole>()
-                .AddEntityFrameworkStores<WWWDbContext>()
-                .AddDefaultTokenProviders();
-            services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
-            services.AddAiurMvc();
-            services.AddAiursoftIdentity<WWWUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
-        }
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.Configure<List<Navbar>>(Configuration.GetSection("Navbar"));
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
-        }
+        services.AddIdentity<WWWUser, IdentityRole>()
+            .AddEntityFrameworkStores<WWWDbContext>()
+            .AddDefaultTokenProviders();
+        services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
+        services.AddAiurMvc();
+        services.AddAiursoftIdentity<WWWUser>(
+            Configuration.GetConnectionString("ArchonConnection"),
+            Configuration.GetConnectionString("ObserverConnection"),
+            Configuration.GetConnectionString("ProbeConnection"),
+            Configuration.GetConnectionString("GatewayConnection"));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiursoftDefault();
     }
 }

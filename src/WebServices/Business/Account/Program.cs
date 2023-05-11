@@ -5,22 +5,21 @@ using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Account
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            App<Startup>(args)
-                .Update<AccountDbContext>()
-                .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessTokenAsync())
-                .Run();
-        }
+namespace Aiursoft.Account;
 
-        // For EF
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return BareApp<Startup>(args);
-        }
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        App<Startup>(args)
+            .Update<AccountDbContext>()
+            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessTokenAsync())
+            .Run();
+    }
+
+    // For EF
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return BareApp<Startup>(args);
     }
 }

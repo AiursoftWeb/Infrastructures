@@ -1,6 +1,6 @@
 ﻿@model Aiursoft.Gateway.Models.ThirdPartyViewModels.BindAccountViewModel
-@{ 
-    ViewData["Title"] = "Bind success with " + Model.Provider.GetName(); 
+@{
+    ViewData["Title"] = "Bind success with " + Model.Provider.GetName();
 }
 <div class="container">
     <div class="card mx-auto mt-5" style="max-width: 50rem;">
@@ -17,7 +17,9 @@
                 }
             </div>
             <div class="alert alert-success alert-dismissible mt-3" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
                 <strong>@Localizer["Bind success!"]</strong>
                 <p class="mb-0">
                     You have successfully bind your Aiursoft account <strong>@Model.User.NickName</strong> with @Model.Provider.GetName() account <strong>@Model.UserDetail.Name</strong>!

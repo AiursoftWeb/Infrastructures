@@ -1,7 +1,6 @@
-﻿namespace Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels
+﻿namespace Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+
+public class UserSignOutAddressModel
 {
-    public class UserSignOutAddressModel
-    {
-        public string ToRedirect { get; set; }
-    }
+    public string ToRedirect { get; set; }
 }

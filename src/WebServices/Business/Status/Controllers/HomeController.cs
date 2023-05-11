@@ -2,25 +2,24 @@
 using Aiursoft.Status.Models.HomeViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Status.Controllers
+namespace Aiursoft.Status.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly MonitorDataProvider dataProvider;
+
+    public HomeController(MonitorDataProvider dbContext)
     {
-        private readonly MonitorDataProvider dataProvider;
+        dataProvider = dbContext;
+    }
 
-        public HomeController(MonitorDataProvider dbContext)
+    public IActionResult Index()
+    {
+        var data = dataProvider.MonitorRules;
+        var model = new IndexViewModel
         {
-            dataProvider = dbContext;
-        }
-
-        public IActionResult Index()
-        {
-            var data = dataProvider.MonitorRules;
-            var model = new IndexViewModel
-            {
-                Data = data
-            };
-            return View(model);
-        }
+            Data = data
+        };
+        return View(model);
     }
 }

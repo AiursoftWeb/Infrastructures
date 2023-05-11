@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.SDKTools.Attributes
+namespace Aiursoft.SDKTools.Attributes;
+
+public class TestableValidationAttribute : ValidationAttribute
 {
-    public class TestableValidationAttribute : ValidationAttribute
+    public ValidationResult TestEntry(object value)
     {
-        public ValidationResult TestEntry(object value)
-        {
-            return IsValid(value, new ValidationContext(value) { DisplayName = "Mock-display-name" });
-        }
+        return IsValid(value, new ValidationContext(value) { DisplayName = "Mock-display-name" });
     }
 }

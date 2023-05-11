@@ -1,4 +1,4 @@
-@model Aiursoft.Account.Models.AccountViewModels.GetRecoveryCodesViewModel
+@model GetRecoveryCodesViewModel
 @{
     ViewData["Title"] = "GetRecoveryCodes";
 }
@@ -23,7 +23,9 @@
                 {
                     <div class="container-fluid">
                         <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">@Localizer["x"]</span>
+                            </button>
                             <strong>@Localizer["Validation success!"]</strong> @Localizer["Your account is ready for two-factor authentication."]
                         </div>
                     </div>

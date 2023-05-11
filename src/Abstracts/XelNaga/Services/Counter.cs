@@ -1,30 +1,23 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using System.Threading;
+﻿using System.Threading;
+using Aiursoft.Scanner.Interfaces;
 
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.XelNaga.Services;
+
+public class Counter : ISingletonDependency
 {
-    public class Counter : ISingletonDependency
+    private int _current;
+
+    /// <summary>
+    ///     Last returned counter value. If a initial counter, will be -1.
+    /// </summary>
+    public int GetCurrent => _current;
+
+    /// <summary>
+    ///     Get a new scope unique number which is one larger than current.
+    /// </summary>
+    /// <returns></returns>
+    public int GetUniqueNo()
     {
-        private int _current;
-
-        /// <summary>
-        /// Get a new scope unique number which is one larger than current.
-        /// </summary>
-        /// <returns></returns>
-        public int GetUniqueNo()
-        {
-            return Interlocked.Increment(ref this._current);
-        }
-
-        /// <summary>
-        /// Last returned counter value. If a initial counter, will be -1.
-        /// </summary>
-        public int GetCurrent 
-        {
-            get
-            {
-                return this._current;
-            }
-        }
+        return Interlocked.Increment(ref _current);
     }
 }

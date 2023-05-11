@@ -1,16 +1,15 @@
-﻿namespace Aiursoft.Stargate.SDK.Services
+﻿namespace Aiursoft.Stargate.SDK.Services;
+
+public class StargateLocator
 {
-    public class StargateLocator
+    public StargateLocator(string endpoint)
     {
-        public StargateLocator(string endpoint)
-        {
-            Endpoint = endpoint;
-            ListenEndpoint = Endpoint
+        Endpoint = endpoint;
+        ListenEndpoint = Endpoint
             .Replace("https://", "wss://")
             .Replace("http://", "ws://");
-        }
-
-        public string Endpoint { get; private set; }
-        public string ListenEndpoint { get; private set; }
     }
+
+    public string Endpoint { get; }
+    public string ListenEndpoint { get; private set; }
 }

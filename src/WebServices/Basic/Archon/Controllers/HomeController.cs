@@ -6,27 +6,26 @@ using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Archon.Controllers
+namespace Aiursoft.Archon.Controllers;
+
+[LimitPerMin]
+public class HomeController : ControllerBase
 {
-    [LimitPerMin]
-    public class HomeController : ControllerBase
+    private readonly PrivateKeyStore _privateKeyStore;
+
+    public HomeController(PrivateKeyStore privateKeyStore)
     {
-        private readonly PrivateKeyStore _privateKeyStore;
+        _privateKeyStore = privateKeyStore;
+    }
 
-        public HomeController(PrivateKeyStore privateKeyStore)
+    public IActionResult Index()
+    {
+        return this.Protocol(new IndexViewModel
         {
-            _privateKeyStore = privateKeyStore;
-        }
-
-        public IActionResult Index()
-        {
-            return this.Protocol(new IndexViewModel
-            {
-                Code = ErrorType.Success,
-                Message = "Welcome to Archon server!",
-                Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
-                Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64()
-            });
-        }
+            Code = ErrorType.Success,
+            Message = "Welcome to Archon server!",
+            Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
+            Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64()
+        });
     }
 }

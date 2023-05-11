@@ -1,12 +1,11 @@
-﻿namespace Aiursoft.Developer.SDK.Services
-{
-    public class DeveloperLocator
-    {
-        public DeveloperLocator(string endpoint)
-        {
-            Endpoint = endpoint;
-        }
+﻿namespace Aiursoft.Developer.SDK.Services;
 
-        public string Endpoint { get; }
+public class DeveloperLocator
+{
+    public DeveloperLocator(string endpoint)
+    {
+        Endpoint = endpoint;
     }
+
+    public string Endpoint { get; }
 }

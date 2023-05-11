@@ -1,28 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Aiursoft.SDK.Middlewares
+namespace Aiursoft.SDK.Middlewares;
+
+public class HandleRobotsMiddleware
 {
-    public class HandleRobotsMiddleware
+    private readonly RequestDelegate _next;
+
+    public HandleRobotsMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public HandleRobotsMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
-        public async Task Invoke(HttpContext context)
-        {
-            if (string.Equals(context.Request.Path, "/robots.txt", StringComparison.OrdinalIgnoreCase))
-            {
-                context.Response.StatusCode = StatusCodes.Status204NoContent;
-            }
-            else
-            {
-                await _next.Invoke(context);
-            }
-        }
+    public async Task Invoke(HttpContext context)
+    {
+        if (string.Equals(context.Request.Path, "/robots.txt", StringComparison.OrdinalIgnoreCase))
+            context.Response.StatusCode = StatusCodes.Status204NoContent;
+        else
+            await _next.Invoke(context);
     }
 }

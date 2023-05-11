@@ -1,4 +1,4 @@
-@model Aiursoft.Account.Models.AccountViewModels.TwoFactorAuthenticationViewModel
+@model TwoFactorAuthenticationViewModel
 @{
     ViewData["Title"] = "Two-factor authentication";
 }
@@ -32,15 +32,17 @@
                 {
                     <div class="container-fluid">
                         <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">@Localizer["x"]</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">@Localizer["x"]</span>
+                            </button>
                             <strong>@Localizer["Two-factor authentication enabled!"]</strong> @Localizer["Your account is ready for two-factor authentication."]
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                     <h6>@Localizer["Disable two-factor authentication"]</h6>
                     <p>@Localizer["Disable two-factor authentication allows others to log in your account with only your password."]</p>
                     <a asp-controller="Account" asp-action="DisableTwoFA" class="btn btn-outline-danger">@Localizer["Disable two-factor authentication"]</a>
-                    <hr />
+                    <hr/>
 
 
                     <h6>@Localizer["Recovery code"]</h6>
@@ -51,7 +53,7 @@
                         @Localizer["Click the button below will generate new verification codes. Your old code will be invalid."]
                     </p>
                     <a asp-controller="Account" asp-action="GetRecoveryCodes" class="btn btn-outline-danger">@Localizer["Reset and view recovery codes"]</a>
-                    <hr />
+                    <hr/>
 
                     <h6>@Localizer["Reset two-factor authentication key."]</h6>
                     <p class="text-danger">

@@ -1,14 +1,11 @@
-﻿using Aiursoft.SDKTools.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Aiursoft.SDKTools.Attributes;
 
-namespace Aiursoft.Developer.SDK.Models.ApiAddressModels
+namespace Aiursoft.Developer.SDK.Models.ApiAddressModels;
+
+public class IsValidateAppAddressModel
 {
-    public class IsValidateAppAddressModel
-    {
-        [Required]
-        [IsGuidOrEmpty]
-        public virtual string AppId { get; set; }
-        [Required]
-        public virtual string AppSecret { get; set; }
-    }
+    [Required] [IsGuidOrEmpty] public virtual string AppId { get; set; }
+
+    [Required] public virtual string AppSecret { get; set; }
 }

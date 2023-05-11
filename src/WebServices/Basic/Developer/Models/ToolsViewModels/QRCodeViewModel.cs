@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Developer.Models.ToolsViewModels
+namespace Aiursoft.Developer.Models.ToolsViewModels;
+
+public class QRCodeViewModel
 {
-    public class QRCodeViewModel
-    {
-        [Required]
-        [Display(Name = "Source String")]
-        public string SourceString { get; set; } = "Try any string!";
-    }
+    [Required]
+    [Display(Name = "Source String")]
+    public string SourceString { get; set; } = "Try any string!";
 }

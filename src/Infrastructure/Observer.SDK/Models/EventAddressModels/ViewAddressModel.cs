@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Observer.SDK.Models.EventAddressModels
+namespace Aiursoft.Observer.SDK.Models.EventAddressModels;
+
+public class ViewAddressModel
 {
-    public class ViewAddressModel
-    {
-        [Required]
-        public string AccessToken { get; set; }
-    }
+    [Required] public string AccessToken { get; set; }
 }

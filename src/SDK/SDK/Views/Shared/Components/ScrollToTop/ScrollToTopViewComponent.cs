@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Views.Shared.Components.ScrollToTop
+namespace Aiursoft.SDK.Views.Shared.Components.ScrollToTop;
+
+public class ScrollToTopViewComponent : ViewComponent
 {
-    public class ScrollToTopViewComponent : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

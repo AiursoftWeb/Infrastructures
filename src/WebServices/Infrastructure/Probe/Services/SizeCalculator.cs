@@ -1,34 +1,23 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Aiursoft.Scanner.Interfaces;
 
-namespace Aiursoft.Probe.Services
+namespace Aiursoft.Probe.Services;
+
+public class SizeCalculator : ITransientDependency
 {
-    public class SizeCalculator : ITransientDependency
+    private IEnumerable<int> GetTwoPowers()
     {
-        private IEnumerable<int> GetTwoPowers()
-        {
-            yield return 0;
-            for (var i = 1; i <= 8192; i *= 2)
-            {
-                yield return i;
-            }
-        }
+        yield return 0;
+        for (var i = 1; i <= 8192; i *= 2) yield return i;
+    }
 
-        public int Ceiling(int input)
-        {
-            if (input >= 8192)
-            {
-                return 8192;
-            }
-            foreach (var optional in GetTwoPowers())
-            {
-                if (optional >= input)
-                {
-                    return optional;
-                }
-            }
-            throw new InvalidOperationException($"Image size calculation failed with input: {input}.");
-        }
+    public int Ceiling(int input)
+    {
+        if (input >= 8192) return 8192;
+        foreach (var optional in GetTwoPowers())
+            if (optional >= input)
+                return optional;
+        throw new InvalidOperationException($"Image size calculation failed with input: {input}.");
     }
 }

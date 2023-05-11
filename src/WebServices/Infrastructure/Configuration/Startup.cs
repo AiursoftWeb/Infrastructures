@@ -9,33 +9,32 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Configuration
+namespace Aiursoft.Configuration;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["ConfigurationAppId"];
+        AppsContainer.CurrentAppSecret = configuration["ConfigurationAppSecret"];
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["ConfigurationAppId"];
-            AppsContainer.CurrentAppSecret = configuration["ConfigurationAppSecret"];
-        }
+    public IConfiguration Configuration { get; }
 
-        public virtual void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-            services.AddAiurAPIMvc();
-            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddAiursoftSDK();
-        }
+    public virtual void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddAiurAPIMvc();
+        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftSDK();
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurAPIHandler(env.IsDevelopment());
-            app.UseCors(builder => builder.AllowAnyOrigin());
-            app.UseAiursoftAPIDefault();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurAPIHandler(env.IsDevelopment());
+        app.UseCors(builder => builder.AllowAnyOrigin());
+        app.UseAiursoftAPIDefault();
     }
 }

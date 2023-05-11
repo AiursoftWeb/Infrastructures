@@ -1,16 +1,18 @@
 ﻿using System;
 
-namespace Aiursoft.Account.Models.AccountViewModels
-{
-    public class View2FAKeyViewModel : AccountViewModel
-    {
-        [Obsolete(error: true, message: "This method is only for framework!")]
-        public View2FAKeyViewModel()
-        {
-        }
-        public View2FAKeyViewModel(AccountUser user) : base(user, "Two-factor Authentication") { }
+namespace Aiursoft.Account.Models.AccountViewModels;
 
-        public string NewTwoFAKey { get; set; }
-        public string QRCodeBase64 { get; set; }
+public class View2FAKeyViewModel : AccountViewModel
+{
+    [Obsolete(error: true, message: "This method is only for framework!")]
+    public View2FAKeyViewModel()
+    {
     }
+
+    public View2FAKeyViewModel(AccountUser user) : base(user, "Two-factor Authentication")
+    {
+    }
+
+    public string NewTwoFAKey { get; set; }
+    public string QRCodeBase64 { get; set; }
 }

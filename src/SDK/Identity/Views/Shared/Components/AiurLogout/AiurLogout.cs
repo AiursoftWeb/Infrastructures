@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Identity.Views.Shared.Components.AiurLogout
+namespace Aiursoft.Identity.Views.Shared.Components.AiurLogout;
+
+public class AiurLogout : ViewComponent
 {
-    public class AiurLogout : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

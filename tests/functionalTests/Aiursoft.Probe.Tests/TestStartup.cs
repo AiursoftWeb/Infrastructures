@@ -4,17 +4,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Aiursoft.Probe.Tests
-{
-    public class TestStartup : Startup
-    {
-        public TestStartup(IConfiguration configuration) : base(configuration) { }
+namespace Aiursoft.Probe.Tests;
 
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            base.ConfigureServices(services);
-            services.RemoveAll<ACTokenValidator>();
-            services.AddTransient<ACTokenValidator, MockAcTokenValidator>();
-        }
+public class TestStartup : Startup
+{
+    public TestStartup(IConfiguration configuration) : base(configuration)
+    {
+    }
+
+    public override void ConfigureServices(IServiceCollection services)
+    {
+        base.ConfigureServices(services);
+        services.RemoveAll<ACTokenValidator>();
+        services.AddTransient<ACTokenValidator, MockAcTokenValidator>();
     }
 }

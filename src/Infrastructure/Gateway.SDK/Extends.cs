@@ -2,15 +2,14 @@
 using Aiursoft.Scanner;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.Gateway.SDK
+namespace Aiursoft.Gateway.SDK;
+
+public static class Extends
 {
-    public static class Extends
+    public static IServiceCollection AddGatewayServer(this IServiceCollection services, string serverEndpoint)
     {
-        public static IServiceCollection AddGatewayServer(this IServiceCollection services, string serverEndpoint)
-        {
-            services.AddSingleton(new GatewayLocator(serverEndpoint));
-            services.AddLibraryDependencies();
-            return services;
-        }
+        services.AddSingleton(new GatewayLocator(serverEndpoint));
+        services.AddLibraryDependencies();
+        return services;
     }
 }

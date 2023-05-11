@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.Gateway.Models.PasswordViewModels
+namespace Aiursoft.Gateway.Models.PasswordViewModels;
+
+public class MethodSelectionViewModel
 {
-    public class MethodSelectionViewModel
-    {
-        public string AccountName { get; set; }
-        public IEnumerable<UserEmail> AvailableEmails { get; set; }
-        public bool SmsResetAvailable { get; set; }
-        public string PhoneNumber { get; set; }
-    }
+    public string AccountName { get; set; }
+    public IEnumerable<UserEmail> AvailableEmails { get; set; }
+    public bool SmsResetAvailable { get; set; }
+    public string PhoneNumber { get; set; }
 }

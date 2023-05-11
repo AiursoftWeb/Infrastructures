@@ -1,9 +1,8 @@
-﻿namespace Aiursoft.Observer.SDK.Models
+﻿namespace Aiursoft.Observer.SDK.Models;
+
+public enum EventLevel
 {
-    public enum EventLevel
-    {
-        Exception = 1,
-        Warning = 2,
-        Info = 3
-    }
+    Exception = 1,
+    Warning = 2,
+    Info = 3
 }

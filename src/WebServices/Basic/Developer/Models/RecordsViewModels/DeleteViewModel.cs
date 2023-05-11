@@ -1,33 +1,30 @@
-﻿using Aiursoft.Developer.Models.AppsViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Developer.Models.AppsViewModels;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Developer.Models.RecordsViewModels
+namespace Aiursoft.Developer.Models.RecordsViewModels;
+
+public class DeleteViewModel : AppLayoutModel
 {
-    public class DeleteViewModel : AppLayoutModel
+    [Obsolete("This method is only for framework", true)]
+    public DeleteViewModel()
     {
-        [Obsolete(message: "This method is only for framework", error: true)]
-        public DeleteViewModel() { }
-        public DeleteViewModel(DeveloperUser user) : base(user)
-        {
+    }
 
-        }
+    public DeleteViewModel(DeveloperUser user) : base(user)
+    {
+    }
 
-        public void Recover(DeveloperUser user, string appName)
-        {
-            AppName = appName;
-            RootRecover(user);
-        }
+    [FromRoute] [Required] public string AppId { get; set; }
 
-        [FromRoute]
-        [Required]
-        public string AppId { get; set; }
+    [Required] [FromRoute] [MaxLength(50)] public string RecordName { get; set; }
 
-        [Required]
-        [FromRoute]
-        [MaxLength(50)]
-        public string RecordName { get; set; }
-        public string AppName { get; set; }
+    public string AppName { get; set; }
+
+    public void Recover(DeveloperUser user, string appName)
+    {
+        AppName = appName;
+        RootRecover(user);
     }
 }

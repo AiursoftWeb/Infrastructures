@@ -1,14 +1,13 @@
-﻿namespace Aiursoft.Scanner.Interfaces
+﻿namespace Aiursoft.Scanner.Interfaces;
+
+public interface ISingletonDependency
 {
-    public interface ISingletonDependency
-    {
-    }
+}
 
-    public interface IScopedDependency
-    {
-    }
+public interface IScopedDependency
+{
+}
 
-    public interface ITransientDependency
-    {
-    }
+public interface ITransientDependency
+{
 }

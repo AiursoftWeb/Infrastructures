@@ -1,8 +1,7 @@
-﻿namespace Aiursoft.Probe.SDK.Models.SitesAddressModels
+﻿namespace Aiursoft.Probe.SDK.Models.SitesAddressModels;
+
+public class ViewSiteDetailAddressModel
 {
-    public class ViewSiteDetailAddressModel
-    {
-        public string SiteName { get; set; }
-        public string AccessToken { get; set; }
-    }
+    public string SiteName { get; set; }
+    public string AccessToken { get; set; }
 }

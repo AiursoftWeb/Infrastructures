@@ -1,10 +1,9 @@
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.XelNaga.Services;
+
+public static class ScriptsFilter
 {
-    public static class ScriptsFilter
+    public static string FilterString(string html)
     {
-        public static string FilterString(string html)
-        {
-            return html.Replace("<scripts", "< scripts");
-        }
+        return html.Replace("<scripts", "< scripts");
     }
 }

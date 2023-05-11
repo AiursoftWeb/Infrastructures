@@ -10,34 +10,33 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Stargate
+namespace Aiursoft.Stargate;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["TestAppId"];
+        AppsContainer.CurrentAppSecret = configuration["TestAppSecret"];
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["TestAppId"];
-            AppsContainer.CurrentAppSecret = configuration["TestAppSecret"];
-        }
+    public IConfiguration Configuration { get; }
 
-        public virtual void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-            services.AddAiurAPIMvc();
-            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddAiursoftSDK();
-            services.AddSingleton(new StargateLocator(endpoint: Configuration["StargateEndpoint"]));
-        }
+    public virtual void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddAiurAPIMvc();
+        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftSDK();
+        services.AddSingleton(new StargateLocator(Configuration["StargateEndpoint"]));
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurAPIHandler(env.IsDevelopment());
-            app.UseWebSockets();
-            app.UseAiursoftAPIDefault();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurAPIHandler(env.IsDevelopment());
+        app.UseWebSockets();
+        app.UseAiursoftAPIDefault();
     }
 }

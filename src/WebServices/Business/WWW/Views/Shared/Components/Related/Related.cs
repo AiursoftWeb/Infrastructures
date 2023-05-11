@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
 
-namespace Aiursoft.WWW.Views.Shared.Components.Related
+namespace Aiursoft.WWW.Views.Shared.Components.Related;
+
+public class Related : ViewComponent
 {
-    public class Related : ViewComponent
+    public IViewComponentResult Invoke(RelatedSearchesRelatedSearchAnswer related)
     {
-        public IViewComponentResult Invoke(Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.RelatedSearchesRelatedSearchAnswer related)
-        {
-            return View(model: related);
-        }
+        return View(related);
     }
 }

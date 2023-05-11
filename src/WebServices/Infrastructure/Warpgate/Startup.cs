@@ -10,35 +10,35 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Warpgate
+namespace Aiursoft.Warpgate;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["WarpgateAppId"];
-            AppsContainer.CurrentAppSecret = configuration["WarpgateAppSecret"];
-        }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["WarpgateAppId"];
+        AppsContainer.CurrentAppSecret = configuration["WarpgateAppSecret"];
+    }
 
-        public virtual void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+    public IConfiguration Configuration { get; }
 
-            services.AddAiurAPIMvc();
-            services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
-            services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-            services.AddSingleton(new WarpgateLocator(
-                Configuration["WarpgateEndpoint"], 
-                Configuration["WarpPattern"]));
-            services.AddAiursoftSDK();
-        }
+    public virtual void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurAPIHandler(env.IsDevelopment());
-            app.UseAiursoftAPIDefault();
-        }
+        services.AddAiurAPIMvc();
+        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddSingleton(new WarpgateLocator(
+            Configuration["WarpgateEndpoint"],
+            Configuration["WarpPattern"]));
+        services.AddAiursoftSDK();
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurAPIHandler(env.IsDevelopment());
+        app.UseAiursoftAPIDefault();
     }
 }

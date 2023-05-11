@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Aiursoft.DocGenerator.Attributes
-{
-    public class GenerateDoc : Attribute
-    {
+namespace Aiursoft.DocGenerator.Attributes;
 
-    }
+public class GenerateDoc : Attribute
+{
 }

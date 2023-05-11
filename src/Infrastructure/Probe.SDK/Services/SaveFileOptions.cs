@@ -1,8 +1,7 @@
-﻿namespace Aiursoft.Probe.SDK.Services
+﻿namespace Aiursoft.Probe.SDK.Services;
+
+public enum SaveFileOptions
 {
-    public enum SaveFileOptions
-    {
-        RandomName,
-        SourceName
-    }
+    RandomName,
+    SourceName
 }

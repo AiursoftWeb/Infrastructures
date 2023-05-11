@@ -1,13 +1,12 @@
-﻿using Aiursoft.Handler.Models;
+﻿using System.Collections.Generic;
+using Aiursoft.Handler.Models;
 using Aiursoft.SDKTools.Attributes;
-using System.Collections.Generic;
 
-namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels
+namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels;
+
+public class ViewMyChannelsViewModel : AiurProtocol
 {
-    public class ViewMyChannelsViewModel : AiurProtocol
-    {
-        [IsGuidOrEmpty]
-        public string AppId { get; set; }
-        public IEnumerable<Channel> Channels { get; set; }
-    }
+    [IsGuidOrEmpty] public string AppId { get; set; }
+
+    public IEnumerable<Channel> Channels { get; set; }
 }

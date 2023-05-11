@@ -1,11 +1,10 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Probe.SDK.Models.HomeViewModels
+namespace Aiursoft.Probe.SDK.Models.HomeViewModels;
+
+public class IndexViewModel : AiurProtocol
 {
-    public class IndexViewModel : AiurProtocol
-    {
-        public string DownloadPattern { get; set; }
-        public string PlayerPattern { get; set; }
-        public string OpenPattern { get; set; }
-    }
+    public string DownloadPattern { get; set; }
+    public string PlayerPattern { get; set; }
+    public string OpenPattern { get; set; }
 }

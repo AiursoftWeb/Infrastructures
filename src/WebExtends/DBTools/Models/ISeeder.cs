@@ -1,7 +1,6 @@
-﻿namespace Aiursoft.DBTools.Models
+﻿namespace Aiursoft.DBTools.Models;
+
+public interface ISeeder
 {
-    public interface ISeeder
-    {
-        void Seed();
-    }
+    void Seed();
 }

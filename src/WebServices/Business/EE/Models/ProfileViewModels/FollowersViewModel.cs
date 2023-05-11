@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.EE.Models.ProfileViewModels
+namespace Aiursoft.EE.Models.ProfileViewModels;
+
+public class FollowersViewModel : ProfileViewModelBase
 {
-    public class FollowersViewModel : ProfileViewModelBase
-    {
-        public IEnumerable<Follow> Followers { get; set; }
-    }
+    public IEnumerable<Follow> Followers { get; set; }
 }

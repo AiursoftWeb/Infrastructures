@@ -1,49 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Aiursoft.XelNaga.Models
+namespace Aiursoft.XelNaga.Models;
+
+public class SafeQueue<T>
 {
-    public class SafeQueue<T>
+    private readonly object loc = new();
+    private readonly Queue<T> queue = new();
+
+    public void Enqueue(T item)
     {
-        private readonly Queue<T> queue = new();
-        private readonly object loc = new();
-
-        public void Enqueue(T item)
+        lock (loc)
         {
-            lock (loc)
-            {
-                queue.Enqueue(item);
-            }
+            queue.Enqueue(item);
+        }
+    }
+
+    public T Dequeue()
+    {
+        T item;
+        lock (loc)
+        {
+            item = queue.Dequeue();
         }
 
-        public T Dequeue()
+        return item;
+    }
+
+    public bool Any()
+    {
+        bool any;
+        lock (loc)
         {
-            T item;
-            lock (loc)
-            {
-                item = queue.Dequeue();
-            }
-            return item;
+            any = queue.Any();
         }
 
-        public bool Any()
+        return any;
+    }
+
+    public int Count()
+    {
+        int count;
+        lock (loc)
         {
-            bool any;
-            lock (loc)
-            {
-                any = queue.Any();
-            }
-            return any;
+            count = queue.Count;
         }
 
-        public int Count()
-        {
-            int count;
-            lock (loc)
-            {
-                count = queue.Count;
-            }
-            return count;
-        }
+        return count;
     }
 }

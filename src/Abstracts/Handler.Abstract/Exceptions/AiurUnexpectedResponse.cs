@@ -1,19 +1,19 @@
-﻿using Aiursoft.Handler.Models;
-using System;
+﻿using System;
+using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Handler.Exceptions
+namespace Aiursoft.Handler.Exceptions;
+
+/// <summary>
+///     Throw this exception if the json respond by the Aiursoft Server was not with code = 0.
+///     Catch it in your own code or just use `AiurExpHandler`.
+/// </summary>
+public class AiurUnexpectedResponse : Exception
 {
-    /// <summary>
-    /// Throw this exception if the json respond by the Aiursoft Server was not with code = 0.
-    /// Catch it in your own code or just use `AiurExpHandler`.
-    /// </summary>
-    public class AiurUnexpectedResponse : Exception
+    public AiurUnexpectedResponse(AiurProtocol response) : base(response.Message)
     {
-        public AiurProtocol Response { get; set; }
-        public ErrorType Code => Response.Code;
-        public AiurUnexpectedResponse(AiurProtocol response) : base(response.Message)
-        {
-            Response = response;
-        }
+        Response = response;
     }
+
+    public AiurProtocol Response { get; set; }
+    public ErrorType Code => Response.Code;
 }

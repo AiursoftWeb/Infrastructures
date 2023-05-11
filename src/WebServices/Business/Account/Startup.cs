@@ -11,40 +11,39 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Account
+namespace Aiursoft.Account;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["AccountAppId"];
+        AppsContainer.CurrentAppSecret = configuration["AccountAppSecret"];
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["AccountAppId"];
-            AppsContainer.CurrentAppSecret = configuration["AccountAppSecret"];
-        }
+    public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<AccountDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<AccountDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-            services.AddIdentity<AccountUser, IdentityRole>()
-                .AddEntityFrameworkStores<AccountDbContext>()
-                .AddDefaultTokenProviders();
+        services.AddIdentity<AccountUser, IdentityRole>()
+            .AddEntityFrameworkStores<AccountDbContext>()
+            .AddDefaultTokenProviders();
 
-            services.AddAiurMvc();
-            services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-            services.AddAiursoftIdentity<AccountUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
-        }
+        services.AddAiurMvc();
+        services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
+        services.AddAiursoftIdentity<AccountUser>(
+            Configuration.GetConnectionString("ArchonConnection"),
+            Configuration.GetConnectionString("ObserverConnection"),
+            Configuration.GetConnectionString("ProbeConnection"),
+            Configuration.GetConnectionString("GatewayConnection"));
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiursoftDefault();
     }
 }

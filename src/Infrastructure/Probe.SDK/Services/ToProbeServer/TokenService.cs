@@ -1,61 +1,56 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using System;
+using System.Threading.Tasks;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Probe.SDK.Services.ToProbeServer
+namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
+
+public class TokenService : IScopedDependency
 {
-    public class TokenService : IScopedDependency
+    private readonly APIProxyService _http;
+    private readonly ProbeLocator _serviceLocation;
+
+    public TokenService(
+        APIProxyService http,
+        ProbeLocator serviceLocation)
     {
-        private readonly APIProxyService _http;
-        private readonly ProbeLocator _serviceLocation;
+        _http = http;
+        _serviceLocation = serviceLocation;
+    }
 
-        public TokenService(
-            APIProxyService http,
-            ProbeLocator serviceLocation)
+    /// <summary>
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="siteName"></param>
+    /// <param name="permissions">Upload, Download</param>
+    /// <param name="underPath"></param>
+    /// <param name="lifespan"></param>
+    /// <returns></returns>
+    public async Task<string> GetTokenAsync(
+        string accessToken,
+        string siteName,
+        string[] permissions,
+        string underPath,
+        TimeSpan lifespan)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetToken", new { });
+        var form = new AiurUrl(string.Empty, new GetTokenAddressModel
         {
-            _http = http;
-            _serviceLocation = serviceLocation;
-        }
+            AccessToken = accessToken,
+            SiteName = siteName,
+            Permissions = string.Join(",", permissions),
+            UnderPath = underPath,
+            LifespanSeconds = (long)lifespan.TotalSeconds
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="accessToken"></param>
-        /// <param name="siteName"></param>
-        /// <param name="permissions">Upload, Download</param>
-        /// <param name="underPath"></param>
-        /// <param name="lifespan"></param>
-        /// <returns></returns>
-        public async Task<string> GetTokenAsync(
-            string accessToken, 
-            string siteName, 
-            string[] permissions, 
-            string underPath,
-            TimeSpan lifespan)
-        {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetToken", new { });
-            var form = new AiurUrl(string.Empty, new GetTokenAddressModel
-            {
-                AccessToken = accessToken,
-                SiteName = siteName,
-                Permissions = string.Join(",", permissions),
-                UnderPath = underPath,
-                LifespanSeconds = (long)lifespan.TotalSeconds
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult.Value;
-        }
+        return jResult.Value;
     }
 }

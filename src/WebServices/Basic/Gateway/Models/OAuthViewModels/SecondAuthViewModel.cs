@@ -1,16 +1,15 @@
-﻿using Aiursoft.Gateway.SDK.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Aiursoft.Gateway.SDK.Models;
 
-namespace Aiursoft.Gateway.Models.OAuthViewModels
+namespace Aiursoft.Gateway.Models.OAuthViewModels;
+
+public class SecondAuthViewModel : FinishAuthInfo
 {
-    public class SecondAuthViewModel : FinishAuthInfo
-    {
-        [Required]
-        [StringLength(6)]
-        [Display(Name = "Verification Code")]
-        public string VerifyCode { get; set; }
+    [Required]
+    [StringLength(6)]
+    [Display(Name = "Verification Code")]
+    public string VerifyCode { get; set; }
 
-        [Display(Name = "Don't ask me this again on this device.")]
-        public bool DoNotAskMeOnIt { get; set; }
-    }
+    [Display(Name = "Don't ask me this again on this device.")]
+    public bool DoNotAskMeOnIt { get; set; }
 }

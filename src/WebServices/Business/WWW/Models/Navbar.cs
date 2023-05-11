@@ -1,9 +1,8 @@
-﻿namespace Aiursoft.WWW.Models
+﻿namespace Aiursoft.WWW.Models;
+
+public class Navbar
 {
-    public class Navbar
-    {
-        public string Title { get; set; }
-        public string Link { get; set; }
-        public Navbar[] Dropdowns { get; set; }
-    }
+    public string Title { get; set; }
+    public string Link { get; set; }
+    public Navbar[] Dropdowns { get; set; }
 }

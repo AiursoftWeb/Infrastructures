@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Configuration.Data
+namespace Aiursoft.Configuration.Data;
+
+public class ConfigurationDbContext : DbContext
 {
-    public class ConfigurationDbContext : DbContext
+    public ConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options) : base(options)
     {
-        public ConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options) : base(options)
-        {
-        }
     }
 }

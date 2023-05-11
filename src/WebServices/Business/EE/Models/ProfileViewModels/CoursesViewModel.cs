@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.EE.Models.ProfileViewModels
+namespace Aiursoft.EE.Models.ProfileViewModels;
+
+public class CoursesViewModel : ProfileViewModelBase
 {
-    public class CoursesViewModel : ProfileViewModelBase
-    {
-        public IEnumerable<Course> AllCourses{ get; set; }
-    }
+    public IEnumerable<Course> AllCourses { get; set; }
 }

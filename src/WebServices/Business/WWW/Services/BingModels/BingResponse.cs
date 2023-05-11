@@ -1,8 +1,7 @@
-﻿namespace Aiursoft.WWW.Services.BingModels
+﻿namespace Aiursoft.WWW.Services.BingModels;
+
+public class BingResponse
 {
-    public class BingResponse
-    {
-        public DetectedLanguage DetectedLanguage { get; set; }
-        public TranslationsItem[] Translations { get; set; }
-    }
+    public DetectedLanguage DetectedLanguage { get; set; }
+    public TranslationsItem[] Translations { get; set; }
 }

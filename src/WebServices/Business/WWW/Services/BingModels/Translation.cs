@@ -1,7 +1,6 @@
-﻿namespace Aiursoft.WWW.Services.BingModels
+﻿namespace Aiursoft.WWW.Services.BingModels;
+
+public class Translation
 {
-    public class Translation
-    {
-        public string Text { get; set; }
-    }
+    public string Text { get; set; }
 }

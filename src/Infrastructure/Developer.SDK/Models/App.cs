@@ -1,66 +1,72 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
-namespace Aiursoft.Developer.SDK.Models
+namespace Aiursoft.Developer.SDK.Models;
+
+public class App
 {
-    public class App
+    [Obsolete(error: true, message: "This method is only for framework!")]
+    public App()
     {
-        [Obsolete(error: true, message: "This method is only for framework!")]
-        public App() { }
-        public App(string name, string description, Category category, Platform platform, string iconPath = null)
-        {
-            this.AppId = Guid.NewGuid().ToString("N");
-            this.AppSecret = Guid.NewGuid().ToString("N");
-            this.AppName = name;
-            this.AppDescription = description;
-            this.AppCategory = category;
-            this.AppPlatform = platform;
-            this.IconPath = iconPath;
-        }
-        [Key]
-        public string AppId { get; set; }
-        [JsonIgnore]
-        public string AppSecret { get; set; }
-        public string AppName { get; set; }
-
-        /// <summary>
-        /// sitename/filepath/filename.extension
-        /// </summary>
-        public string IconPath { get; set; }
-        public string AppDescription { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}")]
-        public DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
-
-        public Category AppCategory { get; set; }
-        public Platform AppPlatform { get; set; }
-
-        public bool EnableOAuth { get; set; } = true;
-        /// <summary>
-        /// Force the user to input his password even when he is already signed in.
-        /// </summary>
-        public bool ForceInputPassword { get; set; }
-        public bool ForceConfirmation { get; set; } = true;
-        public bool DebugMode { get; set; }
-        public string AppDomain { get; set; }
-        public string AppFailCallbackUrl { get; set; }
-
-        public bool ViewOpenId { get; set; } = true;
-        public bool ViewPhoneNumber { get; set; }
-        public bool ChangePhoneNumber { get; set; }
-        public bool ConfirmEmail { get; set; }
-        public bool ChangeBasicInfo { get; set; }
-        public bool ChangePassword { get; set; }
-        public bool ChangeGrantInfo { get; set; }
-        public bool ViewAuditLog { get; set; }
-        public bool ManageSocialAccount { get; set; }
-        public bool TrustedApp { get; set; }
-
-        [Url]
-        [Display(Name = "Privacy Statement Url")]
-        public string PrivacyStatementUrl { get; set; }
-        [Url]
-        [Display(Name = "License Url")]
-        public string LicenseUrl { get; set; }
     }
+
+    public App(string name, string description, Category category, Platform platform, string iconPath = null)
+    {
+        AppId = Guid.NewGuid().ToString("N");
+        AppSecret = Guid.NewGuid().ToString("N");
+        AppName = name;
+        AppDescription = description;
+        AppCategory = category;
+        AppPlatform = platform;
+        IconPath = iconPath;
+    }
+
+    [Key] public string AppId { get; set; }
+
+    [JsonIgnore] public string AppSecret { get; set; }
+
+    public string AppName { get; set; }
+
+    /// <summary>
+    ///     sitename/filepath/filename.extension
+    /// </summary>
+    public string IconPath { get; set; }
+
+    public string AppDescription { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}")]
+    public DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
+
+    public Category AppCategory { get; set; }
+    public Platform AppPlatform { get; set; }
+
+    public bool EnableOAuth { get; set; } = true;
+
+    /// <summary>
+    ///     Force the user to input his password even when he is already signed in.
+    /// </summary>
+    public bool ForceInputPassword { get; set; }
+
+    public bool ForceConfirmation { get; set; } = true;
+    public bool DebugMode { get; set; }
+    public string AppDomain { get; set; }
+    public string AppFailCallbackUrl { get; set; }
+
+    public bool ViewOpenId { get; set; } = true;
+    public bool ViewPhoneNumber { get; set; }
+    public bool ChangePhoneNumber { get; set; }
+    public bool ConfirmEmail { get; set; }
+    public bool ChangeBasicInfo { get; set; }
+    public bool ChangePassword { get; set; }
+    public bool ChangeGrantInfo { get; set; }
+    public bool ViewAuditLog { get; set; }
+    public bool ManageSocialAccount { get; set; }
+    public bool TrustedApp { get; set; }
+
+    [Url]
+    [Display(Name = "Privacy Statement Url")]
+    public string PrivacyStatementUrl { get; set; }
+
+    [Url] [Display(Name = "License Url")] public string LicenseUrl { get; set; }
 }

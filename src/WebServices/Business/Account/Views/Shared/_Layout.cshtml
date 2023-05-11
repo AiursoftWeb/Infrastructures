@@ -1,6 +1,6 @@
 ﻿@model AccountViewModel
 @{
-	var title = $"{ViewData["Title"] ?? string.Empty} - {Values.ProjectName ?? string.Empty} {Localizer["Account"].ToString() ?? string.Empty}";
+    var title = $"{ViewData["Title"] ?? string.Empty} - {Values.ProjectName ?? string.Empty} {Localizer["Account"].ToString() ?? string.Empty}";
 }
 <!DOCTYPE html>
 <html>
@@ -8,74 +8,82 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@title</title>
     <vc:aiur-market-css></vc:aiur-market-css>
-    @await RenderSectionAsync("css", required: false)
+    @await RenderSectionAsync("css", false)
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName ?? string.Empty]</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName ?? string.Empty]</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Account" asp-action="Index">@Localizer["Manage Account"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">@Localizer["Connected Devices"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">@Localizer["FAQ"]</a>
+                </li>
+            </ul>
+            <div class="form-inline">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Index">@Localizer["Manage Account"]</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["Connected Devices"]</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">@Localizer["FAQ"]</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Index">
+                                @Localizer["Account Settings"]
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @await UserImageGenerator.RenderUserImageAsync(User)
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Index">@Localizer["Profile"]</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">@Localizer["Sign out"]</a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                @Localizer["Sign in"]
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                @Localizer["Sign up"]
+                            </a>
+                        </li>
+                    }
                 </ul>
-                <div class="form-inline">
-                    <ul class="navbar-nav mr-auto">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Index">
-                                    @Localizer["Account Settings"]
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @await UserImageGenerator.RenderUserImageAsync(User)
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdown02">
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Index">@Localizer["Profile"]</a>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">@Localizer["Sign out"]</a>
-                                </div>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item active">
-                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
-                                    @Localizer["Sign in"]
-                                </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
-                                    @Localizer["Sign up"]
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
             </div>
         </div>
-    </nav>
-    @RenderBody()
-    <footer class="bd-footer text-muted">
-        <div class="container-fluid p-3 p-md-5">
-            <ul class="bd-footer-links">
-                <vc:aiur-footer template="li" item-class=""></vc:aiur-footer>
-            </ul>
-            <p>
-                &copy; @DateTime.Now.Year - @Values.ProjectName
-                <vc:china-register></vc:china-register>
-            </p>
-        </div>
-    </footer>
-    <vc:scroll-to-top></vc:scroll-to-top>
-    <vc:aiur-logout></vc:aiur-logout>
-    <vc:aiur-market-js></vc:aiur-market-js>
-@await RenderSectionAsync("js", required: false)
+    </div>
+</nav>
+@RenderBody()
+<footer class="bd-footer text-muted">
+    <div class="container-fluid p-3 p-md-5">
+        <ul class="bd-footer-links">
+            <vc:aiur-footer template="li" item-class=""></vc:aiur-footer>
+        </ul>
+        <p>
+            &copy; @DateTime.Now.Year - @Values.ProjectName
+            <vc:china-register></vc:china-register>
+        </p>
+    </div>
+</footer>
+<vc:scroll-to-top></vc:scroll-to-top>
+<vc:aiur-logout></vc:aiur-logout>
+<vc:aiur-market-js></vc:aiur-market-js>
+@await RenderSectionAsync("js", false)
 </body>
 </html>

@@ -13,59 +13,58 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Aiursoft.Wiki
+namespace Aiursoft.Wiki;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["WikiAppId"];
-            AppsContainer.CurrentAppSecret = configuration["WikiAppSecret"];
-        }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<WikiDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-
-            services.AddIdentity<WikiUser, IdentityRole>()
-                .AddEntityFrameworkStores<WikiDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddAiurMvc();
-
-            services.AddAiursoftIdentity<WikiUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
-        }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["WikiAppId"];
+        AppsContainer.CurrentAppSecret = configuration["WikiAppSecret"];
     }
 
-    public static class PostStartUp
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
     {
-        public static IHost Seed(this IHost host)
-        {
-            using var scope = host.Services.CreateScope();
-            var services = scope.ServiceProvider;
-            var logger = services.GetRequiredService<ILogger<Seeder>>();
-            var seeder = services.GetRequiredService<Seeder>();
-            logger.LogInformation($"Seeding...");
-            AsyncHelper.TryAsync(
-                times: 3,
-                taskFactory: () => seeder.Seed(),
-                onError: (e) => seeder.HandleException(e)
-            );
-            logger.LogInformation($"Seeded");
-            return host;
-        }
+        services.AddDbContextWithCache<WikiDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+
+        services.AddIdentity<WikiUser, IdentityRole>()
+            .AddEntityFrameworkStores<WikiDbContext>()
+            .AddDefaultTokenProviders();
+
+        services.AddAiurMvc();
+
+        services.AddAiursoftIdentity<WikiUser>(
+            Configuration.GetConnectionString("ArchonConnection"),
+            Configuration.GetConnectionString("ObserverConnection"),
+            Configuration.GetConnectionString("ProbeConnection"),
+            Configuration.GetConnectionString("GatewayConnection"));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiursoftDefault();
+    }
+}
+
+public static class PostStartUp
+{
+    public static IHost Seed(this IHost host)
+    {
+        using var scope = host.Services.CreateScope();
+        var services = scope.ServiceProvider;
+        var logger = services.GetRequiredService<ILogger<Seeder>>();
+        var seeder = services.GetRequiredService<Seeder>();
+        logger.LogInformation("Seeding...");
+        AsyncHelper.TryAsync(
+            times: 3,
+            taskFactory: () => seeder.Seed(),
+            onError: e => seeder.HandleException(e)
+        );
+        logger.LogInformation("Seeded");
+        return host;
     }
 }

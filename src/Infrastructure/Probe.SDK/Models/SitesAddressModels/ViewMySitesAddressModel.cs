@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Probe.SDK.Models.SitesAddressModels
+namespace Aiursoft.Probe.SDK.Models.SitesAddressModels;
+
+public class ViewMySitesAddressModel
 {
-    public class ViewMySitesAddressModel
-    {
-        [Required]
-        public string AccessToken { get; set; }
-    }
+    [Required] public string AccessToken { get; set; }
 }

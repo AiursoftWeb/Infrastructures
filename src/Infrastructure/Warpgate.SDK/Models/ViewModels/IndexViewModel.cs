@@ -1,9 +1,8 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Warpgate.SDK.Models.ViewModels
+namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
+
+public class IndexViewModel : AiurProtocol
 {
-    public class IndexViewModel : AiurProtocol
-    {
-        public string WarpPattern { get; set; }
-    }
+    public string WarpPattern { get; set; }
 }

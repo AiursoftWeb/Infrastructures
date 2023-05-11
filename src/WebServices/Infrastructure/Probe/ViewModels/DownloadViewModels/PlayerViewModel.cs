@@ -1,19 +1,17 @@
-﻿namespace Aiursoft.Probe.ViewModels.DownloadViewModels
+﻿using System.Net;
+
+namespace Aiursoft.Probe.ViewModels.DownloadViewModels;
+
+public class PlayerViewModel
 {
-    public class PlayerViewModel
+    public PlayerViewModel(string src, string token)
     {
-        public PlayerViewModel(string src, string token)
-        {
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                PlayUrl = $"{src}?token={System.Net.WebUtility.UrlEncode(token)}";
-            }
-            else
-            {
-                PlayUrl = src;
-            }
-        }
-        public string PlayUrl { get; set; }
-        public string Title { get; set; }
+        if (!string.IsNullOrWhiteSpace(token))
+            PlayUrl = $"{src}?token={WebUtility.UrlEncode(token)}";
+        else
+            PlayUrl = src;
     }
+
+    public string PlayUrl { get; set; }
+    public string Title { get; set; }
 }

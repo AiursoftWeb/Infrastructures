@@ -1,17 +1,17 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
+using Aiursoft.Scanner.Interfaces;
 
-namespace Aiursoft.Probe.Services
+namespace Aiursoft.Probe.Services;
+
+public class PBKeyPair : ISingletonDependency
 {
-    public class PBKeyPair : ISingletonDependency
+    private RSAParameters? _privateKey;
+
+    public RSAParameters GetKey()
     {
-        private RSAParameters? _privateKey;
-        public RSAParameters GetKey()
-        {
-            if (_privateKey != null) return _privateKey.Value;
-            var provider = new RSACryptoServiceProvider();
-            _privateKey = provider.ExportParameters(true);
-            return _privateKey.Value;
-        }
+        if (_privateKey != null) return _privateKey.Value;
+        var provider = new RSACryptoServiceProvider();
+        _privateKey = provider.ExportParameters(true);
+        return _privateKey.Value;
     }
 }

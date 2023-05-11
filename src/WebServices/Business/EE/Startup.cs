@@ -10,38 +10,38 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.EE
+namespace Aiursoft.EE;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["EEAppId"];
-            AppsContainer.CurrentAppSecret = configuration["EEAppSecret"];
-        }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["EEAppId"];
+        AppsContainer.CurrentAppSecret = configuration["EEAppSecret"];
+    }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+    public IConfiguration Configuration { get; }
 
-            services.AddIdentity<EEUser, IdentityRole>()
-                .AddEntityFrameworkStores<EEDbContext>()
-                .AddDefaultTokenProviders();
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-            services.AddAiurMvc();
-            services.AddAiursoftIdentity<EEUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
-        }
+        services.AddIdentity<EEUser, IdentityRole>()
+            .AddEntityFrameworkStores<EEDbContext>()
+            .AddDefaultTokenProviders();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
-        }
+        services.AddAiurMvc();
+        services.AddAiursoftIdentity<EEUser>(
+            Configuration.GetConnectionString("ArchonConnection"),
+            Configuration.GetConnectionString("ObserverConnection"),
+            Configuration.GetConnectionString("ProbeConnection"),
+            Configuration.GetConnectionString("GatewayConnection"));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiursoftDefault();
     }
 }

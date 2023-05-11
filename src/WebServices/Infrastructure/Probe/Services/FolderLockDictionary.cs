@@ -1,29 +1,25 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
+using Aiursoft.Scanner.Interfaces;
 
-namespace Aiursoft.Probe.Services
+namespace Aiursoft.Probe.Services;
+
+public class FolderLockDictionary : ISingletonDependency
 {
-    public class FolderLockDictionary : ISingletonDependency
-    {
-        private Dictionary<int, SemaphoreSlim> _dictionary = new();
+    private readonly Dictionary<int, SemaphoreSlim> _dictionary = new();
 
-        public SemaphoreSlim GetLock(int contextId)
+    public SemaphoreSlim GetLock(int contextId)
+    {
+        lock (this)
         {
-            lock (this)
+            if (_dictionary.ContainsKey(contextId))
             {
-                if (_dictionary.ContainsKey(contextId))
-                {
-                    return _dictionary[contextId];
-                }
-                else
-                {
-                    var newLock = new SemaphoreSlim(1, 1);
-                    _dictionary[contextId] = newLock;
-                    return newLock;
-                }
+                return _dictionary[contextId];
             }
+
+            var newLock = new SemaphoreSlim(1, 1);
+            _dictionary[contextId] = newLock;
+            return newLock;
         }
     }
-
 }

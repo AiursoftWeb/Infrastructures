@@ -1,4 +1,4 @@
-﻿@using System.Text.RegularExpressions;
+﻿@using System.Text.RegularExpressions
 @model Aiursoft.Developer.Models.RecordsViewModels.EditViewModel
 @{
     ViewData["Title"] = "Edit record - " + Model.OldRecordName;
@@ -22,7 +22,9 @@
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
             <strong>@Localizer["Invalid Input!"]</strong>
             <div asp-validation-summary="All"></div>
         </div>
@@ -57,7 +59,7 @@
 
                     <div class="form-check col-12 pl-5">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" asp-for="Enabled" />
+                            <input type="checkbox" class="form-check-input" asp-for="Enabled"/>
                             <label asp-for="Enabled"></label>
                         </label>
                     </div>
@@ -92,7 +94,8 @@
                         <button type="submit" data-disable-with="Updating.." class="btn btn-primary btn">@Localizer["Update"]</button>
                         @if (!string.IsNullOrEmpty(Model.AppId))
                         {
-                <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>}
+                            <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
+                        }
                     </div>
                 </form>
             </div>

@@ -1,6 +1,7 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Aiursoft.Archon.SDK.Services;
 using Aiursoft.DBTools;
-using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.Data;
@@ -11,88 +12,84 @@ using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Observer.Controllers
+namespace Aiursoft.Observer.Controllers;
+
+[LimitPerMin]
+[APIModelStateChecker]
+[APIExpHandler]
+public class EventController : ControllerBase
 {
-    [LimitPerMin]
-    [APIModelStateChecker]
-    [APIExpHandler]
-    public class EventController : ControllerBase
+    private readonly CannonQueue _cannon;
+    private readonly ObserverDbContext _dbContext;
+    private readonly ACTokenValidator _tokenManager;
+
+    public EventController(
+        ACTokenValidator tokenManager,
+        ObserverDbContext dbContext,
+        CannonQueue cannon)
     {
-        private readonly ACTokenValidator _tokenManager;
-        private readonly ObserverDbContext _dbContext;
-        private readonly CannonQueue _cannon;
+        _tokenManager = tokenManager;
+        _dbContext = dbContext;
+        _cannon = cannon;
+    }
 
-        public EventController(
-            ACTokenValidator tokenManager,
-            ObserverDbContext dbContext,
-            CannonQueue cannon)
+    [HttpPost]
+    public IActionResult Log(LogAddressModel model)
+    {
+        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        _cannon.QueueWithDependency<ObserverDbContext>(async dbContext =>
         {
-            _tokenManager = tokenManager;
-            _dbContext = dbContext;
-            _cannon = cannon;
-        }
-
-        [HttpPost]
-        public IActionResult Log(LogAddressModel model)
-        {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            _cannon.QueueWithDependency<ObserverDbContext>(async dbContext =>
+            var newEvent = new ErrorLog
             {
-                var newEvent = new ErrorLog
-                {
-                    AppId = appid,
-                    Message = model.Message,
-                    StackTrace = model.StackTrace,
-                    EventLevel = model.EventLevel,
-                    Path = model.Path
-                };
-                dbContext.ErrorLogs.Add(newEvent);
-                await dbContext.SaveChangesAsync();
-            });
+                AppId = appid,
+                Message = model.Message,
+                StackTrace = model.StackTrace,
+                EventLevel = model.EventLevel,
+                Path = model.Path
+            };
+            dbContext.ErrorLogs.Add(newEvent);
+            await dbContext.SaveChangesAsync();
+        });
 
-            return this.Protocol(ErrorType.Success, "Successfully logged your event.");
-        }
+        return this.Protocol(ErrorType.Success, "Successfully logged your event.");
+    }
 
-        [Produces(typeof(ViewLogViewModel))]
-        public async Task<IActionResult> View(ViewAddressModel model)
-        {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            var logs = (await _dbContext
+    [Produces(typeof(ViewLogViewModel))]
+    public async Task<IActionResult> View(ViewAddressModel model)
+    {
+        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var logs = (await _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
                 .ToListAsync())
-                .GroupBy(t => t.Message)
-                .Select(t => new LogCollection
-                {
-                    Message = t.Key,
-                    First = t.OrderByDescending(p => p.LogTime).FirstOrDefault(),
-                    Count = t.Count()
-                })
-                .ToList();
-            var viewModel = new ViewLogViewModel
+            .GroupBy(t => t.Message)
+            .Select(t => new LogCollection
             {
-                AppId = appid,
-                Logs = logs,
-                Code = ErrorType.Success,
-                Message = "Successfully get your logs!"
-            };
-            return this.Protocol(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
+                Message = t.Key,
+                First = t.OrderByDescending(p => p.LogTime).FirstOrDefault(),
+                Count = t.Count()
+            })
+            .ToList();
+        var viewModel = new ViewLogViewModel
         {
-            var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
-            if (appid != model.AppId)
-            {
-                return this.Protocol(ErrorType.Unauthorized, "The app you try to delete is not the access token you granted!");
-            }
-            _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
-            await _dbContext.SaveChangesAsync();
-            return this.Protocol(ErrorType.Success, "App deleted.");
-        }
+            AppId = appid,
+            Logs = logs,
+            Code = ErrorType.Success,
+            Message = "Successfully get your logs!"
+        };
+        return this.Protocol(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
+    {
+        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        if (appid != model.AppId)
+            return this.Protocol(ErrorType.Unauthorized,
+                "The app you try to delete is not the access token you granted!");
+        _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
+        await _dbContext.SaveChangesAsync();
+        return this.Protocol(ErrorType.Success, "App deleted.");
     }
 }

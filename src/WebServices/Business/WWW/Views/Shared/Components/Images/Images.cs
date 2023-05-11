@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.WWW.Views.Shared.Components.Images
+namespace Aiursoft.WWW.Views.Shared.Components.Images;
+
+public class Images : ViewComponent
 {
-    public class Images : ViewComponent
+    public IViewComponentResult Invoke(Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.Images images)
     {
-        public IViewComponentResult Invoke(Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.Images images)
-        {
-            return View(model: images);
-        }
+        return View(images);
     }
 }

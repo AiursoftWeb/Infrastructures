@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Stargate.SDK.Models
+namespace Aiursoft.Stargate.SDK.Models;
+
+public class StargateApp
 {
-    public class StargateApp
-    {
-        [Key]
-        public string Id { get; set; }
-    }
+    [Key] public string Id { get; set; }
 }

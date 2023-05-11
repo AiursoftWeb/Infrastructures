@@ -51,79 +51,78 @@
                         <i class="fas fa-trash-alt"></i>
                         Delete @Model.Folder.FolderName
                     </a>
-
                 }
                 <div class="table-responsive">
                     <table class="table files-datatable">
                         <thead>
-                            <tr>
-                                <th>@Localizer["Name"]</th>
-                                <th>@Localizer["Size"]</th>
-                                <th>@Localizer["Upload Time"]</th>
-                                <td>Operations</td>
-                            </tr>
+                        <tr>
+                            <th>@Localizer["Name"]</th>
+                            <th>@Localizer["Size"]</th>
+                            <th>@Localizer["Upload Time"]</th>
+                            <td>Operations</td>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach (var folder in Model.Folder.SubFolders)
-                            {
-                                <tr>
-                                    <td data-order="A@(folder.FolderName)">
-                                        <i class="fas fa-folder text-primary"></i>
-                                        <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                            @folder.FolderName
-                                        </a>
-                                    </td>
-                                    <td data-order="0"></td>
-                                    <td data-order="0"></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                    Delete
-                                                </a>
-                                            </div>
+                        @foreach (var folder in Model.Folder.SubFolders)
+                        {
+                            <tr>
+                                <td data-order="A@(folder.FolderName)">
+                                    <i class="fas fa-folder text-primary"></i>
+                                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                        @folder.FolderName
+                                    </a>
+                                </td>
+                                <td data-order="0"></td>
+                                <td data-order="0"></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFolder" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(folder.FolderName)">
+                                                <i class="fas fa-trash-alt"></i>
+                                                Delete
+                                            </a>
                                         </div>
-                                    </td>
-                                </tr>
-                            }
-                            @foreach (var file in Model.Folder.Files)
-                            {
-                                <tr>
-                                    <td data-order="Z@(file.FileName)">
-                                        <i class="fas fa-file-alt text-primary"></i>
-                                        <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
-                                            @file.FileName
-                                        </a>
-                                    </td>
-                                    <td data-order="@file.FileSize">@file.FileSize.HumanReadableSize()</td>
-                                    <td data-utc-time="@file.UploadTime.ToHtmlDateTime()" data-order="@file.UploadTime.Ticks"></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
-                                                    <i class="fa fa-download"></i>
-                                                    Download
-                                                </a>
-                                                <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                    Delete
-                                                </a>
-                                                <a class="dropdown-item" asp-controller="Sites" asp-action="RenameFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
-                                                    <i class="fas fa-pencil"></i>
-                                                    Rename
-                                                </a>
-                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var file in Model.Folder.Files)
+                        {
+                            <tr>
+                                <td data-order="Z@(file.FileName)">
+                                    <i class="fas fa-file-alt text-primary"></i>
+                                    <a href="@ProbeLocator.GetProbeOpenAddress(Model.SiteName, Model.Path, file.FileName)" target="_blank">
+                                        @file.FileName
+                                    </a>
+                                </td>
+                                <td data-order="@file.FileSize">@file.FileSize.HumanReadableSize()</td>
+                                <td data-utc-time="@file.UploadTime.ToHtmlDateTime()" data-order="@file.UploadTime.Ticks"></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle p-1 pl-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="@ProbeLocator.GetProbeDownloadAddress(Model.SiteName, Model.Path, file.FileName)">
+                                                <i class="fa fa-download"></i>
+                                                Download
+                                            </a>
+                                            <a class="dropdown-item" asp-controller="Sites" asp-action="DeleteFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                <i class="fas fa-trash-alt"></i>
+                                                Delete
+                                            </a>
+                                            <a class="dropdown-item" asp-controller="Sites" asp-action="RenameFile" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.AppendPath(file.FileName)">
+                                                <i class="fas fa-pencil"></i>
+                                                Rename
+                                            </a>
                                         </div>
-                                    </td>
-                                </tr>
-                            }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>

@@ -1,6 +1,6 @@
 ﻿@model Aiursoft.Gateway.Models.ThirdPartyViewModels.BindAccountViewModel
-@{ 
-    ViewData["Title"] = "Bind failed with " + Model.Provider.GetName(); 
+@{
+    ViewData["Title"] = "Bind failed with " + Model.Provider.GetName();
 }
 <div class="container">
     <div class="card mx-auto mt-5" style="max-width: 50rem;">
@@ -17,7 +17,9 @@
                 }
             </div>
             <div class="alert alert-danger alert-dismissible mt-3" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
                 <strong>@Localizer["Bind failed!"]</strong>
                 <p class="mb-0">
                     There already exists another Aiursoft account binded with the @Model.Provider.GetName() account <strong>@Model.UserDetail.Name</strong>!

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Aiursoft.Archon.SDK.Models
+namespace Aiursoft.Archon.SDK.Models;
+
+public class ACToken
 {
-    public class ACToken
-    {
-        public string AppId { get; set; }
-        public DateTime Expires { get; set; }
-    }
+    public string AppId { get; set; }
+    public DateTime Expires { get; set; }
 }

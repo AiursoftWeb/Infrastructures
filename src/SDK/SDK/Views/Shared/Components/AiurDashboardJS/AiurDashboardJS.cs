@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.SDK.Views.Shared.Components.AiurDashboardJS
+namespace Aiursoft.SDK.Views.Shared.Components.AiurDashboardJS;
+
+public class AiurDashboardJS : ViewComponent
 {
-    public class AiurDashboardJS : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

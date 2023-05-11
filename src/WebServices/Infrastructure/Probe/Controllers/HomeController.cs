@@ -5,28 +5,27 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Aiursoft.Probe.Controllers
+namespace Aiursoft.Probe.Controllers;
+
+[LimitPerMin]
+public class HomeController : ControllerBase
 {
-    [LimitPerMin]
-    public class HomeController : ControllerBase
+    private readonly IConfiguration _configuration;
+
+    public HomeController(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
+        _configuration = configuration;
+    }
 
-        public HomeController(IConfiguration configuration)
+    public IActionResult Index()
+    {
+        return this.Protocol(new IndexViewModel
         {
-            _configuration = configuration;
-        }
-
-        public IActionResult Index()
-        {
-            return this.Protocol(new IndexViewModel
-            {
-                OpenPattern = _configuration["OpenPattern"],
-                DownloadPattern = _configuration["DownloadPattern"],
-                PlayerPattern = _configuration["PlayerPattern"],
-                Code = ErrorType.Success,
-                Message = "Welcome to Probe!"
-            });
-        }
+            OpenPattern = _configuration["OpenPattern"],
+            DownloadPattern = _configuration["DownloadPattern"],
+            PlayerPattern = _configuration["PlayerPattern"],
+            Code = ErrorType.Success,
+            Message = "Welcome to Probe!"
+        });
     }
 }

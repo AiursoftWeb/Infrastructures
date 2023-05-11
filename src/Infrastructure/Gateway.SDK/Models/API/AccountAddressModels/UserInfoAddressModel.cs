@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.SDK.Models.API.AccountAddressModels
+namespace Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
+
+public class UserInfoAddressModel
 {
-    public class UserInfoAddressModel
-    {
-        [Required]
-        public virtual string AccessToken { get; set; }
-        [Required]
-        public virtual string OpenId { get; set; }
-    }
+    [Required] public virtual string AccessToken { get; set; }
+
+    [Required] public virtual string OpenId { get; set; }
 }

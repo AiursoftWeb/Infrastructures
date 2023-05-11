@@ -88,7 +88,7 @@
                     </ul>
                 </div>
                 <ul class="list-group list-group-flush">
-                    @foreach(var sec in Model.Sections)
+                    @foreach (var sec in Model.Sections)
                     {
                         <li class="list-group-item">
                             <span class="float-left">
@@ -104,7 +104,7 @@
                             }
                         </li>
                     }
-                    @if(Model.Sections.Count()==0)
+                    @if (Model.Sections.Count() == 0)
                     {
                         <li class="list-group-item">
                             There is no section for this course!

@@ -13,41 +13,40 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Aiursoft.Developer
+namespace Aiursoft.Developer;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
+        Configuration = configuration;
+        AppsContainer.CurrentAppId = configuration["DeveloperAppId"];
+        AppsContainer.CurrentAppSecret = configuration["DeveloperAppSecret"];
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            AppsContainer.CurrentAppId = configuration["DeveloperAppId"];
-            AppsContainer.CurrentAppSecret = configuration["DeveloperAppSecret"];
-        }
+    public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextWithCache<DeveloperDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContextWithCache<DeveloperDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-            services.AddIdentity<DeveloperUser, IdentityRole>()
-                .AddEntityFrameworkStores<DeveloperDbContext>()
-                .AddDefaultTokenProviders();
-            services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
-            services.AddAiurMvc();
-            services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
-            services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
-            services.AddAiursoftIdentity<DeveloperUser>(
-                archonEndpoint: Configuration.GetConnectionString("ArchonConnection"),
-                observerEndpoint: Configuration.GetConnectionString("ObserverConnection"),
-                probeEndpoint: Configuration.GetConnectionString("ProbeConnection"),
-                gateEndpoint: Configuration.GetConnectionString("GatewayConnection"));
-        }
+        services.AddIdentity<DeveloperUser, IdentityRole>()
+            .AddEntityFrameworkStores<DeveloperDbContext>()
+            .AddDefaultTokenProviders();
+        services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
+        services.AddAiurMvc();
+        services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
+        services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
+        services.AddAiursoftIdentity<DeveloperUser>(
+            Configuration.GetConnectionString("ArchonConnection"),
+            Configuration.GetConnectionString("ObserverConnection"),
+            Configuration.GetConnectionString("ProbeConnection"),
+            Configuration.GetConnectionString("GatewayConnection"));
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseAiurUserHandler(env.IsDevelopment());
-            app.UseAiursoftDefault();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiursoftDefault();
     }
 }

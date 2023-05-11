@@ -1,30 +1,30 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Aiursoft.Stargate.SDK.Services.ToStargateServer;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
-namespace Aiursoft.Stargate.Tests.Services
+namespace Aiursoft.Stargate.Tests.Services;
+
+public class DebugMessageSender : IScopedDependency
 {
-    public class DebugMessageSender : IScopedDependency
-    {
-        private readonly PushMessageService _messageService;
-        public DebugMessageSender(PushMessageService messageService)
-        {
-            _messageService = messageService;
-        }
+    private readonly PushMessageService _messageService;
 
-        public async Task SendDebuggingMessages(string accessToken, int channelId)
+    public DebugMessageSender(PushMessageService messageService)
+    {
+        _messageService = messageService;
+    }
+
+    public async Task SendDebuggingMessages(string accessToken, int channelId)
+    {
+        for (var i = 0; i < 100; i++)
         {
-            for (var i = 0; i < 100; i++)
+            await _messageService.PushMessageAsync(accessToken, channelId, new
             {
-                await _messageService.PushMessageAsync(accessToken, channelId, new
-                {
-                    Guid = Guid.NewGuid().ToString("N"),
-                    Time = DateTime.UtcNow,
-                    Id = i
-                });
-                await Task.Delay(1);
-            }
+                Guid = Guid.NewGuid().ToString("N"),
+                Time = DateTime.UtcNow,
+                Id = i
+            });
+            await Task.Delay(1);
         }
     }
 }

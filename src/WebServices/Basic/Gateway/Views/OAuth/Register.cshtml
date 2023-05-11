@@ -17,7 +17,7 @@
                   asp-route-redirect_uri="@Model.RedirectUri"
                   asp-route-state="@Model.State">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en-US"].Value" />
+                <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en-US"].Value"/>
                 <div class="form-group">
                     <label asp-for="Email">@Localizer["New"] @Values.ProjectName @Localizer["Account"]</label>
                     <input type="email" asp-for="Email" class="form-control" placeholder="@Localizer["Enter your email account..."]" aria-describedby="emailHelp">
@@ -38,9 +38,9 @@
                     <label asp-for="CaptchaCode"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <img src="~/get-captcha-image" style="width:100px;height:33px;" onclick="$(this).attr('src', '/get-captcha-image?t=' + new Date().getTime())" />
+                            <img src="~/get-captcha-image" style="width:100px;height:33px;" onclick="$(this).attr('src', '/get-captcha-image?t=' + new Date().getTime())"/>
                         </div>
-                        <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4" />
+                        <input type="text" asp-for="CaptchaCode" class="form-control" placeholder="Captcha Code" autocomplete="off" minlength="4" maxlength="4"/>
                     </div>
                 </div>
 

@@ -1,42 +1,36 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer
+namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer;
+
+public class FaceBookUserDetail : IUserDetail
 {
-    public class FaceBookUserDetail : IUserDetail
+    [JsonProperty("picture")] public FaceBookPicture Picture { get; set; } = new();
+
+    [JsonProperty("id")] public string Id { get; set; }
+
+    public string AvatarUrl
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
-
-        public string AvatarUrl { get => Picture?.Data?.Url; set => Picture.Data.Url = value; }
-
-        [JsonProperty("picture")]
-        public FaceBookPicture Picture { get; set; } = new();
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("bio")]
-        public string Bio { get; set; } = "";
+        get => Picture?.Data?.Url;
+        set => Picture.Data.Url = value;
     }
 
-    public class FaceBookPicture
-    {
-        [JsonProperty("data")]
-        public FaceBookPictureData Data { get; set; } = new();
-    }
+    [JsonProperty("name")] public string Name { get; set; }
 
-    public class FaceBookPictureData
-    {
-        [JsonProperty("height")]
-        public int Height { get; set; }
+    [JsonProperty("email")] public string Email { get; set; }
 
-        [JsonProperty("width")]
-        public int Width { get; set; }
+    [JsonProperty("bio")] public string Bio { get; set; } = "";
+}
 
-        [JsonProperty("url")]
-        public string Url { get; set; }
-    }
+public class FaceBookPicture
+{
+    [JsonProperty("data")] public FaceBookPictureData Data { get; set; } = new();
+}
+
+public class FaceBookPictureData
+{
+    [JsonProperty("height")] public int Height { get; set; }
+
+    [JsonProperty("width")] public int Width { get; set; }
+
+    [JsonProperty("url")] public string Url { get; set; }
 }

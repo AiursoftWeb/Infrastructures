@@ -4,11 +4,11 @@
     <vc:aiur-header></vc:aiur-header>
     <title>@ViewData["Title"] - @Values.ProjectName</title>
     <vc:aiur-dashboard-css></vc:aiur-dashboard-css>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body class="bg-light lines">
-    @RenderBody()
-    <vc:aiur-dashboard-js></vc:aiur-dashboard-js>
-@await RenderSectionAsync("scripts", required: false)
+@RenderBody()
+<vc:aiur-dashboard-js></vc:aiur-dashboard-js>
+@await RenderSectionAsync("scripts", false)
 </body>
 </html>

@@ -1,11 +1,10 @@
-﻿using Aiursoft.Handler.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Warpgate.SDK.Models.ViewModels
+namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
+
+public class ViewMyRecordsViewModel : AiurProtocol
 {
-    public class ViewMyRecordsViewModel : AiurProtocol
-    {
-        public string AppId { get; set; }
-        public List<WarpRecord> Records { get; set; }
-    }
+    public string AppId { get; set; }
+    public List<WarpRecord> Records { get; set; }
 }

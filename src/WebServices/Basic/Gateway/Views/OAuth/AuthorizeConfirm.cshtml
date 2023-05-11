@@ -20,39 +20,57 @@
             <ul>
                 @if (Model.ViewOpenId)
                 {
-                    <li><label asp-for="ViewOpenId"></label></li>
+                    <li>
+                        <label asp-for="ViewOpenId"></label>
+                    </li>
                 }
                 @if (Model.ViewPhoneNumber)
                 {
-                    <li><label asp-for="ViewPhoneNumber"></label></li>
+                    <li>
+                        <label asp-for="ViewPhoneNumber"></label>
+                    </li>
                 }
                 @if (Model.ChangePhoneNumber)
                 {
-                    <li><label asp-for="ChangePhoneNumber"></label></li>
+                    <li>
+                        <label asp-for="ChangePhoneNumber"></label>
+                    </li>
                 }
                 @if (Model.ConfirmEmail)
                 {
-                    <li><label asp-for="ConfirmEmail"></label></li>
+                    <li>
+                        <label asp-for="ConfirmEmail"></label>
+                    </li>
                 }
                 @if (Model.ChangeBasicInfo)
                 {
-                    <li><label asp-for="ChangeBasicInfo"></label></li>
+                    <li>
+                        <label asp-for="ChangeBasicInfo"></label>
+                    </li>
                 }
                 @if (Model.ChangePassword)
                 {
-                    <li><label asp-for="ChangePassword"></label></li>
+                    <li>
+                        <label asp-for="ChangePassword"></label>
+                    </li>
                 }
                 @if (Model.ChangeGrantInfo)
                 {
-                    <li><label asp-for="ChangeGrantInfo"></label></li>
+                    <li>
+                        <label asp-for="ChangeGrantInfo"></label>
+                    </li>
                 }
                 @if (Model.ViewAuditLog)
                 {
-                    <li><label asp-for="ViewAuditLog"></label></li>
+                    <li>
+                        <label asp-for="ViewAuditLog"></label>
+                    </li>
                 }
                 @if (Model.ManageSocialAccount)
                 {
-                    <li><label asp-for="ManageSocialAccount"></label></li>
+                    <li>
+                        <label asp-for="ManageSocialAccount"></label>
+                    </li>
                 }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post"

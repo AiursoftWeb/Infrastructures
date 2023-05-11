@@ -1,4 +1,5 @@
-﻿@inject Microsoft.Extensions.Options.IOptions<List<Navbar>> optionsAccessor
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<List<Navbar>> optionsAccessor
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,84 +13,84 @@
         <title>@ViewData["Title"] - @Values.ProjectName</title>
     }
     <vc:aiur-market-css></vc:aiur-market-css>
-    <link type="application/opensearchdescription+xml" rel="search" title="@Values.ProjectName" href="/open-search" />
+    <link type="application/opensearchdescription+xml" rel="search" title="@Values.ProjectName" href="/open-search"/>
     <link rel="stylesheet" href="~/css/site.css">
 </head>
 <body>
-    @if (string.IsNullOrWhiteSpace(ViewData["NoNav"] as string))
-    {
-        <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    @Values.ProjectName
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#aiursoft-navbar" aria-controls="aiursoft-navbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="aiursoft-navbar">
-                    <vc:navbar-control configuration="@optionsAccessor.Value"></vc:navbar-control>
-                    <div class="form-inline">
-                        <ul class="navbar-nav mr-auto">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @await UserImageGenerator.RenderUserImageAsync(User)
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdown02">
-                                        <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
-                                        <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">@Localizer["Sign out"]</a>
-                                    </div>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item active">
-                                    <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
-                                        @Localizer["Sign in"]
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
-                                        @Localizer["Sign up"]
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    }
-    @RenderBody()
-    <footer class="footer bg-light">
+@if (string.IsNullOrWhiteSpace(ViewData["NoNav"] as string))
+{
+    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 h-100 text-center text-lg-left my-auto">
-                    <ul class="list-inline mb-2">
-                        <vc:aiur-footer template="li" item-class="list-inline-item"></vc:aiur-footer>
-                    </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">
-                        &copy; @DateTime.Now.Year - @Values.ProjectName
-                        <vc:china-register></vc:china-register>
-                    </p>
-                </div>
-                <div class="col-lg-4 h-100 text-center text-lg-right my-auto">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item mr-3">
-                            <a href="https://github.com/AiursoftWeb/Infrastructures">
-                                <i class="fab fa-github fa-2x "></i>
-                            </a>
-                        </li>
+            <a class="navbar-brand" href="/">
+                @Values.ProjectName
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#aiursoft-navbar" aria-controls="aiursoft-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="aiursoft-navbar">
+                <vc:navbar-control configuration="@optionsAccessor.Value"></vc:navbar-control>
+                <div class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @await UserImageGenerator.RenderUserImageAsync(User)
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">@Localizer["Sign out"]</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                    @Localizer["Sign in"]
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                    @Localizer["Sign up"]
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </div>
-    </footer>
-    <vc:scroll-to-top></vc:scroll-to-top>
-    <vc:aiur-logout></vc:aiur-logout>
-    <vc:aiur-market-js></vc:aiur-market-js>
-    @await RenderSectionAsync("js", required: false)
-    <script src="~/js/site.js"></script>
+    </nav>
+}
+@RenderBody()
+<footer class="footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 h-100 text-center text-lg-left my-auto">
+                <ul class="list-inline mb-2">
+                    <vc:aiur-footer template="li" item-class="list-inline-item"></vc:aiur-footer>
+                </ul>
+                <p class="text-muted small mb-4 mb-lg-0">
+                    &copy; @DateTime.Now.Year - @Values.ProjectName
+                    <vc:china-register></vc:china-register>
+                </p>
+            </div>
+            <div class="col-lg-4 h-100 text-center text-lg-right my-auto">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/AiursoftWeb/Infrastructures">
+                            <i class="fab fa-github fa-2x "></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<vc:scroll-to-top></vc:scroll-to-top>
+<vc:aiur-logout></vc:aiur-logout>
+<vc:aiur-market-js></vc:aiur-market-js>
+@await RenderSectionAsync("js", false)
+<script src="~/js/site.js"></script>
 </body>
 </html>

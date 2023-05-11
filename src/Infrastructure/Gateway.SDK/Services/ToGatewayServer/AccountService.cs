@@ -1,4 +1,5 @@
-﻿using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
+﻿using System.Threading.Tasks;
+using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -6,56 +7,48 @@ using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer
+namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+
+public class AccountService : IScopedDependency
 {
-    public class AccountService : IScopedDependency
+    private readonly APIProxyService _http;
+    private readonly GatewayLocator _serviceLocation;
+
+    public AccountService(
+        GatewayLocator serviceLocation,
+        APIProxyService http)
     {
-        private readonly GatewayLocator _serviceLocation;
-        private readonly APIProxyService _http;
+        _serviceLocation = serviceLocation;
+        _http = http;
+    }
 
-        public AccountService(
-            GatewayLocator serviceLocation,
-            APIProxyService http)
+    public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
         {
-            _serviceLocation = serviceLocation;
-            _http = http;
-        }
+            AccessToken = accessToken,
+            Code = code
+        });
+        var result = await _http.Get(url, true);
+        var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
 
-        public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
+
+        return jResult;
+    }
+
+    public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "UserInfo", new UserInfoAddressModel
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
-            {
-                AccessToken = accessToken,
-                Code = code
-            });
-            var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
+            AccessToken = accessToken,
+            OpenId = openid
+        });
+        var result = await _http.Get(url, true);
+        var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult;
-        }
-
-        public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
-        {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "UserInfo", new UserInfoAddressModel
-            {
-                AccessToken = accessToken,
-                OpenId = openid
-            });
-            var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult;
-        }
+        return jResult;
     }
 }

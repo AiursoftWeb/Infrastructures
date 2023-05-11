@@ -1,14 +1,13 @@
-﻿using Aiursoft.WWW.Models;
+﻿using System.Collections.Generic;
+using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
-namespace Aiursoft.WWW.Views.Shared.Components.NavbarControl
+namespace Aiursoft.WWW.Views.Shared.Components.NavbarControl;
+
+public class NavbarControl : ViewComponent
 {
-    public class NavbarControl : ViewComponent
+    public IViewComponentResult Invoke(List<Navbar> configuration)
     {
-        public IViewComponentResult Invoke(List<Navbar> configuration)
-        {
-            return View(model: configuration);
-        }
+        return View(configuration);
     }
 }

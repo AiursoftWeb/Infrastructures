@@ -1,4 +1,4 @@
-@model Aiursoft.Account.Models.AccountViewModels.View2FAKeyViewModel
+@model View2FAKeyViewModel
 @{
     ViewData["Title"] = "ViewTwoFAKey";
 }
@@ -30,7 +30,9 @@
                         </p>
                     </li>
                     <li>
-                        <p>@Localizer["Scan the QR Code or enter this key"] <kbd>@Model.NewTwoFAKey</kbd> @Localizer["into your two factor authenticator app. Spaces and casing do not matter."]</p>
+                        <p>
+                            @Localizer["Scan the QR Code or enter this key"] <kbd>@Model.NewTwoFAKey</kbd> @Localizer["into your two factor authenticator app. Spaces and casing do not matter."]
+                        </p>
                         <div class="col-lg-6 col-md-8  col-sm-10 col-12">
                             <img class="img-fluid" src="@Html.Raw(Model.QRCodeBase64)">
                         </div>

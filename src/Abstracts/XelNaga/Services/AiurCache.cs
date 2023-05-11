@@ -1,54 +1,47 @@
-﻿using Aiursoft.Scanner.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.Scanner.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace Aiursoft.XelNaga.Services
+namespace Aiursoft.XelNaga.Services;
+
+public class AiurCache : ITransientDependency
 {
-    public class AiurCache : ITransientDependency
+    private readonly IMemoryCache _cache;
+
+    public AiurCache(IMemoryCache cache)
     {
-        private readonly IMemoryCache _cache;
+        _cache = cache;
+    }
 
-        public AiurCache(IMemoryCache cache)
-        {
-            _cache = cache;
-        }
+    public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
+    {
+        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null) return resultValue;
 
-        public async Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
-        {
-            if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
-            {
-                return resultValue;
-            }
+        resultValue = await backup();
 
-            resultValue = await backup();
+        var cacheEntryOptions = new MemoryCacheEntryOptions()
+            .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
 
-            var cacheEntryOptions = new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
+        _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+        return resultValue;
+    }
 
-            _cache.Set(cacheKey, resultValue, cacheEntryOptions);
-            return resultValue;
-        }
+    public void Clear(string key)
+    {
+        _cache.Remove(key);
+    }
 
-        public void Clear(string key)
-        {
-            _cache.Remove(key);
-        }
+    public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
+    {
+        if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null) return resultValue;
 
-        public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
-        {
-            if (_cache.TryGetValue(cacheKey, out T resultValue) && resultValue != null)
-            {
-                return resultValue;
-            }
+        resultValue = backup();
 
-            resultValue = backup();
+        var cacheEntryOptions = new MemoryCacheEntryOptions()
+            .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
 
-            var cacheEntryOptions = new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
-
-            _cache.Set(cacheKey, resultValue, cacheEntryOptions);
-            return resultValue;
-        }
+        _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+        return resultValue;
     }
 }

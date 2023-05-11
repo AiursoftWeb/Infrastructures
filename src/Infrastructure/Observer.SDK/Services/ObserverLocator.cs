@@ -1,12 +1,11 @@
-﻿namespace Aiursoft.Observer.SDK.Services
-{
-    public class ObserverLocator
-    {
-        public ObserverLocator(string endpoint)
-        {
-            Endpoint = endpoint;
-        }
+﻿namespace Aiursoft.Observer.SDK.Services;
 
-        public string Endpoint { get; }
+public class ObserverLocator
+{
+    public ObserverLocator(string endpoint)
+    {
+        Endpoint = endpoint;
     }
+
+    public string Endpoint { get; }
 }

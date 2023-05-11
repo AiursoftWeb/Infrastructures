@@ -1,38 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 
-namespace Aiursoft.SDK.Middlewares
+namespace Aiursoft.SDK.Middlewares;
+
+public class SwitchLanguageMiddleware
 {
-    public class SwitchLanguageMiddleware
+    private readonly RequestDelegate _next;
+
+    public SwitchLanguageMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public SwitchLanguageMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context)
+    {
+        if (string.Equals(context.Request.Path, "/switch-language", StringComparison.OrdinalIgnoreCase))
         {
-            _next = next;
+            var culture = context.Request.Query["culture"];
+            var returnUrl = context.Request.Query["returnUrl"];
+            context.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddYears(1)
+                });
+            context.Response.Redirect(returnUrl);
         }
-
-        public async Task Invoke(HttpContext context)
+        else
         {
-            if (string.Equals(context.Request.Path, "/switch-language", StringComparison.OrdinalIgnoreCase))
-            {
-                var culture = context.Request.Query["culture"];
-                var returnUrl = context.Request.Query["returnUrl"];
-                context.Response.Cookies.Append(
-                    CookieRequestCultureProvider.DefaultCookieName,
-                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                    new CookieOptions
-                    {
-                        Expires = DateTimeOffset.UtcNow.AddYears(1)
-                    });
-                context.Response.Redirect(returnUrl);
-            }
-            else
-            {
-                await _next.Invoke(context);
-            }
+            await _next.Invoke(context);
         }
     }
 }

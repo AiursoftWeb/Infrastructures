@@ -7,44 +7,43 @@ using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Stargate.Controllers
+namespace Aiursoft.Stargate.Controllers;
+
+[APIExpHandler]
+[APIModelStateChecker]
+public class HomeController : Controller
 {
-    [APIExpHandler]
-    [APIModelStateChecker]
-    public class HomeController : Controller
+    private readonly Counter _counter;
+    private readonly StargateMemory _memory;
+
+    public HomeController(
+        StargateMemory memory,
+        Counter counter)
     {
-        private readonly Counter _counter;
-        private readonly StargateMemory _memory;
+        _memory = memory;
+        _counter = counter;
+    }
 
-        public HomeController(
-            StargateMemory memory,
-            Counter counter)
+    public IActionResult Index()
+    {
+        var (channels, messages) = _memory.GetMonitoringReport();
+        return this.Protocol(new IndexViewModel
         {
-            _memory = memory;
-            _counter = counter;
-        }
+            CurrentId = _counter.GetCurrent,
+            TotalMemoryMessages = messages,
+            Channels = channels,
+            Code = ErrorType.Success,
+            Message = "Welcome to Aiursoft Stargate server!"
+        });
+    }
 
-        public IActionResult Index()
-        {
-            var (channels, messages) = _memory.GetMonitoringReport();
-            return this.Protocol(new IndexViewModel
-            {
-                CurrentId = _counter.GetCurrent,
-                TotalMemoryMessages = messages,
-                Channels = channels,
-                Code = ErrorType.Success,
-                Message = "Welcome to Aiursoft Stargate server!"
-            });
-        }
+    public IActionResult ListenTo(ChannelAddressModel model)
+    {
+        return View("Test", model);
+    }
 
-        public IActionResult ListenTo(ChannelAddressModel model)
-        {
-            return View("Test", model);
-        }
-
-        public IActionResult Error()
-        {
-            return this.Protocol(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");
-        }
+    public IActionResult Error()
+    {
+        return this.Protocol(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Aiursoft.Stargate.SDK.Models
+﻿namespace Aiursoft.Stargate.SDK.Models;
+
+public class Message
 {
-    public class Message
-    {
-        public int Id { get; set; }
-        public string Content { get; set; }
-        public int ChannelId { get; set; }
-    }
+    public int Id { get; set; }
+    public string Content { get; set; }
+    public int ChannelId { get; set; }
 }

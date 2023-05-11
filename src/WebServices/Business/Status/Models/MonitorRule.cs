@@ -1,33 +1,32 @@
-﻿using Aiursoft.DBTools;
-using System;
+﻿using System;
+using Aiursoft.DBTools;
 
-namespace Aiursoft.Status.Models
+namespace Aiursoft.Status.Models;
+
+public class MonitorRule : ISyncable<MonitorRule>
 {
-    public class MonitorRule : ISyncable<MonitorRule>
+    public string ProjectName { get; set; }
+    public string CheckAddress { get; set; }
+    public bool LastHealthStatus { get; set; }
+    public string ExpectedContent { get; set; }
+    public DateTime LastCheckTime { get; set; } = DateTime.UtcNow;
+
+    public bool EqualsInDb(MonitorRule obj)
     {
-        public string ProjectName { get; set; }
-        public string CheckAddress { get; set; }
-        public bool LastHealthStatus { get; set; }
-        public string ExpectedContent { get; set; }
-        public DateTime LastCheckTime { get; set; } = DateTime.UtcNow;
+        return
+            obj.ProjectName == ProjectName &&
+            obj.CheckAddress == CheckAddress &&
+            obj.ExpectedContent == ExpectedContent;
+    }
 
-        public bool EqualsInDb(MonitorRule obj)
+    public MonitorRule Map()
+    {
+        return new MonitorRule
         {
-            return
-                obj.ProjectName == ProjectName &&
-                obj.CheckAddress == CheckAddress &&
-                obj.ExpectedContent == ExpectedContent;
-        }
-
-        public MonitorRule Map()
-        {
-            return new MonitorRule
-            {
-                ProjectName = ProjectName,
-                CheckAddress = CheckAddress,
-                LastHealthStatus = false,
-                ExpectedContent = ExpectedContent
-            };
-        }
+            ProjectName = ProjectName,
+            CheckAddress = CheckAddress,
+            LastHealthStatus = false,
+            ExpectedContent = ExpectedContent
+        };
     }
 }

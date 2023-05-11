@@ -1,6 +1,5 @@
-﻿namespace Aiursoft.EE.Models
+﻿namespace Aiursoft.EE.Models;
+
+public class CommonViewModel
 {
-    public class CommonViewModel
-    {
-    }
 }

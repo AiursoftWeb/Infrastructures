@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.Status.Models.HomeViewModels
+namespace Aiursoft.Status.Models.HomeViewModels;
+
+public class IndexViewModel
 {
-    public class IndexViewModel
-    {
-        public IReadOnlyCollection<MonitorRule> Data { get; internal set; }
-    }
+    public IReadOnlyCollection<MonitorRule> Data { get; internal set; }
 }

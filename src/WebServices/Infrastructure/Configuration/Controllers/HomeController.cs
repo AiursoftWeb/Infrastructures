@@ -2,13 +2,12 @@
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Configuration.Controllers
+namespace Aiursoft.Configuration.Controllers;
+
+public class HomeController : ControllerBase
 {
-    public class HomeController : ControllerBase
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return this.Protocol(ErrorType.Success, "Welcome to Aiursoft Configuration center!");
-        }
+        return this.Protocol(ErrorType.Success, "Welcome to Aiursoft Configuration center!");
     }
 }

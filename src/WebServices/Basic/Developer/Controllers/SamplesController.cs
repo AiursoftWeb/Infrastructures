@@ -1,40 +1,39 @@
-﻿using Aiursoft.Developer.Models.SamplesViewModels;
+﻿using System.Threading.Tasks;
+using Aiursoft.Developer.Models.SamplesViewModels;
 using Aiursoft.Handler.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Developer.Controllers
+namespace Aiursoft.Developer.Controllers;
+
+[LimitPerMin]
+public class SamplesController : Controller
 {
-    [LimitPerMin]
-    public class SamplesController : Controller
+    public ActionResult DisableWithForm()
     {
-        public ActionResult DisableWithForm()
-        {
-            var model = new DisableWithFormViewModel();
-            return View(model);
-        }
+        var model = new DisableWithFormViewModel();
+        return View(model);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DisableWithFormSubmit()
-        {
-            await Task.Delay(4000);
-            return RedirectToAction(nameof(DisableWithForm));
-        }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DisableWithFormSubmit()
+    {
+        await Task.Delay(4000);
+        return RedirectToAction(nameof(DisableWithForm));
+    }
 
-        public IActionResult UTCTime()
-        {
-            return View();
-        }
+    public IActionResult UTCTime()
+    {
+        return View();
+    }
 
-        public IActionResult Scanner()
-        {
-            return View();
-        }
+    public IActionResult Scanner()
+    {
+        return View();
+    }
 
-        public IActionResult DocGenerator()
-        {
-            return View();
-        }
+    public IActionResult DocGenerator()
+    {
+        return View();
     }
 }

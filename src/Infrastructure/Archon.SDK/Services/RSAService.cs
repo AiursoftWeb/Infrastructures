@@ -1,26 +1,25 @@
-﻿using Aiursoft.Scanner.Interfaces;
+﻿using System.Security.Cryptography;
+using Aiursoft.Scanner.Interfaces;
 using Aiursoft.XelNaga.Tools;
-using System.Security.Cryptography;
 
-namespace Aiursoft.Archon.SDK.Services
+namespace Aiursoft.Archon.SDK.Services;
+
+public class RSAService : IScopedDependency
 {
-    public class RSAService : IScopedDependency
+    private readonly ArchonLocator _archonLocator;
+    private readonly RSA _rsa;
+
+    public RSAService(ArchonLocator archonLocator)
     {
-        private readonly RSA _rsa;
-        private readonly ArchonLocator _archonLocator;
+        _rsa = RSA.Create();
+        _archonLocator = archonLocator;
+    }
 
-        public RSAService(ArchonLocator archonLocator)
-        {
-            _rsa = RSA.Create();
-            _archonLocator = archonLocator;
-        }
-
-        public bool VerifyData(string originalMessage, string signedBase64)
-        {
-            var bytesToVerify = originalMessage.StringToBytes();
-            var signedBytes = signedBase64.Base64ToBytes();
-            _rsa.ImportParameters(_archonLocator.PublicKey);
-            return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-        }
+    public bool VerifyData(string originalMessage, string signedBase64)
+    {
+        var bytesToVerify = originalMessage.StringToBytes();
+        var signedBytes = signedBase64.Base64ToBytes();
+        _rsa.ImportParameters(_archonLocator.PublicKey);
+        return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }

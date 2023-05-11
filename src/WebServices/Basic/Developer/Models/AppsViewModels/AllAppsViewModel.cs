@@ -1,13 +1,15 @@
 ﻿using System;
 
-namespace Aiursoft.Developer.Models.AppsViewModels
+namespace Aiursoft.Developer.Models.AppsViewModels;
+
+public class AllAppsViewModel : AppLayoutModel
 {
-    public class AllAppsViewModel : AppLayoutModel
+    [Obsolete("This method is only for framework", true)]
+    public AllAppsViewModel()
     {
-        [Obsolete(message: "This method is only for framework", error: true)]
-        public AllAppsViewModel() { }
-        public AllAppsViewModel(DeveloperUser user) : base(user)
-        {
-        }
+    }
+
+    public AllAppsViewModel(DeveloperUser user) : base(user)
+    {
     }
 }

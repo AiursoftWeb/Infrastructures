@@ -1,4 +1,6 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Interfaces;
 using Aiursoft.Warpgate.SDK.Models;
@@ -7,132 +9,115 @@ using Aiursoft.Warpgate.SDK.Models.ViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer
+namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
+
+public class RecordsService : IScopedDependency
 {
-    public class RecordsService : IScopedDependency
+    private readonly APIProxyService _http;
+    private readonly WarpgateLocator _serviceLocation;
+
+    public RecordsService(
+        APIProxyService http,
+        WarpgateLocator serviceLocation)
     {
-        private readonly APIProxyService _http;
-        private readonly WarpgateLocator _serviceLocation;
-        public RecordsService(
-            APIProxyService http,
-            WarpgateLocator serviceLocation)
+        _http = http;
+        _serviceLocation = serviceLocation;
+    }
+
+    public async Task<AiurProtocol> CreateNewRecordAsync(
+        string accessToken,
+        string newRecordName,
+        string targetUrl,
+        string[] tags,
+        RecordType type,
+        bool enabled)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "CreateNewRecord", new { });
+        var form = new AiurUrl(string.Empty, new CreateNewRecordAddressModel
         {
-            _http = http;
-            _serviceLocation = serviceLocation;
-        }
+            AccessToken = accessToken,
+            NewRecordName = newRecordName,
+            TargetUrl = targetUrl,
+            Type = type,
+            Enabled = enabled,
+            Tags = string.Join(',', tags.Select(t => t.Trim()))
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-        public async Task<AiurProtocol> CreateNewRecordAsync(
-            string accessToken,
-            string newRecordName,
-            string targetUrl,
-            string[] tags,
-            RecordType type,
-            bool enabled)
+        return jResult;
+    }
+
+    public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "CreateNewRecord", new { });
-            var form = new AiurUrl(string.Empty, new CreateNewRecordAddressModel
-            {
-                AccessToken = accessToken,
-                NewRecordName = newRecordName,
-                TargetUrl = targetUrl,
-                Type = type,
-                Enabled = enabled,
-                Tags = string.Join(',', tags.Select(t => t.Trim()))
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
+            AccessToken = accessToken,
+            Tag = tag
+        });
+        var result = await _http.Get(url, true);
+        var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            return jResult;
-        }
+        return jResult;
+    }
 
-        public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
+    public async Task<AiurProtocol> UpdateRecordInfoAsync(
+        string accessToken,
+        string oldRecordName,
+        string newRecordName,
+        RecordType newType,
+        string newUrl,
+        string[] tags,
+        bool enabled)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "UpdateRecordInfo", new { });
+        var form = new AiurUrl(string.Empty, new UpdateRecordInfoAddressModel
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
-            {
-                AccessToken = accessToken,
-                Tag = tag
-            });
-            var result = await _http.Get(url, true);
-            var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
+            AccessToken = accessToken,
+            OldRecordName = oldRecordName,
+            NewRecordName = newRecordName,
+            NewType = newType,
+            NewUrl = newUrl,
+            Enabled = enabled,
+            Tags = string.Join(',', tags.Select(t => t.Trim()))
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            return jResult;
-        }
+        return jResult;
+    }
 
-        public async Task<AiurProtocol> UpdateRecordInfoAsync(
-            string accessToken,
-            string oldRecordName,
-            string newRecordName,
-            RecordType newType,
-            string newUrl,
-            string[] tags,
-            bool enabled)
+    public async Task<AiurProtocol> DeleteRecordAsync(string accessToken, string recordName)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteRecord", new { });
+        var form = new AiurUrl(string.Empty, new DeleteRecordAddressModel
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "UpdateRecordInfo", new { });
-            var form = new AiurUrl(string.Empty, new UpdateRecordInfoAddressModel
-            {
-                AccessToken = accessToken,
-                OldRecordName = oldRecordName,
-                NewRecordName = newRecordName,
-                NewType = newType,
-                NewUrl = newUrl,
-                Enabled = enabled,
-                Tags = string.Join(',', tags.Select(t => t.Trim()))
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
+            AccessToken = accessToken,
+            RecordName = recordName
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            return jResult;
-        }
+        return jResult;
+    }
 
-        public async Task<AiurProtocol> DeleteRecordAsync(string accessToken, string recordName)
+    public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+    {
+        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteApp", new { });
+        var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
         {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteRecord", new { });
-            var form = new AiurUrl(string.Empty, new DeleteRecordAddressModel
-            {
-                AccessToken = accessToken,
-                RecordName = recordName
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
+            AccessToken = accessToken,
+            AppId = appId
+        });
+        var result = await _http.Post(url, form, true);
+        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        if (jResult.Code != ErrorType.Success) throw new AiurUnexpectedResponse(jResult);
 
-            return jResult;
-        }
-
-        public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
-        {
-            var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteApp", new { });
-            var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
-            {
-                AccessToken = accessToken,
-                AppId = appId
-            });
-            var result = await _http.Post(url, form, true);
-            var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-            if (jResult.Code != ErrorType.Success)
-            {
-                throw new AiurUnexpectedResponse(jResult);
-            }
-
-            return jResult;
-        }
+        return jResult;
     }
 }
