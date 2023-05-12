@@ -136,7 +136,7 @@ install_infrastructures()
     aiur install/sql_server
     aiur mssql/config_password $dbPassword
 
-    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code $branch_name
+    aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
     dotnet restore $infs_code/Aiursoft.Infrastructures.sln
     cp $archon_code/appsettings.json $archon_code/appsettings.Production.json

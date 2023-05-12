@@ -54,7 +54,7 @@ update()
     account_path="$infs_path/Account"
     ee_path="$infs_path/EE"
 
-    aiur git/clone_to AiursoftWeb/Infrastructures $infs_code $branch_name
+    aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
 
     systemctl stop "archon.service"
