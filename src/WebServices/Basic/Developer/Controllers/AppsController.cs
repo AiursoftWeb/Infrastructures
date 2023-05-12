@@ -272,8 +272,11 @@ public class AppsController : Controller
         }
 
         var appExists = await _dbContext.Apps.FindAsync(appId);
-        appExists.IconPath = iconFile;
-        await _dbContext.SaveChangesAsync();
+        if (appExists != null)
+        {
+            appExists.IconPath = iconFile;
+            await _dbContext.SaveChangesAsync();
+        }
         return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
     }
 }
