@@ -1,8 +1,8 @@
 # Aiursoft Infrastructures
 
-[![Build status](https://aiursoft.visualstudio.com/Star/_apis/build/status/Infrastructures%20Build)](https://aiursoft.visualstudio.com/Star/_build/latest?definitionId=5)
-![Azure DevOps tests](https://img.shields.io/azure-devops/tests/aiursoft/Star/5)
-![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/aiursoft/Star/5)
+![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
+![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/pipeline.svg)
+![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/coverage.svg)
 [![NuGet version (Aiursoft.Identity)](https://img.shields.io/nuget/v/Aiursoft.Identity.svg?style=flat-square)](https://www.nuget.org/packages/Aiursoft.Identity/)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fwww.aiursoft.com%2F%3Fshow%3Ddirect)
 
