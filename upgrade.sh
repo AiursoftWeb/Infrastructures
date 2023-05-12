@@ -1,4 +1,4 @@
-aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/AiursoftWeb/AiurScript/raw/master/$1.sh | sudo bash -s $arg; }
+aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurscript/-/raw/master/$1.sh | sudo bash -s $arg; }
 
 update()
 {
@@ -23,7 +23,7 @@ update()
     fi
     
     # Upgrade AiurUI
-    #curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/upgrade.sh | sudo bash
+    curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurui/-/raw/master/upgrade.sh | sudo bash
 
     infs_code="./Infrastructures"
     infs_path="/opt/apps/Infrastructures"

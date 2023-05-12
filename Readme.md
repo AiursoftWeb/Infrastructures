@@ -69,7 +69,7 @@ Create a wildcard domain record to your server's public IP.
 Execute the following command on the server (Replace the `instance.name` to your own brand name):
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh | sudo bash -s aiur.io instance.name master
+curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/install.sh | sudo bash -s aiur.io instance.name master
 ```
 
 ### Upgrade your server
@@ -77,7 +77,7 @@ $ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/install.sh 
 If we released a newer version, and you can upgrade your server via:
 
 ```bash
-$ curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/upgrade.sh | sudo bash -s instance.name master
+curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
 
 Also, you can run that upgrade script to repair some issues with your Infrastructures instance.

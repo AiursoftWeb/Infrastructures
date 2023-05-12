@@ -1,4 +1,4 @@
-aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://github.com/AiursoftWeb/AiurScript/raw/master/$1.sh | sudo bash -s $arg; }
+aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurscript/-/raw/master/$1.sh | sudo bash -s $arg; }
 
 infs_code="./Infrastructures"
 infs_path="/opt/apps/Infrastructures"
@@ -129,7 +129,7 @@ install_infrastructures()
         echo "branch name is: $branch_name"
     fi
 
-    curl -sL https://github.com/AiursoftWeb/AiurUI/raw/master/install.sh | bash -s ui.$1
+    curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurui/-/raw/master/install.sh | bash -s ui.$1
 
     aiur install/dotnet
     aiur install/jq
@@ -221,7 +221,7 @@ install_infrastructures()
     aiur text/edit_json "EEAppId" "$eeAppId" $ee_path/appsettings.Production.json
     aiur text/edit_json "EEAppSecret" "$eeAppSecret" $ee_path/appsettings.Production.json
 
-    curl -sL https://github.com/AiursoftWeb/Infrastructures/raw/master/seed.sql --output - > ./temp.sql
+    curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/seed.sql --output - > ./temp.sql
     domainUpper=$(echo $domain | tr a-z A-Z)
     replace_in_file ./temp.sql "{{Instance}}" $instance_name
     replace_in_file ./temp.sql "{{userId}}" $userId
