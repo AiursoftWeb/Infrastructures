@@ -15,14 +15,11 @@
         <div class="markdown-body">@Html.Raw(Model.RenderedContent)</div>
     </article>
     <div class="mb-3 mt-3">
-        @if (!string.IsNullOrWhiteSpace(Model.CurrentArticle.ArticleAddress) && Model.CurrentArticle.ArticleAddress.StartsWith("https://raw.githubusercontent.com/"))
+        @if (!string.IsNullOrWhiteSpace(Model.CurrentArticle.ArticleAddress))
         {
-            var paths = Model.CurrentArticle.ArticleAddress.Split('/');
-            paths = paths.Skip(3).ToArray();
-            var path = "https://github.com" + $"/{paths[0]}/{paths[1]}/blob/{string.Join("/", paths.Skip(2))}";
-            <a class="btn btn-info" href="@path" target="_blank">
+            <a class="btn btn-info" href="@Model.CurrentArticle.ArticleAddress" target="_blank">
                 <i class="fab fa-gitlab"></i>
-                View in GitLab
+                View source
             </a>
         }
         else if (Model.CurrentArticle.BuiltByJson)
