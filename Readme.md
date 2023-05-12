@@ -3,7 +3,7 @@
 ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/pipeline.svg)
 ![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/coverage.svg)
-[![NuGet version (Aiursoft.Identity)](https://img.shields.io/nuget/v/Aiursoft.Identity.svg?style=flat-square)](https://www.nuget.org/packages/Aiursoft.Identity/)
+[![NuGet version (Aiursoft.Identity)](https://img.shields.io/nuget/v/Aiursoft.Identity.svg)](https://www.nuget.org/packages/Aiursoft.Identity/)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fwww.aiursoft.com%2F%3Fshow%3Ddirect)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
