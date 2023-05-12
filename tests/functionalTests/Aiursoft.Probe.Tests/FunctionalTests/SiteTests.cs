@@ -52,8 +52,11 @@ public class SiteTests
     public async Task CleanServer()
     {
         LimitPerMin.ClearMemory();
-        await _server.StopAsync();
-        _server.Dispose();
+        if (_server != null)
+        {
+            await _server.StopAsync();
+            _server.Dispose();
+        }
     }
 
     [TestMethod]

@@ -5,6 +5,7 @@ using Aiursoft.Archon.SDK;
 using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Archon.SDK.Services.ToArchonServer;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.XelNaga.Tools;
@@ -47,8 +48,12 @@ public class BasicTests
     [TestCleanup]
     public async Task CleanServer()
     {
-        await _server.StopAsync();
-        _server.Dispose();
+        LimitPerMin.ClearMemory();
+        if (_server != null)
+        {
+            await _server.StopAsync();
+            _server.Dispose();
+        }
     }
 
     [TestMethod]

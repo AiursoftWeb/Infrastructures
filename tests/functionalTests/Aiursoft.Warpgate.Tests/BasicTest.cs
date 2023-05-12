@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner;
@@ -51,8 +52,12 @@ public class BasicTests
     [TestCleanup]
     public async Task CleanServer()
     {
-        await _server.StopAsync();
-        _server.Dispose();
+        LimitPerMin.ClearMemory();
+        if (_server != null)
+        {
+            await _server.StopAsync();
+            _server.Dispose();
+        }
     }
 
     [TestMethod]
