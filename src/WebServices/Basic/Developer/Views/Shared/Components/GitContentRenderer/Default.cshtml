@@ -1,4 +1,4 @@
-﻿@model GitHubRendererViewModel
+﻿@model GitContentRendererViewModel
 
 <div class="card mb-5">
     <div class="card-header">
@@ -9,7 +9,7 @@
         <article class="markdown-body">
             @Html.Raw(Model.HTML)
         </article>
-        <a class="btn btn-primary btn-md mt-3" href="//gitlab.aiursoft.cn/@Model.Org/@Model.Repo/-/tree/master/@Model.Path" target="_blank" role="button">
+        <a class="btn btn-primary btn-md mt-3" href="//@Model.Server/@Model.Org/@Model.Repo/-/tree/master/@Model.Path" target="_blank" role="button">
             <i class="fab fa-gitlab"></i>
             View it on GitLab
         </a>

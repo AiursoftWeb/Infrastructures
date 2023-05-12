@@ -4,14 +4,14 @@ using Aiursoft.XelNaga.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Developer.Views.Shared.Components.GitHubRenderer;
+namespace Aiursoft.Developer.Views.Shared.Components.GitContentRenderer;
 
-public class GitHubRenderer : ViewComponent
+public class GitContentRenderer : ViewComponent
 {
     private readonly AiurCache _cache;
     private readonly HttpService _http;
 
-    public GitHubRenderer(
+    public GitContentRenderer(
         HttpService http,
         AiurCache cache)
     {
@@ -19,17 +19,18 @@ public class GitHubRenderer : ViewComponent
         _cache = cache;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string org, string repo, string path)
+    public async Task<IViewComponentResult> InvokeAsync(string server, string org, string repo, string path)
     {
-        var markdownUrl = $"https://raw.githubusercontent.com/{org}/{repo}/master/{path}";
-        var markdown = await _cache.GetAndCache($"github.{org}.{repo}.{path}.cache",
+        var markdownUrl = $"https://{server}/{org}/{repo}/-/raw/master/{path}";
+        var markdown = await _cache.GetAndCache($"gitcontent.{org}.{repo}.{path}.cache",
             async () => await _http.Get(new AiurUrl(markdownUrl)));
         var pipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .Build();
         var html = Markdown.ToHtml(markdown, pipeline);
-        var model = new GitHubRendererViewModel
+        var model = new GitContentRendererViewModel
         {
+            Server = server,
             Org = org,
             Repo = repo,
             HTML = html,
