@@ -31,9 +31,6 @@ public static class ProgramExtends
                 {
                     await context.Database.MigrateAsync();
                 }
-
-                var seeder = services.GetService<ISeeder>();
-                seeder?.Seed();
             }, 3, e =>
             {
                 logger.LogCritical(e, "Update database failed.");

@@ -54,7 +54,6 @@ public static class ServicesExtends
         services.AddMemoryCache();
         var abstractsArray = abstracts
             .AddWith(typeof(IHostedService))
-            .AddWith(typeof(ISeeder))
             .ToArray();
         if (EntryExtends.IsProgramEntry())
             // Program is starting itself.
