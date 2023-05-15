@@ -9,7 +9,7 @@ using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.XelNaga.Models;

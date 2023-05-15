@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 
 namespace Aiursoft.Probe.Services;
 

@@ -52,23 +52,22 @@ public static class ServicesExtends
     {
         services.AddHttpClient();
         services.AddMemoryCache();
-        var abstractsArray = abstracts
-            .AddWith(typeof(IHostedService))
-            .ToArray();
+        var abstractsList = abstracts.ToList();
+        abstractsList.Add(typeof(IHostedService));
         if (EntryExtends.IsProgramEntry())
             // Program is starting itself.
         {
-            services.AddScannedDependencies(abstractsArray);
+            services.AddScannedDependencies(abstractsList.ToArray());
         }
         else if (assembly != null)
             // Program is started in UT or EF. Method called from extension.
         {
-            services.AddAssemblyDependencies(assembly, abstractsArray);
+            services.AddAssemblyDependencies(assembly, abstractsList.ToArray());
         }
         else
             // Program is started in UT or EF. Method called from web project.
         {
-            services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsArray);
+            services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsList.ToArray());
         }
 
         return services;

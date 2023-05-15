@@ -8,7 +8,7 @@ using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Gateway.Services;

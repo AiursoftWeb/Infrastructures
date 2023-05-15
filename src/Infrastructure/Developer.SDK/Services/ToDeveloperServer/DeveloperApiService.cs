@@ -3,7 +3,7 @@ using Aiursoft.Developer.SDK.Models.ApiAddressModels;
 using Aiursoft.Developer.SDK.Models.ApiViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

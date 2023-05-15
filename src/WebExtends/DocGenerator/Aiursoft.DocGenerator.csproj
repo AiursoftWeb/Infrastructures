@@ -19,11 +19,11 @@
 	
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
   </ItemGroup> 
 	
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\DocGenerator.Abstract\Aiursoft.DocGenerator.Abstract.csproj" />
-    <ProjectReference Include="..\..\Abstracts\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
   </ItemGroup> 
 
 </Project>

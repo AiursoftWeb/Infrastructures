@@ -16,7 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
 		<ProjectReference Include="..\..\src\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
 	</ItemGroup>
 

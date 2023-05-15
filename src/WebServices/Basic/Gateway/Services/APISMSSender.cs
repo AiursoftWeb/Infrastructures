@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Twilio;

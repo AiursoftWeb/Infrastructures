@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Attributes;
 
 namespace Aiursoft.XelNaga.Tools;

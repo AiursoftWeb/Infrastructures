@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

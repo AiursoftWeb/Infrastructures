@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Logging;

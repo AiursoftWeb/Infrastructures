@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 

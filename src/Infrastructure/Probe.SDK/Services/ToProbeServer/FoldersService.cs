@@ -3,7 +3,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;

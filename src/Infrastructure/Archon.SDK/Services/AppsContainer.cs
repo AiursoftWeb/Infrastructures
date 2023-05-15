@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Archon.SDK.Services;

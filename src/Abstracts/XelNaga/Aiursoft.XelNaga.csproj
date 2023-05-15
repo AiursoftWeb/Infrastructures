@@ -18,10 +18,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Scanner.Abstract\Aiursoft.Scanner.Abstract.csproj" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 </Project>

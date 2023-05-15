@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.Data;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;

@@ -5,7 +5,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

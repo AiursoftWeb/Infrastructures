@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;

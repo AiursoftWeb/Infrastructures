@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK.Models;
 using Microsoft.EntityFrameworkCore;

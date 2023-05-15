@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Tools;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Newtonsoft.Json;
 
 namespace Aiursoft.DocGenerator.Services;

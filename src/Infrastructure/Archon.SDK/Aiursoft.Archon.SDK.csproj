@@ -6,13 +6,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aiursoft.Scanner" Version="6.0.9" />
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.10" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
 		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
 		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
-		<ProjectReference Include="..\..\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 
 namespace Aiursoft.Probe.Services;

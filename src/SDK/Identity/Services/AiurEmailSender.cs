@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

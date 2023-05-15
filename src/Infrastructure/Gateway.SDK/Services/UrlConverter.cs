@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Gateway.SDK.Services;

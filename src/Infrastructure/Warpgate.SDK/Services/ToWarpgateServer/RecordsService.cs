@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;

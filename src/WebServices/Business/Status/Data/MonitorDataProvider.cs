@@ -4,7 +4,7 @@ using Aiursoft.Archon.SDK.Services;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Probe.SDK.Services;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;

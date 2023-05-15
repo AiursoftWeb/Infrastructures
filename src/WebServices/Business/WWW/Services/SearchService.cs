@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.WWW.Services.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Azure.CognitiveServices.Search.EntitySearch;

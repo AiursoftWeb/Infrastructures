@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.XelNaga.Tests.Models;

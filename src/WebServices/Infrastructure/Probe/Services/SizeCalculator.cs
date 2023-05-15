@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 
 namespace Aiursoft.Probe.Services;
 

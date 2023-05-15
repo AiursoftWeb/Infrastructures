@@ -5,6 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aiursoft.Scanner" Version="6.0.9" />
 		<PackageReference Include="coverlet.collector" Version="3.2.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
@@ -19,7 +20,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
-		<ProjectReference Include="..\..\src\WebExtends\Scanner\Aiursoft.Scanner.csproj" />
 	</ItemGroup>
 
 </Project>

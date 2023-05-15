@@ -2,7 +2,7 @@
 using Aiursoft.Gateway.Controllers;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Identity.Services;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
 

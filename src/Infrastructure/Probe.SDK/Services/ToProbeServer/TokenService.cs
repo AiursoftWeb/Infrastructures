@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

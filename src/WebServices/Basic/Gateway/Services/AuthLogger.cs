@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Http;
 

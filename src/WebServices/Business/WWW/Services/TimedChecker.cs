@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.WWW.Data;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;

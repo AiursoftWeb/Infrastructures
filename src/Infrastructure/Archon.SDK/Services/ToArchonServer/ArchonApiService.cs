@@ -2,7 +2,7 @@
 using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

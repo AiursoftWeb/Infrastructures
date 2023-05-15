@@ -4,7 +4,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;

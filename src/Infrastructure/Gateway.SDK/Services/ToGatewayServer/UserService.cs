@@ -4,7 +4,7 @@ using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
 using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Observer.Data;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

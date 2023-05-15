@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Scanner.Interfaces;
+using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
