@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Aiursoft.DBTools.Models;
 using Aiursoft.Scanner;
-using Aiursoft.Scanner.Tools;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;

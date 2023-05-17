@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.DBTools.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
