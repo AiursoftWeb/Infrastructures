@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -93,7 +94,7 @@ public class DownloadController : Controller
                     fileName);
             }
 
-            if (file.FileName.IsStaticImage() && Image.DetectFormat(path) != null)
+            if (file.FileName.IsStaticImage() && await IsValidImageAsync(path))
             {
                 return await FileWithImageCompressor(path, extension);
             }
@@ -103,6 +104,18 @@ public class DownloadController : Controller
         catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
         {
             return NotFound();
+        }
+    }
+
+    private async Task<bool> IsValidImageAsync(string imagePath)
+    {
+        try
+        {
+            return (await Image.DetectFormatAsync(imagePath)).MimeTypes.Any();
+        }
+        catch
+        {
+            return false;
         }
     }
 
