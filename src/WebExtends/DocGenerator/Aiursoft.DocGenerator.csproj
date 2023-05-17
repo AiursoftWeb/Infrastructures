@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <Version>6.0.8</Version>
@@ -18,7 +18,7 @@
   </ItemGroup> 
 	
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
   </ItemGroup> 
 	

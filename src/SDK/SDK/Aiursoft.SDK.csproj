@@ -8,10 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.10" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10" />
-		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.7.3" />
-		<PackageReference Include="Aiursoft.Scanner" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.16" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.16" />
+		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.9.1" />
+		
 	</ItemGroup>
 
 	<ItemGroup>
