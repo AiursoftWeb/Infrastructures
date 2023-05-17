@@ -69,14 +69,10 @@ public class ImageCompressor : ITransientDependency
         {
             lock (ObjClearLock)
             {
-                using var stream = File.OpenWrite(saveTarget ??
-                                                  throw new ArgumentException("Save target is null!",
-                                                      nameof(saveTarget)));
-                var image = Image.Load(sourceImage, out var format);
+                var image = Image.Load(sourceImage);
                 image.Mutate(x => x.AutoOrient());
                 image.Metadata.ExifProfile = null;
-                image.Save(stream, format);
-                stream.Close();
+                image.Save(saveTarget ?? throw new NullReferenceException($"When compressing image, {nameof(saveTarget)} is null!"));
             }
         }
     }
@@ -126,18 +122,12 @@ public class ImageCompressor : ITransientDependency
         {
             lock (ObjCompareLock)
             {
-                // Create file
-                using var stream = File.OpenWrite(saveTarget ??
-                                                  throw new ArgumentException("Save target is null!",
-                                                      nameof(saveTarget)));
-                // Load and compress file
-                var image = Image.Load(sourceImage, out var format);
+                var image = Image.Load(sourceImage);
                 image.Mutate(x => x.AutoOrient());
                 image.Metadata.ExifProfile = null;
                 image.Mutate(x => x
                     .Resize(width, height));
-                image.Save(stream, format);
-                stream.Close();
+                image.Save(saveTarget ?? throw new NullReferenceException($"When compressing image, {nameof(saveTarget)} is null!"));
             }
         }
     }
