@@ -56,7 +56,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-10 d-flex">
-                                <img class="rounded mr-3" src="@ProbeLocator.GetProbeOpenAddress(app.IconPath)?w=128&square=true" style="width:40px; height:40px;"/>
+                                <img class="rounded mr-3" src="@await ProbeLocator.GetProbeOpenAddressAsync(app.IconPath)?w=128&square=true" style="width:40px; height:40px;"/>
                                 <div class="d-block">
                                     <h5>@app.AppName</h5>
                                     <p>

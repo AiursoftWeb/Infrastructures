@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.DBTools;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -17,14 +17,14 @@ public class FolderRepo : IScopedDependency
     private readonly ProbeDbContext _dbContext;
     private readonly FileRepo _fileRepo;
     private readonly IStorageProvider _storageProvider;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly FolderLockDictionary lockDictionary;
 
     public FolderRepo(
         ProbeDbContext probeDbContext,
         FileRepo fileRepo,
         IStorageProvider storageProvider,
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         FolderLockDictionary lockDictionary)
     {
         _dbContext = probeDbContext;
@@ -52,7 +52,7 @@ public class FolderRepo : IScopedDependency
     public async Task<Folder> GetFolderAsOwner(string accessToken, string siteName, string[] folderNames,
         bool recursiveCreate = false)
     {
-        var appid = _tokenManager.ValidateAccessToken(accessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
         var site = await _dbContext
             .Sites
             .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());

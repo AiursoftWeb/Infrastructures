@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
@@ -19,10 +19,10 @@ public class TokenController : ControllerBase
 {
     private readonly ProbeDbContext _dbContext;
     private readonly PBTokenManager _pbTokenManager;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public TokenController(
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         ProbeDbContext dbContext,
         PBTokenManager pbTokenManager)
     {
@@ -35,7 +35,7 @@ public class TokenController : ControllerBase
     [Produces(typeof(AiurValue<string>))]
     public async Task<IActionResult> GetToken(GetTokenAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var site = await _dbContext
             .Sites
             .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<Version>6.0.8</Version>
+		<Version>6.0.12</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -15,7 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Infrastructure\Archon.SDK\Aiursoft.Archon.SDK.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
 	</ItemGroup>
 

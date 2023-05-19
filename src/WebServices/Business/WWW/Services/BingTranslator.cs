@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.WWW.Services.BingModels;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -9,7 +10,12 @@ namespace Aiursoft.WWW.Services;
 
 public class BingTranslator : IScopedDependency
 {
-    public static string APIKey;
+    private readonly IConfiguration _configuration;
+
+    public BingTranslator(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
 
     private async Task<string> CallTranslateAPI(string inputJson, string targetLanguage)
     {
@@ -17,7 +23,7 @@ public class BingTranslator : IScopedDependency
         var client = new RestClient(apiAddress);
         var request = new RestRequest();
         request
-            .AddHeader("Ocp-Apim-Subscription-Key", APIKey)
+            .AddHeader("Ocp-Apim-Subscription-Key", _configuration["TranslateAPIKey"])
             .AddHeader("Content-Type", "application/json")
             .AddParameter("undefined", inputJson, ParameterType.RequestBody);
 

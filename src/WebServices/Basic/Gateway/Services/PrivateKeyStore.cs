@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Aiursoft.Archon.Services;
+namespace Aiursoft.Gateway.Services;
 
 public class PrivateKeyStore
 {

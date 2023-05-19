@@ -1,5 +1,4 @@
-using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;
@@ -17,8 +16,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["WarpgateAppId"];
-        AppsContainer.CurrentAppSecret = configuration["WarpgateAppSecret"];
     }
 
     public IConfiguration Configuration { get; }
@@ -28,7 +25,7 @@ public class Startup
         services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurAPIMvc();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddSingleton(new WarpgateLocator(
             Configuration["WarpgateEndpoint"],

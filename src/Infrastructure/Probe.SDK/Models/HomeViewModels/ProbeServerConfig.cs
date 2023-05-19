@@ -2,7 +2,7 @@
 
 namespace Aiursoft.Probe.SDK.Models.HomeViewModels;
 
-public class IndexViewModel : AiurProtocol
+public class ProbeServerConfig : AiurProtocol
 {
     public string DownloadPattern { get; set; }
     public string PlayerPattern { get; set; }

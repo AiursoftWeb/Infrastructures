@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Security.Claims;
-using Aiursoft.Archon.SDK;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
@@ -35,13 +34,11 @@ public static class Extends
     }
 
     public static IServiceCollection AddAiursoftIdentity<TUser>(this IServiceCollection services,
-        string archonEndpoint,
         string observerEndpoint,
         string probeEndpoint,
         string gateEndpoint) where TUser : AiurUserBase, new()
     {
         services.AddObserverServer(observerEndpoint); // For error reporting.
-        services.AddArchonServer(archonEndpoint); // For token exchanging.
         services.AddProbeServer(probeEndpoint); // For file storaging.
         services.AddGatewayServer(gateEndpoint); // For authentication.
         services.AddAiursoftSDK(Assembly.GetCallingAssembly(), typeof(IAuthProvider));

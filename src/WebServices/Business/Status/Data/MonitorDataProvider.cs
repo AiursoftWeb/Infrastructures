@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Probe.SDK.Services;
@@ -9,36 +9,40 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly ArchonLocator archonLocator;
+    private readonly GatewayLocator gatewayLocator;
     private readonly List<MonitorRule> customRules;
     private readonly DeveloperLocator developerLocator;
     private readonly ObserverLocator observerLocator;
     private readonly ProbeLocator probeLocator;
+    private readonly IConfiguration _configuration;
     private readonly ServiceLocation serviceLocation;
     private readonly StargateLocator stargateLocator;
     private readonly WarpgateLocator warpgateLocator;
 
     public MonitorDataProvider(
+        IConfiguration configuration,
         ServiceLocation serviceLocation,
         ObserverLocator observerLocator,
         StargateLocator stargateLocator,
         DeveloperLocator developerLocator,
-        ArchonLocator archonLocator,
+        GatewayLocator gatewayLocator,
         ProbeLocator probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
+        _configuration = configuration;
         this.serviceLocation = serviceLocation;
         this.observerLocator = observerLocator;
         this.stargateLocator = stargateLocator;
         this.developerLocator = developerLocator;
-        this.archonLocator = archonLocator;
+        this.gatewayLocator = gatewayLocator;
         this.probeLocator = probeLocator;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
@@ -60,12 +64,6 @@ public class MonitorDataProvider : ISingletonDependency
             },
             new()
             {
-                ProjectName = "Aiursoft Archon",
-                CheckAddress = $"{archonLocator.Endpoint}",
-                ExpectedContent = "Welcome to Archon server!"
-            },
-            new()
-            {
                 ProjectName = "Aiursoft Developer",
                 CheckAddress = $"{developerLocator.Endpoint}/?show=direct",
                 ExpectedContent = "Welcome to"
@@ -74,7 +72,7 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft authentication gateway",
                 CheckAddress =
-                    $"{serviceLocation.Gateway}/oauth/authorize?appid={AppsContainer.CurrentAppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{gatewayLocator.Endpoint}/oauth/authorize?appid={_configuration["AiursoftAppId"]}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()

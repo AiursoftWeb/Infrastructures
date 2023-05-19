@@ -1,5 +1,4 @@
-using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
@@ -16,8 +15,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["ObserverAppId"];
-        AppsContainer.CurrentAppSecret = configuration["ObserverAppSecret"];
     }
 
     public IConfiguration Configuration { get; }
@@ -28,7 +25,7 @@ public class Startup
 
         services.AddAiurAPIMvc();
         services.AddAiursoftSDK();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
     }
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>6.0.8</Version>
+		<Version>6.0.12</Version>
 		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
@@ -12,6 +12,9 @@
 		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
 		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
 		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\API\AccessTokenAddressModels\" />
 	</ItemGroup>
 
 

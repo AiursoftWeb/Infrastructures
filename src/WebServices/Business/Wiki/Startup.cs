@@ -1,5 +1,4 @@
-﻿using Aiursoft.Archon.SDK.Services;
-using Aiursoft.Identity;
+﻿using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
@@ -20,8 +19,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["WikiAppId"];
-        AppsContainer.CurrentAppSecret = configuration["WikiAppSecret"];
     }
 
     public IConfiguration Configuration { get; }
@@ -37,7 +34,6 @@ public class Startup
         services.AddAiurMvc();
 
         services.AddAiursoftIdentity<WikiUser>(
-            Configuration.GetConnectionString("ArchonConnection"),
             Configuration.GetConnectionString("ObserverConnection"),
             Configuration.GetConnectionString("ProbeConnection"),
             Configuration.GetConnectionString("GatewayConnection"));

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK.Models;
@@ -9,16 +9,16 @@ namespace Aiursoft.Warpgate.Repositories;
 
 public class AppRepo : IScopedDependency
 {
-    private readonly ACTokenValidator _acTokenManager;
+    private readonly AiursoftAppTokenValidator _aiursoftAppTokenManager;
     private readonly WarpgateDbContext _dbContext;
     private readonly RecordRepo _recordRepo;
 
     public AppRepo(
-        ACTokenValidator acTokenManager,
+        AiursoftAppTokenValidator aiursoftAppTokenManager,
         WarpgateDbContext dbContext,
         RecordRepo recordRepo)
     {
-        _acTokenManager = acTokenManager;
+        _aiursoftAppTokenManager = aiursoftAppTokenManager;
         _dbContext = dbContext;
         _recordRepo = recordRepo;
     }
@@ -30,7 +30,7 @@ public class AppRepo : IScopedDependency
 
     public async Task<WarpgateApp> GetApp(string accessToken)
     {
-        var appid = _acTokenManager.ValidateAccessToken(accessToken);
+        var appid = await _aiursoftAppTokenManager.ValidateAccessTokenAsync(accessToken);
         var appLocal = await _dbContext.WarpApps.SingleOrDefaultAsync(t => t.AppId == appid);
         if (appLocal != null)
         {

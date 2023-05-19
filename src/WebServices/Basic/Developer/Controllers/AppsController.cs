@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Developer.Models.AppsViewModels;
@@ -54,7 +54,7 @@ public class AppsController : Controller
         return RedirectToAction(nameof(AllApps));
         // We did not implement the report page.
         // var currentUser = await GetCurrentUserAsync();
-        // var model = new IndexViewModel(currentUser);
+        // var model = new AppTokenConfigViewModel(currentUser);
         // return View(model);
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-using Aiursoft.Archon.SDK.Services;
+using System.Threading.Tasks;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Stargate.Data;
@@ -17,12 +18,12 @@ public class MessageController : ControllerBase
 {
     private readonly Counter _counter;
     private readonly StargateMemory _memoryContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public MessageController(
         StargateMemory memoryContext,
         Counter counter,
-        ACTokenValidator tokenManager)
+        AiursoftAppTokenValidator tokenManager)
     {
         _memoryContext = memoryContext;
         _counter = counter;
@@ -30,10 +31,10 @@ public class MessageController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PushMessage(PushMessageAddressModel model)
+    public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
     {
         //Ensure app
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         //Ensure channel
         var channel = _memoryContext.GetChannelsUnderApp(appid).SingleOrDefault(t => t.Id == model.ChannelId);
         if (channel == null)

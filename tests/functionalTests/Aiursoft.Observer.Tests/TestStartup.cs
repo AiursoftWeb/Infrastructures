@@ -1,4 +1,4 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.SDK.Tests.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ public class TestStartup : Startup
     public override void ConfigureServices(IServiceCollection services)
     {
         base.ConfigureServices(services);
-        services.RemoveAll<ACTokenValidator>();
-        services.AddTransient<ACTokenValidator, MockAcTokenValidator>();
+        services.RemoveAll<AiursoftAppTokenValidator>();
+        services.AddTransient<AiursoftAppTokenValidator, MockAcTokenValidator>();
     }
 }

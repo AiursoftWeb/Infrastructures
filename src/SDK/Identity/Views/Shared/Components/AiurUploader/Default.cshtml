@@ -18,7 +18,7 @@
     }
     if (!string.IsNullOrWhiteSpace(Model.DefaultFile))
     {
-        extension += $"data-default-file=\"{ProbeLocator.GetProbeOpenAddress(Model.DefaultFile)}\" ";
+        extension += $"data-default-file=\"{await ProbeLocator.GetProbeOpenAddressAsync(Model.DefaultFile)}\" ";
     }
     if (Model.SizeInMB > 0)
     {

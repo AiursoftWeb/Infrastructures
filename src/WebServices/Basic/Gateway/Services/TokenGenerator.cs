@@ -1,11 +1,11 @@
 ﻿using System;
-using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Aiursoft.Archon.Services;
+namespace Aiursoft.Gateway.Services;
 
 public class TokenGenerator : IScopedDependency
 {

@@ -1,29 +1,29 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Gateway.Controllers;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Identity.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Gateway.Services;
 
 public class ConfirmationEmailSender : ITransientDependency
 {
+    private readonly IConfiguration _configuration;
     private readonly AiurEmailSender _emailSender;
-    private readonly GatewayLocator _gatewayLocator;
 
     public ConfirmationEmailSender(
-        GatewayLocator gatewayLocator,
+        IConfiguration configuration,
         AiurEmailSender emailSender)
     {
-        _gatewayLocator = gatewayLocator;
+        _configuration = configuration;
         _emailSender = emailSender;
     }
 
     public async Task SendConfirmation(string userId, string emailAddress, string token)
     {
-        var callbackUrl = new AiurUrl(_gatewayLocator.Endpoint, "Password", nameof(PasswordController.EmailConfirm), new
+        var callbackUrl = new AiurUrl(_configuration["GatewayEndpoint"], "Password", nameof(PasswordController.EmailConfirm), new
         {
             userId,
             code = token
@@ -35,7 +35,7 @@ public class ConfirmationEmailSender : ITransientDependency
 
     public Task SendResetPassword(string code, string userId, string targetEmail)
     {
-        var callbackUrl = new AiurUrl(_gatewayLocator.Endpoint, "Password", nameof(PasswordController.ResetPassword),
+        var callbackUrl = new AiurUrl(_configuration["GatewayEndpoint"], "Password", nameof(PasswordController.ResetPassword),
             new
             {
                 Code = code,

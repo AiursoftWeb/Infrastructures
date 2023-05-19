@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
@@ -17,12 +17,12 @@ public class GrantChecker : IScopedDependency
 {
     private readonly GatewayDbContext _dbContext;
     private readonly DeveloperApiService _developerApiService;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public GrantChecker(
         GatewayDbContext context,
         DeveloperApiService developerApiService,
-        ACTokenValidator tokenManager)
+        AiursoftAppTokenValidator tokenManager)
     {
         _dbContext = context;
         _developerApiService = developerApiService;
@@ -31,7 +31,7 @@ public class GrantChecker : IScopedDependency
 
     public async Task<GatewayUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
     {
-        var appid = _tokenManager.ValidateAccessToken(accessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
         var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);
         var app = await _developerApiService.AppInfoAsync(appid);
         if (!_dbContext.LocalAppGrant.Any(t => t.AppId == appid && t.GatewayUserId == targetUser.Id))

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
@@ -21,10 +21,10 @@ public class AccountController : ControllerBase
     private readonly DeveloperApiService _apiService;
     private readonly UserAppAuthManager _authManager;
     private readonly GatewayDbContext _dbContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public AccountController(
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         DeveloperApiService apiService,
         GatewayDbContext dbContext,
         UserAppAuthManager authManager)
@@ -38,7 +38,7 @@ public class AccountController : ControllerBase
     [Produces(typeof(CodeToOpenIdViewModel))]
     public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
     {
-        var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appId =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var targetPack = await _dbContext
             .OAuthPack
             .SingleOrDefaultAsync(t => t.Code == model.Code);
@@ -80,7 +80,7 @@ public class AccountController : ControllerBase
     [Produces(typeof(UserInfoViewModel))]
     public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
     {
-        var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appId =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
         if (user == null)
         {

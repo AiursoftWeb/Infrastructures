@@ -32,6 +32,6 @@ public class UserImageGenerator<T> where T : AiurUserBase
     public async Task<string> GetUserImageUrl(ClaimsPrincipal userClaims)
     {
         var user = await _userManager.GetUserAsync(userClaims);
-        return _probeLocator.GetProbeOpenAddress(user.IconFilePath);
+        return await _probeLocator.GetProbeOpenAddressAsync(user.IconFilePath);
     }
 }

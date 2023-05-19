@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -89,7 +88,7 @@ public class DownloadController : Controller
             if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "Video")
             {
                 return VideoPlayerWithFile(
-                    probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName),
+                    await probeLocator.GetProbeOpenAddressAsync(model.SiteName, folders, fileName),
                     model.PBToken,
                     fileName);
             }
@@ -111,7 +110,8 @@ public class DownloadController : Controller
     {
         try
         {
-            return (await Image.DetectFormatAsync(imagePath)).MimeTypes.Any();
+            _ = await Image.DetectFormatAsync(imagePath);
+            return true;
         }
         catch
         {

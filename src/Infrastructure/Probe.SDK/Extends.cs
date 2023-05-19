@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK;
 
@@ -20,16 +18,7 @@ public static class Extends
         this IServiceCollection services,
         string serverEndpoint)
     {
-        AsyncHelper.TryAsync(async () =>
-        {
-            var serverConfigString = await SimpleHttp.DownloadAsString(serverEndpoint);
-            var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
-            var openFormat = serverConfig.OpenPattern;
-            var downloadFormat = serverConfig.DownloadPattern;
-            var playerFormat = serverConfig.PlayerPattern;
-            services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat, playerFormat));
-        }, 5);
-
+        services.AddSingleton(new ProbeLocator(serverEndpoint));
         services.AddLibraryDependencies();
         return services;
     }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+using Aiursoft.Gateway.SDK.Models.API.APIViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
@@ -7,24 +8,24 @@ using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Archon.SDK.Services.ToArchonServer;
+namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 
-public class ArchonApiService : IScopedDependency
+public class ApiService : IScopedDependency
 {
-    private readonly ArchonLocator _archonLocator;
+    private readonly GatewayLocator _gatewayLocator;
     private readonly APIProxyService _http;
 
-    public ArchonApiService(
-        ArchonLocator serviceLocation,
+    public ApiService(
+        GatewayLocator serviceLocation,
         APIProxyService http)
     {
-        _archonLocator = serviceLocation;
+        _gatewayLocator = serviceLocation;
         _http = http;
     }
 
     public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
     {
-        var url = new AiurUrl(_archonLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
+        var url = new AiurUrl(_gatewayLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
         {
             AppId = appId,
             AppSecret = appSecret

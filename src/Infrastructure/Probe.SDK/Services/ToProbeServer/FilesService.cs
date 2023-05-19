@@ -15,20 +15,20 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 public class FilesService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly ProbeLocator _serviceLocation;
+    private readonly ProbeLocator _probeLocator;
 
     public FilesService(
         APIProxyService http,
-        ProbeLocator serviceLocation)
+        ProbeLocator probeLocator)
     {
         _http = http;
-        _serviceLocation = serviceLocation;
+        _probeLocator = probeLocator;
     }
 
     public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames,
         Stream file, bool recursiveCreate = false)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_probeLocator.Endpoint,
             $"/Files/UploadFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new UploadFileAddressModel
             {
                 Token = accessToken,
@@ -46,7 +46,7 @@ public class FilesService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteFileAsync(string accessToken, string siteName, string folderNames)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_probeLocator.Endpoint,
             $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
         {
@@ -70,7 +70,7 @@ public class FilesService : IScopedDependency
             targetFolderNames = "/";
         }
 
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_probeLocator.Endpoint,
             $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new CopyFileAddressModel
         {
@@ -91,7 +91,7 @@ public class FilesService : IScopedDependency
     public async Task<UploadFileViewModel> RenameFileAsync(string accessToken, string siteName, string folderNames,
         string targetFileName)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_probeLocator.Endpoint,
             $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new RenameFileAddressModel
         {

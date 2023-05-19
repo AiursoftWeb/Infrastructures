@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.Models.HomeViewModels;
+using Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
+using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.WebTools;
+using Aiursoft.XelNaga.Tools;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +22,15 @@ public class HomeController : ControllerBase
     private readonly ISessionBasedCaptcha _captcha;
     private readonly GatewayDbContext _dbContext;
     private readonly IStringLocalizer<HomeController> _localizer;
+    private readonly PrivateKeyStore _privateKeyStore;
 
     public HomeController(
+        PrivateKeyStore privateKeyStore,
         IStringLocalizer<HomeController> localizer,
         GatewayDbContext dbContext,
         ISessionBasedCaptcha captcha)
     {
+        _privateKeyStore = privateKeyStore;
         _localizer = localizer;
         _dbContext = dbContext;
         _captcha = captcha;
@@ -34,13 +39,15 @@ public class HomeController : ControllerBase
     public async Task<IActionResult> Index()
     {
         var currentUser = await GetCurrentUserAsync();
-        return this.Protocol(new IndexViewModel
+        return this.Protocol(new ArchonServerConfig
         {
             SignedIn = User.Identity?.IsAuthenticated ?? false,
             ServerTime = DateTime.UtcNow,
             Code = ErrorType.Success,
             Message = "Server started successfully!",
             Local = _localizer["en"],
+            Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
+            Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64(),
             User = currentUser
         });
     }
