@@ -2,7 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
+using CacheManager.Core.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
@@ -12,13 +14,16 @@ public class ImageCompressor : ITransientDependency
 {
     private static readonly object ObjCompareLock = new();
     private static readonly object ObjClearLock = new();
+    private readonly ILogger<ImageCompressor> _logger;
     private readonly SizeCalculator _sizeCalculator;
     private readonly string _tempFilePath;
 
     public ImageCompressor(
+        ILogger<ImageCompressor> logger,
         IConfiguration configuration,
         SizeCalculator sizeCalculator)
     {
+        _logger = logger;
         _sizeCalculator = sizeCalculator;
         _tempFilePath = configuration["TempFileStoragePath"];
         if (string.IsNullOrWhiteSpace(_tempFilePath))
@@ -42,8 +47,9 @@ public class ImageCompressor : ITransientDependency
             await ClearImage(path, clearedImagePath);
             return clearedImagePath;
         }
-        catch (ImageFormatException)
+        catch (ImageFormatException ex)
         {
+            _logger.LogError(ex, "Failed to clear the EXIF of an image.");
             return path;
         }
     }
@@ -95,8 +101,9 @@ public class ImageCompressor : ITransientDependency
             await SaveCompressedImage(path, compressedImagePath, width, height);
             return compressedImagePath;
         }
-        catch (ImageFormatException)
+        catch (ImageFormatException ex)
         {
+            _logger.LogError(ex, "Failed to compress an image.");
             return path;
         }
     }
