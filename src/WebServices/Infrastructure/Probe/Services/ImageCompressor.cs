@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
-using CacheManager.Core.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
