@@ -89,7 +89,7 @@ public class DownloadController : Controller
             if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "Video")
             {
                 return VideoPlayerWithFile(
-                    probeLocator.GetProbeOpenAddress(model.SiteName, folders, fileName),
+                    await probeLocator.GetProbeOpenAddressAsync(model.SiteName, folders, fileName),
                     model.PBToken,
                     fileName);
             }

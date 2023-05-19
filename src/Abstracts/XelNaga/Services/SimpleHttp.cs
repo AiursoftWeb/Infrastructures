@@ -9,6 +9,7 @@ public static class SimpleHttp
     {
         var http = new HttpClient();
         var response = await http.GetAsync(url);
+        response.EnsureSuccessStatusCode();
         var body = await response.Content.ReadAsStringAsync();
         return body;
     }

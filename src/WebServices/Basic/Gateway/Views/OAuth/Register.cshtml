@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <div class="text-center">
-                <img class="rounded" style="width:100px;height:100px;" src="@ProbeLocator.GetProbeOpenAddress(Model.AppImageUrl)?w=128&square=true">
+                <img class="rounded" style="width:100px;height:100px;" src="@await ProbeLocator.GetProbeOpenAddressAsync(Model.AppImageUrl)?w=128&square=true">
             </div>
             <form asp-controller="OAuth" asp-action="Register" method="post"
                   asp-route-appId="@Model.AppId"

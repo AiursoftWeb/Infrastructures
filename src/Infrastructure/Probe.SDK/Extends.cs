@@ -20,16 +20,7 @@ public static class Extends
         this IServiceCollection services,
         string serverEndpoint)
     {
-        AsyncHelper.TryAsync(async () =>
-        {
-            var serverConfigString = await SimpleHttp.DownloadAsString(serverEndpoint);
-            var serverConfig = JsonConvert.DeserializeObject<IndexViewModel>(serverConfigString);
-            var openFormat = serverConfig.OpenPattern;
-            var downloadFormat = serverConfig.DownloadPattern;
-            var playerFormat = serverConfig.PlayerPattern;
-            services.AddSingleton(new ProbeLocator(serverEndpoint, openFormat, downloadFormat, playerFormat));
-        }, 5);
-
+        services.AddSingleton(new ProbeLocator(serverEndpoint));
         services.AddLibraryDependencies();
         return services;
     }

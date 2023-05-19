@@ -98,8 +98,8 @@ public class FilesController : ControllerBase
         var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', folders), fileName);
         return this.Protocol(new UploadFileViewModel
         {
-            InternetPath = _probeLocator.GetProbeOpenAddress(filePath),
-            DownloadPath = _probeLocator.GetProbeDownloadAddress(filePath),
+            InternetPath = await _probeLocator.GetProbeOpenAddressAsync(filePath),
+            DownloadPath = await _probeLocator.GetProbeDownloadAddressAsync(filePath),
             SiteName = model.SiteName,
             FilePath = filePath,
             FileSize = file.Length,
@@ -158,7 +158,7 @@ public class FilesController : ControllerBase
         var fileName = _folderSplitter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
         await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
         var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
-        var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
+        var internetPath = await _probeLocator.GetProbeOpenAddressAsync(filePath);
         return this.Protocol(new UploadFileViewModel
         {
             InternetPath = internetPath,
@@ -190,7 +190,7 @@ public class FilesController : ControllerBase
         await _fileRepo.UpdateName(file.Id, newFileName);
 
         var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', sourceFileName), newFileName);
-        var internetPath = _probeLocator.GetProbeOpenAddress(filePath);
+        var internetPath = await _probeLocator.GetProbeOpenAddressAsync(filePath);
         return this.Protocol(new UploadFileViewModel
         {
             InternetPath = internetPath,

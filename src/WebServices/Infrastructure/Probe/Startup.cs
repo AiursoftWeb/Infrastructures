@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK;
@@ -34,11 +35,13 @@ public class Startup
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddAiursoftSDK();
         services.AddScoped<IStorageProvider, DiskAccess>();
-        services.AddSingleton(new ProbeLocator(
-            Configuration["ProbeEndpoint"],
-            Configuration["OpenPattern"],
-            Configuration["DownloadPattern"],
-            Configuration["PlayerPattern"]));
+
+        services.AddSingleton(new ProbeLocator(Configuration["ProbeEndpoint"], new ProbeServerConfig
+        {
+            OpenPattern = Configuration["OpenPattern"],
+            DownloadPattern = Configuration["DownloadPattern"],
+            PlayerPattern = Configuration["PlayerPattern"]
+        }));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

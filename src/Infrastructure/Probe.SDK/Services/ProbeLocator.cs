@@ -1,67 +1,63 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Models.HomeViewModels;
+using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
+using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services;
 
 public class ProbeLocator
 {
-    public string PlayerFormat;
+    public readonly string Endpoint;
+    private ProbeServerConfig _config;
 
-    public ProbeLocator(
-        string endpoint,
-        string openFormat,
-        string downloadFormat,
-        string playerFormat)
+    public ProbeLocator(string endpoint)
     {
         Endpoint = endpoint;
-        if (string.IsNullOrWhiteSpace(openFormat))
+    }
+
+    public ProbeLocator(string endpoint, ProbeServerConfig config)
+    {
+        Endpoint = endpoint;
+        _config = config;
+    }
+
+    private async Task<ProbeServerConfig> ExtractServerConfig()
+    {
+        if (_config == null)
         {
-            openFormat = endpoint + "/download/open/{0}";
+            var serverConfigString = await SimpleHttp.DownloadAsString(Endpoint);
+            _config = JsonConvert.DeserializeObject<ProbeServerConfig>(serverConfigString);
         }
 
-        OpenFormat = openFormat;
-        if (string.IsNullOrWhiteSpace(downloadFormat))
-        {
-            downloadFormat = endpoint + "/download/file/{0}";
-        }
-
-        DownloadFormat = downloadFormat;
-        if (string.IsNullOrWhiteSpace(playerFormat))
-        {
-            playerFormat = endpoint + "/Video/file/{0}";
-        }
-
-        PlayerFormat = playerFormat;
+        return _config;
     }
 
-    public string Endpoint { get; private set; }
-    public string OpenFormat { get; }
-    public string DownloadFormat { get; }
-
-    public string GetProbeOpenAddress(string siteName, string[] folders, string fileName)
+    public Task<string> GetProbeOpenAddressAsync(string siteName, string[] folders, string fileName)
     {
-        return GetProbeOpenAddress(siteName, string.Join('/', folders), fileName);
+        return GetProbeOpenAddressAsync(siteName, string.Join('/', folders), fileName);
     }
 
-    public string GetProbeOpenAddress(string siteName, string path, string fileName)
+    public Task<string> GetProbeOpenAddressAsync(string siteName, string path, string fileName)
     {
         var fullPath = GetProbeFullPath(siteName, path, fileName);
-        return GetProbeOpenAddress(fullPath);
+        return GetProbeOpenAddressAsync(fullPath);
     }
 
-    public string GetProbeDownloadAddress(string siteName, string path, string fileName)
+    public Task<string> GetProbeDownloadAddressAsync(string siteName, string path, string fileName)
     {
         var fullPath = GetProbeFullPath(siteName, path, fileName);
-        return GetProbeDownloadAddress(fullPath);
+        return GetProbeOpenAddressAsync(fullPath);
     }
 
-    public string GetProbePlayerAddress(string siteName, string path, string fileName)
+    public Task<string> GetProbePlayerAddressAsync(string siteName, string path, string fileName)
     {
         var fullPath = GetProbeFullPath(siteName, path, fileName);
-        return GetProbePlayerAddress(fullPath);
+        return GetProbeOpenAddressAsync(fullPath);
     }
 
     public string GetProbeFullPath(string siteName, string path, string fileName)
@@ -71,26 +67,30 @@ public class ProbeLocator
         return fullPath;
     }
 
-    public string GetProbeOpenAddress(string fullPath)
+    public async Task<string> GetProbeOpenAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var domain = string.Format(OpenFormat, siteName);
+
+        var serverConfig = await this.ExtractServerConfig();
+        var domain = string.Format(serverConfig.OpenPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
     }
 
-    public string GetProbeDownloadAddress(string fullPath)
+    public async Task<string> GetProbeDownloadAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var domain = string.Format(DownloadFormat, siteName);
+        var serverConfig = await this.ExtractServerConfig();
+        var domain = string.Format(serverConfig.DownloadPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
     }
 
-    public string GetProbePlayerAddress(string fullPath)
+    public async Task<string> GetProbePlayerAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var domain = string.Format(PlayerFormat, siteName);
+        var serverConfig = await this.ExtractServerConfig();
+        var domain = string.Format(serverConfig.PlayerPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
     }
