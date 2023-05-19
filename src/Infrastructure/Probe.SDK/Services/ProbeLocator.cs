@@ -26,7 +26,7 @@ public class ProbeLocator
         _config = config;
     }
 
-    private async Task<ProbeServerConfig> ExtractServerConfig()
+    public async Task<ProbeServerConfig> ExtractServerConfig()
     {
         if (_config == null)
         {
