@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
@@ -18,8 +17,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["AccountAppId"];
-        AppsContainer.CurrentAppSecret = configuration["AccountAppSecret"];
     }
 
     public IConfiguration Configuration { get; }

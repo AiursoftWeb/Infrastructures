@@ -23,11 +23,11 @@ public class ChannelController : ControllerBase
     private readonly Counter _counter;
     private readonly StargateDbContext _dbContext;
     private readonly StargateMemory _stargateMemory;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public ChannelController(
         StargateDbContext dbContext,
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         StargateMemory stargateMemory,
         Counter counter)
     {

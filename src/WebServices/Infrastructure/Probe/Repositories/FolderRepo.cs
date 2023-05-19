@@ -17,14 +17,14 @@ public class FolderRepo : IScopedDependency
     private readonly ProbeDbContext _dbContext;
     private readonly FileRepo _fileRepo;
     private readonly IStorageProvider _storageProvider;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly FolderLockDictionary lockDictionary;
 
     public FolderRepo(
         ProbeDbContext probeDbContext,
         FileRepo fileRepo,
         IStorageProvider storageProvider,
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         FolderLockDictionary lockDictionary)
     {
         _dbContext = probeDbContext;

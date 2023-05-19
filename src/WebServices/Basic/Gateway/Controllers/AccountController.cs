@@ -21,10 +21,10 @@ public class AccountController : ControllerBase
     private readonly DeveloperApiService _apiService;
     private readonly UserAppAuthManager _authManager;
     private readonly GatewayDbContext _dbContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public AccountController(
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         DeveloperApiService apiService,
         GatewayDbContext dbContext,
         UserAppAuthManager authManager)

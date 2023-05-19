@@ -29,7 +29,7 @@ namespace Aiursoft.Gateway.Controllers;
 public class ApiController : Controller
 {
     private readonly GatewayDbContext _dbContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly UserManager<GatewayUser> _userManager;
     private readonly DeveloperApiService _developerApiService;
     private readonly TokenGenerator _tokenGenerator;
@@ -39,7 +39,7 @@ public class ApiController : Controller
         DeveloperApiService developerApiService,
         UserManager<GatewayUser> userManager,
         GatewayDbContext context,
-        ACTokenValidator tokenManager)
+        AiursoftAppTokenValidator tokenManager)
     {
         _tokenGenerator = tokenGenerator;
         _developerApiService = developerApiService;

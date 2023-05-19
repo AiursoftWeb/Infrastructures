@@ -1,5 +1,4 @@
 using Aiursoft.Gateway.SDK;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
@@ -16,8 +15,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["ObserverAppId"];
-        AppsContainer.CurrentAppSecret = configuration["ObserverAppSecret"];
     }
 
     public IConfiguration Configuration { get; }

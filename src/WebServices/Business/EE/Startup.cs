@@ -1,5 +1,4 @@
-﻿using Aiursoft.Gateway.SDK.Services;
-using Aiursoft.EE.Data;
+﻿using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
@@ -17,8 +16,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["EEAppId"];
-        AppsContainer.CurrentAppSecret = configuration["EEAppSecret"];
     }
 
     public IConfiguration Configuration { get; }

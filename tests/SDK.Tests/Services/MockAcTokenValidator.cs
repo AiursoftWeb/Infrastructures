@@ -5,12 +5,12 @@ using Aiursoft.Handler.Models;
 
 namespace Aiursoft.SDK.Tests.Services;
 
-public class MockAcTokenValidator : ACTokenValidator
+public class MockAcTokenValidator : AiursoftAppTokenValidator
 {
     public static string MockAppId = Guid.NewGuid().ToString();
     public static string Mock2AppId = Guid.NewGuid().ToString();
 
-    public MockAcTokenValidator(RSAService rsa) : base(rsa)
+    public MockAcTokenValidator(GatewayRSAService rsa) : base(rsa)
     {
     }
 

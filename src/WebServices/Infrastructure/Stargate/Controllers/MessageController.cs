@@ -17,12 +17,12 @@ public class MessageController : ControllerBase
 {
     private readonly Counter _counter;
     private readonly StargateMemory _memoryContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public MessageController(
         StargateMemory memoryContext,
         Counter counter,
-        ACTokenValidator tokenManager)
+        AiursoftAppTokenValidator tokenManager)
     {
         _memoryContext = memoryContext;
         _counter = counter;

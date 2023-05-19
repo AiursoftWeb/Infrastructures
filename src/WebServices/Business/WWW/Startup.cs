@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
-using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -19,9 +17,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["WWWAppId"];
-        AppsContainer.CurrentAppSecret = configuration["WWWAppSecret"];
-        BingTranslator.APIKey = configuration["TranslateAPIKey"];
     }
 
     public IConfiguration Configuration { get; }

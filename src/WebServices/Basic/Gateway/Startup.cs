@@ -25,8 +25,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["GatewayAppId"];
-        AppsContainer.CurrentAppSecret = configuration["GatewayAppSecret"];
     }
 
     public IConfiguration Configuration { get; }

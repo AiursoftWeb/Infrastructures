@@ -15,7 +15,7 @@ public class TestStartup : Startup
     public override void ConfigureServices(IServiceCollection services)
     {
         base.ConfigureServices(services);
-        services.RemoveAll<ACTokenValidator>();
-        services.AddTransient<ACTokenValidator, MockAcTokenValidator>();
+        services.RemoveAll<AiursoftAppTokenValidator>();
+        services.AddTransient<AiursoftAppTokenValidator, MockAcTokenValidator>();
     }
 }

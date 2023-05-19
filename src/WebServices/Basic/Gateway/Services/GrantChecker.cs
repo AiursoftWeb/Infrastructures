@@ -17,12 +17,12 @@ public class GrantChecker : IScopedDependency
 {
     private readonly GatewayDbContext _dbContext;
     private readonly DeveloperApiService _developerApiService;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public GrantChecker(
         GatewayDbContext context,
         DeveloperApiService developerApiService,
-        ACTokenValidator tokenManager)
+        AiursoftAppTokenValidator tokenManager)
     {
         _dbContext = context;
         _developerApiService = developerApiService;

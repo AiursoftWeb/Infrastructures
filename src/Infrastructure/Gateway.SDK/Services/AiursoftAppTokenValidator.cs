@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace Aiursoft.Gateway.SDK.Services;
 
-public class ACTokenValidator : IScopedDependency
+public class AiursoftAppTokenValidator : IScopedDependency
 {
-    private readonly RSAService _rsa;
+    private readonly GatewayRSAService _gatewayRsa;
 
-    public ACTokenValidator(RSAService rsa)
+    public AiursoftAppTokenValidator(GatewayRSAService gatewayRsa)
     {
-        _rsa = rsa;
+        _gatewayRsa = gatewayRsa;
     }
 
     public virtual string ValidateAccessToken(string value)
@@ -30,7 +30,7 @@ public class ACTokenValidator : IScopedDependency
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
             }
 
-            if (!_rsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+            if (!_gatewayRsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized,
                     "Invalid signature! Token could not be authorized!");

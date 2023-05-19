@@ -22,10 +22,10 @@ public class EventController : ControllerBase
 {
     private readonly CannonQueue _cannon;
     private readonly ObserverDbContext _dbContext;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public EventController(
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         ObserverDbContext dbContext,
         CannonQueue cannon)
     {

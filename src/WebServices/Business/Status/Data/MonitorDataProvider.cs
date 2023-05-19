@@ -9,6 +9,7 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Status.Data;
@@ -20,11 +21,13 @@ public class MonitorDataProvider : ISingletonDependency
     private readonly DeveloperLocator developerLocator;
     private readonly ObserverLocator observerLocator;
     private readonly ProbeLocator probeLocator;
+    private readonly IConfiguration _configuration;
     private readonly ServiceLocation serviceLocation;
     private readonly StargateLocator stargateLocator;
     private readonly WarpgateLocator warpgateLocator;
 
     public MonitorDataProvider(
+        IConfiguration configuration,
         ServiceLocation serviceLocation,
         ObserverLocator observerLocator,
         StargateLocator stargateLocator,
@@ -34,6 +37,7 @@ public class MonitorDataProvider : ISingletonDependency
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
+        _configuration = configuration;
         this.serviceLocation = serviceLocation;
         this.observerLocator = observerLocator;
         this.stargateLocator = stargateLocator;
@@ -68,7 +72,7 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft authentication gateway",
                 CheckAddress =
-                    $"{gatewayLocator.Endpoint}/oauth/authorize?appid={AppsContainer.CurrentAppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{gatewayLocator.Endpoint}/oauth/authorize?appid={_configuration["AiursoftAppId"]}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()

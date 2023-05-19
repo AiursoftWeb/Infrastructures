@@ -19,10 +19,10 @@ public class TokenController : ControllerBase
 {
     private readonly ProbeDbContext _dbContext;
     private readonly PBTokenManager _pbTokenManager;
-    private readonly ACTokenValidator _tokenManager;
+    private readonly AiursoftAppTokenValidator _tokenManager;
 
     public TokenController(
-        ACTokenValidator tokenManager,
+        AiursoftAppTokenValidator tokenManager,
         ProbeDbContext dbContext,
         PBTokenManager pbTokenManager)
     {

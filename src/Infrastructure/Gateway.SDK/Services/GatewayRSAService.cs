@@ -4,12 +4,12 @@ using Aiursoft.XelNaga.Tools;
 
 namespace Aiursoft.Gateway.SDK.Services;
 
-public class RSAService : IScopedDependency
+public class GatewayRSAService : IScopedDependency
 {
     private readonly GatewayLocator _gatewayLocator;
     private readonly RSA _rsa;
 
-    public RSAService(GatewayLocator gatewayLocator)
+    public GatewayRSAService(GatewayLocator gatewayLocator)
     {
         _rsa = RSA.Create();
         _gatewayLocator = gatewayLocator;

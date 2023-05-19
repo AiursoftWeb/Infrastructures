@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
@@ -21,8 +20,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        AppsContainer.CurrentAppId = configuration["StatusAppId"];
-        AppsContainer.CurrentAppSecret = configuration["StatusAppSecret"];
     }
 
     public IConfiguration Configuration { get; }
