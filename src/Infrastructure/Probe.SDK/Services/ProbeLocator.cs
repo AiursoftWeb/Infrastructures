@@ -15,6 +15,9 @@ public class ProbeLocator
     public readonly string Endpoint;
     private ProbeServerConfig _config;
 
+    [Obsolete("This method is only for framework", true)]
+    public ProbeLocator() { }
+
     public ProbeLocator(string endpoint)
     {
         Endpoint = endpoint;
