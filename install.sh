@@ -5,8 +5,6 @@ infs_path="/opt/apps/Infrastructures"
 dbPassword=$(uuidgen)
 userId=$(uuidgen)
 
-archonAppId=$(uuidgen)
-archonAppSecret=$(uuidgen)
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
 gatewayAppId=$(uuidgen)
@@ -30,7 +28,6 @@ statusAppSecret=$(uuidgen)
 eeAppId=$(uuidgen)
 eeAppSecret=$(uuidgen)
 
-archon_code="$infs_code/src/WebServices/Basic/Archon"
 gateway_code="$infs_code/src/WebServices/Basic/Gateway"
 developer_code="$infs_code/src/WebServices/Basic/Developer"
 observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
@@ -43,7 +40,6 @@ status_code="$infs_code/src/WebServices/Business/Status"
 account_code="$infs_code/src/WebServices/Business/Account"
 ee_code="$infs_code/src/WebServices/Business/EE"
 
-archon_path="$infs_path/Archon"
 gateway_path="$infs_path/Gateway"
 developer_path="$infs_path/Developer"
 observer_path="$infs_path/Observer"
@@ -61,7 +57,6 @@ set_env()
     dist_path="$1"
     domain="$2"
     aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.ArchonConnection" "https://archon.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.StargateConnection" "https://stargate.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
@@ -139,7 +134,6 @@ install_infrastructures()
     aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
     dotnet restore $infs_code/Aiursoft.Infrastructures.sln
-    cp $archon_code/appsettings.json $archon_code/appsettings.Production.json
     aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
     aiur dotnet/seeddb $developer_code "Developer" $dbPassword
     aiur dotnet/seeddb $observer_code "Observer" $dbPassword
@@ -152,7 +146,6 @@ install_infrastructures()
     aiur dotnet/seeddb $account_code "Account" $dbPassword
     aiur dotnet/seeddb $ee_code "EE" $dbPassword
 
-    aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
     aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
@@ -167,7 +160,6 @@ install_infrastructures()
 
     rm $infs_code -rf
 
-    set_env $archon_path $1
     set_env $gateway_path $1
     set_env $developer_path $1
     set_env $observer_path $1
@@ -180,7 +172,6 @@ install_infrastructures()
     set_env $account_path $1
     set_env $ee_path $1
 
-    aiur text/edit_json "ArchonEndpoint" "https://archon.$1" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperEndpoint" "https://developer.$1" $developer_path/appsettings.Production.json
     aiur text/edit_json "GatewayEndpoint" "https://gateway.$1" $gateway_path/appsettings.Production.json
     aiur text/edit_json "ObserverEndpoint" "https://observer.$1" $observer_path/appsettings.Production.json
@@ -193,8 +184,6 @@ install_infrastructures()
     aiur text/edit_json "WarpPattern" "https://warpgate.$1/warp/{warp}" $warpgate_path/appsettings.Production.json
     aiur text/edit_json "StoragePath" "/opt/apps/" $probe_path/appsettings.Production.json
     aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
-    aiur text/edit_json "ArchonAppId" "$archonAppId" $archon_path/appsettings.Production.json
-    aiur text/edit_json "ArchonAppSecret" "$archonAppSecret" $archon_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
     aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
@@ -227,8 +216,6 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{userId}}" $userId
     replace_in_file ./temp.sql "{{domain}}" $1
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
-    replace_in_file ./temp.sql "{{archonAppId}}" $archonAppId
-    replace_in_file ./temp.sql "{{archonAppSecret}}" $archonAppSecret
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
     replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
@@ -253,7 +240,6 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{eeAppSecret}}" $eeAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
-    add_service "archon" $archon_path "Aiursoft.Archon" $1
     add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
     add_service "developer" $developer_path "Aiursoft.Developer" $1
     add_service "observer" $observer_path "Aiursoft.Observer" $1

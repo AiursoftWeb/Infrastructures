@@ -28,7 +28,6 @@ update()
     infs_code="./Infrastructures"
     infs_path="/opt/apps/Infrastructures"
 
-    archon_code="$infs_code/src/WebServices/Basic/Archon"
     gateway_code="$infs_code/src/WebServices/Basic/Gateway"
     developer_code="$infs_code/src/WebServices/Basic/Developer"
     observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
@@ -41,7 +40,6 @@ update()
     account_code="$infs_code/src/WebServices/Business/Account"
     ee_code="$infs_code/src/WebServices/Business/EE"
 
-    archon_path="$infs_path/Archon"
     gateway_path="$infs_path/Gateway"
     developer_path="$infs_path/Developer"
     observer_path="$infs_path/Observer"
@@ -56,9 +54,6 @@ update()
 
     aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
-
-    systemctl stop "archon.service"
-    aiur dotnet/publish $archon_path $archon_code/"Aiursoft.Archon.csproj"
 
     systemctl stop "stargate.service"
     aiur dotnet/publish $stargate_path $stargate_code/"Aiursoft.Stargate.csproj"
@@ -92,11 +87,6 @@ update()
 
     systemctl stop "status.service"
     aiur dotnet/publish $status_path $status_code/"Aiursoft.Status.csproj"
-    
-    echo "Starting dependencies and Archon..."
-    systemctl restart mssql-server.service
-    systemctl restart "archon.service"
-    sleep 30
     
     echo "Starting infrastructurs..."
     systemctl restart "probe.service"

@@ -12,20 +12,20 @@ namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 
 public class ApiService : IScopedDependency
 {
-    private readonly GatewayLocator _archonLocator;
+    private readonly GatewayLocator _gatewayLocator;
     private readonly APIProxyService _http;
 
     public ApiService(
         GatewayLocator serviceLocation,
         APIProxyService http)
     {
-        _archonLocator = serviceLocation;
+        _gatewayLocator = serviceLocation;
         _http = http;
     }
 
     public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
     {
-        var url = new AiurUrl(_archonLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
+        var url = new AiurUrl(_gatewayLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
         {
             AppId = appId,
             AppSecret = appSecret
