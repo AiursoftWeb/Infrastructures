@@ -68,7 +68,7 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft authentication gateway",
                 CheckAddress =
-                    $"{serviceLocation.Gateway}/oauth/authorize?appid={AppsContainer.CurrentAppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{gatewayLocator.Endpoint}/oauth/authorize?appid={AppsContainer.CurrentAppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()

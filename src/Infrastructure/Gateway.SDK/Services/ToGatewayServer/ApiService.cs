@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Models;
-using Aiursoft.Gateway.SDK;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+using Aiursoft.Gateway.SDK.Models.API.APIViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;

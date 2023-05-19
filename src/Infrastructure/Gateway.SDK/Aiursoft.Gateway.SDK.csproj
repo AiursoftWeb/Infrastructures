@@ -13,6 +13,9 @@
 		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
 		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\API\AccessTokenAddressModels\" />
+	</ItemGroup>
 
 
 </Project>

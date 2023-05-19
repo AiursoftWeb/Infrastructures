@@ -10,4 +10,5 @@ public class IndexViewModel : AiurProtocol
     public string Local { get; set; }
     public string Exponent { get; set; }
     public string Modulus { get; set; }
+    public AiurUserBase User { get; set; }
 }

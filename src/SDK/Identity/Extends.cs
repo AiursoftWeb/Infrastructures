@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Security.Claims;
-using Aiursoft.Archon.SDK;
 using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;

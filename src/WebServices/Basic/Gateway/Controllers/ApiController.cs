@@ -3,16 +3,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Models;
 using Aiursoft.DBTools;
 using Aiursoft.DBTools.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ApiViewModels;
-using Aiursoft.Gateway.SDK;
 using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+using Aiursoft.Gateway.SDK.Models.API.APIViewModels;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
@@ -132,7 +131,7 @@ public class ApiController : Controller
         var appid = _tokenManager.ValidateAccessToken(accessToken);
         _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully droped all users granted!");
+        return this.Protocol(ErrorType.Success, "Successfully dropped all users granted!");
     }
 
     private Task<GatewayUser> GetCurrentUserAsync()
@@ -142,8 +141,6 @@ public class ApiController : Controller
             .Include(t => t.Emails)
             .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
-
-
 
     [APIExpHandler]
     [APIModelStateChecker]

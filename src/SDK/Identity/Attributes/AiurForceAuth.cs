@@ -1,6 +1,5 @@
 ﻿using System;
 using Aiursoft.Gateway.SDK.Services;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,4 @@
 ﻿using System;
-using Aiursoft.Archon.SDK;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Gateway.Data;
@@ -17,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Aiursoft.Gateway.Services;
 
 namespace Aiursoft.Gateway;
 
@@ -46,6 +46,9 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
+        var keyStore = new PrivateKeyStore();
+        services.AddSingleton(keyStore);
+        services.AddSingleton(new GatewayLocator(Configuration["GatewayEndpoint"], keyStore.GetPrivateKey()));
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.SDK.Models.API;
 using Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
@@ -48,7 +47,8 @@ public class HomeController : ControllerBase
             Message = "Server started successfully!",
             Local = _localizer["en"],
             Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
-            Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64()
+            Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64(),
+            User = currentUser
         });
     }
 

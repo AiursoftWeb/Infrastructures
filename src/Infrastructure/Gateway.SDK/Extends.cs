@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using Aiursoft.Archon.SDK.Models;
 using Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Scanner;

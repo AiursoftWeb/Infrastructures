@@ -22,7 +22,6 @@ public class ServiceLocation : ISingletonDependency
         UI = TrySet(section["UIPath"], "https://ui.aiursoft.com");
         Gateway = TrySet(section["GatewayPath"], "https://gateway.aiursoft.com");
         Developer = TrySet(section["DeveloperPath"], "https://developer.aiursoft.com");
-        EE = TrySet(section["EEPath"], "https://ee.aiursoft.com");
         Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
         WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
         Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
@@ -33,7 +32,6 @@ public class ServiceLocation : ISingletonDependency
     public string UI { get; private set; }
     public string Developer { get; private set; }
     public string Gateway { get; private set; }
-    public string EE { get; private set; }
     public string Wiki { get; private set; }
     public string WWW { get; private set; }
     public string Status { get; private set; }
