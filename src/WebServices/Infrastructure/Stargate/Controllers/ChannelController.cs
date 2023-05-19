@@ -40,7 +40,7 @@ public class ChannelController : ControllerBase
     [Produces(typeof(ViewMyChannelsViewModel))]
     public async Task<IActionResult> ViewMyChannels(ViewMyChannelsAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid = await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
         if (appLocal == null)
         {
@@ -107,7 +107,7 @@ public class ChannelController : ControllerBase
     public async Task<IActionResult> CreateChannel(CreateChannelAddressModel model)
     {
         //Update app info
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid = await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.Id == appid);
         if (appLocal == null)
         {
@@ -135,7 +135,7 @@ public class ChannelController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> DeleteChannel(DeleteChannelAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var channel = _stargateMemory[model.ChannelId];
         if (channel.AppId != appid)
         {
@@ -159,7 +159,7 @@ public class ChannelController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         if (appid != model.AppId)
         {
             return this.Protocol(new AiurProtocol

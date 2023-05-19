@@ -30,7 +30,7 @@ public class AppRepo : IScopedDependency
 
     public async Task<WarpgateApp> GetApp(string accessToken)
     {
-        var appid = _aiursoftAppTokenManager.ValidateAccessToken(accessToken);
+        var appid = await _aiursoftAppTokenManager.ValidateAccessTokenAsync(accessToken);
         var appLocal = await _dbContext.WarpApps.SingleOrDefaultAsync(t => t.AppId == appid);
         if (appLocal != null)
         {

@@ -35,9 +35,9 @@ public class EventController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Log(LogAddressModel model)
+    public async Task<IActionResult> Log(LogAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid = await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         _cannon.QueueWithDependency<ObserverDbContext>(async dbContext =>
         {
             var newEvent = new ErrorLog
@@ -58,7 +58,7 @@ public class EventController : ControllerBase
     [Produces(typeof(ViewLogViewModel))]
     public async Task<IActionResult> View(ViewAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var logs = (await _dbContext
                 .ErrorLogs
                 .Where(t => t.AppId == appid)
@@ -84,7 +84,7 @@ public class EventController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> DeleteApp(DeleteAppAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         if (appid != model.AppId)
         {
             return this.Protocol(ErrorType.Unauthorized,

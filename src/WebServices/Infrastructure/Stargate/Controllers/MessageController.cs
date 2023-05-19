@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -30,10 +31,10 @@ public class MessageController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PushMessage(PushMessageAddressModel model)
+    public async Task<IActionResult> PushMessage(PushMessageAddressModel model)
     {
         //Ensure app
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         //Ensure channel
         var channel = _memoryContext.GetChannelsUnderApp(appid).SingleOrDefault(t => t.Id == model.ChannelId);
         if (channel == null)

@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 
@@ -15,11 +16,11 @@ public class GatewayRSAService : IScopedDependency
         _gatewayLocator = gatewayLocator;
     }
 
-    public bool VerifyData(string originalMessage, string signedBase64)
+    public async Task<bool> VerifyDataAsync(string originalMessage, string signedBase64)
     {
         var bytesToVerify = originalMessage.StringToBytes();
         var signedBytes = signedBase64.Base64ToBytes();
-        _rsa.ImportParameters(_gatewayLocator.PublicKey);
+        _rsa.ImportParameters(await _gatewayLocator.GetPublicKey());
         return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }

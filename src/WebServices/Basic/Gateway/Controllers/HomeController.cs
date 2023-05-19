@@ -39,7 +39,7 @@ public class HomeController : ControllerBase
     public async Task<IActionResult> Index()
     {
         var currentUser = await GetCurrentUserAsync();
-        return this.Protocol(new IndexViewModel
+        return this.Protocol(new ArchonServerConfig
         {
             SignedIn = User.Identity?.IsAuthenticated ?? false,
             ServerTime = DateTime.UtcNow,

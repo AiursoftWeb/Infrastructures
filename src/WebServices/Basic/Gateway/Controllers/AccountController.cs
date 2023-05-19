@@ -38,7 +38,7 @@ public class AccountController : ControllerBase
     [Produces(typeof(CodeToOpenIdViewModel))]
     public async Task<IActionResult> CodeToOpenId(CodeToOpenIdAddressModel model)
     {
-        var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appId =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var targetPack = await _dbContext
             .OAuthPack
             .SingleOrDefaultAsync(t => t.Code == model.Code);
@@ -80,7 +80,7 @@ public class AccountController : ControllerBase
     [Produces(typeof(UserInfoViewModel))]
     public async Task<IActionResult> UserInfo(UserInfoAddressModel model)
     {
-        var appId = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appId =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
         if (user == null)
         {

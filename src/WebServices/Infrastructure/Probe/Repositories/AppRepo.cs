@@ -30,7 +30,7 @@ public class AppRepo : IScopedDependency
 
     public async Task<ProbeApp> GetApp(string accessToken)
     {
-        var appid = _aiursoftAppTokenManager.ValidateAccessToken(accessToken);
+        var appid = await _aiursoftAppTokenManager.ValidateAccessTokenAsync(accessToken);
         var appLocal = await _dbContext.Apps.SingleOrDefaultAsync(t => t.AppId == appid);
         if (appLocal != null)
         {

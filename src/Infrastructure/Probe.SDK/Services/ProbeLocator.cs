@@ -26,7 +26,7 @@ public class ProbeLocator
         _config = config;
     }
 
-    public async Task<ProbeServerConfig> ExtractServerConfig()
+    public async Task<ProbeServerConfig> GetServerConfig()
     {
         if (_config == null)
         {
@@ -71,7 +71,7 @@ public class ProbeLocator
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
 
-        var serverConfig = await this.ExtractServerConfig();
+        var serverConfig = await this.GetServerConfig();
         var domain = string.Format(serverConfig.OpenPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
@@ -80,7 +80,7 @@ public class ProbeLocator
     public async Task<string> GetProbeDownloadAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var serverConfig = await this.ExtractServerConfig();
+        var serverConfig = await this.GetServerConfig();
         var domain = string.Format(serverConfig.DownloadPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
@@ -89,7 +89,7 @@ public class ProbeLocator
     public async Task<string> GetProbePlayerAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var serverConfig = await this.ExtractServerConfig();
+        var serverConfig = await this.GetServerConfig();
         var domain = string.Format(serverConfig.PlayerPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";

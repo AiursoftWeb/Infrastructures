@@ -3,7 +3,7 @@ using Aiursoft.Handler.Models;
 
 namespace Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
 
-public class IndexViewModel : AiurProtocol
+public class ArchonServerConfig : AiurProtocol
 {
     public DateTime ServerTime { get; set; }
     public bool SignedIn { get; set; }

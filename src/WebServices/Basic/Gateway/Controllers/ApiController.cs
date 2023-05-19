@@ -109,7 +109,7 @@ public class ApiController : Controller
     [Produces(typeof(AiurPagedCollection<Grant>))]
     public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
     {
-        var appid = _tokenManager.ValidateAccessToken(model.AccessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var query = _dbContext
             .LocalAppGrant
             .Include(t => t.User)
@@ -128,7 +128,7 @@ public class ApiController : Controller
     [APIModelStateChecker]
     public async Task<IActionResult> DropGrants([Required] string accessToken)
     {
-        var appid = _tokenManager.ValidateAccessToken(accessToken);
+        var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
         _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(ErrorType.Success, "Successfully dropped all users granted!");

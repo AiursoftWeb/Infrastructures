@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -17,7 +18,7 @@ public class AiursoftAppTokenValidator : IScopedDependency
         _gatewayRsa = gatewayRsa;
     }
 
-    public virtual string ValidateAccessToken(string value)
+    public virtual async Task<string> ValidateAccessTokenAsync(string value)
     {
         ACToken token;
         try
@@ -30,7 +31,7 @@ public class AiursoftAppTokenValidator : IScopedDependency
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
             }
 
-            if (!_gatewayRsa.VerifyData(tokenBase64.Base64ToString(), tokenSign))
+            if (!await _gatewayRsa.VerifyDataAsync(tokenBase64.Base64ToString(), tokenSign))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized,
                     "Invalid signature! Token could not be authorized!");
