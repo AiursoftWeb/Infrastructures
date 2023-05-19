@@ -7,7 +7,7 @@
 
   <ItemGroup>
     
-    <ProjectReference Include="..\..\..\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj" />
+    
     
     <ProjectReference Include="..\..\..\SDK\SDK\Aiursoft.SDK.csproj" />
   </ItemGroup>
