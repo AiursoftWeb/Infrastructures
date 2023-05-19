@@ -111,7 +111,8 @@ public class DownloadController : Controller
     {
         try
         {
-            return (await Image.DetectFormatAsync(imagePath)).MimeTypes.Any();
+            _ = await Image.DetectFormatAsync(imagePath);
+            return true;
         }
         catch
         {
