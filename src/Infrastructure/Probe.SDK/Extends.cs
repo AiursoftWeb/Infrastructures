@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK;
 
