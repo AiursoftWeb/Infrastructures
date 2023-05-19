@@ -1,4 +1,4 @@
-﻿using Aiursoft.Archon.SDK.Services;
+﻿using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Identity;
@@ -33,7 +33,6 @@ public class Startup
 
         services.AddAiurMvc();
         services.AddAiursoftIdentity<EEUser>(
-            Configuration.GetConnectionString("ArchonConnection"),
             Configuration.GetConnectionString("ObserverConnection"),
             Configuration.GetConnectionString("ProbeConnection"),
             Configuration.GetConnectionString("GatewayConnection"));

@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Services;
@@ -33,7 +34,7 @@ public class Startup
 
         services.AddCors();
         services.AddAiurAPIMvc();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddAiursoftSDK();
         services.AddScoped<IStorageProvider, DiskAccess>();

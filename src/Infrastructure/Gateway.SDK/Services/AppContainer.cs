@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Archon.SDK.Services.ToArchonServer;
+using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.Archon.SDK.Services;
+namespace Aiursoft.Gateway.SDK.Services;
 
 public class AppContainer
 {
@@ -28,8 +28,8 @@ public class AppContainer
         }
 
         using var scope = scopeFactory.CreateScope();
-        var archonApiService = scope.ServiceProvider.GetRequiredService<ArchonApiService>();
-        var serverResult = await archonApiService.AccessTokenAsync(AppId, _appSecret);
+        var apiService = scope.ServiceProvider.GetRequiredService<ApiService>();
+        var serverResult = await apiService.AccessTokenAsync(AppId, _appSecret);
         _latestAccessToken = serverResult.AccessToken;
         _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
         return _latestAccessToken;

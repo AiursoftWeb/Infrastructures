@@ -2,7 +2,7 @@
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 
-namespace Aiursoft.Archon.Services;
+namespace Aiursoft.Gateway.Services;
 
 public class RSASignService : IScopedDependency
 {

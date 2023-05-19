@@ -9,18 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Archon.Controllers;
 
 [LimitPerMin]
-public class HomeController : ControllerBase
+public class AppTokenController : ControllerBase
 {
     private readonly PrivateKeyStore _privateKeyStore;
 
-    public HomeController(PrivateKeyStore privateKeyStore)
+    public AppTokenController(PrivateKeyStore privateKeyStore)
     {
         _privateKeyStore = privateKeyStore;
     }
 
     public IActionResult Index()
     {
-        return this.Protocol(new IndexViewModel
+        return this.Protocol(new AppTokenConfigViewModel
         {
             Code = ErrorType.Success,
             Message = "Welcome to Archon server!",

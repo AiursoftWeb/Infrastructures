@@ -1,12 +1,13 @@
 ﻿using System;
 using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Gateway.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Archon.SDK.Services;
+namespace Aiursoft.Gateway.SDK.Services;
 
 public class ACTokenValidator : IScopedDependency
 {

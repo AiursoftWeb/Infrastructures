@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.Archon.SDK.Models;
+namespace Aiursoft.Gateway.SDK.Models;
 
 public class ACToken
 {

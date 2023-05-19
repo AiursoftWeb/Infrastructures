@@ -1,5 +1,5 @@
 ﻿using System;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.XelNaga.Models;

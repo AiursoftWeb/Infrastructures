@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.Probe.SDK.Services;
@@ -15,7 +15,7 @@ namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly ArchonLocator archonLocator;
+    private readonly GatewayLocator gatewayLocator;
     private readonly List<MonitorRule> customRules;
     private readonly DeveloperLocator developerLocator;
     private readonly ObserverLocator observerLocator;
@@ -29,7 +29,7 @@ public class MonitorDataProvider : ISingletonDependency
         ObserverLocator observerLocator,
         StargateLocator stargateLocator,
         DeveloperLocator developerLocator,
-        ArchonLocator archonLocator,
+        GatewayLocator gatewayLocator,
         ProbeLocator probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
@@ -38,7 +38,7 @@ public class MonitorDataProvider : ISingletonDependency
         this.observerLocator = observerLocator;
         this.stargateLocator = stargateLocator;
         this.developerLocator = developerLocator;
-        this.archonLocator = archonLocator;
+        this.gatewayLocator = gatewayLocator;
         this.probeLocator = probeLocator;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
@@ -57,12 +57,6 @@ public class MonitorDataProvider : ISingletonDependency
                 CheckAddress = $"{serviceLocation.WWW}/?show=direct",
                 ExpectedContent =
                     "Free training, tools, and community to help you grow your skills, career, or business."
-            },
-            new()
-            {
-                ProjectName = "Aiursoft Archon",
-                CheckAddress = $"{archonLocator.Endpoint}",
-                ExpectedContent = "Welcome to Archon server!"
             },
             new()
             {

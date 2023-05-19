@@ -1,6 +1,7 @@
 using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Configuration.Data;
+using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +27,7 @@ public class Startup
     {
         services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurAPIMvc();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddAiursoftSDK();
     }

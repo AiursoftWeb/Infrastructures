@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
@@ -35,7 +35,6 @@ public class Startup
         services.AddAiurMvc();
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
         services.AddAiursoftIdentity<AccountUser>(
-            Configuration.GetConnectionString("ArchonConnection"),
             Configuration.GetConnectionString("ObserverConnection"),
             Configuration.GetConnectionString("ProbeConnection"),
             Configuration.GetConnectionString("GatewayConnection"));

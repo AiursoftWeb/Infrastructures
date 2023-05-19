@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Aiursoft.Account.Models;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Account.Services;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.SDK.Services.ToGatewayServer;

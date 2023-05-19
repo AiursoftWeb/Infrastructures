@@ -1,5 +1,6 @@
 using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
@@ -28,7 +29,7 @@ public class Startup
 
         services.AddAiurAPIMvc();
         services.AddAiursoftSDK();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
     }
 

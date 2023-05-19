@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Archon.SDK.Models;
+using Aiursoft.Gateway.SDK;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
@@ -7,15 +9,15 @@ using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Archon.SDK.Services.ToArchonServer;
+namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 
-public class ArchonApiService : IScopedDependency
+public class ApiService : IScopedDependency
 {
-    private readonly ArchonLocator _archonLocator;
+    private readonly GatewayLocator _archonLocator;
     private readonly APIProxyService _http;
 
-    public ArchonApiService(
-        ArchonLocator serviceLocation,
+    public ApiService(
+        GatewayLocator serviceLocation,
         APIProxyService http)
     {
         _archonLocator = serviceLocation;

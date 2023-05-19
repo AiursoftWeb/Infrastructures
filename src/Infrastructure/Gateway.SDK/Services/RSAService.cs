@@ -2,24 +2,24 @@
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 
-namespace Aiursoft.Archon.SDK.Services;
+namespace Aiursoft.Gateway.SDK.Services;
 
 public class RSAService : IScopedDependency
 {
-    private readonly ArchonLocator _archonLocator;
+    private readonly GatewayLocator _gatewayLocator;
     private readonly RSA _rsa;
 
-    public RSAService(ArchonLocator archonLocator)
+    public RSAService(GatewayLocator gatewayLocator)
     {
         _rsa = RSA.Create();
-        _archonLocator = archonLocator;
+        _gatewayLocator = gatewayLocator;
     }
 
     public bool VerifyData(string originalMessage, string signedBase64)
     {
         var bytesToVerify = originalMessage.StringToBytes();
         var signedBytes = signedBase64.Base64ToBytes();
-        _rsa.ImportParameters(_archonLocator.PublicKey);
+        _rsa.ImportParameters(_gatewayLocator.PublicKey);
         return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }

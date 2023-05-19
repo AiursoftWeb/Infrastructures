@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.Archon.SDK.Services;
+namespace Aiursoft.Gateway.SDK.Services;
 
 /// <summary>
 ///     For storaging other apps with appid and appsecret for current app.

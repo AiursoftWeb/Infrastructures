@@ -2,7 +2,7 @@
 using Aiursoft.SDKTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Archon.SDK.Models;
+namespace Aiursoft.Gateway.SDK;
 
 public class AccessTokenAddressModel
 {

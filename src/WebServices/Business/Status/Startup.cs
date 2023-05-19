@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Aiursoft.Archon.SDK;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
+using Aiursoft.Gateway.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
@@ -31,7 +32,7 @@ public class Startup
     {
         services.Configure<List<MonitorRule>>(Configuration.GetSection("CustomRules"));
         services.AddAiurMvc();
-        services.AddArchonServer(Configuration.GetConnectionString("ArchonConnection"));
+        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
         services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
         services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));

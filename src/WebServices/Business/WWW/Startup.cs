@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Aiursoft.Archon.SDK.Services;
+using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
@@ -37,7 +37,6 @@ public class Startup
         services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
         services.AddAiurMvc();
         services.AddAiursoftIdentity<WWWUser>(
-            Configuration.GetConnectionString("ArchonConnection"),
             Configuration.GetConnectionString("ObserverConnection"),
             Configuration.GetConnectionString("ProbeConnection"),
             Configuration.GetConnectionString("GatewayConnection"));
