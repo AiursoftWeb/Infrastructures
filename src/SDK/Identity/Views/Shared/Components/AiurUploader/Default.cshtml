@@ -1,12 +1,14 @@
-﻿@    using Aiursoft.Probe.SDK.Models.FilesAddressModels
-@    using Aiursoft.Probe.SDK.Services
-@    using Aiursoft.XelNaga.Models
-@    using Aiursoft.XelNaga.Tools
+﻿@using Aiursoft.Probe.SDK.Models.FilesAddressModels
+@using Aiursoft.Probe.SDK.Services
+@using Aiursoft.Probe.SDK.Configuration;
+@using Aiursoft.XelNaga.Models
+@using Aiursoft.XelNaga.Tools
 @model Aiursoft.Identity.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
 
-@inject ProbeLocator ProbeLocator
+@inject ProbeConfiguration ProbeConfiguration
+@inject ProbeSettingsFetcher ProbeLocator
 @{
-    var url = new AiurUrl(ProbeLocator.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
+    var url = new AiurUrl(ProbeConfiguration.Endpoint, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
     {
         Token = Model.PBToken,
         RecursiveCreate = true

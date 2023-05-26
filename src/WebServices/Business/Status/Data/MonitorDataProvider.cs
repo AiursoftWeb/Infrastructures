@@ -11,12 +11,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Probe.SDK.Configuration;
+using Aiursoft.Directory.SDK.Configuration;
 
 namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly DirectoryContext gatewayLocator;
+    private readonly DirectoryConfiguration gatewayLocator;
     private readonly List<MonitorRule> customRules;
     private readonly DeveloperLocator developerLocator;
     private readonly ObserverConfiguration observerLocator;
@@ -27,12 +28,14 @@ public class MonitorDataProvider : ISingletonDependency
     private readonly WarpgateLocator warpgateLocator;
 
     public MonitorDataProvider(
+#warning Use Options!
+#warning Deprecate IConfiguration!
         IConfiguration configuration,
         ServiceLocation serviceLocation,
         ObserverConfiguration observerLocator,
         StargateLocator stargateLocator,
         DeveloperLocator developerLocator,
-        DirectoryContext gatewayLocator,
+        IOptions<DirectoryConfiguration> gatewayLocator,
         ProbeConfiguration probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
@@ -42,7 +45,7 @@ public class MonitorDataProvider : ISingletonDependency
         this.observerLocator = observerLocator;
         this.stargateLocator = stargateLocator;
         this.developerLocator = developerLocator;
-        this.gatewayLocator = gatewayLocator;
+        this.gatewayLocator = gatewayLocator.Value;
         this.probeLocator = probeLocator;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
@@ -72,7 +75,7 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft authentication gateway",
                 CheckAddress =
-                    $"{gatewayLocator.Endpoint}/oauth/authorize?appid={_configuration["AiursoftAppId"]}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{gatewayLocator.Instance}/oauth/authorize?appid={_configuration["AiursoftAppId"]}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()

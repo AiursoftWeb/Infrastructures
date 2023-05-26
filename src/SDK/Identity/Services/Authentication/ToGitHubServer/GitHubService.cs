@@ -2,13 +2,14 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Services;
+using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Identity.Services.Authentication.ToGitHubServer;
@@ -19,17 +20,17 @@ public class GitHubService : IAuthProvider
     private readonly string _clientId;
     private readonly string _clientSecret;
     private readonly APIProxyService _http;
-    private readonly DirectoryContext _serviceLocation;
+    private readonly DirectoryConfiguration _serviceLocation;
 
     public GitHubService(
         APIProxyService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
-        DirectoryContext serviceLocation,
+        IOptions<DirectoryConfiguration> serviceLocation,
         ILogger<GitHubService> logger)
     {
         _http = http;
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
         _client = clientFactory.CreateClient();
         _clientId = configuration["GitHub:ClientId"];
         _clientSecret = configuration["GitHub:ClientSecret"];
@@ -70,7 +71,7 @@ public class GitHubService : IAuthProvider
         return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
         {
             ClientId = _clientId,
-            RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { })
+            RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                 .ToString()
         }).ToString();
     }
@@ -81,7 +82,7 @@ public class GitHubService : IAuthProvider
         {
             ClientId = _clientId,
             RedirectUri =
-                new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                new AiurUrl(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
             State = state.ToString()
         }).ToString();
     }

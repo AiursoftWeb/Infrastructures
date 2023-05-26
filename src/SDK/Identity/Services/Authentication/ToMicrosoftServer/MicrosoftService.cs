@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -9,6 +10,7 @@ using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Identity.Services.Authentication.ToMicrosoftServer;
@@ -19,18 +21,18 @@ public class MicrosoftService : IAuthProvider
     private readonly string _clientId;
     private readonly string _clientSecret;
     private readonly APIProxyService _http;
-    private readonly DirectoryContext _serviceLocation;
+    private readonly DirectoryConfiguration _serviceLocation;
     private readonly string _tenant;
 
     public MicrosoftService(
         APIProxyService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
-        DirectoryContext serviceLocation,
+        IOptions<DirectoryConfiguration> serviceLocation,
         ILogger<MicrosoftService> logger)
     {
         _http = http;
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
         _client = clientFactory.CreateClient();
         _clientId = configuration["Microsoft:ClientId"];
         _clientSecret = configuration["Microsoft:ClientSecret"];
@@ -75,7 +77,7 @@ public class MicrosoftService : IAuthProvider
             new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/bind-account/{GetName()}", new { })
+                RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                     .ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
@@ -89,7 +91,7 @@ public class MicrosoftService : IAuthProvider
             new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Endpoint, $"/third-party/sign-in/{GetName()}", new { })
+                RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { })
                     .ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
@@ -115,7 +117,7 @@ public class MicrosoftService : IAuthProvider
             Code = code,
             Scope = "user.read",
             RedirectUri =
-                new AiurUrl(_serviceLocation.Endpoint, $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                new AiurUrl(_serviceLocation.Instance, $"/third-party/{action}/{GetName()}", new { }).ToString(),
             GrantType = "authorization_code"
         });
         try
