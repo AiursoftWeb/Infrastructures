@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Gateway.Models.PasswordViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;

@@ -19,7 +19,7 @@ public class HomeController : ControllerBase
 
     public IActionResult Index()
     {
-        return this.Protocol(new ProbeServerConfig
+        return this.Protocol(new ProbeDownloadPatternConfig
         {
             OpenPattern = _configuration["OpenPattern"],
             DownloadPattern = _configuration["DownloadPattern"],

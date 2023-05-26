@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
-using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.SDK.Attributes;
@@ -13,6 +11,8 @@ using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Aiursoft.Directory.Data;
+using Aiursoft.Directory.Services;
 
 namespace Aiursoft.Gateway.Controllers;
 
@@ -20,14 +20,14 @@ namespace Aiursoft.Gateway.Controllers;
 public class HomeController : ControllerBase
 {
     private readonly ISessionBasedCaptcha _captcha;
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
     private readonly IStringLocalizer<HomeController> _localizer;
     private readonly PrivateKeyStore _privateKeyStore;
 
     public HomeController(
         PrivateKeyStore privateKeyStore,
         IStringLocalizer<HomeController> localizer,
-        GatewayDbContext dbContext,
+        DirectoryDbContext dbContext,
         ISessionBasedCaptcha captcha)
     {
         _privateKeyStore = privateKeyStore;
@@ -39,7 +39,7 @@ public class HomeController : ControllerBase
     public async Task<IActionResult> Index()
     {
         var currentUser = await GetCurrentUserAsync();
-        return this.Protocol(new ArchonServerConfig
+        return this.Protocol(new DirectoryServerConfiguration
         {
             SignedIn = User.Identity?.IsAuthenticated ?? false,
             ServerTime = DateTime.UtcNow,

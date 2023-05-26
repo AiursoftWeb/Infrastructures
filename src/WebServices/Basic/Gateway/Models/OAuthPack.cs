@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.Models;
+namespace Aiursoft.Directory.Models;
 
 public class OAuthPack
 {

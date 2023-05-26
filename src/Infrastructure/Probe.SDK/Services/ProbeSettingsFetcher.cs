@@ -15,7 +15,7 @@ namespace Aiursoft.Probe.SDK.Services;
 
 public class ProbeSettingsFetcher : ISingletonDependency
 {
-    private ProbeServerConfig _probeServerConfig;
+    private ProbeDownloadPatternConfig _probeServerConfig;
     private readonly ProbeConfiguration _probeConfiguration;
 
     public ProbeSettingsFetcher(IOptions<ProbeConfiguration> probeConfiguration)
@@ -23,12 +23,12 @@ public class ProbeSettingsFetcher : ISingletonDependency
         _probeConfiguration = probeConfiguration.Value;
     }
 
-    public async Task<ProbeServerConfig> GetServerConfig()
+    public async Task<ProbeDownloadPatternConfig> GetServerConfig()
     {
         if (_probeServerConfig == null)
         {
             var serverConfigString = await SimpleHttp.DownloadAsString(_probeConfiguration.Endpoint);
-            _probeServerConfig = JsonConvert.DeserializeObject<ProbeServerConfig>(serverConfigString);
+            _probeServerConfig = JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
         }
 
         return _probeServerConfig;

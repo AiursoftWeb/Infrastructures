@@ -1,4 +1,4 @@
-﻿using Aiursoft.Gateway.Models;
+﻿using Aiursoft.Directory.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

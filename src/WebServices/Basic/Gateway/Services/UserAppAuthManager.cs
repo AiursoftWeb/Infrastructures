@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Gateway.Controllers;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Scanner.Abstract;

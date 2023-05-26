@@ -1,9 +1,11 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.Services;
 
@@ -15,14 +17,14 @@ public class DiskAccess : IStorageProvider
     private readonly string _trashPath;
 
     public DiskAccess(
-        IConfiguration configuration,
+        IOptions<DiskAccessConfig> config,
         AiurCache aiurCache)
     {
-        _path = configuration["StoragePath"] + $"{_}Storage{_}";
-        var tempFilePath = configuration["TempFileStoragePath"];
+        _path = config.Value.StoragePath + $"{_}Storage{_}";
+        var tempFilePath = config.Value.StoragePath;
         if (string.IsNullOrWhiteSpace(tempFilePath))
         {
-            tempFilePath = configuration["StoragePath"];
+            tempFilePath = config.Value.StoragePath;
         }
 
         _trashPath = tempFilePath + $"{_}TrashBin{_}";

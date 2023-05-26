@@ -1,6 +1,8 @@
 ﻿using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.Data;
+using Aiursoft.Probe.Models.Configuration;
+using Aiursoft.Probe.SDK;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
@@ -26,6 +28,8 @@ public class Startup
     public virtual void ConfigureServices(IServiceCollection services)
     {
         services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
+        services.Configure<ProbeDownloadPatternConfig>(Configuration.GetSection("DownloadPatternConfig"));
+        services.Configure<DiskAccessConfig>(Configuration.GetSection("DiskAccessConfig"));
 
         services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
@@ -33,15 +37,10 @@ public class Startup
         services.AddAiurAPIMvc();
         services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
+
         services.AddAiursoftSDK();
         services.AddScoped<IStorageProvider, DiskAccess>();
-
-        services.AddSingleton(new ProbeLocator(Configuration["ProbeEndpoint"], new ProbeServerConfig
-        {
-            OpenPattern = Configuration["OpenPattern"],
-            DownloadPattern = Configuration["DownloadPattern"],
-            PlayerPattern = Configuration["PlayerPattern"]
-        }));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

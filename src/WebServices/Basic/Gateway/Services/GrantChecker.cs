@@ -5,7 +5,7 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;

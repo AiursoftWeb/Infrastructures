@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Aiursoft.DBTools;
 using Aiursoft.DBTools.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
-using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.Models.ApiViewModels;
+using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.APIAddressModels;
 using Aiursoft.Directory.SDK.Models.API.APIViewModels;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Gateway.Services;
+using Aiursoft.Directory.Services;
+using Aiursoft.Directory.Models;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
@@ -23,12 +22,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.Directory.Models.ApiViewModels;
 
 namespace Aiursoft.Gateway.Controllers;
 
 public class ApiController : Controller
 {
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly UserManager<DirectoryUser> _userManager;
     private readonly DeveloperApiService _developerApiService;
@@ -38,7 +38,7 @@ public class ApiController : Controller
         TokenGenerator tokenGenerator,
         DeveloperApiService developerApiService,
         UserManager<DirectoryUser> userManager,
-        GatewayDbContext context,
+        DirectoryDbContext context,
         AiursoftAppTokenValidator tokenManager)
     {
         _tokenGenerator = tokenGenerator;
@@ -139,7 +139,7 @@ public class ApiController : Controller
         return _dbContext
             .Users
             .Include(t => t.Emails)
-            .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
+            .FirstOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
 
     [APIExpHandler]

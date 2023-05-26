@@ -1,6 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK;
 using Aiursoft.XelNaga.Tools;

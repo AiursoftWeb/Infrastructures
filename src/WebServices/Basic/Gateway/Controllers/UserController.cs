@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Aiursoft.DBTools.Models;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 using Aiursoft.Directory.SDK.Models.API.UserViewModels;

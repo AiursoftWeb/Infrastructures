@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Gateway.Models.OAuthViewModels;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;

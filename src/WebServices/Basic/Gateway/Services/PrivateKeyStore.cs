@@ -1,8 +1,9 @@
-﻿using System.Security.Cryptography;
+﻿using Aiursoft.Scanner.Abstract;
+using System.Security.Cryptography;
 
 namespace Aiursoft.Directory.Services;
 
-public class PrivateKeyStore
+public class PrivateKeyStore : ISingletonDependency
 {
     private RSAParameters? _privateKey;
 

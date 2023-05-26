@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
 using Aiursoft.Gateway.Models.ThirdPartyViewModels;
 using Aiursoft.Directory.SDK.Models;

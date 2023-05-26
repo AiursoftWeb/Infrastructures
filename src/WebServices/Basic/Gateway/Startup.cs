@@ -1,6 +1,6 @@
 ﻿using System;
 using Aiursoft.Developer.SDK;
-using Aiursoft.Gateway.Models;
+using Aiursoft.Directory.Models;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
@@ -44,11 +44,15 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
-        services.AddSingleton<PrivateKeyStore>();
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+
+#pragma warning disable CS0618 // Type or member is obsolete
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
+
         services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();

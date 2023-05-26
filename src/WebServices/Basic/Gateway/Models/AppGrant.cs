@@ -2,7 +2,7 @@
 using Aiursoft.Directory.SDK.Models.API;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.Models;
+namespace Aiursoft.Directory.Models;
 
 public class AppGrant : Grant
 {

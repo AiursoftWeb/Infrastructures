@@ -6,7 +6,7 @@ using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.Models;
+namespace Aiursoft.Directory.Models;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class DirectoryUser : AiurUserBase

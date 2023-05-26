@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
@@ -19,15 +21,15 @@ public class ImageCompressor : ITransientDependency
 
     public ImageCompressor(
         ILogger<ImageCompressor> logger,
-        IConfiguration configuration,
+        IOptions<DiskAccessConfig> diskAccessConfig,
         SizeCalculator sizeCalculator)
     {
         _logger = logger;
         _sizeCalculator = sizeCalculator;
-        _tempFilePath = configuration["TempFileStoragePath"];
+        _tempFilePath = diskAccessConfig.Value.TempFileStoragePath;
         if (string.IsNullOrWhiteSpace(_tempFilePath))
         {
-            _tempFilePath = configuration["StoragePath"];
+            _tempFilePath = diskAccessConfig.Value.StoragePath;
         }
     }
 
@@ -37,9 +39,9 @@ public class ImageCompressor : ITransientDependency
         {
             var clearedFolder =
                 _tempFilePath + $"{Path.DirectorySeparatorChar}ClearedEXIF{Path.DirectorySeparatorChar}";
-            if (Directory.Exists(clearedFolder) == false)
+            if (System.IO.Directory.Exists(clearedFolder) == false)
             {
-                Directory.CreateDirectory(clearedFolder);
+                System.IO.Directory.CreateDirectory(clearedFolder);
             }
 
             var clearedImagePath = $"{clearedFolder}probe_cleared_file_id_{Path.GetFileNameWithoutExtension(path)}.dat";
@@ -90,9 +92,9 @@ public class ImageCompressor : ITransientDependency
         {
             var compressedFolder =
                 _tempFilePath + $"{Path.DirectorySeparatorChar}Compressed{Path.DirectorySeparatorChar}";
-            if (Directory.Exists(compressedFolder) == false)
+            if (System.IO.Directory.Exists(compressedFolder) == false)
             {
-                Directory.CreateDirectory(compressedFolder);
+                System.IO.Directory.CreateDirectory(compressedFolder);
             }
 
             var compressedImagePath =
