@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aiursoft.Gateway.Models.PasswordViewModels;
+namespace Aiursoft.Directory.Models.PasswordViewModels;
 
 public class MethodSelectionViewModel
 {

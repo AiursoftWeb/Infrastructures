@@ -12,7 +12,7 @@ public class OAuthPack
 
     [ForeignKey(nameof(UserId))]
     [JsonIgnore]
-    public virtual GatewayUser User { get; set; }
+    public virtual DirectoryUser User { get; set; }
 
     public virtual string UserId { get; set; }
 

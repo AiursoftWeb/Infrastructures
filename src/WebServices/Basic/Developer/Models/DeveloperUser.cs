@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 
 namespace Aiursoft.Developer.Models;
 

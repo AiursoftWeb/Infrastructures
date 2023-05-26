@@ -1,13 +1,9 @@
 ﻿using System;
-using Aiursoft.Gateway.SDK.Services;
 using Aiursoft.Developer.SDK;
-using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
-using Aiursoft.Observer.SDK;
-using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Builder;
@@ -16,9 +12,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Aiursoft.Gateway.Services;
+using Aiursoft.Probe.SDK;
+using Aiursoft.Directory.Services;
+using Aiursoft.Directory.Data;
+using Aiursoft.Directory.SDK;
+using Aiursoft.Observer.SDK;
 
-namespace Aiursoft.Gateway;
+namespace Aiursoft.Directory;
 
 public class Startup
 {
@@ -31,7 +31,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<GatewayDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextWithCache<DirectoryDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddSession(options =>
         {
@@ -39,19 +39,18 @@ public class Startup
             options.Cookie.HttpOnly = true;
         });
 
-        services.AddIdentity<GatewayUser, IdentityRole>(options => options.Password = AuthValues.PasswordOptions)
-            .AddEntityFrameworkStores<GatewayDbContext>()
+        services.AddIdentity<DirectoryUser, IdentityRole>(options => options.Password = AuthValues.PasswordOptions)
+            .AddEntityFrameworkStores<DirectoryDbContext>()
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
-        var keyStore = new PrivateKeyStore();
-        services.AddSingleton(keyStore);
-        services.AddSingleton(new GatewayLocator(Configuration["GatewayEndpoint"], keyStore.GetPrivateKey()));
+        services.AddSingleton<PrivateKeyStore>();
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
-        services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
+        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
         services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
-        services.AddScoped<UserImageGenerator<GatewayUser>>();
+        services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();
     }
 

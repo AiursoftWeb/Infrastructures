@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+﻿namespace Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 
 public class UserSignOutAddressModel
 {

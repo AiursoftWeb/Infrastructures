@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.Models.PasswordViewModels;
+namespace Aiursoft.Directory.Models.PasswordViewModels;
 
 public class ForgotPasswordForViewModel
 {

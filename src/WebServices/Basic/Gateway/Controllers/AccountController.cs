@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
-using Aiursoft.Gateway.Data;
-using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
-using Aiursoft.Gateway.Services;
+using Aiursoft.Directory.Data;
+using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
+using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
+using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
@@ -20,13 +20,13 @@ public class AccountController : ControllerBase
 {
     private readonly DeveloperApiService _apiService;
     private readonly UserAppAuthManager _authManager;
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public AccountController(
         AiursoftAppTokenValidator tokenManager,
         DeveloperApiService apiService,
-        GatewayDbContext dbContext,
+        DirectoryDbContext dbContext,
         UserAppAuthManager authManager)
     {
         _tokenManager = tokenManager;

@@ -1,23 +1,25 @@
-﻿using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+﻿using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
+using Microsoft.Extensions.Options;
 
-namespace Aiursoft.Gateway.SDK.Services;
+namespace Aiursoft.Directory.SDK.Services;
 
 public class UrlConverter : ITransientDependency
 {
-    private readonly GatewayLocator _serviceLocation;
+    private readonly DirectoryConfiguration _directoryConfiguration;
 
     public UrlConverter(
-        GatewayLocator serviceLocation)
+        IOptions<DirectoryConfiguration> directoryConfiguration)
     {
-        _serviceLocation = serviceLocation;
+        _directoryConfiguration = directoryConfiguration.Value;
     }
 
     private AiurUrl GenerateAuthUrl(AiurUrl destination, string appId, string state, bool? justTry, bool register)
     {
         var action = register ? "register" : "authorize";
-        var url = new AiurUrl(_serviceLocation.Endpoint, "oauth", action, new AuthorizeAddressModel
+        var url = new AiurUrl(_directoryConfiguration.Instance, "oauth", action, new AuthorizeAddressModel
         {
             AppId = appId,
             RedirectUri = destination.ToString(),

@@ -21,12 +21,12 @@ public class PasswordController : Controller
     private readonly CannonService _cannonService;
     private readonly GatewayDbContext _dbContext;
     private readonly ILogger _logger;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly UserManager<DirectoryUser> _userManager;
 
     public PasswordController(
         GatewayDbContext dbContext,
         ILoggerFactory loggerFactory,
-        UserManager<GatewayUser> userManager,
+        UserManager<DirectoryUser> userManager,
         CannonService cannonService)
     {
         _dbContext = dbContext;

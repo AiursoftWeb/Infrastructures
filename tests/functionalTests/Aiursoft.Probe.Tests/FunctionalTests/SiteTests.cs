@@ -6,7 +6,7 @@ using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
-using Aiursoft.Probe.SDK.Services;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
@@ -44,7 +44,7 @@ public class SiteTests
         var services = new ServiceCollection();
         services.AddHttpClient();
         services.AddLibraryDependencies();
-        services.AddProbeServer(_endpointUrl);
+        services.AddAiursoftProbe(_endpointUrl);
         _serviceProvider = services.BuildServiceProvider();
     }
 
@@ -74,7 +74,7 @@ public class SiteTests
     [TestMethod]
     public async Task StatusCodeTest()
     {
-        var probeLocator = _serviceProvider.GetRequiredService<ProbeLocator>();
+        var probeLocator = _serviceProvider.GetRequiredService<ProbeConfiguration>();
         var client = new HttpClient();
         var url = probeLocator.Endpoint + "/sites/viewmysites";
         var request = new HttpRequestMessage(HttpMethod.Get, url);

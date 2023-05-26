@@ -1,31 +1,33 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
+using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
+using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+namespace Aiursoft.Directory.SDK.Services.ToGatewayServer;
 
 public class AccountService : IScopedDependency
 {
+    private readonly DirectoryConfiguration _directoryConfiguration;
     private readonly APIProxyService _http;
-    private readonly GatewayLocator _serviceLocation;
 
     public AccountService(
-        GatewayLocator serviceLocation,
+        IOptions<DirectoryConfiguration> directoryConfiguration,
         APIProxyService http)
     {
-        _serviceLocation = serviceLocation;
+        _directoryConfiguration = directoryConfiguration.Value;
         _http = http;
     }
 
     public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
+        var url = new AiurUrl(_directoryConfiguration.Instance, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
         {
             AccessToken = accessToken,
             Code = code
@@ -43,7 +45,7 @@ public class AccountService : IScopedDependency
 
     public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Account", "UserInfo", new UserInfoAddressModel
+        var url = new AiurUrl(_directoryConfiguration.Instance, "Account", "UserInfo", new UserInfoAddressModel
         {
             AccessToken = accessToken,
             OpenId = openid

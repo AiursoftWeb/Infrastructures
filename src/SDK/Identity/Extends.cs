@@ -1,15 +1,16 @@
 using System.Reflection;
 using System.Security.Claims;
-using Aiursoft.Gateway.SDK;
-using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+using Aiursoft.Directory.SDK.Models;
+using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
+using Aiursoft.Directory.SDK;
 using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Identity;
@@ -33,14 +34,16 @@ public static class Extends
         return user.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
-    public static IServiceCollection AddAiursoftIdentity<TUser>(this IServiceCollection services,
-        string observerEndpoint,
-        string probeEndpoint,
-        string gateEndpoint) where TUser : AiurUserBase, new()
+    public static IServiceCollection AddAiursoftIdentity<TUser>(
+        this IServiceCollection services,
+        IConfigurationSection observerConfig,
+        IConfigurationSection probeConfig,
+        IConfigurationSection authenticationConfig) where TUser : AiurUserBase, new()
     {
-        services.AddObserverServer(observerEndpoint); // For error reporting.
-        services.AddProbeServer(probeEndpoint); // For file storaging.
-        services.AddGatewayServer(gateEndpoint); // For authentication.
+        services.AddAiursoftProbe(probeConfig); // For file storaging.
+        services.AddAiursoftObserver(observerConfig); // For error reporting.
+        services.AddAiursoftAuthentication(authenticationConfig); // For authentication.
+
         services.AddAiursoftSDK(Assembly.GetCallingAssembly(), typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<TUser>>();
         services.AddScoped<AuthService<TUser>>();

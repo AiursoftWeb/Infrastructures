@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Probe.SDK.Services;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
@@ -9,18 +9,21 @@ namespace Aiursoft.Identity.Services;
 
 public class UserImageGenerator<T> where T : AiurUserBase
 {
-    private readonly ProbeLocator _probeLocator;
+    private readonly ProbeSettingsFetcher _probeSettingsFetcher;
     private readonly UserManager<T> _userManager;
 
     public UserImageGenerator(
-        ProbeLocator probeLocator,
+        ProbeSettingsFetcher probeSettingsFetcher,
         UserManager<T> userManager)
     {
-        _probeLocator = probeLocator;
+        _probeSettingsFetcher = probeSettingsFetcher;
         _userManager = userManager;
     }
 
-    public async Task<IHtmlContent> RenderUserImageAsync(ClaimsPrincipal user, int width = 20, int height = 20,
+    public async Task<IHtmlContent> RenderUserImageAsync(
+        ClaimsPrincipal user, 
+        int width = 20, 
+        int height = 20,
         string @class = "rounded")
     {
         var url = await GetUserImageUrl(user) + $"?w={width}&square=true";
@@ -32,6 +35,6 @@ public class UserImageGenerator<T> where T : AiurUserBase
     public async Task<string> GetUserImageUrl(ClaimsPrincipal userClaims)
     {
         var user = await _userManager.GetUserAsync(userClaims);
-        return await _probeLocator.GetProbeOpenAddressAsync(user.IconFilePath);
+        return await _probeSettingsFetcher.GetProbeOpenAddressAsync(user.IconFilePath);
     }
 }

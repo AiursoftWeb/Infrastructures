@@ -34,9 +34,9 @@ public class Startup
         services.AddAiurMvc();
 
         services.AddAiursoftIdentity<WikiUser>(
-            Configuration.GetConnectionString("ObserverConnection"),
-            Configuration.GetConnectionString("ProbeConnection"),
-            Configuration.GetConnectionString("GatewayConnection"));
+            probeConfig: Configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: Configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,9 +1,9 @@
-﻿using Aiursoft.Gateway.SDK.Services;
+﻿using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.Data;
-using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
+using Aiursoft.Probe.SDK;
 
 namespace Aiursoft.Developer;
 
@@ -13,7 +13,7 @@ public class Program
     {
         App<Startup>(args)
             .Update<DeveloperDbContext>()
-            .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.AccessTokenAsync())
+            .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync())
             .Run();
     }
 

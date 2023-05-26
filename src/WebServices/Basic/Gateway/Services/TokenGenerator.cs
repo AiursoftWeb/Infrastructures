@@ -1,11 +1,11 @@
 ﻿using System;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class TokenGenerator : IScopedDependency
 {

@@ -5,7 +5,7 @@ using Aiursoft.Scanner.Abstract;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Http;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class AuthLogger : IScopedDependency
 {

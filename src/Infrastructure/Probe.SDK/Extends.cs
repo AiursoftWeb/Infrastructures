@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
@@ -14,11 +15,11 @@ namespace Aiursoft.Probe.SDK;
 
 public static class Extends
 {
-    public static IServiceCollection AddProbeServer(
+    public static IServiceCollection AddAiursoftProbe(
         this IServiceCollection services,
-        string serverEndpoint)
+        IConfigurationSection configurationSection)
     {
-        services.AddSingleton(new ProbeLocator(serverEndpoint));
+        services.Configure<ProbeConfiguration>(configurationSection);
         services.AddLibraryDependencies();
         return services;
     }

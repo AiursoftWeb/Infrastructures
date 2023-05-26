@@ -3,8 +3,8 @@ using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Repositories;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
-using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
 using Aiursoft.Probe.ViewModels.DownloadViewModels;
 using Aiursoft.XelNaga.Tools;
@@ -24,7 +24,7 @@ public class DownloadController : Controller
     private readonly SiteRepo _siteRepo;
     private readonly IStorageProvider _storageProvider;
     private readonly TokenEnsurer _tokenEnsurer;
-    private readonly ProbeLocator probeLocator;
+    private readonly ProbeConfiguration probeLocator;
 
     public DownloadController(
         FolderSplitter folderLocator,
@@ -34,7 +34,7 @@ public class DownloadController : Controller
         FolderRepo folderRepo,
         FileRepo fileRepo,
         SiteRepo siteRepo,
-        ProbeLocator probeLocator)
+        ProbeConfiguration probeLocator)
     {
         _folderSplitter = folderLocator;
         _imageCompressor = imageCompressor;

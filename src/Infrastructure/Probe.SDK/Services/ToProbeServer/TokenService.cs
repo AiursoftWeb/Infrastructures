@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
@@ -13,14 +15,14 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 public class TokenService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly ProbeLocator _serviceLocation;
+    private readonly ProbeConfiguration _serviceLocation;
 
     public TokenService(
         APIProxyService http,
-        ProbeLocator serviceLocation)
+        IOptions<ProbeConfiguration> serviceLocation)
     {
         _http = http;
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
     }
 
     /// <summary>

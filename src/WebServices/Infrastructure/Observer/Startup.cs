@@ -1,5 +1,6 @@
-using Aiursoft.Gateway.SDK;
+using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.Data;
+using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -25,8 +26,8 @@ public class Startup
 
         services.AddAiurAPIMvc();
         services.AddAiursoftSDK();
-        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
-        services.AddSingleton(new ObserverLocator(Configuration["ObserverEndpoint"]));
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

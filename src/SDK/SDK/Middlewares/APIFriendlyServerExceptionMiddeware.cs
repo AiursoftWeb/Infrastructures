@@ -3,7 +3,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ namespace Aiursoft.SDK.Middlewares;
 public class APIFriendlyServerExceptionMiddleware
 {
     private readonly AppsContainer _appsContainer;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly ILogger<APIFriendlyServerExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;
 
@@ -23,7 +23,7 @@ public class APIFriendlyServerExceptionMiddleware
         RequestDelegate next,
         ILogger<APIFriendlyServerExceptionMiddleware> logger,
         AppsContainer appsContainer,
-        EventService eventService)
+        ObserverService eventService)
     {
         _next = next;
         _logger = logger;
@@ -57,7 +57,7 @@ public class APIFriendlyServerExceptionMiddleware
             try
             {
                 _logger.LogError(e, e.Message);
-                var accessToken = await _appsContainer.AccessTokenAsync();
+                var accessToken = await _appsContainer.GetAccessTokenAsync();
                 await _eventService.LogExceptionAsync(accessToken, e, context.Request.Path);
             }
             catch

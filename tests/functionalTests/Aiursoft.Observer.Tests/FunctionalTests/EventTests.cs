@@ -75,7 +75,7 @@ public class EventTests
     {
         try
         {
-            var observer = _serviceProvider.GetRequiredService<EventService>();
+            var observer = _serviceProvider.GetRequiredService<ObserverService>();
             await observer.ViewAsync(string.Empty);
             Assert.Fail("Empty request should not success.");
         }
@@ -88,7 +88,7 @@ public class EventTests
     [TestMethod]
     public async Task ViewEmptyLogsTest()
     {
-        var observer = _serviceProvider.GetRequiredService<EventService>();
+        var observer = _serviceProvider.GetRequiredService<ObserverService>();
         var logs = await observer.ViewAsync("mock-access-token");
         Assert.IsTrue(!logs.Logs.Any());
     }
@@ -96,7 +96,7 @@ public class EventTests
     [TestMethod]
     public async Task SubmitAndCheckLogTest()
     {
-        var observer = _serviceProvider.GetRequiredService<EventService>();
+        var observer = _serviceProvider.GetRequiredService<ObserverService>();
         await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
         await Task.Delay(500);
         var logs = await observer.ViewAsync("mock-access-token");
@@ -106,7 +106,7 @@ public class EventTests
     [TestMethod]
     public async Task MultipleThreadSubmitLogsTest()
     {
-        var observer = _serviceProvider.GetRequiredService<EventService>();
+        var observer = _serviceProvider.GetRequiredService<ObserverService>();
         await Task.WhenAll(
             observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
             observer.LogExceptionAsync("mock-access-token", new Exception(DateTime.UtcNow.Ticks.ToString())),
@@ -125,7 +125,7 @@ public class EventTests
     [TestMethod]
     public async Task DeleteAppTest()
     {
-        var observer = _serviceProvider.GetRequiredService<EventService>();
+        var observer = _serviceProvider.GetRequiredService<ObserverService>();
         await observer.LogExceptionAsync("mock-access-token", new Exception("Test"));
         await observer.DeleteAppAsync("mock-access-token", MockAcTokenValidator.MockAppId);
         await Task.Delay(500);

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Aiursoft.DBTools.Models;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.SDK.Models.API;
-using Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.UserViewModels;
+using Aiursoft.Directory.SDK.Models.API;
+using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
+using Aiursoft.Directory.SDK.Models.API.UserViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -32,10 +32,10 @@ public class UserController : ControllerBase
     private readonly GrantChecker _grantChecker;
     private readonly ServiceLocation _serviceLocation;
     private readonly TwoFAHelper _twoFAHelper;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly UserManager<DirectoryUser> _userManager;
 
     public UserController(
-        UserManager<GatewayUser> userManager,
+        UserManager<DirectoryUser> userManager,
         GatewayDbContext context,
         GrantChecker grantChecker,
         TwoFAHelper twoFAHelper,

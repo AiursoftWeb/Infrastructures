@@ -1,31 +1,33 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.APIViewModels;
+using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Directory.SDK.Models.API.APIAddressModels;
+using Aiursoft.Directory.SDK.Models.API.APIViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+namespace Aiursoft.Directory.SDK.Services.ToGatewayServer;
 
-public class ApiService : IScopedDependency
+public class AccessTokenService : IScopedDependency
 {
-    private readonly GatewayLocator _gatewayLocator;
+    private readonly DirectoryConfiguration _gatewayLocator;
     private readonly APIProxyService _http;
 
-    public ApiService(
-        GatewayLocator serviceLocation,
+    public AccessTokenService(
+        IOptions<DirectoryConfiguration> serviceLocation,
         APIProxyService http)
     {
-        _gatewayLocator = serviceLocation;
+        _gatewayLocator = serviceLocation.Value;
         _http = http;
     }
 
     public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
     {
-        var url = new AiurUrl(_gatewayLocator.Endpoint, "API", "AccessToken", new AccessTokenAddressModel
+        var url = new AiurUrl(_gatewayLocator.Instance, "API", "AccessToken", new AccessTokenAddressModel
         {
             AppId = appId,
             AppSecret = appSecret

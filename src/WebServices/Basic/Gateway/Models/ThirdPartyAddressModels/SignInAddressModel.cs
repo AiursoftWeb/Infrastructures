@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels;
+namespace Aiursoft.Directory.Models.ThirdPartyAddressModels;
 
 public class SignInAddressModel
 {

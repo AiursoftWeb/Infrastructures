@@ -9,10 +9,10 @@ using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ApiViewModels;
-using Aiursoft.Gateway.SDK.Models.API;
-using Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
-using Aiursoft.Gateway.SDK.Models.API.APIViewModels;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Models.API;
+using Aiursoft.Directory.SDK.Models.API.APIAddressModels;
+using Aiursoft.Directory.SDK.Models.API.APIViewModels;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -30,14 +30,14 @@ public class ApiController : Controller
 {
     private readonly GatewayDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly UserManager<DirectoryUser> _userManager;
     private readonly DeveloperApiService _developerApiService;
     private readonly TokenGenerator _tokenGenerator;
 
     public ApiController(
         TokenGenerator tokenGenerator,
         DeveloperApiService developerApiService,
-        UserManager<GatewayUser> userManager,
+        UserManager<DirectoryUser> userManager,
         GatewayDbContext context,
         AiursoftAppTokenValidator tokenManager)
     {
@@ -134,7 +134,7 @@ public class ApiController : Controller
         return this.Protocol(ErrorType.Success, "Successfully dropped all users granted!");
     }
 
-    private Task<GatewayUser> GetCurrentUserAsync()
+    private Task<DirectoryUser> GetCurrentUserAsync()
     {
         return _dbContext
             .Users

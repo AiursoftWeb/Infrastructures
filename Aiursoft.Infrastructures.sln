@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.XelNaga", "src\Abs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Developer.SDK", "src\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj", "{ED9386FF-DDB9-4B22-B65A-BA7F165F9084}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Gateway.SDK", "src\Infrastructure\Gateway.SDK\Aiursoft.Gateway.SDK.csproj", "{F3067D15-31B7-4C26-8DDD-786F5F999E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Directory.SDK", "src\Infrastructure\Gateway.SDK\Aiursoft.Directory.SDK.csproj", "{F3067D15-31B7-4C26-8DDD-786F5F999E54}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.SDK", "src\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj", "{CE66F119-5564-41EB-9C6A-B7C9CA2EE404}"
 EndProject
@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Developer", "src\WebServices\Basic\Developer\Aiursoft.Developer.csproj", "{42A8D3F2-12F7-418B-B0B6-EB88EFBE1577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Gateway", "src\WebServices\Basic\Gateway\Aiursoft.Gateway.csproj", "{1B818B9A-DC72-487B-AFB6-522DF5AD21AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Directory", "src\WebServices\Basic\Gateway\Aiursoft.Directory.csproj", "{1B818B9A-DC72-487B-AFB6-522DF5AD21AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Account", "src\WebServices\Business\Account\Aiursoft.Account.csproj", "{421FEB24-6384-4301-9CFE-3341B3D14EDD}"
 EndProject

@@ -47,9 +47,9 @@ public class DiskAccess : IStorageProvider
             return;
         }
 
-        if (!Directory.Exists(_trashPath))
+        if (!System.IO.Directory.Exists(_trashPath))
         {
-            Directory.CreateDirectory(_trashPath);
+            System.IO.Directory.CreateDirectory(_trashPath);
         }
 
         File.Move(path, target);
@@ -63,12 +63,12 @@ public class DiskAccess : IStorageProvider
 
     public string[] GetAllFileNamesInHardware()
     {
-        if (!Directory.Exists(_path))
+        if (!System.IO.Directory.Exists(_path))
         {
-            Directory.CreateDirectory(_path);
+            System.IO.Directory.CreateDirectory(_path);
         }
 
-        return Directory.GetFiles(_path).Select(t => Path.GetFileNameWithoutExtension(t)).ToArray();
+        return System.IO.Directory.GetFiles(_path).Select(t => Path.GetFileNameWithoutExtension(t)).ToArray();
     }
 
     public string GetExtension(string fileName)
@@ -90,9 +90,9 @@ public class DiskAccess : IStorageProvider
     public async Task Save(string hardwareUuid, IFormFile file)
     {
         //Try saving file.
-        if (!Directory.Exists(_path))
+        if (!System.IO.Directory.Exists(_path))
         {
-            Directory.CreateDirectory(_path);
+            System.IO.Directory.CreateDirectory(_path);
         }
 
         using var fileStream = new FileStream(_path + hardwareUuid + ".dat", FileMode.Create);

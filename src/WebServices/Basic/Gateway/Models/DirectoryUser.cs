@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Gateway.SDK.Models.API;
+using Aiursoft.Directory.SDK.Models;
+using Aiursoft.Directory.SDK.Models.API;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Gateway.Models;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class GatewayUser : AiurUserBase
+public class DirectoryUser : AiurUserBase
 {
     [InverseProperty(nameof(OAuthPack.User))]
     public IEnumerable<OAuthPack> Packs { get; set; }
@@ -51,7 +51,7 @@ public class UserEmail : AiurUserEmail
 
     [JsonIgnore]
     [ForeignKey(nameof(OwnerId))]
-    public GatewayUser Owner { get; set; }
+    public DirectoryUser Owner { get; set; }
 
     [JsonIgnore] public string ValidateToken { get; set; }
 
@@ -70,5 +70,5 @@ public class ThirdPartyAccount : AiurThirdPartyAccount
 
     [JsonIgnore]
     [ForeignKey(nameof(OwnerId))]
-    public GatewayUser Owner { get; set; }
+    public DirectoryUser Owner { get; set; }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.SDK.Services;
+namespace Aiursoft.Directory.SDK.Services;
 
 public class AiursoftAppTokenValidator : IScopedDependency
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Aiursoft.Gateway.SDK.Models.API;
+using Aiursoft.Directory.SDK.Models.API;
 
 namespace Aiursoft.Account.Models.AccountViewModels;
 

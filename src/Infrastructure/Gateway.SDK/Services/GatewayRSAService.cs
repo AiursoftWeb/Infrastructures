@@ -3,24 +3,24 @@ using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 
-namespace Aiursoft.Gateway.SDK.Services;
+namespace Aiursoft.Directory.SDK.Services;
 
 public class GatewayRSAService : IScopedDependency
 {
-    private readonly GatewayLocator _gatewayLocator;
     private readonly RSA _rsa;
+    private readonly ServerPublicKeyVault _keyVault;
 
-    public GatewayRSAService(GatewayLocator gatewayLocator)
+    public GatewayRSAService(ServerPublicKeyVault keyVault)
     {
         _rsa = RSA.Create();
-        _gatewayLocator = gatewayLocator;
+        _keyVault = keyVault;
     }
 
     public async Task<bool> VerifyDataAsync(string originalMessage, string signedBase64)
     {
         var bytesToVerify = originalMessage.StringToBytes();
         var signedBytes = signedBase64.Base64ToBytes();
-        _rsa.ImportParameters(await _gatewayLocator.GetPublicKey());
+        _rsa.ImportParameters(await _keyVault.GetPublicKey());
         return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }

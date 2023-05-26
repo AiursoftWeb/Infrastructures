@@ -1,43 +1,37 @@
+﻿using Aiursoft.Handler.Exceptions;
+using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Configuration;
+using Aiursoft.Probe.SDK.Models.HomeViewModels;
+using Aiursoft.Scanner.Abstract;
+using Aiursoft.XelNaga.Services;
+using Aiursoft.XelNaga.Tools;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
-using Aiursoft.Probe.SDK.Models.HomeViewModels;
-using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tools;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services;
 
-public class ProbeLocator
+public class ProbeSettingsFetcher : ISingletonDependency
 {
-    public readonly string Endpoint;
-    private ProbeServerConfig _config;
+    private ProbeServerConfig _probeServerConfig;
+    private readonly ProbeConfiguration _probeConfiguration;
 
-    [Obsolete("This method is only for framework", true)]
-    public ProbeLocator() { }
-
-    public ProbeLocator(string endpoint)
+    public ProbeSettingsFetcher(IOptions<ProbeConfiguration> probeConfiguration)
     {
-        Endpoint = endpoint;
-    }
-
-    public ProbeLocator(string endpoint, ProbeServerConfig config)
-    {
-        Endpoint = endpoint;
-        _config = config;
+        _probeConfiguration = probeConfiguration.Value;
     }
 
     public async Task<ProbeServerConfig> GetServerConfig()
     {
-        if (_config == null)
+        if (_probeServerConfig == null)
         {
-            var serverConfigString = await SimpleHttp.DownloadAsString(Endpoint);
-            _config = JsonConvert.DeserializeObject<ProbeServerConfig>(serverConfigString);
+            var serverConfigString = await SimpleHttp.DownloadAsString(_probeConfiguration.Endpoint);
+            _probeServerConfig = JsonConvert.DeserializeObject<ProbeServerConfig>(serverConfigString);
         }
 
-        return _config;
+        return _probeServerConfig;
     }
 
     public Task<string> GetProbeOpenAddressAsync(string siteName, string[] folders, string fileName)
@@ -74,7 +68,7 @@ public class ProbeLocator
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
 
-        var serverConfig = await this.GetServerConfig();
+        var serverConfig = await GetServerConfig();
         var domain = string.Format(serverConfig.OpenPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
@@ -83,7 +77,7 @@ public class ProbeLocator
     public async Task<string> GetProbeDownloadAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var serverConfig = await this.GetServerConfig();
+        var serverConfig = await GetServerConfig();
         var domain = string.Format(serverConfig.DownloadPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";
@@ -92,7 +86,7 @@ public class ProbeLocator
     public async Task<string> GetProbePlayerAddressAsync(string fullPath)
     {
         var (siteName, folders, fileName) = SplitToPath(fullPath);
-        var serverConfig = await this.GetServerConfig();
+        var serverConfig = await GetServerConfig();
         var domain = string.Format(serverConfig.PlayerPattern, siteName);
         var path = (string.Join('/', folders).EncodePath() + "/").TrimStart('/');
         return $"{domain}/{path}{fileName.ToUrlEncoded()}";

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 
-namespace Aiursoft.Gateway.Models.OAuthViewModels;
+namespace Aiursoft.Directory.Models.OAuthViewModels;
 
 public class SecondAuthViewModel : FinishAuthInfo
 {

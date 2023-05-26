@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
+using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
@@ -100,7 +100,7 @@ public class HomeController : ControllerBase
     //    });
     //}
 
-    private Task<GatewayUser> GetCurrentUserAsync()
+    private Task<DirectoryUser> GetCurrentUserAsync()
     {
         return _dbContext
             .Users

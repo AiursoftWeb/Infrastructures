@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
-using Aiursoft.Gateway.SDK.Models.API;
-using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services;
+using Aiursoft.Directory.SDK.Models.API;
+using Aiursoft.Directory.SDK.Services.ToGatewayServer;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
@@ -127,7 +127,7 @@ public class ViewAppViewModel : CreateAppViewModel
         CoreApiService coreApiService,
         AppsContainer appsContainer,
         SitesService sitesService,
-        EventService eventService,
+        ObserverService eventService,
         ChannelService channelService,
         RecordsService recordsService,
         int pageNumber)
@@ -144,13 +144,13 @@ public class ViewAppViewModel : CreateAppViewModel
         CoreApiService coreApiService,
         AppsContainer appsContainer,
         SitesService sitesService,
-        EventService eventService,
+        ObserverService eventService,
         ChannelService channelService,
         RecordsService recordsService,
         int pageNumber)
     {
         RootRecover(user);
-        var token = await appsContainer.AccessTokenAsync(appInDb.AppId, appInDb.AppSecret);
+        var token = await appsContainer.GetAccessTokenAsyncWithAppInfo(appInDb.AppId, appInDb.AppSecret);
 
         Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Aiursoft.Developer.SDK;
-using Aiursoft.Gateway.SDK;
+using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
@@ -28,12 +28,13 @@ public class Startup
     {
         services.Configure<List<MonitorRule>>(Configuration.GetSection("CustomRules"));
         services.AddAiurMvc();
-        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
-        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
+
         services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
         services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
-        services.AddProbeServer(Configuration.GetConnectionString("ProbeConnection"));
         services.AddAiursoftSDK();
     }
 

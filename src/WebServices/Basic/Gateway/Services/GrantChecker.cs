@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
@@ -11,7 +11,7 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class GrantChecker : IScopedDependency
 {
@@ -29,7 +29,7 @@ public class GrantChecker : IScopedDependency
         _tokenManager = tokenManager;
     }
 
-    public async Task<GatewayUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
+    public async Task<DirectoryUser> EnsureGranted(string accessToken, string userId, Func<App, bool> prefix)
     {
         var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
         var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);

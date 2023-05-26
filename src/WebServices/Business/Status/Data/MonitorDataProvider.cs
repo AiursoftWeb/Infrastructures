@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.SDK.Services;
-using Aiursoft.Observer.SDK.Services;
-using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
@@ -11,16 +9,18 @@ using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Aiursoft.Observer.SDK.Configuration;
+using Aiursoft.Probe.SDK.Configuration;
 
 namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly GatewayLocator gatewayLocator;
+    private readonly DirectoryContext gatewayLocator;
     private readonly List<MonitorRule> customRules;
     private readonly DeveloperLocator developerLocator;
-    private readonly ObserverLocator observerLocator;
-    private readonly ProbeLocator probeLocator;
+    private readonly ObserverConfiguration observerLocator;
+    private readonly ProbeConfiguration probeLocator;
     private readonly IConfiguration _configuration;
     private readonly ServiceLocation serviceLocation;
     private readonly StargateLocator stargateLocator;
@@ -29,11 +29,11 @@ public class MonitorDataProvider : ISingletonDependency
     public MonitorDataProvider(
         IConfiguration configuration,
         ServiceLocation serviceLocation,
-        ObserverLocator observerLocator,
+        ObserverConfiguration observerLocator,
         StargateLocator stargateLocator,
         DeveloperLocator developerLocator,
-        GatewayLocator gatewayLocator,
-        ProbeLocator probeLocator,
+        DirectoryContext gatewayLocator,
+        ProbeConfiguration probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
@@ -102,7 +102,7 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Observer",
-                CheckAddress = $"{observerLocator.Endpoint}",
+                CheckAddress = $"{observerLocator.Instance}",
                 ExpectedContent = "Welcome"
             },
             new()

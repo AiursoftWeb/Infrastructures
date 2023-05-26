@@ -8,7 +8,7 @@ using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
 using Aiursoft.Gateway.Models.ThirdPartyViewModels;
-using Aiursoft.Gateway.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
@@ -32,16 +32,16 @@ public class ThirdPartyController : Controller
     private readonly UserAppAuthManager _authManager;
     private readonly IEnumerable<IAuthProvider> _authProviders;
     private readonly GatewayDbContext _dbContext;
-    private readonly SignInManager<GatewayUser> _signInManager;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly SignInManager<DirectoryUser> _signInManager;
+    private readonly UserManager<DirectoryUser> _userManager;
 
     public ThirdPartyController(
         IEnumerable<IAuthProvider> authProviders,
         GatewayDbContext dbContext,
         UserAppAuthManager authManager,
         DeveloperApiService apiService,
-        UserManager<GatewayUser> userManager,
-        SignInManager<GatewayUser> signInManager,
+        UserManager<DirectoryUser> userManager,
+        SignInManager<DirectoryUser> signInManager,
         AuthLogger authLogger)
     {
         _authProviders = authProviders;
@@ -124,7 +124,7 @@ public class ThirdPartyController : Controller
             return View(nameof(SignIn), model);
         }
 
-        var user = new GatewayUser
+        var user = new DirectoryUser
         {
             UserName = model.UserDetail.Email + $".from.{model.ProviderName}.com",
             Email = model.UserDetail.Email,
@@ -230,7 +230,7 @@ public class ThirdPartyController : Controller
         return View(viewModel);
     }
 
-    private Task<GatewayUser> GetCurrentUserAsync()
+    private Task<DirectoryUser> GetCurrentUserAsync()
     {
         return _dbContext
             .Users

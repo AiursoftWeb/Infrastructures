@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Account.Models;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
@@ -14,14 +14,14 @@ namespace Aiursoft.Account.Controllers;
 [LimitPerMin]
 public class HomeController : Controller
 {
-    private readonly GatewayLocator _gatewayLocator;
+    private readonly DirectoryContext _gatewayLocator;
     private readonly ILogger _logger;
     private readonly SignInManager<AccountUser> _signInManager;
 
     public HomeController(
         SignInManager<AccountUser> signInManager,
         ILoggerFactory loggerFactory,
-        GatewayLocator gatewayLocator)
+        DirectoryContext gatewayLocator)
     {
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();

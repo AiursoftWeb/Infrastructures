@@ -6,23 +6,23 @@ using Aiursoft.SDK;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class TwoFAHelper : ITransientDependency
 {
     private const string _authenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
     private readonly UrlEncoder _urlEncoder;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly UserManager<DirectoryUser> _userManager;
 
     public TwoFAHelper(
-        UserManager<GatewayUser> userManager,
+        UserManager<DirectoryUser> userManager,
         UrlEncoder urlEncoder)
     {
         _userManager = userManager;
         _urlEncoder = urlEncoder;
     }
 
-    public async Task<(string, string)> LoadSharedKeyAndQrCodeUriAsync(GatewayUser user)
+    public async Task<(string, string)> LoadSharedKeyAndQrCodeUriAsync(DirectoryUser user)
     {
         var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         if (string.IsNullOrEmpty(unformattedKey))

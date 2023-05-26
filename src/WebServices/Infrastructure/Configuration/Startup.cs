@@ -1,5 +1,5 @@
 using Aiursoft.Configuration.Data;
-using Aiursoft.Gateway.SDK;
+using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -23,8 +23,8 @@ public class Startup
     {
         services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurAPIMvc();
-        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
-        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftSDK();
     }
 

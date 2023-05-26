@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
-using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
-using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
 using Microsoft.AspNetCore.Identity;
+using Aiursoft.Directory.SDK.Models;
+using Aiursoft.Directory.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services;
+using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 
 namespace Aiursoft.Identity.Services;
 
@@ -30,8 +30,8 @@ public class AuthService<T> where T : AiurUserBase, new()
 
     public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
     {
-        var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.AccessTokenAsync(), model.Code);
-        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessTokenAsync(), openId.OpenId);
+        var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.GetAccessTokenAsync(), model.Code);
+        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.GetAccessTokenAsync(), openId.OpenId);
         var current = await _userManager.FindByIdAsync(userInfo.User.Id);
         if (current == null)
         {
@@ -62,7 +62,7 @@ public class AuthService<T> where T : AiurUserBase, new()
 
     public async Task<T> OnlyUpdate(T user)
     {
-        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.AccessTokenAsync(), user.Id);
+        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.GetAccessTokenAsync(), user.Id);
         user.Update(userInfo);
         await _userManager.UpdateAsync(user);
         return user;

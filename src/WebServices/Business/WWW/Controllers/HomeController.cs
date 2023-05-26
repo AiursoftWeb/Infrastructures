@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
@@ -15,13 +15,13 @@ namespace Aiursoft.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger _logger;
-    private readonly GatewayLocator _serviceLocation;
+    private readonly DirectoryContext _serviceLocation;
     private readonly SignInManager<WWWUser> _signInManager;
 
     public HomeController(
         SignInManager<WWWUser> signInManager,
         ILoggerFactory loggerFactory,
-        GatewayLocator serviceLocation)
+        DirectoryContext serviceLocation)
     {
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();

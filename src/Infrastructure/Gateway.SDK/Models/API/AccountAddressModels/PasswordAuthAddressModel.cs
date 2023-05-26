@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.SDKTools.Attributes;
 
-namespace Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
+namespace Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 
 public class PasswordAuthAddressModel
 {

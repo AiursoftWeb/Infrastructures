@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Wiki.Data;
@@ -18,13 +18,13 @@ namespace Aiursoft.Wiki.Controllers;
 public class HomeController : Controller
 {
     private readonly WikiDbContext _dbContext;
-    private readonly GatewayLocator _serviceLocation;
+    private readonly DirectoryContext _serviceLocation;
     private readonly SignInManager<WikiUser> _signInManager;
 
     public HomeController(
         SignInManager<WikiUser> signInManager,
         WikiDbContext context,
-        GatewayLocator serviceLocation)
+        DirectoryContext serviceLocation)
     {
         _signInManager = signInManager;
         _dbContext = context;

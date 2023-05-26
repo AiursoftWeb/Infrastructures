@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Probe.Repositories;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
-using Aiursoft.Probe.SDK.Services;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.WebTools;
@@ -24,7 +24,7 @@ public class FilesController : ControllerBase
     private readonly FileRepo _fileRepo;
     private readonly FolderRepo _folderRepo;
     private readonly FolderSplitter _folderSplitter;
-    private readonly ProbeLocator _probeLocator;
+    private readonly ProbeConfiguration _probeLocator;
     private readonly SiteRepo _siteRepo;
     private readonly IStorageProvider _storageProvider;
     private readonly TokenEnsurer _tokenEnsurer;
@@ -32,7 +32,7 @@ public class FilesController : ControllerBase
     public FilesController(
         FolderSplitter folderLocator,
         TokenEnsurer tokenEnsurer,
-        ProbeLocator probeLocator,
+        ProbeConfiguration probeLocator,
         IStorageProvider storageProvider,
         SiteRepo siteRepo,
         FolderRepo folderRepo,

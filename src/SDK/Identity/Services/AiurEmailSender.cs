@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ namespace Aiursoft.Identity.Services;
 public class AiurEmailSender : ITransientDependency
 {
     private readonly AppsContainer _appsContainer;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly ILogger<AiurEmailSender> _logger;
     private readonly string _mailPassword;
     private readonly string _mailServer;
@@ -23,7 +23,7 @@ public class AiurEmailSender : ITransientDependency
         IConfiguration configuration,
         ILogger<AiurEmailSender> logger,
         AppsContainer appsContainer,
-        EventService eventService)
+        ObserverService eventService)
     {
         _mailUser = configuration["MailUser"];
         _mailPassword = configuration["MailPassword"];
@@ -60,7 +60,7 @@ public class AiurEmailSender : ITransientDependency
             try
             {
                 _logger.LogError(e, e.Message);
-                var accessToken = _appsContainer.AccessTokenAsync();
+                var accessToken = _appsContainer.GetAccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e);
             }
             catch

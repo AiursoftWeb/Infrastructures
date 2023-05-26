@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Account.Data;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
@@ -13,7 +13,7 @@ public class Program
     {
         App<Startup>(args)
             .Update<AccountDbContext>()
-            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.AccessTokenAsync())
+            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync())
             .Run();
     }
 

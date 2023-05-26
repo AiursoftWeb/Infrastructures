@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Gateway.SDK.Models.API.UserAddressModels;
+﻿namespace Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 
 public class ViewPhoneNumberAddressModel : UserOperationAddressModel
 {

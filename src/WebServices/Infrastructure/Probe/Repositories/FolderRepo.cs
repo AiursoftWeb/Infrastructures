@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.DBTools;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;

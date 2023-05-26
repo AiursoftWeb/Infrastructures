@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
@@ -27,7 +27,7 @@ public class Seeder : ITransientDependency
     private readonly IConfiguration _configuration;
     private readonly WikiDbContext _dbContext;
     private readonly string _domain;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly HttpService _http;
     private readonly ILogger<Seeder> _logger;
     private readonly MarkDownDocGenerator _markDownGenerator;
@@ -37,7 +37,7 @@ public class Seeder : ITransientDependency
         IConfiguration configuration,
         HttpService http,
         MarkDownDocGenerator markDownGenerator,
-        EventService eventService,
+        ObserverService eventService,
         AppsContainer appsContainer,
         ILogger<Seeder> logger)
     {
@@ -151,7 +151,7 @@ public class Seeder : ITransientDependency
 
     public async Task HandleException(Exception e)
     {
-        var accessToken = await _appsContainer.AccessTokenAsync();
+        var accessToken = await _appsContainer.GetAccessTokenAsync();
         await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
         _logger.LogCritical(e, e.Message);
     }

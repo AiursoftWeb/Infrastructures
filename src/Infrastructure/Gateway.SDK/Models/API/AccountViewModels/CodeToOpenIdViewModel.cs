@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
+namespace Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 
 public class CodeToOpenIdViewModel : AiurProtocol
 {

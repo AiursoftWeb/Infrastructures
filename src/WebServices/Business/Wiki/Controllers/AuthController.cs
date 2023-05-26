@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
+using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.Identity.Services;

@@ -1,8 +1,8 @@
-﻿using Aiursoft.Gateway.SDK.Models;
+﻿using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.Identity.Services.Authentication.ToGoogleServer;
 
-namespace Aiursoft.Gateway.Models.ThirdPartyViewModels;
+namespace Aiursoft.Directory.Models.ThirdPartyViewModels;
 
 public class SignInViewModel : FinishAuthInfo
 {

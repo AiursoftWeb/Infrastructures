@@ -2,38 +2,40 @@
 using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Observer.SDK.Services.ToObserverServer;
 
-public class EventService : IScopedDependency
+public class ObserverService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly ObserverLocator _observerLocator;
+    private readonly ObserverConfiguration _observerLocator;
 
-    public EventService(
+    public ObserverService(
         APIProxyService http,
-        ObserverLocator observerLocator)
+        IOptions<ObserverConfiguration> observerLocator)
     {
         _http = http;
-        _observerLocator = observerLocator;
+        _observerLocator = observerLocator.Value;
     }
 
-    public Task<AiurProtocol> LogExceptionAsync(string accessToken, Exception e, string path = "Inline")
+    public Task<AiurProtocol> LogExceptionAsync(string accessToken, Exception e, string httpRequestPath = "Inline")
     {
-        return LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception, path);
+        return LogAsync(accessToken, e.Message, e.StackTrace, EventLevel.Exception, httpRequestPath);
     }
 
     public async Task<AiurProtocol> LogAsync(string accessToken, string message, string stackTrace,
         EventLevel eventLevel, string path)
     {
-        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "Log", new { });
+        var url = new AiurUrl(_observerLocator.Instance, "Event", "Log", new { });
         var form = new AiurUrl(string.Empty, new LogAddressModel
         {
             AccessToken = accessToken,
@@ -54,7 +56,7 @@ public class EventService : IScopedDependency
 
     public async Task<ViewLogViewModel> ViewAsync(string accessToken)
     {
-        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "View", new ViewAddressModel
+        var url = new AiurUrl(_observerLocator.Instance, "Event", "View", new ViewAddressModel
         {
             AccessToken = accessToken
         });
@@ -70,7 +72,7 @@ public class EventService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
     {
-        var url = new AiurUrl(_observerLocator.Endpoint, "Event", "DeleteApp", new { });
+        var url = new AiurUrl(_observerLocator.Instance, "Event", "DeleteApp", new { });
         var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
         {
             AccessToken = accessToken,

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aiursoft.Gateway.SDK.Models.API;
+namespace Aiursoft.Directory.SDK.Models.API;
 
 public class Grant
 {

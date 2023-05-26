@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using Aiursoft.Gateway.Controllers;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
-using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
+using Aiursoft.Directory.SDK.Models;
+using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class UserAppAuthManager : IScopedDependency
 {
@@ -22,7 +22,7 @@ public class UserAppAuthManager : IScopedDependency
         _dbContext = dbContext;
     }
 
-    public async Task<IActionResult> FinishAuth(GatewayUser user, FinishAuthInfo model, bool forceGrant, bool trusted)
+    public async Task<IActionResult> FinishAuth(DirectoryUser user, FinishAuthInfo model, bool forceGrant, bool trusted)
     {
         var authorized = await HasAuthorizedApp(user, model.AppId);
         if (!authorized && trusted)
@@ -56,7 +56,7 @@ public class UserAppAuthManager : IScopedDependency
         }
     }
 
-    public async Task GrantTargetApp(GatewayUser user, string appId)
+    public async Task GrantTargetApp(DirectoryUser user, string appId)
     {
         if (!await HasAuthorizedApp(user, appId))
         {
@@ -70,7 +70,7 @@ public class UserAppAuthManager : IScopedDependency
         }
     }
 
-    private async Task<OAuthPack> GeneratePack(GatewayUser user, string appId)
+    private async Task<OAuthPack> GeneratePack(DirectoryUser user, string appId)
     {
         var pack = new OAuthPack
         {
@@ -83,7 +83,7 @@ public class UserAppAuthManager : IScopedDependency
         return pack;
     }
 
-    public Task<bool> HasAuthorizedApp(GatewayUser user, string appId)
+    public Task<bool> HasAuthorizedApp(DirectoryUser user, string appId)
     {
         return _dbContext
             .LocalAppGrant

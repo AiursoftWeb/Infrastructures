@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.Gateway.SDK.Models;
+namespace Aiursoft.Directory.SDK.Models;
 
 public class ACToken
 {

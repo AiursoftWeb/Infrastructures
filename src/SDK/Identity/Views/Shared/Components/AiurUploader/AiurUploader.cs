@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,7 @@ public class AiurUploader : ViewComponent
 
     private async Task<bool> OpenUpload(string siteName)
     {
-        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessTokenAsync();
+        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.GetAccessTokenAsync();
         var site = await _sitesService.ViewSiteDetailAsync(accessToken, siteName);
         return site.Site.OpenToUpload;
     }
@@ -40,7 +40,7 @@ public class AiurUploader : ViewComponent
             return string.Empty;
         }
 
-        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.AccessTokenAsync();
+        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.GetAccessTokenAsync();
         return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path,
             TimeSpan.FromMinutes(100));
     }

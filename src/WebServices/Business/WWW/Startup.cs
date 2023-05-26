@@ -32,9 +32,9 @@ public class Startup
         services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
         services.AddAiurMvc();
         services.AddAiursoftIdentity<WWWUser>(
-            Configuration.GetConnectionString("ObserverConnection"),
-            Configuration.GetConnectionString("ProbeConnection"),
-            Configuration.GetConnectionString("GatewayConnection"));
+            probeConfig: Configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: Configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

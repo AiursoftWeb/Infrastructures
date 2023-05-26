@@ -1,4 +1,4 @@
-﻿using Aiursoft.Gateway.SDK;
+﻿using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
@@ -24,8 +24,8 @@ public class Startup
     {
         services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurAPIMvc();
-        services.AddGatewayServer(Configuration.GetConnectionString("GatewayConnection"));
-        services.AddObserverServer(Configuration.GetConnectionString("ObserverConnection"));
+        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftSDK();
         services.AddSingleton(new StargateLocator(Configuration["StargateEndpoint"]));
     }

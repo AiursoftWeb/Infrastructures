@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Gateway.Models.ThirdPartyAddressModels;
+namespace Aiursoft.Directory.Models.ThirdPartyAddressModels;
 
 public class BindAccountAddressModel
 {

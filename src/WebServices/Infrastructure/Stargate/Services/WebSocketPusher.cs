@@ -2,7 +2,7 @@
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
@@ -13,13 +13,13 @@ namespace Aiursoft.Stargate.Services;
 public class WebSocketPusher : IScopedDependency
 {
     private readonly AppsContainer _appsContainer;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private bool _dropped;
     private WebSocket _ws;
 
     public WebSocketPusher(
         AppsContainer appsContainer,
-        EventService eventService)
+        ObserverService eventService)
     {
         _appsContainer = appsContainer;
         _eventService = eventService;
@@ -57,7 +57,7 @@ public class WebSocketPusher : IScopedDependency
         catch (Exception e) when (!e.Message.StartsWith("The remote party closed the WebSocket connection"))
         {
             _dropped = true;
-            var accessToken = _appsContainer.AccessTokenAsync();
+            var accessToken = _appsContainer.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(await accessToken, e, "InPusher");
         }
     }

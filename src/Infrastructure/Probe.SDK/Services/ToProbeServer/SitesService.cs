@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
@@ -13,14 +15,14 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 public class SitesService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly ProbeLocator _probeLocator;
+    private readonly ProbeConfiguration _probeLocator;
 
     public SitesService(
         APIProxyService http,
-        ProbeLocator serviceLocation)
+        IOptions<ProbeConfiguration> serviceLocation)
     {
         _http = http;
-        _probeLocator = serviceLocation;
+        _probeLocator = serviceLocation.Value;
     }
 
     public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload,

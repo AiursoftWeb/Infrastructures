@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.Models.ApiViewModels;
+namespace Aiursoft.Directory.Models.ApiViewModels;
 
 public class SetLangViewModel : SetLangAddressModel
 {

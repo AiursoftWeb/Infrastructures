@@ -16,12 +16,12 @@ namespace Aiursoft.Developer;
 
 public class Startup
 {
+    public IConfiguration Configuration { get; }
+
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
-
-    public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -35,9 +35,9 @@ public class Startup
         services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
         services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
         services.AddAiursoftIdentity<DeveloperUser>(
-            Configuration.GetConnectionString("ObserverConnection"),
-            Configuration.GetConnectionString("ProbeConnection"),
-            Configuration.GetConnectionString("GatewayConnection"));
+            probeConfig: Configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: Configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

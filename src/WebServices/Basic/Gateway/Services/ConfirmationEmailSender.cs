@@ -6,7 +6,7 @@ using Aiursoft.SDK;
 using Aiursoft.XelNaga.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Aiursoft.Gateway.Services;
+namespace Aiursoft.Directory.Services;
 
 public class ConfirmationEmailSender : ITransientDependency
 {

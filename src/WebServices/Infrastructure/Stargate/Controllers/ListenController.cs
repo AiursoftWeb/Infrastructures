@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
@@ -23,7 +23,7 @@ public class ListenController : ControllerBase
 {
     private readonly AppsContainer _appsContainer;
     private readonly Counter _counter;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly ILogger<ListenController> _logger;
     private readonly StargateMemory _memoryContext;
     private readonly WebSocketPusher _pusher;
@@ -34,7 +34,7 @@ public class ListenController : ControllerBase
         ILogger<ListenController> logger,
         Counter counter,
         AppsContainer appsContainer,
-        EventService eventService)
+        ObserverService eventService)
     {
         _memoryContext = memoryContext;
         _pusher = pusher;
@@ -101,7 +101,7 @@ public class ListenController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e, e.Message);
-            var accessToken = _appsContainer.AccessTokenAsync();
+            var accessToken = _appsContainer.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(await accessToken, e, Request.Path);
         }
         finally

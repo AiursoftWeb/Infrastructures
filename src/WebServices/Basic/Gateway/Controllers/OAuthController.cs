@@ -5,8 +5,8 @@ using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Gateway.Data;
 using Aiursoft.Gateway.Models;
 using Aiursoft.Gateway.Models.OAuthViewModels;
-using Aiursoft.Gateway.SDK.Models;
-using Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+using Aiursoft.Directory.SDK.Models;
+using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Gateway.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
@@ -35,12 +35,12 @@ public class OAuthController : Controller
     private readonly ISessionBasedCaptcha _captcha;
     private readonly GatewayDbContext _dbContext;
     private readonly ILogger _logger;
-    private readonly SignInManager<GatewayUser> _signInManager;
-    private readonly UserManager<GatewayUser> _userManager;
+    private readonly SignInManager<DirectoryUser> _signInManager;
+    private readonly UserManager<DirectoryUser> _userManager;
 
     public OAuthController(
-        UserManager<GatewayUser> userManager,
-        SignInManager<GatewayUser> signInManager,
+        UserManager<DirectoryUser> userManager,
+        SignInManager<DirectoryUser> signInManager,
         ILoggerFactory loggerFactory,
         GatewayDbContext context,
         DeveloperApiService developerApiService,
@@ -370,7 +370,7 @@ public class OAuthController : Controller
             return View(model);
         }
 
-        var user = new GatewayUser
+        var user = new DirectoryUser
         {
             UserName = model.Email,
             Email = model.Email,
@@ -420,7 +420,7 @@ public class OAuthController : Controller
         }
     }
 
-    private Task<GatewayUser> GetCurrentUserAsync()
+    private Task<DirectoryUser> GetCurrentUserAsync()
     {
         return _dbContext
             .Users

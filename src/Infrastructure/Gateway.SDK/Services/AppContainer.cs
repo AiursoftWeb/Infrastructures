@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToGatewayServer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.Gateway.SDK.Services;
+namespace Aiursoft.Directory.SDK.Services;
 
 public class AppContainer
 {
@@ -20,7 +20,7 @@ public class AppContainer
         _latestAccessToken = string.Empty;
     }
 
-    public async Task<string> AccessToken(IServiceScopeFactory scopeFactory)
+    public async Task<string> GetCachedAccessTokenAsync(IServiceScopeFactory scopeFactory)
     {
         if (DateTime.UtcNow <= _accessTokenDeadTime)
         {
@@ -28,10 +28,15 @@ public class AppContainer
         }
 
         using var scope = scopeFactory.CreateScope();
-        var apiService = scope.ServiceProvider.GetRequiredService<ApiService>();
+        var apiService = scope.ServiceProvider.GetRequiredService<AccessTokenService>();
         var serverResult = await apiService.AccessTokenAsync(AppId, _appSecret);
         _latestAccessToken = serverResult.AccessToken;
         _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);
         return _latestAccessToken;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(this._appSecret, this.AppId);
     }
 }

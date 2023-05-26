@@ -1,4 +1,4 @@
-﻿using Aiursoft.Gateway.SDK.Models;
+﻿using Aiursoft.Directory.SDK.Models;
 
 namespace Aiursoft.Account.Models;
 

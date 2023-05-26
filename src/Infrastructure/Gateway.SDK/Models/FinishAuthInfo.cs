@@ -2,7 +2,7 @@
 using Aiursoft.SDKTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Gateway.SDK.Models;
+namespace Aiursoft.Directory.SDK.Models;
 
 public class FinishAuthInfo
 {

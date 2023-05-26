@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.SDK.Models.ForApps.AddressModels;
+namespace Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 
 public class AuthResultAddressModel
 {

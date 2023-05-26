@@ -1,4 +1,4 @@
-﻿using Aiursoft.Gateway.SDK.Services;
+﻿using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Tests.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

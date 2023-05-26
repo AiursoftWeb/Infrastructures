@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Aiursoft.Gateway.SDK.Models.API.AccountViewModels;
+using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Gateway.SDK.Models;
+namespace Aiursoft.Directory.SDK.Models;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class AiurUserBase : IdentityUser

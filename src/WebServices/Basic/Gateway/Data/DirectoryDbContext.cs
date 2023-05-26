@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Gateway.Data;
+namespace Aiursoft.Directory.Data;
 
-public class GatewayDbContext : IdentityDbContext<GatewayUser>
+public class DirectoryDbContext : IdentityDbContext<DirectoryUser>
 {
-    public GatewayDbContext(DbContextOptions<GatewayDbContext> options) : base(options)
+    public DirectoryDbContext(DbContextOptions<DirectoryDbContext> options) : base(options)
     {
     }
 

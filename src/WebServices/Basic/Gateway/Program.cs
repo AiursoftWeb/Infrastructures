@@ -1,15 +1,15 @@
-﻿using Aiursoft.Gateway.Data;
+﻿using Aiursoft.Directory.Data;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 
-namespace Aiursoft.Gateway;
+namespace Aiursoft.Directory;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        App<Startup>(args).Update<GatewayDbContext>().Run();
+        App<Startup>(args).Update<DirectoryDbContext>().Run();
     }
 
     // For EF

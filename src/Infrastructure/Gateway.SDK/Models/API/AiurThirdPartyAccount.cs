@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.Gateway.SDK.Models.API;
+namespace Aiursoft.Directory.SDK.Models.API;
 
 public class AiurThirdPartyAccount
 {

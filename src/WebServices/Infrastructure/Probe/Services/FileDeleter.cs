@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
@@ -14,7 +14,7 @@ namespace Aiursoft.Probe.Services;
 public class FileDeleter : ITransientDependency
 {
     private readonly AppsContainer _appsContainer;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly ProbeDbContext _probeDbContext;
     private readonly RetryEngine _retryEngine;
     private readonly IStorageProvider _storageProvider;
@@ -23,7 +23,7 @@ public class FileDeleter : ITransientDependency
         ProbeDbContext probeDbContext,
         RetryEngine retryEngine,
         IStorageProvider storageProvider,
-        EventService eventService,
+        ObserverService eventService,
         AppsContainer appsContainer)
     {
         _probeDbContext = probeDbContext;
@@ -50,7 +50,7 @@ public class FileDeleter : ITransientDependency
         }
         catch (Exception e)
         {
-            var token = await _appsContainer.AccessTokenAsync();
+            var token = await _appsContainer.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(token, e, "Deleter");
         }
     }

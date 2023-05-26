@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
+using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
@@ -15,14 +17,14 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 public class FilesService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly ProbeLocator _probeLocator;
+    private readonly ProbeConfiguration _probeLocator;
 
     public FilesService(
         APIProxyService http,
-        ProbeLocator probeLocator)
+        IOptions<ProbeConfiguration> probeLocator)
     {
         _http = http;
-        _probeLocator = probeLocator;
+        _probeLocator = probeLocator.Value;
     }
 
     public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames,

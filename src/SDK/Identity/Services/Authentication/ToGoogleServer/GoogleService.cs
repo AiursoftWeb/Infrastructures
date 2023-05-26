@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.XelNaga.Models;
@@ -19,13 +19,13 @@ public class GoogleService : IAuthProvider
     private readonly string _clientId;
     private readonly string _clientSecret;
     private readonly APIProxyService _http;
-    private readonly GatewayLocator _serviceLocation;
+    private readonly DirectoryContext _serviceLocation;
 
     public GoogleService(
         APIProxyService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
-        GatewayLocator serviceLocation,
+        DirectoryContext serviceLocation,
         ILogger<GoogleService> logger)
     {
         _http = http;

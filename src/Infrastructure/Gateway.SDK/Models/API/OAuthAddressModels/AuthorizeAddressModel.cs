@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Aiursoft.Gateway.SDK.Models.API.OAuthAddressModels;
+namespace Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 
 public class AuthorizeAddressModel : FinishAuthInfo
 {

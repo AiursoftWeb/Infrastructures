@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.Gateway.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToGatewayServer;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -27,7 +27,7 @@ public class AppsController : Controller
     private readonly ChannelService _channelService;
     private readonly CoreApiService _coreApiService;
     private readonly DeveloperDbContext _dbContext;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly RecordsService _recordsService;
     private readonly SitesService _siteService;
 
@@ -36,7 +36,7 @@ public class AppsController : Controller
         AppsContainer appsContainer,
         CoreApiService coreApiService,
         SitesService siteService,
-        EventService eventService,
+        ObserverService eventService,
         ChannelService channelService,
         RecordsService recordsService)
     {
@@ -166,7 +166,7 @@ public class AppsController : Controller
             _ChangePermission(target.ManageSocialAccount, model.ManageSocialAccount, ref permissionAdded);
         if (permissionAdded)
         {
-            var token = await _appsContainer.AccessTokenAsync(target.AppId, target.AppSecret);
+            var token = await _appsContainer.GetAccessTokenAsyncWithAppInfo(target.AppId, target.AppSecret);
             await _coreApiService.DropGrantsAsync(token);
         }
 
@@ -241,7 +241,7 @@ public class AppsController : Controller
 
         try
         {
-            var token = await _appsContainer.AccessTokenAsync(target.AppId, target.AppSecret);
+            var token = await _appsContainer.GetAccessTokenAsyncWithAppInfo(target.AppId, target.AppSecret);
             await _siteService.DeleteAppAsync(token, target.AppId);
             await _recordsService.DeleteAppAsync(token, target.AppId);
             await _eventService.DeleteAppAsync(token, target.AppId);

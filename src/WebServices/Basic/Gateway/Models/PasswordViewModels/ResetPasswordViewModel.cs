@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.SDKTools.Attributes;
 
-namespace Aiursoft.Gateway.Models.PasswordViewModels;
+namespace Aiursoft.Directory.Models.PasswordViewModels;
 
 public class ResetPasswordViewModel
 {

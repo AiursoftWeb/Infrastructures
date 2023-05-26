@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.Handler.Interfaces;
 
-namespace Aiursoft.Gateway.SDK.Models.API.APIAddressModels;
+namespace Aiursoft.Directory.SDK.Models.API.APIAddressModels;
 
 public class AllUserGrantedAddressModel : IPageable
 {

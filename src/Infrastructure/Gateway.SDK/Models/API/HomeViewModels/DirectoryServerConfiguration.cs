@@ -1,9 +1,9 @@
 ﻿using System;
 using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Gateway.SDK.Models.API.HomeViewModels;
+namespace Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 
-public class ArchonServerConfig : AiurProtocol
+public class DirectoryServerConfiguration : AiurProtocol
 {
     public DateTime ServerTime { get; set; }
     public bool SignedIn { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.Gateway.SDK.Models.API.AccountAddressModels;
+namespace Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 
 public class UserInfoAddressModel
 {

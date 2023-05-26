@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.SDK.Services;
+using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +13,7 @@ namespace Aiursoft.SDK.Middlewares;
 public class UserFriendlyServerExceptionMiddleware
 {
     private readonly AppsContainer _appsContainer;
-    private readonly EventService _eventService;
+    private readonly ObserverService _eventService;
     private readonly ILogger<UserFriendlyServerExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;
     private readonly ServiceLocation _serviceLocation;
@@ -22,7 +22,7 @@ public class UserFriendlyServerExceptionMiddleware
         RequestDelegate next,
         ServiceLocation serviceLocation,
         ILogger<UserFriendlyServerExceptionMiddleware> logger,
-        EventService eventService,
+        ObserverService eventService,
         AppsContainer appsContainer)
     {
         _next = next;
@@ -55,7 +55,7 @@ public class UserFriendlyServerExceptionMiddleware
             try
             {
                 _logger.LogError(e, e.Message);
-                var accessToken = _appsContainer.AccessTokenAsync();
+                var accessToken = _appsContainer.GetAccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e, context.Request.Path);
             }
             catch
