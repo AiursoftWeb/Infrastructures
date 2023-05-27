@@ -54,6 +54,7 @@ public class APIProxyService : IScopedDependency
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
+        _logger.LogInformation($"Sending HTTP Get request to: {url}...");
 
         request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json, text/html");
@@ -86,6 +87,7 @@ public class APIProxyService : IScopedDependency
         {
             Content = new FormUrlEncodedContent(postDataStr.Params)
         };
+        _logger.LogInformation($"Sending HTTP Post request to: {url}...");
 
         request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json");
@@ -122,6 +124,7 @@ public class APIProxyService : IScopedDependency
                 { new StreamContent(fileStream), "file", "file" }
             }
         };
+        _logger.LogInformation($"Sending HTTP Upload request to: {url}...");
 
         request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json");
