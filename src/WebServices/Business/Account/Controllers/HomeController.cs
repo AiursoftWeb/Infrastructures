@@ -15,7 +15,7 @@ namespace Aiursoft.Account.Controllers;
 [LimitPerMin]
 public class HomeController : Controller
 {
-    private readonly DirectoryConfiguration _gatewayLocator;
+    private readonly DirectoryConfiguration _directoryLocator;
     private readonly ILogger _logger;
     private readonly SignInManager<AccountUser> _signInManager;
 

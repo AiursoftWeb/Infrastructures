@@ -31,7 +31,7 @@ There are some example apps based on Aiursoft Infrastructures.
 
 ## Features
 
-* Integrated user authentication https://gateway.aiursoft.com (OAuth, Social authenticate, password reset)
+* Integrated user authentication https://directory.aiursoft.com (OAuth, Social authenticate, password reset)
 * Account management center https://account.aiursoft.com (Profile editing, Two-FA, social account, switch email)
 * Developer center https://developer.aiursoft.com (App creation and permission management, basic debugging tools)
 * File storage system https://probe.aiursoft.com (Compress, Clear EXIF, customize domain-name)
