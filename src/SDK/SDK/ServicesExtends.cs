@@ -19,29 +19,24 @@ public static class ServicesExtends
 {
     public static IServiceCollection AddAiurMvc(this IServiceCollection services)
     {
-        services.AddLocalization(options => options.ResourcesPath = "Resources");
-        services.AddAiurAPIMvc()
-            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-            .AddDataAnnotationsLocalization();
-
-        return services;
-    }
-
-    public static IMvcBuilder AddAiurAPIMvc(this IServiceCollection services)
-    {
         JsonConvert.DefaultSettings = () => new JsonSerializerSettings
         {
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
-        return services
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
+        services
             .AddControllersWithViews()
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            })
+            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+            .AddDataAnnotationsLocalization();
+
+        return services;
     }
 
     public static IServiceCollection AddAiursoftSDK(this IServiceCollection services,
@@ -104,7 +99,7 @@ public static class ServicesExtends
         services.AddEFSecondLevelCache(options =>
         {
             options.UseMemoryCacheProvider().DisableLogging(true);
-            options.CacheAllQueries(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(30));
+            options.CacheAllQueries(CacheExpirationMode.Absolute, TimeSpan.FromMinutes(30));
         });
         return services;
     }

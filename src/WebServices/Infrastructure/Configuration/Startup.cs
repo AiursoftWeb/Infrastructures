@@ -22,7 +22,7 @@ public class Startup
     public virtual void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-        services.AddAiurAPIMvc();
+        services.AddAiurMvc();
         services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftSDK();

@@ -23,7 +23,7 @@ public class Startup
     {
         services.AddDbContextWithCache<ObserverDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurAPIMvc();
+        services.AddAiurMvc();
         services.AddAiursoftSDK();
         services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));

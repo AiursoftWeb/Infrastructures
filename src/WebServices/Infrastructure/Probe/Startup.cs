@@ -33,7 +33,7 @@ public class Startup
         services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddCors();
-        services.AddAiurAPIMvc();
+        services.AddAiurMvc();
         services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));

@@ -21,6 +21,8 @@ public static class Handlers
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseHttpsRedirection();
+
+            // TODO: Use Attributes
             app.UseMiddleware<UserFriendlyServerExceptionMiddleware>();
             app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
             app.UseMiddleware<UserFriendlyBadRequestMiddleware>();
@@ -43,6 +45,8 @@ public static class Handlers
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseHttpsRedirection();
+
+            // TODO: Use Attributes
             app.UseMiddleware<APIFriendlyServerExceptionMiddleware>();
         }
 
