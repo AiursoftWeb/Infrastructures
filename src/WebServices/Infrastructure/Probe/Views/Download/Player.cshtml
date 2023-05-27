@@ -1,4 +1,5 @@
 ﻿@model Aiursoft.Probe.ViewModels.DownloadViewModels.PlayerViewModel
+@inject ServiceLocation SL
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video player - @Model.Title</title>
-    <link href="@ServiceLocation.UI/node_modules/video.js/dist/video-js.min.css" rel="stylesheet"/>
+    <link href="@SL.UI/node_modules/video.js/dist/video-js.min.css" rel="stylesheet"/>
     <style>
         body {
             margin: 0;
@@ -21,7 +22,7 @@
     <source src="@Html.Raw(Model.PlayUrl)">
 </video>
 
-<script src="@ServiceLocation.UI/node_modules/video.js/dist/video.min.js"></script>
+    <script src="@SL.UI/node_modules/video.js/dist/video.min.js"></script>
 <script>
         var player = videojs('player', {
             playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3],
