@@ -2,7 +2,7 @@
 
 namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
 
-public class IndexViewModel : AiurProtocol
+public class WarpgatePatternConfig : AiurProtocol
 {
     public string WarpPattern { get; set; }
 }

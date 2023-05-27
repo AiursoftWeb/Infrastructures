@@ -32,7 +32,7 @@ public class Startup
             .AddDefaultTokenProviders();
         services.AddSingleton(new DeveloperLocator(Configuration["DeveloperEndpoint"]));
         services.AddAiurMvc();
-        services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
+        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
         services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftIdentity<DeveloperUser>(
             probeConfig: Configuration.GetSection("AiursoftProbe"),

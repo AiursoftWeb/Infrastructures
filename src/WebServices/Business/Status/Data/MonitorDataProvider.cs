@@ -3,12 +3,12 @@ using System.Linq;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
 using Aiursoft.Status.Models;
-using Aiursoft.Warpgate.SDK.Services;
 using Microsoft.Extensions.Options;
 using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Configuration;
+using Aiursoft.Warpgate.SDK.Configuration;
 
 namespace Aiursoft.Status.Data;
 
@@ -20,7 +20,7 @@ public class MonitorDataProvider : ISingletonDependency
     private readonly DirectoryConfiguration directoryConfiguration;
     private readonly ServiceLocation serviceLocation;
     private readonly StargateConfiguration stargateLocator;
-    private readonly WarpgateLocator warpgateLocator;
+    private readonly WarpgateConfiguration warpgateLocator;
 
     public MonitorDataProvider(
         IOptions<DirectoryConfiguration> directoryConfiguration,
@@ -28,7 +28,7 @@ public class MonitorDataProvider : ISingletonDependency
         ServiceLocation serviceLocation,
         IOptions<StargateConfiguration> stargateLocator,
         IOptions<ProbeConfiguration> probeLocator,
-        WarpgateLocator warpgateLocator,
+        IOptions<WarpgateConfiguration> warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
         this.directoryConfiguration = directoryConfiguration.Value;
@@ -36,7 +36,7 @@ public class MonitorDataProvider : ISingletonDependency
         this.serviceLocation = serviceLocation;
         this.stargateLocator = stargateLocator.Value;
         this.probeLocator = probeLocator.Value;
-        this.warpgateLocator = warpgateLocator;
+        this.warpgateLocator = warpgateLocator.Value;
         this.customRules = customRules.Value;
         MonitorRules = BuildDefaultRules().ToArray();
     }
@@ -102,7 +102,7 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Warpgate",
-                CheckAddress = warpgateLocator.Endpoint,
+                CheckAddress = warpgateLocator.Instance,
                 ExpectedContent = "Welcome"
             },
             new()

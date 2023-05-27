@@ -45,7 +45,7 @@ public class BasicTests
         var services = new ServiceCollection();
         services.AddHttpClient();
         services.AddLibraryDependencies();
-        services.AddWarpgateServer(_endpointUrl);
+        services.AddAiursoftWarpgate(_endpointUrl);
         _serviceProvider = services.BuildServiceProvider();
     }
 

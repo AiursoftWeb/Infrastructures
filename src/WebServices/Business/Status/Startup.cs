@@ -31,7 +31,7 @@ public class Startup
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
         services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
-        services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
+        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
         services.AddAiursoftSDK();
     }
 

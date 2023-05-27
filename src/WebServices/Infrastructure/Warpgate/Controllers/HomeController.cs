@@ -1,30 +1,32 @@
 ﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
+using Aiursoft.Warpgate.Models.Configuration;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
 using Aiursoft.Warpgate.SDK.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Warpgate.Controllers;
 
 [LimitPerMin]
 public class HomeController : ControllerBase
 {
-    private readonly WarpgateLocator _locator;
+    private readonly RedirectConfiguration _locator;
 
-    public HomeController(WarpgateLocator locator)
+    public HomeController(IOptions<RedirectConfiguration> locator)
     {
-        _locator = locator;
+        _locator = locator.Value;
     }
 
-    [Produces(typeof(IndexViewModel))]
+    [Produces(typeof(WarpgatePatternConfig))]
     public IActionResult Index()
     {
-        var model = new IndexViewModel
+        var model = new WarpgatePatternConfig
         {
             Code = ErrorType.Success,
             Message = "Welcome to Aiursoft Warpgate!",
-            WarpPattern = _locator.WarpPattern
+            WarpPattern = _locator.RedirectPattern
         };
         return this.Protocol(model);
     }

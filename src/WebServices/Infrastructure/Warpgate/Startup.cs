@@ -2,7 +2,8 @@ using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;
-using Aiursoft.Warpgate.SDK.Services;
+using Aiursoft.Warpgate.Models.Configuration;
+using Aiursoft.Warpgate.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,14 +23,14 @@ public class Startup
 
     public virtual void ConfigureServices(IServiceCollection services)
     {
+        services.Configure<RedirectConfiguration>(Configuration.GetSection("RedirectConfig"));
         services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddSingleton(new WarpgateLocator(
-            Configuration["WarpgateEndpoint"],
-            Configuration["WarpPattern"]));
+        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
+
         services.AddAiursoftSDK();
     }
 

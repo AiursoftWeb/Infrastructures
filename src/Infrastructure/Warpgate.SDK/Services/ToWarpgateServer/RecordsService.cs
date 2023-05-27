@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
+using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
@@ -15,14 +17,14 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 public class RecordsService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly WarpgateLocator _serviceLocation;
+    private readonly WarpgateConfiguration _serviceLocation;
 
     public RecordsService(
         APIProxyService http,
-        WarpgateLocator serviceLocation)
+        IOptions<WarpgateConfiguration> serviceLocation)
     {
         _http = http;
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
     }
 
     public async Task<AiurProtocol> CreateNewRecordAsync(
@@ -33,7 +35,7 @@ public class RecordsService : IScopedDependency
         RecordType type,
         bool enabled)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "CreateNewRecord", new { });
+        var url = new AiurUrl(_serviceLocation.Instance, "Records", "CreateNewRecord", new { });
         var form = new AiurUrl(string.Empty, new CreateNewRecordAddressModel
         {
             AccessToken = accessToken,
@@ -55,7 +57,7 @@ public class RecordsService : IScopedDependency
 
     public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
+        var url = new AiurUrl(_serviceLocation.Instance, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
         {
             AccessToken = accessToken,
             Tag = tag
@@ -79,7 +81,7 @@ public class RecordsService : IScopedDependency
         string[] tags,
         bool enabled)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "UpdateRecordInfo", new { });
+        var url = new AiurUrl(_serviceLocation.Instance, "Records", "UpdateRecordInfo", new { });
         var form = new AiurUrl(string.Empty, new UpdateRecordInfoAddressModel
         {
             AccessToken = accessToken,
@@ -102,7 +104,7 @@ public class RecordsService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteRecordAsync(string accessToken, string recordName)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteRecord", new { });
+        var url = new AiurUrl(_serviceLocation.Instance, "Records", "DeleteRecord", new { });
         var form = new AiurUrl(string.Empty, new DeleteRecordAddressModel
         {
             AccessToken = accessToken,
@@ -120,7 +122,7 @@ public class RecordsService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Records", "DeleteApp", new { });
+        var url = new AiurUrl(_serviceLocation.Instance, "Records", "DeleteApp", new { });
         var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
         {
             AccessToken = accessToken,
