@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.Developer.SDK.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
 using Aiursoft.Stargate.SDK.Services;
@@ -16,7 +15,6 @@ namespace Aiursoft.Status.Data;
 public class MonitorDataProvider : ISingletonDependency
 {
     private readonly List<MonitorRule> customRules;
-    private readonly DeveloperLocator developerLocator;
     private readonly ObserverConfiguration observerLocator;
     private readonly ProbeConfiguration probeLocator;
     private readonly DirectoryConfiguration directoryConfiguration;
@@ -29,7 +27,6 @@ public class MonitorDataProvider : ISingletonDependency
         IOptions<ObserverConfiguration> observerConfiguration,
         ServiceLocation serviceLocation,
         StargateLocator stargateLocator,
-        DeveloperLocator developerLocator,
         IOptions<ProbeConfiguration> probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
@@ -38,7 +35,6 @@ public class MonitorDataProvider : ISingletonDependency
         this.observerLocator = observerConfiguration.Value;
         this.serviceLocation = serviceLocation;
         this.stargateLocator = stargateLocator;
-        this.developerLocator = developerLocator;
         this.probeLocator = probeLocator.Value;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
@@ -61,12 +57,14 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Developer",
-                CheckAddress = $"{developerLocator.Endpoint}/?show=direct",
+
+                // TODO: Developer will be merged to directory.
+                CheckAddress = $"https://developer.aiursoft.com/?show=direct",
                 ExpectedContent = "Welcome to"
             },
             new()
             {
-                ProjectName = "Aiursoft authentication gateway",
+                ProjectName = "Aiursoft Directory service",
                 CheckAddress =
                     $"{directoryConfiguration.Instance}/oauth/authorize?appid={directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
