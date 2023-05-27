@@ -7,6 +7,7 @@ namespace Aiursoft.SDK;
 
 public static class Handlers
 {
+    // TODO: Merge the two handlers.
     public static IApplicationBuilder UseAiurUserHandler(this IApplicationBuilder app, bool isDevelopment)
     {
         if (isDevelopment || !EntryExtends.IsProgramEntry())
@@ -15,6 +16,7 @@ public static class Handlers
         }
         else
         {
+            app.UseCors();
             app.UseMiddleware<HandleRobotsMiddleware>();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -39,6 +41,7 @@ public static class Handlers
         }
         else
         {
+            app.UseCors();
             app.UseMiddleware<HandleRobotsMiddleware>();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

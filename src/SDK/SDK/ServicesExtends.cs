@@ -25,6 +25,10 @@ public static class ServicesExtends
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
+        services.AddCors(options =>
+            options.AddDefaultPolicy(builder =>
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services
             .AddControllersWithViews()
