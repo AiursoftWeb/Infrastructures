@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
@@ -162,8 +161,6 @@ public class BasicTests
         var channelService = _serviceProvider.GetRequiredService<ChannelService>();
         var messageSender = _serviceProvider.GetRequiredService<DebugMessageSender>();
         var channel = await channelService.CreateChannelAsync("mock-access-token", "Connect test channel");
-
-      
 
         var wsPath = new AiurUrl(locator.Value.GetListenEndpoint(), "Listen", "Channel", new ChannelAddressModel
         {
