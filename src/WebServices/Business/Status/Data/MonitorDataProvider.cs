@@ -2,13 +2,13 @@
 using System.Linq;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
-using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK.Services;
 using Microsoft.Extensions.Options;
 using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Stargate.SDK.Configuration;
 
 namespace Aiursoft.Status.Data;
 
@@ -19,14 +19,14 @@ public class MonitorDataProvider : ISingletonDependency
     private readonly ProbeConfiguration probeLocator;
     private readonly DirectoryConfiguration directoryConfiguration;
     private readonly ServiceLocation serviceLocation;
-    private readonly StargateLocator stargateLocator;
+    private readonly StargateConfiguration stargateLocator;
     private readonly WarpgateLocator warpgateLocator;
 
     public MonitorDataProvider(
         IOptions<DirectoryConfiguration> directoryConfiguration,
         IOptions<ObserverConfiguration> observerConfiguration,
         ServiceLocation serviceLocation,
-        StargateLocator stargateLocator,
+        IOptions<StargateConfiguration> stargateLocator,
         IOptions<ProbeConfiguration> probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
@@ -34,7 +34,7 @@ public class MonitorDataProvider : ISingletonDependency
         this.directoryConfiguration = directoryConfiguration.Value;
         this.observerLocator = observerConfiguration.Value;
         this.serviceLocation = serviceLocation;
-        this.stargateLocator = stargateLocator;
+        this.stargateLocator = stargateLocator.Value;
         this.probeLocator = probeLocator.Value;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
@@ -78,7 +78,7 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Stargate",
-                CheckAddress = stargateLocator.Endpoint,
+                CheckAddress = stargateLocator.Instance,
                 ExpectedContent = "Welcome to"
             },
             new()

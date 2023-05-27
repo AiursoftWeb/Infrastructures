@@ -2,9 +2,11 @@ using System.Threading.Tasks;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
+using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -13,19 +15,19 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 public class PushMessageService : IScopedDependency
 {
     private readonly APIProxyService _httpService;
-    private readonly StargateLocator _stargateLocator;
+    private readonly StargateConfiguration _stargateLocator;
 
     public PushMessageService(
         APIProxyService httpService,
-        StargateLocator serviceLocation)
+        IOptions<StargateConfiguration> serviceLocation)
     {
         _httpService = httpService;
-        _stargateLocator = serviceLocation;
+        _stargateLocator = serviceLocation.Value;
     }
 
     public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, object eventObject)
     {
-        var url = new AiurUrl(_stargateLocator.Endpoint, "Message", "PushMessage", new { });
+        var url = new AiurUrl(_stargateLocator.Instance, "Message", "PushMessage", new { });
         var payloadToken = JsonConvert.SerializeObject(eventObject, new JsonSerializerSettings
         {
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,

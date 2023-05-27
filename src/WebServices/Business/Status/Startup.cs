@@ -27,11 +27,10 @@ public class Startup
     {
         services.Configure<List<MonitorRule>>(Configuration.GetSection("CustomRules"));
         services.AddAiurMvc();
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
-
-        services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
+        services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
         services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
         services.AddAiursoftSDK();
     }

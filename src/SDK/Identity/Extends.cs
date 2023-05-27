@@ -42,7 +42,7 @@ public static class Extends
     {
         services.AddAiursoftProbe(probeConfig); // For file storaging.
         services.AddAiursoftObserver(observerConfig); // For error reporting.
-        services.AddAiursoftAuthentication(authenticationConfig); // For authentication.
+        services.AddAiursoftAppAuthentication(authenticationConfig); // For authentication.
 
         services.AddAiursoftSDK(Assembly.GetCallingAssembly(), typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<TUser>>();

@@ -12,14 +12,15 @@ using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
+using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.Stargate.SDK.Services;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Tests.Services;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static Aiursoft.WebTools.Extends;
@@ -52,7 +53,7 @@ public class BasicTests
         var services = new ServiceCollection();
         services.AddHttpClient();
         services.AddLibraryDependencies();
-        services.AddStargateServer(_endpointUrl);
+        services.AddAiursoftStargate(_endpointUrl);
         _serviceProvider = services.BuildServiceProvider();
     }
 
@@ -156,12 +157,12 @@ public class BasicTests
     [TestMethod]
     public async Task TestConnect()
     {
-        var locator = _serviceProvider.GetRequiredService<StargateLocator>();
+        var locator = _serviceProvider.GetRequiredService<IOptions<StargateConfiguration>>();
         var channelService = _serviceProvider.GetRequiredService<ChannelService>();
         var messageSender = _serviceProvider.GetRequiredService<DebugMessageSender>();
         var channel = await channelService.CreateChannelAsync("mock-access-token", "Connect test channel");
 
-        var wsPath = new AiurUrl(locator.ListenEndpoint, "Listen", "Channel", new ChannelAddressModel
+        var wsPath = new AiurUrl(locator.Value.Instance, "Listen", "Channel", new ChannelAddressModel
         {
             Id = channel.ChannelId,
             Key = channel.ConnectKey

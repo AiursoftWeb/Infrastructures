@@ -2,11 +2,13 @@
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
+using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
@@ -14,19 +16,19 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 public class ChannelService : IScopedDependency
 {
     private readonly APIProxyService _http;
-    private readonly StargateLocator _stargateLocator;
+    private readonly StargateConfiguration _stargateLocator;
 
     public ChannelService(
-        StargateLocator serviceLocation,
+        IOptions<StargateConfiguration> serviceLocation,
         APIProxyService http)
     {
-        _stargateLocator = serviceLocation;
+        _stargateLocator = serviceLocation.Value;
         _http = http;
     }
 
     public async Task<ViewMyChannelsViewModel> ViewMyChannelsAsync(string accessToken)
     {
-        var url = new AiurUrl(_stargateLocator.Endpoint, "Channel", "ViewMyChannels", new ViewMyChannelsAddressModel
+        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "ViewMyChannels", new ViewMyChannelsAddressModel
         {
             AccessToken = accessToken
         });
@@ -42,7 +44,7 @@ public class ChannelService : IScopedDependency
 
     public async Task<AiurValue<string>> ValidateChannelAsync(int id, string key)
     {
-        var url = new AiurUrl(_stargateLocator.Endpoint, "Channel", "ValidateChannel", new ChannelAddressModel
+        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "ValidateChannel", new ChannelAddressModel
         {
             Id = id,
             Key = key
@@ -54,7 +56,7 @@ public class ChannelService : IScopedDependency
 
     public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
     {
-        var url = new AiurUrl(_stargateLocator.Endpoint, "Channel", "CreateChannel", new { });
+        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "CreateChannel", new { });
         var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
         {
             AccessToken = accessToken,

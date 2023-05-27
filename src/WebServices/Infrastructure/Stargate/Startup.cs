@@ -2,6 +2,7 @@
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
+using Aiursoft.Stargate.SDK;
 using Aiursoft.Stargate.SDK.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,10 +25,10 @@ public class Startup
     {
         services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurMvc();
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftSDK();
-        services.AddSingleton(new StargateLocator(Configuration["StargateEndpoint"]));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

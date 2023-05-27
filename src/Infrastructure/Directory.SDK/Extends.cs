@@ -7,7 +7,7 @@ namespace Aiursoft.Directory.SDK;
 
 public static class Extends
 {
-    public static IServiceCollection AddAiursoftAuthentication(this IServiceCollection services, 
+    public static IServiceCollection AddAiursoftAppAuthentication(this IServiceCollection services, 
         IConfigurationSection configurationSection)
     {
         services.Configure<DirectoryConfiguration>(configurationSection);

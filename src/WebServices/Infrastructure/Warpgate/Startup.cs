@@ -25,7 +25,7 @@ public class Startup
         services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddSingleton(new WarpgateLocator(
             Configuration["WarpgateEndpoint"],

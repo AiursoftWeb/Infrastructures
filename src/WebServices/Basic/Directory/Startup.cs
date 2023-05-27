@@ -48,7 +48,7 @@ public class Startup
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
 #pragma warning restore CS0618 // Type or member is obsolete
 
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 

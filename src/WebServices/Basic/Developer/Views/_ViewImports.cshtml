@@ -18,6 +18,8 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
 @using Aiursoft.Probe.SDK.Configuration;
+@using Aiursoft.Stargate.SDK.Configuration
+@using Microsoft.Extensions.Options
 
 @inject IViewLocalizer Localizer
 @inject SignInManager<DeveloperUser> SignInManager
@@ -25,7 +27,7 @@
 @inject ServiceLocation ServiceLocation
 @inject ProbeSettingsFetcher ProbeLocator
 @inject WarpgateLocator WarpgateLocator
-@inject StargateLocator StargateLocator
+@inject IOptions<StargateConfiguration> StargateLocator
 @inject UserImageGenerator<DeveloperUser> UserImageGenerator
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Aiursoft.Identity

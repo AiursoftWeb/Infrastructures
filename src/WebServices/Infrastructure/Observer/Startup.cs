@@ -25,7 +25,7 @@ public class Startup
 
         services.AddAiurMvc();
         services.AddAiursoftSDK();
-        services.AddAiursoftAuthentication(Configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
     }
 

@@ -429,7 +429,7 @@
                             <td data-utc-time="@channel.LastAccessTime.ToHtmlDateTime()" data-order="@channel.LastAccessTime.Ticks"></td>
                             <td>@channel.ConnectedUsers</td>
                             @{
-                                var path = new AiurUrl(StargateLocator.Endpoint, "Home", "ListenTo", new ChannelAddressModel
+                                var path = new AiurUrl(StargateLocator.Value.Instance, "Home", "ListenTo", new ChannelAddressModel
                                 {
                                     Id = channel.Id,
                                     Key = channel.ConnectKey
