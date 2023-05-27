@@ -14,7 +14,7 @@ using Microsoft.Extensions.Localization;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Services;
 
-namespace Aiursoft.Gateway.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
 [LimitPerMin]
 public class HomeController : ControllerBase

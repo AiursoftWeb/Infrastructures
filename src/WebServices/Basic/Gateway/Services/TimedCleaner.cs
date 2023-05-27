@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
-using Aiursoft.Gateway.Data;
+using Aiursoft.Directory.Data;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Hosting;
@@ -60,7 +60,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         {
             _logger.LogInformation("Cleaner task started!");
             using var scope = _scopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<GatewayDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<DirectoryDbContext>();
             await AllClean(dbContext);
         }
         catch (Exception ex)
@@ -69,7 +69,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         }
     }
 
-    public async Task AllClean(GatewayDbContext dbContext)
+    public async Task AllClean(DirectoryDbContext dbContext)
     {
         try
         {
@@ -82,7 +82,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         }
     }
 
-    public Task ClearTimeOutOAuthPack(GatewayDbContext dbContext)
+    public Task ClearTimeOutOAuthPack(DirectoryDbContext dbContext)
     {
         var outDateTime = DateTime.UtcNow - TimeSpan.FromDays(1);
         var outDateTime2 = DateTime.UtcNow - TimeSpan.FromMinutes(20);

@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Directory.Models.ApiViewModels;
 
-namespace Aiursoft.Gateway.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
 public class ApiController : Controller
 {

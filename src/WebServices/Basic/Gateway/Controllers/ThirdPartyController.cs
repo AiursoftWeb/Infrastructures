@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
+using Aiursoft.Directory.Data;
 using Aiursoft.DocGenerator.Attributes;
-using Aiursoft.Gateway.Data;
 using Aiursoft.Directory.Models;
-using Aiursoft.Gateway.Models.ThirdPartyAddressModels;
-using Aiursoft.Gateway.Models.ThirdPartyViewModels;
+using Aiursoft.Directory.Models.ThirdPartyAddressModels;
+using Aiursoft.Directory.Models.ThirdPartyViewModels;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.Gateway.Services;
+using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Identity;
@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Gateway.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
 [GenerateDoc]
 [LimitPerMin]
@@ -30,22 +30,22 @@ public class ThirdPartyController : Controller
     private readonly DeveloperApiService _apiService;
     private readonly AuthLogger _authLogger;
     private readonly UserAppAuthManager _authManager;
+    private readonly DirectoryDbContext _dbContext;
     private readonly IEnumerable<IAuthProvider> _authProviders;
-    private readonly GatewayDbContext _dbContext;
     private readonly SignInManager<DirectoryUser> _signInManager;
     private readonly UserManager<DirectoryUser> _userManager;
 
     public ThirdPartyController(
+        DirectoryDbContext dbContext,
         IEnumerable<IAuthProvider> authProviders,
-        GatewayDbContext dbContext,
         UserAppAuthManager authManager,
         DeveloperApiService apiService,
         UserManager<DirectoryUser> userManager,
         SignInManager<DirectoryUser> signInManager,
         AuthLogger authLogger)
     {
-        _authProviders = authProviders;
         _dbContext = dbContext;
+        _authProviders = authProviders;
         _authManager = authManager;
         _apiService = apiService;
         _userManager = userManager;

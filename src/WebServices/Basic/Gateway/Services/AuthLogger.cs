@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.Data;
+using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.WebTools;
@@ -9,10 +9,10 @@ namespace Aiursoft.Directory.Services;
 
 public class AuthLogger : IScopedDependency
 {
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
 
     public AuthLogger(
-        GatewayDbContext dbContext)
+        DirectoryDbContext dbContext)
     {
         _dbContext = dbContext;
     }

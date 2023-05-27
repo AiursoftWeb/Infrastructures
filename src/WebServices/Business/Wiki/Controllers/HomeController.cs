@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Services;
+using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Wiki.Data;
@@ -11,6 +11,7 @@ using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Wiki.Controllers;
 
@@ -18,17 +19,17 @@ namespace Aiursoft.Wiki.Controllers;
 public class HomeController : Controller
 {
     private readonly WikiDbContext _dbContext;
-    private readonly DirectoryContext _serviceLocation;
+    private readonly DirectoryConfiguration _serviceLocation;
     private readonly SignInManager<WikiUser> _signInManager;
 
     public HomeController(
         SignInManager<WikiUser> signInManager,
         WikiDbContext context,
-        DirectoryContext serviceLocation)
+        IOptions<DirectoryConfiguration> serviceLocation)
     {
         _signInManager = signInManager;
         _dbContext = context;
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
     }
 
     public async Task<IActionResult> Index() //Title
@@ -93,7 +94,7 @@ public class HomeController : Controller
     public async Task<IActionResult> LogOff()
     {
         await _signInManager.SignOutAsync();
-        return this.SignOutRootServer(_serviceLocation.Endpoint,
+        return this.SignOutRootServer(_serviceLocation.Instance,
             new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
     }
 

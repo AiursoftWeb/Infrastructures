@@ -24,6 +24,15 @@ public static class Extends
         return services;
     }
 
+    public static IServiceCollection AddAiursoftProbe(
+        this IServiceCollection services,
+        string endPointUrl)
+    {
+        services.Configure<ProbeConfiguration>(options => options.Endpoint = endPointUrl);
+        services.AddLibraryDependencies();
+        return services;
+    }
+
     public static IHost InitSite<TProvider>(this IHost host,
         Func<IConfiguration, string> getConfig,
         Func<TProvider, Task<string>> getToken,

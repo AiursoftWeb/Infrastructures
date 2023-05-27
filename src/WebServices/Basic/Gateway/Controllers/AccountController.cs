@@ -12,7 +12,7 @@ using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Gateway.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
 [APIExpHandler]
 [APIModelStateChecker]

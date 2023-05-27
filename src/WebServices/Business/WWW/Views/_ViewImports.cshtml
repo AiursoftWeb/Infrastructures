@@ -1,3 +1,4 @@
+@using Aiursoft.Directory.SDK.Configuration
 @using Microsoft.AspNetCore.Identity
 @using Aiursoft.WWW
 @using Aiursoft.WWW.Models
@@ -15,13 +16,15 @@
 @using Aiursoft.XelNaga.Models
 @using Aiursoft.XelNaga.Services
 @using Aiursoft.Directory.SDK.Services
+@using Aiursoft.Observer.SDK.Configuration
 @using Aiursoft.WebTools
+@using Microsoft.Extensions.Options
 
-@inject DirectoryContext GatewayLocator
+@inject IOptions<DirectoryConfiguration> GatewayLocator
 @inject SignInManager<WWWUser> SignInManager
 @inject UserManager<WWWUser> UserManager
 @inject IConfiguration Configuration
-@inject ObserverLocator ObserverLocator
+@inject IOptions<ObserverConfiguration> ObserverLocator
 @inject ServiceLocation ServiceLocation
 @inject IViewLocalizer Localizer
 @inject UserImageGenerator<WWWUser> UserImageGenerator

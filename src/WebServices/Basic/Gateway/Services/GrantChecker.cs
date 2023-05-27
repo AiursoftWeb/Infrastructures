@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
-using Aiursoft.Gateway.Data;
+using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -15,12 +15,12 @@ namespace Aiursoft.Directory.Services;
 
 public class GrantChecker : IScopedDependency
 {
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
     private readonly DeveloperApiService _developerApiService;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public GrantChecker(
-        GatewayDbContext context,
+        DirectoryDbContext context,
         DeveloperApiService developerApiService,
         AiursoftAppTokenValidator tokenManager)
     {

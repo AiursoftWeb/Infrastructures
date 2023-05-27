@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.SDK.Services;
 
+[Obsolete(error: false, message: "Avoid using this!")]
 public class ServiceLocation : ISingletonDependency
 {
     private readonly HttpClient _client;

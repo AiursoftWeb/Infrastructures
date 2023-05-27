@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Gateway.Controllers;
+using Aiursoft.Directory.Controllers;
 using Aiursoft.Identity.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK;

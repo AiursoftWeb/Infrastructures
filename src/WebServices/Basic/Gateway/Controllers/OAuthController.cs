@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
-using Aiursoft.Gateway.Data;
+using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
-using Aiursoft.Gateway.Models.OAuthViewModels;
+using Aiursoft.Directory.Models.OAuthViewModels;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
-using Aiursoft.Gateway.Services;
+using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.XelNaga.Models;
@@ -20,7 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Aiursoft.Gateway.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
 [LimitPerMin]
 [UserFriendlyNotFoundHandler]
@@ -33,7 +33,7 @@ public class OAuthController : Controller
     private readonly UserAppAuthManager _authManager;
     private readonly CannonService _cannonService;
     private readonly ISessionBasedCaptcha _captcha;
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
     private readonly ILogger _logger;
     private readonly SignInManager<DirectoryUser> _signInManager;
     private readonly UserManager<DirectoryUser> _userManager;
@@ -42,7 +42,7 @@ public class OAuthController : Controller
         UserManager<DirectoryUser> userManager,
         SignInManager<DirectoryUser> signInManager,
         ILoggerFactory loggerFactory,
-        GatewayDbContext context,
+        DirectoryDbContext context,
         DeveloperApiService developerApiService,
         ISessionBasedCaptcha sessionBasedCaptcha,
         UserAppAuthManager authManager,

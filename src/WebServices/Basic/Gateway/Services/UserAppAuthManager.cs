@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Gateway.Controllers;
-using Aiursoft.Gateway.Data;
+using Aiursoft.Directory.Controllers;
+using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
@@ -15,9 +15,9 @@ namespace Aiursoft.Directory.Services;
 
 public class UserAppAuthManager : IScopedDependency
 {
-    private readonly GatewayDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
 
-    public UserAppAuthManager(GatewayDbContext dbContext)
+    public UserAppAuthManager(DirectoryDbContext dbContext)
     {
         _dbContext = dbContext;
     }

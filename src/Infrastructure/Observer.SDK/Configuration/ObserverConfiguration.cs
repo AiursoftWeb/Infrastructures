@@ -2,5 +2,5 @@
 
 public class ObserverConfiguration
 {
-    public string Instance { get; }
+    public string Instance { get; set;  }
 }
