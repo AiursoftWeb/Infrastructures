@@ -3,7 +3,6 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.Stargate.SDK.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

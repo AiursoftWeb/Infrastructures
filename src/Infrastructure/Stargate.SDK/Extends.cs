@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Scanner;
 using Aiursoft.Stargate.SDK.Configuration;
-using Aiursoft.Stargate.SDK.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
