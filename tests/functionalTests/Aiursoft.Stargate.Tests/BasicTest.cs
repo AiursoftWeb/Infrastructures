@@ -163,9 +163,9 @@ public class BasicTests
         var messageSender = _serviceProvider.GetRequiredService<DebugMessageSender>();
         var channel = await channelService.CreateChannelAsync("mock-access-token", "Connect test channel");
 
-        var endpoint = locator.Value.Instance;
-        var wssEndpoint = Regex.Replace(endpoint,@"^http://(.*)$", @"ws://$1");
-        var wsPath = new AiurUrl(wssEndpoint, "Listen", "Channel", new ChannelAddressModel
+      
+
+        var wsPath = new AiurUrl(locator.Value.GetListenEndpoint(), "Listen", "Channel", new ChannelAddressModel
         {
             Id = channel.ChannelId,
             Key = channel.ConnectKey
