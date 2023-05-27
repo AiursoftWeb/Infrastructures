@@ -1,11 +1,12 @@
 ﻿using System;
+using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Identity.Attributes;
 
@@ -100,9 +101,9 @@ public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
     private RedirectResult Redirect(ActionExecutingContext context, string page, bool? justTry, bool register)
     {
         var urlConverter = context.HttpContext.RequestServices.GetRequiredService<UrlConverter>();
-        var configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+        var configuration = context.HttpContext.RequestServices.GetRequiredService<IOptions<DirectoryConfiguration>>();
         var serverPosition = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}";
-        var url = urlConverter.UrlWithAuth(serverPosition, configuration["AiursoftAppId"], page, justTry, register);
+        var url = urlConverter.UrlWithAuth(serverPosition, configuration.Value.AppId, page, justTry, register);
         return new RedirectResult(url);
     }
 }
