@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
+using Aiursoft.Developer.SDK;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,10 @@ public class Startup
         services.AddIdentity<AccountUser, IdentityRole>()
             .AddEntityFrameworkStores<AccountDbContext>()
             .AddDefaultTokenProviders();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
+#pragma warning restore CS0618 // Type or member is obsolete
 
         services.AddAiurMvc();
         services.AddAiursoftIdentity<AccountUser>(
