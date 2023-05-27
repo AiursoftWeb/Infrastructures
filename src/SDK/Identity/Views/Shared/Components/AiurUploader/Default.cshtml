@@ -3,12 +3,13 @@
 @using Aiursoft.Probe.SDK.Configuration;
 @using Aiursoft.XelNaga.Models
 @using Aiursoft.XelNaga.Tools
+@using Microsoft.Extensions.Options
 @model Aiursoft.Identity.Views.Shared.Components.AiurUploader.AiurUploaderViewModel
 
-@inject ProbeConfiguration ProbeConfiguration
+@inject IOptions<ProbeConfiguration> ProbeConfig
 @inject ProbeSettingsFetcher ProbeLocator
 @{
-    var url = new AiurUrl(ProbeConfiguration.Instance, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
+    var url = new AiurUrl(ProbeConfig.Value.Instance, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
     {
         Token = Model.PBToken,
         RecursiveCreate = true
