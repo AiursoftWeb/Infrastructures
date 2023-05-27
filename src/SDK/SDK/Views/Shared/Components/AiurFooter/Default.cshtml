@@ -1,8 +1,11 @@
-﻿@using Aiursoft.SDK
+﻿@using Aiursoft.Directory.SDK.Configuration
+@using Aiursoft.SDK
 @using Aiursoft.SDK.Services
 @using Aiursoft.XelNaga.Models
+@using Microsoft.Extensions.Options
 @model Aiursoft.SDK.Views.Shared.Components.AiurFooter.AiurFooterViewModel
 @inject ServiceLocation ServiceLocation
+@inject IOptions<DirectoryConfiguration> DirectoryConfiguration
 @{
     var classText = string.Empty;
     if (!string.IsNullOrWhiteSpace(Model.Class))
@@ -20,12 +23,14 @@
 }
 
 @{
-    var langLink = new AiurUrl(ServiceLocation.Gateway, "/set-language", new { });
+    var langLink = new AiurUrl(DirectoryConfiguration.Value.Instance, "/set-language", new { });
 }
 @Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.Status, "Status"))
-@Html.Raw(GetRenderedFooter(ServiceLocation.Developer, "Developer"))
+
+@*// TODO: Developer will be merged to Directory.*@
+@Html.Raw(GetRenderedFooter("https://developer.aiursoft.com", "Developer"))
 @Html.Raw(GetRenderedFooter("https://gitlab.aiursoft.cn/Aiursoft", "Company"))
 @Html.Raw(GetRenderedFooter("https://gitlab.aiursoft.cn/Aiursoft", "GitLab"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.WWW + Values.TermsAfterWWW, "Terms"))
