@@ -27,7 +27,7 @@ public static class Extends
         this IServiceCollection services,
         string endPointUrl)
     {
-        services.Configure<ProbeConfiguration>(options => options.Endpoint = endPointUrl);
+        services.Configure<ProbeConfiguration>(options => options.Instance = endPointUrl);
         services.AddLibraryDependencies();
         return services;
     }

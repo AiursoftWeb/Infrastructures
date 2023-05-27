@@ -27,7 +27,7 @@ public class ProbeSettingsFetcher : ISingletonDependency
     {
         if (_probeServerConfig == null)
         {
-            var serverConfigString = await SimpleHttp.DownloadAsString(_probeConfiguration.Endpoint);
+            var serverConfigString = await SimpleHttp.DownloadAsString(_probeConfiguration.Instance);
             _probeServerConfig = JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
         }
 

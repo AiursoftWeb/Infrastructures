@@ -77,7 +77,7 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Probe",
-                CheckAddress = probeLocator.Endpoint,
+                CheckAddress = probeLocator.Instance,
                 ExpectedContent = "Welcome to Probe!"
             },
             new()

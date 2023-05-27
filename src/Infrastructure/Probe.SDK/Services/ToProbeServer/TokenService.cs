@@ -40,7 +40,7 @@ public class TokenService : IScopedDependency
         string underPath,
         TimeSpan lifespan)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "Token", "GetToken", new { });
+        var url = new AiurUrl(_serviceLocation.Instance, "Token", "GetToken", new { });
         var form = new AiurUrl(string.Empty, new GetTokenAddressModel
         {
             AccessToken = accessToken,

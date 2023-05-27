@@ -30,7 +30,7 @@ public class FilesService : IScopedDependency
     public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames,
         Stream file, bool recursiveCreate = false)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint,
+        var url = new AiurUrl(_probeLocator.Instance,
             $"/Files/UploadFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new UploadFileAddressModel
             {
                 Token = accessToken,
@@ -48,7 +48,7 @@ public class FilesService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteFileAsync(string accessToken, string siteName, string folderNames)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint,
+        var url = new AiurUrl(_probeLocator.Instance,
             $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
         {
@@ -72,7 +72,7 @@ public class FilesService : IScopedDependency
             targetFolderNames = "/";
         }
 
-        var url = new AiurUrl(_probeLocator.Endpoint,
+        var url = new AiurUrl(_probeLocator.Instance,
             $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new CopyFileAddressModel
         {
@@ -93,7 +93,7 @@ public class FilesService : IScopedDependency
     public async Task<UploadFileViewModel> RenameFileAsync(string accessToken, string siteName, string folderNames,
         string targetFileName)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint,
+        var url = new AiurUrl(_probeLocator.Instance,
             $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new RenameFileAddressModel
         {

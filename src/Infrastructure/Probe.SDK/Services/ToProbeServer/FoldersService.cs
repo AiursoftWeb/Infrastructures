@@ -28,7 +28,7 @@ public class FoldersService : IScopedDependency
 
     public async Task<AiurValue<Folder>> ViewContentAsync(string accessToken, string siteName, string folderNames)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_serviceLocation.Instance,
             $"/Folders/ViewContent/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new ViewContentAddressModel
             {
                 AccessToken = accessToken
@@ -46,7 +46,7 @@ public class FoldersService : IScopedDependency
     public async Task<AiurProtocol> CreateNewFolderAsync(string accessToken, string siteName, string folderNames,
         string newFolderName, bool recursiveCreate)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_serviceLocation.Instance,
             $"/Folders/CreateNewFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new CreateNewFolderAddressModel
         {
@@ -66,7 +66,7 @@ public class FoldersService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteFolderAsync(string accessToken, string siteName, string folderNames)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint,
+        var url = new AiurUrl(_serviceLocation.Instance,
             $"/Folders/DeleteFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
         var form = new AiurUrl(string.Empty, new DeleteFolderAddressModel
         {

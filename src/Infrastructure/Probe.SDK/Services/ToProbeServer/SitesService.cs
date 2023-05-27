@@ -28,7 +28,7 @@ public class SitesService : IScopedDependency
     public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload,
         bool openToDownload)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "CreateNewSite", new { });
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "CreateNewSite", new { });
         var form = new AiurUrl(string.Empty, new CreateNewSiteAddressModel
         {
             AccessToken = accessToken,
@@ -48,7 +48,7 @@ public class SitesService : IScopedDependency
 
     public async Task<ViewMySitesViewModel> ViewMySitesAsync(string accessToken)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "ViewMySites", new ViewMySitesAddressModel
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "ViewMySites", new ViewMySitesAddressModel
         {
             AccessToken = accessToken
         });
@@ -64,7 +64,7 @@ public class SitesService : IScopedDependency
 
     public async Task<ViewSiteDetailViewModel> ViewSiteDetailAsync(string accessToken, string siteName)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName
@@ -82,7 +82,7 @@ public class SitesService : IScopedDependency
     public async Task<AiurProtocol> UpdateSiteInfoAsync(string accessToken, string oldSiteName, string newSiteName,
         bool openToUpload, bool openToDownload)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "UpdateSiteInfo", new { });
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "UpdateSiteInfo", new { });
         var form = new AiurUrl(string.Empty, new UpdateSiteInfoAddressModel
         {
             AccessToken = accessToken,
@@ -103,7 +103,7 @@ public class SitesService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteSiteAsync(string accessToken, string siteName)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "DeleteSite", new { });
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "DeleteSite", new { });
         var form = new AiurUrl(string.Empty, new DeleteSiteAddressModel
         {
             AccessToken = accessToken,
@@ -121,7 +121,7 @@ public class SitesService : IScopedDependency
 
     public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
     {
-        var url = new AiurUrl(_probeLocator.Endpoint, "Sites", "DeleteApp", new { });
+        var url = new AiurUrl(_probeLocator.Instance, "Sites", "DeleteApp", new { });
         var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
         {
             AccessToken = accessToken,

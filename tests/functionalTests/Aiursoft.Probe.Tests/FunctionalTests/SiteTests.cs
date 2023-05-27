@@ -13,6 +13,7 @@ using Aiursoft.SDK;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static Aiursoft.WebTools.Extends;
@@ -74,9 +75,9 @@ public class SiteTests
     [TestMethod]
     public async Task StatusCodeTest()
     {
-        var probeLocator = _serviceProvider.GetRequiredService<ProbeConfiguration>();
+        var probeLocator = _serviceProvider.GetRequiredService<IOptions<ProbeConfiguration>>();
         var client = new HttpClient();
-        var url = probeLocator.Endpoint + "/sites/viewmysites";
+        var url = probeLocator.Value.Instance + "/sites/viewmysites";
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         request.Headers.Add("accept", "application/json");
         var response = await client.SendAsync(request);
