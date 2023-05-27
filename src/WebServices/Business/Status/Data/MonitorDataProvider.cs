@@ -15,7 +15,6 @@ namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly DirectoryConfiguration gatewayLocator;
     private readonly List<MonitorRule> customRules;
     private readonly DeveloperLocator developerLocator;
     private readonly ObserverConfiguration observerLocator;
@@ -27,22 +26,20 @@ public class MonitorDataProvider : ISingletonDependency
 
     public MonitorDataProvider(
         IOptions<DirectoryConfiguration> directoryConfiguration,
+        IOptions<ObserverConfiguration> observerConfiguration,
         ServiceLocation serviceLocation,
-        ObserverConfiguration observerLocator,
         StargateLocator stargateLocator,
         DeveloperLocator developerLocator,
-        IOptions<DirectoryConfiguration> gatewayLocator,
-        ProbeConfiguration probeLocator,
+        IOptions<ProbeConfiguration> probeLocator,
         WarpgateLocator warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
         this.directoryConfiguration = directoryConfiguration.Value;
+        this.observerLocator = observerConfiguration.Value;
         this.serviceLocation = serviceLocation;
-        this.observerLocator = observerLocator;
         this.stargateLocator = stargateLocator;
         this.developerLocator = developerLocator;
-        this.gatewayLocator = gatewayLocator.Value;
-        this.probeLocator = probeLocator;
+        this.probeLocator = probeLocator.Value;
         this.warpgateLocator = warpgateLocator;
         this.customRules = customRules.Value;
         MonitorRules = BuildDefaultRules().ToArray();
@@ -71,7 +68,7 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft authentication gateway",
                 CheckAddress =
-                    $"{gatewayLocator.Instance}/oauth/authorize?appid={directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{directoryConfiguration.Instance}/oauth/authorize?appid={directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()
