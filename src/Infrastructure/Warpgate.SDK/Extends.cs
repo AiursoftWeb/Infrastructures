@@ -15,6 +15,7 @@ public static class Extends
         {
             var response = await SimpleHttp.DownloadAsString(warpgateEndpoint);
             var serverModel = JsonConvert.DeserializeObject<IndexViewModel>(response);
+            // TODO: Use configuration!
             services.AddSingleton(new WarpgateLocator(warpgateEndpoint, serverModel.WarpPattern));
         }, 5);
         services.AddLibraryDependencies();

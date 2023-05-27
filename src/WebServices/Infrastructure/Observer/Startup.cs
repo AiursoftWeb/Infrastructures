@@ -1,7 +1,6 @@
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
-using Aiursoft.Observer.SDK.Services;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

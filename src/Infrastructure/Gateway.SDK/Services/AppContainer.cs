@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aiursoft.Directory.SDK.Services;

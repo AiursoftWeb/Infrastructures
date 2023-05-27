@@ -11,7 +11,7 @@ using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Directory.SDK.Services.ToGatewayServer;
+namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
 public class UserService : IScopedDependency
 {

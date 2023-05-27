@@ -3,9 +3,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.Directory.SDK.Services.ToGatewayServer;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
+using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
 namespace Aiursoft.Identity.Services;
 

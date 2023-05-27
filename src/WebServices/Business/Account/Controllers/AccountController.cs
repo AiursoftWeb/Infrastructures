@@ -10,7 +10,7 @@ using Aiursoft.Account.Services;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Directory.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;

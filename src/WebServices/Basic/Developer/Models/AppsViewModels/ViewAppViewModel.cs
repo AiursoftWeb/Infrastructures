@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Models.API;
-using Aiursoft.Directory.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;

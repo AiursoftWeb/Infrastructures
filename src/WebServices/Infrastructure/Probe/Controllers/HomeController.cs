@@ -3,7 +3,6 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.Controllers;

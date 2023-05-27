@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Aiursoft.Developer.SDK;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
@@ -33,7 +32,6 @@ public class Startup
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 
         services.AddStargateServer(Configuration.GetConnectionString("StargateConnection"));
-        services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
         services.AddWarpgateServer(Configuration.GetConnectionString("WarpgateConnection"));
         services.AddAiursoftSDK();
     }

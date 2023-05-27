@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Developer.SDK;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +29,6 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
-        services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
         services.AddAiursoftIdentity<AccountUser>(
             probeConfig: Configuration.GetSection("AiursoftProbe"),
             authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),

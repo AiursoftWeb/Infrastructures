@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Aiursoft.Developer.Models;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;

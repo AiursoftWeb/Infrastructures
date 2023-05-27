@@ -4,7 +4,7 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Developer.Models.AppsViewModels;
-using Aiursoft.Directory.SDK.Services.ToGatewayServer;
+using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;

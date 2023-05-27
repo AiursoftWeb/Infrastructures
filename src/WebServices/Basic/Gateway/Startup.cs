@@ -13,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Aiursoft.Probe.SDK;
-using Aiursoft.Directory.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;

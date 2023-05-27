@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.Services;

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Account.Models;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;

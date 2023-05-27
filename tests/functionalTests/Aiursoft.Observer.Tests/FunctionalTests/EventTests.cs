@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK;
 using Aiursoft.SDK.Tests.Services;
 using Aiursoft.XelNaga.Tools;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
