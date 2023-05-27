@@ -250,7 +250,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> ViewGrantedApps(UserOperationAddressModel model)
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
-        var applications = await _dbContext.LocalAppGrant.Where(t => t.GatewayUserId == user.Id).ToListAsync();
+        var applications = await _dbContext.LocalAppGrant.Where(t => t.DirectoryUserId == user.Id).ToListAsync();
         return this.Protocol(new AiurCollection<AppGrant>(applications)
         {
             Code = ErrorType.Success,
@@ -264,7 +264,7 @@ public class UserController : ControllerBase
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeGrantInfo);
         var appToDelete = await _dbContext
             .LocalAppGrant
-            .Where(t => t.GatewayUserId == user.Id)
+            .Where(t => t.DirectoryUserId == user.Id)
             .SingleOrDefaultAsync(t => t.AppId == model.AppIdToDrop);
         if (appToDelete == null)
         {

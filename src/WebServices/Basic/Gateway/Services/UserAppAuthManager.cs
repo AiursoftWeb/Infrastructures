@@ -63,7 +63,7 @@ public class UserAppAuthManager : IScopedDependency
             var appGrant = new AppGrant
             {
                 AppId = appId,
-                GatewayUserId = user.Id
+                DirectoryUserId = user.Id
             };
             await _dbContext.LocalAppGrant.AddAsync(appGrant);
             await _dbContext.SaveChangesAsync();
@@ -88,7 +88,7 @@ public class UserAppAuthManager : IScopedDependency
         return _dbContext
             .LocalAppGrant
             .Where(t => t.AppId == appId)
-            .AnyAsync(t => t.GatewayUserId == user.Id);
+            .AnyAsync(t => t.DirectoryUserId == user.Id);
     }
 
     private string GetRegexRedirectUri(string sourceUrl)
