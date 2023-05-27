@@ -14,6 +14,7 @@ public class ConfirmationEmailSender : ITransientDependency
     private readonly AiurEmailSender _emailSender;
 
     public ConfirmationEmailSender(
+        // TODO: Deprecate the IConfiguration.
         IConfiguration configuration,
         AiurEmailSender emailSender)
     {
@@ -23,7 +24,7 @@ public class ConfirmationEmailSender : ITransientDependency
 
     public async Task SendConfirmation(string userId, string emailAddress, string token)
     {
-        var callbackUrl = new AiurUrl(_configuration["GatewayEndpoint"], "Password", nameof(PasswordController.EmailConfirm), new
+        var callbackUrl = new AiurUrl(_configuration["DirectoryEndpoint"], "Password", nameof(PasswordController.EmailConfirm), new
         {
             userId,
             code = token
@@ -35,7 +36,7 @@ public class ConfirmationEmailSender : ITransientDependency
 
     public Task SendResetPassword(string code, string userId, string targetEmail)
     {
-        var callbackUrl = new AiurUrl(_configuration["GatewayEndpoint"], "Password", nameof(PasswordController.ResetPassword),
+        var callbackUrl = new AiurUrl(_configuration["DirectoryEndpoint"], "Password", nameof(PasswordController.ResetPassword),
             new
             {
                 Code = code,

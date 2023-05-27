@@ -28,7 +28,7 @@ update()
     infs_code="./Infrastructures"
     infs_path="/opt/apps/Infrastructures"
 
-    gateway_code="$infs_code/src/WebServices/Basic/Gateway"
+    directory_code="$infs_code/src/WebServices/Basic/Directory"
     developer_code="$infs_code/src/WebServices/Basic/Developer"
     observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
     probe_code="$infs_code/src/WebServices/Infrastructure/Probe"
@@ -40,7 +40,7 @@ update()
     account_code="$infs_code/src/WebServices/Business/Account"
     ee_code="$infs_code/src/WebServices/Business/EE"
 
-    gateway_path="$infs_path/Gateway"
+    directory_path="$infs_path/Directory"
     developer_path="$infs_path/Developer"
     observer_path="$infs_path/Observer"
     probe_path="$infs_path/Probe"
@@ -61,8 +61,8 @@ update()
     systemctl stop "probe.service"
     aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
 
-    systemctl stop "gateway.service"
-    aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
+    systemctl stop "directory.service"
+    aiur dotnet/publish $directory_path $directory_code/"Aiursoft.Directory.csproj"
 
     systemctl stop "warpgate.service"
     aiur dotnet/publish $warpgate_path $warpgate_code/"Aiursoft.Warpgate.csproj"
@@ -96,7 +96,7 @@ update()
     sleep 30
     
     echo "Starting basic services..."
-    systemctl restart "gateway.service"
+    systemctl restart "directory.service"
     systemctl restart "developer.service"
     sleep 30
     

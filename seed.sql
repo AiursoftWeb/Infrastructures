@@ -1,6 +1,6 @@
 SET QUOTED_IDENTIFIER ON;
 
-use Gateway;
+use Directory;
 
 delete from UserEmails;
 delete from AspNetUsers;
@@ -22,7 +22,7 @@ VALUES(0,1,0,'admin@{{domain}}','ADMIN@{{domainUpper}}','AQAAAAEAACcQAAAAEHswFfc
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
 values('{{developerAppId}}','{{developerAppSecret}}','{{Instance}} Developer Center','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Developer Center',0,7,1,0,0,0,'developer.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
-values('{{gatewayAppId}}','{{gatewayAppSecret}}','{{Instance}} Gateway','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Gateway',0,7,1,0,0,0,'gateway.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
+values('{{directoryAppId}}','{{directoryAppSecret}}','{{Instance}} Directory','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Directory',0,7,1,0,0,0,'directory.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)
 values('{{stargateAppId}}','{{stargateAppSecret}}','{{Instance}} Stargate','2020-01-01 12:34:56','aiursoft-app-icons/appdefaulticon.png','Aiursoft Stargate',0,7,1,0,0,0,'stargate.{{domain}}',1,'{{userId}}',0,0,0,0,0,1);
 insert into Apps(AppId,AppSecret,AppName,AppCreateTime,IconPath,AppDescription,AppCategory,AppPlatform,EnableOAuth,ForceConfirmation,ForceInputPassword,DebugMode,[AppDomain],ViewOpenId,CreatorId,ViewPhoneNumber,ChangePhoneNumber,ConfirmEmail,ChangeBasicInfo,ChangePassword,TrustedApp)

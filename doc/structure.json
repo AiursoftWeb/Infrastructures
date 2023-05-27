@@ -35,7 +35,7 @@
                 "articleTitle": "Aiursoft authentication"
             }
         ],
-        "docAPIAddress": "https://gateway.{{rootDomain}}/doc"
+        "docAPIAddress": "https://directory.{{rootDomain}}/doc"
     },
     {
         "collectionTitle": "App Info",

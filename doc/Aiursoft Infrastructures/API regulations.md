@@ -32,11 +32,11 @@ For different, the response value might change. But always contains the two prop
 
 ## Example API
 
-### Gateway status API
+### Directory status API
 
 Address
 
-    https://gateway.aiursoft.com/
+    https://directory.aiursoft.com/
 
 Method
 

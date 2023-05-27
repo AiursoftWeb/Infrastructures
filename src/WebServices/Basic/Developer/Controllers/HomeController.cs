@@ -23,11 +23,11 @@ public class HomeController : Controller
     public HomeController(
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
-        IOptions<DirectoryConfiguration> gatewayLocator)
+        IOptions<DirectoryConfiguration> directoryLocator)
     {
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();
-        _gatewayLocator = gatewayLocator.Value;
+        _directoryLocator = directoryLocator.Value;
     }
 
     [AiurForceAuth("", "", true)]
@@ -47,7 +47,7 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out.");
-        return this.SignOutRootServer(_gatewayLocator.Instance,
+        return this.SignOutRootServer(_directoryLocator.Instance,
             new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
     }
 }

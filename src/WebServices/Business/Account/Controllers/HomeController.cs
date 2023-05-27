@@ -15,18 +15,18 @@ namespace Aiursoft.Account.Controllers;
 [LimitPerMin]
 public class HomeController : Controller
 {
-    private readonly DirectoryConfiguration _directoryLocator;
+    private readonly DirectoryConfiguration _directoryConfig;
     private readonly ILogger _logger;
     private readonly SignInManager<AccountUser> _signInManager;
 
     public HomeController(
         SignInManager<AccountUser> signInManager,
         ILoggerFactory loggerFactory,
-        IOptions<DirectoryConfiguration> gatewayLocator)
+        IOptions<DirectoryConfiguration> directoryConfig)
     {
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();
-        _gatewayLocator = gatewayLocator.Value;
+        _directoryConfig = directoryConfig.Value;
     }
 
     [AiurForceAuth("Account", "Index", true)]
@@ -40,7 +40,7 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out.");
-        return this.SignOutRootServer(_gatewayLocator.Instance,
+        return this.SignOutRootServer(_directoryConfig.Instance,
             new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
     }
 }

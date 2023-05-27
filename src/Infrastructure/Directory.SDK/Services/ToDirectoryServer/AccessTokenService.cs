@@ -21,13 +21,13 @@ public class AccessTokenService : IScopedDependency
         IOptions<DirectoryConfiguration> serviceLocation,
         APIProxyService http)
     {
-        _gatewayLocator = serviceLocation.Value;
+        _directoryLocator = serviceLocation.Value;
         _http = http;
     }
 
     public async Task<AccessTokenViewModel> AccessTokenAsync(string appId, string appSecret)
     {
-        var url = new AiurUrl(_gatewayLocator.Instance, "API", "AccessToken", new AccessTokenAddressModel
+        var url = new AiurUrl(_directoryLocator.Instance, "API", "AccessToken", new AccessTokenAddressModel
         {
             AppId = appId,
             AppSecret = appSecret

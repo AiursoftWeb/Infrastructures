@@ -36,12 +36,12 @@ Redirect the user to the OAuth page.
 
 Request path:
 
-<p><kbd>https://gateway.aiursoft.com/OAuth/Authorize</kbd></p>
+<p><kbd>https://directory.aiursoft.com/OAuth/Authorize</kbd></p>
 
 Request example:
 
 ```
-https://gateway.aiursoft.com/OAuth/Authorize?appid=yourappid&amp;redirect_uri=yourredirect_uri&amp;state=yourstate
+https://directory.aiursoft.com/OAuth/Authorize?appid=yourappid&amp;redirect_uri=yourredirect_uri&amp;state=yourstate
 ```
 
 Request arguments:

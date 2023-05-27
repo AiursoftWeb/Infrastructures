@@ -7,8 +7,8 @@ userId=$(uuidgen)
 
 developerAppId=$(uuidgen)
 developerAppSecret=$(uuidgen)
-gatewayAppId=$(uuidgen)
-gatewayAppSecret=$(uuidgen)
+directoryAppId=$(uuidgen)
+directoryAppSecret=$(uuidgen)
 stargateAppId=$(uuidgen)
 stargateAppSecret=$(uuidgen)
 observerAppId=$(uuidgen)
@@ -28,7 +28,7 @@ statusAppSecret=$(uuidgen)
 eeAppId=$(uuidgen)
 eeAppSecret=$(uuidgen)
 
-gateway_code="$infs_code/src/WebServices/Basic/Gateway"
+directory_code="$infs_code/src/WebServices/Basic/Directory"
 developer_code="$infs_code/src/WebServices/Basic/Developer"
 observer_code="$infs_code/src/WebServices/Infrastructure/Observer"
 probe_code="$infs_code/src/WebServices/Infrastructure/Probe"
@@ -40,7 +40,7 @@ status_code="$infs_code/src/WebServices/Business/Status"
 account_code="$infs_code/src/WebServices/Business/Account"
 ee_code="$infs_code/src/WebServices/Business/EE"
 
-gateway_path="$infs_path/Gateway"
+directory_path="$infs_path/Directory"
 developer_path="$infs_path/Developer"
 observer_path="$infs_path/Observer"
 probe_path="$infs_path/Probe"
@@ -57,13 +57,13 @@ set_env()
     dist_path="$1"
     domain="$2"
     aiur text/edit_json "ConnectionStrings.DeveloperConnection" "https://developer.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "ConnectionStrings.GatewayConnection" "https://gateway.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "ConnectionStrings.DirectoryConnection" "https://directory.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.StargateConnection" "https://stargate.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ObserverConnection" "https://observer.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.ProbeConnection" "https://probe.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "ConnectionStrings.WarpgateConnection" "https://warpgate.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.DeveloperPath" "https://developer.$domain" $dist_path/appsettings.Production.json
-    aiur text/edit_json "Dependencies.GatewayPath" "https://gateway.$domain" $dist_path/appsettings.Production.json
+    aiur text/edit_json "Dependencies.DirectoryPath" "https://directory.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.AccountPath" "https://account.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.UIPath" "https://ui.$domain" $dist_path/appsettings.Production.json
     aiur text/edit_json "Dependencies.EEPath" "https://ee.$domain" $dist_path/appsettings.Production.json
@@ -134,7 +134,7 @@ install_infrastructures()
     aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
     dotnet restore $infs_code/Aiursoft.Infrastructures.sln
-    aiur dotnet/seeddb $gateway_code "Gateway" $dbPassword
+    aiur dotnet/seeddb $directory_code "Directory" $dbPassword
     aiur dotnet/seeddb $developer_code "Developer" $dbPassword
     aiur dotnet/seeddb $observer_code "Observer" $dbPassword
     aiur dotnet/seeddb $probe_code "Probe" $dbPassword
@@ -146,7 +146,7 @@ install_infrastructures()
     aiur dotnet/seeddb $account_code "Account" $dbPassword
     aiur dotnet/seeddb $ee_code "EE" $dbPassword
 
-    aiur dotnet/publish $gateway_path $gateway_code/"Aiursoft.Gateway.csproj"
+    aiur dotnet/publish $directory_path $directory_code/"Aiursoft.Directory.csproj"
     aiur dotnet/publish $developer_path $developer_code/"Aiursoft.Developer.csproj"
     aiur dotnet/publish $observer_path $observer_code/"Aiursoft.Observer.csproj"
     aiur dotnet/publish $probe_path $probe_code/"Aiursoft.Probe.csproj"
@@ -160,7 +160,7 @@ install_infrastructures()
 
     rm $infs_code -rf
 
-    set_env $gateway_path $1
+    set_env $directory_path $1
     set_env $developer_path $1
     set_env $observer_path $1
     set_env $probe_path $1
@@ -173,7 +173,7 @@ install_infrastructures()
     set_env $ee_path $1
 
     aiur text/edit_json "DeveloperEndpoint" "https://developer.$1" $developer_path/appsettings.Production.json
-    aiur text/edit_json "GatewayEndpoint" "https://gateway.$1" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "DirectoryEndpoint" "https://directory.$1" $directory_path/appsettings.Production.json
     aiur text/edit_json "ObserverEndpoint" "https://observer.$1" $observer_path/appsettings.Production.json
     aiur text/edit_json "ProbeEndpoint" "https://probe.$1" $probe_path/appsettings.Production.json
     aiur text/edit_json "OpenPattern" "https://probe.$1/download/open/{0}" $probe_path/appsettings.Production.json
@@ -186,8 +186,8 @@ install_infrastructures()
     aiur text/edit_json "TempFileStoragePath" "/tmp/probe" $probe_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppId" "$developerAppId" $developer_path/appsettings.Production.json
     aiur text/edit_json "DeveloperAppSecret" "$developerAppSecret" $developer_path/appsettings.Production.json
-    aiur text/edit_json "GatewayAppId" "$gatewayAppId" $gateway_path/appsettings.Production.json
-    aiur text/edit_json "GatewayAppSecret" "$gatewayAppSecret" $gateway_path/appsettings.Production.json
+    aiur text/edit_json "DirectoryAppId" "$directoryAppId" $directory_path/appsettings.Production.json
+    aiur text/edit_json "DirectoryAppSecret" "$directoryAppSecret" $directory_path/appsettings.Production.json
     aiur text/edit_json "TestAppId" "$stargateAppId" $stargate_path/appsettings.Production.json
     aiur text/edit_json "TestAppSecret" "$stargateAppSecret" $stargate_path/appsettings.Production.json
     aiur text/edit_json "ObserverAppId" "$observerAppId" $observer_path/appsettings.Production.json
@@ -218,8 +218,8 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{domainUpper}}" $domainUpper
     replace_in_file ./temp.sql "{{developerAppId}}" $developerAppId
     replace_in_file ./temp.sql "{{developerAppSecret}}" $developerAppSecret
-    replace_in_file ./temp.sql "{{gatewayAppId}}" $gatewayAppId
-    replace_in_file ./temp.sql "{{gatewayAppSecret}}" $gatewayAppSecret
+    replace_in_file ./temp.sql "{{directoryAppId}}" $directoryAppId
+    replace_in_file ./temp.sql "{{directoryAppSecret}}" $directoryAppSecret
     replace_in_file ./temp.sql "{{stargateAppId}}" $stargateAppId
     replace_in_file ./temp.sql "{{stargateAppSecret}}" $stargateAppSecret
     replace_in_file ./temp.sql "{{observerAppId}}" $observerAppId
@@ -240,7 +240,7 @@ install_infrastructures()
     replace_in_file ./temp.sql "{{eeAppSecret}}" $eeAppSecret
     aiur mssql/run_sql $dbPassword ./temp.sql
 
-    add_service "gateway" $gateway_path "Aiursoft.Gateway" $1
+    add_service "directory" $directory_path "Aiursoft.Directory" $1
     add_service "developer" $developer_path "Aiursoft.Developer" $1
     add_service "observer" $observer_path "Aiursoft.Observer" $1
     add_service "probe" $probe_path "Aiursoft.Probe" $1

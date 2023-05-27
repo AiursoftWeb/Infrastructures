@@ -5,12 +5,12 @@ using Aiursoft.XelNaga.Tools;
 
 namespace Aiursoft.Directory.SDK.Services;
 
-public class GatewayRSAService : IScopedDependency
+public class AppTokenRSAService : IScopedDependency
 {
     private readonly RSA _rsa;
     private readonly ServerPublicKeyVault _keyVault;
 
-    public GatewayRSAService(ServerPublicKeyVault keyVault)
+    public AppTokenRSAService(ServerPublicKeyVault keyVault)
     {
         _rsa = RSA.Create();
         _keyVault = keyVault;
