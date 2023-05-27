@@ -1,5 +1,6 @@
 ﻿namespace Aiursoft.Warpgate.SDK.Services;
 
+// TODO: Refactor this as configuration!
 public class WarpgateLocator
 {
     public WarpgateLocator(string endpoint, string warpPattern)

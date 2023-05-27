@@ -31,7 +31,6 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseAiurAPIHandler(env.IsDevelopment());
-        app.UseCors(builder => builder.AllowAnyOrigin());
         app.UseAiursoftAPIDefault();
     }
 }

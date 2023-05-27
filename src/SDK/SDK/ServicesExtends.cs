@@ -25,6 +25,7 @@ public static class ServicesExtends
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
+        // TODO: Use it as an attribute to only apply to API.
         services.AddCors(options =>
             options.AddDefaultPolicy(builder =>
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

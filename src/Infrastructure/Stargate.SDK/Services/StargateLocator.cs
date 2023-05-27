@@ -1,5 +1,6 @@
 ﻿namespace Aiursoft.Stargate.SDK.Services;
 
+// TODO: Refactor this as configuration!
 public class StargateLocator
 {
     public StargateLocator(string endpoint)
