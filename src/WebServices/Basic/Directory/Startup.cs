@@ -59,8 +59,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseAiurUserHandler(env.IsDevelopment());
+        app.UseAiuroftHandler(env.IsDevelopment());
         app.UseSession();
-        app.UseAiursoftDefault();
+        app.UseAiursoftAppRouters();
     }
 }

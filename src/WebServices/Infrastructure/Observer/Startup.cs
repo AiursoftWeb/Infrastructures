@@ -31,7 +31,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseAiurAPIHandler(env.IsDevelopment());
-        app.UseAiursoftAPIDefault();
+        app.UseAiuroftHandler(env.IsDevelopment());
+        app.UseAiursoftAPIAppRouters();
     }
 }

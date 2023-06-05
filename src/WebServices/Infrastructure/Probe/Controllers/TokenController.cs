@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aiursoft.Probe.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class TokenController : ControllerBase
 {

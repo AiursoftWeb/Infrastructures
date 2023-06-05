@@ -17,7 +17,7 @@ namespace Aiursoft.Observer.Controllers;
 
 [LimitPerMin]
 [APIModelStateChecker]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 public class EventController : ControllerBase
 {
     private readonly CannonQueue _cannon;

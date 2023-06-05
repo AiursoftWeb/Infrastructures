@@ -14,8 +14,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Directory.Controllers;
 
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
+[LimitPerMin]
 public class AccountController : ControllerBase
 {
     private readonly DeveloperApiService _apiService;

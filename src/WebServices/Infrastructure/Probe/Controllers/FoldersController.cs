@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Probe.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 [Route("Folders")]
 public class FoldersController : ControllerBase

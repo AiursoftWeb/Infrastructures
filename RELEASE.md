@@ -60,3 +60,10 @@ services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 ## Version 6.0.19
 
 - Allowed applications to disable default `CORS`.
+
+## Version 6.0.20
+
+- Fixed an issue that exception handler middleware not using correct scope.
+- Add new handler: UseAiuroftHandler
+- Rename middleware: UseAiursoftAppRouters\UseAiursoftAPIAppRouters
+- Rename to APIExpHandler APIRemoteExceptionHandler

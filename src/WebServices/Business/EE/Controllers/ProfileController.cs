@@ -127,7 +127,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     [AiurForceAuth("", "", false)]
     public async Task<IActionResult> Follow(string id) //Target user id
@@ -157,7 +157,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     [AiurForceAuth("", "", false)]
     public async Task<IActionResult> UnFollow(string id) //Target User Id

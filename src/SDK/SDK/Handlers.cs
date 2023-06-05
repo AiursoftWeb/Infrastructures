@@ -7,59 +7,46 @@ namespace Aiursoft.SDK;
 
 public static class Handlers
 {
-    // TODO: Merge the two handlers.
-    public static IApplicationBuilder UseAiurUserHandler(this IApplicationBuilder app, bool isDevelopment, bool allowCors = true)
+    public static IApplicationBuilder UseAiuroftHandler(this IApplicationBuilder app, bool isDevelopment, bool allowCors = true, bool addUserFriendlyPages = true)
     {
+        // Recognize correct IP address.
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+
+        // Allow CORS.
+        if (allowCors)
+        {
+            app.UseCors();
+        }
+
+        // Use HTTPS redirection.
+        app.UseHttpsRedirection();
+
+        // Add error handlers.
         if (isDevelopment || !EntryExtends.IsProgramEntry())
         {
             app.UseDeveloperExceptionPage();
         }
         else
         {
-            if (allowCors)
+            // Friendly page.
+            app.UseMiddleware<ProductionExceptionPageMiddleware>();
+
+            // Error tracking.
+            app.UseMiddleware<ObserverExceptionUploader>();
+
+            if (addUserFriendlyPages)
             {
-                app.UseCors();
+                // User friendly pages.
+                app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
+                app.UseMiddleware<UserFriendlyBadRequestMiddleware>();
             }
-
-            app.UseMiddleware<HandleRobotsMiddleware>();
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-            app.UseHttpsRedirection();
-
-            // TODO: Use Attributes
-            app.UseMiddleware<UserFriendlyServerExceptionMiddleware>();
-            app.UseMiddleware<UserFriendlyNotFoundMiddleware>();
-            app.UseMiddleware<UserFriendlyBadRequestMiddleware>();
         }
 
-        return app;
-    }
-
-    public static IApplicationBuilder UseAiurAPIHandler(this IApplicationBuilder app, bool isDevelopment, bool allowCors = true)
-    {
-        if (isDevelopment || !EntryExtends.IsProgramEntry())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            if (allowCors)
-            {
-                app.UseCors();
-            }
-
-            app.UseMiddleware<HandleRobotsMiddleware>();
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-            app.UseHttpsRedirection();
-
-            // TODO: Use Attributes
-            app.UseMiddleware<APIFriendlyServerExceptionMiddleware>();
-        }
+        // Handle robots.
+        app.UseMiddleware<HandleRobotsMiddleware>();
 
         return app;
     }

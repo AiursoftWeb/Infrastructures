@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class ChannelController : ControllerBase
 {

@@ -14,7 +14,7 @@ using SixLabors.ImageSharp;
 namespace Aiursoft.Probe.Controllers;
 
 [Route("Download")]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 public class DownloadController : Controller
 {
     private readonly FileRepo _fileRepo;

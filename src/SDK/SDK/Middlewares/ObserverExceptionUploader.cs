@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Net;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Aiursoft.SDK.Middlewares;
 
-public class APIFriendlyServerExceptionMiddleware
+/// <summary>
+/// This middleware will send the exception message in this app to Aiursoft Observer server.
+/// </summary>
+public class ObserverExceptionUploader
 {
     private readonly AppsContainer _appsContainer;
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly ILogger<APIFriendlyServerExceptionMiddleware> _logger;
+    private readonly ILogger<ObserverExceptionUploader> _logger;
     private readonly RequestDelegate _next;
 
-    public APIFriendlyServerExceptionMiddleware(
+    public ObserverExceptionUploader(
         RequestDelegate next,
-        ILogger<APIFriendlyServerExceptionMiddleware> logger,
+        ILogger<ObserverExceptionUploader> logger,
         AppsContainer appsContainer,
         IServiceScopeFactory scopeFactory)
     {
@@ -40,32 +38,19 @@ public class APIFriendlyServerExceptionMiddleware
         }
         catch (Exception e)
         {
-            if (context.Response.HasStarted)
-            {
-                throw;
-            }
-
-            context.Response.Clear();
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            context.Response.ContentType = "application/json; charset=utf-8";
-            var projectName = Assembly.GetEntryAssembly()?.GetName().Name;
-            var message = JsonConvert.SerializeObject(new AiurProtocol
-            {
-                Code = ErrorType.UnknownError,
-                Message = $"{projectName} server was crashed! Sorry about that."
-            });
-            await context.Response.WriteAsync(message, Encoding.UTF8);
             try
             {
-                _logger.LogError(e, e.Message);
+                _logger.LogCritical(e, e.Message);
                 var accessToken = await _appsContainer.GetAccessTokenAsync();
                 var scope = _scopeFactory.CreateScope();
                 var eventService = scope.ServiceProvider.GetRequiredService<ObserverService>();
                 await eventService.LogExceptionAsync(accessToken, e, context.Request.Path);
+                throw;
             }
-            catch
+            catch (Exception ex)
             {
-                // ignored
+                _logger.LogCritical(ex, "Failed to upload exception to Observer.");
+                throw e;
             }
         }
     }

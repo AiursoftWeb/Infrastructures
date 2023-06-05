@@ -113,7 +113,7 @@ public class CourseController : Controller
 
     [HttpPost]
     [AiurForceAuth("", "", false)]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> Subscribe(int id) //Course Id
     {
@@ -147,7 +147,7 @@ public class CourseController : Controller
 
     [HttpPost]
     [AiurForceAuth("", "", false)]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> UnSubscribe(int id) //Course Id
     {

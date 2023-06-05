@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace Aiursoft.Warpgate.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class WarpController : Controller
 {

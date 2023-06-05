@@ -138,7 +138,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> SendEmail([EmailAddress] string email)
     {
@@ -149,7 +149,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> DeleteEmail([EmailAddress] string email)
     {
@@ -160,7 +160,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> SetPrimaryEmail([EmailAddress] string email)
     {
@@ -357,7 +357,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> DeleteGrant(string appId)
     {
@@ -498,7 +498,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> UnBindAccount(string provider)
     {

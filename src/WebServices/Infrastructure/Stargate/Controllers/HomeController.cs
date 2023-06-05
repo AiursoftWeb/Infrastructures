@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class HomeController : Controller
 {

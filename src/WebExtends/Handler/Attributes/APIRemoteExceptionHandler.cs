@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Exceptions;
+﻿using System.Reflection;
+using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -9,7 +10,7 @@ namespace Aiursoft.Handler.Attributes;
 ///     Adding this will handle `AiurAPIModelException` and return the result as JSON directly.
 ///     Adding this will handle `AiurUnexpectedResponse` and return the result as JSON directly.
 /// </summary>
-public class APIExpHandler : ExceptionFilterAttribute
+public class APIRemoteExceptionHandler : ExceptionFilterAttribute
 {
     public override void OnException(ExceptionContext context)
     {

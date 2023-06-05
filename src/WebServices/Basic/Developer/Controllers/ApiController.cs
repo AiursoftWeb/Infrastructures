@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Developer.Controllers;
 
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 [LimitPerMin]
 public class ApiController : ControllerBase

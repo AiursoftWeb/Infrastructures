@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace Aiursoft.Stargate.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class ListenController : ControllerBase
 {

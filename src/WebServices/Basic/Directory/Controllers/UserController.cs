@@ -22,8 +22,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Directory.Controllers;
 
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
+[LimitPerMin]
 public class UserController : ControllerBase
 {
     private readonly IEnumerable<IAuthProvider> _authProviders;

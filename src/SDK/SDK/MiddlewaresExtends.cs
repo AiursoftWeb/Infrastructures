@@ -33,7 +33,7 @@ public static class MiddlewaresExtends
     /// <param name="app"></param>
     /// <param name="beforeMvc"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseAiursoftDefault(
+    public static IApplicationBuilder UseAiursoftAppRouters(
         this IApplicationBuilder app,
         Func<IApplicationBuilder,
             IApplicationBuilder> beforeMvc = null)
@@ -58,7 +58,7 @@ public static class MiddlewaresExtends
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseAiursoftAPIDefault(false, beforeMvc);
+        app.UseAiursoftAPIAppRouters(false, beforeMvc);
         app.UseMiddleware<SwitchLanguageMiddleware>();
 
         return app;
@@ -71,7 +71,7 @@ public static class MiddlewaresExtends
     /// <param name="addRouting"></param>
     /// <param name="beforeMvc"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseAiursoftAPIDefault(
+    public static IApplicationBuilder UseAiursoftAPIAppRouters(
         this IApplicationBuilder app,
         bool addRouting = true,
         Func<IApplicationBuilder, IApplicationBuilder> beforeMvc = null)
@@ -90,8 +90,8 @@ public static class MiddlewaresExtends
                 return
                     action.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
                     controller.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
-                    action.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
-                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIExpHandler)) ||
+                    action.CustomAttributes.Any(t => t.AttributeType == typeof(APIRemoteExceptionHandler)) ||
+                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIRemoteExceptionHandler)) ||
                     action.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker)) ||
                     controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker));
             };

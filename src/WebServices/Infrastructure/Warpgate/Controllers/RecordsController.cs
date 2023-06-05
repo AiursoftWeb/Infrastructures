@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Warpgate.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class RecordsController : ControllerBase
 {

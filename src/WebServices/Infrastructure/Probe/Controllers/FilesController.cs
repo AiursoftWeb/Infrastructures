@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Probe.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 [Route("Files")]
 [DisableRequestSizeLimit]

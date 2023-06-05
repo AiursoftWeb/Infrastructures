@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aiursoft.Probe.Controllers;
 
 [LimitPerMin]
-[APIExpHandler]
+[APIRemoteExceptionHandler]
 [APIModelStateChecker]
 public class SitesController : ControllerBase
 {

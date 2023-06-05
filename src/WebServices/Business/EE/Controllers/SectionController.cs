@@ -86,7 +86,7 @@ public class SectionController : Controller
 
     [AiurForceAuth]
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> Drop(int id) //Section Id
     {

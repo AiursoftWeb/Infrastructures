@@ -104,7 +104,7 @@ public class ApiController : Controller
         return Redirect(toGo.ToString());
     }
 
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     [Produces(typeof(AiurPagedCollection<Grant>))]
     public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
@@ -124,7 +124,7 @@ public class ApiController : Controller
     }
 
     [HttpPost]
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     public async Task<IActionResult> DropGrants([Required] string accessToken)
     {
@@ -142,7 +142,7 @@ public class ApiController : Controller
             .FirstOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
 
-    [APIExpHandler]
+    [APIRemoteExceptionHandler]
     [APIModelStateChecker]
     [Produces(typeof(AccessTokenViewModel))]
     public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
