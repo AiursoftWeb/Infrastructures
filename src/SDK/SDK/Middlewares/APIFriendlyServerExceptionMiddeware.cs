@@ -7,6 +7,7 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -15,7 +16,7 @@ namespace Aiursoft.SDK.Middlewares;
 public class APIFriendlyServerExceptionMiddleware
 {
     private readonly AppsContainer _appsContainer;
-    private readonly ObserverService _eventService;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<APIFriendlyServerExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;
 
@@ -23,12 +24,12 @@ public class APIFriendlyServerExceptionMiddleware
         RequestDelegate next,
         ILogger<APIFriendlyServerExceptionMiddleware> logger,
         AppsContainer appsContainer,
-        ObserverService eventService)
+        IServiceScopeFactory scopeFactory)
     {
         _next = next;
         _logger = logger;
         _appsContainer = appsContainer;
-        _eventService = eventService;
+        _scopeFactory = scopeFactory;
     }
 
     public async Task Invoke(HttpContext context)
@@ -58,7 +59,9 @@ public class APIFriendlyServerExceptionMiddleware
             {
                 _logger.LogError(e, e.Message);
                 var accessToken = await _appsContainer.GetAccessTokenAsync();
-                await _eventService.LogExceptionAsync(accessToken, e, context.Request.Path);
+                var scope = _scopeFactory.CreateScope();
+                var eventService = scope.ServiceProvider.GetRequiredService<ObserverService>();
+                await eventService.LogExceptionAsync(accessToken, e, context.Request.Path);
             }
             catch
             {

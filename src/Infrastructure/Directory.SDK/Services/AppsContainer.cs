@@ -9,11 +9,11 @@ using Microsoft.Extensions.Options;
 namespace Aiursoft.Directory.SDK.Services;
 
 /// <summary>
-///     For storaging other apps with appid and appsecret for current app.
+///     For saving other apps with appid and appsecret for current app.
 /// </summary>
 public class AppsContainer : ISingletonDependency
 {
-    private readonly HashSet<AppContainer> _allApps = new HashSet<AppContainer>();
+    private readonly HashSet<AppContainer> _allApps = new();
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly string _appId;
     private readonly string _appSecret;

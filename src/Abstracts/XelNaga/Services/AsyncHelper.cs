@@ -34,7 +34,7 @@ public static class AsyncHelper
             }
         }
 
-        throw new NotImplementedException("Code shall not reach here.");
+        throw new InvalidOperationException("Code shall not reach here.");
     }
 
     /// <summary>
