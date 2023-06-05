@@ -43,7 +43,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseAiuroftHandler(env.IsDevelopment());
+        app.UseAiuroftHandler(env.IsDevelopment(), addUserFriendlyPages: true);
         app.UseCors(builder => builder.AllowAnyOrigin());
         app.UseAiursoftAPIAppRouters();
     }
