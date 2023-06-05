@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
