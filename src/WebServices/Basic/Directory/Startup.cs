@@ -16,6 +16,7 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
+using Aiursoft.Canon;
 
 namespace Aiursoft.Directory;
 
@@ -48,6 +49,7 @@ public class Startup
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
 #pragma warning restore CS0618 // Type or member is obsolete
 
+        services.AddTaskCanon();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));

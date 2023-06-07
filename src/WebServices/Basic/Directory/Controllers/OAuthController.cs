@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
@@ -11,7 +12,6 @@ using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,7 +31,7 @@ public class OAuthController : Controller
     private readonly DeveloperApiService _apiService;
     private readonly AuthLogger _authLogger;
     private readonly UserAppAuthManager _authManager;
-    private readonly CannonService _cannonService;
+    private readonly CanonService _cannonService;
     private readonly ISessionBasedCaptcha _captcha;
     private readonly DirectoryDbContext _dbContext;
     private readonly ILogger _logger;
@@ -48,7 +48,7 @@ public class OAuthController : Controller
         UserAppAuthManager authManager,
         AuthLogger authLogger,
         IConfiguration configuration,
-        CannonService cannonService)
+        CanonService cannonService)
     {
         _userManager = userManager;
         _signInManager = signInManager;

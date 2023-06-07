@@ -1,3 +1,4 @@
+using Aiursoft.Canon;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
@@ -25,6 +26,7 @@ public class Startup
 
         services.AddAiurMvc();
         services.AddAiursoftSDK();
+        services.AddTaskCanon();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
     }

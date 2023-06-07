@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,7 +31,7 @@ public static class Extends
         return services;
     }
 
-    public static IHost InitSite<TProvider>(this IHost host,
+    public static async Task<IHost> InitSite<TProvider>(this IHost host,
         Func<IConfiguration, string> getConfig,
         Func<TProvider, Task<string>> getToken,
         bool openToUpload = true,
@@ -43,23 +42,18 @@ public static class Extends
         var configuration = services.GetService<IConfiguration>();
         var logger = services.GetRequiredService<ILogger<TProvider>>();
         var siteName = getConfig(configuration);
-        var cannon = services.GetRequiredService<CannonService>();
-        cannon.Fire<SitesService>(sitesService =>
-        {
-            cannon.FireAsync<TProvider>(async tokenProvider =>
-            {
-                // Wait 20 seconds. Dependencies might not be started yet.
-                await Task.Delay(20 * 1000);
-                var token = await getToken(tokenProvider);
-                logger.LogInformation("Starting create Probe resources...");
+        var sitesService = services.GetRequiredService<SitesService>();
+        var tokenProvider = services.GetRequiredService<TProvider>();
+        var token = await getToken(tokenProvider);
 
-                var sites = await sitesService.ViewMySitesAsync(token);
-                if (!sites.Sites.Any(s => s.SiteName == siteName))
-                {
-                    await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
-                }
-            });
-        });
+        logger.LogInformation("Getting Probe sites...");
+        var sites = await sitesService.ViewMySitesAsync(token);
+
+        if (!sites.Sites.Any(s => s.SiteName == siteName))
+        {
+            logger.LogInformation("Creating new Probe site...");
+            await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
+        }
 
         return host;
     }

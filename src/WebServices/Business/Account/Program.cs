@@ -3,18 +3,19 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.SDK;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Account;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        App<Startup>(args)
+        await (await App<Startup>(args)
             .Update<AccountDbContext>()
-            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync())
-            .Run();
+            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync()))
+            .RunAsync();
     }
 
     // For EF

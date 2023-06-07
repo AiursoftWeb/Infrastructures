@@ -4,17 +4,18 @@ using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 using Aiursoft.Probe.SDK;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Developer;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        App<Startup>(args)
+        await (await App<Startup>(args)
             .Update<DeveloperDbContext>()
-            .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync())
-            .Run();
+            .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync()))
+            .RunAsync();
     }
 
     // For EF

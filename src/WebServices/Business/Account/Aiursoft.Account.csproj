@@ -1,18 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
-    <Description>Account management center for Aiursoft.</Description>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Description>Account management center for Aiursoft.</Description>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Twilio" Version="6.7.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
-    <ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
-  </ItemGroup>
-  
+	<ItemGroup>
+		<PackageReference Include="Aiursoft.Canon" Version="6.0.1" />
+		<PackageReference Include="Twilio" Version="6.7.0" />
+		<PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.DBTools;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
@@ -9,7 +10,6 @@ using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
 using Aiursoft.WebTools;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,14 +20,14 @@ namespace Aiursoft.Observer.Controllers;
 [APIRemoteExceptionHandler]
 public class EventController : ControllerBase
 {
-    private readonly CannonQueue _cannon;
+    private readonly CanonQueue _cannon;
     private readonly ObserverDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public EventController(
         AiursoftAppTokenValidator tokenManager,
         ObserverDbContext dbContext,
-        CannonQueue cannon)
+        CanonQueue cannon)
     {
         _tokenManager = tokenManager;
         _dbContext = dbContext;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.Models.PasswordViewModels;
 using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace Aiursoft.Directory.Controllers;
 [LimitPerMin]
 public class PasswordController : Controller
 {
-    private readonly CannonService _cannonService;
+    private readonly CanonService _cannonService;
     private readonly DirectoryDbContext _dbContext;
     private readonly ILogger _logger;
     private readonly UserManager<DirectoryUser> _userManager;
@@ -27,7 +27,7 @@ public class PasswordController : Controller
         DirectoryDbContext dbContext,
         ILoggerFactory loggerFactory,
         UserManager<DirectoryUser> userManager,
-        CannonService cannonService)
+        CanonService cannonService)
     {
         _dbContext = dbContext;
         _userManager = userManager;

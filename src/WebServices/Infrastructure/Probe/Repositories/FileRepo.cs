@@ -1,22 +1,22 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.Services;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Repositories;
 
 public class FileRepo : IScopedDependency
 {
-    private readonly CannonQueue _cannonQueue;
+    private readonly CanonQueue _cannonQueue;
     private readonly ProbeDbContext _dbContext;
 
     public FileRepo(
         ProbeDbContext dbContext,
-        CannonQueue cannonQueue)
+        CanonQueue cannonQueue)
     {
         _dbContext = dbContext;
         _cannonQueue = cannonQueue;

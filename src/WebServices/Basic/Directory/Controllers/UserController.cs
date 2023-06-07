@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.DBTools.Models;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
@@ -15,7 +16,6 @@ using Aiursoft.Handler.Models;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +28,7 @@ namespace Aiursoft.Directory.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IEnumerable<IAuthProvider> _authProviders;
-    private readonly CannonService _cannonService;
+    private readonly CanonService _cannonService;
     private readonly DirectoryDbContext _dbContext;
     private readonly GrantChecker _grantChecker;
     private readonly ServiceLocation _serviceLocation;
@@ -42,7 +42,7 @@ public class UserController : ControllerBase
         TwoFAHelper twoFAHelper,
         IEnumerable<IAuthProvider> authProviders,
         ServiceLocation serviceLocation,
-        CannonService cannonService)
+        CanonService cannonService)
     {
         _userManager = userManager;
         _dbContext = context;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Aiursoft.Account.Models;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Account.Services;
+using Aiursoft.Canon;
 using Aiursoft.Developer.SDK.Models;
 using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.SDK.Services;
@@ -35,7 +36,7 @@ public class AccountController : Controller
     private readonly AppsContainer _appsContainer;
     private readonly IEnumerable<IAuthProvider> _authProviders;
     private readonly AuthService<AccountUser> _authService;
-    private readonly CannonService _cannonService;
+    private readonly CanonService _cannonService;
     private readonly IConfiguration _configuration;
     private readonly DeveloperApiService _developerApiService;
     private readonly QRCodeService _qrCodeService;
@@ -51,7 +52,7 @@ public class AccountController : Controller
         AuthService<AccountUser> authService,
         IEnumerable<IAuthProvider> authProviders,
         QRCodeService qrCodeService,
-        CannonService cannonService)
+        CanonService cannonService)
     {
         _userManager = userManager;
         _userService = userService;

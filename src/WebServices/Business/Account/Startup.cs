@@ -1,5 +1,6 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
+using Aiursoft.Canon;
 using Aiursoft.Developer.SDK;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
@@ -33,6 +34,7 @@ public class Startup
         services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
 #pragma warning restore CS0618 // Type or member is obsolete
 
+        services.AddTaskCanon();
         services.AddAiurMvc();
         services.AddAiursoftIdentity<AccountUser>(
             probeConfig: Configuration.GetSection("AiursoftProbe"),
