@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
@@ -118,9 +119,9 @@ public class DownloadController : Controller
             _logger.LogInformation("File with path {ImagePath} is an valid image", imagePath);
             return true;
         }
-        catch
+        catch (Exception e)
         {
-            _logger.LogWarning("File with path {ImagePath} is not an valid image", imagePath);
+            _logger.LogWarning(e, "File with path {ImagePath} is not an valid image", imagePath);
             return false;
         }
     }
@@ -142,10 +143,10 @@ public class DownloadController : Controller
         {
             if (square)
             {
-                return this.WebFile(await _imageCompressor.Compress(path, width, width), extension);
+                return this.WebFile(await _imageCompressor.Compress(path, width, width, extension), extension);
             }
 
-            return this.WebFile(await _imageCompressor.Compress(path, width, 0), extension);
+            return this.WebFile(await _imageCompressor.Compress(path, width, 0, extension), extension);
         }
 
         return this.WebFile(await _imageCompressor.ClearExif(path), extension);

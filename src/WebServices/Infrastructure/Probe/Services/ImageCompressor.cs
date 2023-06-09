@@ -83,7 +83,7 @@ public class ImageCompressor : ITransientDependency
         }
     }
 
-    public async Task<string> Compress(string path, int width, int height)
+    public async Task<string> Compress(string path, int width, int height, string extension)
     {
         width = _sizeCalculator.Ceiling(width);
         height = _sizeCalculator.Ceiling(height);
@@ -97,7 +97,7 @@ public class ImageCompressor : ITransientDependency
             }
 
             var compressedImagePath =
-                $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.dat";
+                $"{compressedFolder}probe_compressed_w{width}_h{height}_fileId_{Path.GetFileNameWithoutExtension(path)}.{extension}";
             await SaveCompressedImage(path, compressedImagePath, width, height);
             return compressedImagePath;
         }
