@@ -21,7 +21,7 @@ public class RecordsController : Controller
 {
     private readonly AppsContainer _appsContainer;
     private readonly RecordsService _recordsService;
-    public DeveloperDbContext _dbContext;
+    private readonly DeveloperDbContext _dbContext;
 
     public RecordsController(
         DeveloperDbContext dbContext,

@@ -164,7 +164,7 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurProtocol
             {
-                Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the accesstoken you granted!"
+                Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the access token you granted!"
             });
         }
 

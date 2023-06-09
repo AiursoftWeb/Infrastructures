@@ -36,7 +36,7 @@ public class APIProxyService : IScopedDependency
                 response.StatusCode == HttpStatusCode.ServiceUnavailable)
             {
                 throw new WebException(
-                    $"Api proxy failed bacause bad gateway [{response.StatusCode}]. (This error will trigger auto retry)");
+                    $"Api proxy failed because of bad gateway [{response.StatusCode}]. (This error will trigger auto retry)");
             }
 
             return response;
