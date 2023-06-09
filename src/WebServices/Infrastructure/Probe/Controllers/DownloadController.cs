@@ -9,6 +9,7 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Probe.ViewModels.DownloadViewModels;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 
 namespace Aiursoft.Probe.Controllers;
@@ -22,9 +23,10 @@ public class DownloadController : Controller
     private readonly FolderSplitter _folderSplitter;
     private readonly ImageCompressor _imageCompressor;
     private readonly SiteRepo _siteRepo;
+    private readonly ILogger<DownloadController> _logger;
     private readonly IStorageProvider _storageProvider;
     private readonly TokenEnsurer _tokenEnsurer;
-    private readonly ProbeSettingsFetcher probeLocator;
+    private readonly ProbeSettingsFetcher _probeLocator;
 
     public DownloadController(
         FolderSplitter folderLocator,
@@ -34,6 +36,7 @@ public class DownloadController : Controller
         FolderRepo folderRepo,
         FileRepo fileRepo,
         SiteRepo siteRepo,
+        ILogger<DownloadController> logger,
         ProbeSettingsFetcher probeLocator)
     {
         _folderSplitter = folderLocator;
@@ -43,7 +46,8 @@ public class DownloadController : Controller
         _folderRepo = folderRepo;
         _fileRepo = fileRepo;
         _siteRepo = siteRepo;
-        this.probeLocator = probeLocator;
+        _logger = logger;
+        this._probeLocator = probeLocator;
     }
 
     [Route("File/{SiteName}/{**FolderNames}", Name = "File")]
@@ -88,7 +92,7 @@ public class DownloadController : Controller
             if (ControllerContext.ActionDescriptor.AttributeRouteInfo?.Name == "Video")
             {
                 return VideoPlayerWithFile(
-                    await probeLocator.GetProbeOpenAddressAsync(model.SiteName, folders, fileName),
+                    await _probeLocator.GetProbeOpenAddressAsync(model.SiteName, folders, fileName),
                     model.PBToken,
                     fileName);
             }
@@ -111,10 +115,12 @@ public class DownloadController : Controller
         try
         {
             _ = await Image.DetectFormatAsync(imagePath);
+            _logger.LogInformation("File with path {ImagePath} is an valid image", imagePath);
             return true;
         }
         catch
         {
+            _logger.LogWarning("File with path {ImagePath} is not an valid image", imagePath);
             return false;
         }
     }
