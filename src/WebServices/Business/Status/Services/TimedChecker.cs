@@ -35,18 +35,18 @@ public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
     {
         if (!EntryExtends.IsProgramEntry())
         {
-            _logger.LogInformation("Skip cleaner in development environment.");
+            _logger.LogInformation("Skip cleaner in development environment");
             return Task.CompletedTask;
         }
 
-        _logger.LogInformation("Timed Background Service is starting.");
+        _logger.LogInformation("Timed Background Service is starting");
         _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(5), TimeSpan.FromMinutes(10));
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Timed Background Service is stopping.");
+        _logger.LogInformation("Timed Background Service is stopping");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
     }
@@ -75,16 +75,14 @@ public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
     {
         foreach (var item in dbContext.MonitorRules)
         {
-            _logger.LogInformation($"Checking status for: {item.ProjectName}");
+            _logger.LogInformation("Checking status for: {ProjectName}", item.ProjectName);
             try
             {
                 var content = await http.Get(new AiurUrl(item.CheckAddress));
                 var success = content.Contains(item.ExpectedContent);
                 if (!success)
                 {
-                    var errorMessage =
-                        $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got content: {content}";
-                    _logger.LogError(errorMessage);
+                    _logger.LogError("Status check for {ProjectName} did not pass. Expected: {ExpectedContent}. Got content: {Content}", item.ProjectName, item.ExpectedContent, content);
                 }
 
                 item.LastHealthStatus = success;
@@ -92,9 +90,7 @@ public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
             }
             catch (Exception e)
             {
-                var errorMessage =
-                    $"Status check for {item.ProjectName} did not pass. Expected: {item.ExpectedContent}. Got error: {e.Message}";
-                _logger.LogError(errorMessage);
+                _logger.LogError(e, "Status check for {ProjectName} did not pass. Expected: {ExpectedContent}. Got error: {Error}", item.ProjectName, item.ExpectedContent, e.Message);
                 item.LastHealthStatus = false;
                 item.LastCheckTime = DateTime.UtcNow;
             }

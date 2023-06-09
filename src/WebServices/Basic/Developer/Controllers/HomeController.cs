@@ -46,7 +46,7 @@ public class HomeController : Controller
     public async Task<IActionResult> LogOff()
     {
         await _signInManager.SignOutAsync();
-        _logger.LogInformation(4, "User logged out.");
+        _logger.LogInformation(4, "User logged out");
         return this.SignOutRootServer(_directoryLocator.Instance,
             new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
     }

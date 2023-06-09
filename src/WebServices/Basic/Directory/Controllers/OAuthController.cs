@@ -78,7 +78,7 @@ public class OAuthController : Controller
         if (url.Host != app.AppDomain && app.DebugMode == false)
         {
             ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
-            _logger.LogInformation($"A request with appId {model.AppId} is access wrong domain.");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
             return View("AuthError");
         }
         // Signed in. App is not in force input password mode. User did not specify force input.

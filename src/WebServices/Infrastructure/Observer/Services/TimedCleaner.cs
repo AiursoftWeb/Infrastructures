@@ -39,18 +39,18 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
         {
-            _logger.LogInformation("Skip cleaner in test environment.");
+            _logger.LogInformation("Skip cleaner in test environment");
             return Task.CompletedTask;
         }
 
-        _logger.LogInformation("TimedCleaner Background Service is starting.");
+        _logger.LogInformation("TimedCleaner Background Service is starting");
         _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromMinutes(60));
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Timed Background Service is stopping.");
+        _logger.LogInformation("Timed Background Service is stopping");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
     }

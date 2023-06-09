@@ -39,18 +39,18 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
         {
-            _logger.LogInformation("Skip cleaner in development environment.");
+            _logger.LogInformation("Skip cleaner in development environment");
             return Task.CompletedTask;
         }
 
-        _logger.LogInformation("Timed Background Service is starting.");
+        _logger.LogInformation("Timed Background Service is starting");
         _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(5), TimeSpan.FromMinutes(10));
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Timed Background Service is stopping.");
+        _logger.LogInformation("Timed Background Service is stopping");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
     }
@@ -86,7 +86,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
             }
 
             _logger.LogWarning(
-                $"Cleaner message: File with Id: {file.HardwareId} was found in database but not found on disk! Deleting record in database...");
+                "Cleaner message: File with Id: {HardwareId} was found in database but not found on disk! Deleting record in database...", file.HardwareId);
             // delete file in db.
             dbContext.Files.Remove(file);
         }
@@ -101,7 +101,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
             }
 
             _logger.LogWarning(
-                $"Cleaner message: File with hardware Id: {file} was found on disk but not found in database! Consider delete that file on disk!");
+                "Cleaner message: File with hardware Id: {File} was found on disk but not found in database! Consider delete that file on disk!", file);
             // delete file in disk
             storageProvider.DeleteToTrash(file);
         }

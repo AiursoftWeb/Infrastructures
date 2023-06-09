@@ -153,6 +153,6 @@ public class Seeder : ITransientDependency
     {
         var accessToken = await _appsContainer.GetAccessTokenAsync();
         await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
-        _logger.LogCritical(e, e.Message);
+        _logger.LogCritical(e, "Failed to seed Wiki database");
     }
 }

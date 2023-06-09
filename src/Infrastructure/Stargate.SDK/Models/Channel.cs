@@ -17,7 +17,7 @@ public class Channel
 
     [JsonIgnore] public ConcurrentBag<Message> Messages { get; set; } = new();
 
-    [JsonIgnore] public TimeSpan MaxIdleLife { get; } = TimeSpan.FromDays(10);
+    [JsonIgnore] private TimeSpan MaxIdleLife { get; } = TimeSpan.FromDays(10);
 
     public int ConnectedUsers { get; set; }
 

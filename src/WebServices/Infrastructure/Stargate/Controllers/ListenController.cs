@@ -100,9 +100,9 @@ public class ListenController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
-            var accessToken = _appsContainer.GetAccessTokenAsync();
-            await _eventService.LogExceptionAsync(await accessToken, e, Request.Path);
+            _logger.LogError(e, "Crashed while monitoring channel");
+            var accessToken = await _appsContainer.GetAccessTokenAsync();
+            await _eventService.LogExceptionAsync(accessToken, e, Request.Path);
         }
         finally
         {

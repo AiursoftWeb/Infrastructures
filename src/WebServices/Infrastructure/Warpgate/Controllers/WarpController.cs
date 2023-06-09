@@ -38,8 +38,8 @@ public class WarpController : Controller
     [Route("Warp/{RecordName}/{**Path}", Name = "Warp")]
     public async Task<IActionResult> Warp(WarpAddressModel model)
     {
+        _logger.LogInformation("New request coming with name: {Record} path: {Path}", model.RecordName, model.Path);
         var record = await _recordRepo.GetRecordByName(model.RecordName);
-        _logger.LogInformation($"New request coming with name: {model.RecordName}, path: {model.Path}.");
         if (record == null)
         {
             return NotFound();
@@ -51,7 +51,7 @@ public class WarpController : Controller
         }
 
         var builtUrl = BuildTargetUrl(record, model.Path);
-        _logger.LogInformation($"Target {record.Type} url is: {builtUrl}.");
+        _logger.LogInformation("Target {Type} url is: {Url}", record.Type, builtUrl);
         return record.Type switch
         {
             RecordType.IFrame => View("Iframe", builtUrl),

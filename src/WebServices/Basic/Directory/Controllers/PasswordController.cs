@@ -87,7 +87,7 @@ public class PasswordController : Controller
         if (!mailObject.Validated)
         {
             _logger.LogWarning(
-                $"The email object with address: {mailObject.EmailAddress} was already validated but the user was still trying to validate it!");
+                "The email object with address: {EmailAddress} was already validated but the user was still trying to validate it!", mailObject.EmailAddress);
         }
 
         mailObject.Validated = true;
@@ -136,11 +136,11 @@ public class PasswordController : Controller
 
         var model = new MethodSelectionViewModel
         {
-            AccountName = user.Email
+            AccountName = user.Email,
+            SmsResetAvailable = user.PhoneNumberConfirmed,
+            PhoneNumber = user.PhoneNumber?[^4..] ?? string.Empty,
+            AvailableEmails = user.Emails.Where(t => t.Validated)
         };
-        model.SmsResetAvailable = user.PhoneNumberConfirmed;
-        model.PhoneNumber = user.PhoneNumber?.Substring(user.PhoneNumber.Length - 4) ?? string.Empty;
-        model.AvailableEmails = user.Emails.Where(t => t.Validated);
         return View(model);
     }
 
@@ -159,7 +159,7 @@ public class PasswordController : Controller
             .Include(t => t.Emails)
             .SingleOrDefaultAsync(t => t.Id == mail.OwnerId);
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        // limit the sending frenquency to 3 minutes.
+        // limit the sending frequency to 3 minutes.
         if (DateTime.UtcNow <= mail.LastSendTime + new TimeSpan(0, 1, 0))
         {
             return RedirectToAction(nameof(ForgotPasswordSent));

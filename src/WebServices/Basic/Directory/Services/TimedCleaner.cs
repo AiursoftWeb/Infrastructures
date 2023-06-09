@@ -38,18 +38,18 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
         {
-            _logger.LogInformation("Skip cleaner in development environment.");
+            _logger.LogInformation("Skip cleaner in development environment");
             return Task.CompletedTask;
         }
 
-        _logger.LogInformation("Timed Background Service is starting.");
+        _logger.LogInformation("Timed Background Service is starting");
         _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(5), TimeSpan.FromMinutes(10));
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Timed Background Service is stopping.");
+        _logger.LogInformation("Timed Background Service is stopping");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
     }
@@ -65,11 +65,11 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred.");
+            _logger.LogError(ex, "An error occurred with cleaner service");
         }
     }
 
-    public async Task AllClean(DirectoryDbContext dbContext)
+    private async Task AllClean(DirectoryDbContext dbContext)
     {
         try
         {
@@ -78,11 +78,11 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
         }
         catch (Exception e)
         {
-            _logger.LogCritical(e.Message);
+            _logger.LogCritical(e, "Failed while cleaning database");
         }
     }
 
-    public Task ClearTimeOutOAuthPack(DirectoryDbContext dbContext)
+    private Task ClearTimeOutOAuthPack(DirectoryDbContext dbContext)
     {
         var outDateTime = DateTime.UtcNow - TimeSpan.FromDays(1);
         var outDateTime2 = DateTime.UtcNow - TimeSpan.FromMinutes(20);

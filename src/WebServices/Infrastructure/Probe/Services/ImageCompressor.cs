@@ -49,7 +49,7 @@ public class ImageCompressor : ITransientDependency
         }
         catch (ImageFormatException ex)
         {
-            _logger.LogError(ex, "Failed to clear the EXIF of an image.");
+            _logger.LogError(ex, "Failed to clear the EXIF of an image");
             return path;
         }
     }
@@ -103,7 +103,7 @@ public class ImageCompressor : ITransientDependency
         }
         catch (ImageFormatException ex)
         {
-            _logger.LogError(ex, "Failed to compress an image.");
+            _logger.LogError(ex, "Failed to compress an image");
             return path;
         }
     }

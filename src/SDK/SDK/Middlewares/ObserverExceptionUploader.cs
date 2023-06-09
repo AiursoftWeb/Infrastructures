@@ -40,7 +40,7 @@ public class ObserverExceptionUploader
         {
             try
             {
-                _logger.LogCritical(e, e.Message);
+                _logger.LogCritical(e, "Observer exception handler detected a critical error in app and will try to upload to Observer server");
                 var accessToken = await _appsContainer.GetAccessTokenAsync();
                 var scope = _scopeFactory.CreateScope();
                 var eventService = scope.ServiceProvider.GetRequiredService<ObserverService>();
@@ -49,7 +49,7 @@ public class ObserverExceptionUploader
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Failed to upload exception to Observer.");
+                _logger.LogCritical(ex, "Failed to upload an exception to Observer server");
                 throw e;
             }
         }

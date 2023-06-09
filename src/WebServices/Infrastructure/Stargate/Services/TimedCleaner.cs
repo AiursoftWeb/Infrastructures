@@ -38,11 +38,11 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
     {
         if (_env.IsDevelopment() || !EntryExtends.IsProgramEntry())
         {
-            _logger.LogInformation("Skip cleaner in development environment.");
+            _logger.LogInformation("Skip cleaner in development environment");
             return Task.CompletedTask;
         }
 
-        _logger.LogInformation("Timed Background Service is starting.");
+        _logger.LogInformation("Timed Background Service is starting");
         // Start cleaner after one day.
         // Because when stargate starts, all channels are treated dead.
         _timer = new Timer(DoWork, null, TimeSpan.FromDays(1), TimeSpan.FromMinutes(10));
@@ -51,7 +51,7 @@ public class TimedCleaner : IHostedService, IDisposable, ISingletonDependency
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Timed Background Service is stopping.");
+        _logger.LogInformation("Timed Background Service is stopping");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
     }
