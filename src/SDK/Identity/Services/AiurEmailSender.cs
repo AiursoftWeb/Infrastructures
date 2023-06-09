@@ -59,7 +59,7 @@ public class AiurEmailSender : ITransientDependency
         {
             try
             {
-                _logger.LogError(e, e.Message);
+                _logger.LogError(e, "Failed to send an email");
                 var accessToken = _appsContainer.GetAccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e);
             }

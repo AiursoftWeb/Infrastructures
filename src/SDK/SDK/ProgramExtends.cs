@@ -19,7 +19,7 @@ public static class ProgramExtends
         var context = services.GetRequiredService<TContext>();
         try
         {
-            logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
+            logger.LogInformation("Migrating database associated with context {ContextName}", typeof(TContext).Name);
             AsyncHelper.TryAsync(async () =>
             {
                 if (EntryExtends.IsInUT())
@@ -32,15 +32,15 @@ public static class ProgramExtends
                 }
             }, 3, e =>
             {
-                logger.LogCritical(e, "Update database failed.");
+                logger.LogCritical(e, "Update database with context {ContextName} failed", typeof(TContext).Name);
                 return Task.CompletedTask;
             });
-            logger.LogInformation($"Updated database associated with context {typeof(TContext).Name}");
+            logger.LogInformation("Updated database associated with context {ContextName}", typeof(TContext).Name);
         }
         catch (Exception ex)
         {
             logger.LogError(ex,
-                $"An error occurred while migrating the database used on context {typeof(TContext).Name}");
+                "An error occurred while migrating the database used on context {ContextName}", typeof(TContext).Name);
         }
 
         return host;

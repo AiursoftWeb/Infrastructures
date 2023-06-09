@@ -118,7 +118,7 @@ public class Seeder : ITransientDependency
                 }
                 // Generate markdown from doc generator
 
-                _logger.LogInformation($"Requesting doc API: {collection.DocAPIAddress}");
+                _logger.LogInformation($"Requesting doc API...");
                 var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress));
                 var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                 if (docModel == null)

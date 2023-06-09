@@ -76,13 +76,13 @@ public class HttpService : IScopedDependency
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }
 
-    private async Task<string> GetResponseContent(HttpResponseMessage response)
+    private static async Task<string> GetResponseContent(HttpResponseMessage response)
     {
         var isGZipEncoded = response.Content.Headers.ContentEncoding.Contains("gzip");
         if (isGZipEncoded)
         {
-            using var stream = await response.Content.ReadAsStreamAsync();
-            using var decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
+            await using var stream = await response.Content.ReadAsStreamAsync();
+            await using var decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
             using var reader = new StreamReader(decompressionStream);
             var text = await reader.ReadToEndAsync();
             return text;

@@ -53,7 +53,7 @@ public class AccountSmsSender : ITransientDependency
         }
         catch (Exception e)
         {
-            _logger.LogCritical(e, e.Message);
+            _logger.LogCritical(e, "Failed to send an sms");
             return Task.CompletedTask;
         }
     }

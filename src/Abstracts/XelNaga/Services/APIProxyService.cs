@@ -40,7 +40,7 @@ public class APIProxyService : IScopedDependency
             }
 
             return response;
-        }, 5, e => { _logger.LogCritical(e, e.Message); });
+        }, 5, e => { _logger.LogCritical(e, "Transient issue (retry available) happened with remote server bad gateway"); });
     }
 
     public async Task<string> Get(AiurUrl url, bool forceHttp = false, bool autoRetry = true)
