@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
 using Aiursoft.Probe.Models.Configuration;
@@ -12,11 +13,33 @@ namespace Aiursoft.Probe.Services;
 
 public class ImageCompressor : ITransientDependency
 {
-    private static readonly object ObjCompareLock = new();
-    private static readonly object ObjClearLock = new();
     private readonly ILogger<ImageCompressor> _logger;
     private readonly SizeCalculator _sizeCalculator;
     private readonly string _tempFilePath;
+    private static ConcurrentDictionary<string, object> ReadFileLockMapping = new();
+    private static ConcurrentDictionary<string, object> WriteFileLockMapping = new();
+
+    private static object GetFileReadLock(string path)
+    {
+        if (ReadFileLockMapping.TryGetValue(path, out var mapping))
+        {
+            return mapping;
+        }
+
+        ReadFileLockMapping.TryAdd(path, new object());
+        return GetFileReadLock(path);
+    }
+
+    private static object GetFileWriteLock(string path)
+    {
+        if (WriteFileLockMapping.TryGetValue(path, out var mapping))
+        {
+            return mapping;
+        }
+
+        WriteFileLockMapping.TryAdd(path, new object());
+        return GetFileReadLock(path);
+    }
 
     public ImageCompressor(
         ILogger<ImageCompressor> logger,
@@ -49,6 +72,7 @@ public class ImageCompressor : ITransientDependency
         }
         catch (ImageFormatException ex)
         {
+            // ReSharper disable once InconsistentlySynchronizedField
             _logger.LogError(ex, "Failed to clear the EXIF of an image");
             return path;
         }
@@ -73,12 +97,18 @@ public class ImageCompressor : ITransientDependency
         }
         else
         {
-            lock (ObjClearLock)
+            lock (GetFileReadLock(sourceImage))
             {
-                var image = Image.Load(sourceImage);
-                image.Mutate(x => x.AutoOrient());
-                image.Metadata.ExifProfile = null;
-                image.Save(saveTarget ?? throw new NullReferenceException($"When compressing image, {nameof(saveTarget)} is null!"));
+                lock (GetFileWriteLock(saveTarget))
+                {
+                    _logger.LogInformation("Trying to clear EXIF for image {Source} and save to {Target}", sourceImage, saveTarget);
+                    var image = Image.Load(sourceImage);
+                    image.Mutate(x => x.AutoOrient());
+                    image.Metadata.ExifProfile = null;
+                    image.Save(saveTarget ??
+                               throw new NullReferenceException(
+                                   $"When compressing image, {nameof(saveTarget)} is null!"));
+                }
             }
         }
     }
@@ -103,6 +133,7 @@ public class ImageCompressor : ITransientDependency
         }
         catch (ImageFormatException ex)
         {
+            // ReSharper disable once InconsistentlySynchronizedField
             _logger.LogError(ex, "Failed to compress an image");
             return path;
         }
@@ -127,14 +158,20 @@ public class ImageCompressor : ITransientDependency
         }
         else
         {
-            lock (ObjCompareLock)
+            lock (GetFileReadLock(sourceImage))
             {
-                var image = Image.Load(sourceImage);
-                image.Mutate(x => x.AutoOrient());
-                image.Metadata.ExifProfile = null;
-                image.Mutate(x => x
-                    .Resize(width, height));
-                image.Save(saveTarget ?? throw new NullReferenceException($"When compressing image, {nameof(saveTarget)} is null!"));
+                lock (GetFileWriteLock(saveTarget))
+                {
+                    _logger.LogInformation("Trying to compress for image {Source} and save to {Target}", sourceImage, saveTarget);
+                    var image = Image.Load(sourceImage);
+                    image.Mutate(x => x.AutoOrient());
+                    image.Metadata.ExifProfile = null;
+                    image.Mutate(x => x
+                        .Resize(width, height));
+                    image.Save(saveTarget ??
+                               throw new NullReferenceException(
+                                   $"When compressing image, {nameof(saveTarget)} is null!"));
+                }
             }
         }
     }
