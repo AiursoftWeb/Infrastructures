@@ -49,7 +49,7 @@ public static class Extends
         logger.LogInformation("Getting Probe sites...");
         var sites = await sitesService.ViewMySitesAsync(token);
 
-        if (!sites.Sites.Any(s => s.SiteName == siteName))
+        if (sites.Sites.All(s => s.SiteName != siteName))
         {
             logger.LogInformation("Creating new Probe site...");
             await sitesService.CreateNewSiteAsync(token, siteName, openToUpload, openToDownload);
