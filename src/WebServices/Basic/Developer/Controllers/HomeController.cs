@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.Developer.Data;
 using Aiursoft.Developer.Models;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Handler.Attributes;
@@ -8,6 +9,7 @@ using Aiursoft.Identity.Attributes;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -18,13 +20,16 @@ public class HomeController : Controller
 {
     private readonly DirectoryConfiguration _directoryLocator;
     private readonly ILogger _logger;
+    private readonly DeveloperDbContext _context;
     private readonly SignInManager<DeveloperUser> _signInManager;
 
     public HomeController(
+        DeveloperDbContext context,
         SignInManager<DeveloperUser> signInManager,
         ILoggerFactory loggerFactory,
         IOptions<DirectoryConfiguration> directoryLocator)
     {
+        _context = context;
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();
         _directoryLocator = directoryLocator.Value;
@@ -34,6 +39,12 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         return View();
+    }
+
+    public async Task<IActionResult> OneTimeExport()
+    {
+        var apps = await _context.Apps.ToListAsync();
+        return Json(apps);
     }
 
     [AiurForceAuth("", "", true)]

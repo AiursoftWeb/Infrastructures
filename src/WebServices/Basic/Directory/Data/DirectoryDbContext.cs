@@ -15,4 +15,6 @@ public class DirectoryDbContext : IdentityDbContext<DirectoryUser>
     public DbSet<UserEmail> UserEmails { get; set; }
     public DbSet<AuditLogLocal> AuditLogs { get; set; }
     public DbSet<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
+    
+    public DbSet<DirectoryAppInDb> DirectoryAppsInDb { get; set; }
 }
