@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
@@ -107,17 +106,6 @@ public class HomeController : ControllerBase
             .Users
             .Include(t => t.Emails)
             .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
-    }
-
-    public async Task<IActionResult> ImportApps([FromBody]List<DirectoryAppInDb> apps)
-    {
-        foreach (var app in apps)
-        {
-            await _dbContext.AddAsync(app);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        return Ok();
     }
 
     [AiurNoCache]
