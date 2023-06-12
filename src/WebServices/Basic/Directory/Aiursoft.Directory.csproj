@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Aiursoft.Canon" Version="6.0.1" />
+	<PackageReference Include="Aiursoft.Canon" Version="6.0.4" />
     <PackageReference Include="Twilio" Version="6.7.0" />
     <PackageReference Include="Edi.Captcha" Version="3.15.0" />
   </ItemGroup>

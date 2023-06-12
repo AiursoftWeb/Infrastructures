@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Services;
@@ -41,7 +41,7 @@ public class FileDeleter : ITransientDependency
                 .AnyAsync(f => f.HardwareId == file.HardwareId);
             if (!haveDaemon)
             {
-                await _retryEngine.RunWithTry(_ =>
+                await _retryEngine.RunWithRetry(_ =>
                 {
                     _storageProvider.DeleteToTrash(file.HardwareId);
                     return Task.FromResult(0);
