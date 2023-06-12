@@ -41,15 +41,9 @@ public class AuthorizeConfirmViewModel : FinishAuthInfo
 
     public string TermsUrl { get; set; }
     public string PStatementUrl { get; set; }
-    public string FailBackUrl { get; set; }
 
     public string GetRedirectRoot()
     {
-        if (!string.IsNullOrWhiteSpace(FailBackUrl))
-        {
-            return FailBackUrl;
-        }
-
         var url = new Uri(RedirectUri);
         return $@"{url.Scheme}://{url.Host}/?{AuthValues.DirectShowString.Key}={AuthValues.DirectShowString.Value}";
     }

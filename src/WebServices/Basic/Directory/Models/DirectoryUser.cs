@@ -25,6 +25,9 @@ public class DirectoryUser : AiurUserBase
 
     [InverseProperty(nameof(ThirdPartyAccount.Owner))]
     public IEnumerable<ThirdPartyAccount> ThirdPartyAccounts { get; set; }
+    
+    [InverseProperty(nameof(DirectoryAppInDb.Creator))]
+    public IEnumerable<DirectoryAppInDb> CreatedApps { get; set; }
 
     public string SMSPasswordResetToken { get; set; }
     public bool Has2FAKey { get; set; }

@@ -20,12 +20,12 @@ public class AiursoftAppTokenValidator : IScopedDependency
 
     public virtual async Task<string> ValidateAccessTokenAsync(string value)
     {
-        ACToken token;
+        AppToken token;
         try
         {
             var tokenParts = value.Split('.');
             string tokenBase64 = tokenParts[0], tokenSign = tokenParts[1];
-            token = JsonConvert.DeserializeObject<ACToken>(tokenBase64.Base64ToString());
+            token = JsonConvert.DeserializeObject<AppToken>(tokenBase64.Base64ToString());
             if (DateTime.UtcNow > token.Expires)
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");

@@ -23,7 +23,6 @@ using Microsoft.Extensions.Logging;
 namespace Aiursoft.Directory.Controllers;
 
 [LimitPerMin]
-[UserFriendlyNotFoundHandler]
 public class OAuthController : Controller
 {
     private readonly bool _allowPasswordSignIn;
@@ -171,7 +170,6 @@ public class OAuthController : Controller
             UserNickName = user.NickName,
             AppId = model.AppId,
             RedirectUri = model.RedirectUri,
-            FailBackUrl = app.AppFailCallbackUrl,
             State = model.State,
             // Permissions
             ViewOpenId = app.ViewOpenId,

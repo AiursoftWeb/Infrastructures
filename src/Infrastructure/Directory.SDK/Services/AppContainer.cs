@@ -37,6 +37,6 @@ public class AppContainer
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(this._appSecret, this.AppId);
+        return HashCode.Combine(_appSecret, AppId);
     }
 }

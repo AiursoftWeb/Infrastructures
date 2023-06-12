@@ -48,7 +48,7 @@ public class DownloadController : Controller
         _fileRepo = fileRepo;
         _siteRepo = siteRepo;
         _logger = logger;
-        this._probeLocator = probeLocator;
+        _probeLocator = probeLocator;
     }
 
     [Route("File/{SiteName}/{**FolderNames}", Name = "File")]

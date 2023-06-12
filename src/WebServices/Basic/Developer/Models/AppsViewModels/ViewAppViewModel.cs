@@ -34,8 +34,6 @@ public class ViewAppViewModel : CreateAppViewModel
 
         AppName = thisApp.AppName;
         AppDescription = thisApp.AppDescription;
-        AppCategory = thisApp.AppCategory;
-        AppPlatform = thisApp.AppPlatform;
         AppId = thisApp.AppId;
         AppSecret = thisApp.AppSecret;
         EnableOAuth = thisApp.EnableOAuth;
@@ -46,7 +44,6 @@ public class ViewAppViewModel : CreateAppViewModel
         LicenseUrl = thisApp.LicenseUrl;
         IconPath = thisApp.IconPath;
         AppDomain = thisApp.AppDomain;
-        AppFailCallbackUrl = thisApp.AppFailCallbackUrl;
 
         ViewOpenId = thisApp.ViewOpenId;
         ViewPhoneNumber = thisApp.ViewPhoneNumber;
@@ -81,10 +78,6 @@ public class ViewAppViewModel : CreateAppViewModel
     [Display(Name = "App Domain")]
     [ValidDomainName]
     public string AppDomain { get; set; }
-
-    [Url]
-    [Display(Name = "App fail OAuth callback URL")]
-    public string AppFailCallbackUrl { get; set; }
 
     // Permissions
     [Display(Name = "View user's basic identity info")]

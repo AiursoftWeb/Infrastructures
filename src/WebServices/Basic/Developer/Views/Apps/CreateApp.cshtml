@@ -42,36 +42,7 @@
                             <textarea class="form-control" asp-for="AppDescription" rows="3" placeholder="Enter a short description about your app..."></textarea>
                             <span asp-validation-for="AppDescription" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="AppPlatform"></label>
-                            <select class="form-control" asp-for="AppPlatform">
-                                <option value="0">@Localizer["Cross Platform"]</option>
-                                <option value="1">@Localizer["Android"]</option>
-                                <option value="2">@Localizer["iOS"]</option>
-                                <option value="3">@Localizer["Windows Desktop"]</option>
-                                <option value="4">@Localizer["Windows UWP"]</option>
-                                <option value="5">@Localizer["Linux"]</option>
-                                <option value="6">@Localizer["Mac OS"]</option>
-                                <option value="7">@Localizer["Web / HTML / PWA"]</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="AppCategory"></label>
-                            <select class="form-control" asp-for="AppCategory">
-                                <option value="0">@Localizer["Development"]</option>
-                                <option value="1">App for @Values.ProjectName</option>
-                                <option value="2">@Localizer["App for pages"]</option>
-                                <option value="3">@Localizer["Books"]</option>
-                                <option value="4">@Localizer["Business"]</option>
-                                <option value="5">@Localizer["Communication"]</option>
-                                <option value="6">@Localizer["Education"]</option>
-                                <option value="7">@Localizer["Entertainment"]</option>
-                                <option value="8">@Localizer["Fashion"]</option>
-                                <option value="9">@Localizer["Finance"]</option>
-                                <option value="10">@Localizer["Food &amp; Drink"]</option>
-                                <option value="11">@Localizer["Game"]</option>
-                            </select>
-                        </div>
+                       
                         <div class="form-group">
                             <label asp-for="IconPath">@Localizer["Upload your app icon"]</label>
                             <vc:aiur-uploader asp-for="@nameof(Model.IconPath)" site-name="@Configuration["AppsIconSiteName"]" path="Unamed-Apps" size-in-mb="2" allowed-extensions="png jpg bmp" default-file="aiursoft-app-icons/appdefaulticon.png"></vc:aiur-uploader>

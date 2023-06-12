@@ -89,8 +89,7 @@ public class AppsController : Controller
             return View(model);
         }
 
-        var newApp = new DeveloperApp(model.AppName, model.AppDescription, model.AppCategory, model.AppPlatform,
-            model.IconPath)
+        var newApp = new DeveloperApp(model.AppName, model.AppDescription, model.IconPath)
         {
             CreatorId = currentUser.Id
         };
@@ -141,8 +140,6 @@ public class AppsController : Controller
 
         target.AppName = model.AppName;
         target.AppDescription = model.AppDescription;
-        target.AppCategory = model.AppCategory;
-        target.AppPlatform = model.AppPlatform;
         target.EnableOAuth = model.EnableOAuth;
         target.ForceInputPassword = model.ForceInputPassword;
         target.ForceConfirmation = model.ForceConfirmation;
@@ -150,7 +147,6 @@ public class AppsController : Controller
         target.PrivacyStatementUrl = model.PrivacyStatementUrl;
         target.LicenseUrl = model.LicenseUrl;
         target.AppDomain = model.AppDomain;
-        target.AppFailCallbackUrl = model.AppFailCallbackUrl;
         // Permissions
         var permissionAdded = false;
         target.ViewOpenId = _ChangePermission(target.ViewOpenId, model.ViewOpenId, ref permissionAdded);

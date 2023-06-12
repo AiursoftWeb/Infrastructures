@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Aiursoft.Developer.SDK.Models;
 
 namespace Aiursoft.Developer.Models.AppsViewModels;
 
@@ -21,14 +20,6 @@ public class CreateAppViewModel : AppLayoutModel
     public string AppName { get; set; }
 
     [Display(Name = "App Description")] public string AppDescription { get; set; }
-
-    [Required]
-    [Display(Name = "App Category")]
-    public Category AppCategory { get; set; }
-
-    [Required]
-    [Display(Name = "App Platform")]
-    public Platform AppPlatform { get; set; }
 
     [Required]
     [Display(Name = "Icon Path")]

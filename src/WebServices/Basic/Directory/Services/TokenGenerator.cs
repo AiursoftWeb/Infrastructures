@@ -18,7 +18,7 @@ public class TokenGenerator : IScopedDependency
 
     public (string tokenString, DateTime expireTime) GenerateAccessToken(string appId)
     {
-        var token = new ACToken
+        var token = new AppToken
         {
             AppId = appId,
             Expires = DateTime.UtcNow + new TimeSpan(0, 20, 0)

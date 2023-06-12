@@ -32,7 +32,7 @@ public class MonitorDataProvider : ISingletonDependency
         IOptions<List<MonitorRule>> customRules)
     {
         this.directoryConfiguration = directoryConfiguration.Value;
-        this.observerLocator = observerConfiguration.Value;
+        observerLocator = observerConfiguration.Value;
         this.serviceLocation = serviceLocation;
         this.stargateLocator = stargateLocator.Value;
         this.probeLocator = probeLocator.Value;

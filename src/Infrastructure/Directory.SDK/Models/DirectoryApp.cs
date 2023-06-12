@@ -2,16 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Developer.SDK.Models;
+namespace Aiursoft.Directory.SDK.Models;
 
-public class App
+public class DirectoryApp
 {
     [Obsolete(error: true, message: "This method is only for framework!")]
-    public App()
+    public DirectoryApp()
     {
     }
 
-    public App(string name, string description, string iconPath)
+    public DirectoryApp(string name, string description, string iconPath)
     {
         AppId = Guid.NewGuid().ToString("N");
         AppSecret = Guid.NewGuid().ToString("N");
@@ -37,17 +37,11 @@ public class App
     public DateTime AppCreateTime { get; set; } = DateTime.UtcNow;
 
     public bool EnableOAuth { get; set; } = true;
-
-    /// <summary>
-    /// Force the user to input his password even when he is already signed in.
-    /// </summary>
     public bool ForceInputPassword { get; set; }
-
     public bool ForceConfirmation { get; set; } = true;
     public bool DebugMode { get; set; }
     public string AppDomain { get; set; }
     public string AppFailCallbackUrl { get; set; }
-
     public bool ViewOpenId { get; set; } = true;
     public bool ViewPhoneNumber { get; set; }
     public bool ChangePhoneNumber { get; set; }

@@ -12,8 +12,8 @@ public class DeveloperApp : App
     {
     }
 
-    public DeveloperApp(string name, string description, Category category, Platform platform, string iconPath = null)
-        : base(name, description, category, platform, iconPath)
+    public DeveloperApp(string name, string description, string iconPath)
+        : base(name, description,iconPath)
     {
     }
 
