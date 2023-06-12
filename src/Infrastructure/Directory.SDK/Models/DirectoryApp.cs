@@ -22,7 +22,7 @@ public class DirectoryApp
 
     [Key] public string AppId { get; set; }
 
-    [JsonIgnore] public string AppSecret { get; set; }
+    public string AppSecret { get; set; }
 
     public string AppName { get; set; }
 
