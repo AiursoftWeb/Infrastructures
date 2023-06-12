@@ -113,8 +113,15 @@ public class HomeController : ControllerBase
     {
         foreach (var app in apps)
         {
-            await _dbContext.AddAsync(app);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.AddAsync(app);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         return Ok();
