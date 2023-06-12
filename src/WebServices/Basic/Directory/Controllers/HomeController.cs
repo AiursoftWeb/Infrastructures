@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
@@ -109,24 +108,6 @@ public class HomeController : ControllerBase
             .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
     
-    public async Task<IActionResult> ImportApps([FromBody]List<DirectoryAppInDb> apps)
-    {
-        foreach (var app in apps)
-        {
-            try
-            {
-                await _dbContext.AddAsync(app);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        return Ok();
-    }
-
     [AiurNoCache]
     [Route("get-captcha-image")]
     public IActionResult GetCaptchaImage()

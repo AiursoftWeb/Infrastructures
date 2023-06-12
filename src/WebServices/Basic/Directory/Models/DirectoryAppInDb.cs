@@ -17,6 +17,7 @@ public class DirectoryAppInDb : DirectoryApp
     {
     }
 
+    [JsonIgnore]
     public string CreatorId { get; set; }
 
     [ForeignKey(nameof(CreatorId))]

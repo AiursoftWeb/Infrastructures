@@ -20,14 +20,16 @@ public class DirectoryApp
         IconPath = iconPath;
     }
 
-    [Key] public string AppId { get; set; }
+    [Key] 
+    public string AppId { get; set; }
 
+    [JsonIgnore]
     public string AppSecret { get; set; }
 
     public string AppName { get; set; }
 
     /// <summary>
-    /// sitename/filepath/filename.extension
+    /// Format is: site-name/filepath/filename.extension
     /// </summary>
     public string IconPath { get; set; }
 
