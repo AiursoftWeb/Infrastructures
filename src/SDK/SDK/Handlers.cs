@@ -7,7 +7,11 @@ namespace Aiursoft.SDK;
 
 public static class Handlers
 {
-    public static IApplicationBuilder UseAiuroftHandler(this IApplicationBuilder app, bool isDevelopment, bool allowCors = true, bool addUserFriendlyPages = true)
+    public static IApplicationBuilder UseAiursoftHandler(
+        this IApplicationBuilder app, 
+        bool isDevelopment, 
+        bool allowCors = true, 
+        bool addUserFriendlyPages = true)
     {
         // Recognize correct IP address.
         app.UseForwardedHeaders(new ForwardedHeadersOptions

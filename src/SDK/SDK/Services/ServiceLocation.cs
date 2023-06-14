@@ -23,7 +23,7 @@ public class ServiceLocation : ISingletonDependency
         Wiki = TrySet(section["WikiPath"], "https://wiki.aiursoft.com");
         WWW = TrySet(section["WWWPath"], "https://www.aiursoft.com");
         Status = TrySet(section["StatusPath"], "https://status.aiursoft.com");
-        AsyncHelper.RunSync(async () => { UI = await TryGetCDNDomain(UI); });
+        AsyncHelper.RunSync(async () => { UI = await TryGetCdnDomain(UI); });
     }
 
     public string Account { get; private set; }
@@ -37,7 +37,7 @@ public class ServiceLocation : ISingletonDependency
         return string.IsNullOrWhiteSpace(setting) ? defaultValue : setting;
     }
 
-    public async Task<string> TryGetCDNDomain(string input)
+    public async Task<string> TryGetCdnDomain(string input)
     {
         var domains = input.Split('.').ToList();
         domains.Insert(1, "cdn");
