@@ -94,7 +94,7 @@ public static class Extends
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(config =>
             {
-                // Todo: load from observer.
+                // Todo: load from configuration center.
                 _ = config.Build().GetValue<string>("AppId");
                 config.AddInMemoryCollection(new List<KeyValuePair<string, string>>
                 {

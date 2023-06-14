@@ -1,7 +1,7 @@
 ﻿using System;
 using Aiursoft.Handler.Models;
 
-namespace Aiursoft.Directory.SDK.Models.API.APIViewModels;
+namespace Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 
 public class AccessTokenViewModel : AiurProtocol
 {

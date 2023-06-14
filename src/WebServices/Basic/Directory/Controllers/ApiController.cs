@@ -1,18 +1,8 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.DBTools;
-using Aiursoft.DBTools.Models;
 using Aiursoft.Directory.Data;
-using Aiursoft.Directory.SDK.Models.API;
-using Aiursoft.Directory.SDK.Models.API.APIAddressModels;
-using Aiursoft.Directory.SDK.Models.API.APIViewModels;
-using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Directory.Services;
 using Aiursoft.Directory.Models;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Models;
@@ -28,20 +18,14 @@ namespace Aiursoft.Directory.Controllers;
 public class ApiController : Controller
 {
     private readonly DirectoryDbContext _dbContext;
-    private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly UserManager<DirectoryUser> _userManager;
-    private readonly TokenGenerator _tokenGenerator;
 
     public ApiController(
-        TokenGenerator tokenGenerator,
         UserManager<DirectoryUser> userManager,
-        DirectoryDbContext context,
-        AiursoftAppTokenValidator tokenManager)
+        DirectoryDbContext context)
     {
-        _tokenGenerator = tokenGenerator;
         _userManager = userManager;
         _dbContext = context;
-        _tokenManager = tokenManager;
     }
 
     private void _ApplyCultureCookie(string culture)
@@ -100,67 +84,11 @@ public class ApiController : Controller
         return Redirect(toGo.ToString());
     }
 
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
-    [Produces(typeof(AiurPagedCollection<Grant>))]
-    public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
-    {
-        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
-        var query = _dbContext
-            .LocalAppGrant
-            .Include(t => t.User)
-            .Where(t => t.AppId == appid)
-            .OrderByDescending(t => t.GrantTime);
-        var result = await AiurPagedCollectionBuilder.BuildAsync<Grant>(
-            query,
-            model,
-            ErrorType.Success,
-            "Successfully get all your users");
-        return this.Protocol(result);
-    }
-
-    [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
-    public async Task<IActionResult> DropGrants([Required] string accessToken)
-    {
-        var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
-        _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
-        await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully dropped all users granted!");
-    }
-
     private Task<DirectoryUser> GetCurrentUserAsync()
     {
         return _dbContext
             .Users
             .Include(t => t.Emails)
             .FirstOrDefaultAsync(t => t.UserName == User.Identity.Name);
-    }
-
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
-    [Produces(typeof(AccessTokenViewModel))]
-    public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
-    {
-        var target = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
-        if (target == null)
-        {
-            return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
-        }
-
-        if (target.AppSecret != model.AppSecret)
-        {
-            return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
-        }
-        
-        var token = _tokenGenerator.GenerateAccessToken(model.AppId);
-        return this.Protocol(new AccessTokenViewModel
-        {
-            Code = ErrorType.Success,
-            Message = "Successfully get access token.",
-            AccessToken = token.tokenString,
-            DeadTime = token.expireTime
-        });
     }
 }

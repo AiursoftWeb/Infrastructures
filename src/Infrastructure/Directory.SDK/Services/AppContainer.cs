@@ -28,7 +28,7 @@ public class AppContainer
         }
 
         using var scope = scopeFactory.CreateScope();
-        var apiService = scope.ServiceProvider.GetRequiredService<AccessTokenService>();
+        var apiService = scope.ServiceProvider.GetRequiredService<AppsService>();
         var serverResult = await apiService.AccessTokenAsync(AppId, _appSecret);
         _latestAccessToken = serverResult.AccessToken;
         _accessTokenDeadTime = serverResult.DeadTime - TimeSpan.FromSeconds(20);

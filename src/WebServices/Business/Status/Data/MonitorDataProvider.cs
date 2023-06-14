@@ -56,14 +56,6 @@ public class MonitorDataProvider : ISingletonDependency
             },
             new()
             {
-                ProjectName = "Aiursoft Developer",
-
-                // TODO: Developer will be merged to directory.
-                CheckAddress = $"https://developer.aiursoft.com/?show=direct",
-                ExpectedContent = "Welcome to"
-            },
-            new()
-            {
                 ProjectName = "Aiursoft Directory service",
                 CheckAddress =
                     $"{directoryConfiguration.Instance}/oauth/authorize?appid={directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
