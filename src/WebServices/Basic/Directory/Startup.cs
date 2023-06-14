@@ -1,5 +1,4 @@
 ﻿using System;
-using Aiursoft.Developer.SDK;
 using Aiursoft.Directory.Models;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services;
@@ -44,10 +43,6 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
-
-#pragma warning disable CS0618 // Type or member is obsolete
-        services.AddDeveloperServer(Configuration.GetConnectionString("DeveloperConnection"));
-#pragma warning restore CS0618 // Type or member is obsolete
 
         services.AddTaskCanon();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));

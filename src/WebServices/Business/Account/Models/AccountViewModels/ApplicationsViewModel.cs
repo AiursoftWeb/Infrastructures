@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aiursoft.Developer.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 
 namespace Aiursoft.Account.Models.AccountViewModels;
@@ -16,7 +16,7 @@ public class ApplicationsViewModel : AccountViewModel
     {
     }
 
-    public IEnumerable<App> Apps { get; set; }
+    public List<DirectoryApp> Apps { get; set; }
 
     public IEnumerable<Grant> Grants { get; set; } = new List<Grant>();
 }

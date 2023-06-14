@@ -32,14 +32,14 @@ public class UserController : ControllerBase
     private readonly DirectoryDbContext _dbContext;
     private readonly GrantChecker _grantChecker;
     private readonly ServiceLocation _serviceLocation;
-    private readonly TwoFAHelper _twoFAHelper;
+    private readonly TwoFAHelper _twoFaHelper;
     private readonly UserManager<DirectoryUser> _userManager;
 
     public UserController(
         UserManager<DirectoryUser> userManager,
         DirectoryDbContext context,
         GrantChecker grantChecker,
-        TwoFAHelper twoFAHelper,
+        TwoFAHelper twoFaHelper,
         IEnumerable<IAuthProvider> authProviders,
         ServiceLocation serviceLocation,
         CanonService cannonService)
@@ -47,7 +47,7 @@ public class UserController : ControllerBase
         _userManager = userManager;
         _dbContext = context;
         _grantChecker = grantChecker;
-        _twoFAHelper = twoFAHelper;
+        _twoFaHelper = twoFaHelper;
         _authProviders = authProviders;
         _serviceLocation = serviceLocation;
         _cannonService = cannonService;
@@ -96,14 +96,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangePhoneNumber);
-        if (string.IsNullOrWhiteSpace(model.Phone))
-        {
-            user.PhoneNumber = string.Empty;
-        }
-        else
-        {
-            user.PhoneNumber = model.Phone;
-        }
+        user.PhoneNumber = string.IsNullOrWhiteSpace(model.Phone) ? string.Empty : model.Phone;
 
         await _userManager.UpdateAsync(user);
         return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
@@ -355,10 +348,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> View2FAKey(UserOperationAddressModel model)
     {
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ChangeBasicInfo);
-        var (twoFAKey, twoFAQRUri) = await _twoFAHelper.LoadSharedKeyAndQrCodeUriAsync(user);
+        var (twoFaKey, twoFAQRUri) = await _twoFaHelper.LoadSharedKeyAndQrCodeUriAsync(user);
         return this.Protocol(new View2FAKeyViewModel
         {
-            TwoFAKey = twoFAKey,
+            TwoFAKey = twoFaKey,
             TwoFAQRUri = twoFAQRUri,
             Code = ErrorType.Success,
             Message = "Successfully set the user's TwoFAKey!"

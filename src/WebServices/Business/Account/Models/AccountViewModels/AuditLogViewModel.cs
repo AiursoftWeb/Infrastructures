@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Aiursoft.Developer.SDK.Models;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Handler.Models;
 
@@ -17,6 +17,6 @@ public class AuditLogViewModel : AccountViewModel
     {
     }
 
-    public ConcurrentBag<App> Apps { get; set; } = new();
+    public ConcurrentBag<DirectoryApp> Apps { get; set; } = new();
     public AiurPagedCollection<AuditLog> Logs { get; set; }
 }

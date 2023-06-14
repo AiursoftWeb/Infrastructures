@@ -34,7 +34,7 @@ public class SignInAddressModel
                 State = values.SingleOrDefault(t => t.Key == "state".ToLower()).Value
             };
         }
-        catch (Exception e) when (e is IndexOutOfRangeException || e is NullReferenceException)
+        catch (Exception e) when (e is IndexOutOfRangeException or NullReferenceException)
         {
             throw new AiurAPIModelException(ErrorType.InvalidInput, "State is invalid!");
         }

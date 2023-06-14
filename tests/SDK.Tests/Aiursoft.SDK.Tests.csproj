@@ -6,7 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
 	  <ProjectReference Include="..\..\src\SDK\SDK\Aiursoft.SDK.csproj" />
 	</ItemGroup>
 

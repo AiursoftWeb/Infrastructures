@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Aiursoft.Developer.SDK.Models;
 
+[Obsolete]
 public class App
 {
     [Obsolete(error: true, message: "This method is only for framework!")]

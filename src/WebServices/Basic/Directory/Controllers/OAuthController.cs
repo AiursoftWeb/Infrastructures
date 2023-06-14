@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.Models.OAuthViewModels;
@@ -27,7 +26,6 @@ public class OAuthController : Controller
 {
     private readonly bool _allowPasswordSignIn;
     private readonly bool _allowRegistering;
-    private readonly DeveloperApiService _apiService;
     private readonly AuthLogger _authLogger;
     private readonly UserAppAuthManager _authManager;
     private readonly CanonService _cannonService;
@@ -42,7 +40,6 @@ public class OAuthController : Controller
         SignInManager<DirectoryUser> signInManager,
         ILoggerFactory loggerFactory,
         DirectoryDbContext context,
-        DeveloperApiService developerApiService,
         ISessionBasedCaptcha sessionBasedCaptcha,
         UserAppAuthManager authManager,
         AuthLogger authLogger,
@@ -53,7 +50,6 @@ public class OAuthController : Controller
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<OAuthController>();
         _dbContext = context;
-        _apiService = developerApiService;
         _captcha = sessionBasedCaptcha;
         _authManager = authManager;
         _authLogger = authLogger;
@@ -70,7 +66,14 @@ public class OAuthController : Controller
             return View("AuthError");
         }
 
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         var url = new Uri(model.RedirectUri);
         var user = await GetCurrentUserAsync();
         // Wrong domain
@@ -109,7 +112,14 @@ public class OAuthController : Controller
             return Unauthorized();
         }
 
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         if (!ModelState.IsValid)
         {
             model.Recover(app.AppName, app.IconPath, _allowRegistering, _allowPasswordSignIn);
@@ -162,7 +172,14 @@ public class OAuthController : Controller
             return View("AuthError");
         }
 
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         var user = await GetCurrentUserAsync();
         var viewModel = new AuthorizeConfirmViewModel
         {
@@ -229,7 +246,14 @@ public class OAuthController : Controller
         }
 
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         var authenticatorCode = model.VerifyCode.Replace(" ", string.Empty).Replace("-", string.Empty);
         var result =
             await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, model.DoNotAskMeOnIt);
@@ -238,14 +262,10 @@ public class OAuthController : Controller
             return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
         }
 
-        if (result.IsLockedOut)
-        {
-            ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
-        }
-        else
-        {
-            ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
-        }
+        ModelState.AddModelError(string.Empty,
+            result.IsLockedOut
+                ? "The account is locked for too many attempts."
+                : "The code is invalid. Please check and try again.");
 
         var viewModel = new SecondAuthViewModel
         {
@@ -283,7 +303,14 @@ public class OAuthController : Controller
         }
 
         var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty).Replace("-", string.Empty);
         var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
         if (result.Succeeded)
@@ -291,14 +318,10 @@ public class OAuthController : Controller
             return await _authManager.FinishAuth(user, model, app.ForceConfirmation, app.TrustedApp);
         }
 
-        if (result.IsLockedOut)
-        {
-            ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
-        }
-        else
-        {
-            ModelState.AddModelError(string.Empty, "The code is invalid. Please check and try again.");
-        }
+        ModelState.AddModelError(string.Empty,
+            result.IsLockedOut
+                ? "The account is locked for too many attempts."
+                : "The code is invalid. Please check and try again.");
 
         var viewModel = new RecoveryCodeAuthViewModel
         {
@@ -317,7 +340,14 @@ public class OAuthController : Controller
             return Unauthorized();
         }
 
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         if (!ModelState.IsValid)
         {
             return View("AuthError");
@@ -341,7 +371,14 @@ public class OAuthController : Controller
             ModelState.AddModelError(string.Empty, "Invalid captcha code!");
         }
 
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
+            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            return View("AuthError");
+        }
+        
         if (!ModelState.IsValid)
         {
             model.Recover(app.AppName, app.IconPath);

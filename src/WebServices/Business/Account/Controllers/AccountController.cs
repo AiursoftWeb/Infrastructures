@@ -8,8 +8,7 @@ using Aiursoft.Account.Models;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Account.Services;
 using Aiursoft.Canon;
-using Aiursoft.Developer.SDK.Models;
-using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.Handler.Attributes;
@@ -38,27 +37,27 @@ public class AccountController : Controller
     private readonly AuthService<AccountUser> _authService;
     private readonly CanonService _cannonService;
     private readonly IConfiguration _configuration;
-    private readonly DeveloperApiService _developerApiService;
     private readonly QRCodeService _qrCodeService;
+    private readonly AppsService _appsService;
     private readonly UserManager<AccountUser> _userManager;
     private readonly UserService _userService;
 
     public AccountController(
+        AppsService appsService,
         UserManager<AccountUser> userManager,
         UserService userService,
         AppsContainer appsContainer,
         IConfiguration configuration,
-        DeveloperApiService developerApiService,
         AuthService<AccountUser> authService,
         IEnumerable<IAuthProvider> authProviders,
         QRCodeService qrCodeService,
         CanonService cannonService)
     {
+        _appsService = appsService;
         _userManager = userManager;
         _userService = userService;
         _appsContainer = appsContainer;
         _configuration = configuration;
-        _developerApiService = developerApiService;
         _authService = authService;
         _authProviders = authProviders;
         _qrCodeService = qrCodeService;
@@ -340,12 +339,12 @@ public class AccountController : Controller
         {
             Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
         };
-        var appsBag = new ConcurrentBag<App>();
+        var appsBag = new ConcurrentBag<DirectoryApp>();
         await model.Grants.ForEachInThreadsPool(async grant =>
         {
             try
             {
-                var appInfo = await _developerApiService.AppInfoAsync(grant.AppId);
+                var appInfo = await _appsService.AppInfoAsync(grant.AppId);
                 appsBag.Add(appInfo.App);
             }
             catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound)
@@ -384,7 +383,7 @@ public class AccountController : Controller
         };
         await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachInThreadsPool(async id =>
         {
-            var appInfo = await _developerApiService.AppInfoAsync(id);
+            var appInfo = await _appsService.AppInfoAsync(id);
             model.Apps.Add(appInfo.App);
         });
         return View(model);

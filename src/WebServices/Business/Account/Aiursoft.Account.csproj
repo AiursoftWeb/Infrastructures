@@ -13,7 +13,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
-		<ProjectReference Include="..\..\..\Infrastructure\Developer.SDK\Aiursoft.Developer.SDK.csproj" />
 	</ItemGroup>
 
 </Project>

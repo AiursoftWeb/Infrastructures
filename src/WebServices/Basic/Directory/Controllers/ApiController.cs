@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
 using Aiursoft.DBTools.Models;
-using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.APIAddressModels;
@@ -31,18 +30,15 @@ public class ApiController : Controller
     private readonly DirectoryDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
     private readonly UserManager<DirectoryUser> _userManager;
-    private readonly DeveloperApiService _developerApiService;
     private readonly TokenGenerator _tokenGenerator;
 
     public ApiController(
         TokenGenerator tokenGenerator,
-        DeveloperApiService developerApiService,
         UserManager<DirectoryUser> userManager,
         DirectoryDbContext context,
         AiursoftAppTokenValidator tokenManager)
     {
         _tokenGenerator = tokenGenerator;
-        _developerApiService = developerApiService;
         _userManager = userManager;
         _dbContext = context;
         _tokenManager = tokenManager;
@@ -147,19 +143,24 @@ public class ApiController : Controller
     [Produces(typeof(AccessTokenViewModel))]
     public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
     {
-        var correctApp = await _developerApiService.IsValidAppAsync(model.AppId, model.AppSecret);
-        if (correctApp)
+        var target = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (target == null)
         {
-            var token = _tokenGenerator.GenerateAccessToken(model.AppId);
-            return this.Protocol(new AccessTokenViewModel
-            {
-                Code = ErrorType.Success,
-                Message = "Successfully get access token.",
-                AccessToken = token.tokenString,
-                DeadTime = token.expireTime
-            });
+            return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
         }
 
-        return this.Protocol(ErrorType.WrongKey, "Wrong app info.");
+        if (target.AppSecret != model.AppSecret)
+        {
+            return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+        }
+        
+        var token = _tokenGenerator.GenerateAccessToken(model.AppId);
+        return this.Protocol(new AccessTokenViewModel
+        {
+            Code = ErrorType.Success,
+            Message = "Successfully get access token.",
+            AccessToken = token.tokenString,
+            DeadTime = token.expireTime
+        });
     }
 }

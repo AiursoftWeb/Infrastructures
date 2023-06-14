@@ -1,38 +1,26 @@
-using System;
-using System.Threading.Tasks;
-using Aiursoft.Developer.Data;
-using Aiursoft.Developer.SDK.Models.ApiAddressModels;
-using Aiursoft.Developer.SDK.Models.ApiViewModels;
-using Aiursoft.Handler.Attributes;
+﻿using System.Threading.Tasks;
+using Aiursoft.Directory.Data;
+using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
+using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
 using Aiursoft.Handler.Models;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.Developer.Controllers;
+namespace Aiursoft.Directory.Controllers;
 
-[Obsolete]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
-[LimitPerMin]
-public class ApiController : ControllerBase
+public class AppsController : ControllerBase
 {
-    private readonly DeveloperDbContext _dbContext;
+    private readonly DirectoryDbContext _dbContext;
 
-    public ApiController(
-        DeveloperDbContext context)
+    public AppsController(
+        DirectoryDbContext context)
     {
         _dbContext = context;
     }
-
-    public IActionResult Error()
-    {
-        throw new Exception("This is a test API error for debugging.");
-    }
-
+    
     public async Task<IActionResult> IsValidApp(IsValidateAppAddressModel model)
     {
-        var target = await _dbContext.Apps.FindAsync(model.AppId);
+        var target = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
         if (target == null)
         {
             return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
@@ -50,8 +38,8 @@ public class ApiController : ControllerBase
     public async Task<IActionResult> AppInfo(AppInfoAddressModel model)
     {
         var target = await _dbContext
-            .Apps
-            .SingleOrDefaultAsync(t => t.AppId == model.AppId);
+            .DirectoryAppsInDb
+            .FindAsync(model.AppId);
 
         if (target == null)
         {

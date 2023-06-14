@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.Data;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Directory.Models;
@@ -27,7 +26,6 @@ namespace Aiursoft.Directory.Controllers;
 [Route("Third-party")]
 public class ThirdPartyController : Controller
 {
-    private readonly DeveloperApiService _apiService;
     private readonly AuthLogger _authLogger;
     private readonly UserAppAuthManager _authManager;
     private readonly DirectoryDbContext _dbContext;
@@ -39,7 +37,6 @@ public class ThirdPartyController : Controller
         DirectoryDbContext dbContext,
         IEnumerable<IAuthProvider> authProviders,
         UserAppAuthManager authManager,
-        DeveloperApiService apiService,
         UserManager<DirectoryUser> userManager,
         SignInManager<DirectoryUser> signInManager,
         AuthLogger authLogger)
@@ -47,7 +44,6 @@ public class ThirdPartyController : Controller
         _dbContext = dbContext;
         _authProviders = authProviders;
         _authManager = authManager;
-        _apiService = apiService;
         _userManager = userManager;
         _signInManager = signInManager;
         _authLogger = authLogger;
@@ -86,7 +82,11 @@ public class ThirdPartyController : Controller
             .Where(t => t.Owner != null)
             .Where(t => t.OpenId != null)
             .FirstOrDefaultAsync(t => t.OpenId == info.Id);
-        var app = (await _apiService.AppInfoAsync(oauthModel.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(oauthModel.AppId);
+        if (app == null)
+        {
+            return NotFound();
+        }
         if (account != null)
         {
             await _authLogger.LogAuthRecord(account.OwnerId, HttpContext, true, app.AppId);
@@ -113,7 +113,12 @@ public class ThirdPartyController : Controller
     [Route("create-account-and-bind/{providerName}")]
     public async Task<IActionResult> CreateAccountAndBind(SignInViewModel model)
     {
-        var app = (await _apiService.AppInfoAsync(model.AppId)).App;
+        var app = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
+        if (app == null)
+        {
+            return NotFound();
+        }
+        
         var exists = _dbContext.UserEmails.Any(t => t.EmailAddress == model.UserDetail.Email.ToLower());
         if (exists)
         {

@@ -1,28 +1,30 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Developer.SDK.Models.ApiAddressModels;
-using Aiursoft.Developer.SDK.Models.ApiViewModels;
+using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
+using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
 using Aiursoft.Handler.Exceptions;
 using Aiursoft.Handler.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Aiursoft.Developer.SDK.Services.ToDeveloperServer;
+namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
-public class DeveloperApiService : IScopedDependency
+public class AppsService : IScopedDependency
 {
     private readonly AiurCache _cache;
     private readonly APIProxyService _http;
-    private readonly DeveloperLocator _serviceLocation;
+    private readonly DirectoryConfiguration _serviceLocation;
 
-    public DeveloperApiService(
-        DeveloperLocator serviceLocation,
+    public AppsService(
+        IOptions<DirectoryConfiguration> serviceLocation,
         APIProxyService http,
         AiurCache cache)
     {
-        _serviceLocation = serviceLocation;
+        _serviceLocation = serviceLocation.Value;
         _http = http;
         _cache = cache;
     }
@@ -55,7 +57,7 @@ public class DeveloperApiService : IScopedDependency
 
     private async Task<bool> IsValidAppWithoutCacheAsync(string appId, string appSecret)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "api", "IsValidApp", new IsValidateAppAddressModel
+        var url = new AiurUrl(_serviceLocation.Instance, "api", "IsValidApp", new IsValidateAppAddressModel
         {
             AppId = appId,
             AppSecret = appSecret
@@ -67,7 +69,7 @@ public class DeveloperApiService : IScopedDependency
 
     private async Task<AppInfoViewModel> AppInfoWithoutCacheAsync(string appId)
     {
-        var url = new AiurUrl(_serviceLocation.Endpoint, "api", "AppInfo", new AppInfoAddressModel
+        var url = new AiurUrl(_serviceLocation.Instance, "api", "AppInfo", new AppInfoAddressModel
         {
             AppId = appId
         });

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Developer.SDK.Services.ToDeveloperServer;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
@@ -19,19 +18,16 @@ namespace Aiursoft.Directory.Controllers;
 [LimitPerMin]
 public class AccountController : ControllerBase
 {
-    private readonly DeveloperApiService _apiService;
     private readonly UserAppAuthManager _authManager;
     private readonly DirectoryDbContext _dbContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public AccountController(
         AiursoftAppTokenValidator tokenManager,
-        DeveloperApiService apiService,
         DirectoryDbContext dbContext,
         UserAppAuthManager authManager)
     {
         _tokenManager = tokenManager;
-        _apiService = apiService;
         _dbContext = dbContext;
         _authManager = authManager;
     }
@@ -60,7 +56,12 @@ public class AccountController : ControllerBase
             return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
         }
 
-        var currentApp = (await _apiService.AppInfoAsync(targetPack.ApplyAppId)).App;
+        var currentApp = await _dbContext.DirectoryAppsInDb.FindAsync(appId);
+        if (currentApp == null)
+        {
+            return this.Protocol(ErrorType.NotFound, $"The app with ID: '{appId}' was not found!.");
+        }
+        
         if (!currentApp.ViewOpenId)
         {
             return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
