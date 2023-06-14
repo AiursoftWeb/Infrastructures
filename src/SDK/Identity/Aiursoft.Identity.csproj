@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup>
-		<Version>6.0.20</Version>
+		<Version>6.0.21</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Company>Aiursoft</Company>
 		<Product>AiursoftWeb</Product>

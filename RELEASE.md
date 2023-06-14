@@ -67,3 +67,7 @@ services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 - Add new handler: UseAiuroftHandler
 - Rename middleware: UseAiursoftAppRouters\UseAiursoftAPIAppRouters
 - Rename to APIExpHandler APIRemoteExceptionHandler
+
+## Version 6.0.21
+
+- Remove Developer related code.
