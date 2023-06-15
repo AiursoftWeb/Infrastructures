@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <vc:aiur-header></vc:aiur-header>
+    <title>@ViewData["Title"] - @Values.ProjectName Portal</title>
+    <vc:aiur-market-css></vc:aiur-market-css>
+    <link href="@ServiceLocation.UI/node_modules/primer-markdown/build/build.css" rel="stylesheet">
+    <link href="@ServiceLocation.UI/node_modules/github-syntax-light/lib/github-light.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="@ServiceLocation.WWW">@Localizer[Values.ProjectName]</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown00" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Localizer["Libraries"]
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown00">
+                        <p class="nav-text-muted">Front-end</p>
+                        <a class="dropdown-item" asp-controller="Samples" asp-action="DisableWithForm">jquery-disable-with</a>
+                        <a class="dropdown-item" asp-controller="Samples" asp-action="UTCTime">jquery-utc-time</a>
+                        <div class="dropdown-divider"></div>
+                        <p class="nav-text-muted">Back-end</p>
+                        <a class="dropdown-item" asp-controller="Samples" asp-action="Scanner">Scanner</a>
+                        <a class="dropdown-item" asp-controller="Samples" asp-action="DocGenerator">DocGenerator</a>
+                        <a class="dropdown-item" href="https://gitlab.aiursoft.cn/Anduin/HSharp" target="_blank">HSharp</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Wiki">Identity</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Localizer["Docs"]
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="@ServiceLocation.Wiki/User%20Authentication/Aiursoft%20authentication.md">@Localizer["OAuth"]</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Wiki/Integrated%20Website/Getting%20Started.md">Probe</a>
+                        <a class="dropdown-item" href="@ServiceLocation.Wiki/Stargate/What%20is%20Stargate.md">@Localizer["Message Queue"]</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Localizer["Tools"]
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown02">
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="WebSocket">@Localizer["WebSocket Debugger"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="Base64">@Localizer["Base64 Converter"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="UrlEncode">@Localizer["URL Encode"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="HtmlEncode">@Localizer["HTML Encode"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="Markdown">@Localizer["Markdown Compiler"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="Rot13">@Localizer["Rot13 Encode"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="JsonFormat">@Localizer["Json Format"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="QRCode">@Localizer["QR Code Generator"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="Uuid">@Localizer[@"Guid\Uuid Generator"]</a>
+                        <a class="dropdown-item" asp-controller="Tools" asp-action="Hash">@Localizer[@"Hash Calculator"]</a>
+                        <a class="dropdown-item" href="https://tracer.aiursoft.com">Tracer - Network speed test</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">@Localizer["Support"]</a>
+                </li>
+            </ul>
+            <div class="form-inline">
+                <ul class="navbar-nav mr-auto">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Apps" asp-action="Index">
+                                @Localizer["Dashboard"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Apps" asp-action="CreateApp">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @await UserImageGenerator.RenderUserImageAsync(User)
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+                                <a class="dropdown-item" href="@ServiceLocation.Account">@Localizer["Settings"]</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">@Localizer["Sign out"]</a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoAuth">
+                                @Localizer["Sign in"]
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Auth" asp-action="GoRegister">
+                                @Localizer["Sign up"]
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div id="render-part">
+    @RenderBody()
+</div>
+<footer class="bd-footer text-muted">
+    <div class="container-fluid p-3 p-md-5">
+        <ul class="bd-footer-links">
+            <vc:aiur-footer item-class="" template="li"></vc:aiur-footer>
+        </ul>
+        <p>
+            &copy; @DateTime.Now.Year - @Values.ProjectName
+            <vc:china-register></vc:china-register>
+        </p>
+    </div>
+</footer>
+<vc:scroll-to-top></vc:scroll-to-top>
+<vc:aiur-logout></vc:aiur-logout>
+<vc:aiur-market-js></vc:aiur-market-js>
+<script src="@ServiceLocation.UI/node_modules/autosize/dist/autosize.min.js"></script>
+<script>
+        window.addEventListener('load', function () {
+            autosize($('textarea'));
+        });
+    </script>
+</body>
+</html>

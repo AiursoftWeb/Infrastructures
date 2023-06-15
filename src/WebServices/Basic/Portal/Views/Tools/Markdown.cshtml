@@ -1,0 +1,86 @@
+﻿@model Aiursoft.Portal.Models.ToolsViewModels.MarkdownViewModel
+@{
+    ViewData["Title"] = "Markdown Compiler Online";
+    ViewData["Des"] = "Compile your markdown to HTML online.";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>@ViewData["Title"]</h3>
+        <p>@ViewBag.Des</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="https://gitlab.aiursoft.cn/Aiursoft/Infrastructures/-/blob/master/src/WebServices/Basic/Portal/Views/Tools/Markdown.cshtml" target="_blank" role="button">
+                <i class="fab fa-gitlab"></i>
+                View it on GitLab
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card mb-5 mt-4">
+                <div class="card-header">
+                    <i class="fa fa-code"></i>
+                    Enter your markdown
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Tools" asp-action="Markdown" method="post">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>Enter the markdown you want to compile to HTML.</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-success float-right" type="submit">
+                                    <i class="fa fa-code"></i>
+                                    Compile
+                                </button>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="SourceMarkdown"></label>
+                            <textarea asp-for="SourceMarkdown" placeholder="Enter your markdown" class="form-control" rows="15"></textarea>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card mb-5 mt-4 w-100">
+                <div class="card-header">
+                    <i class="fas fa-heading"></i>
+                    Rendered HTML
+                </div>
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-html-tab" data-toggle="tab" href="#nav-html" role="tab" aria-controls="nav-html" aria-selected="true">HTML</a>
+                            <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-preview" aria-selected="false">Preview</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-html" role="tabpanel" aria-labelledby="nav-html-tab">
+                            <div class="form-group mt-3">
+                                <textarea asp-for="RenderedHTML" readonly="readonly" onclick="auto_grow(this)" id="renderedHTML" class="form-control" rows="15"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" data-clipboard-target="#renderedHTML" type="submit" data-toggle="tooltip" data-original-title="copied!" data-trigger="click" data-clipboard-text>
+                                    <i class="fa fa-copy"></i>
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                            <article class="markdown-body mt-3">
+                                @Html.Raw(Model.RenderedHTML)
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

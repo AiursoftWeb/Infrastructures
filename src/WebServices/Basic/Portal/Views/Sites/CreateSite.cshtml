@@ -1,0 +1,76 @@
+﻿@model Aiursoft.Portal.Models.SitesViewModels.CreateSiteViewModel
+@{
+    ViewData["Title"] = "Create New Site";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Create site
+        </li>
+    </ol>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-inbox"></i>
+            @Localizer["New Site Info"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Sites" asp-action="CreateSite" asp-route-id="@Model.AppId" method="post" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="SiteName"></label>
+                            <input asp-for="SiteName" type="text" class="form-control" placeholder="Enter your new site name...">
+                            <span asp-validation-for="SiteName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-check col-12 pl-5">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="OpenToUpload"/>
+                            <label asp-for="OpenToUpload"></label>
+                        </label>
+                        <p class="text-muted">If you wanna allow users to upload files to your site anonymously and without permission, check this.</p>
+                    </div>
+
+                    <div class="form-check col-12 pl-5">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="OpenToDownload"/>
+                            <label asp-for="OpenToDownload"></label>
+                        </label>
+                        <p class="text-muted">If you wanna allow users to upload files to your site anonymously and without permission, check this.</p>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" data-disable-with="Creating..." class="btn btn-primary btn">@Localizer["Create"]</button>
+                        <input type="reset" class="btn btn-danger btn" id="cleartoasts" value="@Localizer["Clear"]"/>
+                        @if (!string.IsNullOrEmpty(Model.AppId))
+                        {
+                            <a class="btn btn-info btn" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to app"]</a>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@using Aiursoft.Portal
+@using Aiursoft.Portal.Models
+@using Aiursoft.Portal.Views.Shared.Components.GitContentRenderer
+@using Microsoft.AspNetCore.Identity
+@using Aiursoft.Identity
+@using Aiursoft.SDK
+@using Aiursoft.SDK.Services
+@using Aiursoft.Identity.Services
+@using Aiursoft.Directory.SDK.Models.API
+@using Aiursoft.Observer.SDK.Models
+@using Aiursoft.Stargate.SDK.Services
+@using Aiursoft.Warpgate.SDK.Services
+@using Aiursoft.XelNaga.Tools
+@using Aiursoft.XelNaga.Models
+@using Aiursoft.WebTools
+@using Aiursoft.Probe.SDK.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using Aiursoft.Probe.SDK.Configuration;
+@using Aiursoft.Stargate.SDK.Configuration
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject SignInManager<PortalUser> SignInManager
+@inject UserManager<PortalUser> UserManager
+@inject ServiceLocation ServiceLocation
+@inject ProbeSettingsFetcher ProbeLocator
+@inject WarpgateSettingsFetcher WarpgateLocator
+@inject IOptions<StargateConfiguration> StargateLocator
+@inject UserImageGenerator<PortalUser> UserImageGenerator
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Aiursoft.Identity
+@addTagHelper *, Aiursoft.Portal
+@addTagHelper *, Aiursoft.SDK

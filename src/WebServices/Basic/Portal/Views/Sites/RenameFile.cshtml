@@ -1,0 +1,87 @@
+﻿@model Aiursoft.Portal.Models.SitesViewModels.RenameFileViewModel
+@{
+    ViewData["Title"] = "Rename File - " + Model.Path;
+    var currentPath = "";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="">@Model.SiteName</a>
+        </li>
+        @foreach (var path in Model.Path?.Split('/') ?? new string[0])
+        {
+            <li class="breadcrumb-item">
+                @* ReSharper disable once AccessToModifiedClosure *@
+                @{
+                    currentPath = currentPath + path;
+                    <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="@currentPath">
+                        @path
+                    </a>
+                    currentPath = currentPath + "/";
+                }
+            </li>
+        }
+        <li class="breadcrumb-item active">
+            Rename file
+        </li>
+    </ol>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>@Localizer["Invalid Input!"]</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-trash-alt ico"></i>
+            @Localizer["Rename File"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Sites" asp-action="RenameFile" method="post" asp-route-siteName="@Model.SiteName" asp-route-appId="@Model.AppId">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="NewName"></label>
+                                <input asp-for="NewName" type="text" class="form-control">
+                                <span asp-validation-for="NewName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="SiteName"></label>
+                                <input asp-for="SiteName" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Path"></label>
+                                <input asp-for="Path" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 margin-top-30">
+                            <a class="btn btn-success" asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" asp-route-path="@Model.Path.DetachPath()">@Localizer["Back to Folder"]</a>
+                            <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to rename"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

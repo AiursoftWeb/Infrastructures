@@ -1,0 +1,57 @@
+﻿@model Aiursoft.Portal.Models.SitesViewModels.DeleteViewModel
+@{
+    ViewData["Title"] = "Delete Site - " + Model.SiteName;
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="AllApps">@Localizer["All Apps"]</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Model.AppName</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Sites" asp-action="ViewFiles" asp-route-appId="@Model.AppId" asp-route-sitename="@Model.SiteName" asp-route-path="">@Model.SiteName</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Delete site
+        </li>
+    </ol>
+
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+        </button>
+        <strong>@Localizer["Caution!"]</strong> You are about to delete site "@Model.SiteName"! If you are confirmed to continue, you will lose all<strong> folders and files</strong>. @Localizer["and this site won't be able to use again! This process is not recoverable!"]
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-trash-alt ico"></i>
+            @Localizer["Delete Site"]
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <form asp-controller="Sites" asp-action="Delete" asp-route-appId="@Model.AppId" asp-route-siteName="@Model.SiteName" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="SiteName"></label>
+                                <input asp-for="SiteName" type="text" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 margin-top-30">
+                            <a class="btn btn-success" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">@Localizer["Back to App"]</a>
+                            <button class="btn btn-danger" data-disable-with="Deleting..." type="submit">@Localizer["Confirm to delete"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

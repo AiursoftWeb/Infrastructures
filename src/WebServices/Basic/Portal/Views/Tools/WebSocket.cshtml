@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "WebSocket Tester";
+    ViewData["Des"] = "Test your WebSocket server and connection online.";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>@ViewData["Title"]</h3>
+        <p>@ViewData["Des"]</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="https://gitlab.aiursoft.cn/Aiursoft/Infrastructures/-/blob/master/src/WebServices/Basic/Portal/Views/Tools/WebSocket.cshtml" target="_blank" role="button">
+                <i class="fab fa-gitlab"></i>
+                View it on GitLab
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-lg-12 col-md-12">
+        <div class="card mb-5 mt-4">
+            <div class="card-header">
+                <i class="fa fa-network"></i>
+                Test your connection
+            </div>
+            <div class="card-body">
+                <div class="col-md-6">
+                    <h4>Use your WebSocket server address to connect.</h4>
+                    <hr/>
+                    <div class="form-group">
+                        <label>WS Address</label>
+                        <input placeholder="wss://" type="url" id="id" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" onclick="trigger()">Connect</button>
+                    </div>
+                    <kdb id="spanStatus" class="text-danger">Waiting</kdb>
+                </div>
+                <div class="col-md-6">
+                    <div id="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var connect = function (address) {
+        var target = address;
+        var webSocket = new WebSocket(target);
+        webSocket.onopen = function () {
+            $("#spanStatus").text("Connected to " + target);
+        };
+        webSocket.onmessage = function (evt) {
+            $("#message").append('<p>' + evt.data + '</p>');
+        };
+        webSocket.onerror = function () {
+            alert('Can not connect!');
+        };
+        webSocket.onclose = function () {
+            $("#spanStatus").text("Disconnected!");
+        };
+    };
+    var trigger = function () {
+        connect($('#id').val());
+    }
+</script>

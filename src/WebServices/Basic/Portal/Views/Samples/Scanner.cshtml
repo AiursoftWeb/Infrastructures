@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Scanner";
+    ViewData["Des"] = "An Automatic dependencies management system for ASP.NET Core and powers Aiursoft.";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>Aiursoft Scanner</h3>
+        <p>@ViewBag.Des</p>
+        <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-lg" href="https://gitlab.aiursoft.cn/aiursoft/scanner/" target="_blank" role="button">
+                <i class="fab fa-gitlab"></i>
+                View it on GitLab
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <vc:git-content-renderer server="gitlab.aiursoft.cn" org="aiursoft" repo="Scanner" path="README.md"></vc:git-content-renderer>
+        </div>
+    </div>
+</div>
