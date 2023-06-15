@@ -12,6 +12,7 @@ using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.Canon;
 
 namespace Aiursoft.Portal.Controllers;
 
@@ -21,7 +22,7 @@ namespace Aiursoft.Portal.Controllers;
 public class SitesController : Controller
 {
     private readonly AppsContainer _appsContainer;
-    private readonly AiurCache _cache;
+    private readonly CacheService _cache;
     private readonly FilesService _filesService;
     private readonly FoldersService _foldersService;
     private readonly SitesService _sitesService;
@@ -33,7 +34,7 @@ public class SitesController : Controller
         SitesService sitesService,
         FoldersService foldersService,
         FilesService filesService,
-        AiurCache cache)
+        CacheService cache)
     {
         _dbContext = dbContext;
         _appsContainer = appsContainer;

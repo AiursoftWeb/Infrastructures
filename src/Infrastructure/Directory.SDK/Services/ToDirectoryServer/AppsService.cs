@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
@@ -16,14 +17,14 @@ namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
 public class AppsService : IScopedDependency
 {
-    private readonly AiurCache _cache;
     private readonly APIProxyService _http;
+    private readonly CacheService _cache;
     private readonly DirectoryConfiguration _directoryLocator;
 
     public AppsService(
         IOptions<DirectoryConfiguration> serviceLocation,
         APIProxyService http,
-        AiurCache cache)
+        CacheService cache)
     {
         _directoryLocator = serviceLocation.Value;
         _http = http;
@@ -42,7 +43,7 @@ public class AppsService : IScopedDependency
             return Task.FromResult(false);
         }
 
-        return _cache.GetAndCache($"ValidAppWithId-{appId}-Secret-{appSecret}",
+        return _cache.RunWithCache($"ValidAppWithId-{appId}-Secret-{appSecret}",
             async () =>
             {
                 var url = new AiurUrl(_directoryLocator.Instance, "apps", "IsValidApp", new IsValidateAppAddressModel
@@ -63,7 +64,7 @@ public class AppsService : IScopedDependency
             throw new AiurAPIModelException(ErrorType.NotFound, "Invalid app Id!");
         }
 
-        return _cache.GetAndCache($"app-info-cache-{appId}", async () =>
+        return _cache.RunWithCache($"app-info-cache-{appId}", async () =>
         {
             var url = new AiurUrl(_directoryLocator.Instance, "apps", "AppInfo", new AppInfoAddressModel
             {

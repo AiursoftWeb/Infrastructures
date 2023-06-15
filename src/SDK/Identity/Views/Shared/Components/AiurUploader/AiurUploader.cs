@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.XelNaga.Services;
@@ -9,7 +10,7 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader;
 
 public class AiurUploader : ViewComponent
 {
-    private readonly AiurCache _aiurCache;
+    private readonly CacheService _aiurCache;
     private readonly AppsContainer _appsContainer;
     private readonly SitesService _sitesService;
     private readonly TokenService _tokenService;
@@ -18,7 +19,7 @@ public class AiurUploader : ViewComponent
         AppsContainer appsContainer,
         TokenService tokenService,
         SitesService sitesService,
-        AiurCache aiurCache)
+        CacheService aiurCache)
     {
         _appsContainer = appsContainer;
         _tokenService = tokenService;
@@ -35,7 +36,7 @@ public class AiurUploader : ViewComponent
 
     private async Task<string> GetUploadToken(string siteName, string path)
     {
-        if (await _aiurCache.GetAndCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
+        if (await _aiurCache.RunWithCache($"site-public-status-{siteName}", () => OpenUpload(siteName)))
         {
             return string.Empty;
         }

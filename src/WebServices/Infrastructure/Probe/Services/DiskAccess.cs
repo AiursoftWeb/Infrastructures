@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,13 +12,13 @@ namespace Aiursoft.Probe.Services;
 public class DiskAccess : IStorageProvider
 {
     private readonly char _ = Path.DirectorySeparatorChar;
-    private readonly AiurCache _cache;
+    private readonly CacheService _cache;
     private readonly string _path;
     private readonly string _trashPath;
 
     public DiskAccess(
         IOptions<DiskAccessConfig> config,
-        AiurCache aiurCache)
+        CacheService aiurCache)
     {
         _path = config.Value.StoragePath + $"{_}Storage{_}";
         var tempFilePath = config.Value.StoragePath;
@@ -83,9 +84,9 @@ public class DiskAccess : IStorageProvider
         return path;
     }
 
-    public long GetSize(string hardwareUuid)
+    public Task<long> GetSize(string hardwareUuid)
     {
-        return _cache.GetAndCache($"file-size-cache-id-{hardwareUuid}", () => GetFileSize(hardwareUuid));
+        return _cache.RunWithCache($"file-size-cache-id-{hardwareUuid}", () => GetFileSize(hardwareUuid));
     }
 
     public async Task Save(string hardwareUuid, IFormFile file)
@@ -101,14 +102,14 @@ public class DiskAccess : IStorageProvider
         fileStream.Close();
     }
 
-    private long GetFileSize(string hardwareUuid)
+    private Task<long> GetFileSize(string hardwareUuid)
     {
         var path = _path + $"{hardwareUuid}.dat";
         if (File.Exists(path))
         {
-            return new FileInfo(path).Length;
+            return Task.FromResult(new FileInfo(path).Length);
         }
 
-        return 0;
+        return Task.FromResult<long>(0);
     }
 }

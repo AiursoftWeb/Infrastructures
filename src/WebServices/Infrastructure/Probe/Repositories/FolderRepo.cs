@@ -161,7 +161,9 @@ public class FolderRepo : IScopedDependency
             .Files
             .Where(t => t.ContextId == folder.Id)
             .ToListAsync();
-        size += localFiles.Sum(t => _storageProvider.GetSize(t.HardwareId));
+
+        // TODO: Refactor with await.
+        size += localFiles.Sum(t => _storageProvider.GetSize(t.HardwareId).Result);
         return size;
     }
 

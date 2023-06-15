@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Aiursoft.Canon;
 using Aiursoft.Scanner;
 using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
@@ -29,6 +30,8 @@ public static class ServicesExtends
         services.AddCors(options =>
             options.AddDefaultPolicy(builder =>
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+        services.AddTaskCanon();
 
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services

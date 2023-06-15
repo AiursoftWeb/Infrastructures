@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.WebTools;
@@ -16,7 +17,7 @@ namespace Aiursoft.WWW.Controllers;
 public class SearchController : Controller
 {
     private readonly BingTranslator _bingTranslator;
-    private readonly AiurCache _cache;
+    private readonly CacheService _cache;
     private readonly WWWDbContext _dbContext;
     private readonly SearchService _searchService;
 
@@ -24,7 +25,7 @@ public class SearchController : Controller
         SearchService searchService,
         WWWDbContext dbContext,
         BingTranslator bingTranslator,
-        AiurCache cache)
+        CacheService cache)
     {
         _searchService = searchService;
         _dbContext = dbContext;
@@ -42,9 +43,9 @@ public class SearchController : Controller
 
         ViewBag.CurrentPage = page;
         var market = CultureInfo.CurrentCulture.Name;
-        var result = await _cache.GetAndCache($"search-content-{market}-{page}-" + question,
+        var result = await _cache.RunWithCache($"search-content-{market}-{page}-" + question,
             () => _searchService.DoSearch(question, market, page));
-        ViewBag.Entities = await _cache.GetAndCache($"search-entity-{market}-" + question,
+        ViewBag.Entities = await _cache.RunWithCache($"search-entity-{market}-" + question,
             () => _searchService.EntitySearch(question, market));
         if (!HttpContext.AllowTrack())
         {
@@ -65,7 +66,7 @@ public class SearchController : Controller
     public async Task<IActionResult> Suggestion([FromRoute] string question)
     {
         var market = CultureInfo.CurrentCulture.Name;
-        var suggestions = await _cache.GetAndCache($"search-suggestion-{market}-" + question,
+        var suggestions = await _cache.RunWithCache($"search-suggestion-{market}-" + question,
             () => _searchService.GetSuggestion(question, market));
         var strings = suggestions
             ?.SuggestionGroups
