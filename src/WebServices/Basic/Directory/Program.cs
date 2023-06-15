@@ -1,15 +1,16 @@
 ﻿using Aiursoft.Directory.Data;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Directory;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        App<Startup>(args).Update<DirectoryDbContext>().Run();
+        (await App<Startup>(args).UpdateDbAsync<DirectoryDbContext>()).Run();
     }
 
     // For EF

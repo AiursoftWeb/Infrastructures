@@ -31,7 +31,7 @@ public static class Extends
         return services;
     }
 
-    public static async Task<IHost> InitSite<TProvider>(this IHost host,
+    public static async Task<IHost> InitSiteAsync<TProvider>(this IHost host,
         Func<IConfiguration, string> getConfig,
         Func<TProvider, Task<string>> getToken,
         bool openToUpload = true,

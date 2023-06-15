@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
@@ -15,21 +16,24 @@ namespace Aiursoft.XelNaga.Services;
 public class APIProxyService : IScopedDependency
 {
     private readonly HttpClient _client;
+    private readonly RetryEngine _retryEngine;
     private readonly ILogger<APIProxyService> _logger;
     private readonly Regex _regex;
 
     public APIProxyService(
+        RetryEngine retryEngine,
         IHttpClientFactory clientFactory,
         ILogger<APIProxyService> logger)
     {
         _regex = new Regex("^https://", RegexOptions.Compiled);
         _client = clientFactory.CreateClient();
+        _retryEngine = retryEngine;
         _logger = logger;
     }
 
     private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
     {
-        return AsyncHelper.Try(async () =>
+        return _retryEngine.RunWithRetry(async attempt =>
         {
             var response = await _client.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.BadGateway ||
@@ -40,7 +44,12 @@ public class APIProxyService : IScopedDependency
             }
 
             return response;
-        }, 5, e => { _logger.LogCritical(e, "Transient issue (retry available) happened with remote server bad gateway"); });
+        }, 
+        when: e => e is WebException,
+        onError: e => 
+        {
+            _logger.LogCritical(e, "Transient issue (retry available) happened with remote server");
+        });
     }
 
     public async Task<string> Get(AiurUrl url, bool forceHttp = false, bool autoRetry = true)

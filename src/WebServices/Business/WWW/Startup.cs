@@ -29,7 +29,6 @@ public class Startup
         services.AddIdentity<WWWUser, IdentityRole>()
             .AddEntityFrameworkStores<WWWDbContext>()
             .AddDefaultTokenProviders();
-        services.UseBlacklistFromAddress(Configuration["BlackListLocation"]);
         services.AddAiurMvc();
         services.AddAiursoftIdentity<WWWUser>(
             probeConfig: Configuration.GetSection("AiursoftProbe"),

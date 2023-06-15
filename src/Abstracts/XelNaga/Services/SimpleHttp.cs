@@ -1,8 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Aiursoft.XelNaga.Services;
 
+[Obsolete("Use HTTP service for external and ApiProxyService for internal.")]
 public static class SimpleHttp
 {
     public static async Task<string> DownloadAsString(string url)

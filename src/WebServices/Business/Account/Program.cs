@@ -12,9 +12,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        await (await App<Startup>(args)
-            .Update<AccountDbContext>()
-            .InitSite<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync()))
+        await (await (await App<Startup>(args)
+            .UpdateDbAsync<AccountDbContext>())
+            .InitSiteAsync<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync()))
             .RunAsync();
     }
 

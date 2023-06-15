@@ -10,8 +10,8 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        await App<Startup>(args)
-            .Update<PortalDbContext>()
+        await (await App<Startup>(args)
+            .UpdateDbAsync<PortalDbContext>())
             .RunAsync();
         
         // await (await App<Startup>(args)

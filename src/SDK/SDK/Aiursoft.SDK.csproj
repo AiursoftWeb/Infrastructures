@@ -22,7 +22,6 @@
 		<ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
 		<ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
 		<ProjectReference Include="..\..\WebExtends\Handler\Aiursoft.Handler.csproj" />
-		
 		<ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
 	</ItemGroup>
 

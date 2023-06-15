@@ -1,15 +1,16 @@
 using Aiursoft.Configuration.Data;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Configuration;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        App<Startup>(args).Update<ConfigurationDbContext>().Run();
+        (await App<Startup>(args).UpdateDbAsync<ConfigurationDbContext>()).Run();
     }
 
     // For EF

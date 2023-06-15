@@ -1,15 +1,16 @@
 ﻿using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Stargate;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        App<Startup>(args).Update<StargateDbContext>().Run();
+        (await App<Startup>(args).UpdateDbAsync<StargateDbContext>()).Run();
     }
 
     // For EF

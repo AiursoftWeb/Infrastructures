@@ -8,7 +8,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.16" />
 		<PackageReference Include="Aiursoft.Scanner" Version="6.0.10" />
-		<PackageReference Include="Aiursoft.Canon" Version="6.0.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />

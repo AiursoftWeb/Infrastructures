@@ -17,6 +17,7 @@ using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Aiursoft.Canon;
 
 namespace Aiursoft.Wiki.Services;
 
@@ -25,6 +26,7 @@ public class Seeder : ITransientDependency
     private static readonly SemaphoreSlim SemaphoreSlim = new(1, 1);
     private readonly AppsContainer _appsContainer;
     private readonly IConfiguration _configuration;
+    private readonly RetryEngine _retry;
     private readonly WikiDbContext _dbContext;
     private readonly string _domain;
     private readonly ObserverService _eventService;
@@ -33,6 +35,7 @@ public class Seeder : ITransientDependency
     private readonly MarkDownDocGenerator _markDownGenerator;
 
     public Seeder(
+        RetryEngine retry,
         WikiDbContext dbContext,
         IConfiguration configuration,
         HttpService http,
@@ -41,6 +44,7 @@ public class Seeder : ITransientDependency
         AppsContainer appsContainer,
         ILogger<Seeder> logger)
     {
+        _retry = retry;
         _dbContext = dbContext;
         _configuration = configuration;
         _http = http;
@@ -56,6 +60,25 @@ public class Seeder : ITransientDependency
         _dbContext.Article.Delete(t => true);
         _dbContext.Collections.Delete(t => true);
         return _dbContext.SaveChangesAsync();
+    }
+
+    public async Task SeedWithRetry()
+    {
+        try
+        {
+            await _retry.RunWithRetry(async attempt =>
+            {
+                await Seed();
+                return 0;
+            }, attempts: 5);
+        }
+        catch (Exception e)
+        {
+            var accessToken = await _appsContainer.GetAccessTokenAsync();
+            await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
+            _logger.LogCritical(e, "Failed to seed Wiki database");
+            throw;
+        }
     }
 
     public async Task Seed()
@@ -147,12 +170,5 @@ public class Seeder : ITransientDependency
         {
             SemaphoreSlim.Release();
         }
-    }
-
-    public async Task HandleException(Exception e)
-    {
-        var accessToken = await _appsContainer.GetAccessTokenAsync();
-        await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
-        _logger.LogCritical(e, "Failed to seed Wiki database");
     }
 }

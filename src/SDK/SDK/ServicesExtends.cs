@@ -31,8 +31,6 @@ public static class ServicesExtends
             options.AddDefaultPolicy(builder =>
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-        services.AddTaskCanon();
-
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services
             .AddControllersWithViews()
@@ -53,6 +51,7 @@ public static class ServicesExtends
     {
         services.AddHttpClient();
         services.AddMemoryCache();
+        services.AddTaskCanon();
         var abstractsList = abstracts.ToList();
         abstractsList.Add(typeof(IHostedService));
         if (EntryExtends.IsProgramEntry())
@@ -71,17 +70,6 @@ public static class ServicesExtends
             services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsList.ToArray());
         }
 
-        return services;
-    }
-
-    public static IServiceCollection UseBlacklistFromAddress(this IServiceCollection services, string address)
-    {
-        AsyncHelper.TryAsync(async () =>
-        {
-            var list = await SimpleHttp.DownloadAsString(address);
-            var provider = new BlackListPorivder(list.Split('\n'));
-            services.AddSingleton(provider);
-        }, 3);
         return services;
     }
 

@@ -1,4 +1,5 @@
-﻿using Aiursoft.Identity;
+﻿using Aiursoft.Canon;
+using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
@@ -11,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Aiursoft.Wiki;
 
@@ -48,18 +51,14 @@ public class Startup
 
 public static class PostStartUp
 {
-    public static IHost Seed(this IHost host)
+    public static async Task<IHost> SeedAsync(this IHost host)
     {
         using var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
         var logger = services.GetRequiredService<ILogger<Seeder>>();
         var seeder = services.GetRequiredService<Seeder>();
         logger.LogInformation("Seeding...");
-        AsyncHelper.TryAsync(
-            times: 3,
-            taskFactory: () => seeder.Seed(),
-            onError: e => seeder.HandleException(e)
-        );
+        await seeder.SeedWithRetry();
         logger.LogInformation("Seeded");
         return host;
     }

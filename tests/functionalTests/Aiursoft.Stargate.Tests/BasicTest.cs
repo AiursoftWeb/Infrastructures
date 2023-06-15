@@ -46,7 +46,7 @@ public class BasicTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = App<TestStartup>(port: _port).Update<StargateDbContext>();
+        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<StargateDbContext>());
         _http = new HttpClient();
         await _server.StartAsync();
 

@@ -38,7 +38,7 @@ public class SiteTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = App<TestStartup>(port: _port).Update<ProbeDbContext>();
+        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<ProbeDbContext>());
         _http = new HttpClient();
         await _server.StartAsync();
 

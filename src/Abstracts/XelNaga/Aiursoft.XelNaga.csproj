@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aiursoft.Canon" Version="6.0.6" />
 		<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
 	</ItemGroup>
 
