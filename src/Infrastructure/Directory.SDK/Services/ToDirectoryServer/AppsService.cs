@@ -43,7 +43,17 @@ public class AppsService : IScopedDependency
         }
 
         return _cache.GetAndCache($"ValidAppWithId-{appId}-Secret-{appSecret}",
-            () => IsValidAppWithoutCacheAsync(appId, appSecret));
+            async () =>
+            {
+                var url = new AiurUrl(_directoryLocator.Instance, "apps", "IsValidApp", new IsValidateAppAddressModel
+                {
+                    AppId = appId,
+                    AppSecret = appSecret
+                });
+                var result = await _http.Get(url, true);
+                var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+                return jResult.Code == ErrorType.Success;
+            });
     }
 
     public Task<AppInfoViewModel> AppInfoAsync(string appId)
@@ -53,38 +63,23 @@ public class AppsService : IScopedDependency
             throw new AiurAPIModelException(ErrorType.NotFound, "Invalid app Id!");
         }
 
-        return _cache.GetAndCache($"app-info-cache-{appId}", () => AppInfoWithoutCacheAsync(appId));
-    }
-
-    private async Task<bool> IsValidAppWithoutCacheAsync(string appId, string appSecret)
-    {
-        var url = new AiurUrl(_directoryLocator.Instance, "apps", "IsValidApp", new IsValidateAppAddressModel
+        return _cache.GetAndCache($"app-info-cache-{appId}", async () =>
         {
-            AppId = appId,
-            AppSecret = appSecret
+            var url = new AiurUrl(_directoryLocator.Instance, "apps", "AppInfo", new AppInfoAddressModel
+            {
+                AppId = appId
+            });
+            var json = await _http.Get(url, true);
+            var result = JsonConvert.DeserializeObject<AppInfoViewModel>(json);
+            if (result.Code != ErrorType.Success)
+            {
+                throw new AiurUnexpectedResponse(result);
+            }
+
+            return result;
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        return jResult.Code == ErrorType.Success;
     }
 
-    private async Task<AppInfoViewModel> AppInfoWithoutCacheAsync(string appId)
-    {
-        var url = new AiurUrl(_directoryLocator.Instance, "apps", "AppInfo", new AppInfoAddressModel
-        {
-            AppId = appId
-        });
-        var json = await _http.Get(url, true);
-        var result = JsonConvert.DeserializeObject<AppInfoViewModel>(json);
-        if (result.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(result);
-        }
-
-        return result;
-    }
-    
-    
     /// <summary>
     /// </summary>
     /// <param name="accessToken"></param>

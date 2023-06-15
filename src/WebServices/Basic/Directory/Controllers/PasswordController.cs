@@ -32,7 +32,7 @@ public class PasswordController : Controller
         _dbContext = dbContext;
         _userManager = userManager;
         _cannonService = cannonService;
-        _logger = loggerFactory.CreateLogger<ApiController>();
+        _logger = loggerFactory.CreateLogger<LanguageController>();
     }
 
     public async Task<IActionResult> EmailConfirm(string userId, string code)

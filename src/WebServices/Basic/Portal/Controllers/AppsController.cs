@@ -54,10 +54,6 @@ public class AppsController : Controller
     public IActionResult Index()
     {
         return RedirectToAction(nameof(AllApps));
-        // We did not implement the report page.
-        // var currentUser = await GetCurrentUserAsync();
-        // var model = new AppTokenConfigViewModel(currentUser);
-        // return View(model);
     }
 
     [Route("Apps")]

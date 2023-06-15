@@ -82,29 +82,6 @@ public static class AsyncHelper
         return rnd.Next(0, max);
     }
 
-    public static async Task InvokeTasksByQueue(IEnumerable<Func<Task>> taskFactories, int maxDegreeOfParallelism)
-    {
-        var queue = new Queue<Func<Task>>(taskFactories);
-        if (queue.Count == 0)
-        {
-            return;
-        }
-
-        var tasksInFlight = new List<Task>(maxDegreeOfParallelism);
-        do
-        {
-            while (tasksInFlight.Count < maxDegreeOfParallelism && queue.Count != 0)
-            {
-                var taskFactory = queue.Dequeue();
-                tasksInFlight.Add(taskFactory());
-            }
-
-            var completedTask = await Task.WhenAny(tasksInFlight).ConfigureAwait(false);
-            await completedTask.ConfigureAwait(false);
-            tasksInFlight.Remove(completedTask);
-        } while (queue.Count != 0 || tasksInFlight.Count != 0);
-    }
-
     public static TResult RunSync<TResult>(Func<Task<TResult>> func)
     {
         return TaskFactory
@@ -127,21 +104,5 @@ public static class AsyncHelper
     {
         return Task.WhenAll(items
             .Select(function));
-    }
-
-    /// <summary>
-    ///     Foreach in a threads pool. This is only a light-weight method for pool a threading. For complicated requirements
-    ///     with dependency, please consider CannonQueue.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="items"></param>
-    /// <param name="function"></param>
-    /// <param name="maxDegreeOfParallelism"></param>
-    /// <returns></returns>
-    public static Task ForEachInThreadsPool<T>(this IEnumerable<T> items, Func<T, Task> function,
-            int maxDegreeOfParallelism = 8)
-        // ReSharper disable once RedundantTypeArgumentsOfMethod
-    {
-        return InvokeTasksByQueue(items.Select<T, Func<Task>>(t => () => function(t)), maxDegreeOfParallelism);
     }
 }

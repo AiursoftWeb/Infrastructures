@@ -12,6 +12,7 @@ namespace Aiursoft.SDK;
 public static class ProgramExtends
 {
     public static IHost Update<TContext>(this IHost host) where TContext : DbContext
+    // TODO: Use async method.
     {
         using var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
@@ -20,16 +21,11 @@ public static class ProgramExtends
         try
         {
             logger.LogInformation("Migrating database associated with context {ContextName}", typeof(TContext).Name);
+            
+            // TODO: Replace with Retry Engine.
             AsyncHelper.TryAsync(async () =>
             {
-                if (EntryExtends.IsInUT())
-                {
-                    await context.Database.EnsureDeletedAsync();
-                }
-                else
-                {
-                    await context.Database.MigrateAsync();
-                }
+                await context.Database.MigrateAsync();
             }, 3, e =>
             {
                 logger.LogCritical(e, "Update database with context {ContextName} failed", typeof(TContext).Name);

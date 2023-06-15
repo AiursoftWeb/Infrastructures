@@ -20,7 +20,6 @@ using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.WebTools;
 using Aiursoft.WebTools.Data;
 using Aiursoft.WebTools.Services;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,11 +37,13 @@ public class AccountController : Controller
     private readonly CanonService _cannonService;
     private readonly IConfiguration _configuration;
     private readonly QRCodeService _qrCodeService;
+    private readonly CanonPool _canonPool;
     private readonly AppsService _appsService;
     private readonly UserManager<AccountUser> _userManager;
     private readonly UserService _userService;
 
     public AccountController(
+        CanonPool canonPool,
         AppsService appsService,
         UserManager<AccountUser> userManager,
         UserService userService,
@@ -53,6 +54,7 @@ public class AccountController : Controller
         QRCodeService qrCodeService,
         CanonService cannonService)
     {
+        _canonPool = canonPool;
         _appsService = appsService;
         _userManager = userManager;
         _userService = userService;
@@ -102,9 +104,9 @@ public class AccountController : Controller
         var model = new EmailViewModel(user)
         {
             Emails = emails.Items,
-            PrimaryEmail = user.Email
+            PrimaryEmail = user.Email,
+            JustHaveUpdated = justHaveUpdated
         };
-        model.JustHaveUpdated = justHaveUpdated;
         return View(model);
     }
 
@@ -265,6 +267,8 @@ public class AccountController : Controller
         }
 
         var phone = model.ZoneNumber + model.NewPhoneNumber;
+        
+        // TODO: Migrate the logic to directory!
         var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, phone);
         _cannonService.FireAsync<AccountSmsSender>(async sender =>
         {
@@ -340,17 +344,19 @@ public class AccountController : Controller
             Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
         };
         var appsBag = new ConcurrentBag<DirectoryApp>();
-        await model.Grants.ForEachInThreadsPool(async grant =>
+        foreach (var grant in model.Grants)
         {
-            try
+            _canonPool.RegisterNewTaskToPool(async () =>
             {
-                var appInfo = await _appsService.AppInfoAsync(grant.AppId);
-                appsBag.Add(appInfo.App);
-            }
-            catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound)
-            {
-            }
-        });
+                try
+                {
+                    var appInfo = await _appsService.AppInfoAsync(grant.AppId);
+                    appsBag.Add(appInfo.App);
+                }
+                catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
+            });
+        }
+        await _canonPool.RunAllTasksInPoolAsync();
         model.Apps = appsBag.OrderBy(app =>
             model.Grants.Single(grant => grant.AppId == app.AppId).GrantTime).ToList();
         return View(model);
@@ -381,11 +387,15 @@ public class AccountController : Controller
         {
             Logs = logs
         };
-        await model.Logs.Items.Select(t => t.AppId).Distinct().ForEachInThreadsPool(async id =>
+        foreach (var id in model.Logs.Items.Select(t => t.AppId).Distinct())
         {
-            var appInfo = await _appsService.AppInfoAsync(id);
-            model.Apps.Add(appInfo.App);
-        });
+            _canonPool.RegisterNewTaskToPool(async () =>
+            {
+                var appInfo = await _appsService.AppInfoAsync(id);
+                model.Apps.Add(appInfo.App);
+            });
+        }
+        await _canonPool.RunAllTasksInPoolAsync();
         return View(model);
     }
 

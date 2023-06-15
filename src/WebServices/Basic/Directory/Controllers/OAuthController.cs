@@ -250,7 +250,7 @@ public class OAuthController : Controller
         if (app == null)
         {
             ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
-            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            _logger.LogInformation("App with ID: {ModelAppId} was not found!", model.AppId);
             return View("AuthError");
         }
         
@@ -344,7 +344,7 @@ public class OAuthController : Controller
         if (app == null)
         {
             ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
-            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            _logger.LogInformation("App with ID: {ModelAppId} was not found!", model.AppId);
             return View("AuthError");
         }
         
@@ -375,7 +375,7 @@ public class OAuthController : Controller
         if (app == null)
         {
             ModelState.AddModelError(string.Empty, $"App with ID: {model.AppId} was not found!");
-            _logger.LogInformation("A request with appId {AppId} is access wrong domain", model.AppId);
+            _logger.LogInformation("App with ID: {ModelAppId} was not found!", model.AppId);
             return View("AuthError");
         }
         

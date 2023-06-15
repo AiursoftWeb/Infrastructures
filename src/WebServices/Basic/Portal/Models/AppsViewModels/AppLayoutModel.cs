@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aiursoft.Directory.SDK.Models;
 
 namespace Aiursoft.Portal.Models.AppsViewModels;
 
@@ -20,7 +21,7 @@ public class AppLayoutModel
     public bool EmailConfirmed { get; set; }
     public string NickName { get; set; }
     public int AppCount { get; set; }
-    public IEnumerable<DeveloperApp> AllApps { get; set; }
+    public IEnumerable<DirectoryApp> AllApps { get; set; }
 
     public void RootRecover(PortalUser user)
     {

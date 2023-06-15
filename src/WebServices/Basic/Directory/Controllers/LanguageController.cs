@@ -15,12 +15,13 @@ using Aiursoft.Directory.Models.ApiViewModels;
 
 namespace Aiursoft.Directory.Controllers;
 
-public class ApiController : Controller
+// TODO: Move to new project: Gateway.
+public class LanguageController : Controller
 {
     private readonly DirectoryDbContext _dbContext;
     private readonly UserManager<DirectoryUser> _userManager;
 
-    public ApiController(
+    public LanguageController(
         UserManager<DirectoryUser> userManager,
         DirectoryDbContext context)
     {
