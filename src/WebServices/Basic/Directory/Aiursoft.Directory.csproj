@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Aiursoft.Canon" Version="6.0.5" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  <PrivateAssets>all</PrivateAssets>
