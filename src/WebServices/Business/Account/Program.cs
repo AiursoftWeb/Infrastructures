@@ -12,15 +12,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        await (await (await App<Startup>(args)
-            .UpdateDbAsync<AccountDbContext>())
-            .InitSiteAsync<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync()))
-            .RunAsync();
-    }
-
-    // For EF
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return BareApp<Startup>(args);
+        var app = App<Startup>(args);
+        await app.UpdateDbAsync<AccountDbContext>();
+        await app.InitSiteAsync<AppsContainer>(c => c["UserIconSiteName"], a => a.GetAccessTokenAsync());
+        await app.RunAsync();
     }
 }

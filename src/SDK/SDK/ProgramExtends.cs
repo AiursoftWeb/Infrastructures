@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.XelNaga.Services;
-using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,26 +15,21 @@ public static class ProgramExtends
         var services = scope.ServiceProvider;
         var logger = services.GetRequiredService<ILogger<TContext>>();
         var context = services.GetRequiredService<TContext>();
+        logger.LogInformation("Migrating database associated with context {ContextName}", typeof(TContext).Name);
+
         try
         {
-            logger.LogInformation("Migrating database associated with context {ContextName}", typeof(TContext).Name);
+            await context.Database.EnsureCreatedAsync();
+            logger.LogInformation("The database with context {ContextName} was ensured to be created",
+                typeof(TContext).Name);
 
-            try
-            {
-                await context.Database.MigrateAsync();
-            }
-            catch (Exception e)
-            {
-                logger.LogCritical(e, "Update database with context {ContextName} failed", typeof(TContext).Name);
-                throw;
-            }
-
-            logger.LogInformation("Updated database associated with context {ContextName}", typeof(TContext).Name);
+            await context.Database.MigrateAsync();
+            logger.LogInformation("Migrated database associated with context {ContextName}", typeof(TContext).Name);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            logger.LogError(ex,
-                "An error occurred while migrating the database used on context {ContextName}", typeof(TContext).Name);
+            logger.LogCritical(e, "Update database with context {ContextName} failed", typeof(TContext).Name);
+            throw;
         }
 
         return host;

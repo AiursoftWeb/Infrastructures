@@ -32,7 +32,7 @@ public class Startup
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
         services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
-        services.AddAiursoftSDK();
+        services.AddAiursoftSdk();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

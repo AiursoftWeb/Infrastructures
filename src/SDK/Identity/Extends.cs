@@ -44,7 +44,7 @@ public static class Extends
         services.AddAiursoftObserver(observerConfig); // For error reporting.
         services.AddAiursoftAppAuthentication(authenticationConfig); // For authentication.
 
-        services.AddAiursoftSDK(Assembly.GetCallingAssembly(), typeof(IAuthProvider));
+        services.AddAiursoftSdk(Assembly.GetCallingAssembly(), typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<TUser>>();
         services.AddScoped<AuthService<TUser>>();
         return services;

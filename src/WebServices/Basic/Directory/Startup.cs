@@ -49,7 +49,7 @@ public class Startup
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 
-        services.AddAiursoftSDK(abstracts: typeof(IAuthProvider));
+        services.AddAiursoftSdk(abstracts: typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();
     }

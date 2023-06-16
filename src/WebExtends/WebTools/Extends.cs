@@ -61,6 +61,7 @@ public static class Extends
         return httpContext.Request.Headers.TryGetValue("dnt", out var dntFlag) && dntFlag.ToString().Trim() != "1";
     }
 
+    // TODO: Move to new project: AppProtocol.
     public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
     {
         return controller.Protocol(new AiurProtocol
@@ -69,7 +70,8 @@ public static class Extends
             Message = errorMessage
         });
     }
-
+    
+    // TODO: Move to new project: AppProtocol.
     public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
     {
         if (controller.HttpContext.Response.HasStarted)
@@ -89,7 +91,7 @@ public static class Extends
             new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
     }
 
-    public static IHostBuilder BareApp<T>(string[] args = null, int port = -1) where T : class
+    private static IHostBuilder BareApp<T>(string[] args = null, int port = -1) where T : class
     {
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(config =>

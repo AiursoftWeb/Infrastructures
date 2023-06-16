@@ -39,7 +39,7 @@ public class Startup
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 
-        services.AddAiursoftSDK();
+        services.AddAiursoftSdk();
         services.AddScoped<IStorageProvider, DiskAccess>();
     }
 

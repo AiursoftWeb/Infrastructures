@@ -10,12 +10,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        (await (await App<Startup>(args).UpdateDbAsync<WikiDbContext>()).SeedAsync()).Run();
-    }
-
-    // For EF
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return BareApp<Startup>(args);
+        var app = App<Startup>(args);
+        await app.UpdateDbAsync<WikiDbContext>();
+        await app.SeedAsync();
+        await app.RunAsync();
     }
 }

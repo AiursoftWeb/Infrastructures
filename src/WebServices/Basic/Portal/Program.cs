@@ -3,6 +3,8 @@ using Aiursoft.SDK;
 using Microsoft.Extensions.Hosting;
 using static Aiursoft.WebTools.Extends;
 using System.Threading.Tasks;
+using Aiursoft.Directory.SDK.Services;
+using Aiursoft.Probe.SDK;
 
 namespace Aiursoft.Portal;
 
@@ -10,19 +12,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        await (await App<Startup>(args)
-            .UpdateDbAsync<PortalDbContext>())
-            .RunAsync();
-        
-        // await (await App<Startup>(args)
-        //     .Update<PortalDbContext>()
-        //     .InitSite<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync()))
-        //     .RunAsync();
-    }
-
-    // For EF
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return BareApp<Startup>(args);
+        var app = App<Startup>(args);
+        await app.UpdateDbAsync<PortalDbContext>();
+        await app.InitSiteAsync<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync());
+        await app.RunAsync();
     }
 }

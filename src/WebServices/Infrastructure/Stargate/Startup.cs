@@ -27,7 +27,7 @@ public class Startup
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
-        services.AddAiursoftSDK();
+        services.AddAiursoftSdk();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

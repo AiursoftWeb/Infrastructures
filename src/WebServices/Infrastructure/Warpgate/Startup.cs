@@ -31,7 +31,7 @@ public class Startup
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
 
-        services.AddAiursoftSDK();
+        services.AddAiursoftSdk();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

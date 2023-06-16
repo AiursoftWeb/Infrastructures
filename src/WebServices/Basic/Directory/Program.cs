@@ -10,12 +10,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        (await App<Startup>(args).UpdateDbAsync<DirectoryDbContext>()).Run();
-    }
-
-    // For EF
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return BareApp<Startup>(args);
+        var app = App<Startup>(args);
+        await app.UpdateDbAsync<DirectoryDbContext>();
+        // TODO: There should create new Probe Site. But that logic should be in a new project called Gateway.
+        await app.RunAsync();
     }
 }

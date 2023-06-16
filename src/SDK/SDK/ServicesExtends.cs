@@ -3,8 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Aiursoft.Canon;
 using Aiursoft.Scanner;
-using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -45,7 +43,7 @@ public static class ServicesExtends
         return services;
     }
 
-    public static IServiceCollection AddAiursoftSDK(this IServiceCollection services,
+    public static IServiceCollection AddAiursoftSdk(this IServiceCollection services,
         Assembly assembly = null,
         params Type[] abstracts)
     {
