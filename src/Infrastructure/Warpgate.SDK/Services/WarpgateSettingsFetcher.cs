@@ -12,6 +12,8 @@ namespace Aiursoft.Warpgate.SDK.Services;
 public class WarpgateSettingsFetcher : ISingletonDependency
 {
     private readonly ApiProxyService _apiProxyService;
+    
+    // TODO: Avoid private variable, use cache service.
     private WarpgatePatternConfig _warpgateServerConfig;
     private readonly WarpgateConfiguration _warpgateConfiguration;
 

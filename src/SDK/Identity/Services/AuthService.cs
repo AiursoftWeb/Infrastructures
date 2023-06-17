@@ -13,7 +13,7 @@ namespace Aiursoft.Identity.Services;
 public class AuthService<T> where T : AiurUserBase, new()
 {
     private readonly AccountService _accountService;
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly SignInManager<T> _signInManager;
     private readonly ILogger<AuthService<T>> _logger;
     private readonly UserManager<T> _userManager;
@@ -23,19 +23,19 @@ public class AuthService<T> where T : AiurUserBase, new()
         UserManager<T> userManager,
         SignInManager<T> signInManager,
         AccountService accountService,
-        AppsContainer appsContainer)
+        DirectoryAppTokenService directoryAppTokenService)
     {
         _logger = logger;
         _userManager = userManager;
         _signInManager = signInManager;
         _accountService = accountService;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
     }
 
     public async Task<T> AuthApp(AuthResultAddressModel model, bool isPersistent = false)
     {
-        var openId = await _accountService.CodeToOpenIdAsync(await _appsContainer.GetAccessTokenAsync(), model.Code);
-        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.GetAccessTokenAsync(), openId.OpenId);
+        var openId = await _accountService.CodeToOpenIdAsync(await _directoryAppTokenService.GetAccessTokenAsync(), model.Code);
+        var userInfo = await _accountService.OpenIdToUserInfo(await _directoryAppTokenService.GetAccessTokenAsync(), openId.OpenId);
         var current = await _userManager.FindByIdAsync(userInfo.User.Id);
         if (current == null)
         {
@@ -67,7 +67,7 @@ public class AuthService<T> where T : AiurUserBase, new()
 
     public async Task<T> Fetch(T user)
     {
-        var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.GetAccessTokenAsync(), user.Id);
+        var userInfo = await _accountService.OpenIdToUserInfo(await _directoryAppTokenService.GetAccessTokenAsync(), user.Id);
         user.Update(userInfo);
         await _userManager.UpdateAsync(user);
         return user;

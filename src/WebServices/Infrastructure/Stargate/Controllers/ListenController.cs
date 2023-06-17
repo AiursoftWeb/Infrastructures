@@ -21,7 +21,7 @@ namespace Aiursoft.Stargate.Controllers;
 [APIModelStateChecker]
 public class ListenController : ControllerBase
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly Counter _counter;
     private readonly ObserverService _eventService;
     private readonly ILogger<ListenController> _logger;
@@ -33,14 +33,14 @@ public class ListenController : ControllerBase
         WebSocketPusher pusher,
         ILogger<ListenController> logger,
         Counter counter,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         ObserverService eventService)
     {
         _memoryContext = memoryContext;
         _pusher = pusher;
         _logger = logger;
         _counter = counter;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _eventService = eventService;
     }
 
@@ -101,7 +101,7 @@ public class ListenController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e, "Crashed while monitoring channel");
-            var accessToken = await _appsContainer.GetAccessTokenAsync();
+            var accessToken = await _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(accessToken, e, Request.Path);
         }
         finally

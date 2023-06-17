@@ -15,6 +15,8 @@ public class ServerPublicKeyVault : ISingletonDependency
 {
     private readonly ApiProxyService _proxy;
     private readonly DirectoryConfiguration _directoryConfiguration;
+    
+    // TODO: Avoid private variable, use cache service.
     private RSAParameters? _publicKey;
 
     public ServerPublicKeyVault(

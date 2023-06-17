@@ -14,7 +14,7 @@ public class Program
     {
         var app = App<Startup>(args);
         await app.UpdateDbAsync<PortalDbContext>();
-        await app.InitSiteAsync<AppsContainer>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync());
+        await app.InitSiteAsync<DirectoryAppTokenService>(c => c["AppsIconSiteName"], a => a.GetAccessTokenAsync());
         await app.RunAsync();
     }
 }

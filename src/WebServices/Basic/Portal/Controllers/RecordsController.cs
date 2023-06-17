@@ -19,17 +19,17 @@ namespace Aiursoft.Portal.Controllers;
 [Route("Dashboard")]
 public class RecordsController : Controller
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly RecordsService _recordsService;
     private readonly PortalDbContext _dbContext;
 
     public RecordsController(
         PortalDbContext dbContext,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         RecordsService recordsService)
     {
         _dbContext = dbContext;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _recordsService = recordsService;
     }
 
@@ -82,7 +82,7 @@ public class RecordsController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _recordsService.CreateNewRecordAsync(token, model.RecordName, model.URL,
                 model.Tags?.Split(',') ?? Array.Empty<string>(), model.Type, model.Enabled);
             return RedirectToAction(nameof(AppsController.ViewApp), "Apps",
@@ -113,7 +113,7 @@ public class RecordsController : Controller
             return Unauthorized();
         }
 
-        var accessToken = _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+        var accessToken = _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
         var allRecords = await _recordsService.ViewMyRecordsAsync(await accessToken);
         var recordDetail = allRecords.Records.FirstOrDefault(t => t.RecordUniqueName == recordName);
         if (recordDetail == null)
@@ -160,7 +160,7 @@ public class RecordsController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _recordsService.UpdateRecordInfoAsync(token, model.OldRecordName, model.NewRecordName, model.Type,
                 model.URL, model.Tags?.Split(',') ?? Array.Empty<string>(), model.Enabled);
             return RedirectToAction(nameof(AppsController.ViewApp), "Apps",
@@ -226,7 +226,7 @@ public class RecordsController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _recordsService.DeleteRecordAsync(token, model.RecordName);
             return RedirectToAction(nameof(AppsController.ViewApp), "Apps",
                 new { id = app.AppId, JustHaveUpdated = true });

@@ -22,7 +22,7 @@ namespace Aiursoft.Portal.Controllers;
 [Route("Dashboard")]
 public class AppsController : Controller
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly ChannelService _channelService;
     private readonly AppsService _coreApiService;
     private readonly PortalDbContext _dbContext;
@@ -32,7 +32,7 @@ public class AppsController : Controller
 
     public AppsController(
         PortalDbContext dbContext,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         AppsService coreApiService,
         SitesService siteService,
         ObserverService eventService,
@@ -40,7 +40,7 @@ public class AppsController : Controller
         RecordsService recordsService)
     {
         _dbContext = dbContext;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _coreApiService = coreApiService;
         _siteService = siteService;
         _eventService = eventService;
@@ -103,7 +103,7 @@ public class AppsController : Controller
         }
 
         var currentUser = await GetCurrentUserAsync();
-        var model = await ViewAppViewModel.SelfCreateAsync(currentUser, app, _coreApiService, _appsContainer,
+        var model = await ViewAppViewModel.SelfCreateAsync(currentUser, app, _coreApiService, _directoryAppTokenService,
             _siteService, _eventService, _channelService, _recordsService, page);
         model.JustHaveUpdated = justHaveUpdated;
         return View(model);
@@ -118,7 +118,7 @@ public class AppsController : Controller
         if (!ModelState.IsValid)
         {
             await model.Recover(currentUser, await _dbContext.Apps.FindAsync(model.AppId), _coreApiService,
-                _appsContainer, _siteService, _eventService, _channelService, _recordsService, page);
+                _directoryAppTokenService, _siteService, _eventService, _channelService, _recordsService, page);
             return View(model);
         }
 
@@ -157,7 +157,7 @@ public class AppsController : Controller
             _ChangePermission(target.ManageSocialAccount, model.ManageSocialAccount, ref permissionAdded);
         if (permissionAdded)
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
             await _coreApiService.DropGrantsAsync(token);
         }
 
@@ -232,7 +232,7 @@ public class AppsController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
             await _siteService.DeleteAppAsync(token, target.AppId);
             await _recordsService.DeleteAppAsync(token, target.AppId);
             await _eventService.DeleteAppAsync(token, target.AppId);

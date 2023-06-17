@@ -8,19 +8,19 @@ namespace Aiursoft.Directory.SDK.Services;
 public class AppTokenRSAService : IScopedDependency
 {
     private readonly RSA _rsa;
-    private readonly ServerPublicKeyVault _keyVault;
+    private readonly ServerPublicKeyVault _serverPublicKeyVault;
 
-    public AppTokenRSAService(ServerPublicKeyVault keyVault)
+    public AppTokenRSAService(ServerPublicKeyVault serverPublicKeyVault)
     {
         _rsa = RSA.Create();
-        _keyVault = keyVault;
+        _serverPublicKeyVault = serverPublicKeyVault;
     }
 
     public async Task<bool> VerifyDataAsync(string originalMessage, string signedBase64)
     {
         var bytesToVerify = originalMessage.StringToBytes();
         var signedBytes = signedBase64.Base64ToBytes();
-        _rsa.ImportParameters(await _keyVault.GetPublicKey());
+        _rsa.ImportParameters(await _serverPublicKeyVault.GetPublicKey());
         return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }

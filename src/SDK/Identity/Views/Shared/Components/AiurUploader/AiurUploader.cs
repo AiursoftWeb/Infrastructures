@@ -11,17 +11,17 @@ namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader;
 public class AiurUploader : ViewComponent
 {
     private readonly CacheService _aiurCache;
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly SitesService _sitesService;
     private readonly TokenService _tokenService;
 
     public AiurUploader(
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         TokenService tokenService,
         SitesService sitesService,
         CacheService aiurCache)
     {
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _tokenService = tokenService;
         _sitesService = sitesService;
         _aiurCache = aiurCache;
@@ -29,7 +29,7 @@ public class AiurUploader : ViewComponent
 
     private async Task<bool> OpenUpload(string siteName)
     {
-        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.GetAccessTokenAsync();
+        var accessToken = ViewBag.AccessToken as string ?? await _directoryAppTokenService.GetAccessTokenAsync();
         var site = await _sitesService.ViewSiteDetailAsync(accessToken, siteName);
         return site.Site.OpenToUpload;
     }
@@ -41,7 +41,7 @@ public class AiurUploader : ViewComponent
             return string.Empty;
         }
 
-        var accessToken = ViewBag.AccessToken as string ?? await _appsContainer.GetAccessTokenAsync();
+        var accessToken = ViewBag.AccessToken as string ?? await _directoryAppTokenService.GetAccessTokenAsync();
         return await _tokenService.GetTokenAsync(accessToken, siteName, new[] { "Upload" }, path,
             TimeSpan.FromMinutes(100));
     }

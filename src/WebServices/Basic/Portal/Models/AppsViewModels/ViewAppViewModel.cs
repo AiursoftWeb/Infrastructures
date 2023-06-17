@@ -93,7 +93,7 @@ public class ViewAppViewModel : CreateAppViewModel
         IReadOnlyCollection<DirectoryApp> hisApps, 
         DirectoryApp app,
         AppsService coreApiService,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         SitesService sitesService,
         ObserverService eventService,
         ChannelService channelService,
@@ -101,7 +101,7 @@ public class ViewAppViewModel : CreateAppViewModel
         int pageNumber)
     {
         var model = new ViewAppViewModel(user, hisApps);
-        await model.Recover(user, hisApps, app, coreApiService, appsContainer, sitesService, eventService, channelService,
+        await model.Recover(user, hisApps, app, coreApiService, directoryAppTokenService, sitesService, eventService, channelService,
             recordsService, pageNumber);
         return model;
     }
@@ -111,7 +111,7 @@ public class ViewAppViewModel : CreateAppViewModel
         IReadOnlyCollection<DirectoryApp> hisApps, 
         DirectoryApp appInDb,
         AppsService coreApiService,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         SitesService sitesService,
         ObserverService eventService,
         ChannelService channelService,
@@ -142,7 +142,7 @@ public class ViewAppViewModel : CreateAppViewModel
         ViewAuditLog = appInDb.ViewAuditLog;
         ManageSocialAccount = appInDb.ManageSocialAccount;
         
-        var token = await appsContainer.GetAccessTokenWithAppInfoAsync(appInDb.AppId, appInDb.AppSecret);
+        var token = await directoryAppTokenService.GetAccessTokenWithAppInfoAsync(appInDb.AppId, appInDb.AppSecret);
 
         // TODO: After migration to Directory, load from DB.
         Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);

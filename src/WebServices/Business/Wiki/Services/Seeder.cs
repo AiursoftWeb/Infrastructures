@@ -24,7 +24,7 @@ namespace Aiursoft.Wiki.Services;
 public class Seeder : ITransientDependency
 {
     private static readonly SemaphoreSlim SemaphoreSlim = new(1, 1);
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly IConfiguration _configuration;
     private readonly RetryEngine _retry;
     private readonly WikiDbContext _dbContext;
@@ -41,7 +41,7 @@ public class Seeder : ITransientDependency
         HttpService http,
         MarkDownDocGenerator markDownGenerator,
         ObserverService eventService,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         ILogger<Seeder> logger)
     {
         _retry = retry;
@@ -50,7 +50,7 @@ public class Seeder : ITransientDependency
         _http = http;
         _markDownGenerator = markDownGenerator;
         _eventService = eventService;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _logger = logger;
         _domain = configuration["RootDomain"];
     }
@@ -74,7 +74,7 @@ public class Seeder : ITransientDependency
         }
         catch (Exception e)
         {
-            var accessToken = await _appsContainer.GetAccessTokenAsync();
+            var accessToken = await _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(accessToken, e, "Seeder");
             _logger.LogCritical(e, "Failed to seed Wiki database");
             throw;

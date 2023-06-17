@@ -20,7 +20,7 @@ namespace Aiursoft.Portal.Controllers;
 [Route("Dashboard")]
 public class SitesController : Controller
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly CacheService _cache;
     private readonly FilesService _filesService;
     private readonly FoldersService _foldersService;
@@ -29,14 +29,14 @@ public class SitesController : Controller
 
     public SitesController(
         PortalDbContext dbContext,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         SitesService sitesService,
         FoldersService foldersService,
         FilesService filesService,
         CacheService cache)
     {
         _dbContext = dbContext;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _sitesService = sitesService;
         _foldersService = foldersService;
         _filesService = filesService;
@@ -91,7 +91,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _sitesService.CreateNewSiteAsync(token, model.SiteName, model.OpenToUpload, model.OpenToDownload);
             return RedirectToAction(nameof(AppsController.ViewApp), "Apps",
                 new { id = app.AppId, JustHaveUpdated = true });
@@ -121,7 +121,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             var data = await _foldersService.ViewContentAsync(token, siteName, path);
             ViewData["AccessToken"] = token;
             var model = new ViewFilesViewModel(user)
@@ -190,7 +190,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _foldersService.CreateNewFolderAsync(token, model.SiteName, model.Path, model.NewFolderName, false);
             return RedirectToAction(nameof(ViewFiles),
                 new { appId = model.AppId, siteName = model.SiteName, path = model.Path });
@@ -254,7 +254,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _foldersService.DeleteFolderAsync(token, model.SiteName, model.Path);
             return RedirectToAction(nameof(ViewFiles),
                 new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
@@ -318,7 +318,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _filesService.DeleteFileAsync(token, model.SiteName, model.Path);
             return RedirectToAction(nameof(ViewFiles),
                 new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
@@ -382,7 +382,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _filesService.RenameFileAsync(token, model.SiteName, model.Path, model.NewName);
             return RedirectToAction(nameof(ViewFiles),
                 new { appId = model.AppId, siteName = model.SiteName, path = model.Path.DetachPath() });
@@ -410,7 +410,7 @@ public class SitesController : Controller
             return Unauthorized();
         }
 
-        var accessToken = _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+        var accessToken = _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
         var siteDetail = await _sitesService.ViewSiteDetailAsync(await accessToken, siteName);
         var model = new EditViewModel(user)
         {
@@ -450,7 +450,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _sitesService.UpdateSiteInfoAsync(token, model.OldSiteName, model.NewSiteName, model.OpenToUpload,
                 model.OpenToDownload);
             _cache.Clear($"site-public-status-{model.OldSiteName}");
@@ -516,7 +516,7 @@ public class SitesController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
+            var token = await _directoryAppTokenService.GetAccessTokenWithAppInfoAsync(app.AppId, app.AppSecret);
             await _sitesService.DeleteSiteAsync(token, model.SiteName);
             return RedirectToAction(nameof(AppsController.ViewApp), "Apps",
                 new { id = app.AppId, JustHaveUpdated = true });

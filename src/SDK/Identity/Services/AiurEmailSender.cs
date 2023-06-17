@@ -12,7 +12,7 @@ namespace Aiursoft.Identity.Services;
 
 public class AiurEmailSender : ITransientDependency
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly ObserverService _eventService;
     private readonly ILogger<AiurEmailSender> _logger;
     private readonly string _mailPassword;
@@ -22,14 +22,14 @@ public class AiurEmailSender : ITransientDependency
     public AiurEmailSender(
         IConfiguration configuration,
         ILogger<AiurEmailSender> logger,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         ObserverService eventService)
     {
         _mailUser = configuration["MailUser"];
         _mailPassword = configuration["MailPassword"];
         _mailServer = configuration["MailServer"];
         _logger = logger;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _eventService = eventService;
     }
 
@@ -60,7 +60,7 @@ public class AiurEmailSender : ITransientDependency
             try
             {
                 _logger.LogError(e, "Failed to send an email");
-                var accessToken = _appsContainer.GetAccessTokenAsync();
+                var accessToken = _directoryAppTokenService.GetAccessTokenAsync();
                 await _eventService.LogExceptionAsync(await accessToken, e);
             }
             catch

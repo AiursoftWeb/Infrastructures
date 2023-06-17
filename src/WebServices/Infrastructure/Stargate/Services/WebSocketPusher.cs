@@ -12,16 +12,16 @@ namespace Aiursoft.Stargate.Services;
 
 public class WebSocketPusher : IScopedDependency
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly ObserverService _eventService;
     private bool _dropped;
     private WebSocket _ws;
 
     public WebSocketPusher(
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         ObserverService eventService)
     {
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _eventService = eventService;
     }
 
@@ -57,7 +57,7 @@ public class WebSocketPusher : IScopedDependency
         catch (Exception e) when (!e.Message.StartsWith("The remote party closed the WebSocket connection"))
         {
             _dropped = true;
-            var accessToken = _appsContainer.GetAccessTokenAsync();
+            var accessToken = _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(await accessToken, e, "InPusher");
         }
     }

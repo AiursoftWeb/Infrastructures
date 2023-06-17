@@ -43,7 +43,6 @@ public class DirectoryApp
     public bool ForceConfirmation { get; set; } = true;
     public bool DebugMode { get; set; }
     public string AppDomain { get; set; }
-    public string AppFailCallbackUrl { get; set; }
     public bool ViewOpenId { get; set; } = true;
     public bool ViewPhoneNumber { get; set; }
     public bool ChangePhoneNumber { get; set; }

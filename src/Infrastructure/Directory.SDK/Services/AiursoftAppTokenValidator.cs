@@ -11,11 +11,11 @@ namespace Aiursoft.Directory.SDK.Services;
 
 public class AiursoftAppTokenValidator : IScopedDependency
 {
-    private readonly AppTokenRSAService _appTokenRSAService;
+    private readonly AppTokenRSAService _appTokenRsaService;
 
-    public AiursoftAppTokenValidator(AppTokenRSAService appTokenRSAService)
+    public AiursoftAppTokenValidator(AppTokenRSAService appTokenRsaService)
     {
-        _appTokenRSAService = appTokenRSAService;
+        _appTokenRsaService = appTokenRsaService;
     }
 
     public virtual async Task<string> ValidateAccessTokenAsync(string value)
@@ -31,7 +31,7 @@ public class AiursoftAppTokenValidator : IScopedDependency
                 throw new AiurAPIModelException(ErrorType.Unauthorized, "Token was timed out!");
             }
 
-            if (!await _appTokenRSAService.VerifyDataAsync(tokenBase64.Base64ToString(), tokenSign))
+            if (!await _appTokenRsaService.VerifyDataAsync(tokenBase64.Base64ToString(), tokenSign))
             {
                 throw new AiurAPIModelException(ErrorType.Unauthorized,
                     "Invalid signature! Token could not be authorized!");

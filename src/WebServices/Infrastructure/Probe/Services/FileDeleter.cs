@@ -13,7 +13,7 @@ namespace Aiursoft.Probe.Services;
 
 public class FileDeleter : ITransientDependency
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly ObserverService _eventService;
     private readonly ProbeDbContext _probeDbContext;
     private readonly RetryEngine _retryEngine;
@@ -24,13 +24,13 @@ public class FileDeleter : ITransientDependency
         RetryEngine retryEngine,
         IStorageProvider storageProvider,
         ObserverService eventService,
-        AppsContainer appsContainer)
+        DirectoryAppTokenService directoryAppTokenService)
     {
         _probeDbContext = probeDbContext;
         _retryEngine = retryEngine;
         _storageProvider = storageProvider;
         _eventService = eventService;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
     }
 
     public async Task DeleteOnDisk(File file)
@@ -50,7 +50,7 @@ public class FileDeleter : ITransientDependency
         }
         catch (Exception e)
         {
-            var token = await _appsContainer.GetAccessTokenAsync();
+            var token = await _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(token, e, "Deleter");
         }
     }

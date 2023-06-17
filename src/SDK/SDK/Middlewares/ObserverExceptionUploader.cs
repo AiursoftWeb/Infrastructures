@@ -13,7 +13,7 @@ namespace Aiursoft.SDK.Middlewares;
 /// </summary>
 public class ObserverExceptionUploader
 {
-    private readonly AppsContainer _appsContainer;
+    private readonly DirectoryAppTokenService _directoryAppTokenService;
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<ObserverExceptionUploader> _logger;
     private readonly RequestDelegate _next;
@@ -21,12 +21,12 @@ public class ObserverExceptionUploader
     public ObserverExceptionUploader(
         RequestDelegate next,
         ILogger<ObserverExceptionUploader> logger,
-        AppsContainer appsContainer,
+        DirectoryAppTokenService directoryAppTokenService,
         IServiceScopeFactory scopeFactory)
     {
         _next = next;
         _logger = logger;
-        _appsContainer = appsContainer;
+        _directoryAppTokenService = directoryAppTokenService;
         _scopeFactory = scopeFactory;
     }
 
@@ -41,7 +41,7 @@ public class ObserverExceptionUploader
             try
             {
                 _logger.LogCritical(e, "Observer exception handler detected a critical error in app and will try to upload to Observer server");
-                var accessToken = await _appsContainer.GetAccessTokenAsync();
+                var accessToken = await _directoryAppTokenService.GetAccessTokenAsync();
                 var scope = _scopeFactory.CreateScope();
                 var eventService = scope.ServiceProvider.GetRequiredService<ObserverService>();
                 await eventService.LogExceptionAsync(accessToken, e, context.Request.Path);

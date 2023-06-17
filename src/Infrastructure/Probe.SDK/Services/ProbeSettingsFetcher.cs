@@ -16,6 +16,7 @@ namespace Aiursoft.Probe.SDK.Services;
 
 public class ProbeSettingsFetcher : ISingletonDependency
 {
+    // TODO: Avoid private variable, use cache service.
     private ProbeDownloadPatternConfig _probeServerConfig;
     private readonly ApiProxyService _apiProxyService;
     private readonly ProbeConfiguration _probeConfiguration;
