@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 using Aiursoft.SDKTools.Attributes;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +15,7 @@ public class CreateSiteViewModel : AppLayoutModel
     {
     }
 
-    public CreateSiteViewModel(PortalUser user) : base(user)
+    public CreateSiteViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -35,8 +37,8 @@ public class CreateSiteViewModel : AppLayoutModel
     [Display(Name = "Open to download")]
     public bool OpenToDownload { get; set; }
 
-    public void Recover(PortalUser user)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps)
     {
-        RootRecover(user);
+        RootRecover(user, hisApps);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 
 namespace Aiursoft.Portal.Models.SitesViewModels;
@@ -11,7 +13,7 @@ public class RenameFileViewModel : AppLayoutModel
     {
     }
 
-    public RenameFileViewModel(PortalUser user) : base(user)
+    public RenameFileViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -25,9 +27,9 @@ public class RenameFileViewModel : AppLayoutModel
 
     [Required] public string NewName { get; set; }
 
-    public void Recover(PortalUser user, string appName)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps, string appName)
     {
         AppName = appName;
-        RootRecover(user);
+        RootRecover(user, hisApps);
     }
 }

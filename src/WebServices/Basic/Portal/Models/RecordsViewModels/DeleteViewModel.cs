@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +14,7 @@ public class DeleteViewModel : AppLayoutModel
     {
     }
 
-    public DeleteViewModel(PortalUser user) : base(user)
+    public DeleteViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -22,9 +24,9 @@ public class DeleteViewModel : AppLayoutModel
 
     public string AppName { get; set; }
 
-    public void Recover(PortalUser user, string appName)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps, string appName)
     {
         AppName = appName;
-        RootRecover(user);
+        RootRecover(user, hisApps);
     }
 }

@@ -6,6 +6,7 @@ using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Identity.Services;
 
@@ -14,14 +15,17 @@ public class AuthService<T> where T : AiurUserBase, new()
     private readonly AccountService _accountService;
     private readonly AppsContainer _appsContainer;
     private readonly SignInManager<T> _signInManager;
+    private readonly ILogger<AuthService<T>> _logger;
     private readonly UserManager<T> _userManager;
 
     public AuthService(
+        ILogger<AuthService<T>> logger,
         UserManager<T> userManager,
         SignInManager<T> signInManager,
         AccountService accountService,
         AppsContainer appsContainer)
     {
+        _logger = logger;
         _userManager = userManager;
         _signInManager = signInManager;
         _accountService = accountService;
@@ -43,11 +47,12 @@ public class AuthService<T> where T : AiurUserBase, new()
                 var message = new StringBuilder();
                 foreach (var error in result.Errors)
                 {
+                    _logger.LogError("Failed to create user based on Directory's user Info. Error: {@RegisterError}", error);
                     message.AppendLine(error.Description);
                 }
 
                 throw new InvalidOperationException(
-                    $"The user info ({userInfo.User.Id}) we get could not register to our database because {message}.");
+                    $"The user info ({userInfo.User.Id}) we get could was not registered in our database because {message}.");
             }
         }
         else
@@ -60,7 +65,7 @@ public class AuthService<T> where T : AiurUserBase, new()
         return current;
     }
 
-    public async Task<T> OnlyUpdate(T user)
+    public async Task<T> Fetch(T user)
     {
         var userInfo = await _accountService.OpenIdToUserInfo(await _appsContainer.GetAccessTokenAsync(), user.Id);
         user.Update(userInfo);

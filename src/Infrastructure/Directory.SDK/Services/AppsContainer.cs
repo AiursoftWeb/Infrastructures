@@ -29,10 +29,10 @@ public class AppsContainer : ISingletonDependency
 
     public async Task<string> GetAccessTokenAsync()
     {
-        return await GetAccessTokenAsyncWithAppInfo(_appId, _appSecret);
+        return await GetAccessTokenWithAppInfoAsync(_appId, _appSecret);
     }
 
-    public async Task<string> GetAccessTokenAsyncWithAppInfo(string appId, string appSecret)
+    public async Task<string> GetAccessTokenWithAppInfoAsync(string appId, string appSecret)
     {
         var app = GetApp(appId, appSecret);
         return await app.GetCachedAccessTokenAsync(_scopeFactory);

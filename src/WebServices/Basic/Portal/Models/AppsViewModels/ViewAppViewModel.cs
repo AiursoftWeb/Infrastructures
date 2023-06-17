@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
@@ -26,37 +27,10 @@ public class ViewAppViewModel : CreateAppViewModel
     {
     }
 
-    private ViewAppViewModel(PortalUser user, DeveloperApp thisApp) : base(user)
+    public ViewAppViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
-        if (thisApp.CreatorId != user.Id)
-        {
-            throw new InvalidOperationException("The app is not the user's app!");
-        }
-
-        AppName = thisApp.AppName;
-        AppDescription = thisApp.AppDescription;
-        AppId = thisApp.AppId;
-        AppSecret = thisApp.AppSecret;
-        EnableOAuth = thisApp.EnableOAuth;
-        ForceInputPassword = thisApp.ForceInputPassword;
-        ForceConfirmation = thisApp.ForceConfirmation;
-        DebugMode = thisApp.DebugMode;
-        PrivacyStatementUrl = thisApp.PrivacyStatementUrl;
-        LicenseUrl = thisApp.LicenseUrl;
-        IconPath = thisApp.IconPath;
-        AppDomain = thisApp.AppDomain;
-
-        ViewOpenId = thisApp.ViewOpenId;
-        ViewPhoneNumber = thisApp.ViewPhoneNumber;
-        ChangePhoneNumber = thisApp.ChangePhoneNumber;
-        ConfirmEmail = thisApp.ConfirmEmail;
-        ChangeBasicInfo = thisApp.ChangeBasicInfo;
-        ChangePassword = thisApp.ChangePassword;
-        ChangeGrantInfo = thisApp.ChangeGrantInfo;
-        ViewAuditLog = thisApp.ViewAuditLog;
-        ManageSocialAccount = thisApp.ManageSocialAccount;
     }
-
+    
     public bool JustHaveUpdated { get; set; }
     public string AppId { get; set; }
     public string AppSecret { get; set; }
@@ -117,7 +91,8 @@ public class ViewAppViewModel : CreateAppViewModel
 
     public static async Task<ViewAppViewModel> SelfCreateAsync(
         PortalUser user,
-        DeveloperApp appInDb,
+        IReadOnlyCollection<DirectoryApp> hisApps, 
+        DirectoryApp app,
         AppsService coreApiService,
         AppsContainer appsContainer,
         SitesService sitesService,
@@ -126,15 +101,16 @@ public class ViewAppViewModel : CreateAppViewModel
         RecordsService recordsService,
         int pageNumber)
     {
-        var model = new ViewAppViewModel(user, appInDb);
-        await model.Recover(user, appInDb, coreApiService, appsContainer, sitesService, eventService, channelService,
+        var model = new ViewAppViewModel(user, hisApps);
+        await model.Recover(user, hisApps, app, coreApiService, appsContainer, sitesService, eventService, channelService,
             recordsService, pageNumber);
         return model;
     }
 
     public async Task Recover(
         PortalUser user,
-        DeveloperApp appInDb,
+        IReadOnlyCollection<DirectoryApp> hisApps, 
+        DirectoryApp appInDb,
         AppsService coreApiService,
         AppsContainer appsContainer,
         SitesService sitesService,
@@ -143,8 +119,31 @@ public class ViewAppViewModel : CreateAppViewModel
         RecordsService recordsService,
         int pageNumber)
     {
-        RootRecover(user);
-        var token = await appsContainer.GetAccessTokenAsyncWithAppInfo(appInDb.AppId, appInDb.AppSecret);
+        RootRecover(user, hisApps);
+        AppName = appInDb.AppName;
+        AppDescription = appInDb.AppDescription;
+        AppId = appInDb.AppId;
+        AppSecret = appInDb.AppSecret;
+        EnableOAuth = appInDb.EnableOAuth;
+        ForceInputPassword = appInDb.ForceInputPassword;
+        ForceConfirmation = appInDb.ForceConfirmation;
+        DebugMode = appInDb.DebugMode;
+        PrivacyStatementUrl = appInDb.PrivacyStatementUrl;
+        LicenseUrl = appInDb.LicenseUrl;
+        IconPath = appInDb.IconPath;
+        AppDomain = appInDb.AppDomain;
+
+        ViewOpenId = appInDb.ViewOpenId;
+        ViewPhoneNumber = appInDb.ViewPhoneNumber;
+        ChangePhoneNumber = appInDb.ChangePhoneNumber;
+        ConfirmEmail = appInDb.ConfirmEmail;
+        ChangeBasicInfo = appInDb.ChangeBasicInfo;
+        ChangePassword = appInDb.ChangePassword;
+        ChangeGrantInfo = appInDb.ChangeGrantInfo;
+        ViewAuditLog = appInDb.ViewAuditLog;
+        ManageSocialAccount = appInDb.ManageSocialAccount;
+        
+        var token = await appsContainer.GetAccessTokenWithAppInfoAsync(appInDb.AppId, appInDb.AppSecret);
 
         // TODO: After migration to Directory, load from DB.
         Grants = await coreApiService.AllUserGrantedAsync(token, pageNumber, 15);

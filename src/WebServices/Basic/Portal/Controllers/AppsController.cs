@@ -19,7 +19,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Portal.Controllers;
 
-[Obsolete]
 [AiurForceAuth]
 [LimitPerMin]
 [Route("Dashboard")]
@@ -160,7 +159,7 @@ public class AppsController : Controller
             _ChangePermission(target.ManageSocialAccount, model.ManageSocialAccount, ref permissionAdded);
         if (permissionAdded)
         {
-            var token = await _appsContainer.GetAccessTokenAsyncWithAppInfo(target.AppId, target.AppSecret);
+            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
             await _coreApiService.DropGrantsAsync(token);
         }
 
@@ -235,7 +234,7 @@ public class AppsController : Controller
 
         try
         {
-            var token = await _appsContainer.GetAccessTokenAsyncWithAppInfo(target.AppId, target.AppSecret);
+            var token = await _appsContainer.GetAccessTokenWithAppInfoAsync(target.AppId, target.AppSecret);
             await _siteService.DeleteAppAsync(token, target.AppId);
             await _recordsService.DeleteAppAsync(token, target.AppId);
             await _eventService.DeleteAppAsync(token, target.AppId);
@@ -247,12 +246,6 @@ public class AppsController : Controller
         _dbContext.Apps.Remove(target);
         await _dbContext.SaveChangesAsync();
         return RedirectToAction(nameof(AllApps));
-    }
-
-    private async Task<PortalUser> GetCurrentUserAsync()
-    {
-        return await _dbContext.Users.Include(t => t.MyApps)
-            .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
 
     [Route("Apps/{appId}/ChangeIcon")]
@@ -272,5 +265,11 @@ public class AppsController : Controller
             await _dbContext.SaveChangesAsync();
         }
         return RedirectToAction(nameof(ViewApp), new { id = appId, JustHaveUpdated = true });
+    }
+    
+    private async Task<PortalUser> GetCurrentUserAsync()
+    {
+        return await _dbContext.Users.Include(t => t.MyApps)
+            .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
     }
 }

@@ -99,7 +99,7 @@ public class AccountController : Controller
     public async Task<IActionResult> Email(bool justHaveUpdated)
     {
         var user = await GetCurrentUserAsync();
-        user = await _authService.OnlyUpdate(user);
+        user = await _authService.Fetch(user);
         var emails = await _userService.ViewAllEmailsAsync(await _appsContainer.GetAccessTokenAsync(), user.Id);
         var model = new EmailViewModel(user)
         {

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.Warpgate.SDK.Models;
@@ -14,7 +16,7 @@ public class CreateRecordViewModel : AppLayoutModel
     {
     }
 
-    public CreateRecordViewModel(PortalUser user) : base(user)
+    public CreateRecordViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -42,8 +44,8 @@ public class CreateRecordViewModel : AppLayoutModel
 
     [MaxLength(1000)] public string Tags { get; set; }
 
-    public void Recover(PortalUser user)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps)
     {
-        RootRecover(user);
+        RootRecover(user, hisApps);
     }
 }

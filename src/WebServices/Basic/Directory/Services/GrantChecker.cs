@@ -28,7 +28,12 @@ public class GrantChecker : IScopedDependency
     public async Task<DirectoryUser> EnsureGranted(string accessToken, string userId, Func<DirectoryApp, bool> prefix)
     {
         var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
-        var targetUser = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == userId);
+        var targetUser = await _dbContext.Users.Include(t => t.Emails).FirstOrDefaultAsync(t => t.Id == userId);
+        if (targetUser == null)
+        {
+            throw new AiurAPIModelException(ErrorType.NotFound, $"The user with ID: {userId} was not found!");
+        }
+        
         var app = await _dbContext.DirectoryAppsInDb.FindAsync(appid);
         if (app == null)
         {

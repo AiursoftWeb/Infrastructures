@@ -40,7 +40,7 @@ public static class Extends
         IConfigurationSection probeConfig,
         IConfigurationSection authenticationConfig) where TUser : AiurUserBase, new()
     {
-        services.AddAiursoftProbe(probeConfig); // For file storaging.
+        services.AddAiursoftProbe(probeConfig); // For file storage like user's avatar.
         services.AddAiursoftObserver(observerConfig); // For error reporting.
         services.AddAiursoftAppAuthentication(authenticationConfig); // For authentication.
 

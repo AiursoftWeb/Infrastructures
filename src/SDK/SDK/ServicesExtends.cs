@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Aiursoft.Canon;
 using Aiursoft.Scanner;
 using Aiursoft.XelNaga.Tools;
 using EFCoreSecondLevelCacheInterceptor;
@@ -49,7 +48,6 @@ public static class ServicesExtends
     {
         services.AddHttpClient();
         services.AddMemoryCache();
-        services.AddTaskCanon();
         var abstractsList = abstracts.ToList();
         abstractsList.Add(typeof(IHostedService));
         if (EntryExtends.IsProgramEntry())

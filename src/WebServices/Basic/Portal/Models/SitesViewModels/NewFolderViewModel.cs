@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +14,7 @@ public class NewFolderViewModel : AppLayoutModel
     {
     }
 
-    public NewFolderViewModel(PortalUser user) : base(user)
+    public NewFolderViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -26,9 +28,9 @@ public class NewFolderViewModel : AppLayoutModel
 
     public string AppName { get; set; }
 
-    public void Recover(PortalUser user, string appName)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps, string appName)
     {
-        RootRecover(user);
+        RootRecover(user, hisApps);
         AppName = appName;
     }
 }

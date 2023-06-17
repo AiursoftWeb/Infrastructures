@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 
 namespace Aiursoft.Portal.Models.AppsViewModels;
 
@@ -10,7 +12,7 @@ public class CreateAppViewModel : AppLayoutModel
     {
     }
 
-    public CreateAppViewModel(PortalUser user) : base(user)
+    public CreateAppViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 

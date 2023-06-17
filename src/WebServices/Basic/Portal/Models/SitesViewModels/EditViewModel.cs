@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Portal.Models.AppsViewModels;
 using Aiursoft.SDKTools.Attributes;
 
@@ -12,7 +14,7 @@ public class EditViewModel : AppLayoutModel
     {
     }
 
-    public EditViewModel(PortalUser user) : base(user)
+    public EditViewModel(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps) : base(user, hisApps)
     {
     }
 
@@ -44,9 +46,9 @@ public class EditViewModel : AppLayoutModel
 
     public long Size { get; set; }
 
-    public void Recover(PortalUser user, string appName)
+    public void Recover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps, string appName)
     {
         AppName = appName;
-        RootRecover(user);
+        RootRecover(user, hisApps);
     }
 }
