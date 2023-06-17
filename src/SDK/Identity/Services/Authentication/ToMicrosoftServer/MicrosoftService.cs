@@ -19,12 +19,12 @@ public class MicrosoftService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly DirectoryConfiguration _serviceLocation;
     private readonly string _tenant;
 
     public MicrosoftService(
-        APIProxyService http,
+        ApiProxyService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,

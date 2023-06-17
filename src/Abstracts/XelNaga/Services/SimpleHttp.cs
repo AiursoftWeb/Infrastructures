@@ -7,6 +7,7 @@ namespace Aiursoft.XelNaga.Services;
 [Obsolete("Use HTTP service for external and ApiProxyService for internal.")]
 public static class SimpleHttp
 {
+    [Obsolete("Use HTTP service for external and ApiProxyService for internal.")]
     public static async Task<string> DownloadAsString(string url)
     {
         var http = new HttpClient();

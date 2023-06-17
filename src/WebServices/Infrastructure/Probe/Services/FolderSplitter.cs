@@ -25,7 +25,7 @@ public class FolderSplitter : IScopedDependency
 
         var foldersWithFileName = SplitToFolders(folderNames);
         var fileName = foldersWithFileName.Last();
-        var folders = foldersWithFileName.Take(foldersWithFileName.Count() - 1).ToArray();
+        var folders = foldersWithFileName.Take(foldersWithFileName.Length - 1).ToArray();
         return (folders, fileName);
     }
 

@@ -10,16 +10,21 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Probe.SDK.Services;
 
 public class ProbeSettingsFetcher : ISingletonDependency
 {
     private ProbeDownloadPatternConfig _probeServerConfig;
+    private readonly ApiProxyService _apiProxyService;
     private readonly ProbeConfiguration _probeConfiguration;
 
-    public ProbeSettingsFetcher(IOptions<ProbeConfiguration> probeConfiguration)
+    public ProbeSettingsFetcher(
+        ApiProxyService apiProxyService,
+        IOptions<ProbeConfiguration> probeConfiguration)
     {
+        _apiProxyService = apiProxyService;
         _probeConfiguration = probeConfiguration.Value;
     }
 
@@ -27,7 +32,7 @@ public class ProbeSettingsFetcher : ISingletonDependency
     {
         if (_probeServerConfig == null)
         {
-            var serverConfigString = await SimpleHttp.DownloadAsString(_probeConfiguration.Instance);
+            var serverConfigString = await _apiProxyService.Get(new AiurUrl(_probeConfiguration.Instance), true);
             _probeServerConfig = JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
         }
 
@@ -94,7 +99,7 @@ public class ProbeSettingsFetcher : ISingletonDependency
 
     private (string siteName, string[] folders, string fileName) SplitToPath(string fullPath)
     {
-        if (fullPath == null || fullPath.Length == 0)
+        if (string.IsNullOrEmpty(fullPath))
         {
             throw new AiurAPIModelException(ErrorType.NotFound,
                 $"Can't get your file download address from path: '{fullPath}'!");
@@ -103,12 +108,12 @@ public class ProbeSettingsFetcher : ISingletonDependency
         var paths = SplitStrings(fullPath);
         var fileName = paths.Last();
         var siteName = paths.First();
-        var folders = paths.Take(paths.Count() - 1).Skip(1).ToArray();
+        var folders = paths.Take(paths.Length - 1).Skip(1).ToArray();
         return (siteName, folders, fileName);
     }
 
     private string[] SplitStrings(string folderNames)
     {
-        return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+        return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
     }
 }

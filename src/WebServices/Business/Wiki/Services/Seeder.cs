@@ -66,7 +66,7 @@ public class Seeder : ITransientDependency
     {
         try
         {
-            await _retry.RunWithRetry(async attempt =>
+            await _retry.RunWithRetry(async _ =>
             {
                 await Seed();
                 return 0;

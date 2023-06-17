@@ -19,11 +19,11 @@ public class GitHubService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly DirectoryConfiguration _serviceLocation;
 
     public GitHubService(
-        APIProxyService http,
+        ApiProxyService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,

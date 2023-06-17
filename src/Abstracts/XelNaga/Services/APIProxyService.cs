@@ -13,17 +13,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.XelNaga.Services;
 
-public class APIProxyService : IScopedDependency
+public class ApiProxyService : IScopedDependency
 {
     private readonly HttpClient _client;
     private readonly RetryEngine _retryEngine;
-    private readonly ILogger<APIProxyService> _logger;
+    private readonly ILogger<ApiProxyService> _logger;
     private readonly Regex _regex;
 
-    public APIProxyService(
+    public ApiProxyService(
         RetryEngine retryEngine,
         IHttpClientFactory clientFactory,
-        ILogger<APIProxyService> logger)
+        ILogger<ApiProxyService> logger)
     {
         _regex = new Regex("^https://", RegexOptions.Compiled);
         _client = clientFactory.CreateClient();
@@ -33,11 +33,10 @@ public class APIProxyService : IScopedDependency
 
     private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
     {
-        return _retryEngine.RunWithRetry(async attempt =>
+        return _retryEngine.RunWithRetry(async _ =>
         {
             var response = await _client.SendAsync(request);
-            if (response.StatusCode == HttpStatusCode.BadGateway ||
-                response.StatusCode == HttpStatusCode.ServiceUnavailable)
+            if (response.StatusCode is HttpStatusCode.BadGateway or HttpStatusCode.ServiceUnavailable)
             {
                 throw new WebException(
                     $"Api proxy failed because of bad gateway [{response.StatusCode}]. (This error will trigger auto retry)");
@@ -48,7 +47,7 @@ public class APIProxyService : IScopedDependency
         when: e => e is WebException,
         onError: e => 
         {
-            _logger.LogCritical(e, "Transient issue (retry available) happened with remote server");
+            _logger.LogWarning(e, "Transient issue (retry available) happened with remote server");
         });
     }
 
@@ -77,7 +76,7 @@ public class APIProxyService : IScopedDependency
         if (response.IsSuccessStatusCode)
         {
             throw new InvalidOperationException(
-                $"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                $"The {nameof(ApiProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
         }
 
         throw new WebException(
@@ -109,7 +108,7 @@ public class APIProxyService : IScopedDependency
         if (response.IsSuccessStatusCode)
         {
             throw new InvalidOperationException(
-                $"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                $"The {nameof(ApiProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
         }
 
         throw new WebException(
@@ -145,7 +144,7 @@ public class APIProxyService : IScopedDependency
         if (response.IsSuccessStatusCode)
         {
             throw new InvalidOperationException(
-                $"The {nameof(APIProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
+                $"The {nameof(ApiProxyService)} can only handle JSON content while the remote server returned unexpected content: {content.OTake(100)}.");
         }
 
         throw new WebException(

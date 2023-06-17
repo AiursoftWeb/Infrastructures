@@ -5,34 +5,38 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.WWW.Services;
 
 public class BlackListPorivder : IScopedDependency
 {
     private readonly string _address;
+    private readonly HttpService _httpService;
     private readonly CacheService _cache;
     private readonly RetryEngine _retryEngine;
 
     public BlackListPorivder(
-
+        HttpService httpService,
+        
         // TODO: Use IOptions!
         IConfiguration configuration,
         CacheService cache,
         RetryEngine retryEngine)
     {
-        this._address = configuration["BlackListLocation"];
-        this._cache = cache;
-        this._retryEngine = retryEngine;
+        _address = configuration["BlackListLocation"];
+        _httpService = httpService;
+        _cache = cache;
+        _retryEngine = retryEngine;
     }
 
     private Task<string[]> GetItems()
     {
-        return this._cache.RunWithCache("black_list", () =>
+        return _cache.RunWithCache("black_list", () =>
         {
-            return _retryEngine.RunWithRetry(async attempt =>
+            return _retryEngine.RunWithRetry(async _ =>
             {
-                var list = await SimpleHttp.DownloadAsString(_address);
+                var list = await _httpService.Get(new AiurUrl(_address));
                 return list
                     .Split('\n')
                     .Where(t => !string.IsNullOrWhiteSpace(t))
@@ -45,7 +49,7 @@ public class BlackListPorivder : IScopedDependency
     {
         var url = new Uri(input);
         var domain = url.Host;
-        var blackListItem = await this.GetItems();
+        var blackListItem = await GetItems();
         return blackListItem.Any(t => domain.ToLower().Trim().EndsWith(t.ToLower().Trim()));
     }
 }

@@ -5,16 +5,21 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
+using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Warpgate.SDK.Services;
 
 public class WarpgateSettingsFetcher : ISingletonDependency
 {
+    private readonly ApiProxyService _apiProxyService;
     private WarpgatePatternConfig _warpgateServerConfig;
     private readonly WarpgateConfiguration _warpgateConfiguration;
 
-    public WarpgateSettingsFetcher(IOptions<WarpgateConfiguration> probeConfiguration)
+    public WarpgateSettingsFetcher(
+        ApiProxyService apiProxyService,
+        IOptions<WarpgateConfiguration> probeConfiguration)
     {
+        _apiProxyService = apiProxyService;
         _warpgateConfiguration = probeConfiguration.Value;
     }
 
@@ -22,7 +27,7 @@ public class WarpgateSettingsFetcher : ISingletonDependency
     {
         if (_warpgateServerConfig == null)
         {
-            var serverConfigString = await SimpleHttp.DownloadAsString(_warpgateConfiguration.Instance);
+            var serverConfigString = await _apiProxyService.Get(new AiurUrl(_warpgateConfiguration.Instance, true));
             _warpgateServerConfig = JsonConvert.DeserializeObject<WarpgatePatternConfig>(serverConfigString);
         }
 

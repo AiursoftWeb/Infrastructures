@@ -7,25 +7,29 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Directory.SDK.Services;
 
 public class ServerPublicKeyVault : ISingletonDependency
 {
-    private readonly DirectoryConfiguration directoryConfiguration;
+    private readonly ApiProxyService _proxy;
+    private readonly DirectoryConfiguration _directoryConfiguration;
     private RSAParameters? _publicKey;
 
     public ServerPublicKeyVault(
+        ApiProxyService proxy,
         IOptions<DirectoryConfiguration> directoryConfiguration)
     {
-        this.directoryConfiguration = directoryConfiguration.Value;
+        _proxy = proxy;
+        _directoryConfiguration = directoryConfiguration.Value;
     }
 
     public async Task<RSAParameters> GetPublicKey()
     {
         if (_publicKey == null)
         {
-            var response = await SimpleHttp.DownloadAsString(directoryConfiguration.Instance);
+            var response = await _proxy.Get(new AiurUrl(_directoryConfiguration.Instance), true);
             var serverModel = JsonConvert.DeserializeObject<DirectoryServerConfiguration>(response);
             _publicKey = new RSAParameters
             {

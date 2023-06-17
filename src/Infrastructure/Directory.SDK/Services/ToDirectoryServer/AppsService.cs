@@ -17,13 +17,13 @@ namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
 public class AppsService : IScopedDependency
 {
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly CacheService _cache;
     private readonly DirectoryConfiguration _directoryLocator;
 
     public AppsService(
         IOptions<DirectoryConfiguration> serviceLocation,
-        APIProxyService http,
+        ApiProxyService http,
         CacheService cache)
     {
         _directoryLocator = serviceLocation.Value;

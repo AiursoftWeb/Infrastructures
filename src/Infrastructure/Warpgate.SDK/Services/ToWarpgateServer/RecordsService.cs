@@ -16,11 +16,11 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 
 public class RecordsService : IScopedDependency
 {
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly WarpgateConfiguration _serviceLocation;
 
     public RecordsService(
-        APIProxyService http,
+        ApiProxyService http,
         IOptions<WarpgateConfiguration> serviceLocation)
     {
         _http = http;

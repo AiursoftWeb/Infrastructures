@@ -19,7 +19,6 @@ using Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 
 namespace Aiursoft.Portal.Models.AppsViewModels;
 
-[Obsolete]
 public class ViewAppViewModel : CreateAppViewModel
 {
     [Obsolete("This method is only for framework", true)]

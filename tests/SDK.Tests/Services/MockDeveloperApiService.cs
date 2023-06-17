@@ -11,7 +11,7 @@ public class MockDeveloperApiService : AppsService
 {
     public MockDeveloperApiService(
         IOptions<DirectoryConfiguration> serviceLocation,
-        APIProxyService http,
+        ApiProxyService http,
         CacheService cache) : base (serviceLocation, http, cache)
     {
     }

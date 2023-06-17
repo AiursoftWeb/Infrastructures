@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Portal.Data;
 using Aiursoft.Portal.Models;

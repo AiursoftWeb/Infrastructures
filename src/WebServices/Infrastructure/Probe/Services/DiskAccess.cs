@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.Probe.Models.Configuration;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 

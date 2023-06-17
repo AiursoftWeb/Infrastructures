@@ -16,11 +16,11 @@ namespace Aiursoft.Observer.SDK.Services.ToObserverServer;
 
 public class ObserverService : IScopedDependency
 {
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly ObserverConfiguration _observerLocator;
 
     public ObserverService(
-        APIProxyService http,
+        ApiProxyService http,
         IOptions<ObserverConfiguration> observerLocator)
     {
         _http = http;

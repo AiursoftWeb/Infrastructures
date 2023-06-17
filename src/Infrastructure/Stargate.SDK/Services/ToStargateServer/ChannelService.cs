@@ -15,12 +15,12 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 public class ChannelService : IScopedDependency
 {
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly StargateConfiguration _stargateLocator;
 
     public ChannelService(
         IOptions<StargateConfiguration> serviceLocation,
-        APIProxyService http)
+        ApiProxyService http)
     {
         _stargateLocator = serviceLocation.Value;
         _http = http;

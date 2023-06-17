@@ -28,14 +28,14 @@ public class HTTPServiceTests
     [TestMethod]
     public void TestBuildService()
     {
-        var http = _serviceProvider.GetRequiredService<APIProxyService>();
+        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
         Assert.IsNotNull(http);
     }
 
     [TestMethod]
     public async Task TestGetInternal()
     {
-        var http = _serviceProvider.GetRequiredService<APIProxyService>();
+        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
         var random = StringOperation.RandomString(100);
         var result = await http.Get(new AiurUrl("https://postman-echo.com/get", new
         {
@@ -50,7 +50,7 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestGetOutter()
     {
-        var http = _serviceProvider.GetRequiredService<APIProxyService>();
+        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
         var random = StringOperation.RandomString(100);
         var result = await http.Get(new AiurUrl("https://postman-echo.com/get", new
         {
@@ -65,7 +65,7 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestPostInternal()
     {
-        var http = _serviceProvider.GetRequiredService<APIProxyService>();
+        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
         var random = StringOperation.RandomString(100);
         var random2 = StringOperation.RandomString(100);
         var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new
@@ -85,7 +85,7 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestPostOutter()
     {
-        var http = _serviceProvider.GetRequiredService<APIProxyService>();
+        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
         var random = StringOperation.RandomString(100);
         var random2 = StringOperation.RandomString(100);
         var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new

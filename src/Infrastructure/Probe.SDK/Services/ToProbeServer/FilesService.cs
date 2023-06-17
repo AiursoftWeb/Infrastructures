@@ -16,11 +16,11 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 
 public class FilesService : IScopedDependency
 {
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
     private readonly ProbeConfiguration _probeLocator;
 
     public FilesService(
-        APIProxyService http,
+        ApiProxyService http,
         IOptions<ProbeConfiguration> probeLocator)
     {
         _http = http;

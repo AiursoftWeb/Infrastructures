@@ -14,11 +14,11 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 public class PushMessageService : IScopedDependency
 {
-    private readonly APIProxyService _httpService;
+    private readonly ApiProxyService _httpService;
     private readonly StargateConfiguration _stargateLocator;
 
     public PushMessageService(
-        APIProxyService httpService,
+        ApiProxyService httpService,
         IOptions<StargateConfiguration> serviceLocation)
     {
         _httpService = httpService;

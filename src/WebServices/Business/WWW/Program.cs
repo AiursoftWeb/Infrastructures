@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.SDK;
+﻿using Aiursoft.SDK;
 using Aiursoft.WWW.Data;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;

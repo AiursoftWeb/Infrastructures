@@ -15,11 +15,11 @@ namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 public class AccountService : IScopedDependency
 {
     private readonly DirectoryConfiguration _directoryConfiguration;
-    private readonly APIProxyService _http;
+    private readonly ApiProxyService _http;
 
     public AccountService(
         IOptions<DirectoryConfiguration> directoryConfiguration,
-        APIProxyService http)
+        ApiProxyService http)
     {
         _directoryConfiguration = directoryConfiguration.Value;
         _http = http;
