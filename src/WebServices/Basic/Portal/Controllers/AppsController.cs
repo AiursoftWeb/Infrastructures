@@ -57,10 +57,9 @@ public class AppsController : Controller
     public async Task<IActionResult> AllApps()
     {
         var currentUser = await GetCurrentUserAsync();
-        var model = new AllAppsViewModel(currentUser)
-        {
-            AllApps = _dbContext.Apps.Where(t => t.CreatorId == currentUser.Id)
-        };
+        var allMyApps = await _coreApiService.GetMyApps(
+            await _directoryAppTokenService.GetAccessTokenAsync(), currentUser.Id);
+        var model = new AllAppsViewModel(currentUser, allMyApps);
         return View(model);
     }
 
@@ -68,7 +67,9 @@ public class AppsController : Controller
     public async Task<IActionResult> CreateApp()
     {
         var currentUser = await GetCurrentUserAsync();
-        var model = new CreateAppViewModel(currentUser);
+        var allMyApps = await _coreApiService.GetMyApps(
+            await _directoryAppTokenService.GetAccessTokenAsync(), currentUser.Id);
+        var model = new CreateAppViewModel(currentUser, allMyApps);
         return View(model);
     }
 
@@ -80,7 +81,9 @@ public class AppsController : Controller
         var currentUser = await GetCurrentUserAsync();
         if (!ModelState.IsValid)
         {
-            model.RootRecover(currentUser);
+            var allMyApps = await _coreApiService.GetMyApps(
+                await _directoryAppTokenService.GetAccessTokenAsync(), currentUser.Id);
+            model.RootRecover(currentUser, allMyApps);
             return View(model);
         }
 

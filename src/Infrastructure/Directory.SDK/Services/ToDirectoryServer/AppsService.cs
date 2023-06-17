@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
@@ -43,7 +46,7 @@ public class AppsService : IScopedDependency
             return Task.FromResult(false);
         }
 
-        return _cache.RunWithCache($"ValidAppWithId-{appId}-Secret-{appSecret}",
+        return _cache.RunWithCache($"valid-app-with-appid-{appId}-secret-{appSecret}",
             async () =>
             {
                 var url = new AiurUrl(_directoryLocator.Instance, "apps", "IsValidApp", new IsValidateAppAddressModel
@@ -54,7 +57,7 @@ public class AppsService : IScopedDependency
                 var result = await _http.Get(url, true);
                 var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
                 return jResult.Code == ErrorType.Success;
-            });
+            }, cacheCondition: result => result);
     }
 
     public Task<AppInfoViewModel> AppInfoAsync(string appId)
@@ -139,5 +142,23 @@ public class AppsService : IScopedDependency
         }
 
         return jResult;
+    }
+
+    public async Task<IReadOnlyCollection<DirectoryApp>> GetMyApps(string accessToken, string openId)
+    {
+        await Task.Delay(0);
+        throw new NotImplementedException();
+    }
+    
+    public async Task<IReadOnlyCollection<DirectoryApp>> GetAllApps(string accessToken)
+    {
+        await Task.Delay(0);
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> GetAppSecret(string accessToken, string appId)
+    {
+        await Task.Delay(0);
+        throw new NotImplementedException();
     }
 }

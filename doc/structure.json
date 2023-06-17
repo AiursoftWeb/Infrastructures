@@ -38,11 +38,6 @@
         "docAPIAddress": "https://directory.{{rootDomain}}/doc"
     },
     {
-        "collectionTitle": "App Info",
-        "articles": [],
-        "docAPIAddress": "https://developer.{{rootDomain}}/doc"
-    },
-    {
         "collectionTitle": "Warpgate",
         "articles": [],
         "docAPIAddress": "https://warpgate.{{rootDomain}}/doc"

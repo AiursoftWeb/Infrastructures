@@ -19,7 +19,7 @@ public class AppLayoutModel
     public bool EmailConfirmed { get; set; }
     public string NickName { get; set; }
     public int AppCount { get; set; }
-    public IEnumerable<DirectoryApp> AllApps { get; set; }
+    public IEnumerable<DirectoryApp> AllApps { get; private set; }
 
     public void RootRecover(PortalUser user, IReadOnlyCollection<DirectoryApp> hisApps)
     {
