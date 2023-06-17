@@ -15,7 +15,6 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
-using Aiursoft.Canon;
 
 namespace Aiursoft.Directory;
 
@@ -43,12 +42,13 @@ public class Startup
             .AddDefaultTokenProviders();
 
         services.AddAiurMvc();
-
-        services.AddTaskCanon();
+    
+        // After having gateway, these should be migrated.
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 
+        // After having gateway, these should be migrated.
         services.AddAiursoftSdk(abstracts: typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();
@@ -57,6 +57,8 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseAiursoftHandler(env.IsDevelopment());
+        
+        // TODO: After having gateway, this should be migrated.
         app.UseSession();
         app.UseAiursoftAppRouters();
     }

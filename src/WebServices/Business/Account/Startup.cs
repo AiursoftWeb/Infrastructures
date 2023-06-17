@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Account.Data;
 using Aiursoft.Account.Models;
-using Aiursoft.Canon;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +28,6 @@ public class Startup
             .AddEntityFrameworkStores<AccountDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddTaskCanon();
         services.AddAiurMvc();
         services.AddAiursoftIdentity<AccountUser>(
             probeConfig: Configuration.GetSection("AiursoftProbe"),

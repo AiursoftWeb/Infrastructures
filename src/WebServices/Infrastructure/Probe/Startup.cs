@@ -1,5 +1,4 @@
-﻿using Aiursoft.Canon;
-using Aiursoft.Directory.SDK;
+﻿using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.Models.Configuration;
@@ -34,7 +33,6 @@ public class Startup
         services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
-        services.AddTaskCanon();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
