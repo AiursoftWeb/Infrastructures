@@ -9,14 +9,14 @@ using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.WWW.Services;
 
-public class BlackListPorivder : IScopedDependency
+public class BlackListProvider : IScopedDependency
 {
     private readonly string _address;
     private readonly HttpService _httpService;
     private readonly CacheService _cache;
     private readonly RetryEngine _retryEngine;
 
-    public BlackListPorivder(
+    public BlackListProvider(
         HttpService httpService,
         
         // TODO: Use IOptions!

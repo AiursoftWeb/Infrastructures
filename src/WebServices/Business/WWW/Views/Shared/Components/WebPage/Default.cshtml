@@ -1,6 +1,6 @@
 ﻿@model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.WebPage
-@inject BlackListPorivder BlackListPorivder
-@if (!await BlackListPorivder.InBlackListAsync(Model.Url))
+@inject BlackListProvider BlackListProvider
+@if (!await BlackListProvider.InBlackListAsync(Model.Url))
 {
     <h3 class="mb-0 mt-3" style="font-size: 20px;line-height: 1.3;font-weight:normal">
         <a href="@Model.Url">
