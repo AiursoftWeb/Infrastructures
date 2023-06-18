@@ -41,7 +41,7 @@ Request path:
 Request example:
 
 ```
-https://directory.aiursoft.com/OAuth/Authorize?appid=yourappid&amp;redirect_uri=yourredirect_uri&amp;state=yourstate
+https://directory.aiursoft.com/OAuth/Authorize?appid=yourappid&redirect_uri=your_redirect_uri&state=yourstate
 ```
 
 Request arguments:
