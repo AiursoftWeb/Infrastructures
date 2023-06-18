@@ -11,9 +11,9 @@ namespace Aiursoft.Directory.SDK.Services;
 
 public class AiursoftAppTokenValidator : IScopedDependency
 {
-    private readonly AppTokenRSAService _appTokenRsaService;
+    private readonly AppTokenRsaService _appTokenRsaService;
 
-    public AiursoftAppTokenValidator(AppTokenRSAService appTokenRsaService)
+    public AiursoftAppTokenValidator(AppTokenRsaService appTokenRsaService)
     {
         _appTokenRsaService = appTokenRsaService;
     }

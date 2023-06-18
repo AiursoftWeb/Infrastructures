@@ -204,4 +204,8 @@
   <data name="Without confirming your email, you won't receive any important notifications and cannot reset your password!" xml:space="preserve">
     <value>如果不确认您的电子邮件，您不会收到任何重要的通知，也无法重置您的密码！</value>
   </data>
+  <data name="Develop" xml:space="preserve">
+    <value>开发</value>
+    <comment>Develop</comment>
+  </data>
 </root>

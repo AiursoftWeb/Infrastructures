@@ -171,6 +171,12 @@ public class AppsService : IScopedDependency
         throw new NotImplementedException();
     }
 
+    public async Task SetAppProperties(string accessToken, string appId)
+    {
+        await Task.Delay(0);
+        throw new NotImplementedException();
+    }
+
     public async Task<string> CreateNewAppFor(
         string accessToken, 
         string name, 

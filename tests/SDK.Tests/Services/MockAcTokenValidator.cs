@@ -11,7 +11,7 @@ public class MockAcTokenValidator : AiursoftAppTokenValidator
     public static string MockAppId = Guid.NewGuid().ToString();
     public static string Mock2AppId = Guid.NewGuid().ToString();
 
-    public MockAcTokenValidator(AppTokenRSAService rsa) : base(rsa)
+    public MockAcTokenValidator(AppTokenRsaService rsa) : base(rsa)
     {
     }
 

@@ -10,34 +10,34 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.Canon;
 using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Probe.SDK.Services;
 
-public class ProbeSettingsFetcher : ISingletonDependency
+public class ProbeSettingsFetcher : IScopedDependency
 {
-    // TODO: Avoid private variable, use cache service.
-    private ProbeDownloadPatternConfig _probeServerConfig;
+    private readonly CacheService _cacheService;
     private readonly ApiProxyService _apiProxyService;
     private readonly ProbeConfiguration _probeConfiguration;
 
     public ProbeSettingsFetcher(
+        CacheService cacheService,
         ApiProxyService apiProxyService,
         IOptions<ProbeConfiguration> probeConfiguration)
     {
+        _cacheService = cacheService;
         _apiProxyService = apiProxyService;
         _probeConfiguration = probeConfiguration.Value;
     }
 
-    public async Task<ProbeDownloadPatternConfig> GetServerConfig()
+    public Task<ProbeDownloadPatternConfig> GetServerConfig()
     {
-        if (_probeServerConfig == null)
+        return _cacheService.RunWithCache("probe-server-config", async () =>
         {
             var serverConfigString = await _apiProxyService.Get(new AiurUrl(_probeConfiguration.Instance), true);
-            _probeServerConfig = JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
-        }
-
-        return _probeServerConfig;
+            return JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
+        });
     }
 
     public Task<string> GetProbeOpenAddressAsync(string siteName, string[] folders, string fileName)

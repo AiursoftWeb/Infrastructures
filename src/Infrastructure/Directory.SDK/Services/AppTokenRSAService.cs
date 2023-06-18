@@ -5,22 +5,22 @@ using Aiursoft.XelNaga.Tools;
 
 namespace Aiursoft.Directory.SDK.Services;
 
-public class AppTokenRSAService : IScopedDependency
+public class AppTokenRsaService : IScopedDependency
 {
     private readonly RSA _rsa;
-    private readonly ServerPublicKeyVault _serverPublicKeyVault;
+    private readonly ServerPublicKeyAccess _serverPublicKeyAccess;
 
-    public AppTokenRSAService(ServerPublicKeyVault serverPublicKeyVault)
+    public AppTokenRsaService(ServerPublicKeyAccess serverPublicKeyAccess)
     {
         _rsa = RSA.Create();
-        _serverPublicKeyVault = serverPublicKeyVault;
+        _serverPublicKeyAccess = serverPublicKeyAccess;
     }
 
     public async Task<bool> VerifyDataAsync(string originalMessage, string signedBase64)
     {
         var bytesToVerify = originalMessage.StringToBytes();
         var signedBytes = signedBase64.Base64ToBytes();
-        _rsa.ImportParameters(await _serverPublicKeyVault.GetPublicKey());
+        _rsa.ImportParameters(await _serverPublicKeyAccess.GetPublicKey());
         return _rsa.VerifyData(bytesToVerify, signedBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
 }
