@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.XelNaga.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,11 +20,21 @@ public static class ProgramExtends
 
         try
         {
+            // Some projects may not be able to migrated. So create first.
             await context.Database.EnsureCreatedAsync();
             logger.LogInformation("The database with context {ContextName} was ensured to be created",
                 typeof(TContext).Name);
 
-            await context.Database.MigrateAsync();
+            if (EntryExtends.IsInUT())
+            {
+                // Reset database for unit tests.
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
+            }
+            else
+            {
+                await context.Database.MigrateAsync();
+            }
             logger.LogInformation("Migrated database associated with context {ContextName}", typeof(TContext).Name);
         }
         catch (Exception e)
