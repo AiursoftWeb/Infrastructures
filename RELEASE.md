@@ -71,3 +71,23 @@ services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 ## Version 6.0.21
 
 - Remove Developer related code.
+
+## Version 6.0.22
+
+- The developer website has been removed from the Wiki center.
+- XelNaga no longer uses AiurCache and has switched to CacheService instead.
+- The Async helper has been replaced with Canon.
+- XelNaga now has Canon service built-in.
+- The Directory SDK will now return the app creator ID.
+- AppsService now uses cache instead of hashset of containers.
+- AppsContainer has been renamed to DirectoryAppTokenService.
+- InitSite has been renamed to InitSiteAsync.
+- APIProxyService has been renamed to ApiProxyService.
+- AddAiursoftSDK has been renamed to AddAiursoftSdk.
+- BlackListProvider has been moved to the WWW project and is now based on cache.
+- The Update method has been renamed to UpdateDbAsync and will create the database first before migrating.
+- The Directory ApiController has been renamed to LanguageController.
+- The CreateHostBuilder method has been removed.
+- AddTaskCanon() no longer needs to be called manually.
+- A new empty project called Portal has been added.
+- Various performance improvements and logging/lint fixes have been made.
