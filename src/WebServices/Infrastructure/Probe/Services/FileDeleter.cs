@@ -44,12 +44,13 @@ public class FileDeleter : ITransientDependency
                 await _retryEngine.RunWithRetry(_ =>
                 {
                     _storageProvider.DeleteToTrash(file.HardwareId);
-                    return Task.FromResult(0);
+                    return Task.CompletedTask;
                 }, 10);
             }
         }
         catch (Exception e)
         {
+            // Observer should integrate logger.
             var token = await _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(token, e, "Deleter");
         }

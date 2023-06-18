@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
@@ -39,8 +40,7 @@ public class DirectoryAppTokenService : IScopedDependency
             cacheKey: $"access-token-{appId}",
             fallback: () => _appsService.AccessTokenAsync(appId, appSecret),
             selector: token => token.AccessToken,
-
-            // TODO: Load the minutes from response.
-            cachedMinutes: 19);
+            cachedMinutes: response => 
+                response.DeadTime - DateTime.UtcNow - TimeSpan.FromSeconds(10));
     }
 }
