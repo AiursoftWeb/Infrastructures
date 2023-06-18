@@ -22,6 +22,8 @@ public class DirectoryApp
 
     [Key] 
     public string AppId { get; set; }
+    
+    public string CreatorId { get; set; }
 
     [JsonIgnore]
     public string AppSecret { get; set; }

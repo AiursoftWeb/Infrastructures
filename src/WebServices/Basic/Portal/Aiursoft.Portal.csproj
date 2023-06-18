@@ -15,4 +15,40 @@
     <ProjectReference Include="..\..\..\Infrastructure\Warpgate.SDK\Aiursoft.Warpgate.SDK.csproj" />
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Records\CreateRecord.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Records\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Records\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\CreateSite.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\DeleteFile.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\DeleteFolder.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\NewFolder.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\RenameFile.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Sites\ViewFiles.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Apps\AllApps.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Apps\CreateApp.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Apps\DeleteApp.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Apps\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Apps\ViewApp.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Samples\DisableWithForm.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Samples\DocGenerator.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Samples\Scanner.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Samples\UTCTime.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Samples\_ViewStart.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\Base64.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\Hash.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\HtmlEncode.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\JsonFormat.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\Markdown.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\QRCode.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\Rot13.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\UrlEncode.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\Uuid.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\UuidBuild.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\WebSocket.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Tools\_ViewStart.cshtml" />
+  </ItemGroup>
 </Project>

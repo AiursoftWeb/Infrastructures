@@ -144,7 +144,7 @@ public class AppsService : IScopedDependency
         return jResult;
     }
 
-    public async Task<IReadOnlyCollection<DirectoryApp>> GetMyApps(string accessToken, string openId)
+    public async Task<IReadOnlyCollection<DirectoryApp>> GetAppsManagedByUser(string accessToken, string openId)
     {
         await Task.Delay(0);
         throw new NotImplementedException();
@@ -156,7 +156,27 @@ public class AppsService : IScopedDependency
         throw new NotImplementedException();
     }
 
-    public async Task<string> GetAppSecret(string accessToken, string appId)
+    /// <summary>
+    /// This API can get any app's details.
+    ///
+    /// This API requires app with permissions: 'Trusted' and 'Manage other apps'.
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="appId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<DirectoryApp> GetAppDetails(string accessToken, string appId)
+    {
+        await Task.Delay(0);
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> CreateNewAppFor(
+        string accessToken, 
+        string name, 
+        string description, 
+        string iconPath, 
+        string creatorId)
     {
         await Task.Delay(0);
         throw new NotImplementedException();
