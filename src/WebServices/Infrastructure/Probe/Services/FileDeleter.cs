@@ -50,7 +50,7 @@ public class FileDeleter : ITransientDependency
         }
         catch (Exception e)
         {
-            // Observer should integrate logger.
+            // TODO: Observer should integrate logger.
             var token = await _directoryAppTokenService.GetAccessTokenAsync();
             await _eventService.LogExceptionAsync(token, e, "Deleter");
         }
