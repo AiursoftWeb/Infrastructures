@@ -60,6 +60,8 @@ public class Startup
         
         // TODO: After having gateway, this should be migrated.
         app.UseSession();
+        
+        // TODO: This should be an API project! Migrate the user logic to gateway soon!
         app.UseAiursoftAppRouters();
     }
 }
