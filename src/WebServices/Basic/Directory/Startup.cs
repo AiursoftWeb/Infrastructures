@@ -43,12 +43,12 @@ public class Startup
 
         services.AddAiurMvc();
     
-        // After having gateway, these should be migrated.
+        // TODO: After having gateway, these should be migrated.
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 
-        // After having gateway, these should be migrated.
+        // TODO: After having gateway, these should be migrated.
         services.AddAiursoftSdk(abstracts: typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();
