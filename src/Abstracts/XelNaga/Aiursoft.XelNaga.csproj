@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Version>6.0.22</Version>
@@ -19,7 +19,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aiursoft.Canon" Version="6.0.9" />
-		<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
+		
 	</ItemGroup>
 
 	<ItemGroup>
