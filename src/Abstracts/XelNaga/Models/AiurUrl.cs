@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aiursoft.XelNaga.Models;
 
+// TODO: DELETE
 public class AiurUrl
 {
     public AiurUrl(string address)
