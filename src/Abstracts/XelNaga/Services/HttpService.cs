@@ -9,9 +9,7 @@ using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.XelNaga.Services;
 
-/// <summary>
-///     An HTTP client which only returns success data.
-/// </summary>
+// TODO: Decouple AiurUrl.
 public class HttpService : IScopedDependency
 {
     private readonly HttpClient _client;

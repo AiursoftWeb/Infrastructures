@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.XelNaga.Services;
 
+// TODO: DELETE
 public class ApiProxyService : IScopedDependency
 {
     private readonly HttpClient _client;

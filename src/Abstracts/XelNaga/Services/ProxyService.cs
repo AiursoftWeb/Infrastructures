@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Aiursoft.XelNaga.Services;
 
+// TODO: Move to WebTools.
 public static class ProxyService
 {
     private const int StreamCopyBufferSize = 81920;
