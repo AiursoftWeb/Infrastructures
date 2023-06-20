@@ -10,7 +10,6 @@
 		<PackageReference Include="Aiursoft.Scanner" Version="6.0.10" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Abstracts\Handler.Abstract\Aiursoft.Handler.Abstract.csproj" />
 		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
 		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
 	</ItemGroup>

@@ -2,24 +2,25 @@
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Aiursoft.AiurProtocol.Services;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 
 public class AccountService : IScopedDependency
 {
     private readonly DirectoryConfiguration _directoryConfiguration;
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
 
     public AccountService(
         IOptions<DirectoryConfiguration> directoryConfiguration,
-        ApiProxyService http)
+        AiurProtocolClient  http)
     {
         _directoryConfiguration = directoryConfiguration.Value;
         _http = http;
@@ -27,36 +28,21 @@ public class AccountService : IScopedDependency
 
     public async Task<CodeToOpenIdViewModel> CodeToOpenIdAsync(string accessToken, int code)
     {
-        var url = new AiurUrl(_directoryConfiguration.Instance, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
+        var url = new AiurApiEndpoint(_directoryConfiguration.Instance, "Account", "CodeToOpenId", new CodeToOpenIdAddressModel
         {
             AccessToken = accessToken,
             Code = code
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<CodeToOpenIdViewModel>(result);
-
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<CodeToOpenIdViewModel>(url);
     }
 
     public async Task<UserInfoViewModel> OpenIdToUserInfo(string accessToken, string openid)
     {
-        var url = new AiurUrl(_directoryConfiguration.Instance, "Account", "UserInfo", new UserInfoAddressModel
+        var url = new AiurApiEndpoint(_directoryConfiguration.Instance, "Account", "UserInfo", new UserInfoAddressModel
         {
             AccessToken = accessToken,
             OpenId = openid
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<UserInfoViewModel>(url);
     }
 }

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Interfaces;
-using Aiursoft.Handler.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.DBTools;
@@ -45,8 +42,7 @@ public static class EFExtends
         var conflict = await query.Select(predicate).AnyAsync(v => v == value);
         if (conflict)
         {
-            throw new AiurAPIModelException(ErrorType.Conflict,
-                $"There is already a record with name: '{value}'. Please try another new name.");
+            throw new DbUpdateException($"There is already a record with name: '{value}'. Please try another new name.");
         }
     }
 
@@ -66,8 +62,7 @@ public static class EFExtends
         var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
         if (conflict)
         {
-            throw new AiurAPIModelException(ErrorType.Conflict,
-                $"There is already a record with name: '{value}'. Please try another new name.");
+            throw new DbUpdateException($"There is already a record with name: '{value}'. Please try another new name.");
         }
     }
 
@@ -114,12 +109,5 @@ public static class EFExtends
             .AsEnumerable()
             .Where(t => !collection.Any(p => p.EqualsInDb(t)));
         dbSet.RemoveRange(toDelete);
-    }
-
-    public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPageable pager)
-    {
-        return query
-            .Skip((pager.PageNumber - 1) * pager.PageSize)
-            .Take(pager.PageSize);
     }
 }

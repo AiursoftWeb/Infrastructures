@@ -20,7 +20,7 @@ public class HttpService : IScopedDependency
         _client = clientFactory.CreateClient();
     }
 
-    public async Task<string> Get(AiurUrl url)
+    public async Task<string> Get(string url)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, url.ToString())
         {
@@ -37,11 +37,11 @@ public class HttpService : IScopedDependency
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }
 
-    public async Task<string> Post(AiurUrl url, AiurUrl postDataStr)
+    public async Task<string> Post(string url, Dictionary<string, string> postDataStr)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, url.ToString())
         {
-            Content = new FormUrlEncodedContent(postDataStr.Params)
+            Content = new FormUrlEncodedContent(postDataStr)
         };
 
         using var response = await _client.SendAsync(request);
@@ -54,9 +54,9 @@ public class HttpService : IScopedDependency
             $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
     }
 
-    public async Task<string> PostWithFile(AiurUrl url, Stream fileStream)
+    public async Task<string> PostWithFile(string url, Stream fileStream)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
+        var request = new HttpRequestMessage(HttpMethod.Post, url)
         {
             Content = new MultipartFormDataContent
             {

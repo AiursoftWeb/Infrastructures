@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +44,7 @@ public class ProductionExceptionPageMiddleware
             {
                 context.Response.ContentType = "application/json; charset=utf-8";
                 var projectName = Assembly.GetEntryAssembly()?.GetName().Name;
-                var message = JsonConvert.SerializeObject(new AiurProtocol
+                var message = JsonConvert.SerializeObject(new AiurResponse
                 {
                     Code = ErrorType.UnknownError,
                     Message = $"{projectName} server was crashed! Sorry about that."

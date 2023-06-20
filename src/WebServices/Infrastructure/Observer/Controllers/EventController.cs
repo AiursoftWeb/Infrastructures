@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
 using Aiursoft.DBTools;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
@@ -15,9 +16,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Observer.Controllers;
 
-[LimitPerMin]
-[APIModelStateChecker]
-[APIRemoteExceptionHandler]
+[ApiModelStateChecker]
+[ApiExceptionHandler]
 public class EventController : ControllerBase
 {
     private readonly CanonQueue _cannon;
@@ -52,7 +52,7 @@ public class EventController : ControllerBase
             await dbContext.SaveChangesAsync();
         });
 
-        return this.Protocol(ErrorType.Success, "Successfully logged your event.");
+        return this.Protocol(Code.Success, "Successfully logged your event.");
     }
 
     [Produces(typeof(ViewLogViewModel))]
@@ -75,7 +75,7 @@ public class EventController : ControllerBase
         {
             AppId = appid,
             Logs = logs,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get your logs!"
         };
         return this.Protocol(viewModel);
@@ -87,12 +87,12 @@ public class EventController : ControllerBase
         var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         if (appid != model.AppId)
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 "The app you try to delete is not the access token you granted!");
         }
 
         _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "App deleted.");
+        return this.Protocol(Code.Success, "App deleted.");
     }
 }

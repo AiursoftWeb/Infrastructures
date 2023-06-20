@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Probe.Controllers;
 
-[LimitPerMin]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class SitesController : ControllerBase
 {
     private readonly AppRepo _appRepo;
@@ -34,7 +34,7 @@ public class SitesController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var createdSite =
             await _siteRepo.CreateSite(model.NewSiteName, model.OpenToUpload, model.OpenToDownload, appid);
-        return this.Protocol(ErrorType.Success,
+        return this.Protocol(Code.Success,
             $"Successfully created your new site: '{createdSite.SiteName}' at {createdSite.CreationTime}.");
     }
 
@@ -79,7 +79,7 @@ public class SitesController : ControllerBase
                        await _siteRepo.GetSiteByName(model.NewSiteName) != null;
         if (conflict)
         {
-            return this.Protocol(ErrorType.Conflict,
+            return this.Protocol(Code.Conflict,
                 $"There is already a site with name: '{model.NewSiteName}'. Please try another new name.");
         }
 
@@ -87,7 +87,7 @@ public class SitesController : ControllerBase
         site.OpenToDownload = model.OpenToDownload;
         site.OpenToUpload = model.OpenToUpload;
         await _siteRepo.UpdateSite(site);
-        return this.Protocol(ErrorType.Success, "Successfully updated your site!");
+        return this.Protocol(Code.Success, "Successfully updated your site!");
     }
 
     [HttpPost]
@@ -96,7 +96,7 @@ public class SitesController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid);
         await _siteRepo.DeleteSite(site);
-        return this.Protocol(ErrorType.Success, "Successfully deleted your site!");
+        return this.Protocol(Code.Success, "Successfully deleted your site!");
     }
 
     [HttpPost]
@@ -105,11 +105,11 @@ public class SitesController : ControllerBase
         var app = await _appRepo.GetApp(model.AccessToken);
         if (app.AppId != model.AppId)
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 "The app you try to delete is not the access token you granted!");
         }
 
         await _appRepo.DeleteApp(app);
-        return this.Protocol(ErrorType.HasSuccessAlready, "That app do not exists in our database.");
+        return this.Protocol(Code.HasSuccessAlready, "That app do not exists in our database.");
     }
 }

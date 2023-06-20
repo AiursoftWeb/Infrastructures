@@ -24,7 +24,7 @@ public class GitContentRenderer : ViewComponent
     {
         var markdownUrl = $"https://{server}/{org}/{repo}/-/raw/master/{path}";
         var markdown = await _cache.RunWithCache($"gitcontent.{org}.{repo}.{path}.cache",
-            async () => await _http.Get(new AiurUrl(markdownUrl)));
+            async () => await _http.Get(new AiurApiEndpoint(markdownUrl)));
         var pipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .Build();

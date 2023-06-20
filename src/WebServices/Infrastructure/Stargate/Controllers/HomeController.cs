@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.HomeViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class HomeController : Controller
 {
     private readonly Counter _counter;
@@ -44,6 +44,6 @@ public class HomeController : Controller
 
     public IActionResult Error()
     {
-        return this.Protocol(ErrorType.UnknownError, "Stargate server crashed! Please tell us!");
+        return this.Protocol(Code.UnknownError, "Stargate server crashed! Please tell us!");
     }
 }

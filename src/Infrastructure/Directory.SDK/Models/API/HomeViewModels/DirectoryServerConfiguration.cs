@@ -1,9 +1,9 @@
 ﻿using System;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 
-public class DirectoryServerConfiguration : AiurProtocol
+public class DirectoryServerConfiguration : AiurResponse
 {
     public DateTime ServerTime { get; set; }
     public bool SignedIn { get; set; }

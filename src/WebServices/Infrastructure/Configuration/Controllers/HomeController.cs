@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +8,6 @@ public class HomeController : ControllerBase
 {
     public IActionResult Index()
     {
-        return this.Protocol(ErrorType.Success, "Welcome to Aiursoft Configuration center!");
+        return this.Protocol(Code.Success, "Welcome to Aiursoft Configuration center!");
     }
 }

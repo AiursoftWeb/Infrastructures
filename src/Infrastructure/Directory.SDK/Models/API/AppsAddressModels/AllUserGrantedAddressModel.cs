@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.Handler.Interfaces;
+﻿using Aiursoft.AiurProtocol.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 
-public class AllUserGrantedAddressModel : IPageable
+public class AllUserGrantedAddressModel : IPager
 {
+    // TODO: Client side attribute to limit the access token.
     [Required] public string AccessToken { get; set; }
 
     /// <summary>

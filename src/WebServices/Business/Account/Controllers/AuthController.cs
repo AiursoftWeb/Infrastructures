@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Account.Controllers;
 
-[LimitPerMin]
+
 public class AuthController : Controller
 {
     private readonly AuthService<AccountUser> _authService;

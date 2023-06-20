@@ -5,8 +5,8 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.EntityFrameworkCore;
 

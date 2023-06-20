@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
@@ -16,9 +16,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[LimitPerMin]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class ListenController : ControllerBase
 {
     private readonly DirectoryAppTokenService _directoryAppTokenService;
@@ -51,12 +51,12 @@ public class ListenController : ControllerBase
         var channel = _memoryContext[model.Id];
         if (channel == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Can not find channel with id: " + model.Id);
+            return this.Protocol(Code.NotFound, "Can not find channel with id: " + model.Id);
         }
 
         if (channel.ConnectKey != model.Key)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.Unauthorized,
                 Message = "Wrong connection key!"
@@ -110,6 +110,6 @@ public class ListenController : ControllerBase
             await _pusher.Close();
         }
 
-        return this.Protocol(new AiurProtocol { Code = ErrorType.UnknownError, Message = "You shouldn't be here." });
+        return this.Protocol(new AiurResponse { Code = ErrorType.UnknownError, Message = "You shouldn't be here." });
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models;
@@ -16,18 +16,18 @@ namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 
 public class RecordsService : IScopedDependency
 {
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
     private readonly WarpgateConfiguration _serviceLocation;
 
     public RecordsService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IOptions<WarpgateConfiguration> serviceLocation)
     {
         _http = http;
         _serviceLocation = serviceLocation.Value;
     }
 
-    public async Task<AiurProtocol> CreateNewRecordAsync(
+    public async Task<AiurResponse> CreateNewRecordAsync(
         string accessToken,
         string newRecordName,
         string targetUrl,
@@ -35,8 +35,8 @@ public class RecordsService : IScopedDependency
         RecordType type,
         bool enabled)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Records", "CreateNewRecord", new { });
-        var form = new AiurUrl(string.Empty, new CreateNewRecordAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "CreateNewRecord", new { });
+        var form = new ApiPayload( new CreateNewRecordAddressModel
         {
             AccessToken = accessToken,
             NewRecordName = newRecordName,
@@ -45,8 +45,8 @@ public class RecordsService : IScopedDependency
             Enabled = enabled,
             Tags = string.Join(',', tags.Select(t => t.Trim()))
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        return await _http.Post<aaaaaaaa>(url, form);
+        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
         if (jResult.Code != ErrorType.Success)
         {
             throw new AiurUnexpectedResponse(jResult);
@@ -57,12 +57,12 @@ public class RecordsService : IScopedDependency
 
     public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "ViewMyRecords", new ViewMyRecordsAddressModel
         {
             AccessToken = accessToken,
             Tag = tag
         });
-        var result = await _http.Get(url, true);
+        return await _http.Get<bbbbbbbbbbb>(url);
         var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
         if (jResult.Code != ErrorType.Success)
         {
@@ -72,7 +72,7 @@ public class RecordsService : IScopedDependency
         return jResult;
     }
 
-    public async Task<AiurProtocol> UpdateRecordInfoAsync(
+    public async Task<AiurResponse> UpdateRecordInfoAsync(
         string accessToken,
         string oldRecordName,
         string newRecordName,
@@ -81,8 +81,8 @@ public class RecordsService : IScopedDependency
         string[] tags,
         bool enabled)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Records", "UpdateRecordInfo", new { });
-        var form = new AiurUrl(string.Empty, new UpdateRecordInfoAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "UpdateRecordInfo", new { });
+        var form = new ApiPayload( new UpdateRecordInfoAddressModel
         {
             AccessToken = accessToken,
             OldRecordName = oldRecordName,
@@ -92,8 +92,8 @@ public class RecordsService : IScopedDependency
             Enabled = enabled,
             Tags = string.Join(',', tags.Select(t => t.Trim()))
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        return await _http.Post<aaaaaaaa>(url, form);
+        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
         if (jResult.Code != ErrorType.Success)
         {
             throw new AiurUnexpectedResponse(jResult);
@@ -102,16 +102,16 @@ public class RecordsService : IScopedDependency
         return jResult;
     }
 
-    public async Task<AiurProtocol> DeleteRecordAsync(string accessToken, string recordName)
+    public async Task<AiurResponse> DeleteRecordAsync(string accessToken, string recordName)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Records", "DeleteRecord", new { });
-        var form = new AiurUrl(string.Empty, new DeleteRecordAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "DeleteRecord", new { });
+        var form = new ApiPayload( new DeleteRecordAddressModel
         {
             AccessToken = accessToken,
             RecordName = recordName
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        return await _http.Post<aaaaaaaa>(url, form);
+        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
         if (jResult.Code != ErrorType.Success)
         {
             throw new AiurUnexpectedResponse(jResult);
@@ -120,16 +120,16 @@ public class RecordsService : IScopedDependency
         return jResult;
     }
 
-    public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+    public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Records", "DeleteApp", new { });
-        var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "DeleteApp", new { });
+        var form = new ApiPayload( new DeleteAppAddressModel
         {
             AccessToken = accessToken,
             AppId = appId
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        return await _http.Post<aaaaaaaa>(url, form);
+        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
         if (jResult.Code != ErrorType.Success)
         {
             throw new AiurUnexpectedResponse(jResult);

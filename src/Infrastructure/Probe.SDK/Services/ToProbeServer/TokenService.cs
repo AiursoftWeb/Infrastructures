@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 
 public class TokenService : IScopedDependency
 {
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient _http;
     private readonly ProbeConfiguration _serviceLocation;
 
     public TokenService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IOptions<ProbeConfiguration> serviceLocation)
     {
         _http = http;
@@ -40,8 +38,8 @@ public class TokenService : IScopedDependency
         string underPath,
         TimeSpan lifespan)
     {
-        var url = new AiurUrl(_serviceLocation.Instance, "Token", "GetToken", new { });
-        var form = new AiurUrl(string.Empty, new GetTokenAddressModel
+        var url = new AiurApiEndpoint(_serviceLocation.Instance, "Token", "GetToken", new { });
+        var form = new ApiPayload(new GetTokenAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName,
@@ -49,13 +47,7 @@ public class TokenService : IScopedDependency
             UnderPath = underPath,
             LifespanSeconds = (long)lifespan.TotalSeconds
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult.Value;
+        var response = await _http.Post<AiurValue<string>>(url, form);
+        return response.Value;
     }
 }

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
@@ -76,7 +76,7 @@ public class BasicTests
         Assert.AreEqual("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
 
         var content = await response.Content.ReadAsStringAsync();
-        var contentObject = JsonConvert.DeserializeObject<AiurProtocol>(content);
+        var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
         Assert.AreEqual(contentObject.Code, ErrorType.Success);
     }
 
@@ -162,7 +162,7 @@ public class BasicTests
         var messageSender = _serviceProvider.GetRequiredService<DebugMessageSender>();
         var channel = await channelService.CreateChannelAsync("mock-access-token", "Connect test channel");
 
-        var wsPath = new AiurUrl(locator.Value.GetListenEndpoint(), "Listen", "Channel", new ChannelAddressModel
+        var wsPath = new AiurApiEndpoint(locator.Value.GetListenEndpoint(), "Listen", "Channel", new ChannelAddressModel
         {
             Id = channel.ChannelId,
             Key = channel.ConnectKey

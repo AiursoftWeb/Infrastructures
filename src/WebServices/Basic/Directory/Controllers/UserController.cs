@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Resources;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
-using Aiursoft.DBTools.Models;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 using Aiursoft.Directory.SDK.Models.API.UserViewModels;
 using Aiursoft.Directory.Services;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
@@ -22,9 +23,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Directory.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
-[LimitPerMin]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class UserController : ControllerBase
 {
     private readonly IEnumerable<IAuthProvider> _authProviders;
@@ -61,8 +61,8 @@ public class UserController : ControllerBase
         user.IconFilePath = model.NewIconFilePathName;
         user.Bio = model.NewBio;
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(new AiurProtocol
-            { Code = ErrorType.Success, Message = "Successfully changed this user's profile!" });
+        return this.Protocol(new AiurResponse
+            { Code = Code.Success, Message = "Successfully changed this user's profile!" });
     }
 
     [HttpPost]
@@ -73,12 +73,12 @@ public class UserController : ControllerBase
         await _userManager.UpdateAsync(user);
         if (result.Succeeded)
         {
-            return this.Protocol(new AiurProtocol
-                { Code = ErrorType.Success, Message = "Successfully changed your password!" });
+            return this.Protocol(new AiurResponse
+                { Code = Code.Success, Message = "Successfully changed your password!" });
         }
 
         return this.Protocol(
-            new AiurProtocol { Code = ErrorType.WrongKey, Message = result.Errors.First().Description });
+            new AiurResponse { Code = Code.WrongKey, Message = result.Errors.First().Description });
     }
 
     [Produces(typeof(AiurValue<string>))]
@@ -87,7 +87,7 @@ public class UserController : ControllerBase
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
         return this.Protocol(new AiurValue<string>(user.PhoneNumber)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get the target user's phone number."
         });
     }
@@ -99,7 +99,7 @@ public class UserController : ControllerBase
         user.PhoneNumber = string.IsNullOrWhiteSpace(model.Phone) ? string.Empty : model.Phone;
 
         await _userManager.UpdateAsync(user);
-        return this.Protocol(ErrorType.Success, "Successfully set the user's PhoneNumber!");
+        return this.Protocol(Code.Success, "Successfully set the user's PhoneNumber!");
     }
 
     [Produces(typeof(AiurCollection<UserEmail>))]
@@ -109,7 +109,7 @@ public class UserController : ControllerBase
         var emails = await _dbContext.UserEmails.Where(t => t.OwnerId == user.Id).ToListAsync();
         return this.Protocol(new AiurCollection<UserEmail>(emails)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get the target user's emails."
         });
     }
@@ -122,7 +122,7 @@ public class UserController : ControllerBase
             await _dbContext.UserEmails.AnyAsync(t => t.EmailAddress.ToLower() == model.NewEmail.ToLower());
         if (emailExists)
         {
-            return this.Protocol(ErrorType.Conflict, $"An user has already bind email: {model.NewEmail}!");
+            return this.Protocol(Code.Conflict, $"An user has already bind email: {model.NewEmail}!");
         }
 
         var mail = new UserEmail
@@ -133,7 +133,7 @@ public class UserController : ControllerBase
         };
         await _dbContext.UserEmails.AddAsync(mail);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully set");
+        return this.Protocol(Code.Success, "Successfully set");
     }
 
     [HttpPost]
@@ -146,18 +146,18 @@ public class UserController : ControllerBase
             await userEmails.SingleOrDefaultAsync(t => t.EmailAddress.ToLower() == model.ThatEmail.ToLower());
         if (userEmail == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.ThatEmail}");
+            return this.Protocol(Code.NotFound, $"Can not find your email:{model.ThatEmail}");
         }
 
         if (await userEmails.CountAsync() == 1)
         {
-            return this.Protocol(ErrorType.Conflict,
+            return this.Protocol(Code.Conflict,
                 $"Can not delete Email: {model.ThatEmail}, because it was your last Email address!");
         }
 
         _dbContext.UserEmails.Remove(userEmail);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, $"Successfully deleted the email: {model.ThatEmail}!");
+        return this.Protocol(Code.Success, $"Successfully deleted the email: {model.ThatEmail}!");
     }
 
     [HttpPost]
@@ -167,32 +167,32 @@ public class UserController : ControllerBase
         var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
         if (userEmail == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+            return this.Protocol(Code.NotFound, $"Can not find your email:{model.Email}");
         }
 
         if (userEmail.OwnerId != user.Id)
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 $"The account you tried to authorize is not an account with id: {model.OpenId}");
         }
 
         if (userEmail.Validated)
         {
-            return this.Protocol(ErrorType.HasSuccessAlready, $"The email: {model.Email} was already validated!");
+            return this.Protocol(Code.Success, $"The email: {model.Email} was already validated!");
         }
 
         var byProvider =
             _authProviders.FirstOrDefault(t => user.Email.ToLower().Contains($"@from.{t.GetName().ToLower()}"));
         if (byProvider != null)
         {
-            return this.Protocol(ErrorType.UnknownError,
+            return this.Protocol(Code.UnknownError,
                 $"We could not get your email from your auth provider: {byProvider.GetName()} because you set your email private. Please manually link your email at: {_serviceLocation.Account}!");
         }
 
         // limit the sending frequency to 3 minutes.
         if (DateTime.UtcNow <= userEmail.LastSendTime + new TimeSpan(0, 1, 0))
         {
-            return this.Protocol(ErrorType.HasSuccessAlready, "We have just sent you an Email in an minute.");
+            return this.Protocol(Code.Success, "We have just sent you an Email in an minute.");
         }
 
         var token = Guid.NewGuid().ToString("N");
@@ -208,10 +208,10 @@ public class UserController : ControllerBase
         }
         catch (SmtpException e)
         {
-            return this.Protocol(ErrorType.InvalidInput, e.Message);
+            return this.Protocol(Code.InvalidInput, e.Message);
         }
 
-        return this.Protocol(ErrorType.Success, "Successfully sent the validation email.");
+        return this.Protocol(Code.Success, "Successfully sent the validation email.");
     }
 
     [HttpPost]
@@ -221,23 +221,23 @@ public class UserController : ControllerBase
         var userEmail = await _dbContext.UserEmails.SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
         if (userEmail == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"Can not find your email:{model.Email}");
+            return this.Protocol(Code.NotFound, $"Can not find your email:{model.Email}");
         }
 
         if (userEmail.OwnerId != user.Id)
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 $"The account you tried to authorize is not an account with id: {model.OpenId}");
         }
 
         if (!userEmail.Validated)
         {
-            return this.Protocol(ErrorType.InsufficientPermissions, $"The email :{model.Email} was not validated!");
+            return this.Protocol(Code.InsufficientPermissions, $"The email :{model.Email} was not validated!");
         }
 
         userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully set your primary email.");
+        return this.Protocol(Code.Success, "Successfully set your primary email.");
     }
 
     [Produces(typeof(AiurCollection<AppGrant>))]
@@ -247,7 +247,7 @@ public class UserController : ControllerBase
         var applications = await _dbContext.LocalAppGrant.Where(t => t.DirectoryUserId == user.Id).ToListAsync();
         return this.Protocol(new AiurCollection<AppGrant>(applications)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get all your granted apps!"
         });
     }
@@ -262,13 +262,13 @@ public class UserController : ControllerBase
             .SingleOrDefaultAsync(t => t.AppId == model.AppIdToDrop);
         if (appToDelete == null)
         {
-            return this.Protocol(ErrorType.NotFound,
+            return this.Protocol(Code.NotFound,
                 $"Can not find target grant record with app with id: {model.AppIdToDrop}");
         }
 
         _dbContext.LocalAppGrant.Remove(appToDelete);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully deleted target app grant record!");
+        return this.Protocol(Code.Success, "Successfully deleted target app grant record!");
     }
 
     [Produces(typeof(AiurPagedCollection<AuditLog>))]
@@ -280,11 +280,7 @@ public class UserController : ControllerBase
             .Where(t => t.UserId == user.Id)
             .OrderByDescending(t => t.HappenTime);
 
-        return this.Protocol(await AiurPagedCollectionBuilder.BuildAsync<AuditLog>(
-            query,
-            model,
-            ErrorType.Success,
-            "Successfully get all your audit log!"));
+        return await this.Protocol(Code.Success, "Successfully get all your audit log!", query, model);
     }
 
     [Produces(typeof(AiurCollection<AiurThirdPartyAccount>))]
@@ -298,7 +294,7 @@ public class UserController : ControllerBase
             .ToListAsync();
         return this.Protocol(new AiurCollection<ThirdPartyAccount>(accounts)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get all your audit log!"
         });
     }
@@ -314,7 +310,7 @@ public class UserController : ControllerBase
             .ToListAsync();
         _dbContext.ThirdPartyAccounts.RemoveRange(accounts);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, $"Successfully unbound your {model.ProviderName} account.");
+        return this.Protocol(Code.Success, $"Successfully unbound your {model.ProviderName} account.");
     }
 
     [HttpPost]
@@ -325,7 +321,7 @@ public class UserController : ControllerBase
         var key = user.Has2FAKey;
         return this.Protocol(new AiurValue<bool>(key)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get the target user's Has2FAkey."
         });
     }
@@ -338,7 +334,7 @@ public class UserController : ControllerBase
         var enabled = user.TwoFactorEnabled;
         return this.Protocol(new AiurValue<bool>(enabled)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get the target user's TwoFactorEnabled."
         });
     }
@@ -353,7 +349,7 @@ public class UserController : ControllerBase
         {
             TwoFAKey = twoFaKey,
             TwoFAQRUri = twoFAQRUri,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully set the user's TwoFAKey!"
         });
     }
@@ -372,7 +368,7 @@ public class UserController : ControllerBase
         var hasKey = user.Has2FAKey;
         return this.Protocol(new AiurValue<bool>(hasKey)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully set the user's TwoFAKey!"
         });
     }
@@ -385,7 +381,7 @@ public class UserController : ControllerBase
         // reset 2fa key
         await _userManager.SetTwoFactorEnabledAsync(user, false);
         await _userManager.ResetAuthenticatorKeyAsync(user);
-        return this.Protocol(ErrorType.Success, "Successfully reset the user's TwoFAKey!");
+        return this.Protocol(Code.Success, "Successfully reset the user's TwoFAKey!");
     }
 
     [HttpPost]
@@ -404,7 +400,7 @@ public class UserController : ControllerBase
         {
             return this.Protocol(new AiurValue<bool>(is2FATokenValid)
             {
-                Code = ErrorType.Success,
+                Code = Code.Success,
                 Message = "Sucess Verified code."
             });
         }
@@ -415,7 +411,7 @@ public class UserController : ControllerBase
 
         return this.Protocol(new AiurValue<bool>(true)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully Verified code."
         });
     }
@@ -439,7 +435,7 @@ public class UserController : ControllerBase
 
         return this.Protocol(new AiurValue<bool>(success)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully called DisableTwoFA method!"
         });
     }
@@ -455,7 +451,7 @@ public class UserController : ControllerBase
 
         return this.Protocol(new AiurCollection<string>(recoveryCodes.ToList())
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Sucess regenerate recovery Codes!."
         });
     }

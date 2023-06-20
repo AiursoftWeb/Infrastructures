@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
@@ -16,8 +16,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class ChannelController : ControllerBase
 {
     private readonly Counter _counter;
@@ -70,7 +70,7 @@ public class ChannelController : ControllerBase
         var channel = _stargateMemory[model.Id];
         if (channel == null)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.NotFound,
                 Message = "Can not find your channel!"
@@ -79,7 +79,7 @@ public class ChannelController : ControllerBase
 
         if (channel.IsDead())
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.Gone,
                 Message = "Your channel is out dated and about to be deleted!"
@@ -88,7 +88,7 @@ public class ChannelController : ControllerBase
 
         if (channel.ConnectKey != model.Key)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.Unauthorized,
                 Message = "Wrong connection key!"
@@ -139,7 +139,7 @@ public class ChannelController : ControllerBase
         var channel = _stargateMemory[model.ChannelId];
         if (channel.AppId != appid)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!"
             });
@@ -147,7 +147,7 @@ public class ChannelController : ControllerBase
 
         _stargateMemory.DeleteChannel(channel.Id);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(new AiurProtocol
+        return this.Protocol(new AiurResponse
             { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
     }
 
@@ -162,7 +162,7 @@ public class ChannelController : ControllerBase
         var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         if (appid != model.AppId)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
             {
                 Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the access token you granted!"
             });
@@ -171,14 +171,14 @@ public class ChannelController : ControllerBase
         var target = await _dbContext.Apps.FindAsync(appid);
         if (target == null)
         {
-            return this.Protocol(new AiurProtocol
+            return this.Protocol(new AiurResponse
                 { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
         }
 
         _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
         _dbContext.Apps.Remove(target);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(new AiurProtocol
+        return this.Protocol(new AiurResponse
             { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
     }
 }

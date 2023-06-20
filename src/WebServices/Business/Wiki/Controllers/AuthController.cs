@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Wiki.Controllers;
 
-[LimitPerMin]
+
 public class AuthController : Controller
 {
     private readonly AuthService<WikiUser> _authService;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Aiursoft.Handler.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -59,28 +58,6 @@ public static class Extends
     public static bool AllowTrack(this HttpContext httpContext)
     {
         return httpContext.Request.Headers.TryGetValue("dnt", out var dntFlag) && dntFlag.ToString().Trim() != "1";
-    }
-
-    // TODO: Move to new project: AppProtocol.
-    public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
-    {
-        return controller.Protocol(new AiurProtocol
-        {
-            Code = errorType,
-            Message = errorMessage
-        });
-    }
-    
-    // TODO: Move to new project: AppProtocol.
-    public static IActionResult Protocol(this ControllerBase controller, AiurProtocol model)
-    {
-        if (controller.HttpContext.Response.HasStarted)
-        {
-            return new EmptyResult();
-        }
-
-        controller.HttpContext.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
-        return new JsonResult(model);
     }
 
     public static void SetClientLang(this ControllerBase controller, string culture)

@@ -10,7 +10,7 @@ using Aiursoft.Directory.Models.ThirdPartyViewModels;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Exceptions;
+
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.XelNaga.Models;
@@ -22,7 +22,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aiursoft.Directory.Controllers;
 
 [GenerateDoc]
-[LimitPerMin]
+
 [Route("Third-party")]
 public class ThirdPartyController : Controller
 {
@@ -66,7 +66,7 @@ public class ThirdPartyController : Controller
         }
         catch (AiurAPIModelException)
         {
-            var refreshLink = provider.GetSignInRedirectLink(new AiurUrl("", new FinishAuthInfo
+            var refreshLink = provider.GetSignInRedirectLink(new AiurApiEndpoint("", new FinishAuthInfo
             {
                 AppId = oauthModel.AppId,
                 RedirectUri = oauthModel.RedirectUri,

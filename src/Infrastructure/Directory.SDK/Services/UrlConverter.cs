@@ -1,4 +1,5 @@
-﻿using Aiursoft.Directory.SDK.Configuration;
+﻿using Aiursoft.AiurProtocol;
+using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Models;
@@ -16,10 +17,10 @@ public class UrlConverter : ITransientDependency
         _directoryConfiguration = directoryConfiguration.Value;
     }
 
-    private AiurUrl GenerateAuthUrl(AiurUrl destination, string appId, string state, bool? justTry, bool register)
+    private AiurApiEndpoint GenerateAuthUrl(AiurApiEndpoint destination, string appId, string state, bool? justTry, bool register)
     {
         var action = register ? "register" : "authorize";
-        var url = new AiurUrl(_directoryConfiguration.Instance, "oauth", action, new AuthorizeAddressModel
+        var url = new AiurApiEndpoint(_directoryConfiguration.Instance, "oauth", action, new AuthorizeAddressModel
         {
             AppId = appId,
             RedirectUri = destination.ToString(),
@@ -31,7 +32,7 @@ public class UrlConverter : ITransientDependency
 
     public string UrlWithAuth(string serverRoot, string appId, string path, bool? justTry, bool register)
     {
-        var localServer = new AiurUrl(serverRoot, "Auth", "AuthResult", new { });
+        var localServer = new AiurApiEndpoint(serverRoot, "Auth", "AuthResult", new { });
         return GenerateAuthUrl(localServer, appId, path, justTry, register).ToString();
     }
 }

@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
 
-public class WarpgatePatternConfig : AiurProtocol
+public class WarpgatePatternConfig : AiurResponse
 {
     public string WarpPattern { get; set; }
 }

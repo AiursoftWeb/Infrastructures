@@ -9,17 +9,19 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.AiurProtocol.Services;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Services;
 
 public class ServerPublicKeyAccess : IScopedDependency
 {
-    private readonly ApiProxyService _proxy;
+    private readonly AiurProtocolClient _proxy;
     private readonly CacheService _cacheService;
     private readonly DirectoryConfiguration _directoryConfiguration;
     
     public ServerPublicKeyAccess(
-        ApiProxyService proxy,
+        AiurProtocolClient  proxy,
         CacheService cacheService,
         IOptions<DirectoryConfiguration> directoryConfiguration)
     {
@@ -32,12 +34,11 @@ public class ServerPublicKeyAccess : IScopedDependency
     {
         return _cacheService.RunWithCache("server-public-key", async () =>
         {
-            var response = await _proxy.Get(new AiurUrl(_directoryConfiguration.Instance), true);
-            var serverModel = JsonConvert.DeserializeObject<DirectoryServerConfiguration>(response);
+            var response = await _proxy.Get<DirectoryServerConfiguration>(new AiurApiEndpoint(_directoryConfiguration.Instance));
             var publicKey = new RSAParameters
             {
-                Modulus = serverModel.Modulus.Base64ToBytes(),
-                Exponent = serverModel.Exponent.Base64ToBytes()
+                Modulus = response.Modulus.Base64ToBytes(),
+                Exponent = response.Exponent.Base64ToBytes()
             };
             return publicKey;
         });

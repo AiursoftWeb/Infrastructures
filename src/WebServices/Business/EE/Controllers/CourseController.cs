@@ -4,7 +4,7 @@ using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
 using Aiursoft.WebTools;
@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.EE.Controllers;
 
-[LimitPerMin]
+
 public class CourseController : Controller
 {
     private readonly EEDbContext _dbContext;
@@ -113,8 +113,8 @@ public class CourseController : Controller
 
     [HttpPost]
     [AiurForceAuth("", "", false)]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> Subscribe(int id) //Course Id
     {
         var user = await GetCurrentUserAsync();
@@ -123,7 +123,7 @@ public class CourseController : Controller
             .SingleOrDefaultAsync(t => t.Id == id);
         if (course == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+            return this.Protocol(Code.NotFound, $"The target course with Id:{id} was not found!");
         }
 
         var subscribed = await _dbContext
@@ -132,7 +132,7 @@ public class CourseController : Controller
 
         if (subscribed)
         {
-            return this.Protocol(ErrorType.HasSuccessAlready, "This course you have already subscribed!");
+            return this.Protocol(Code.HasSuccessAlready, "This course you have already subscribed!");
         }
 
         var newSubscription = new Subscription
@@ -142,13 +142,13 @@ public class CourseController : Controller
         };
         await _dbContext.Subscriptions.AddAsync(newSubscription);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "You have successfully subscribed this course!");
+        return this.Protocol(Code.Success, "You have successfully subscribed this course!");
     }
 
     [HttpPost]
     [AiurForceAuth("", "", false)]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> UnSubscribe(int id) //Course Id
     {
         var user = await GetCurrentUserAsync();
@@ -157,7 +157,7 @@ public class CourseController : Controller
             .SingleOrDefaultAsync(t => t.Id == id);
         if (course == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"The target course with Id:{id} was not found!");
+            return this.Protocol(Code.NotFound, $"The target course with Id:{id} was not found!");
         }
 
         var sub = await _dbContext
@@ -166,12 +166,12 @@ public class CourseController : Controller
 
         if (sub == null)
         {
-            return this.Protocol(ErrorType.HasSuccessAlready, "You did not subscribe this course!");
+            return this.Protocol(Code.HasSuccessAlready, "You did not subscribe this course!");
         }
 
         _dbContext.Subscriptions.Remove(sub);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully unsubscribed this course!");
+        return this.Protocol(Code.Success, "Successfully unsubscribed this course!");
     }
 
     private async Task<EEUser> GetCurrentUserAsync()

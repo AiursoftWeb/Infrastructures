@@ -7,5 +7,5 @@ public class IsValidateAppAddressModel
 {
     [Required] [IsGuidOrEmpty] public virtual string AppId { get; set; }
 
-    [Required] public virtual string AppSecret { get; set; }
+    [Required] [IsGuidOrEmpty] public virtual string AppSecret { get; set; }
 }

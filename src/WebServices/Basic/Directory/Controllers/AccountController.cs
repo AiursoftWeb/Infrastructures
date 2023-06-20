@@ -6,16 +6,16 @@ using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Aiursoft.Directory.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Directory.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
-[LimitPerMin]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
+
 public class AccountController : ControllerBase
 {
     private readonly UserAppAuthManager _authManager;
@@ -42,29 +42,29 @@ public class AccountController : ControllerBase
 
         if (targetPack == null)
         {
-            return this.Protocol(ErrorType.WrongKey, "The code doesn't exists in our database.");
+            return this.Protocol(Code.WrongKey, "The code doesn't exists in our database.");
         }
 
         // Use time is more than 10 seconds from now.
         if (targetPack.UseTime != DateTime.MinValue && targetPack.UseTime + TimeSpan.FromSeconds(10) < DateTime.UtcNow)
         {
-            return this.Protocol(ErrorType.Unauthorized, "Code is used already!");
+            return this.Protocol(Code.Unauthorized, "Code is used already!");
         }
 
         if (targetPack.ApplyAppId != appId)
         {
-            return this.Protocol(ErrorType.Unauthorized, "The app granted code is not the app granting access token!");
+            return this.Protocol(Code.Unauthorized, "The app granted code is not the app granting access token!");
         }
 
         var currentApp = await _dbContext.DirectoryAppsInDb.FindAsync(appId);
         if (currentApp == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"The app with ID: '{appId}' was not found!.");
+            return this.Protocol(Code.NotFound, $"The app with ID: '{appId}' was not found!.");
         }
         
         if (!currentApp.ViewOpenId)
         {
-            return this.Protocol(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
+            return this.Protocol(Code.Unauthorized, "The app doesn't have view open id permission.");
         }
 
         targetPack.UseTime = DateTime.UtcNow;
@@ -86,12 +86,12 @@ public class AccountController : ControllerBase
         var user = await _dbContext.Users.Include(t => t.Emails).SingleOrDefaultAsync(t => t.Id == model.OpenId);
         if (user == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Can not find a user with open id: " + model.OpenId);
+            return this.Protocol(Code.NotFound, "Can not find a user with open id: " + model.OpenId);
         }
 
         if (!await _authManager.HasAuthorizedApp(user, appId))
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 "The user did not allow your app to view his personal info! App Id: " + model.OpenId);
         }
 

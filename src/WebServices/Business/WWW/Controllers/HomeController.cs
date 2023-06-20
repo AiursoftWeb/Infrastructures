@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace Aiursoft.WWW.Controllers;
 
-[LimitPerMin]
+
 public class HomeController : Controller
 {
     private readonly ILogger _logger;
@@ -41,6 +41,6 @@ public class HomeController : Controller
         await _signInManager.SignOutAsync();
         _logger.LogInformation("An user logged out");
         return this.SignOutRootServer(_serviceLocation.Instance,
-            new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            new ApiPayload( "Home", nameof(Index), new { }));
     }
 }

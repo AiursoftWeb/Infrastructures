@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
@@ -14,76 +15,55 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 
 public class SitesService : IScopedDependency
 {
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
     private readonly ProbeConfiguration _probeLocator;
 
     public SitesService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IOptions<ProbeConfiguration> serviceLocation)
     {
         _http = http;
         _probeLocator = serviceLocation.Value;
     }
 
-    public async Task<AiurProtocol> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload,
+    public async Task<AiurResponse> CreateNewSiteAsync(string accessToken, string newSiteName, bool openToUpload,
         bool openToDownload)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "CreateNewSite", new { });
-        var form = new AiurUrl(string.Empty, new CreateNewSiteAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "CreateNewSite", new { });
+        var form = new ApiPayload( new CreateNewSiteAddressModel
         {
             AccessToken = accessToken,
             NewSiteName = newSiteName,
             OpenToUpload = openToUpload,
             OpenToDownload = openToDownload
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
     public async Task<ViewMySitesViewModel> ViewMySitesAsync(string accessToken)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "ViewMySites", new ViewMySitesAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "ViewMySites", new ViewMySitesAddressModel
         {
             AccessToken = accessToken
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<ViewMySitesViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<ViewMySitesViewModel>(url);
     }
 
     public async Task<ViewSiteDetailViewModel> ViewSiteDetailAsync(string accessToken, string siteName)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "ViewSiteDetail", new ViewSiteDetailAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<ViewSiteDetailViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<ViewSiteDetailViewModel>(url);
     }
 
-    public async Task<AiurProtocol> UpdateSiteInfoAsync(string accessToken, string oldSiteName, string newSiteName,
+    public async Task<AiurResponse> UpdateSiteInfoAsync(string accessToken, string oldSiteName, string newSiteName,
         bool openToUpload, bool openToDownload)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "UpdateSiteInfo", new { });
-        var form = new AiurUrl(string.Empty, new UpdateSiteInfoAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "UpdateSiteInfo", new { });
+        var form = new ApiPayload( new UpdateSiteInfoAddressModel
         {
             AccessToken = accessToken,
             OldSiteName = oldSiteName,
@@ -91,49 +71,28 @@ public class SitesService : IScopedDependency
             OpenToDownload = openToDownload,
             OpenToUpload = openToUpload
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
-    public async Task<AiurProtocol> DeleteSiteAsync(string accessToken, string siteName)
+    public async Task<AiurResponse> DeleteSiteAsync(string accessToken, string siteName)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "DeleteSite", new { });
-        var form = new AiurUrl(string.Empty, new DeleteSiteAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "DeleteSite", new { });
+        var form = new ApiPayload( new DeleteSiteAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
-    public async Task<AiurProtocol> DeleteAppAsync(string accessToken, string appId)
+    public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
     {
-        var url = new AiurUrl(_probeLocator.Instance, "Sites", "DeleteApp", new { });
-        var form = new AiurUrl(string.Empty, new DeleteAppAddressModel
+        var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "DeleteApp", new { });
+        var form = new ApiPayload( new DeleteAppAddressModel
         {
             AccessToken = accessToken,
             AppId = appId
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.WWW.Controllers;
 
-[LimitPerMin]
+
 public class SearchController : Controller
 {
     private readonly BingTranslator _bingTranslator;

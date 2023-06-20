@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
@@ -11,7 +12,7 @@ public class MockDeveloperApiService : AppsService
 {
     public MockDeveloperApiService(
         IOptions<DirectoryConfiguration> serviceLocation,
-        ApiProxyService http,
+        AiurProtocolClient  http,
         CacheService cache) : base (serviceLocation, http, cache)
     {
     }

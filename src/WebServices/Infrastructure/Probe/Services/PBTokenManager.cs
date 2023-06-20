@@ -1,6 +1,6 @@
 ﻿using System;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.XelNaga.Tools;
 using Newtonsoft.Json;

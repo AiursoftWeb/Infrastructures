@@ -78,7 +78,7 @@ public class TimedChecker : IHostedService, IDisposable, ISingletonDependency
             _logger.LogInformation("Checking status for: {ProjectName}", item.ProjectName);
             try
             {
-                var content = await http.Get(new AiurUrl(item.CheckAddress));
+                var content = await http.Get(new AiurApiEndpoint(item.CheckAddress));
                 var success = content.Contains(item.ExpectedContent);
                 if (!success)
                 {

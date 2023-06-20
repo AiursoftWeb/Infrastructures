@@ -62,7 +62,7 @@
         <div class="col-md-8">
             <div class="text-muted">
                 @{
-                    var langLink = new AiurUrl(DirectoryLocator.Value.Instance, "/set-language", new { });
+                    var langLink = new AiurApiEndpoint(DirectoryLocator.Value.Instance, "/set-language", new { });
                 }
                 @Localizer["Current search language:"]
                 <a href="@langLink" data-language-change-link>

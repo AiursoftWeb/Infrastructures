@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Stargate.SDK.Models.HomeViewModels;
 
-public class IndexViewModel : AiurProtocol
+public class IndexViewModel : AiurResponse
 {
     public int CurrentId { get; set; }
     public int TotalMemoryMessages { get; set; }

@@ -1,4 +1,4 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -14,7 +14,7 @@ public class AiurForceWebSocket : ActionFilterAttribute
             return;
         }
 
-        var arg = new AiurProtocol
+        var arg = new AiurResponse
         {
             Code = ErrorType.InvalidInput,
             Message = "Wrong protocal!"

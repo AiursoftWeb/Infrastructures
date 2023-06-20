@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.SDK.Tests.Services;
 

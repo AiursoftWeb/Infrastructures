@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
@@ -16,11 +18,11 @@ namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 
 public class FilesService : IScopedDependency
 {
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient _http;
     private readonly ProbeConfiguration _probeLocator;
 
     public FilesService(
-        ApiProxyService http,
+        AiurProtocolClient http,
         IOptions<ProbeConfiguration> probeLocator)
     {
         _http = http;
@@ -30,38 +32,19 @@ public class FilesService : IScopedDependency
     public async Task<UploadFileViewModel> UploadFileAsync(string accessToken, string siteName, string folderNames,
         Stream file, bool recursiveCreate = false)
     {
-        var url = new AiurUrl(_probeLocator.Instance,
-            $"/Files/UploadFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new UploadFileAddressModel
-            {
-                Token = accessToken,
-                RecursiveCreate = recursiveCreate
-            });
-        var result = await _http.PostWithFile(url, file, true);
-        var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        await Task.Delay(0);
+        throw new NotImplementedException("Not implemented.");
     }
 
-    public async Task<AiurProtocol> DeleteFileAsync(string accessToken, string siteName, string folderNames)
+    public async Task<AiurResponse> DeleteFileAsync(string accessToken, string siteName, string folderNames)
     {
-        var url = new AiurUrl(_probeLocator.Instance,
+        var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurUrl(string.Empty, new DeleteFileAddressModel
+        var form = new ApiPayload(new DeleteFileAddressModel
         {
             AccessToken = accessToken
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
     public async Task<UploadFileViewModel> CopyFileAsync(string accessToken, string siteName, string folderNames,
@@ -72,41 +55,27 @@ public class FilesService : IScopedDependency
             targetFolderNames = "/";
         }
 
-        var url = new AiurUrl(_probeLocator.Instance,
+        var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurUrl(string.Empty, new CopyFileAddressModel
+        var form = new ApiPayload(new CopyFileAddressModel
         {
             AccessToken = accessToken,
             TargetSiteName = targetSiteName,
             TargetFolderNames = targetFolderNames
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<UploadFileViewModel>(url, form);
     }
 
     public async Task<UploadFileViewModel> RenameFileAsync(string accessToken, string siteName, string folderNames,
         string targetFileName)
     {
-        var url = new AiurUrl(_probeLocator.Instance,
+        var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurUrl(string.Empty, new RenameFileAddressModel
+        var form = new ApiPayload(new RenameFileAddressModel
         {
             AccessToken = accessToken,
             TargetFileName = targetFileName
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<UploadFileViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<UploadFileViewModel>(url, form);
     }
 }

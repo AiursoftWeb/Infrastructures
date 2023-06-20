@@ -23,7 +23,7 @@
 }
 
 @{
-    var langLink = new AiurUrl(DirectoryConfiguration.Value.Instance, "/set-language", new { });
+    var langLink = new AiurApiEndpoint(DirectoryConfiguration.Value.Instance, "/set-language", new { });
 }
 @Html.Raw(GetRenderedFooter(ServiceLocation.WWW, "Home"))
 @Html.Raw(GetRenderedFooter(ServiceLocation.Wiki, "Wiki"))

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Probe.Services;
@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Controllers;
 
-[LimitPerMin]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class TokenController : ControllerBase
 {
     private readonly ProbeDbContext _dbContext;
@@ -41,12 +41,12 @@ public class TokenController : ControllerBase
             .SingleOrDefaultAsync(t => t.SiteName == model.SiteName);
         if (site == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"Could not find a site with name: '{model.SiteName}'");
+            return this.Protocol(Code.NotFound, $"Could not find a site with name: '{model.SiteName}'");
         }
 
         if (site.AppId != appid)
         {
-            return this.Protocol(ErrorType.Unauthorized,
+            return this.Protocol(Code.Unauthorized,
                 $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
         }
 

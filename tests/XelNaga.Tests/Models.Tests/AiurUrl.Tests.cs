@@ -10,7 +10,7 @@ public class AiurUrlTests
     [TestMethod]
     public void TestBasic()
     {
-        var url = new AiurUrl("https://www.bing.com", "Home", "Search", new
+        var url = new AiurApiEndpoint("https://www.bing.com", "Home", "Search", new
         {
             Question = "MyQuestion",
             Count = 10,
@@ -23,7 +23,7 @@ public class AiurUrlTests
     [TestMethod]
     public void TestComplicated()
     {
-        var url = new AiurUrl("https://www.bing.com", "Home", "Search", new TestAddressModel
+        var url = new AiurApiEndpoint("https://www.bing.com", "Home", "Search", new TestAddressModel
         {
             Question = "MyQuestion",
             Count = 10,
@@ -40,7 +40,7 @@ public class AiurUrlTests
     [TestMethod]
     public void TestLocalhost()
     {
-        var url = new AiurUrl("https://www.bing.com", "Home", "Search", new TestAddressModel
+        var url = new AiurApiEndpoint("https://www.bing.com", "Home", "Search", new TestAddressModel
         {
             Question = "MyQuestion",
             Count = 10,

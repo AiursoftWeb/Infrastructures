@@ -3,8 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +19,11 @@ public class GoogleService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
     private readonly DirectoryConfiguration _serviceLocation;
 
     public GoogleService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -68,10 +68,10 @@ public class GoogleService : IAuthProvider
 
     public string GetBindRedirectLink()
     {
-        return new AiurUrl("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
+        return new AiurApiEndpoint("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
         {
             ClientId = _clientId,
-            RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
+            RedirectUri = new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                 .ToString(),
             State = "a",
             Scope = "profile",
@@ -81,11 +81,11 @@ public class GoogleService : IAuthProvider
 
     public string GetSignInRedirectLink(AiurUrl state)
     {
-        return new AiurUrl("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
+        return new AiurApiEndpoint("https://accounts.google.com", "/o/oauth2/v2/auth", new GoogleAuthAddressModel
         {
             ClientId = _clientId,
             RedirectUri =
-                new AiurUrl(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
             State = state.ToString(),
             Scope = "profile",
             ResponseType = "code"
@@ -101,15 +101,15 @@ public class GoogleService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
     {
         var apiAddress = "https://oauth2.googleapis.com/token";
-        var url = new AiurUrl(apiAddress, new { });
+        var url = new AiurApiEndpoint(apiAddress, new { });
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new AiurUrl(string.Empty, new GoogleAccessTokenAddressModel
+        var form = new ApiPayload( new GoogleAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,
             Code = code,
             RedirectUri =
-                new AiurUrl(_serviceLocation.Instance, $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/{action}/{GetName()}", new { }).ToString(),
             GrantType = "authorization_code"
         });
         try

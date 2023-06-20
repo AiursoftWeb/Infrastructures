@@ -28,16 +28,16 @@ public class HTTPServiceTests
     [TestMethod]
     public void TestBuildService()
     {
-        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
+        var http = _serviceProvider.GetRequiredService<AiurProtocolClient >();
         Assert.IsNotNull(http);
     }
 
     [TestMethod]
     public async Task TestGetInternal()
     {
-        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
+        var http = _serviceProvider.GetRequiredService<AiurProtocolClient >();
         var random = StringOperation.RandomString(100);
-        var result = await http.Get(new AiurUrl("https://postman-echo.com/get", new
+        var result = await http.Get(new AiurApiEndpoint("https://postman-echo.com/get", new
         {
             a = random
         }), true);
@@ -50,9 +50,9 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestGetOutter()
     {
-        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
+        var http = _serviceProvider.GetRequiredService<AiurProtocolClient >();
         var random = StringOperation.RandomString(100);
-        var result = await http.Get(new AiurUrl("https://postman-echo.com/get", new
+        var result = await http.Get(new AiurApiEndpoint("https://postman-echo.com/get", new
         {
             a = random
         }));
@@ -65,13 +65,13 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestPostInternal()
     {
-        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
+        var http = _serviceProvider.GetRequiredService<AiurProtocolClient >();
         var random = StringOperation.RandomString(100);
         var random2 = StringOperation.RandomString(100);
-        var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new
+        var result = await http.Post(new AiurApiEndpoint("https://postman-echo.com/post", new
         {
             a = random
-        }), new AiurUrl("", new
+        }), new AiurApiEndpoint("", new
         {
             c = random2
         }), true);
@@ -85,13 +85,13 @@ public class HTTPServiceTests
     [TestMethod]
     public async Task TestPostOutter()
     {
-        var http = _serviceProvider.GetRequiredService<ApiProxyService>();
+        var http = _serviceProvider.GetRequiredService<AiurProtocolClient >();
         var random = StringOperation.RandomString(100);
         var random2 = StringOperation.RandomString(100);
-        var result = await http.Post(new AiurUrl("https://postman-echo.com/post", new
+        var result = await http.Post(new AiurApiEndpoint("https://postman-echo.com/post", new
         {
             a = random
-        }), new AiurUrl("", new
+        }), new AiurApiEndpoint("", new
         {
             c = random2
         }));

@@ -3,8 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
@@ -19,12 +19,12 @@ public class MicrosoftService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
     private readonly DirectoryConfiguration _serviceLocation;
     private readonly string _tenant;
 
     public MicrosoftService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -72,11 +72,11 @@ public class MicrosoftService : IAuthProvider
 
     public string GetBindRedirectLink()
     {
-        return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize",
+        return new AiurApiEndpoint("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize",
             new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
+                RedirectUri = new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                     .ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
@@ -86,11 +86,11 @@ public class MicrosoftService : IAuthProvider
 
     public string GetSignInRedirectLink(AiurUrl state)
     {
-        return new AiurUrl("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize",
+        return new AiurApiEndpoint("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize",
             new MicrosoftAuthAddressModel
             {
                 ClientId = _clientId,
-                RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { })
+                RedirectUri = new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { })
                     .ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
@@ -107,16 +107,16 @@ public class MicrosoftService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
     {
         var apiAddress = "https://login.microsoftonline.com" + $"/{_tenant}/oauth2/v2.0/token";
-        var url = new AiurUrl(apiAddress, new { });
+        var url = new AiurApiEndpoint(apiAddress, new { });
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new AiurUrl(string.Empty, new MicrosoftAccessTokenAddressModel
+        var form = new ApiPayload( new MicrosoftAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,
             Code = code,
             Scope = "user.read",
             RedirectUri =
-                new AiurUrl(_serviceLocation.Instance, $"/third-party/{action}/{GetName()}", new { }).ToString(),
+                new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/{action}/{GetName()}", new { }).ToString(),
             GrantType = "authorization_code"
         });
         try

@@ -86,7 +86,7 @@ public class Seeder : ITransientDependency
         {
             await SemaphoreSlim.WaitAsync();
             await AllClear();
-            var result = await _http.Get(new AiurUrl(_configuration["ResourcesUrl"] + "structure.json"));
+            return await _http.Get(new AiurApiEndpoint(_configuration["ResourcesUrl"] + "structure.json"));
             var sourceObject = JsonConvert.DeserializeObject<List<Collection>>(result);
 
             // Get all collections
@@ -112,7 +112,7 @@ public class Seeder : ITransientDependency
                         {
                             ArticleTitle = article.ArticleTitle,
                             ArticleAddress = article.ArticleAddress,
-                            ArticleContent = await _http.Get(new AiurUrl(article.ArticleAddress)),
+                            ArticleContent = await _http.Get(new AiurApiEndpoint(article.ArticleAddress)),
                             CollectionId = newCollection.CollectionId
                         };
                         await _dbContext.Article.AddAsync(newArticle);
@@ -124,7 +124,7 @@ public class Seeder : ITransientDependency
                         var newArticle = new Article
                         {
                             ArticleTitle = article.ArticleTitle,
-                            ArticleContent = await _http.Get(new AiurUrl(
+                            ArticleContent = await _http.Get(new AiurApiEndpoint(
                                 $"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md")),
                             CollectionId = newCollection.CollectionId
                         };
@@ -141,7 +141,7 @@ public class Seeder : ITransientDependency
                 // Generate markdown from doc generator
 
                 _logger.LogInformation($"Requesting doc API...");
-                var docString = await _http.Get(new AiurUrl(collection.DocAPIAddress));
+                var docString = await _http.Get(new AiurApiEndpoint(collection.DocAPIAddress));
                 var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
                 if (docModel == null)
                 {

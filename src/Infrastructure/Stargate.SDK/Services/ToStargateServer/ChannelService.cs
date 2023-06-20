@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
@@ -15,12 +16,12 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 public class ChannelService : IScopedDependency
 {
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient _http;
     private readonly StargateConfiguration _stargateLocator;
 
     public ChannelService(
         IOptions<StargateConfiguration> serviceLocation,
-        ApiProxyService http)
+        AiurProtocolClient http)
     {
         _stargateLocator = serviceLocation.Value;
         _http = http;
@@ -28,47 +29,31 @@ public class ChannelService : IScopedDependency
 
     public async Task<ViewMyChannelsViewModel> ViewMyChannelsAsync(string accessToken)
     {
-        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "ViewMyChannels", new ViewMyChannelsAddressModel
+        var url = new AiurApiEndpoint(_stargateLocator.Instance, "Channel", "ViewMyChannels", new ViewMyChannelsAddressModel
         {
             AccessToken = accessToken
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<ViewMyChannelsViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<ViewMyChannelsViewModel>(url);
     }
 
     public async Task<AiurValue<string>> ValidateChannelAsync(int id, string key)
     {
-        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "ValidateChannel", new ChannelAddressModel
+        var url = new AiurApiEndpoint(_stargateLocator.Instance, "Channel", "ValidateChannel", new ChannelAddressModel
         {
             Id = id,
             Key = key
         });
-        var result = await _http.Get(url, true);
-        var jResult = JsonConvert.DeserializeObject<AiurValue<string>>(result);
-        return jResult;
+        return await _http.Get<AiurValue<string>>(url);
     }
 
     public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
     {
-        var url = new AiurUrl(_stargateLocator.Instance, "Channel", "CreateChannel", new { });
-        var form = new AiurUrl(string.Empty, new CreateChannelAddressModel
+        var url = new AiurApiEndpoint(_stargateLocator.Instance, "Channel", "CreateChannel", new { });
+        var form = new ApiPayload( new CreateChannelAddressModel
         {
             AccessToken = accessToken,
             Description = description
         });
-        var result = await _http.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<CreateChannelViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<CreateChannelViewModel>(url, form);
     }
 }

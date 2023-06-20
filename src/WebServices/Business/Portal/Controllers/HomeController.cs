@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Portal.Controllers;
 
-[LimitPerMin]
+
 public class HomeController : Controller
 {
     private readonly DirectoryConfiguration _directoryLocator;
@@ -48,6 +48,6 @@ public class HomeController : Controller
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out");
         return this.SignOutRootServer(_directoryLocator.Instance,
-            new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            new ApiPayload( "Home", nameof(Index), new { }));
     }
 }

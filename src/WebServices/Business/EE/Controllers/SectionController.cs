@@ -4,7 +4,7 @@ using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.SectionViewModels;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.EE.Controllers;
 
-[LimitPerMin]
+
 public class SectionController : Controller
 {
     private readonly EEDbContext _dbContext;
@@ -86,8 +86,8 @@ public class SectionController : Controller
 
     [AiurForceAuth]
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> Drop(int id) //Section Id
     {
         var user = await GetCurrentUserAsync();
@@ -100,7 +100,7 @@ public class SectionController : Controller
 
         _dbContext.Sections.Remove(section);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, $"Successfully deleted the section '{section.SectionName}'!");
+        return this.Protocol(Code.Success, $"Successfully deleted the section '{section.SectionName}'!");
     }
 
     private async Task<EEUser> GetCurrentUserAsync()

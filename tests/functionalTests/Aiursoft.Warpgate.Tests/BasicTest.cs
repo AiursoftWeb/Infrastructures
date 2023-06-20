@@ -3,8 +3,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;
@@ -68,7 +68,7 @@ public class BasicTests
         Assert.AreEqual("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
 
         var content = await response.Content.ReadAsStringAsync();
-        var contentObject = JsonConvert.DeserializeObject<AiurProtocol>(content);
+        var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
         Assert.AreEqual(contentObject.Code, ErrorType.Success);
     }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
 using Aiursoft.Probe.SDK.Services;
@@ -16,7 +16,7 @@ using SixLabors.ImageSharp;
 namespace Aiursoft.Probe.Controllers;
 
 [Route("Download")]
-[APIRemoteExceptionHandler]
+[ApiExceptionHandler]
 public class DownloadController : Controller
 {
     private readonly FileRepo _fileRepo;

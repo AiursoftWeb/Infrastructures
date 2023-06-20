@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDKTools.Attributes;
 
 namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 
-public class ViewMyChannelsViewModel : AiurProtocol
+public class ViewMyChannelsViewModel : AiurResponse
 {
     [IsGuidOrEmpty] public string AppId { get; set; }
 

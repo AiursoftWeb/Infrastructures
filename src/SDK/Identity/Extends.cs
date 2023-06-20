@@ -22,7 +22,7 @@ public static class Extends
     {
         var request = controller.HttpContext.Request;
         var serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
-        var toRedirect = new AiurUrl(apiServerAddress, "OAuth", "UserSignOut", new UserSignOutAddressModel
+        var toRedirect = new AiurApiEndpoint(apiServerAddress, "OAuth", "UserSignOut", new UserSignOutAddressModel
         {
             ToRedirect = serverPosition
         });

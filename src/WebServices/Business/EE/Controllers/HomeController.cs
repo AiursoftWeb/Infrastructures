@@ -15,7 +15,7 @@ using Microsoft.Extensions.Options;
 
 namespace Aiursoft.EE.Controllers;
 
-[LimitPerMin]
+
 public class HomeController : Controller
 {
     public readonly EEDbContext _dbContext;
@@ -47,7 +47,7 @@ public class HomeController : Controller
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out");
         return this.SignOutRootServer(_serviceLocation.Instance,
-            new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            new ApiPayload( "Home", nameof(Index), new { }));
     }
 
     public async Task<IActionResult> Search(string word)

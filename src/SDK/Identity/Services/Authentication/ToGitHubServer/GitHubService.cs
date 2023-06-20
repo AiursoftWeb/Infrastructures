@@ -3,8 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +19,11 @@ public class GitHubService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly ApiProxyService _http;
+    private readonly AiurProtocolClient  _http;
     private readonly DirectoryConfiguration _serviceLocation;
 
     public GitHubService(
-        ApiProxyService http,
+        AiurProtocolClient  http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -68,21 +68,21 @@ public class GitHubService : IAuthProvider
 
     public string GetBindRedirectLink()
     {
-        return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
+        return new AiurApiEndpoint("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
         {
             ClientId = _clientId,
-            RedirectUri = new AiurUrl(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
+            RedirectUri = new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                 .ToString()
         }).ToString();
     }
 
     public string GetSignInRedirectLink(AiurUrl state)
     {
-        return new AiurUrl("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
+        return new AiurApiEndpoint("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
         {
             ClientId = _clientId,
             RedirectUri =
-                new AiurUrl(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
+                new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
             State = state.ToString()
         }).ToString();
     }
@@ -96,7 +96,7 @@ public class GitHubService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
     {
         var apiAddress = "https://github.com/login/oauth/access_token";
-        var url = new AiurUrl(apiAddress, new GitHubAccessTokenAddressModel
+        var url = new AiurApiEndpoint(apiAddress, new GitHubAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,

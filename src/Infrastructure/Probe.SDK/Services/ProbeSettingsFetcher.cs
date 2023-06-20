@@ -1,5 +1,4 @@
-﻿using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Scanner.Abstract;
@@ -12,22 +11,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.XelNaga.Models;
+using Aiursoft.AiurProtocol.Services;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Probe.SDK.Services;
 
 public class ProbeSettingsFetcher : IScopedDependency
 {
     private readonly CacheService _cacheService;
-    private readonly ApiProxyService _apiProxyService;
+    private readonly AiurProtocolClient _AiurProtocolClient ;
     private readonly ProbeConfiguration _probeConfiguration;
 
     public ProbeSettingsFetcher(
         CacheService cacheService,
-        ApiProxyService apiProxyService,
+        AiurProtocolClient AiurProtocolClient ,
         IOptions<ProbeConfiguration> probeConfiguration)
     {
         _cacheService = cacheService;
-        _apiProxyService = apiProxyService;
+        _AiurProtocolClient = AiurProtocolClient ;
         _probeConfiguration = probeConfiguration.Value;
     }
 
@@ -35,8 +36,7 @@ public class ProbeSettingsFetcher : IScopedDependency
     {
         return _cacheService.RunWithCache("probe-server-config", async () =>
         {
-            var serverConfigString = await _apiProxyService.Get(new AiurUrl(_probeConfiguration.Instance), true);
-            return JsonConvert.DeserializeObject<ProbeDownloadPatternConfig>(serverConfigString);
+            return await _AiurProtocolClient.Get<ProbeDownloadPatternConfig>(new AiurApiEndpoint(_probeConfiguration.Instance));
         });
     }
 
@@ -102,8 +102,7 @@ public class ProbeSettingsFetcher : IScopedDependency
     {
         if (string.IsNullOrEmpty(fullPath))
         {
-            throw new AiurAPIModelException(ErrorType.NotFound,
-                $"Can't get your file download address from path: '{fullPath}'!");
+            throw new InvalidOperationException($"Can't get your file download address from empty full path!");
         }
 
         var paths = SplitStrings(fullPath);

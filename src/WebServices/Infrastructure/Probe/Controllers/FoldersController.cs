@@ -1,18 +1,18 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Probe.Controllers;
 
-[LimitPerMin]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 [Route("Folders")]
 public class FoldersController : ControllerBase
 {
@@ -35,12 +35,12 @@ public class FoldersController : ControllerBase
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
         if (folder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            return this.Protocol(Code.NotFound, "Locate folder failed!");
         }
 
         return this.Protocol(new AiurValue<Folder>(folder)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get your folder!"
         });
     }
@@ -54,11 +54,11 @@ public class FoldersController : ControllerBase
             await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
         if (folder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            return this.Protocol(Code.NotFound, "Locate folder failed!");
         }
 
         await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
-        return this.Protocol(ErrorType.Success, "Successfully created your new folder!");
+        return this.Protocol(Code.Success, "Successfully created your new folder!");
     }
 
     [HttpPost]
@@ -69,16 +69,16 @@ public class FoldersController : ControllerBase
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
         if (folder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            return this.Protocol(Code.NotFound, "Locate folder failed!");
         }
 
         if (folder.ContextId == null)
         {
-            return this.Protocol(ErrorType.InvalidInput,
+            return this.Protocol(Code.InvalidInput,
                 "We can not delete root folder! If you wanna delete your site, please consider delete your site directly!");
         }
 
         await _folderRepo.DeleteFolder(folder.Id);
-        return this.Protocol(ErrorType.Success, "Successfully deleted your folder!");
+        return this.Protocol(Code.Success, "Successfully deleted your folder!");
     }
 }

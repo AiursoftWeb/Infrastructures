@@ -2,24 +2,22 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
-using Aiursoft.DBTools.Models;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Services;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
-using Aiursoft.WebTools;
+using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
-[LimitPerMin]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class AppsController : ControllerBase
 {
     private readonly TokenGenerator _tokenGenerator;
@@ -35,21 +33,21 @@ public class AppsController : ControllerBase
         _tokenManager = tokenManager;
         _dbContext = context;
     }
-    
+
     public async Task<IActionResult> IsValidApp(IsValidateAppAddressModel model)
     {
         var target = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
         if (target == null)
         {
-            return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
+            return this.Protocol(new AiurResponse { Message = "Target app did not found.", Code = Code.NotFound });
         }
 
         if (target.AppSecret != model.AppSecret)
         {
-            return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+            return this.Protocol(new AiurResponse { Message = "Wrong secret.", Code = Code.WrongKey });
         }
 
-        return this.Protocol(new AiurProtocol { Message = "Correct app info.", Code = ErrorType.Success });
+        return this.Protocol(new AiurResponse { Message = "Correct app info.", Code = Code.Success });
     }
 
     [Produces(typeof(AppInfoViewModel))]
@@ -61,69 +59,64 @@ public class AppsController : ControllerBase
 
         if (target == null)
         {
-            return this.Protocol(new AiurProtocol
-                { Message = $"Could find target app with appId: '{model.AppId}'!", Code = ErrorType.NotFound });
+            return this.Protocol(new AiurResponse
+            { Message = $"Could find target app with appId: '{model.AppId}'!", Code = Code.NotFound });
         }
 
         return this.Protocol(new AppInfoViewModel
         {
             Message = "Successfully get target app info.",
-            Code = ErrorType.Success,
+            Code = Code.Success,
             App = target
         });
     }
-    
+
     [Produces(typeof(AccessTokenViewModel))]
     public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
     {
         var target = await _dbContext.DirectoryAppsInDb.FindAsync(model.AppId);
         if (target == null)
         {
-            return this.Protocol(new AiurProtocol { Message = "Target app did not found.", Code = ErrorType.NotFound });
+            return this.Protocol(new AiurResponse { Message = "Target app did not found.", Code = Code.NotFound });
         }
 
         if (target.AppSecret != model.AppSecret)
         {
-            return this.Protocol(new AiurProtocol { Message = "Wrong secret.", Code = ErrorType.WrongKey });
+            return this.Protocol(new AiurResponse { Message = "Wrong secret.", Code = Code.WrongKey });
         }
-        
+
         var token = _tokenGenerator.GenerateAccessToken(model.AppId);
         return this.Protocol(new AccessTokenViewModel
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get access token.",
             AccessToken = token.tokenString,
             DeadTime = token.expireTime
         });
     }
-    
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     [Produces(typeof(AiurPagedCollection<Grant>))]
     public async Task<IActionResult> AllUserGranted(AllUserGrantedAddressModel model)
     {
-        var appid =await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
+        var appid = await _tokenManager.ValidateAccessTokenAsync(model.AccessToken);
         var query = _dbContext
             .LocalAppGrant
             .Include(t => t.User)
             .Where(t => t.AppId == appid)
             .OrderByDescending(t => t.GrantTime);
-        var result = await AiurPagedCollectionBuilder.BuildAsync<Grant>(
-            query,
-            model,
-            ErrorType.Success,
-            "Successfully get all your users");
-        return this.Protocol(result);
+        return await this.Protocol(Code.Success, "Successfully get all your users", query, model);
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> DropGrants([Required] string accessToken)
     {
-        var appid =await _tokenManager.ValidateAccessTokenAsync(accessToken);
+        var appid = await _tokenManager.ValidateAccessTokenAsync(accessToken);
         _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "Successfully dropped all users granted!");
+        return this.Protocol(Code.Success, "Successfully dropped all users granted!");
     }
 }

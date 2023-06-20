@@ -1,4 +1,5 @@
 ﻿using System;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Attributes;
@@ -50,7 +51,7 @@ public class AiurForceAuth : ActionFilterAttribute, IAiurForceAuth
                 return "/";
             }
 
-            return new AiurUrl(string.Empty, _preferController, _preferAction, new { }).ToString();
+            return $"/{_preferController}/{_preferAction}";
         }
     }
 

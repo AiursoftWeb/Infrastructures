@@ -4,7 +4,7 @@ using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.EE.Controllers;
 
-[LimitPerMin]
+
 public class ProfileController : Controller
 {
     public readonly EEDbContext _dbContext;
@@ -127,8 +127,8 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     [AiurForceAuth("", "", false)]
     public async Task<IActionResult> Follow(string id) //Target user id
     {
@@ -136,7 +136,7 @@ public class ProfileController : Controller
         var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
         if (user == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+            return this.Protocol(Code.NotFound, $"The target user with id:{id} was not found!");
         }
 
         var follow =
@@ -144,7 +144,7 @@ public class ProfileController : Controller
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow != null)
         {
-            return this.Protocol(ErrorType.HasSuccessAlready, "You have already followed the target user!");
+            return this.Protocol(Code.HasSuccessAlready, "You have already followed the target user!");
         }
 
         await _dbContext.Follows.AddAsync(new Follow
@@ -153,12 +153,12 @@ public class ProfileController : Controller
             ReceiverId = user.Id
         });
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "You have successfully followed the target user!");
+        return this.Protocol(Code.Success, "You have successfully followed the target user!");
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     [AiurForceAuth("", "", false)]
     public async Task<IActionResult> UnFollow(string id) //Target User Id
     {
@@ -166,7 +166,7 @@ public class ProfileController : Controller
         var user = await _dbContext.Users.SingleOrDefaultAsync(t => t.Id == id);
         if (user == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"The target user with id:{id} was not found!");
+            return this.Protocol(Code.NotFound, $"The target user with id:{id} was not found!");
         }
 
         var follow =
@@ -174,13 +174,13 @@ public class ProfileController : Controller
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow == null)
         {
-            return this.Protocol(ErrorType.HasSuccessAlready,
+            return this.Protocol(Code.HasSuccessAlready,
                 "You did not follow the target user and can not unFollow him!");
         }
 
         _dbContext.Follows.Remove(follow);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(ErrorType.Success, "You have successfully unfollowed the target user!");
+        return this.Protocol(Code.Success, "You have successfully unfollowed the target user!");
     }
 
     [AiurForceAuth]

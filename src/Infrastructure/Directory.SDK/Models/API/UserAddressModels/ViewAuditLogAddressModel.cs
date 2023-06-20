@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.Handler.Interfaces;
+using Aiursoft.AiurProtocol.Interfaces;
 
 namespace Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 
-public class ViewAuditLogAddressModel : UserOperationAddressModel, IPageable
+public class ViewAuditLogAddressModel : UserOperationAddressModel, IPager
 {
     /// <summary>
     ///     Default is 10

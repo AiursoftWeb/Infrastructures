@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Probe.SDK.Models.FilesViewModels;
 
-public class UploadFileViewModel : AiurProtocol
+public class UploadFileViewModel : AiurResponse
 {
     /// <summary>
     ///     For example: mynewsite

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Http;
@@ -67,7 +67,7 @@ public class LanguageController : Controller
         }
         catch (CultureNotFoundException)
         {
-            return this.Protocol(new AiurProtocol { Message = "Not a language.", Code = ErrorType.InvalidInput });
+            return this.Protocol(new AiurResponse { Message = "Not a language.", Code = ErrorType.InvalidInput });
         }
 
         var user = await GetCurrentUserAsync();
@@ -77,7 +77,7 @@ public class LanguageController : Controller
             await _userManager.UpdateAsync(user);
         }
 
-        var toGo = new AiurUrl(model.Host, "/switch-language", new
+        var toGo = new AiurApiEndpoint(model.Host, "/switch-language", new
         {
             model.Culture,
             ReturnUrl = model.Path

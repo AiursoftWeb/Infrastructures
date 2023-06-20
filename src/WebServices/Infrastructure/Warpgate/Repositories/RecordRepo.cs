@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK.Models;

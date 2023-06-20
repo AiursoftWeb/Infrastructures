@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
@@ -11,12 +10,13 @@ using Aiursoft.Probe.Services;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Probe.Controllers;
 
-[LimitPerMin]
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 [Route("Files")]
 [DisableRequestSizeLimit]
 public class FilesController : ControllerBase
@@ -55,7 +55,7 @@ public class FilesController : ControllerBase
         var site = await _siteRepo.GetSiteByName(model.SiteName);
         if (site == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"Can't find a site with name: '{model.SiteName}'!");
+            return this.Protocol(Code.NotFound, $"Can't find a site with name: '{model.SiteName}'!");
         }
 
         if (!site.OpenToUpload)
@@ -68,7 +68,7 @@ public class FilesController : ControllerBase
         var folder = await _folderRepo.GetFolderFromPath(folders, rootFolder, model.RecursiveCreate);
         if (folder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Can't find your folder!");
+            return this.Protocol(Code.NotFound, "Can't find your folder!");
         }
 
         // Executing here will let the browser upload the file.
@@ -78,18 +78,18 @@ public class FilesController : ControllerBase
         }
         catch (InvalidOperationException e)
         {
-            return this.Protocol(ErrorType.InvalidInput, e.Message);
+            return this.Protocol(Code.InvalidInput, e.Message);
         }
 
         if (HttpContext.Request.Form.Files.Count < 1)
         {
-            return this.Protocol(ErrorType.InvalidInput, "Please provide a file!");
+            return this.Protocol(Code.InvalidInput, "Please provide a file!");
         }
 
         var file = HttpContext.Request.Form.Files.First();
         if (!new ValidFolderName().IsValid(file.FileName))
         {
-            return this.Protocol(ErrorType.InvalidInput, $"Invalid file name: '{file.FileName}'!");
+            return this.Protocol(Code.InvalidInput, $"Invalid file name: '{file.FileName}'!");
         }
 
         var fileName = _folderSplitter.GetValidFileName(folder.Files.Select(t => t.FileName), file.FileName);
@@ -103,7 +103,7 @@ public class FilesController : ControllerBase
             SiteName = model.SiteName,
             FilePath = filePath,
             FileSize = file.Length,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully uploaded your file."
         });
     }
@@ -116,17 +116,17 @@ public class FilesController : ControllerBase
         var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
         if (folder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate folder failed!");
+            return this.Protocol(Code.NotFound, "Locate folder failed!");
         }
 
         var file = await _fileRepo.GetFileInFolder(folder, fileName);
         if (file == null)
         {
-            return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+            return this.Protocol(Code.NotFound, "The file cannot be found. Maybe it has been deleted.");
         }
 
         await _fileRepo.DeleteFileById(file.Id);
-        return this.Protocol(ErrorType.Success, $"Successfully deleted the file '{file.FileName}'");
+        return this.Protocol(Code.Success, $"Successfully deleted the file '{file.FileName}'");
     }
 
     [HttpPost]
@@ -141,18 +141,18 @@ public class FilesController : ControllerBase
             await _folderRepo.GetFolderAsOwner(model.AccessToken, model.TargetSiteName, targetFolders, true);
         if (sourceFolder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate source folder failed!");
+            return this.Protocol(Code.NotFound, "Locate source folder failed!");
         }
 
         if (targetFolder == null)
         {
-            return this.Protocol(ErrorType.NotFound, "Locate target folder failed!");
+            return this.Protocol(Code.NotFound, "Locate target folder failed!");
         }
 
         var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
         if (file == null)
         {
-            return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+            return this.Protocol(Code.NotFound, "The file cannot be found. Maybe it has been deleted.");
         }
 
         var fileName = _folderSplitter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
@@ -165,7 +165,7 @@ public class FilesController : ControllerBase
             SiteName = model.TargetSiteName,
             FilePath = filePath,
             FileSize = file.FileSize,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully copied your file."
         });
     }
@@ -180,7 +180,7 @@ public class FilesController : ControllerBase
         var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
         if (file == null)
         {
-            return this.Protocol(ErrorType.NotFound, "The file cannot be found. Maybe it has been deleted.");
+            return this.Protocol(Code.NotFound, "The file cannot be found. Maybe it has been deleted.");
         }
 
         var newFileName = _folderSplitter.GetValidFileName(sourceFolder
@@ -197,7 +197,7 @@ public class FilesController : ControllerBase
             SiteName = model.SiteName,
             FilePath = filePath,
             FileSize = file.FileSize,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully copied your file."
         });
     }

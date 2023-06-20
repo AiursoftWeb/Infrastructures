@@ -9,7 +9,7 @@
 @inject IOptions<ProbeConfiguration> ProbeConfig
 @inject ProbeSettingsFetcher ProbeLocator
 @{
-    var url = new AiurUrl(ProbeConfig.Value.Instance, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
+    var url = new AiurApiEndpoint(ProbeConfig.Value.Instance, $"/Files/UploadFile/{Model.SiteName}/{Model.Path.EncodePath()}", new UploadFileAddressModel
     {
         Token = Model.PBToken,
         RecursiveCreate = true

@@ -1,9 +1,9 @@
 ﻿using System;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 
-public class AccessTokenViewModel : AiurProtocol
+public class AccessTokenViewModel : AiurResponse
 {
     public virtual string AccessToken { get; set; }
     public virtual DateTime DeadTime { get; set; }

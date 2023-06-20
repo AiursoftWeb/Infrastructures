@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Probe.SDK.Models.SitesAddressModels;
 
-public class ViewSiteDetailViewModel : AiurProtocol
+public class ViewSiteDetailViewModel : AiurResponse
 {
     public string AppId { get; set; }
     public Site Site { get; set; }

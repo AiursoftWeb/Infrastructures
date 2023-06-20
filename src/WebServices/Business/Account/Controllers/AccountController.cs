@@ -11,9 +11,7 @@ using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
-using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
@@ -27,7 +25,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Account.Controllers;
 
-[LimitPerMin]
 [AiurForceAuth]
 public class AccountController : Controller
 {
@@ -140,8 +137,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> SendEmail([EmailAddress] string email)
     {
         var user = await GetCurrentUserAsync();
@@ -151,8 +148,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> DeleteEmail([EmailAddress] string email)
     {
         var user = await GetCurrentUserAsync();
@@ -162,8 +159,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> SetPrimaryEmail([EmailAddress] string email)
     {
         var user = await GetCurrentUserAsync();
@@ -363,15 +360,15 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> DeleteGrant(string appId)
     {
         var user = await GetCurrentUserAsync();
         var token = await _directoryAppTokenService.GetAccessTokenAsync();
         if (_configuration["AccountAppId"] == appId)
         {
-            return this.Protocol(ErrorType.InvalidInput, "You can not revoke Aiursoft Account Center!");
+            return this.Protocol(Code.InvalidInput, "You can not revoke Aiursoft Account Center!");
         }
 
         var result = await _userService.DropGrantedAppsAsync(token, user.Id, appId);
@@ -508,13 +505,13 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    [APIRemoteExceptionHandler]
-    [APIModelStateChecker]
+    [ApiExceptionHandler]
+    [ApiModelStateChecker]
     public async Task<IActionResult> UnBindAccount(string provider)
     {
         if (string.IsNullOrWhiteSpace(provider))
         {
-            return this.Protocol(ErrorType.Success, "Seems no this provider at all...");
+            return this.Protocol(Code.Success, "Seems no this provider at all...");
         }
 
         var user = await GetCurrentUserAsync();

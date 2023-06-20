@@ -5,7 +5,7 @@ using System.Linq;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -90,10 +90,10 @@ public static class MiddlewaresExtends
                 return
                     action.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
                     controller.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||
-                    action.CustomAttributes.Any(t => t.AttributeType == typeof(APIRemoteExceptionHandler)) ||
-                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIRemoteExceptionHandler)) ||
-                    action.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker)) ||
-                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(APIModelStateChecker));
+                    action.CustomAttributes.Any(t => t.AttributeType == typeof(ApiExceptionHandler)) ||
+                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(ApiExceptionHandler)) ||
+                    action.CustomAttributes.Any(t => t.AttributeType == typeof(ApiModelStateChecker)) ||
+                    controller.CustomAttributes.Any(t => t.AttributeType == typeof(ApiModelStateChecker));
             };
             options.JudgeAuthorized = (action, controller) =>
             {
@@ -102,7 +102,7 @@ public static class MiddlewaresExtends
                     controller.CustomAttributes.Any(t => t.AttributeType.IsAssignableFrom(typeof(IAiurForceAuth)));
             };
             options.Format = DocFormat.Json;
-            options.GlobalPossibleResponse.Add(new AiurProtocol
+            options.GlobalPossibleResponse.Add(new AiurResponse
             {
                 Code = ErrorType.WrongKey,
                 Message = "Some error."

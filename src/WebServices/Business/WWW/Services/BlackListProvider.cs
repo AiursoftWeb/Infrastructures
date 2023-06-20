@@ -36,7 +36,7 @@ public class BlackListProvider : IScopedDependency
         {
             return _retryEngine.RunWithRetry(async _ =>
             {
-                var list = await _httpService.Get(new AiurUrl(_address));
+                var list = await _httpService.Get(new AiurApiEndpoint(_address));
                 return list
                     .Split('\n')
                     .Where(t => !string.IsNullOrWhiteSpace(t))

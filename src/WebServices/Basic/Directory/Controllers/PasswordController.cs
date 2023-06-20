@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Directory.Controllers;
 
-[LimitPerMin]
+
 public class PasswordController : Controller
 {
     private readonly CanonService _cannonService;

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Wiki.Controllers;
 
-[LimitPerMin]
+
 public class HomeController : Controller
 {
     private readonly WikiDbContext _dbContext;
@@ -95,7 +95,7 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         return this.SignOutRootServer(_serviceLocation.Instance,
-            new AiurUrl(string.Empty, "Home", nameof(Index), new { }));
+            new ApiPayload( "Home", nameof(Index), new { }));
     }
 
     public IActionResult Error()

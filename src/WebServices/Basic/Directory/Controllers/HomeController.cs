@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
@@ -16,7 +16,7 @@ using Aiursoft.Directory.Services;
 
 namespace Aiursoft.Directory.Controllers;
 
-[LimitPerMin]
+
 public class HomeController : ControllerBase
 {
     private readonly ISessionBasedCaptcha _captcha;

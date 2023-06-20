@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Aiursoft.Handler.Exceptions;
-using Aiursoft.Handler.Models;
+
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
@@ -14,33 +14,33 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 public class PushMessageService : IScopedDependency
 {
-    private readonly ApiProxyService _httpService;
+    private readonly AiurProtocolClient  _httpService;
     private readonly StargateConfiguration _stargateLocator;
 
     public PushMessageService(
-        ApiProxyService httpService,
+        AiurProtocolClient  httpService,
         IOptions<StargateConfiguration> serviceLocation)
     {
         _httpService = httpService;
         _stargateLocator = serviceLocation.Value;
     }
 
-    public async Task<AiurProtocol> PushMessageAsync(string accessToken, int channelId, object eventObject)
+    public async Task<AiurResponse> PushMessageAsync(string accessToken, int channelId, object eventObject)
     {
-        var url = new AiurUrl(_stargateLocator.Instance, "Message", "PushMessage", new { });
+        var url = new AiurApiEndpoint(_stargateLocator.Instance, "Message", "PushMessage", new { });
         var payloadToken = JsonConvert.SerializeObject(eventObject, new JsonSerializerSettings
         {
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         });
-        var form = new AiurUrl(string.Empty, new PushMessageAddressModel
+        var form = new ApiPayload( new PushMessageAddressModel
         {
             AccessToken = accessToken,
             ChannelId = channelId,
             MessageContent = payloadToken
         });
         var result = await _httpService.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurProtocol>(result);
+        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
         if (jResult.Code != ErrorType.Success)
         {
             throw new AiurUnexpectedResponse(jResult);

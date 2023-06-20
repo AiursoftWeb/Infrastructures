@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
 
-[APIRemoteExceptionHandler]
-[APIModelStateChecker]
+[ApiExceptionHandler]
+[ApiModelStateChecker]
 public class MessageController : ControllerBase
 {
     private readonly Counter _counter;
@@ -39,7 +39,7 @@ public class MessageController : ControllerBase
         var channel = _memoryContext.GetChannelsUnderApp(appid).SingleOrDefault(t => t.Id == model.ChannelId);
         if (channel == null)
         {
-            return this.Protocol(ErrorType.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
+            return this.Protocol(Code.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
         }
 
         //Create Message
@@ -50,7 +50,7 @@ public class MessageController : ControllerBase
             Content = model.MessageContent
         };
         channel.Push(message);
-        return this.Protocol(new AiurProtocol
+        return this.Protocol(new AiurResponse
         {
             Code = ErrorType.Success,
             Message = $"You have successfully pushed a new message to channel: {channel.Id}!"

@@ -8,9 +8,7 @@ using Aiursoft.Directory.Models.OAuthViewModels;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Directory.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
-using Aiursoft.XelNaga.Models;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +19,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Directory.Controllers;
 
-[LimitPerMin]
 public class OAuthController : Controller
 {
     private readonly bool _allowPasswordSignIn;
@@ -147,7 +144,7 @@ public class OAuthController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            return Redirect(new AiurUrl($"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
+            return Redirect(new AiurApiEndpoint($"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,

@@ -1,5 +1,5 @@
-﻿using Aiursoft.Handler.Attributes;
-using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.Controllers;
 
-[LimitPerMin]
 public class HomeController : ControllerBase
 {
     private readonly ProbeDownloadPatternConfig _configuration;
@@ -24,7 +23,7 @@ public class HomeController : ControllerBase
             OpenPattern = _configuration.OpenPattern,
             DownloadPattern = _configuration.DownloadPattern,
             PlayerPattern = _configuration.PlayerPattern,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Welcome to Probe!"
         });
     }

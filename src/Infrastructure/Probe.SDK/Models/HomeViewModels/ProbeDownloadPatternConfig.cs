@@ -1,8 +1,8 @@
-﻿using Aiursoft.Handler.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Probe.SDK.Models.HomeViewModels;
 
-public class ProbeDownloadPatternConfig : AiurProtocol
+public class ProbeDownloadPatternConfig : AiurResponse
 {
     public string DownloadPattern { get; set; }
     public string PlayerPattern { get; set; }
