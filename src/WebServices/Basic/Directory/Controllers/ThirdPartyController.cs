@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Data;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.Directory.Models;
@@ -9,11 +11,8 @@ using Aiursoft.Directory.Models.ThirdPartyAddressModels;
 using Aiursoft.Directory.Models.ThirdPartyViewModels;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.Services;
-using Aiursoft.Handler.Attributes;
-
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services.Authentication;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +21,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Aiursoft.Directory.Controllers;
 
 [GenerateDoc]
-
 [Route("Third-party")]
 public class ThirdPartyController : Controller
 {
@@ -64,14 +62,14 @@ public class ThirdPartyController : Controller
         {
             info = await provider.GetUserDetail(model.Code);
         }
-        catch (AiurAPIModelException)
+        catch (WebException)
         {
-            var refreshLink = provider.GetSignInRedirectLink(new AiurApiEndpoint("", new FinishAuthInfo
+            var refreshLink = provider.GetSignInRedirectLink(new ApiPayload(new FinishAuthInfo
             {
                 AppId = oauthModel.AppId,
                 RedirectUri = oauthModel.RedirectUri,
                 State = oauthModel.State
-            }));
+            }).ToString());
             return Redirect(refreshLink);
         }
 
@@ -199,7 +197,7 @@ public class ThirdPartyController : Controller
         {
             info = await provider.GetUserDetail(model.Code, true);
         }
-        catch (AiurAPIModelException)
+        catch (WebException)
         {
             var refreshLink = provider.GetBindRedirectLink();
             return Redirect(refreshLink);

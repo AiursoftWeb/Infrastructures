@@ -1,3 +1,5 @@
+@using Aiursoft.AiurProtocol
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Aiursoft.Directory.Models.OAuthViewModels.AuthorizeViewModel
 @inject IEnumerable<IAuthProvider> AuthProviders
 @{
@@ -12,7 +14,7 @@
         </div>
         <div class="card-body pb-0">
             <div class="text-center">
-                <img class="rounded" style="width:100px; height:100px;" src="@await ProbeLocator.GetProbeOpenAddressAsync(Model.AppImageUrl)?w=128&square=true">
+                <img class="rounded" style="width:100px; height:100px;" src="@await ProbeLocator.GetProbeOpenAddressAsync(Model.AppImageUrl)?w=128&square=true" alt="avatar">
             </div>
             <form asp-controller="OAuth" asp-action="Authorize" method="post"
                   asp-route-appid="@Model.AppId"
@@ -28,7 +30,7 @@
                     <div class="form-group">
                         <label asp-for="Password" class="w-100">
                             @Localizer["Password"]
-                            <a class="d-block float-right" asp-controller="Password" asp-action="ForgotpasswordFor" target="_blank" tabindex="5">
+                            <a class="d-block float-right" asp-controller="Password" asp-action="ForgotPasswordFor" target="_blank" tabindex="5">
                                 @Localizer["Forgot Password?"]
                             </a>
                         </label>
@@ -37,7 +39,7 @@
                     <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit" tabindex="3">@Localizer["Sign in"]</button>
                     <hr class="mb-1"/>
                 }
-                @if (AuthProviders.Where(t => t.IsEnabled()).Any())
+                @if (AuthProviders.Any(t => t.IsEnabled()))
                 {
                     <p class="text-muted mb-2">Sign in by</p>
                     <div class="row">
@@ -51,7 +53,7 @@
                             @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
                             {
                                 <div class="col-lg-6 pb-3">
-                                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurApiEndpoint("", oauthInfo))">
+                                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurApiEndpoint(string.Empty, oauthInfo).ToString())">
                                         <i class="@provider.GetButtonIcon() mr-1"></i>@provider.GetName()
                                     </a>
                                 </div>

@@ -1,11 +1,10 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.WebTools;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -67,7 +66,7 @@ public class LanguageController : Controller
         }
         catch (CultureNotFoundException)
         {
-            return this.Protocol(new AiurResponse { Message = "Not a language.", Code = ErrorType.InvalidInput });
+            return this.Protocol(new AiurResponse { Message = "Not a language.", Code = Code.InvalidInput });
         }
 
         var user = await GetCurrentUserAsync();

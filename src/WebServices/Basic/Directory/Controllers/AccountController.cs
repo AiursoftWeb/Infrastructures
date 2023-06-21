@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Aiursoft.Directory.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,6 @@ namespace Aiursoft.Directory.Controllers;
 
 [ApiExceptionHandler]
 [ApiModelStateChecker]
-
 public class AccountController : ControllerBase
 {
     private readonly UserAppAuthManager _authManager;
@@ -74,7 +73,7 @@ public class AccountController : ControllerBase
             OpenId = targetPack.UserId,
             Scope = "scope",
             Message = "Successfully get user openid",
-            Code = ErrorType.Success
+            Code = Code.Success
         };
         return this.Protocol(viewModel);
     }

@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
-
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,23 +31,23 @@ public class GrantChecker : IScopedDependency
         var targetUser = await _dbContext.Users.Include(t => t.Emails).FirstOrDefaultAsync(t => t.Id == userId);
         if (targetUser == null)
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, $"The user with ID: {userId} was not found!");
+            throw new AiurServerException(Code.NotFound, $"The user with ID: {userId} was not found!");
         }
         
         var app = await _dbContext.DirectoryAppsInDb.FindAsync(appid);
         if (app == null)
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, $"The app with ID: {appid} was not found!");
+            throw new AiurServerException(Code.NotFound, $"The app with ID: {appid} was not found!");
         }
         
         if (!_dbContext.LocalAppGrant.Any(t => t.AppId == appid && t.DirectoryUserId == targetUser.Id))
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "This user did not grant your app!");
+            throw new AiurServerException(Code.Unauthorized, "This user did not grant your app!");
         }
 
         if (prefix != null && !prefix(app))
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "You app is not allowed to do that!");
+            throw new AiurServerException(Code.Unauthorized, "You app is not allowed to do that!");
         }
 
         return targetUser;

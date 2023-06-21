@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Canon;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
@@ -144,7 +145,8 @@ public class OAuthController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            return Redirect(new AiurApiEndpoint($"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
+            // TODO: Use AiurRelativePath
+            return Redirect(new AiurApiEndpoint(string.Empty, $"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,

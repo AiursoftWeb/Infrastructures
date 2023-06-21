@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.Directory.SDK.Models;
-
-using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Directory.Models.ThirdPartyAddressModels;
@@ -36,7 +35,7 @@ public class SignInAddressModel
         }
         catch (Exception e) when (e is IndexOutOfRangeException or NullReferenceException)
         {
-            throw new AiurAPIModelException(ErrorType.InvalidInput, "State is invalid!");
+            throw new AiurServerException(AiurProtocol.Models.Code.InvalidInput, "State is invalid!");
         }
     }
 }

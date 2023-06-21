@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +42,7 @@ public class HomeController : ControllerBase
         {
             SignedIn = User.Identity?.IsAuthenticated ?? false,
             ServerTime = DateTime.UtcNow,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Server started successfully!",
             Local = _localizer["en"],
             Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),

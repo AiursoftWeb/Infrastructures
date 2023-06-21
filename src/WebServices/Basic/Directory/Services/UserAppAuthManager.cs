@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Controllers;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +46,7 @@ public class UserAppAuthManager : IScopedDependency
         else
         {
             // Need to do the auth logic.
-            var url = new ApiPayload( "OAuth", nameof(OAuthController.AuthorizeConfirm), new FinishAuthInfo
+            var url = new AiurApiEndpoint(string.Empty, "OAuth", nameof(OAuthController.AuthorizeConfirm), new FinishAuthInfo
             {
                 AppId = model.AppId,
                 RedirectUri = model.RedirectUri,
