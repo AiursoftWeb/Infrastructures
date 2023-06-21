@@ -11,7 +11,7 @@ public interface IAuthProvider : IScopedDependency
     string GetSettingsPage();
     string GetButtonColor();
     string GetButtonIcon();
-    string GetSignInRedirectLink(AiurUrl state);
+    string GetSignInRedirectLink(string state);
     string GetBindRedirectLink();
     Task<IUserDetail> GetUserDetail(string code, bool isBinding = false);
 }

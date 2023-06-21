@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Security.Claims;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Identity.Services;
@@ -18,10 +19,10 @@ namespace Aiursoft.Identity;
 public static class Extends
 {
     public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress,
-        AiurUrl viewingUrl)
+        string viewingPath)
     {
         var request = controller.HttpContext.Request;
-        var serverPosition = $"{request.Scheme}://{request.Host}{viewingUrl}";
+        var serverPosition = $"{request.Scheme}://{request.Host}{viewingPath}";
         var toRedirect = new AiurApiEndpoint(apiServerAddress, "OAuth", "UserSignOut", new UserSignOutAddressModel
         {
             ToRedirect = serverPosition

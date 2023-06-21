@@ -2,10 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
-
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -19,11 +17,11 @@ public class FaceBookService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly AiurProtocolClient  _http;
+    private readonly HttpService  _http;
     private readonly DirectoryConfiguration _serviceLocation;
 
     public FaceBookService(
-        AiurProtocolClient  http,
+        HttpService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -72,7 +70,7 @@ public class FaceBookService : IAuthProvider
         {
             ClientId = _clientId,
 
-            //Debug RedirectUri = new AiurApiEndpoint("http://localhost:41066", $"/third-party/bind-accoun/{GetName()}", new { }).ToString(),
+            //Debug RedirectUri = new AiurApiEndpoint("http://localhost:41066", $"/third-party/bind-account/{GetName()}", new { }).ToString(),
             RedirectUri = new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/bind-account/{GetName()}", new { })
                 .ToString(),
             State = "a",
@@ -80,14 +78,14 @@ public class FaceBookService : IAuthProvider
         }).ToString();
     }
 
-    public string GetSignInRedirectLink(AiurUrl state)
+    public string GetSignInRedirectLink(string state)
     {
         return new AiurApiEndpoint("https://www.facebook.com", "/v5.0/dialog/oauth", new FaceBookAuthAddressModel
         {
             ClientId = _clientId,
             RedirectUri =
                 new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
-            State = state.ToString(),
+            State = state,
             ResponseType = "code"
         }).ToString();
     }
@@ -101,9 +99,8 @@ public class FaceBookService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
     {
         var apiAddress = "https://graph.facebook.com/v5.0/oauth/access_token?";
-        var url = new AiurApiEndpoint(apiAddress, new { });
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new ApiPayload( new FaceBookAccessTokenAddressModel
+        var form = new ApiPayload(new FaceBookAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,
@@ -113,18 +110,18 @@ public class FaceBookService : IAuthProvider
         });
         try
         {
-            var json = await _http.Post(url, form);
+            var json = await _http.Post(apiAddress, form.Params);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
             if (string.IsNullOrWhiteSpace(response.AccessToken))
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook credential");
+                throw new InvalidOperationException("Invalid facebook credential");
             }
 
             return response.AccessToken;
         }
         catch (WebException)
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid facebook credential");
+            throw new InvalidOperationException("Invalid facebook credential");
         }
     }
 

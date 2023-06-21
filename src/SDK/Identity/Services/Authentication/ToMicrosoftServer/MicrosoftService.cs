@@ -2,10 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
-
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -19,12 +17,12 @@ public class MicrosoftService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly AiurProtocolClient  _http;
+    private readonly HttpService _http;
     private readonly DirectoryConfiguration _serviceLocation;
     private readonly string _tenant;
 
     public MicrosoftService(
-        AiurProtocolClient  http,
+        HttpService http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -84,7 +82,7 @@ public class MicrosoftService : IAuthProvider
             }).ToString();
     }
 
-    public string GetSignInRedirectLink(AiurUrl state)
+    public string GetSignInRedirectLink(string state)
     {
         return new AiurApiEndpoint("https://login.microsoftonline.com", $"/{_tenant}/oauth2/v2.0/authorize",
             new MicrosoftAuthAddressModel
@@ -94,7 +92,7 @@ public class MicrosoftService : IAuthProvider
                     .ToString(),
                 ResponseType = "code",
                 Scope = "user.read",
-                State = state.ToString()
+                State = state
             }).ToString();
     }
 
@@ -107,7 +105,6 @@ public class MicrosoftService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code, bool isBinding)
     {
         var apiAddress = "https://login.microsoftonline.com" + $"/{_tenant}/oauth2/v2.0/token";
-        var url = new AiurApiEndpoint(apiAddress, new { });
         var action = isBinding ? "bind-account" : "sign-in";
         var form = new ApiPayload( new MicrosoftAccessTokenAddressModel
         {
@@ -121,18 +118,18 @@ public class MicrosoftService : IAuthProvider
         });
         try
         {
-            var json = await _http.Post(url, form);
+            var json = await _http.Post(apiAddress, form.Params);
             var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
             if (string.IsNullOrWhiteSpace(response.AccessToken))
             {
-                throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid Microsoft crenditial");
+                throw new InvalidOperationException("Invalid Microsoft crenditial");
             }
 
             return response.AccessToken;
         }
         catch (WebException)
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid Microsoft crenditial");
+            throw new InvalidOperationException("Invalid Microsoft crenditial");
         }
     }
 

@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,8 +44,7 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out");
-        return this.SignOutRootServer(_serviceLocation.Instance,
-            new ApiPayload( "Home", nameof(Index), new { }));
+        return this.SignOutRootServer(_serviceLocation.Instance, "/home/index");
     }
 
     public async Task<IActionResult> Search(string word)

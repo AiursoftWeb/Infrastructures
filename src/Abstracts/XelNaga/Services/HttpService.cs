@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.XelNaga.Services;
 
@@ -22,7 +21,7 @@ public class HttpService : IScopedDependency
 
     public async Task<string> Get(string url)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, url.ToString())
+        var request = new HttpRequestMessage(HttpMethod.Get, url)
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
@@ -39,29 +38,9 @@ public class HttpService : IScopedDependency
 
     public async Task<string> Post(string url, Dictionary<string, string> postDataStr)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, url.ToString())
-        {
-            Content = new FormUrlEncodedContent(postDataStr)
-        };
-
-        using var response = await _client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            return await GetResponseContent(response);
-        }
-
-        throw new WebException(
-            $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}. Url: {url}");
-    }
-
-    public async Task<string> PostWithFile(string url, Stream fileStream)
-    {
         var request = new HttpRequestMessage(HttpMethod.Post, url)
         {
-            Content = new MultipartFormDataContent
-            {
-                { new StreamContent(fileStream), "file", "file" }
-            }
+            Content = new FormUrlEncodedContent(postDataStr)
         };
 
         using var response = await _client.SendAsync(request);

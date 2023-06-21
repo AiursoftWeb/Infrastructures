@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
-
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
@@ -14,11 +15,11 @@ namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 public class PushMessageService : IScopedDependency
 {
-    private readonly AiurProtocolClient  _httpService;
+    private readonly AiurProtocolClient _httpService;
     private readonly StargateConfiguration _stargateLocator;
 
     public PushMessageService(
-        AiurProtocolClient  httpService,
+        AiurProtocolClient httpService,
         IOptions<StargateConfiguration> serviceLocation)
     {
         _httpService = httpService;
@@ -39,13 +40,6 @@ public class PushMessageService : IScopedDependency
             ChannelId = channelId,
             MessageContent = payloadToken
         });
-        var result = await _httpService.Post(url, form, true);
-        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _httpService.Post<AiurResponse>(url, form);
     }
 }

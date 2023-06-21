@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace Aiursoft.SDK.Middlewares;
 
+// TODO: This might not be working now!
 public class ProductionExceptionPageMiddleware
 {
     private readonly ServiceLocation _serviceLocation;
@@ -46,7 +47,7 @@ public class ProductionExceptionPageMiddleware
                 var projectName = Assembly.GetEntryAssembly()?.GetName().Name;
                 var message = JsonConvert.SerializeObject(new AiurResponse
                 {
-                    Code = ErrorType.UnknownError,
+                    Code = Code.UnknownError,
                     Message = $"{projectName} server was crashed! Sorry about that."
                 });
                 await context.Response.WriteAsync(message, Encoding.UTF8);

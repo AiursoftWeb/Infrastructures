@@ -1,26 +1,24 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 
 public class RecordsService : IScopedDependency
 {
-    private readonly AiurProtocolClient  _http;
+    private readonly AiurProtocolClient _http;
     private readonly WarpgateConfiguration _serviceLocation;
 
     public RecordsService(
-        AiurProtocolClient  http,
+        AiurProtocolClient http,
         IOptions<WarpgateConfiguration> serviceLocation)
     {
         _http = http;
@@ -45,14 +43,7 @@ public class RecordsService : IScopedDependency
             Enabled = enabled,
             Tags = string.Join(',', tags.Select(t => t.Trim()))
         });
-        return await _http.Post<aaaaaaaa>(url, form);
-        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
     public async Task<ViewMyRecordsViewModel> ViewMyRecordsAsync(string accessToken, string tag = null)
@@ -62,14 +53,7 @@ public class RecordsService : IScopedDependency
             AccessToken = accessToken,
             Tag = tag
         });
-        return await _http.Get<bbbbbbbbbbb>(url);
-        var jResult = JsonConvert.DeserializeObject<ViewMyRecordsViewModel>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Get<ViewMyRecordsViewModel>(url);
     }
 
     public async Task<AiurResponse> UpdateRecordInfoAsync(
@@ -92,14 +76,7 @@ public class RecordsService : IScopedDependency
             Enabled = enabled,
             Tags = string.Join(',', tags.Select(t => t.Trim()))
         });
-        return await _http.Post<aaaaaaaa>(url, form);
-        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
     public async Task<AiurResponse> DeleteRecordAsync(string accessToken, string recordName)
@@ -110,14 +87,7 @@ public class RecordsService : IScopedDependency
             AccessToken = accessToken,
             RecordName = recordName
         });
-        return await _http.Post<aaaaaaaa>(url, form);
-        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 
     public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
@@ -128,13 +98,6 @@ public class RecordsService : IScopedDependency
             AccessToken = accessToken,
             AppId = appId
         });
-        return await _http.Post<aaaaaaaa>(url, form);
-        var jResult = JsonConvert.DeserializeObject<AiurResponse>(result);
-        if (jResult.Code != ErrorType.Success)
-        {
-            throw new AiurUnexpectedResponse(jResult);
-        }
-
-        return jResult;
+        return await _http.Post<AiurResponse>(url, form);
     }
 }

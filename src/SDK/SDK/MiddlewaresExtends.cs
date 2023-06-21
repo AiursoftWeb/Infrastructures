@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
@@ -104,12 +104,12 @@ public static class MiddlewaresExtends
             options.Format = DocFormat.Json;
             options.GlobalPossibleResponse.Add(new AiurResponse
             {
-                Code = ErrorType.WrongKey,
+                Code = Code.WrongKey,
                 Message = "Some error."
             });
             options.GlobalPossibleResponse.Add(new AiurCollection<string>(new List<string> { "Some item is invalid!" })
             {
-                Code = ErrorType.InvalidInput,
+                Code = Code.InvalidInput,
                 Message = "Your input contains several errors!"
             });
         });

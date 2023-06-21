@@ -2,10 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
-
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -19,11 +17,11 @@ public class GitHubService : IAuthProvider
     private readonly HttpClient _client;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly AiurProtocolClient  _http;
+    private readonly HttpService _http;
     private readonly DirectoryConfiguration _serviceLocation;
 
     public GitHubService(
-        AiurProtocolClient  http,
+        HttpService  http,
         IHttpClientFactory clientFactory,
         IConfiguration configuration,
         IOptions<DirectoryConfiguration> serviceLocation,
@@ -76,14 +74,14 @@ public class GitHubService : IAuthProvider
         }).ToString();
     }
 
-    public string GetSignInRedirectLink(AiurUrl state)
+    public string GetSignInRedirectLink(string state)
     {
         return new AiurApiEndpoint("https://github.com", "/login/oauth/authorize", new GitHubAuthAddressModel
         {
             ClientId = _clientId,
             RedirectUri =
                 new AiurApiEndpoint(_serviceLocation.Instance, $"/third-party/sign-in/{GetName()}", new { }).ToString(),
-            State = state.ToString()
+            State = state
         }).ToString();
     }
 
@@ -101,12 +99,12 @@ public class GitHubService : IAuthProvider
             ClientId = clientId,
             ClientSecret = clientSecret,
             Code = code
-        });
+        }).ToString();
         var json = await _http.Get(url);
         var response = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
         if (string.IsNullOrWhiteSpace(response.AccessToken))
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "Invalid github crenditial");
+            throw new InvalidOperationException("Invalid github credential");
         }
 
         return response.AccessToken;
