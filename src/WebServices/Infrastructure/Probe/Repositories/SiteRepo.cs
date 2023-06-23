@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.DBTools;
-
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
@@ -31,12 +31,12 @@ public class SiteRepo : IScopedDependency
         var site = await GetSiteByName(siteName);
         if (site == null)
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a site with name: '{siteName}'");
+            throw new AiurServerException(Code.NotFound, $"Could not find a site with name: '{siteName}'");
         }
 
         if (site.AppId != appid)
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized,
+            throw new AiurServerException(Code.Unauthorized,
                 "The site you tried to access is not your app's site.");
         }
 

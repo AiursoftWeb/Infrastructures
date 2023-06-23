@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Portal.Models;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Attributes;
+
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.XelNaga.Models;
@@ -47,7 +47,6 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out");
-        return this.SignOutRootServer(_directoryLocator.Instance,
-            new ApiPayload( "Home", nameof(Index), new { }));
+        return this.SignOutRootServer(_directoryLocator.Instance, $"Home/{nameof(Index)}");
     }
 }

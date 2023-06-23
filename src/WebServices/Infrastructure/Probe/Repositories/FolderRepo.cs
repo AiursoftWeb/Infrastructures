@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.DBTools;
-
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
@@ -18,7 +18,7 @@ public class FolderRepo : IScopedDependency
     private readonly FileRepo _fileRepo;
     private readonly IStorageProvider _storageProvider;
     private readonly AiursoftAppTokenValidator _tokenManager;
-    private readonly FolderLockDictionary lockDictionary;
+    private readonly FolderLockDictionary _lockDictionary;
 
     public FolderRepo(
         ProbeDbContext probeDbContext,
@@ -31,7 +31,7 @@ public class FolderRepo : IScopedDependency
         _fileRepo = fileRepo;
         _storageProvider = storageProvider;
         _tokenManager = tokenManager;
-        this.lockDictionary = lockDictionary;
+        _lockDictionary = lockDictionary;
     }
 
     private async Task<Folder> GetSubFolder(int rootFolderId, string subFolderName)
@@ -58,12 +58,12 @@ public class FolderRepo : IScopedDependency
             .SingleOrDefaultAsync(t => t.SiteName.ToLower() == siteName.ToLower());
         if (site == null)
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, "Not found target site!");
+            throw new AiurServerException(Code.NotFound, "Not found target site!");
         }
 
         if (site.AppId != appid)
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized, "The target folder is not your app's folder!");
+            throw new AiurServerException(Code.Unauthorized, "The target folder is not your app's folder!");
         }
 
         var rootFolder = await GetFolderFromId(site.RootFolderId);
@@ -72,7 +72,7 @@ public class FolderRepo : IScopedDependency
 
     public async Task CreateNewFolder(int contextId, string name)
     {
-        var folderLock = lockDictionary.GetLock(contextId);
+        var folderLock = _lockDictionary.GetLock(contextId);
         await folderLock.WaitAsync();
         try
         {
@@ -182,7 +182,7 @@ public class FolderRepo : IScopedDependency
 
     public async Task DeleteFolder(int folderId, bool saveChanges = true)
     {
-        var folderLock = lockDictionary.GetLock(folderId);
+        var folderLock = _lockDictionary.GetLock(folderId);
         await folderLock.WaitAsync();
         try
         {

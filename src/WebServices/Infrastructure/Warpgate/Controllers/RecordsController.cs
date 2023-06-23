@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
-using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Warpgate.Controllers;
-
 
 [ApiExceptionHandler]
 [ApiModelStateChecker]
@@ -44,7 +43,7 @@ public class RecordsController : ControllerBase
         {
             AppId = appid,
             Records = records,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get all your records!"
         };
         return this.Protocol(viewModel);
@@ -93,6 +92,8 @@ public class RecordsController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        return this.Protocol(Code.HasSuccessAlready, "That app do not exists in our database.");
+        
+        // TODO: Use NoActioNeeded.
+        return this.Protocol(Code.NotFound, "That app do not exists in our database.");
     }
 }

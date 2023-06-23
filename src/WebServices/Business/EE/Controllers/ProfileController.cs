@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.ProfileViewModels;
-using Aiursoft.Handler.Attributes;
+
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.WebTools;
@@ -144,7 +146,7 @@ public class ProfileController : Controller
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow != null)
         {
-            return this.Protocol(Code.HasSuccessAlready, "You have already followed the target user!");
+            return this.Protocol(Code.Success, "You have already followed the target user!");
         }
 
         await _dbContext.Follows.AddAsync(new Follow
@@ -174,7 +176,7 @@ public class ProfileController : Controller
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow == null)
         {
-            return this.Protocol(Code.HasSuccessAlready,
+            return this.Protocol(Code.Conflict,
                 "You did not follow the target user and can not unFollow him!");
         }
 

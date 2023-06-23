@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models;
@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Warpgate.Controllers;
-
 
 [ApiExceptionHandler]
 [ApiModelStateChecker]
@@ -79,7 +78,7 @@ public class WarpController : Controller
             return StatusCode(StatusCodes.Status403Forbidden, new AiurResponse
             {
                 Message = "We can only proxy HTTP GET requests!",
-                Code = ErrorType.InvalidInput
+                Code = Code.InvalidInput
             });
         }
 

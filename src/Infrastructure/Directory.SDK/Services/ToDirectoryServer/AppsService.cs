@@ -35,7 +35,7 @@ public class AppsService : IScopedDependency
         _cache = cache;
     }
 
-    public Task<AiurResponse> IsValidAppAsync(string appId, string appSecret)
+    public virtual Task<AiurResponse> IsValidAppAsync(string appId, string appSecret)
     {
         return _cache.RunWithCache($"valid-app-with-appid-{appId}-secret-{appSecret}",
             async () =>

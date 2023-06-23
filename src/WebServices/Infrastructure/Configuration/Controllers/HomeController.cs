@@ -1,5 +1,5 @@
-﻿using Aiursoft.AiurProtocol.Models;
-using Aiursoft.WebTools;
+﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Configuration.Controllers;

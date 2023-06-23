@@ -1,4 +1,12 @@
-﻿@inject UserManager<PortalUser> UserManager
+﻿@using Aiursoft.AiurProtocol
+@using Aiursoft.SDK.Views.Shared.Components.AiurHeader
+@using Aiursoft.SDK.Views.Shared.Components.ScrollToTop
+@using Aiursoft.SDK.Views.Shared.Components.AiurDashboardCSS
+@using Aiursoft.SDK.Views.Shared.Components.AiurDashboardJS
+@using Aiursoft.SDK.Views.Shared.Components.AiurFooter
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aiursoft.Identity.Views.Shared.Components.AiurLogout
+@inject UserManager<PortalUser> UserManager
 @{
     var user = await UserManager.GetUserAsync(User);
 }
@@ -127,7 +135,7 @@
                 </button>
                 <strong>@Localizer["Your account email was not confirmed!"]</strong>
                 <div>
-                    @Localizer["Please"] <a href="@(new AiurUrl(ServiceLocation.Account, "Account", "Email", new { }))">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]
+                    @Localizer["Please"] <a href="@(new AiurApiEndpoint(ServiceLocation.Account, "Account", "Email", new { }))">@Localizer["confirm your email"]</a> @Localizer["as soon as possible! Or you may lose access to your account in a few days!"]
                 </div>
                 <div>@Localizer["Without confirming your email, you won't receive any important notifications and cannot reset your password!"]</div>
             </div>

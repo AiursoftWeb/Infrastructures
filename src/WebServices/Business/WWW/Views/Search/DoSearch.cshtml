@@ -1,6 +1,10 @@
 ﻿@using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
 @using SearchResponse = Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models.SearchResponse
 @using System.Globalization
+@using Aiursoft.AiurProtocol
+@using Aiursoft.WWW.Views.Shared.Components.Entity
+@using Aiursoft.WWW.Views.Shared.Components.Related
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Microsoft.Azure.CognitiveServices.Search.WebSearch.Models.SearchResponse
 @{
     ViewData["Title"] = Model.QueryContext.OriginalQuery;

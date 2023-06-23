@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +22,8 @@ public class GitContentRenderer : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(string server, string org, string repo, string path)
     {
         var markdownUrl = $"https://{server}/{org}/{repo}/-/raw/master/{path}";
-        var markdown = await _cache.RunWithCache($"gitcontent.{org}.{repo}.{path}.cache",
-            async () => await _http.Get(new AiurApiEndpoint(markdownUrl)));
+        var markdown = await _cache.RunWithCache($"git-content-{org}-{repo}-{path}-cache",
+            async () => await _http.Get(markdownUrl));
         var pipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .Build();

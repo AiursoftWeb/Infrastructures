@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +52,7 @@ public class MessageController : ControllerBase
         channel.Push(message);
         return this.Protocol(new AiurResponse
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = $"You have successfully pushed a new message to channel: {channel.Id}!"
         });
     }

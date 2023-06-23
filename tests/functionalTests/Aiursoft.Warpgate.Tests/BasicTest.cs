@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
@@ -52,7 +51,6 @@ public class BasicTests
     [TestCleanup]
     public async Task CleanServer()
     {
-        LimitPerMin.ClearMemory();
         if (_server != null)
         {
             await _server.StopAsync();
@@ -69,7 +67,7 @@ public class BasicTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(contentObject.Code, ErrorType.Success);
+        Assert.AreEqual(Code.Success, contentObject.Code);
     }
 
     [TestMethod]
@@ -81,14 +79,14 @@ public class BasicTests
             await records.ViewMyRecordsAsync(string.Empty);
             Assert.Fail("Empty request should not success.");
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.AreEqual(e.Code, ErrorType.InvalidInput);
+            Assert.AreEqual(Code.InvalidInput, e.Response.Code);
         }
     }
 
     [TestMethod]
-    public async Task ViewEmptyRecordssTest()
+    public async Task ViewEmptyRecordsTest()
     {
         var records = _serviceProvider.GetRequiredService<RecordsService>();
         var recordsItems = await records.ViewMyRecordsAsync("mock-access-token");
@@ -101,7 +99,7 @@ public class BasicTests
         var recordsService = _serviceProvider.GetRequiredService<RecordsService>();
         var created = await recordsService.CreateNewRecordAsync("mock-access-token", "stack",
             "https://stackoverflow.com", Array.Empty<string>(), RecordType.Redirect, true);
-        Assert.AreEqual(created.Code, ErrorType.Success);
+        Assert.AreEqual(Code.Success, created.Code);
         var records = await recordsService.ViewMyRecordsAsync("mock-access-token");
         Assert.AreEqual(records.Records.Single().RecordUniqueName, "stack");
     }

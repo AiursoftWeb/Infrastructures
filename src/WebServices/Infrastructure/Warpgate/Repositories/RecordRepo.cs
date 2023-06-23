@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.DBTools;
 
 using Aiursoft.AiurProtocol.Models;
@@ -14,7 +15,7 @@ namespace Aiursoft.Warpgate.Repositories;
 
 public class RecordRepo : IScopedDependency
 {
-    private static readonly SemaphoreSlim _createRecordLock = new(1, 1);
+    private static readonly SemaphoreSlim CreateRecordLock = new(1, 1);
     private readonly WarpgateDbContext _dbContext;
     private readonly DbSet<WarpRecord> _table;
 
@@ -43,7 +44,7 @@ public class RecordRepo : IScopedDependency
     public async Task<WarpRecord> CreateRecord(string newRecordName, RecordType type, string appid, string targetUrl,
         bool enabled, string tags)
     {
-        await _createRecordLock.WaitAsync();
+        await CreateRecordLock.WaitAsync();
         try
         {
             await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
@@ -62,7 +63,7 @@ public class RecordRepo : IScopedDependency
         }
         finally
         {
-            _createRecordLock.Release();
+            CreateRecordLock.Release();
         }
     }
 
@@ -85,12 +86,12 @@ public class RecordRepo : IScopedDependency
         var record = await GetRecordByName(recordName);
         if (record == null)
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, $"Could not find a record with name: '{recordName}'");
+            throw new AiurServerException(Code.NotFound, $"Could not find a record with name: '{recordName}'");
         }
 
         if (record.AppId != appid)
         {
-            throw new AiurAPIModelException(ErrorType.Unauthorized,
+            throw new AiurServerException(Code.Unauthorized,
                 "The record you tried to access is not your app's record.");
         }
 

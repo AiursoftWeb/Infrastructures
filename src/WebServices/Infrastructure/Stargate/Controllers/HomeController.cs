@@ -1,9 +1,9 @@
-﻿using Aiursoft.Handler.Attributes;
+﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.HomeViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +32,7 @@ public class HomeController : Controller
             CurrentId = _counter.GetCurrent,
             TotalMemoryMessages = messages,
             Channels = channels,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Welcome to Aiursoft Stargate server!"
         });
     }

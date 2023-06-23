@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 using Aiursoft.Account.Models;
 using Aiursoft.Account.Models.AccountViewModels;
 using Aiursoft.Account.Services;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.AiurProtocol.Models;
+using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
-using Aiursoft.WebTools;
 using Aiursoft.WebTools.Data;
 using Aiursoft.WebTools.Services;
 using Microsoft.AspNetCore.Identity;
@@ -123,7 +126,7 @@ public class AccountController : Controller
         {
             await _userService.BindNewEmailAsync(user.Id, model.NewEmail, token);
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
             ModelState.AddModelError(string.Empty, e.Message);
             model.Recover(user);
@@ -225,7 +228,7 @@ public class AccountController : Controller
                 model.OldPassword, model.NewPassword);
             return RedirectToAction(nameof(Security), new { JustHaveUpdated = true });
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
             ModelState.AddModelError(string.Empty, e.Message);
             model.Recover(currentUser);
@@ -300,7 +303,7 @@ public class AccountController : Controller
         {
             var result = await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(),
                 model.NewPhoneNumber);
-            if (result.Code != ErrorType.Success)
+            if (result.Code != Code.Success)
             {
                 throw new InvalidOperationException();
             }
@@ -322,7 +325,7 @@ public class AccountController : Controller
         var user = await GetCurrentUserAsync();
         var result =
             await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(), string.Empty);
-        if (result.Code != ErrorType.Success)
+        if (result.Code != Code.Success)
         {
             throw new InvalidOperationException();
         }
@@ -341,7 +344,7 @@ public class AccountController : Controller
             Grants = (await _userService.ViewGrantedAppsAsync(token, user.Id)).Items
         };
         var appsBag = new ConcurrentBag<DirectoryApp>();
-        foreach (var grant in model.Grants)
+        foreach (var grant in model.Grants ?? Array.Empty<Grant>())
         {
             _canonPool.RegisterNewTaskToPool(async () =>
             {
@@ -350,7 +353,7 @@ public class AccountController : Controller
                     var appInfo = await _appsService.AppInfoAsync(grant.AppId);
                     appsBag.Add(appInfo.App);
                 }
-                catch (AiurUnexpectedResponse e) when (e.Code == ErrorType.NotFound) { }
+                catch (AiurUnexpectedServerResponseException e) when (e.Response.Code == Code.NotFound) { }
             });
         }
         await _canonPool.RunAllTasksInPoolAsync();
@@ -384,7 +387,7 @@ public class AccountController : Controller
         {
             Logs = logs
         };
-        foreach (var id in model.Logs.Items.Select(t => t.AppId).Distinct())
+        foreach (var id in model.Logs.Items?.Select(t => t.AppId).Distinct() ?? Array.Empty<string>())
         {
             _canonPool.RegisterNewTaskToPool(async () =>
             {
@@ -399,12 +402,12 @@ public class AccountController : Controller
     public async Task<IActionResult> TwoFactorAuthentication()
     {
         var user = await GetCurrentUserAsync();
-        var has2FAKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync());
+        var has2FaKey = await _userService.ViewHas2FAKeyAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync());
         var twoFactorEnabled =
             await _userService.ViewTwoFactorEnabledAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync());
         var model = new TwoFactorAuthenticationViewModel(user)
         {
-            NewHas2FAKey = has2FAKey.Value,
+            NewHas2FAKey = has2FaKey.Value,
             NewTwoFactorEnabled = twoFactorEnabled.Value
         };
         return View(model);
@@ -487,7 +490,7 @@ public class AccountController : Controller
     {
         var user = await GetCurrentUserAsync();
         var newCodesKey = await _userService.GetRecoveryCodesAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync());
-        model.NewRecoveryCodesKey = newCodesKey.Items;
+        model.NewRecoveryCodesKey = newCodesKey.Items?.ToList();
         model.RootRecover(user, "Two-factor Authentication");
         return View(model);
     }
@@ -498,7 +501,7 @@ public class AccountController : Controller
         var token = await _directoryAppTokenService.GetAccessTokenAsync();
         var model = new SocialViewModel(user)
         {
-            Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items,
+            Accounts = (await _userService.ViewSocialAccountsAsync(token, user.Id)).Items?.ToList(),
             Providers = _authProviders
         };
         return View(model);

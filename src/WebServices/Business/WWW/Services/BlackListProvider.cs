@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.WWW.Services;
 
@@ -36,7 +35,7 @@ public class BlackListProvider : IScopedDependency
         {
             return _retryEngine.RunWithRetry(async _ =>
             {
-                var list = await _httpService.Get(new AiurApiEndpoint(_address));
+                var list = await _httpService.Get(_address);
                 return list
                     .Split('\n')
                     .Where(t => !string.IsNullOrWhiteSpace(t))

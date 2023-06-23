@@ -1,4 +1,5 @@
-﻿using Aiursoft.Handler.Attributes;
+﻿
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Warpgate.Models.Configuration;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
@@ -23,7 +24,7 @@ public class HomeController : ControllerBase
     {
         var model = new WarpgatePatternConfig
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Welcome to Aiursoft Warpgate!",
             WarpPattern = _locator.RedirectPattern
         };

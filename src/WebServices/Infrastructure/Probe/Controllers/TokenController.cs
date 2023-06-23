@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Attributes;
+
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
@@ -12,23 +14,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Controllers;
 
-
 [ApiExceptionHandler]
 [ApiModelStateChecker]
 public class TokenController : ControllerBase
 {
     private readonly ProbeDbContext _dbContext;
-    private readonly PBTokenManager _pbTokenManager;
+    private readonly ProbeTokenManager _probeTokenManager;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public TokenController(
         AiursoftAppTokenValidator tokenManager,
         ProbeDbContext dbContext,
-        PBTokenManager pbTokenManager)
+        ProbeTokenManager probeTokenManager)
     {
         _tokenManager = tokenManager;
         _dbContext = dbContext;
-        _pbTokenManager = pbTokenManager;
+        _probeTokenManager = probeTokenManager;
     }
 
     [HttpPost]
@@ -50,11 +51,11 @@ public class TokenController : ControllerBase
                 $"The site '{model.SiteName}' you tried to get a PBToken is not your app's site.");
         }
 
-        var (pbToken, deadline) = _pbTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions,
+        var (pbToken, deadline) = _probeTokenManager.GenerateAccessToken(site.SiteName, model.UnderPath, model.Permissions,
             TimeSpan.FromSeconds(model.LifespanSeconds));
         return this.Protocol(new AiurValue<string>(pbToken)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = $"Successfully get your PBToken! Use it before {deadline} UTC!"
         });
     }

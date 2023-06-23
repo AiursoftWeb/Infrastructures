@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
 
@@ -9,18 +9,18 @@ namespace Aiursoft.Probe.Services;
 
 public class FolderSplitter : IScopedDependency
 {
-    private readonly string[] InvalidStrings = { "+" };
+    private readonly string[] _invalidStrings = { "+" };
 
     public string[] SplitToFolders(string folderNames)
     {
-        return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+        return folderNames?.Split('/', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
     }
 
     public (string[] folders, string fileName) SplitToFoldersAndFile(string folderNames)
     {
-        if (folderNames == null || folderNames.Length == 0)
+        if (string.IsNullOrEmpty(folderNames))
         {
-            throw new AiurAPIModelException(ErrorType.NotFound, "The root folder isn't a file!");
+            throw new AiurServerException(Code.NotFound, "The root folder isn't a file!");
         }
 
         var foldersWithFileName = SplitToFolders(folderNames);
@@ -38,7 +38,7 @@ public class FolderSplitter : IScopedDependency
         }
 
         expectedFileName = expectedFileName.ToLower();
-        foreach (var invalidChar in InvalidStrings)
+        foreach (var invalidChar in _invalidStrings)
         {
             expectedFileName = expectedFileName.Replace(invalidChar, string.Empty);
         }

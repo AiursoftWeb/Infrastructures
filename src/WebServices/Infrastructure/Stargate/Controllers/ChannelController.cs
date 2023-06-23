@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -58,7 +58,7 @@ public class ChannelController : ControllerBase
         {
             AppId = appid,
             Channels = channels,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get your channels!"
         };
         return this.Protocol(viewModel);
@@ -72,7 +72,7 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.NotFound,
+                Code = Code.NotFound,
                 Message = "Can not find your channel!"
             });
         }
@@ -81,7 +81,7 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.Gone,
+                Code = Code.Gone,
                 Message = "Your channel is out dated and about to be deleted!"
             });
         }
@@ -90,14 +90,14 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.Unauthorized,
+                Code = Code.Unauthorized,
                 Message = "Wrong connection key!"
             });
         }
 
         return this.Protocol(new AiurValue<string>(channel.AppId)
         {
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
         });
     }
@@ -126,7 +126,7 @@ public class ChannelController : ControllerBase
         {
             ChannelId = channelId,
             ConnectKey = key,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully created your channel!"
         };
         return this.Protocol(viewModel);
@@ -141,14 +141,14 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.Unauthorized, Message = "The channel you try to delete is not your app's channel!"
+                Code = Code.Unauthorized, Message = "The channel you try to delete is not your app's channel!"
             });
         }
 
         _stargateMemory.DeleteChannel(channel.Id);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurResponse
-            { Code = ErrorType.Success, Message = "Successfully deleted your channel!" });
+            { Code = Code.Success, Message = "Successfully deleted your channel!" });
     }
 
     /// <summary>
@@ -164,21 +164,23 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.Unauthorized, Message = "The app you try to delete is not the access token you granted!"
+                Code = Code.Unauthorized, Message = "The app you try to delete is not the access token you granted!"
             });
         }
 
         var target = await _dbContext.Apps.FindAsync(appid);
         if (target == null)
         {
+            
+            // No Action needed.
             return this.Protocol(new AiurResponse
-                { Code = ErrorType.HasSuccessAlready, Message = "That app do not exists in our database." });
+                { Code = Code.NotFound, Message = "That app do not exists in our database." });
         }
 
         _stargateMemory.DeleteChannels(_stargateMemory.GetChannelsUnderApp(appid).Select(t => t.Id));
         _dbContext.Apps.Remove(target);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurResponse
-            { Code = ErrorType.Success, Message = "Successfully deleted that app and all channels." });
+            { Code = Code.Success, Message = "Successfully deleted that app and all channels." });
     }
 }

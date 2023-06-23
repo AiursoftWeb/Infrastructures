@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
@@ -50,7 +49,6 @@ public class EventTests
     [TestCleanup]
     public async Task CleanServer()
     {
-        LimitPerMin.ClearMemory();
         if (_server != null)
         {
             await _server.StopAsync();
@@ -67,7 +65,7 @@ public class EventTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(contentObject.Code, ErrorType.Success);
+        Assert.AreEqual(contentObject.Code, Code.Success);
     }
 
     [TestMethod]
@@ -79,9 +77,9 @@ public class EventTests
             await observer.ViewAsync(string.Empty);
             Assert.Fail("Empty request should not success.");
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.AreEqual(e.Code, ErrorType.InvalidInput);
+            Assert.AreEqual(e.Response.Code, Code.InvalidInput);
         }
     }
 
@@ -136,9 +134,9 @@ public class EventTests
             await observer.DeleteAppAsync("mock2-access-token", MockAcTokenValidator.MockAppId);
             Assert.Fail("Wrong access token should not success.");
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.AreEqual(ErrorType.Unauthorized, e.Code);
+            Assert.AreEqual(Code.Unauthorized, e.Response.Code);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.Directory.SDK.Services;
 
 using Aiursoft.AiurProtocol.Models;
@@ -8,8 +9,8 @@ namespace Aiursoft.SDK.Tests.Services;
 
 public class MockAcTokenValidator : AiursoftAppTokenValidator
 {
-    public static string MockAppId = Guid.NewGuid().ToString();
-    public static string Mock2AppId = Guid.NewGuid().ToString();
+    public static readonly string MockAppId = Guid.NewGuid().ToString();
+    public static readonly string Mock2AppId = Guid.NewGuid().ToString();
 
     public MockAcTokenValidator(AppTokenRsaService rsa) : base(rsa)
     {
@@ -27,7 +28,7 @@ public class MockAcTokenValidator : AiursoftAppTokenValidator
             return Task.FromResult(Mock2AppId);
         }
 
-        throw new AiurAPIModelException(ErrorType.Unauthorized,
+        throw new AiurServerException(Code.Unauthorized,
             "Mock token was not in a valid format and can not be verified!");
     }
 }

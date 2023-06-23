@@ -18,7 +18,9 @@ namespace Aiursoft.Identity;
 
 public static class Extends
 {
-    public static IActionResult SignOutRootServer(this Controller controller, string apiServerAddress,
+    public static IActionResult SignOutRootServer(
+        this Controller controller, 
+        string apiServerAddress,
         string viewingPath)
     {
         var request = controller.HttpContext.Request;

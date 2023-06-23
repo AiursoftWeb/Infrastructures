@@ -44,7 +44,7 @@ public class HomeController : Controller
     {
         await _signInManager.SignOutAsync();
         _logger.LogInformation(4, "User logged out");
-        return this.SignOutRootServer(_serviceLocation.Instance, "/home/index");
+        return this.SignOutRootServer(_serviceLocation.Instance, $"Home/{nameof(Index)}");
     }
 
     public async Task<IActionResult> Search(string word)

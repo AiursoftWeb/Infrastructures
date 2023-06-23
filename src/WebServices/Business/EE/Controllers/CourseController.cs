@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
-using Aiursoft.Handler.Attributes;
+
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
@@ -132,7 +134,7 @@ public class CourseController : Controller
 
         if (subscribed)
         {
-            return this.Protocol(Code.HasSuccessAlready, "This course you have already subscribed!");
+            return this.Protocol(Code.Conflict, "This course you have already subscribed!");
         }
 
         var newSubscription = new Subscription
@@ -166,7 +168,7 @@ public class CourseController : Controller
 
         if (sub == null)
         {
-            return this.Protocol(Code.HasSuccessAlready, "You did not subscribe this course!");
+            return this.Protocol(Code.Conflict, "You did not subscribe this course!");
         }
 
         _dbContext.Subscriptions.Remove(sub);

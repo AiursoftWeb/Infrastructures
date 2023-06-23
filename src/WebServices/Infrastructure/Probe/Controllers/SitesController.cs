@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
-using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Probe.Controllers;
-
 
 [ApiExceptionHandler]
 [ApiModelStateChecker]
@@ -47,7 +46,7 @@ public class SitesController : ControllerBase
         {
             AppId = appid,
             Sites = sites,
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get all your sites!"
         };
         return this.Protocol(viewModel);
@@ -63,7 +62,7 @@ public class SitesController : ControllerBase
             AppId = appid,
             Site = site,
             Size = await _folderRepo.GetFolderSize(site.RootFolderId),
-            Code = ErrorType.Success,
+            Code = Code.Success,
             Message = "Successfully get your site!"
         };
         return this.Protocol(viewModel);
@@ -110,6 +109,8 @@ public class SitesController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        return this.Protocol(Code.HasSuccessAlready, "That app do not exists in our database.");
+        
+        // TODO: Use NoActioNeeded for non exists apps.
+        return this.Protocol(Code.Conflict, "That app do not exists in our database.");
     }
 }

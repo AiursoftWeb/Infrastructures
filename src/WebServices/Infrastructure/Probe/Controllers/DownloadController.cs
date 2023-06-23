@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
@@ -105,7 +105,7 @@ public class DownloadController : Controller
 
             return this.WebFile(path, extension);
         }
-        catch (AiurAPIModelException e) when (e.Code == ErrorType.NotFound)
+        catch (AiurUnexpectedServerResponseException e) when (e.Response.Code == Code.NotFound)
         {
             return NotFound();
         }

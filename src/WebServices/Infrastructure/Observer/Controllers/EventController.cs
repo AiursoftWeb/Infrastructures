@@ -93,6 +93,8 @@ public class EventController : ControllerBase
 
         _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
+        
+        // TODO: Use NoActioNeeded for non exists apps.
         return this.Protocol(Code.Success, "App deleted.");
     }
 }

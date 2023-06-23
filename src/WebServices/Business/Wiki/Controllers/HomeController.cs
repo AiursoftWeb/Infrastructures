@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Tools;
 using Markdig;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +17,7 @@ namespace Aiursoft.Wiki.Controllers;
 public class HomeController : Controller
 {
     private readonly WikiDbContext _dbContext;
-    private readonly DirectoryConfiguration _serviceLocation;
+    private readonly DirectoryConfiguration _directoryLocator;
     private readonly SignInManager<WikiUser> _signInManager;
 
     public HomeController(
@@ -29,7 +27,7 @@ public class HomeController : Controller
     {
         _signInManager = signInManager;
         _dbContext = context;
-        _serviceLocation = serviceLocation.Value;
+        _directoryLocator = serviceLocation.Value;
     }
 
     public async Task<IActionResult> Index() //Title
@@ -94,8 +92,7 @@ public class HomeController : Controller
     public async Task<IActionResult> LogOff()
     {
         await _signInManager.SignOutAsync();
-        return this.SignOutRootServer(_serviceLocation.Instance,
-            new ApiPayload( "Home", nameof(Index), new { }));
+        return this.SignOutRootServer(_directoryLocator.Instance, $"Home/{nameof(Index)}");
     }
 
     public IActionResult Error()

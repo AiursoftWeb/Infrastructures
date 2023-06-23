@@ -5,8 +5,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Handler.Attributes;
-
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
@@ -60,7 +60,6 @@ public class BasicTests
     [TestCleanup]
     public async Task CleanServer()
     {
-        LimitPerMin.ClearMemory();
         if (_server != null)
         {
             await _server.StopAsync();
@@ -77,7 +76,7 @@ public class BasicTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(contentObject.Code, ErrorType.Success);
+        Assert.AreEqual(Code.Success,contentObject.Code);
     }
 
     [TestMethod]
@@ -89,9 +88,9 @@ public class BasicTests
             await channel.ViewMyChannelsAsync(string.Empty);
             Assert.Fail("Empty request should not success.");
         }
-        catch (AiurUnexpectedResponse e)
+        catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.AreEqual(e.Code, ErrorType.InvalidInput);
+            Assert.AreEqual(e.Response.Code, Code.InvalidInput);
         }
     }
 

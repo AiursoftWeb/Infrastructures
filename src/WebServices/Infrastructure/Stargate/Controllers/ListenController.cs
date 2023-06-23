@@ -1,21 +1,20 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.Services;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Stargate.Controllers;
-
 
 [ApiExceptionHandler]
 [ApiModelStateChecker]
@@ -58,7 +57,7 @@ public class ListenController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = ErrorType.Unauthorized,
+                Code = Code.Unauthorized,
                 Message = "Wrong connection key!"
             });
         }
@@ -110,6 +109,6 @@ public class ListenController : ControllerBase
             await _pusher.Close();
         }
 
-        return this.Protocol(new AiurResponse { Code = ErrorType.UnknownError, Message = "You shouldn't be here." });
+        return this.Protocol(new AiurResponse { Code = Code.UnknownError, Message = "You shouldn't be here." });
     }
 }

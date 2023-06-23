@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Configuration;
-using Aiursoft.Handler.Attributes;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.WWW.Models;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,7 +14,7 @@ namespace Aiursoft.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger _logger;
-    private readonly DirectoryConfiguration _serviceLocation;
+    private readonly DirectoryConfiguration _directoryLocator;
     private readonly SignInManager<WWWUser> _signInManager;
 
     public HomeController(
@@ -26,7 +24,7 @@ public class HomeController : Controller
     {
         _signInManager = signInManager;
         _logger = loggerFactory.CreateLogger<HomeController>();
-        _serviceLocation = serviceLocation.Value;
+        _directoryLocator = serviceLocation.Value;
     }
 
     [AiurForceAuth("", "", true)]
@@ -39,8 +37,7 @@ public class HomeController : Controller
     public async Task<IActionResult> LogOff()
     {
         await _signInManager.SignOutAsync();
-        _logger.LogInformation("An user logged out");
-        return this.SignOutRootServer(_serviceLocation.Instance,
-            new ApiPayload( "Home", nameof(Index), new { }));
+        _logger.LogInformation(4, "User logged out");
+        return this.SignOutRootServer(_directoryLocator.Instance, $"Home/{nameof(Index)}");
     }
 }

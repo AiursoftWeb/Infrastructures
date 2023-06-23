@@ -16,8 +16,8 @@ public class AiurForceWebSocket : ActionFilterAttribute
 
         var arg = new AiurResponse
         {
-            Code = ErrorType.InvalidInput,
-            Message = "Wrong protocal!"
+            Code = Code.InvalidInput,
+            Message = "Wrong protocol! Please connect with Websocket instead of HTTP!"
         };
         context.Result = new JsonResult(arg);
     }
