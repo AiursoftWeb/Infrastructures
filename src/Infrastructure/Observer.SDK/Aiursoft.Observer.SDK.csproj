@@ -11,6 +11,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Abstracts\SDKTools\Aiursoft.SDKTools.csproj" />
 		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
 	</ItemGroup>
 
 </Project>

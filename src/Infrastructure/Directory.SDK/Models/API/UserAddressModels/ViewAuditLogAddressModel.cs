@@ -1,19 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.AiurProtocol.Interfaces;
+using Aiursoft.Directory.SDK.Attributes;
 
 namespace Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 
-public class ViewAuditLogAddressModel : UserOperationAddressModel, IPager
+public class ViewAuditLogAddressModel : Pager
 {
-    /// <summary>
-    ///     Default is 10
-    /// </summary>
-    [Range(1, 100)]
-    public int PageSize { get; set; } = 10;
+    [Required] [IsAccessToken] public string AccessToken { get; set; }
 
-    /// <summary>
-    ///     Starts from 0.
-    /// </summary>
-    [Range(1, int.MaxValue)]
-    public int PageNumber { get; set; } = 1;
+    [Required] public string OpenId { get; set; }
 }

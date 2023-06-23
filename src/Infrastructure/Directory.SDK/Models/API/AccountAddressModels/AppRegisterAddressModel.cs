@@ -1,11 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Aiursoft.Directory.SDK.Attributes;
 using Aiursoft.SDKTools.Attributes;
 
 namespace Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 
 public class AppRegisterAddressModel
 {
-    [Required] public string AccessToken { get; set; }
+    [Required] 
+    [IsAccessToken]
+    public string AccessToken { get; set; }
 
     [Required]
     [EmailAddress]

@@ -5,6 +5,7 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels;
 
 public class CopyFileAddressModel
 {
+    // TODO: Unify directory token.
     [Required] public string AccessToken { get; set; }
 
     [Required] [FromRoute] public string SiteName { get; set; }
