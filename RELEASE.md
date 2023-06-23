@@ -91,3 +91,9 @@ services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 - AddTaskCanon() no longer needs to be called manually.
 - A new empty project called Portal has been added.
 - Various performance improvements and logging/lint fixes have been made.
+
+## Version 6.0.23
+
+- Use AiurProtocol instead of Aiursoft.Handler
+- EnsureUniqueString method will return if conflict instead of generating an exception.
+- Using new grammar of response code instead of the original error type.
