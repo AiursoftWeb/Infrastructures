@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.SDKTools.Attributes;
 using Aiursoft.XelNaga.Tools;
@@ -20,6 +18,11 @@ public class IsAccessToken : TestableValidationAttribute
                 return false;
             }
 
+            if (EntryExtends.IsInUT())
+            {
+                return true;
+            }
+            
             if (!val.Contains('.'))
             {
                 return false;
@@ -32,6 +35,11 @@ public class IsAccessToken : TestableValidationAttribute
             }
 
             string tokenBase64 = tokenParts[0], tokenSign = tokenParts[1];
+            if (string.IsNullOrWhiteSpace(tokenSign))
+            {
+                return false;
+            }
+            
             var token = JsonConvert.DeserializeObject<AppToken>(tokenBase64.Base64ToString());
             return DateTime.UtcNow <= token.Expires;
         }
