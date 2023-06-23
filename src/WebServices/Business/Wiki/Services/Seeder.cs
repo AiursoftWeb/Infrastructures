@@ -123,7 +123,7 @@ public class Seeder : ITransientDependency
                         var newArticle = new Article
                         {
                             ArticleTitle = article.ArticleTitle,
-                            ArticleContent = await _http.Get($"{_configuration["ResourcesUrl"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"),
+                            ArticleContent = await _http.Get($"{_configuration["ResourcesPath"]}{collection.CollectionTitle}/{article.ArticleTitle}.md"),
                             CollectionId = newCollection.CollectionId
                         };
                         await _dbContext.Article.AddAsync(newArticle);
