@@ -109,8 +109,6 @@ public class SitesController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        
-        // TODO: Use NoActioNeeded for non exists apps.
-        return this.Protocol(Code.Conflict, "That app do not exists in our database.");
+        return this.Protocol(Code.Success, $"That app with ID: {app.AppId} was successfully deleted!");
     }
 }

@@ -46,7 +46,7 @@ public class ChannelService : IScopedDependency
     public async Task<CreateChannelViewModel> CreateChannelAsync(string accessToken, string description)
     {
         var url = new AiurApiEndpoint(_stargateLocator.Instance, "Channel", "CreateChannel", new { });
-        var form = new ApiPayload( new CreateChannelAddressModel
+        var form = new AiurApiPayload( new CreateChannelAddressModel
         {
             AccessToken = accessToken,
             Description = description

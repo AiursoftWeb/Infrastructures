@@ -100,7 +100,7 @@ public class FaceBookService : IAuthProvider
     {
         var apiAddress = "https://graph.facebook.com/v5.0/oauth/access_token?";
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new ApiPayload(new FaceBookAccessTokenAddressModel
+        var form = new AiurApiPayload(new FaceBookAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,

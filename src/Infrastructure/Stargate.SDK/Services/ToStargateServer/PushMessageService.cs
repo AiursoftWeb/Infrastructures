@@ -32,7 +32,7 @@ public class PushMessageService : IScopedDependency
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         });
-        var form = new ApiPayload( new PushMessageAddressModel
+        var form = new AiurApiPayload( new PushMessageAddressModel
         {
             AccessToken = accessToken,
             ChannelId = channelId,

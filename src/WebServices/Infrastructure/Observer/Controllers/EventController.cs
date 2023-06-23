@@ -66,7 +66,7 @@ public class EventController : ControllerBase
             .Select(t => new LogCollection
             {
                 Message = t.Key,
-                First = t.OrderByDescending(p => p.LogTime).FirstOrDefault(),
+                First = t.MaxBy(p => p.LogTime),
                 Count = t.Count()
             })
             .ToList();
@@ -93,7 +93,6 @@ public class EventController : ControllerBase
         _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
         
-        // TODO: Use NoActioNeeded for non exists apps.
         return this.Protocol(Code.Success, "App deleted.");
     }
 }

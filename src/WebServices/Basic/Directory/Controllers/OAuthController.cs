@@ -145,13 +145,12 @@ public class OAuthController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            // TODO: Use AiurRelativePath
-            return Redirect(new AiurApiEndpoint(string.Empty, $"/oauth/{nameof(SecondAuth)}", new FinishAuthInfo
+            return this.Protocol(new AiurRelativePath("OAuth", nameof(SecondAuth), new
             {
-                AppId = model.AppId,
-                RedirectUri = model.RedirectUri,
-                State = model.State
-            }).ToString());
+                model.AppId,
+                model.RedirectUri,
+                model.State
+            }));
         }
 
         ModelState.AddModelError(string.Empty,

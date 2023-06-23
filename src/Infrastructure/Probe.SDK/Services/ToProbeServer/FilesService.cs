@@ -37,7 +37,7 @@ public class FilesService : IScopedDependency
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new ApiPayload(new DeleteFileAddressModel
+        var form = new AiurApiPayload(new DeleteFileAddressModel
         {
             AccessToken = accessToken
         });
@@ -54,7 +54,7 @@ public class FilesService : IScopedDependency
 
         var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new ApiPayload(new CopyFileAddressModel
+        var form = new AiurApiPayload(new CopyFileAddressModel
         {
             AccessToken = accessToken,
             TargetSiteName = targetSiteName,
@@ -68,7 +68,7 @@ public class FilesService : IScopedDependency
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance,
             $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new ApiPayload(new RenameFileAddressModel
+        var form = new AiurApiPayload(new RenameFileAddressModel
         {
             AccessToken = accessToken,
             TargetFileName = targetFileName

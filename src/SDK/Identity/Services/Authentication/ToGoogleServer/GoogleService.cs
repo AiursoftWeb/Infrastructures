@@ -100,7 +100,7 @@ public class GoogleService : IAuthProvider
     {
         var apiAddress = "https://oauth2.googleapis.com/token";
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new ApiPayload( new GoogleAccessTokenAddressModel
+        var form = new AiurApiPayload( new GoogleAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,

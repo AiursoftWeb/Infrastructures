@@ -27,7 +27,7 @@ public class SitesService : IScopedDependency
         bool openToDownload)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "CreateNewSite", new { });
-        var form = new ApiPayload( new CreateNewSiteAddressModel
+        var form = new AiurApiPayload( new CreateNewSiteAddressModel
         {
             AccessToken = accessToken,
             NewSiteName = newSiteName,
@@ -60,7 +60,7 @@ public class SitesService : IScopedDependency
         bool openToUpload, bool openToDownload)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "UpdateSiteInfo", new { });
-        var form = new ApiPayload( new UpdateSiteInfoAddressModel
+        var form = new AiurApiPayload( new UpdateSiteInfoAddressModel
         {
             AccessToken = accessToken,
             OldSiteName = oldSiteName,
@@ -74,7 +74,7 @@ public class SitesService : IScopedDependency
     public async Task<AiurResponse> DeleteSiteAsync(string accessToken, string siteName)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "DeleteSite", new { });
-        var form = new ApiPayload( new DeleteSiteAddressModel
+        var form = new AiurApiPayload( new DeleteSiteAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName
@@ -85,7 +85,7 @@ public class SitesService : IScopedDependency
     public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance, "Sites", "DeleteApp", new { });
-        var form = new ApiPayload( new DeleteAppAddressModel
+        var form = new AiurApiPayload( new DeleteAppAddressModel
         {
             AccessToken = accessToken,
             AppId = appId

@@ -39,7 +39,7 @@ public class TokenService : IScopedDependency
         TimeSpan lifespan)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "Token", "GetToken", new { });
-        var form = new ApiPayload(new GetTokenAddressModel
+        var form = new AiurApiPayload(new GetTokenAddressModel
         {
             AccessToken = accessToken,
             SiteName = siteName,

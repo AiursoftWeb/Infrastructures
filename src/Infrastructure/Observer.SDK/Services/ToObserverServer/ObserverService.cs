@@ -34,7 +34,7 @@ public class ObserverService : IScopedDependency
         EventLevel eventLevel, string path)
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Event", "Log", new { });
-        var form = new ApiPayload(new LogAddressModel
+        var form = new AiurApiPayload(new LogAddressModel
         {
             AccessToken = accessToken,
             Message = message,
@@ -57,7 +57,7 @@ public class ObserverService : IScopedDependency
     public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Event", "DeleteApp", new { });
-        var form = new ApiPayload(new DeleteAppAddressModel
+        var form = new AiurApiPayload(new DeleteAppAddressModel
         {
             AccessToken = accessToken,
             AppId = appId

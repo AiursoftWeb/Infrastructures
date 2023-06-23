@@ -64,7 +64,7 @@ public class ThirdPartyController : Controller
         }
         catch (WebException)
         {
-            var refreshLink = provider.GetSignInRedirectLink(new ApiPayload(new FinishAuthInfo
+            var refreshLink = provider.GetSignInRedirectLink(new AiurApiPayload(new FinishAuthInfo
             {
                 AppId = oauthModel.AppId,
                 RedirectUri = oauthModel.RedirectUri,

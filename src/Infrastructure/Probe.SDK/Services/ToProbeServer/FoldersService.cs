@@ -39,7 +39,7 @@ public class FoldersService : IScopedDependency
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance,
             $"/Folders/CreateNewFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new ApiPayload( new CreateNewFolderAddressModel
+        var form = new AiurApiPayload( new CreateNewFolderAddressModel
         {
             AccessToken = accessToken,
             NewFolderName = newFolderName,
@@ -52,7 +52,7 @@ public class FoldersService : IScopedDependency
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance,
             $"/Folders/DeleteFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new ApiPayload( new DeleteFolderAddressModel
+        var form = new AiurApiPayload( new DeleteFolderAddressModel
         {
             AccessToken = accessToken
         });

@@ -77,7 +77,7 @@ public class AppsService : IScopedDependency
     public async Task<AiurResponse> DropGrantsAsync(string accessToken)
     {
         var url = new AiurApiEndpoint(_directoryLocator.Instance, "apps", "DropGrants", new { });
-        var form = new ApiPayload(new
+        var form = new AiurApiPayload(new
         {
             AccessToken = accessToken
         });

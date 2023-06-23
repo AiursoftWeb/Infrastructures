@@ -5,7 +5,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.0" />
 		<PackageReference Include="Aiursoft.Scanner" Version="6.0.10" />
 		<PackageReference Include="coverlet.collector" Version="6.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

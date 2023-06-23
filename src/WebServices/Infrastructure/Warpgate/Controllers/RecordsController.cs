@@ -92,8 +92,6 @@ public class RecordsController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        
-        // TODO: Use NoActioNeeded.
-        return this.Protocol(Code.NotFound, "That app do not exists in our database.");
+        return this.Protocol(Code.Success, $"The app with ID: {app.AppId} was successfully deleted!");
     }
 }

@@ -230,7 +230,7 @@ public class UserController : ControllerBase
 
         if (!userEmail.Validated)
         {
-            return this.Protocol(Code.InsufficientPermissions, $"The email :{model.Email} was not validated!");
+            return this.Protocol(Code.Unauthorized, $"The email :{model.Email} was not validated!");
         }
 
         userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;

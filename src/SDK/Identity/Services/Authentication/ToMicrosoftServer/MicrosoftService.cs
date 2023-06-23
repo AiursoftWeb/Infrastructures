@@ -106,7 +106,7 @@ public class MicrosoftService : IAuthProvider
     {
         var apiAddress = "https://login.microsoftonline.com" + $"/{_tenant}/oauth2/v2.0/token";
         var action = isBinding ? "bind-account" : "sign-in";
-        var form = new ApiPayload( new MicrosoftAccessTokenAddressModel
+        var form = new AiurApiPayload( new MicrosoftAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,

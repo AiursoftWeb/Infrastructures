@@ -81,7 +81,7 @@ public class ChannelController : ControllerBase
         {
             return this.Protocol(new AiurResponse
             {
-                Code = Code.Gone,
+                Code = Code.Timeout,
                 Message = "Your channel is out dated and about to be deleted!"
             });
         }

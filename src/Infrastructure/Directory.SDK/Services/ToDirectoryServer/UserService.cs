@@ -28,7 +28,7 @@ public class UserService : IScopedDependency
         string newIconFilePathName, string newBio)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "ChangeProfile", new { });
-        var form = new ApiPayload(new ChangeProfileAddressModel
+        var form = new AiurApiPayload(new ChangeProfileAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId,
@@ -43,7 +43,7 @@ public class UserService : IScopedDependency
         string newPassword)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "ChangePassword", new { });
-        var form = new ApiPayload(new ChangePasswordAddressModel
+        var form = new AiurApiPayload(new ChangePasswordAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId,
@@ -66,7 +66,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "SetPhoneNumber", new { });
-        var form = new ApiPayload(new SetPhoneNumberAddressModel
+        var form = new AiurApiPayload(new SetPhoneNumberAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId,
@@ -88,7 +88,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> BindNewEmailAsync(string openId, string newEmail, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "BindNewEmail", new { });
-        var form = new ApiPayload(new BindNewEmailAddressModel
+        var form = new AiurApiPayload(new BindNewEmailAddressModel
         {
             OpenId = openId,
             NewEmail = newEmail,
@@ -100,7 +100,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> DeleteEmailAsync(string openId, string thatEmail, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "DeleteEmail", new { });
-        var form = new ApiPayload(new DeleteEmailAddressModel
+        var form = new AiurApiPayload(new DeleteEmailAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId,
@@ -112,7 +112,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> SendConfirmationEmailAsync(string accessToken, string userId, string email)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "SendConfirmationEmail", new { });
-        var form = new ApiPayload(new SendConfirmationEmailAddressModel
+        var form = new AiurApiPayload(new SendConfirmationEmailAddressModel
         {
             AccessToken = accessToken,
             OpenId = userId,
@@ -124,7 +124,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> SetPrimaryEmailAsync(string accessToken, string userId, string email)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "SetPrimaryEmail", new { });
-        var form = new ApiPayload(new SetPrimaryEmailAddressModel
+        var form = new AiurApiPayload(new SetPrimaryEmailAddressModel
         {
             AccessToken = accessToken,
             OpenId = userId,
@@ -146,7 +146,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> DropGrantedAppsAsync(string accessToken, string userId, string appId)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "DropGrantedApps", new { });
-        var form = new ApiPayload(new DropGrantedAppsAddressModel
+        var form = new AiurApiPayload(new DropGrantedAppsAddressModel
         {
             AccessToken = accessToken,
             OpenId = userId,
@@ -186,7 +186,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> UnBindSocialAccountAsync(string accessToken, string userId, string providerName)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "UnBindSocialAccount", new { });
-        var form = new ApiPayload(new UnBindSocialAccountAddressModel
+        var form = new AiurApiPayload(new UnBindSocialAccountAddressModel
         {
             AccessToken = accessToken,
             OpenId = userId,
@@ -198,7 +198,7 @@ public class UserService : IScopedDependency
     public async Task<AiurValue<bool>> ViewHas2FAKeyAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "ViewHas2FAKey", new { });
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId
@@ -209,7 +209,7 @@ public class UserService : IScopedDependency
     public async Task<AiurValue<bool>> ViewTwoFactorEnabledAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "ViewTwoFactorEnabled", new { });
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId
@@ -220,7 +220,7 @@ public class UserService : IScopedDependency
     public async Task<View2FAKeyViewModel> View2FAKeyAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "View2FAKey", new UserOperationAddressModel());
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             OpenId = openId,
             AccessToken = accessToken
@@ -231,7 +231,7 @@ public class UserService : IScopedDependency
     public async Task<AiurValue<bool>> SetTwoFAKeyAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "SetTwoFAKey", new { });
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId
@@ -242,7 +242,7 @@ public class UserService : IScopedDependency
     public async Task<AiurResponse> ResetTwoFAKeyAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "ResetTwoFAKey", new { });
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             AccessToken = accessToken,
             OpenId = openId
@@ -253,7 +253,7 @@ public class UserService : IScopedDependency
     public async Task<AiurValue<bool>> TwoFAVerifyCodeAsync(string openId, string accessToken, string code)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "TwoFAVerifyCode", new TwoFAVerifyCodeAddressModel());
-        var form = new ApiPayload(new TwoFAVerifyCodeAddressModel
+        var form = new AiurApiPayload(new TwoFAVerifyCodeAddressModel
         {
             OpenId = openId,
             AccessToken = accessToken,
@@ -265,7 +265,7 @@ public class UserService : IScopedDependency
     public async Task<AiurValue<bool>> DisableTwoFAAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "DisableTwoFA", new UserOperationAddressModel());
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             OpenId = openId,
             AccessToken = accessToken
@@ -276,7 +276,7 @@ public class UserService : IScopedDependency
     public async Task<AiurCollection<string>> GetRecoveryCodesAsync(string openId, string accessToken)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "User", "GetRecoveryCodes", new UserOperationAddressModel());
-        var form = new ApiPayload(new UserOperationAddressModel
+        var form = new AiurApiPayload(new UserOperationAddressModel
         {
             OpenId = openId,
             AccessToken = accessToken

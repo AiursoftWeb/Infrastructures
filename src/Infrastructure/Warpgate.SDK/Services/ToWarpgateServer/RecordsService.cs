@@ -34,7 +34,7 @@ public class RecordsService : IScopedDependency
         bool enabled)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "CreateNewRecord", new { });
-        var form = new ApiPayload( new CreateNewRecordAddressModel
+        var form = new AiurApiPayload( new CreateNewRecordAddressModel
         {
             AccessToken = accessToken,
             NewRecordName = newRecordName,
@@ -66,7 +66,7 @@ public class RecordsService : IScopedDependency
         bool enabled)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "UpdateRecordInfo", new { });
-        var form = new ApiPayload( new UpdateRecordInfoAddressModel
+        var form = new AiurApiPayload( new UpdateRecordInfoAddressModel
         {
             AccessToken = accessToken,
             OldRecordName = oldRecordName,
@@ -82,7 +82,7 @@ public class RecordsService : IScopedDependency
     public async Task<AiurResponse> DeleteRecordAsync(string accessToken, string recordName)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "DeleteRecord", new { });
-        var form = new ApiPayload( new DeleteRecordAddressModel
+        var form = new AiurApiPayload( new DeleteRecordAddressModel
         {
             AccessToken = accessToken,
             RecordName = recordName
@@ -93,7 +93,7 @@ public class RecordsService : IScopedDependency
     public async Task<AiurResponse> DeleteAppAsync(string accessToken, string appId)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance, "Records", "DeleteApp", new { });
-        var form = new ApiPayload( new DeleteAppAddressModel
+        var form = new AiurApiPayload( new DeleteAppAddressModel
         {
             AccessToken = accessToken,
             AppId = appId

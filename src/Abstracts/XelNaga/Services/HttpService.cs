@@ -8,7 +8,6 @@ using Aiursoft.Scanner.Abstract;
 
 namespace Aiursoft.XelNaga.Services;
 
-// TODO: Decouple AiurUrl.
 public class HttpService : IScopedDependency
 {
     private readonly HttpClient _client;
