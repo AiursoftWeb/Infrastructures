@@ -2,7 +2,6 @@
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Directory.SDK.Services;

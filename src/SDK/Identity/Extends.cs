@@ -9,7 +9,6 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.SDK;
 using Aiursoft.SDK;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

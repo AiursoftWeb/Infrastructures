@@ -9,7 +9,6 @@ using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
-using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

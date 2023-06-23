@@ -1,9 +1,7 @@
 ﻿using System;
-using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Attributes;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;

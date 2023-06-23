@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
 
 namespace Aiursoft.Identity.Services.Authentication;
 

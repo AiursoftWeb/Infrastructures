@@ -12,7 +12,6 @@ using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

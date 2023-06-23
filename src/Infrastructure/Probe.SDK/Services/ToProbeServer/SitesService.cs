@@ -6,10 +6,7 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 

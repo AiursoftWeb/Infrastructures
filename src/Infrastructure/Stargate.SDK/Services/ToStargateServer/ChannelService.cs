@@ -7,10 +7,7 @@ using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Stargate.SDK.Services.ToStargateServer;
 

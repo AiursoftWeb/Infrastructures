@@ -5,10 +5,7 @@ using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 using Aiursoft.Directory.SDK.Models.API.UserViewModels;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Services;
 
@@ -63,7 +60,7 @@ public class UserService : IScopedDependency
             AccessToken = accessToken,
             OpenId = openId
         });
-        return await _http.Get<AiurValue<string>>(url, true);
+        return await _http.Get<AiurValue<string>>(url);
     }
 
     public async Task<AiurResponse> SetPhoneNumberAsync(string openId, string accessToken, string phoneNumber)
@@ -85,7 +82,7 @@ public class UserService : IScopedDependency
             AccessToken = accessToken,
             OpenId = openId
         });
-        return await _http.Get<AiurCollection<AiurUserEmail>>(url, true);
+        return await _http.Get<AiurCollection<AiurUserEmail>>(url);
     }
 
     public async Task<AiurResponse> BindNewEmailAsync(string openId, string newEmail, string accessToken)

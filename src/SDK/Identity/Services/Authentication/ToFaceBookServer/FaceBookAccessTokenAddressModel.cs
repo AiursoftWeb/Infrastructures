@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Aiursoft.AiurProtocol;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Identity.Services.Authentication.ToFaceBookServer;
 

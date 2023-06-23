@@ -1,16 +1,12 @@
-﻿using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Probe.SDK.Configuration;
+﻿using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 

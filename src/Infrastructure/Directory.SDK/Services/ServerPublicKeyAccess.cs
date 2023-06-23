@@ -1,14 +1,11 @@
 ﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.XelNaga.Models;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 

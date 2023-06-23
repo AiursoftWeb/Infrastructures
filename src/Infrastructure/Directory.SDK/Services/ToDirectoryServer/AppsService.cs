@@ -9,11 +9,7 @@ using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.SDKTools.Attributes;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 
@@ -75,7 +71,7 @@ public class AppsService : IScopedDependency
             PageNumber = pageNumber,
             PageSize = pageSize
         });
-        return await _http.Get<AiurPagedCollection<Grant>>(url, true);
+        return await _http.Get<AiurPagedCollection<Grant>>(url);
     }
 
     public async Task<AiurResponse> DropGrantsAsync(string accessToken)
@@ -95,7 +91,7 @@ public class AppsService : IScopedDependency
             AppId = appId,
             AppSecret = appSecret
         });
-        return await _http.Get<AccessTokenViewModel>(url, true);
+        return await _http.Get<AccessTokenViewModel>(url);
     }
 
     public async Task<IReadOnlyCollection<DirectoryApp>> GetAppsManagedByUser(string accessToken, string openId)

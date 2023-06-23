@@ -2,12 +2,8 @@
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 

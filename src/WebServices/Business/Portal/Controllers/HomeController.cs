@@ -5,7 +5,6 @@ using Aiursoft.Directory.SDK.Configuration;
 
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
-using Aiursoft.XelNaga.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

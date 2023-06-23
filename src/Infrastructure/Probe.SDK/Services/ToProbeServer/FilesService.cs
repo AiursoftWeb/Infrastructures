@@ -8,11 +8,8 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 

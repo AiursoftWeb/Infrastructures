@@ -5,8 +5,6 @@ using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
-using Aiursoft.XelNaga.Models;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
