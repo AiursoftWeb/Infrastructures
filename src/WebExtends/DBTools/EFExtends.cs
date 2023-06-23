@@ -55,15 +55,12 @@ public static class EFExtends
     /// <param name="predicate">Condition predicate.</param>
     /// <param name="value">Unique value.</param>
     /// <returns>Task.</returns>
-    public static async Task EnsureUniqueString<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate,
+    public static async Task<bool> EnsureUniqueString<T>(this IQueryable<T> query, Expression<Func<T, string>> predicate,
         string value)
         where T : class
     {
         var conflict = await query.Select(predicate).AnyAsync(v => v.ToLower() == value.ToLower());
-        if (conflict)
-        {
-            throw new DbUpdateException($"There is already a record with name: '{value}'. Please try another new name.");
-        }
+        return conflict;
     }
 
     public static void Sync<T, M>(this DbSet<T> dbSet,

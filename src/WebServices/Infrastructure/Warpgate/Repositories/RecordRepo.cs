@@ -47,7 +47,11 @@ public class RecordRepo : IScopedDependency
         await CreateRecordLock.WaitAsync();
         try
         {
-            await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
+            var conflict = await _table.EnsureUniqueString(t => t.RecordUniqueName, newRecordName);
+            if (conflict)
+            {
+                throw new AiurServerException(Code.Conflict, $"There is already a record with name: '{newRecordName}'. Please try another new name.");
+            }
             var newRecord = new WarpRecord
             {
                 RecordUniqueName = newRecordName.ToLower(),

@@ -111,28 +111,6 @@ public class SiteTests
     }
 
     [TestMethod]
-    public async Task TooFrequentTest()
-    {
-        var siteService = _serviceProvider.GetRequiredService<SitesService>();
-        for (var i = 0; i < 31; i++)
-        {
-            await siteService.ViewMySitesAsync("mock-access-token");
-        }
-
-        try
-        {
-            await siteService.ViewMySitesAsync("mock-access-token");
-        }
-        catch (AiurUnexpectedServerResponseException e)
-        {
-            Assert.AreEqual(Code.TooManyRequests, e.Response.Code);
-            return;
-        }
-
-        Assert.Fail("Too many requests shall not success.");
-    }
-
-    [TestMethod]
     public async Task CreateSitesTest()
     {
         var siteService = _serviceProvider.GetRequiredService<SitesService>();

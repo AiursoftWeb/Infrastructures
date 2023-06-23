@@ -76,9 +76,14 @@ public class FolderRepo : IScopedDependency
         await folderLock.WaitAsync();
         try
         {
-            await _dbContext.Folders
+            var conflict = await _dbContext.Folders
                 .Where(t => t.ContextId == contextId)
                 .EnsureUniqueString(t => t.FolderName, name);
+            if (conflict)
+            {
+                throw new AiurServerException(Code.Conflict, $"There is already a record with name: '{name}'. Please try another new name.");
+            }
+            
             var newFolder = new Folder
             {
                 ContextId = contextId,

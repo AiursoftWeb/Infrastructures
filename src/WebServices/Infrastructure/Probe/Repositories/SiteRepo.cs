@@ -54,7 +54,11 @@ public class SiteRepo : IScopedDependency
         await _createSiteLock.WaitAsync();
         try
         {
-            await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
+            var conflict = await _dbContext.Sites.EnsureUniqueString(t => t.SiteName, newSiteName);
+            if (conflict)
+            {
+                throw new AiurServerException(Code.Conflict, $"There is already a record with name: '{newSiteName}'. Please try another new name.");
+            }
             var newRootFolder = new Folder
             {
                 FolderName = "blob"
