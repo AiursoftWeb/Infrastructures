@@ -8,7 +8,7 @@ using Aiursoft.EE.Models.CourseViewModels;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
-using Aiursoft.CSTools.Services;
+using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +51,7 @@ public class CourseController : Controller
 
         var course = new Course
         {
-            Description = ScriptsFilter.FilterString(model.Description),
+            Description = model.Description.RemoveTags(),
             CourseImage = $"{_serviceLocation.UI}/images/thumbnail.svg",
             DisplayOwnerInfo = model.DisplayOwnerInfo,
             WhatYouWillLearn = model.WhatYouWillLearn,

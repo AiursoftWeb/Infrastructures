@@ -1,13 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.CSTools.Attributes;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Directory.SDK.Attributes;
 
-public class IsAccessToken : TestableValidationAttribute
+public class IsAccessToken : ValidationAttribute
 {
     public override bool IsValid(object value)
     {

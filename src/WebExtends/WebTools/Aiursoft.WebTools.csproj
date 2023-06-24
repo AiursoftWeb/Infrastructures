@@ -18,12 +18,8 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="Aiursoft.CSTools" Version="6.0.23" />
 		<PackageReference Include="QRCoder" Version="1.4.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		
-		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.CSTools.csproj" />
 	</ItemGroup>
 
 </Project>
