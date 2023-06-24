@@ -7,7 +7,6 @@ using Aiursoft.SDK.Services;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;
-using Aiursoft.XelNaga.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

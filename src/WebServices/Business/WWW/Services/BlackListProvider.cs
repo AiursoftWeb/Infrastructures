@@ -1,6 +1,5 @@
 ﻿using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;

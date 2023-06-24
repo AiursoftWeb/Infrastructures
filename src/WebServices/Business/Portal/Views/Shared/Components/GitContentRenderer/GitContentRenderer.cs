@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
 
