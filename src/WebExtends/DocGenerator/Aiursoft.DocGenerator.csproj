@@ -19,7 +19,7 @@
 	
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
+	<PackageReference Include="Aiursoft.Scanner.Abstractions" Version="6.0.11" />
   </ItemGroup> 
 	
   <ItemGroup>
