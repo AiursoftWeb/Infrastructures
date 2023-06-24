@@ -3,8 +3,7 @@ using System.IO;
 
 namespace Aiursoft.XelNaga.Models;
 
-// TODO: Move to web tools.
-public static class MIME
+public static class Mime
 {
     private static readonly Dictionary<string, string> MimeTypesDictionary = new()
     {

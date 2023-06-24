@@ -3,11 +3,11 @@
 namespace Aiursoft.XelNaga.Attributes;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class CSVProperty : Attribute
+public class CsvProperty : Attribute
 {
     public readonly string Name;
 
-    public CSVProperty(string name)
+    public CsvProperty(string name)
     {
         Name = name;
     }

@@ -9,34 +9,34 @@ public class MIMETests
     [TestMethod]
     public void TestCanHandle()
     {
-        Assert.IsTrue(MIME.CanHandle("aaaa.mp4"));
-        Assert.IsTrue(MIME.CanHandle(".mp4"));
-        Assert.IsFalse(MIME.CanHandle("aaa.exe"));
-        Assert.IsFalse(MIME.CanHandle(".exe"));
+        Assert.IsTrue(Mime.CanHandle("aaaa.mp4"));
+        Assert.IsTrue(Mime.CanHandle(".mp4"));
+        Assert.IsFalse(Mime.CanHandle("aaa.exe"));
+        Assert.IsFalse(Mime.CanHandle(".exe"));
     }
 
     [TestMethod]
     public void TestIsVideo()
     {
-        Assert.IsTrue(MIME.IsVideo("aaaa.mp4"));
-        Assert.IsTrue(MIME.IsVideo(".mp4"));
-        Assert.IsTrue(MIME.IsVideo("aaaa.webm"));
-        Assert.IsTrue(MIME.IsVideo(".webm"));
-        Assert.IsTrue(MIME.IsVideo("aaaa.ogg"));
-        Assert.IsTrue(MIME.IsVideo(".ogg"));
-        Assert.IsFalse(MIME.IsVideo("aaa.exe"));
-        Assert.IsFalse(MIME.IsVideo(".exe"));
+        Assert.IsTrue(Mime.IsVideo("aaaa.mp4"));
+        Assert.IsTrue(Mime.IsVideo(".mp4"));
+        Assert.IsTrue(Mime.IsVideo("aaaa.webm"));
+        Assert.IsTrue(Mime.IsVideo(".webm"));
+        Assert.IsTrue(Mime.IsVideo("aaaa.ogg"));
+        Assert.IsTrue(Mime.IsVideo(".ogg"));
+        Assert.IsFalse(Mime.IsVideo("aaa.exe"));
+        Assert.IsFalse(Mime.IsVideo(".exe"));
     }
 
     [TestMethod]
     public void TestGetType()
     {
-        Assert.AreEqual(MIME.GetContentType(".mp4"), "video/mp4");
-        Assert.AreEqual(MIME.GetContentType(".html"), "text/html");
-        Assert.AreEqual(MIME.GetContentType(".png"), "image/png");
-        Assert.AreEqual(MIME.GetContentType(".tiff"), "image/tiff");
-        Assert.AreEqual(MIME.GetContentType(".exe"), "application/octet-stream");
-        Assert.AreEqual(MIME.GetContentType(".dll"), "application/octet-stream");
-        Assert.AreEqual(MIME.GetContentType(".msi"), "application/octet-stream");
+        Assert.AreEqual(Mime.GetContentType(".mp4"), "video/mp4");
+        Assert.AreEqual(Mime.GetContentType(".html"), "text/html");
+        Assert.AreEqual(Mime.GetContentType(".png"), "image/png");
+        Assert.AreEqual(Mime.GetContentType(".tiff"), "image/tiff");
+        Assert.AreEqual(Mime.GetContentType(".exe"), "application/octet-stream");
+        Assert.AreEqual(Mime.GetContentType(".dll"), "application/octet-stream");
+        Assert.AreEqual(Mime.GetContentType(".msi"), "application/octet-stream");
     }
 }

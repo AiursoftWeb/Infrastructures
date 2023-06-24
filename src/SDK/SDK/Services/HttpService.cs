@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 
-namespace Aiursoft.XelNaga.Services;
+namespace Aiursoft.SDK.Services;
 
 public class HttpService : IScopedDependency
 {

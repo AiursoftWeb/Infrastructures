@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Aiursoft.XelNaga.Tools;
 
-public static class StringOperation
+public static class StringExtends
 {
     private static Random StaticRan { get; } = new();
 

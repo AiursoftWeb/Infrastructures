@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Aiursoft.XelNaga.Services;
+namespace Aiursoft.SDK.Services;
 
 // TODO: Move to WebTools.
 public static class ProxyService

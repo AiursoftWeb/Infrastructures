@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Aiursoft.Canon;
+using Aiursoft.SDK.Services;
 
 namespace Aiursoft.Wiki.Services;
 

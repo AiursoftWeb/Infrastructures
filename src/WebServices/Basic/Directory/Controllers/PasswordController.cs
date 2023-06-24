@@ -198,7 +198,7 @@ public class PasswordController : Controller
             return NotFound();
         }
 
-        var code = StringOperation.RandomString(6);
+        var code = StringExtends.RandomString(6);
         user.SMSPasswordResetToken = code;
         await _userManager.UpdateAsync(user);
         _cannonService.FireAsync<APISMSSender>(async sender =>

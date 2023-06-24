@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
+using Aiursoft.SDK.Services;
 using Aiursoft.XelNaga.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

@@ -18,11 +18,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aiursoft.Canon" Version="6.0.9" />
-		
-	</ItemGroup>
-
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
 	</ItemGroup>
 </Project>

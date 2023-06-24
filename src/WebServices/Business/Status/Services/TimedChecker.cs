@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
+using Aiursoft.SDK.Services;
 using Aiursoft.Status.Data;
 using Aiursoft.XelNaga.Services;
 using Aiursoft.XelNaga.Tools;
