@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.SDKTools.Attributes;
+namespace Aiursoft.XelNaga.Attributes;
 
 public class NoDot : TestableValidationAttribute
 {

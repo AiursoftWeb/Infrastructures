@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Aiursoft.SDKTools.Attributes;
+namespace Aiursoft.XelNaga.Attributes;
 
 public class ValidDomainName : TestableValidationAttribute
 {

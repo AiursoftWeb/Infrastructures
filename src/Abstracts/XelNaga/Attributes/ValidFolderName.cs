@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Aiursoft.SDKTools.Attributes;
+namespace Aiursoft.XelNaga.Attributes;
 
 public class ValidFolderName : TestableValidationAttribute
 {

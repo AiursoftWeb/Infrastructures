@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Attributes;
-using Aiursoft.SDKTools.Attributes;
+using Aiursoft.XelNaga.Attributes;
 
 namespace Aiursoft.Warpgate.SDK.Models.AddressModels;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.SDKTools.Attributes;
+using Aiursoft.XelNaga.Attributes;
 
 namespace Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 

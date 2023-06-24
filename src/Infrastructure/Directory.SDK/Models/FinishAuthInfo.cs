@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.SDKTools.Attributes;
+using Aiursoft.XelNaga.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Directory.SDK.Models;

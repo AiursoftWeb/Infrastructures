@@ -1,4 +1,4 @@
-﻿using Aiursoft.SDKTools.Attributes;
+﻿using Aiursoft.XelNaga.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Warpgate.SDK.Models.AddressModels;

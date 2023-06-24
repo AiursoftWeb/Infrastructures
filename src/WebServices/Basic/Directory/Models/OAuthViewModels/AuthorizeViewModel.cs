@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.SDKTools.Attributes;
+using Aiursoft.XelNaga.Attributes;
 
 namespace Aiursoft.Directory.Models.OAuthViewModels;
 

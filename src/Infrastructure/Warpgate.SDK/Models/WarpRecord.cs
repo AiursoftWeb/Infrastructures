@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Aiursoft.SDKTools.Attributes;
+using Aiursoft.XelNaga.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
