@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Aiursoft.AiurProtocol.Exceptions;

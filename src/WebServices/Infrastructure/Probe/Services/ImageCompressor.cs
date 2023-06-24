@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
 using Aiursoft.Probe.Models.Configuration;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;

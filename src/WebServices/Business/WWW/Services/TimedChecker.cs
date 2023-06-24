@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.DBTools;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.WWW.Data;
 using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Hosting;

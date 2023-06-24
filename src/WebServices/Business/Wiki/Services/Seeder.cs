@@ -9,7 +9,7 @@ using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Microsoft.Extensions.Configuration;

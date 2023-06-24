@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.SDK.Services;
 using Aiursoft.Status.Data;
 using Aiursoft.CSTools.Tools;

@@ -2,7 +2,7 @@
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Repositories;

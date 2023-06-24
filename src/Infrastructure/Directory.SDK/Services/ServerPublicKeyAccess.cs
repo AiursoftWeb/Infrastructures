@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;

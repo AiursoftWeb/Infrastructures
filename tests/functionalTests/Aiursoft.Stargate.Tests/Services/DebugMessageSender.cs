@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 
 namespace Aiursoft.Stargate.Tests.Services;

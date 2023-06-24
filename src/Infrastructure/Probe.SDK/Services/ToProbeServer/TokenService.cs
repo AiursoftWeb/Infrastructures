@@ -5,7 +5,7 @@ using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;

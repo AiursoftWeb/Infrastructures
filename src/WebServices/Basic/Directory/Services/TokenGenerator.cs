@@ -1,6 +1,6 @@
 ﻿using System;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

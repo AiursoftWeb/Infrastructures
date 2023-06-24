@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 
 namespace Aiursoft.Directory.Services;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Directory.SDK.Services;

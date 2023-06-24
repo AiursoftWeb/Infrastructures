@@ -1,5 +1,5 @@
 ﻿using Aiursoft.Canon;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;

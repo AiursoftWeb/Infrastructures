@@ -1,7 +1,7 @@
 ﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.OAuthAddressModels;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Directory.SDK.Services;

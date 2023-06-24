@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;

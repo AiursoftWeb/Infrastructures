@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.Identity.Services.Authentication;
 

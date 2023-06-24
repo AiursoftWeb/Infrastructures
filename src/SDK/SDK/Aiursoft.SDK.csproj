@@ -8,13 +8,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.18" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.18" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.19" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.19" />
 		<PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.9.2" />
 	</ItemGroup>
 	
 	<ItemGroup>
-		<ProjectReference Include="..\..\Infrastructure\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
+		
 		<ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
 	</ItemGroup>
 

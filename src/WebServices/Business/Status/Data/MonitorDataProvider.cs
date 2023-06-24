@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.Scanner.Abstraction;
+using Aiursoft.Scanner.Abstractions;
 using Aiursoft.SDK.Services;
 using Aiursoft.Status.Models;
 using Microsoft.Extensions.Options;
