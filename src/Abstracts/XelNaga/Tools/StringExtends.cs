@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Aiursoft.XelNaga.Tools;
 
 public static class StringExtends
 {
-    private static Random StaticRan { get; } = new();
+    private static Random Seed { get; } = new();
 
     public static string BytesToBase64(this byte[] input)
     {
@@ -20,12 +20,7 @@ public static class StringExtends
 
     public static byte[] Base64ToBytes(this string input)
     {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return new byte[0];
-        }
-
-        return Convert.FromBase64String(input);
+        return string.IsNullOrWhiteSpace(input) ? Array.Empty<byte>() : Convert.FromBase64String(input);
     }
 
     public static byte[] StringToBytes(this string input)
@@ -48,7 +43,7 @@ public static class StringExtends
         return BytesToString(Base64ToBytes(input));
     }
 
-    public static byte[] ToUTF8WithDom(this string content)
+    public static byte[] ToUtf8WithDom(this string content)
     {
         var encoded = Encoding.UTF8.GetBytes(content);
         var bom = new byte[] { 0xEF, 0xBB, 0xBF };
@@ -70,13 +65,13 @@ public static class StringExtends
         return sBuilder.ToString();
     }
 
-    public static string GetMD5(this string sourceString)
+    public static string GetMd5(this string sourceString)
     {
         var hash = GetMd5Hash(MD5.Create(), sourceString);
         return hash;
     }
 
-    public static string GetMD5(this byte[] data)
+    public static string GetMd5(this byte[] data)
     {
         using var md5 = MD5.Create();
         var hash = md5.ComputeHash(data);
@@ -84,33 +79,15 @@ public static class StringExtends
         return hex.Replace("-", "");
     }
 
-    public static string OTake(this string source, int count)
+    public static string SafeSubstring(this string source, int maxLength)
     {
-        if (source.Length <= count)
-        {
-            return source;
-        }
-
-        return source.Substring(0, count - 3) + "...";
+        return source.Length <= maxLength ? source : $"{source[..(maxLength - 3)]}...";
     }
 
     public static bool IsInFollowingExtension(this string filename, params string[] extensions)
     {
         var ext = Path.GetExtension(filename);
-        foreach (var extension in extensions)
-        {
-            if (ext.Trim('.').ToLower() == extension)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static bool IsImageMedia(this string filename)
-    {
-        return filename.IsInFollowingExtension("jpg", "png", "bmp", "jpeg", "gif", "svg", "ico");
+        return extensions.Any(extension => ext.Trim('.').ToLower() == extension);
     }
 
     public static bool IsStaticImage(this string filename)
@@ -118,33 +95,16 @@ public static class StringExtends
         return filename.IsInFollowingExtension("jpg", "png", "bmp", "jpeg");
     }
 
-    public static bool IsVideo(this string filename)
+    public static string RemoveTags(this string content)
     {
-        return filename.IsInFollowingExtension("mp4", "webm", "ogg");
-    }
-
-    public static string ORemoveHtml(this string content)
-    {
-        var s = string.Empty;
-        content = WebUtility.HtmlDecode(content);
-        if (!content.Contains(">"))
-        {
-            return content;
-        }
-
-        while (content.Contains(">"))
-        {
-            s += content.Substring(0, content.IndexOf("<", StringComparison.Ordinal));
-            content = content.Substring(content.IndexOf(">", StringComparison.Ordinal) + 1);
-        }
-
-        return s + content;
+        var regex = new Regex("<.*?>");
+        return regex.Replace(content, string.Empty);
     }
 
     public static string RandomString(int count)
     {
         var checkCode = string.Empty;
-        var random = new Random(StaticRan.Next());
+        var random = new Random(Seed.Next());
         for (var i = 0; i < count; i++)
         {
             var number = random.Next();
@@ -166,12 +126,9 @@ public static class StringExtends
 
     public static string EncodePath(this string input)
     {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return string.Empty;
-        }
-
-        return input.ToUrlEncoded().Replace("%2F", "/");
+        return string.IsNullOrWhiteSpace(input) ? 
+            string.Empty : 
+            input.ToUrlEncoded().Replace("%2F", "/");
     }
 
     public static string ToUrlEncoded(this string input)
@@ -250,8 +207,6 @@ public static class StringExtends
             catch (JsonException)
             {
             }
-
-            return false;
         }
 
         return false;

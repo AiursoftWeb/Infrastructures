@@ -84,7 +84,7 @@ public class HomeController : Controller
             CurrentArticle = currentArticle,
             RenderedContent = Markdown.ToHtml(currentArticle.ArticleContent, pipeline)
         };
-        ViewBag.Des = Markdown.ToPlainText(currentArticle.ArticleContent).OTake(1000);
+        ViewBag.Des = Markdown.ToPlainText(currentArticle.ArticleContent).SafeSubstring(1000);
         return View(model);
     }
 

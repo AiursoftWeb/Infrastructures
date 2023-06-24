@@ -9,10 +9,4 @@
 * String extend tools
 * Websocket tools
 * URL builder
-* EF Core tools
-    * EF Sync extends
-    * EF Delete extends
-* HTTP request framework
-* C# async tools
 * C# counter
-* RSA tools

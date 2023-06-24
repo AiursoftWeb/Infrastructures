@@ -35,7 +35,7 @@ public class StringOperationTests
     {
         var source = "my_test_string_(17)[]@$";
 
-        var result = source.GetMD5();
+        var result = source.GetMd5();
 
         Assert.AreEqual(result, "0a4112dd96480d0f3eec8ce5b42082a6");
     }

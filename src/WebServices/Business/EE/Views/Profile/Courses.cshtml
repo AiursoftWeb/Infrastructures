@@ -34,7 +34,7 @@
                         <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Id">
                             <h3 class="mt-3">@(course.Name ?? "Null")</h3>
                         </a>
-                        <p>@(course.Description?.ORemoveHtml() ?? "null")
+                        <p>@(course.Description?.RemoveTags() ?? "null")
                         <p>
                     </div>
                     <hr/>
