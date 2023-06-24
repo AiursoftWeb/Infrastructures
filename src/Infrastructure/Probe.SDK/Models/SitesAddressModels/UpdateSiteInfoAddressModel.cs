@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.XelNaga.Attributes;
+using Aiursoft.CSTools.Attributes;
 
 namespace Aiursoft.Probe.SDK.Models.SitesAddressModels;
 

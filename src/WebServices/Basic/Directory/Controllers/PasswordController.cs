@@ -6,7 +6,7 @@ using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.Models.PasswordViewModels;
 using Aiursoft.Directory.Services;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

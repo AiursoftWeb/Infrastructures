@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Aiursoft.Scanner.Abstract;
 
-namespace Aiursoft.XelNaga.Services;
+namespace Aiursoft.CSTools.Services;
 
 public class Counter : ISingletonDependency
 {

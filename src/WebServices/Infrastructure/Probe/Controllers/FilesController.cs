@@ -10,7 +10,7 @@ using Aiursoft.Probe.Services;
 using Microsoft.AspNetCore.Mvc;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol;
-using Aiursoft.XelNaga.Attributes;
+using Aiursoft.CSTools.Attributes;
 
 namespace Aiursoft.Probe.Controllers;
 

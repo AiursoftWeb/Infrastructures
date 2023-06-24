@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebServices", "WebServices"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.DocGenerator.Abstract", "src\Abstracts\DocGenerator.Abstract\Aiursoft.DocGenerator.Abstract.csproj", "{B087E7DF-0A89-43D9-9E92-F71BA554BD9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.XelNaga", "src\Abstracts\XelNaga\Aiursoft.XelNaga.csproj", "{AD2E8159-73AF-468E-9900-EB14CC9462C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.CSTools", "src\Abstracts\XelNaga\Aiursoft.CSTools.csproj", "{AD2E8159-73AF-468E-9900-EB14CC9462C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.Probe.SDK", "src\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj", "{CE66F119-5564-41EB-9C6A-B7C9CA2EE404}"
 EndProject

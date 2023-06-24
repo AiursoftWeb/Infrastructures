@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Aiursoft.Scanner;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;

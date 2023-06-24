@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK.Services;
 using Aiursoft.Status.Data;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

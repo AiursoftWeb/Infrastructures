@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Aiursoft.XelNaga.Tools;
+namespace Aiursoft.CSTools.Tools;
 
 public static class EntryExtends
 {

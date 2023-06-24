@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aiursoft.XelNaga.Tools;
+namespace Aiursoft.CSTools.Tools;
 
 public static class ListExtends
 {

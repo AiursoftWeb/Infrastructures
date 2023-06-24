@@ -1,7 +1,7 @@
 ﻿using System;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

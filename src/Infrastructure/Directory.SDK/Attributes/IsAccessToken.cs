@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.XelNaga.Attributes;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Attributes;
+using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 
 namespace Aiursoft.Directory.SDK.Attributes;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Aiursoft.AiurProtocol.Exceptions;
 

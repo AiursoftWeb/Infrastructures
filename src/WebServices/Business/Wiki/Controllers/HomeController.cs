@@ -4,7 +4,7 @@ using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Identity;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

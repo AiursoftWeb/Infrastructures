@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aiursoft.XelNaga.Attributes;
+namespace Aiursoft.CSTools.Attributes;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class CsvProperty : Attribute

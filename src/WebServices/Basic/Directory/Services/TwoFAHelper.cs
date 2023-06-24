@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.SDK;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Directory.Services;

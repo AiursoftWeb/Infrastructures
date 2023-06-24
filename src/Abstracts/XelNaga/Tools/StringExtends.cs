@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace Aiursoft.XelNaga.Tools;
+namespace Aiursoft.CSTools.Tools;
 
 public static class StringExtends
 {

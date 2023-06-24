@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
 using System.Threading.Tasks;

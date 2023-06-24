@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aiursoft.XelNaga.Tools;
+namespace Aiursoft.CSTools.Tools;
 
 // TODO: Move to WebTools.
 public static class WebSocketExtends

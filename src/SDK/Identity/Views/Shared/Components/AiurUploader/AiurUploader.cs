@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Identity.Views.Shared.Components.AiurUploader;

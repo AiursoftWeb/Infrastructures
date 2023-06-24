@@ -10,7 +10,7 @@ using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

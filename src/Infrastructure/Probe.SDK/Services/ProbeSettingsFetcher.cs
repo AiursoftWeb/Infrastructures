@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;

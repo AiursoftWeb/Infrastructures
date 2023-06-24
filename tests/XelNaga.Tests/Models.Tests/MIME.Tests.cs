@@ -1,4 +1,4 @@
-﻿using Aiursoft.XelNaga.Models;
+﻿using Aiursoft.CSTools.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.XelNaga.Tests.Models.Tests;

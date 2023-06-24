@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 		
-		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.CSTools.csproj" />
 	</ItemGroup>
 
 </Project>

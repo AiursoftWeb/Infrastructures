@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Attributes;
-using Aiursoft.XelNaga.Attributes;
+using Aiursoft.CSTools.Attributes;
 
 namespace Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 

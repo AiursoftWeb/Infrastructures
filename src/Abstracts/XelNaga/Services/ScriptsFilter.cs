@@ -1,4 +1,4 @@
-namespace Aiursoft.XelNaga.Services;
+namespace Aiursoft.CSTools.Services;
 
 // TODO: Move to WebTools.
 public static class ScriptsFilter

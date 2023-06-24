@@ -6,7 +6,7 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;

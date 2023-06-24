@@ -2,7 +2,7 @@
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

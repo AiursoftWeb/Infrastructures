@@ -5,11 +5,10 @@ using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;
-
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Aiursoft.SDK.Services;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

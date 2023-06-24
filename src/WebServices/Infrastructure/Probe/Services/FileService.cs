@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Aiursoft.XelNaga.Models;
+using Aiursoft.CSTools.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Probe.Services;

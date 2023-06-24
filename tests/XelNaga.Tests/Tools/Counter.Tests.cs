@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.XelNaga.Tests.Tools;

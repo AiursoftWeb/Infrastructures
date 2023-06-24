@@ -9,7 +9,7 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;

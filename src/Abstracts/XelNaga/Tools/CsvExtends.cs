@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Aiursoft.XelNaga.Attributes;
+using Aiursoft.CSTools.Attributes;
 
-namespace Aiursoft.XelNaga.Tools;
+namespace Aiursoft.CSTools.Tools;
 
 public static class CsvExtends
 {

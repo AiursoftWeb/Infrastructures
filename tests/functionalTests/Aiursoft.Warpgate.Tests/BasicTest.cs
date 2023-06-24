@@ -10,7 +10,7 @@ using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK;
 using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

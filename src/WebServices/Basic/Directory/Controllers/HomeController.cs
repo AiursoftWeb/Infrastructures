@@ -5,7 +5,7 @@ using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Edi.Captcha;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

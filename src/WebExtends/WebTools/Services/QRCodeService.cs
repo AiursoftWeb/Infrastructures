@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using QRCoder;
 
 namespace Aiursoft.WebTools.Services;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.XelNaga.Tests.Tools;

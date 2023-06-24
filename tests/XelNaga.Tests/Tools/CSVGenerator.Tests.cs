@@ -1,6 +1,6 @@
 ﻿using System;
-using Aiursoft.XelNaga.Attributes;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Attributes;
+using Aiursoft.CSTools.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.XelNaga.Tests.Tools;

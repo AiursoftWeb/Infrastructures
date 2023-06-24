@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.XelNaga.Tests.Services;

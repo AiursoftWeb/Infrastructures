@@ -16,7 +16,7 @@ using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Tests.Services;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;

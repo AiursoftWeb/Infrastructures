@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstract;
 using Aiursoft.WWW.Services.Models;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;

@@ -10,7 +10,7 @@ using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.Services;
-using Aiursoft.XelNaga.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

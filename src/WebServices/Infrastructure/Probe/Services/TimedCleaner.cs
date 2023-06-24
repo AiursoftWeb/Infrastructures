@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Probe.Data;
 using Aiursoft.Scanner.Abstract;
-using Aiursoft.XelNaga.Tools;
+using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

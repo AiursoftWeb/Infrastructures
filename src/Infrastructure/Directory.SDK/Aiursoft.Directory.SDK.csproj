@@ -11,7 +11,7 @@
 		<PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.XelNaga.csproj" />
+		<ProjectReference Include="..\..\Abstracts\XelNaga\Aiursoft.CSTools.csproj" />
 	</ItemGroup>
 
 
