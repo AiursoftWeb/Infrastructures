@@ -18,7 +18,7 @@ public class IsAccessToken : TestableValidationAttribute
                 return false;
             }
 
-            if (EntryExtends.IsInUT())
+            if (EntryExtends.IsInUnitTests())
             {
                 return true;
             }

@@ -72,7 +72,7 @@ public static class ServicesExtends
     public static IServiceCollection AddDbContextWithCache<T>(this IServiceCollection services, string connectionString)
         where T : DbContext
     {
-        if (EntryExtends.IsInUT())
+        if (EntryExtends.IsInUnitTests())
         {
             services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
                 optionsBuilder

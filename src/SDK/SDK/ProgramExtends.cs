@@ -12,6 +12,11 @@ public static class ProgramExtends
 {
     public static async Task<IHost> UpdateDbAsync<TContext>(this IHost host) where TContext : DbContext
     {
+        if (EntryExtends.IsInEntityFramework())
+        {
+            return host;
+        }
+        
         using var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
         var logger = services.GetRequiredService<ILogger<TContext>>();
@@ -25,7 +30,7 @@ public static class ProgramExtends
             logger.LogInformation("The database with context {ContextName} was ensured to be created",
                 typeof(TContext).Name);
 
-            if (EntryExtends.IsInUT())
+            if (EntryExtends.IsInUnitTests())
             {
                 // Reset database for unit tests.
                 await context.Database.EnsureDeletedAsync();
