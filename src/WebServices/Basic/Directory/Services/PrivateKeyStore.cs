@@ -1,4 +1,4 @@
-﻿using Aiursoft.Scanner.Abstract;
+﻿using Aiursoft.Scanner.Abstraction;
 using System.Security.Cryptography;
 
 namespace Aiursoft.Directory.Services;

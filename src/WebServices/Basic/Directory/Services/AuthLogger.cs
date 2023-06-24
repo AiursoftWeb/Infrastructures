@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.Http;
 

@@ -7,7 +7,7 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Directory.Services;

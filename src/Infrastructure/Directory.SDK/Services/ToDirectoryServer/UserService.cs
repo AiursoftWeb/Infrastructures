@@ -4,7 +4,7 @@ using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 using Aiursoft.Directory.SDK.Models.API.UserViewModels;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Options;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Services;

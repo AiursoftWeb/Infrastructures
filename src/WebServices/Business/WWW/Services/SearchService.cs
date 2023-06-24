@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.WWW.Services.Models;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Azure.CognitiveServices.Search.EntitySearch;

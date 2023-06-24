@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.CSTools.Tools;
 
 namespace Aiursoft.Directory.SDK.Services;

@@ -1,6 +1,6 @@
 ﻿using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 
 namespace Aiursoft.Probe.Services;
 

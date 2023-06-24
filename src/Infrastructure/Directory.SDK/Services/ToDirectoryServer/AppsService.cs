@@ -8,7 +8,7 @@ using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Options;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;

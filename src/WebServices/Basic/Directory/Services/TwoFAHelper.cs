@@ -1,7 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.SDK;
 using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Identity;

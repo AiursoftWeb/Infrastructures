@@ -2,7 +2,7 @@
 using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Controllers;
 using Aiursoft.Identity.Services;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.SDK;
 using Microsoft.Extensions.Configuration;
 

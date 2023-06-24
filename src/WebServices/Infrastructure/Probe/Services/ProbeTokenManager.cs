@@ -1,7 +1,7 @@
 ﻿using System;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

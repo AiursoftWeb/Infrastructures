@@ -6,7 +6,7 @@ using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.DBTools;
 
 using Aiursoft.AiurProtocol.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK.Models;
 using Microsoft.EntityFrameworkCore;

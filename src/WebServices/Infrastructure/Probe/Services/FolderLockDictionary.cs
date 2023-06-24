@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 
 namespace Aiursoft.Probe.Services;
 

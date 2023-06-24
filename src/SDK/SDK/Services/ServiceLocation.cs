@@ -1,4 +1,4 @@
-﻿using Aiursoft.Scanner.Abstract;
+﻿using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.SDK.Services;

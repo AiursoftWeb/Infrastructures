@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Http;
 

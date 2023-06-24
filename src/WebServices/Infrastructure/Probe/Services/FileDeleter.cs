@@ -6,7 +6,7 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.Probe.Services;

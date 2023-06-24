@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using System;

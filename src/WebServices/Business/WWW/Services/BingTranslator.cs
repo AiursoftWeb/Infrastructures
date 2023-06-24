@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.WWW.Services.BingModels;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;

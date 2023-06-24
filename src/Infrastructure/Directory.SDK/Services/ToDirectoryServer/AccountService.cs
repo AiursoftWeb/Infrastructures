@@ -2,7 +2,7 @@
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Options;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;

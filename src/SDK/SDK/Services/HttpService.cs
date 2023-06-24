@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 
 namespace Aiursoft.SDK.Services;
 

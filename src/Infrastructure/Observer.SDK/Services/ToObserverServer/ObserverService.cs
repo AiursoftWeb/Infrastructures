@@ -7,7 +7,7 @@ using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;
 using Aiursoft.Observer.SDK.Models.EventViewModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Observer.SDK.Services.ToObserverServer;

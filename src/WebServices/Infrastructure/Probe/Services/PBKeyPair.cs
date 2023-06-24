@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 
 namespace Aiursoft.Probe.Services;
 

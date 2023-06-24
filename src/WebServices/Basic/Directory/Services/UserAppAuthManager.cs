@@ -7,7 +7,7 @@ using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.ForApps.AddressModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

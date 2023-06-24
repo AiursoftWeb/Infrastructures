@@ -5,7 +5,7 @@ using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;

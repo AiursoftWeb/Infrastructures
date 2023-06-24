@@ -7,7 +7,7 @@ using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 

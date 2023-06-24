@@ -2,7 +2,7 @@
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstraction;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.ChannelAddressModels;
 using Aiursoft.Stargate.SDK.Models.ChannelViewModels;
