@@ -32,7 +32,7 @@ public class HomeController : Controller
             CurrentId = _counter.GetCurrent,
             TotalMemoryMessages = messages,
             Channels = channels,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Welcome to Aiursoft Stargate server!"
         });
     }

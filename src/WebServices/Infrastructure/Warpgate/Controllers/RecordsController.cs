@@ -30,7 +30,7 @@ public class RecordsController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var createdRecord = await _recordRepo.CreateRecord(model.NewRecordName, model.Type, appid, model.TargetUrl,
             model.Enabled, model.Tags);
-        return this.Protocol(Code.Success,
+        return this.Protocol(Code.JobDone,
             $"Successfully created your new record: '{createdRecord.RecordUniqueName}' at {createdRecord.CreationTime}.");
     }
 
@@ -43,7 +43,7 @@ public class RecordsController : ControllerBase
         {
             AppId = appid,
             Records = records,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get all your records!"
         };
         return this.Protocol(viewModel);
@@ -69,7 +69,7 @@ public class RecordsController : ControllerBase
         record.Enabled = model.Enabled;
         record.Tags = model.Tags;
         await _recordRepo.UpdateRecord(record);
-        return this.Protocol(Code.Success, "Successfully updated your Record!");
+        return this.Protocol(Code.JobDone, "Successfully updated your Record!");
     }
 
     [HttpPost]
@@ -78,7 +78,7 @@ public class RecordsController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var record = await _recordRepo.GetRecordByNameUnderApp(model.RecordName, appid);
         await _recordRepo.DeleteRecord(record);
-        return this.Protocol(Code.Success, "Successfully deleted your Record!");
+        return this.Protocol(Code.JobDone, "Successfully deleted your Record!");
     }
 
     [HttpPost]
@@ -92,6 +92,6 @@ public class RecordsController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        return this.Protocol(Code.Success, $"The app with ID: {app.AppId} was successfully deleted!");
+        return this.Protocol(Code.JobDone, $"The app with ID: {app.AppId} was successfully deleted!");
     }
 }

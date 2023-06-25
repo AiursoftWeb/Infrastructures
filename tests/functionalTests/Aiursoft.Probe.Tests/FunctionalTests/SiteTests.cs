@@ -67,7 +67,7 @@ public class SiteTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(contentObject.Code, Code.Success);
+        Assert.AreEqual(contentObject.Code, Code.ResultShown);
     }
 
     [TestMethod]
@@ -119,7 +119,7 @@ public class SiteTests
             "my-site",
             openToDownload: true,
             openToUpload: true);
-        Assert.AreEqual(Code.Success, response.Code);
+        Assert.AreEqual(Code.JobDone, response.Code);
 
         var sites = await siteService.ViewMySitesAsync("mock-access-token");
         Assert.AreEqual("my-site", sites.Sites.First().SiteName);
@@ -134,7 +134,7 @@ public class SiteTests
             "my-site",
             openToDownload: true,
             openToUpload: true);
-        Assert.AreEqual(Code.Success, response.Code);
+        Assert.AreEqual(Code.JobDone, response.Code);
 
         try
         {
@@ -163,9 +163,10 @@ public class SiteTests
             "my-site",
             openToDownload: false,
             openToUpload: true);
-        Assert.AreEqual(Code.Success, response.Code);
+        Assert.AreEqual(Code.JobDone, response.Code);
 
         var sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site");
+        Assert.AreEqual(Code.ResultShown, sites.Code);
         Assert.AreEqual(sites.Site.SiteName, "my-site");
         Assert.AreEqual(sites.Site.OpenToDownload, false);
         Assert.AreEqual(sites.Site.OpenToUpload, true);
@@ -180,7 +181,7 @@ public class SiteTests
             "my-site",
             openToDownload: false,
             openToUpload: true);
-        Assert.AreEqual(Code.Success, response.Code);
+        Assert.AreEqual(Code.JobDone, response.Code);
 
         var sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site");
         Assert.AreEqual(sites.Site.SiteName, "my-site");
@@ -193,7 +194,7 @@ public class SiteTests
             "my-site",
             openToDownload: true,
             openToUpload: false);
-        Assert.AreEqual(Code.Success, updateResponse.Code);
+        Assert.AreEqual(Code.JobDone, updateResponse.Code);
 
         updateResponse = await siteService.UpdateSiteInfoAsync(
             "mock-access-token",
@@ -201,7 +202,7 @@ public class SiteTests
             "my-site2",
             openToDownload: true,
             openToUpload: false);
-        Assert.AreEqual(Code.Success, updateResponse.Code);
+        Assert.AreEqual(Code.JobDone, updateResponse.Code);
 
         sites = await siteService.ViewSiteDetailAsync("mock-access-token", "my-site2");
         Assert.AreEqual(sites.Site.SiteName, "my-site2");
@@ -218,11 +219,11 @@ public class SiteTests
             "my-site",
             openToDownload: false,
             openToUpload: true);
-        Assert.AreEqual(Code.Success, createNewSiteResponse.Code);
+        Assert.AreEqual(Code.JobDone, createNewSiteResponse.Code);
 
         var deleteSiteResult = await siteService.DeleteSiteAsync("mock-access-token", "my-site");
-        Assert.AreEqual(Code.Success, deleteSiteResult.Code);
-
+        Assert.AreEqual(Code.JobDone, deleteSiteResult.Code);
+        
         var sites = await siteService.ViewMySitesAsync("mock-access-token");
         Assert.AreEqual(0, sites.Sites.Count);
     }

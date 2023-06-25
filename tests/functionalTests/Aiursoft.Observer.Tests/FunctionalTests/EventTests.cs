@@ -65,7 +65,7 @@ public class EventTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(contentObject.Code, Code.Success);
+        Assert.AreEqual(contentObject.Code, Code.NoActionTaken);
     }
 
     [TestMethod]

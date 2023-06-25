@@ -23,7 +23,7 @@ public class HomeController : ControllerBase
     {
         var model = new WarpgatePatternConfig
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Welcome to Aiursoft Warpgate!",
             WarpPattern = _locator.RedirectPattern
         };

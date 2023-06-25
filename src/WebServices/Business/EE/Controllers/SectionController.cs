@@ -101,7 +101,7 @@ public class SectionController : Controller
 
         _dbContext.Sections.Remove(section);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, $"Successfully deleted the section '{section.SectionName}'!");
+        return this.Protocol(Code.JobDone, $"Successfully deleted the section '{section.SectionName}'!");
     }
 
     private async Task<EEUser> GetCurrentUserAsync()

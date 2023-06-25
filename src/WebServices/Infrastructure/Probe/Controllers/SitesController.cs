@@ -33,7 +33,7 @@ public class SitesController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var createdSite =
             await _siteRepo.CreateSite(model.NewSiteName, model.OpenToUpload, model.OpenToDownload, appid);
-        return this.Protocol(Code.Success,
+        return this.Protocol(Code.JobDone,
             $"Successfully created your new site: '{createdSite.SiteName}' at {createdSite.CreationTime}.");
     }
 
@@ -46,7 +46,7 @@ public class SitesController : ControllerBase
         {
             AppId = appid,
             Sites = sites,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get all your sites!"
         };
         return this.Protocol(viewModel);
@@ -62,7 +62,7 @@ public class SitesController : ControllerBase
             AppId = appid,
             Site = site,
             Size = await _folderRepo.GetFolderSize(site.RootFolderId),
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get your site!"
         };
         return this.Protocol(viewModel);
@@ -86,7 +86,7 @@ public class SitesController : ControllerBase
         site.OpenToDownload = model.OpenToDownload;
         site.OpenToUpload = model.OpenToUpload;
         await _siteRepo.UpdateSite(site);
-        return this.Protocol(Code.Success, "Successfully updated your site!");
+        return this.Protocol(Code.JobDone, "Successfully updated your site!");
     }
 
     [HttpPost]
@@ -95,7 +95,7 @@ public class SitesController : ControllerBase
         var appid = await _appRepo.GetAppId(model.AccessToken);
         var site = await _siteRepo.GetSiteByNameUnderApp(model.SiteName, appid);
         await _siteRepo.DeleteSite(site);
-        return this.Protocol(Code.Success, "Successfully deleted your site!");
+        return this.Protocol(Code.JobDone, "Successfully deleted your site!");
     }
 
     [HttpPost]
@@ -109,6 +109,6 @@ public class SitesController : ControllerBase
         }
 
         await _appRepo.DeleteApp(app);
-        return this.Protocol(Code.Success, $"That app with ID: {app.AppId} was successfully deleted!");
+        return this.Protocol(Code.JobDone, $"That app with ID: {app.AppId} was successfully deleted!");
     }
 }

@@ -47,7 +47,7 @@ public class AppsController : ControllerBase
             return this.Protocol(new AiurResponse { Message = "Wrong secret.", Code = Code.WrongKey });
         }
 
-        return this.Protocol(new AiurResponse { Message = "Correct app info.", Code = Code.Success });
+        return this.Protocol(new AiurResponse { Message = "Correct app info.", Code = Code.NoActionTaken });
     }
 
     [Produces(typeof(AppInfoViewModel))]
@@ -66,7 +66,7 @@ public class AppsController : ControllerBase
         return this.Protocol(new AppInfoViewModel
         {
             Message = "Successfully get target app info.",
-            Code = Code.Success,
+            Code = Code.ResultShown,
             App = target
         });
     }
@@ -88,7 +88,7 @@ public class AppsController : ControllerBase
         var token = _tokenGenerator.GenerateAccessToken(model.AppId);
         return this.Protocol(new AccessTokenViewModel
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get access token.",
             AccessToken = token.tokenString,
             DeadTime = token.expireTime
@@ -106,7 +106,7 @@ public class AppsController : ControllerBase
             .Include(t => t.User)
             .Where(t => t.AppId == appid)
             .OrderByDescending(t => t.GrantTime);
-        return await this.Protocol(Code.Success, "Successfully get all your users", query, model);
+        return await this.Protocol(Code.ResultShown, "Successfully get all your users", query, model);
     }
 
     [HttpPost]
@@ -117,6 +117,6 @@ public class AppsController : ControllerBase
         var appid = await _tokenManager.ValidateAccessTokenAsync(accessToken);
         _dbContext.LocalAppGrant.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "Successfully dropped all users granted!");
+        return this.Protocol(Code.JobDone, "Successfully dropped all users granted!");
     }
 }

@@ -52,7 +52,7 @@ public class MessageController : ControllerBase
         channel.Push(message);
         return this.Protocol(new AiurResponse
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = $"You have successfully pushed a new message to channel: {channel.Id}!"
         });
     }

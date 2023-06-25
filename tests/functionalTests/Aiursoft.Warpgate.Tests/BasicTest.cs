@@ -67,7 +67,7 @@ public class BasicTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(Code.Success, contentObject.Code);
+        Assert.AreEqual(Code.ResultShown, contentObject.Code);
     }
 
     [TestMethod]
@@ -99,7 +99,7 @@ public class BasicTests
         var recordsService = _serviceProvider.GetRequiredService<RecordsService>();
         var created = await recordsService.CreateNewRecordAsync("mock-access-token", "stack",
             "https://stackoverflow.com", Array.Empty<string>(), RecordType.Redirect, true);
-        Assert.AreEqual(Code.Success, created.Code);
+        Assert.AreEqual(Code.JobDone, created.Code);
         var records = await recordsService.ViewMyRecordsAsync("mock-access-token");
         Assert.AreEqual(records.Records.Single().RecordUniqueName, "stack");
     }

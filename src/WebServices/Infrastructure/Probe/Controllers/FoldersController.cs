@@ -39,7 +39,7 @@ public class FoldersController : ControllerBase
 
         return this.Protocol(new AiurValue<Folder>(folder)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get your folder!"
         });
     }
@@ -57,7 +57,7 @@ public class FoldersController : ControllerBase
         }
 
         await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
-        return this.Protocol(Code.Success, "Successfully created your new folder!");
+        return this.Protocol(Code.JobDone, "Successfully created your new folder!");
     }
 
     [HttpPost]
@@ -78,6 +78,6 @@ public class FoldersController : ControllerBase
         }
 
         await _folderRepo.DeleteFolder(folder.Id);
-        return this.Protocol(Code.Success, "Successfully deleted your folder!");
+        return this.Protocol(Code.JobDone, "Successfully deleted your folder!");
     }
 }

@@ -51,7 +51,7 @@ public class EventController : ControllerBase
             await dbContext.SaveChangesAsync();
         });
 
-        return this.Protocol(Code.Success, "Successfully logged your event.");
+        return this.Protocol(Code.JobDone, "Successfully logged your event.");
     }
 
     [Produces(typeof(ViewLogViewModel))]
@@ -74,7 +74,7 @@ public class EventController : ControllerBase
         {
             AppId = appid,
             Logs = logs,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get your logs!"
         };
         return this.Protocol(viewModel);
@@ -93,6 +93,6 @@ public class EventController : ControllerBase
         _dbContext.ErrorLogs.Delete(t => t.AppId == appid);
         await _dbContext.SaveChangesAsync();
         
-        return this.Protocol(Code.Success, "App deleted.");
+        return this.Protocol(Code.JobDone, "App deleted.");
     }
 }

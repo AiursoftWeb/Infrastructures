@@ -75,7 +75,7 @@ public class BasicTests
 
         var content = await response.Content.ReadAsStringAsync();
         var contentObject = JsonConvert.DeserializeObject<AiurResponse>(content);
-        Assert.AreEqual(Code.Success,contentObject.Code);
+        Assert.AreEqual(Code.ResultShown,contentObject.Code);
     }
 
     [TestMethod]

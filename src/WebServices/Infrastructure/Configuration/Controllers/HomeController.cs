@@ -8,6 +8,6 @@ public class HomeController : ControllerBase
 {
     public IActionResult Index()
     {
-        return this.Protocol(Code.Success, "Welcome to Aiursoft Configuration center!");
+        return this.Protocol(Code.NoActionTaken, "Welcome to Aiursoft Configuration center!");
     }
 }

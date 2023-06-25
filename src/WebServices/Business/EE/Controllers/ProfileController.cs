@@ -145,7 +145,7 @@ public class ProfileController : Controller
                 t.TriggerId == currentUser.Id && t.ReceiverId == user.Id);
         if (follow != null)
         {
-            return this.Protocol(Code.Success, "You have already followed the target user!");
+            return this.Protocol(Code.NoActionTaken, "You have already followed the target user!");
         }
 
         await _dbContext.Follows.AddAsync(new Follow
@@ -154,7 +154,7 @@ public class ProfileController : Controller
             ReceiverId = user.Id
         });
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "You have successfully followed the target user!");
+        return this.Protocol(Code.JobDone, "You have successfully followed the target user!");
     }
 
     [HttpPost]
@@ -181,7 +181,7 @@ public class ProfileController : Controller
 
         _dbContext.Follows.Remove(follow);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "You have successfully unfollowed the target user!");
+        return this.Protocol(Code.JobDone, "You have successfully unfollowed the target user!");
     }
 
     [AiurForceAuth]

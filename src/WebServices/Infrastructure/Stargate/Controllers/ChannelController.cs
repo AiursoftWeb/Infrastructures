@@ -58,7 +58,7 @@ public class ChannelController : ControllerBase
         {
             AppId = appid,
             Channels = channels,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get your channels!"
         };
         return this.Protocol(viewModel);
@@ -97,7 +97,7 @@ public class ChannelController : ControllerBase
 
         return this.Protocol(new AiurValue<string>(channel.AppId)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = $"Current Info. Belongs to app with id: '{channel.AppId}'."
         });
     }
@@ -126,7 +126,7 @@ public class ChannelController : ControllerBase
         {
             ChannelId = channelId,
             ConnectKey = key,
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully created your channel!"
         };
         return this.Protocol(viewModel);
@@ -148,7 +148,7 @@ public class ChannelController : ControllerBase
         _stargateMemory.DeleteChannel(channel.Id);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurResponse
-            { Code = Code.Success, Message = "Successfully deleted your channel!" });
+            { Code = Code.JobDone, Message = "Successfully deleted your channel!" });
     }
 
     /// <summary>
@@ -181,6 +181,6 @@ public class ChannelController : ControllerBase
         _dbContext.Apps.Remove(target);
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurResponse
-            { Code = Code.Success, Message = "Successfully deleted that app and all channels." });
+            { Code = Code.JobDone, Message = "Successfully deleted that app and all channels." });
     }
 }

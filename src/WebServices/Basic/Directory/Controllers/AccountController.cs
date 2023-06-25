@@ -73,7 +73,7 @@ public class AccountController : ControllerBase
             OpenId = targetPack.UserId,
             Scope = "scope",
             Message = "Successfully get user openid",
-            Code = Code.Success
+            Code = Code.ResultShown
         };
         return this.Protocol(viewModel);
     }

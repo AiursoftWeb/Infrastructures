@@ -41,7 +41,7 @@ public class HomeController : ControllerBase
         {
             SignedIn = User.Identity?.IsAuthenticated ?? false,
             ServerTime = DateTime.UtcNow,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Server started successfully!",
             Local = _localizer["en"],
             Exponent = _privateKeyStore.GetPublicKey().Exponent!.BytesToBase64(),

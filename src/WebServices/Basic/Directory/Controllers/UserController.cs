@@ -60,7 +60,7 @@ public class UserController : ControllerBase
         user.Bio = model.NewBio;
         await _dbContext.SaveChangesAsync();
         return this.Protocol(new AiurResponse
-            { Code = Code.Success, Message = "Successfully changed this user's profile!" });
+            { Code = Code.JobDone, Message = "Successfully changed this user's profile!" });
     }
 
     [HttpPost]
@@ -72,7 +72,7 @@ public class UserController : ControllerBase
         if (result.Succeeded)
         {
             return this.Protocol(new AiurResponse
-                { Code = Code.Success, Message = "Successfully changed your password!" });
+                { Code = Code.JobDone, Message = "Successfully changed your password!" });
         }
 
         return this.Protocol(
@@ -85,7 +85,7 @@ public class UserController : ControllerBase
         var user = await _grantChecker.EnsureGranted(model.AccessToken, model.OpenId, t => t.ViewPhoneNumber);
         return this.Protocol(new AiurValue<string>(user.PhoneNumber)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get the target user's phone number."
         });
     }
@@ -97,7 +97,7 @@ public class UserController : ControllerBase
         user.PhoneNumber = string.IsNullOrWhiteSpace(model.Phone) ? string.Empty : model.Phone;
 
         await _userManager.UpdateAsync(user);
-        return this.Protocol(Code.Success, "Successfully set the user's PhoneNumber!");
+        return this.Protocol(Code.ResultShown, "Successfully set the user's PhoneNumber!");
     }
 
     [Produces(typeof(AiurCollection<UserEmail>))]
@@ -107,7 +107,7 @@ public class UserController : ControllerBase
         var emails = await _dbContext.UserEmails.Where(t => t.OwnerId == user.Id).ToListAsync();
         return this.Protocol(new AiurCollection<UserEmail>(emails)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get the target user's emails."
         });
     }
@@ -131,7 +131,7 @@ public class UserController : ControllerBase
         };
         await _dbContext.UserEmails.AddAsync(mail);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "Successfully set");
+        return this.Protocol(Code.JobDone, "Successfully set");
     }
 
     [HttpPost]
@@ -155,7 +155,7 @@ public class UserController : ControllerBase
 
         _dbContext.UserEmails.Remove(userEmail);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, $"Successfully deleted the email: {model.ThatEmail}!");
+        return this.Protocol(Code.JobDone, $"Successfully deleted the email: {model.ThatEmail}!");
     }
 
     [HttpPost]
@@ -176,7 +176,7 @@ public class UserController : ControllerBase
 
         if (userEmail.Validated)
         {
-            return this.Protocol(Code.Success, $"The email: {model.Email} was already validated!");
+            return this.Protocol(Code.NoActionTaken, $"The email: {model.Email} was already validated!");
         }
 
         var byProvider =
@@ -190,7 +190,7 @@ public class UserController : ControllerBase
         // limit the sending frequency to 3 minutes.
         if (DateTime.UtcNow <= userEmail.LastSendTime + new TimeSpan(0, 1, 0))
         {
-            return this.Protocol(Code.Success, "We have just sent you an Email in an minute.");
+            return this.Protocol(Code.NoActionTaken, "We have just sent you an Email in an minute.");
         }
 
         var token = Guid.NewGuid().ToString("N");
@@ -209,7 +209,7 @@ public class UserController : ControllerBase
             return this.Protocol(Code.InvalidInput, e.Message);
         }
 
-        return this.Protocol(Code.Success, "Successfully sent the validation email.");
+        return this.Protocol(Code.JobDone, "Successfully sent the validation email.");
     }
 
     [HttpPost]
@@ -235,7 +235,7 @@ public class UserController : ControllerBase
 
         userEmail.Priority = user.Emails.Max(t => t.Priority) + 1;
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "Successfully set your primary email.");
+        return this.Protocol(Code.JobDone, "Successfully set your primary email.");
     }
 
     [Produces(typeof(AiurCollection<AppGrant>))]
@@ -245,7 +245,7 @@ public class UserController : ControllerBase
         var applications = await _dbContext.LocalAppGrant.Where(t => t.DirectoryUserId == user.Id).ToListAsync();
         return this.Protocol(new AiurCollection<AppGrant>(applications)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get all your granted apps!"
         });
     }
@@ -266,7 +266,7 @@ public class UserController : ControllerBase
 
         _dbContext.LocalAppGrant.Remove(appToDelete);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "Successfully deleted target app grant record!");
+        return this.Protocol(Code.JobDone, "Successfully deleted target app grant record!");
     }
 
     [Produces(typeof(AiurPagedCollection<AuditLog>))]
@@ -278,7 +278,7 @@ public class UserController : ControllerBase
             .Where(t => t.UserId == user.Id)
             .OrderByDescending(t => t.HappenTime);
 
-        return await this.Protocol(Code.Success, "Successfully get all your audit log!", query, model);
+        return await this.Protocol(Code.ResultShown, "Successfully get all your audit log!", query, model);
     }
 
     [Produces(typeof(AiurCollection<AiurThirdPartyAccount>))]
@@ -292,7 +292,7 @@ public class UserController : ControllerBase
             .ToListAsync();
         return this.Protocol(new AiurCollection<ThirdPartyAccount>(accounts)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get all your audit log!"
         });
     }
@@ -308,7 +308,7 @@ public class UserController : ControllerBase
             .ToListAsync();
         _dbContext.ThirdPartyAccounts.RemoveRange(accounts);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, $"Successfully unbound your {model.ProviderName} account.");
+        return this.Protocol(Code.JobDone, $"Successfully unbound your {model.ProviderName} account.");
     }
 
     [HttpPost]
@@ -319,8 +319,8 @@ public class UserController : ControllerBase
         var key = user.Has2FAKey;
         return this.Protocol(new AiurValue<bool>(key)
         {
-            Code = Code.Success,
-            Message = "Successfully get the target user's Has2FAkey."
+            Code = Code.ResultShown,
+            Message = "Successfully get the target user's Has2FAkey status."
         });
     }
 
@@ -332,7 +332,7 @@ public class UserController : ControllerBase
         var enabled = user.TwoFactorEnabled;
         return this.Protocol(new AiurValue<bool>(enabled)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Successfully get the target user's TwoFactorEnabled."
         });
     }
@@ -347,8 +347,8 @@ public class UserController : ControllerBase
         {
             TwoFAKey = twoFaKey,
             TwoFAQRUri = twoFAQRUri,
-            Code = Code.Success,
-            Message = "Successfully set the user's TwoFAKey!"
+            Code = Code.ResultShown,
+            Message = "Successfully get the user's TwoFAKey!"
         });
     }
 
@@ -366,7 +366,7 @@ public class UserController : ControllerBase
         var hasKey = user.Has2FAKey;
         return this.Protocol(new AiurValue<bool>(hasKey)
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully set the user's TwoFAKey!"
         });
     }
@@ -379,7 +379,7 @@ public class UserController : ControllerBase
         // reset 2fa key
         await _userManager.SetTwoFactorEnabledAsync(user, false);
         await _userManager.ResetAuthenticatorKeyAsync(user);
-        return this.Protocol(Code.Success, "Successfully reset the user's TwoFAKey!");
+        return this.Protocol(Code.JobDone, "Successfully reset the user's TwoFAKey!");
     }
 
     [HttpPost]
@@ -394,22 +394,30 @@ public class UserController : ControllerBase
         var is2FATokenValid = await _userManager.VerifyTwoFactorTokenAsync(
             user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-        if (!is2FATokenValid || user.TwoFactorEnabled)
+        if (!is2FATokenValid)
         {
-            return this.Protocol(new AiurValue<bool>(is2FATokenValid)
+            return this.Protocol(new AiurValue<bool>(false)
             {
-                Code = Code.Success,
-                Message = "Sucess Verified code."
+                Code = Code.Unauthorized,
+                Message = "Invalid 2FA token!"
             });
         }
 
+        if (user.TwoFactorEnabled)
+        {
+            return this.Protocol(new AiurValue<bool>(true)
+            {
+                Code = Code.NoActionTaken,
+                Message = "The 2FA was already enabled so no action was taken."
+            });
+        }
         // enable 2fa.
         user.TwoFactorEnabled = true;
         await _userManager.UpdateAsync(user);
 
         return this.Protocol(new AiurValue<bool>(true)
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully Verified code."
         });
     }
@@ -433,7 +441,7 @@ public class UserController : ControllerBase
 
         return this.Protocol(new AiurValue<bool>(success)
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully called DisableTwoFA method!"
         });
     }
@@ -449,7 +457,7 @@ public class UserController : ControllerBase
 
         return this.Protocol(new AiurCollection<string>(recoveryCodes.ToList())
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Sucess regenerate recovery Codes!."
         });
     }

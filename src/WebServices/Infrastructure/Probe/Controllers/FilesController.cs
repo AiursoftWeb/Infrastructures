@@ -102,7 +102,7 @@ public class FilesController : ControllerBase
             SiteName = model.SiteName,
             FilePath = filePath,
             FileSize = file.Length,
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully uploaded your file."
         });
     }
@@ -125,7 +125,7 @@ public class FilesController : ControllerBase
         }
 
         await _fileRepo.DeleteFileById(file.Id);
-        return this.Protocol(Code.Success, $"Successfully deleted the file '{file.FileName}'");
+        return this.Protocol(Code.JobDone, $"Successfully deleted the file '{file.FileName}'");
     }
 
     [HttpPost]
@@ -164,7 +164,7 @@ public class FilesController : ControllerBase
             SiteName = model.TargetSiteName,
             FilePath = filePath,
             FileSize = file.FileSize,
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Successfully copied your file."
         });
     }
@@ -196,8 +196,8 @@ public class FilesController : ControllerBase
             SiteName = model.SiteName,
             FilePath = filePath,
             FileSize = file.FileSize,
-            Code = Code.Success,
-            Message = "Successfully copied your file."
+            Code = Code.JobDone,
+            Message = "Successfully renamed your file."
         });
     }
 }

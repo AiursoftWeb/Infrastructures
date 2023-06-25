@@ -22,7 +22,7 @@ public class HomeController : ControllerBase
             OpenPattern = _configuration.OpenPattern,
             DownloadPattern = _configuration.DownloadPattern,
             PlayerPattern = _configuration.PlayerPattern,
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = "Welcome to Probe!"
         });
     }

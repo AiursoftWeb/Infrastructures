@@ -19,6 +19,6 @@ public class MockDeveloperApiService : AppsService
 
     public override Task<AiurResponse> IsValidAppAsync(string appId, string appSecret)
     {
-        return Task.FromResult(new AiurResponse { Code = Code.Success, Message = "Success!" });
+        return Task.FromResult(new AiurResponse { Code = Code.NoActionTaken, Message = "Success!" });
     }
 }

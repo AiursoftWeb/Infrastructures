@@ -142,7 +142,7 @@ public class CourseController : Controller
         };
         await _dbContext.Subscriptions.AddAsync(newSubscription);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "You have successfully subscribed this course!");
+        return this.Protocol(Code.JobDone, "You have successfully subscribed this course!");
     }
 
     [HttpPost]
@@ -171,7 +171,7 @@ public class CourseController : Controller
 
         _dbContext.Subscriptions.Remove(sub);
         await _dbContext.SaveChangesAsync();
-        return this.Protocol(Code.Success, "Successfully unsubscribed this course!");
+        return this.Protocol(Code.JobDone, "Successfully unsubscribed this course!");
     }
 
     private async Task<EEUser> GetCurrentUserAsync()

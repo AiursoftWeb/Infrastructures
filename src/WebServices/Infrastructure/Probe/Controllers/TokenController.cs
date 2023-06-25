@@ -31,6 +31,7 @@ public class TokenController : ControllerBase
         _probeTokenManager = probeTokenManager;
     }
 
+    // TODO: Merge this with Directory token!
     [HttpPost]
     [Produces(typeof(AiurValue<string>))]
     public async Task<IActionResult> GetToken(GetTokenAddressModel model)
@@ -54,7 +55,7 @@ public class TokenController : ControllerBase
             TimeSpan.FromSeconds(model.LifespanSeconds));
         return this.Protocol(new AiurValue<string>(pbToken)
         {
-            Code = Code.Success,
+            Code = Code.ResultShown,
             Message = $"Successfully get your PBToken! Use it before {deadline} UTC!"
         });
     }

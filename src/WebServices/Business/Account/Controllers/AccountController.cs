@@ -301,12 +301,8 @@ public class AccountController : Controller
         var correctToken = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.NewPhoneNumber);
         if (correctToken)
         {
-            var result = await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(),
+            await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(),
                 model.NewPhoneNumber);
-            if (result.Code != Code.Success)
-            {
-                throw new InvalidOperationException();
-            }
 
             user.PhoneNumber = model.NewPhoneNumber;
             await _userManager.UpdateAsync(user);
@@ -323,12 +319,7 @@ public class AccountController : Controller
     public async Task<IActionResult> UnBind()
     {
         var user = await GetCurrentUserAsync();
-        var result =
-            await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(), string.Empty);
-        if (result.Code != Code.Success)
-        {
-            throw new InvalidOperationException();
-        }
+        await _userService.SetPhoneNumberAsync(user.Id, await _directoryAppTokenService.GetAccessTokenAsync(), string.Empty);
 
         user.PhoneNumber = string.Empty;
         await _userManager.UpdateAsync(user);
@@ -510,13 +501,8 @@ public class AccountController : Controller
     [HttpPost]
     [ApiExceptionHandler]
     [ApiModelStateChecker]
-    public async Task<IActionResult> UnBindAccount(string provider)
+    public async Task<IActionResult> UnBindAccount([Required]string provider)
     {
-        if (string.IsNullOrWhiteSpace(provider))
-        {
-            return this.Protocol(Code.Success, "Seems no this provider at all...");
-        }
-
         var user = await GetCurrentUserAsync();
         var token = await _directoryAppTokenService.GetAccessTokenAsync();
         var result = await _userService.UnBindSocialAccountAsync(token, user.Id, provider);
