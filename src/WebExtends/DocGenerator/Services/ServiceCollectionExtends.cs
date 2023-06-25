@@ -27,14 +27,14 @@ public class APIDocGeneratorSettings
             controller.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc));
     };
 
-    public Func<MethodInfo, Type, bool> JudgeAuthorized { get; set; } = (action, controller) =>
+    public Func<MethodInfo, Type, bool> RequiresAuthorized { get; set; } = (action, controller) =>
     {
         return
             action.CustomAttributes.Any(t => t.AttributeType == typeof(AuthorizeAttribute)) ||
             controller.CustomAttributes.Any(t => t.AttributeType == typeof(AuthorizeAttribute));
     };
 
-    public List<object> GlobalPossibleResponse { get; set; } = new();
+    public List<object> GlobalApisPossibleResponses { get; set; } = new();
 }
 
 public static class ServiceCollectionExtends

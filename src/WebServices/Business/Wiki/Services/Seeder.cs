@@ -150,7 +150,7 @@ public class Seeder : ITransientDependency
                 var apiRoot = collection.DocAPIAddress.ToLower().Replace("/doc", "");
                 foreach (var docController in docGrouped)
                 {
-                    var markdown = _markDownGenerator.GenerateMarkDownForApi(docController, apiRoot);
+                    var markdown = _markDownGenerator.GenerateMarkDownForController(docController, apiRoot);
                     var newArticle = new Article
                     {
                         ArticleTitle = docController.Key.TrimController(),

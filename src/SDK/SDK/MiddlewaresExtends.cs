@@ -95,19 +95,19 @@ public static class MiddlewaresExtends
                     action.CustomAttributes.Any(t => t.AttributeType == typeof(ApiModelStateChecker)) ||
                     controller.CustomAttributes.Any(t => t.AttributeType == typeof(ApiModelStateChecker));
             };
-            options.JudgeAuthorized = (action, controller) =>
+            options.RequiresAuthorized = (action, controller) =>
             {
                 return
                     action.CustomAttributes.Any(t => t.AttributeType.IsAssignableFrom(typeof(IAiurForceAuth))) ||
                     controller.CustomAttributes.Any(t => t.AttributeType.IsAssignableFrom(typeof(IAiurForceAuth)));
             };
             options.Format = DocFormat.Json;
-            options.GlobalPossibleResponse.Add(new AiurResponse
+            options.GlobalApisPossibleResponses.Add(new AiurResponse
             {
                 Code = Code.WrongKey,
                 Message = "Some error."
             });
-            options.GlobalPossibleResponse.Add(new AiurCollection<string>(new List<string> { "Some item is invalid!" })
+            options.GlobalApisPossibleResponses.Add(new AiurCollection<string>(new List<string> { "Some item is invalid!" })
             {
                 Code = Code.InvalidInput,
                 Message = "Your input contains several errors!"

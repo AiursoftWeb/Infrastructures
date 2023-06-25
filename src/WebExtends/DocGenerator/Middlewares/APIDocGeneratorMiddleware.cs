@@ -31,8 +31,8 @@ public class APIDocGeneratorMiddleware
     public static void ApplySettings(APIDocGeneratorSettings settings)
     {
         _isAPIAction = settings.IsAPIAction;
-        _judgeAuthorized = settings.JudgeAuthorized;
-        _globalPossibleResponse = settings.GlobalPossibleResponse;
+        _judgeAuthorized = settings.RequiresAuthorized;
+        _globalPossibleResponse = settings.GlobalApisPossibleResponses;
         _format = settings.Format;
         _docAddress = settings.DocAddress.TrimStart('/').ToLower();
     }
@@ -126,7 +126,7 @@ public class APIDocGeneratorMiddleware
             foreach (var controllerDoc in groupedControllers)
             {
                 finalMarkDown +=
-                    generator.GenerateMarkDownForApi(controllerDoc,
+                    generator.GenerateMarkDownForController(controllerDoc,
                         $"{context.Request.Scheme}://{context.Request.Host}") + "\r\n--------\r\n";
             }
 
