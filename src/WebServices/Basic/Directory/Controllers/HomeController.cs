@@ -15,7 +15,6 @@ using Aiursoft.Directory.Services;
 
 namespace Aiursoft.Directory.Controllers;
 
-
 public class HomeController : ControllerBase
 {
     private readonly ISessionBasedCaptcha _captcha;
@@ -45,8 +44,8 @@ public class HomeController : ControllerBase
             Code = Code.Success,
             Message = "Server started successfully!",
             Local = _localizer["en"],
-            Exponent = _privateKeyStore.GetPrivateKey().Exponent.BytesToBase64(),
-            Modulus = _privateKeyStore.GetPrivateKey().Modulus.BytesToBase64(),
+            Exponent = _privateKeyStore.GetPublicKey().Exponent!.BytesToBase64(),
+            Modulus = _privateKeyStore.GetPublicKey().Modulus!.BytesToBase64(),
             User = currentUser
         });
     }
