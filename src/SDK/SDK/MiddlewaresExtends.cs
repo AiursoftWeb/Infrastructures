@@ -85,7 +85,7 @@ public static class MiddlewaresExtends
         app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         app.UseAiursoftDocGenerator(options =>
         {
-            options.IsAPIAction = (action, controller) =>
+            options.IsApiAction = (action, controller) =>
             {
                 return
                     action.CustomAttributes.Any(t => t.AttributeType == typeof(GenerateDoc)) ||

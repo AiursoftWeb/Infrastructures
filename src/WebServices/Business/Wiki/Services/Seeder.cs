@@ -140,7 +140,7 @@ public class Seeder : ITransientDependency
 
                 _logger.LogInformation($"Requesting doc API...");
                 var docString = await _http.Get(collection.DocAPIAddress);
-                var docModel = JsonConvert.DeserializeObject<List<API>>(docString);
+                var docModel = JsonConvert.DeserializeObject<List<Api>>(docString);
                 if (docModel == null)
                 {
                     continue;

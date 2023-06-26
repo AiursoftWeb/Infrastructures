@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <Version>6.0.22</Version>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>Aiursoft.DocGenerator</RootNamespace>
-  </PropertyGroup>
-
-</Project>
