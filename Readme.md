@@ -83,6 +83,23 @@ Also, you can run that upgrade script to repair some issues with your Infrastruc
 
 ## The design of Infrastructures
 
+---
+title: Project dependency diagram
+---
+stateDiagram-v2
+    Aiursoft.Canon --> Aiursoft.Scanner.Abstractions
+    Aiursoft.AiurProtocol --> Aiursoft.Canon
+    Aiursoft.AiurProtocol --> Aiursoft.CSTools
+    Aiursoft.AiurProtocol --> Aiursoft.AiurProtocol.Abstractions
+    Aiursoft.AiurProtocol.Server --> Aiursoft.AiurProtocol
+    Aiursoft.CSTools --> Aiursoft.Scanner.Abstractions
+    Aiursoft.WebTools --> Aiursoft.CSTools
+    Aiursoft.WebTools --> Aiursoft.Scanner.Abstractions
+    DemoApiApp.Sdk --> Aiursoft.AiurProtocol
+    DemoApiApp --> DemoApiApp.Sdk
+    DemoApiApp --> Aiursoft.WebTools
+    DemoApiApp --> Aiursoft.AiurProtocol.Server
+
 ### Basic Services
 
 The basic services are used to support the operation of the entire platform. It is the basis for the expansion of the subsequent infrastructure and user services throughout the platform. The basic services mainly include the user's authentication, authorization, application authentication, authorization, and allow the user's self-registration and self-registration of the application. At the same time, the underlying service is also responsible for the user's underlying data and the underlying data of the application, as well as the user's set of credentials and the set of credentials for the application.
