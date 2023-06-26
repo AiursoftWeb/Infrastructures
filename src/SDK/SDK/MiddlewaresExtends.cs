@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.SDK.Middlewares;
 using Microsoft.AspNetCore.Builder;

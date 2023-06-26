@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.AiurProtocol.Interfaces;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Attributes;
 
 namespace Aiursoft.Directory.SDK.Models.API.UserAddressModels;

@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;

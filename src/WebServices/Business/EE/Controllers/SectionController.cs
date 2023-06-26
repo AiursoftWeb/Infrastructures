@@ -1,12 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.SectionViewModels;
-
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Identity.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

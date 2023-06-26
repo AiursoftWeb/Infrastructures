@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
-using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Account.Models.AccountViewModels;
 

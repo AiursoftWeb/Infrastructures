@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Stargate.SDK.Models.HomeViewModels;
 

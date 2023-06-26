@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;

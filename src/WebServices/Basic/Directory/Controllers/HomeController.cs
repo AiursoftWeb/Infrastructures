@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.SDK.Models.API.HomeViewModels;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Attributes;
 using Aiursoft.CSTools.Tools;
 using Edi.Captcha;

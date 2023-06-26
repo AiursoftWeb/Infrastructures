@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.AiurProtocol.Services;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;

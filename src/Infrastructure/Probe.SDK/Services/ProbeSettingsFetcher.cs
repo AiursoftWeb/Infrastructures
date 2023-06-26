@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Probe.SDK.Services;

@@ -1,5 +1,5 @@
-﻿using Aiursoft.AiurProtocol.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Observer.SDK.Models.EventViewModels;
 

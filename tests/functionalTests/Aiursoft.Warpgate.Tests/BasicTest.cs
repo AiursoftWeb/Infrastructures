@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Scanner;
 using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;

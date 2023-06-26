@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

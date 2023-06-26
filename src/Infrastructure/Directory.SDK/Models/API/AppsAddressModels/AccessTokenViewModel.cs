@@ -1,5 +1,5 @@
 ﻿using System;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 

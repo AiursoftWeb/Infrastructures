@@ -2,8 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.Probe.Services;

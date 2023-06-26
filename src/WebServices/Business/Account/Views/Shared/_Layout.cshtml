@@ -1,4 +1,12 @@
-﻿@model AccountViewModel
+﻿@using Aiursoft.SDK.Views.Shared.Components.AiurHeader
+@using Aiursoft.SDK.Views.Shared.Components.AiurMarketCSS
+@using Aiursoft.SDK.Views.Shared.Components.AiurMarketJS
+@using Aiursoft.SDK.Views.Shared.Components.ChinaRegister
+@using Aiursoft.SDK.Views.Shared.Components.ScrollToTop
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Aiursoft.SDK.Views.Shared.Components.AiurFooter
+@using Aiursoft.Identity.Views.Shared.Components.AiurLogout
+@model AccountViewModel
 @{
     var title = $"{ViewData["Title"] ?? string.Empty} - {Values.ProjectName ?? string.Empty} {Localizer["Account"].ToString() ?? string.Empty}";
 }

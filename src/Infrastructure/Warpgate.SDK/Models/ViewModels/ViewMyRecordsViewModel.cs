@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
 

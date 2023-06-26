@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;

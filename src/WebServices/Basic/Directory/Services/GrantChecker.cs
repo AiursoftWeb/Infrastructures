@@ -1,8 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;

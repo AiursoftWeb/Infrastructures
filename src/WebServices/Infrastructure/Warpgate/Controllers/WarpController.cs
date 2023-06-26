@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Attributes;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.SDK.Services;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models;

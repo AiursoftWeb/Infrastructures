@@ -7,10 +7,8 @@ using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AppsViewModels;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
-using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;

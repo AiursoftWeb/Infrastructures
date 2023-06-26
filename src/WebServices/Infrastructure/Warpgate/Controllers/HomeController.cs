@@ -1,6 +1,6 @@
 ﻿
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Warpgate.Models.Configuration;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;

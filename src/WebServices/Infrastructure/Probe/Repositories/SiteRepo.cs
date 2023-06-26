@@ -2,9 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol;
 using Aiursoft.DBTools;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Abstractions;

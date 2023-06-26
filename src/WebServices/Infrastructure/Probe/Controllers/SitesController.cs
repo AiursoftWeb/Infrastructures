@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Attributes;
-using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Scanner;
 using Aiursoft.CSTools.Tools;
 using EFCoreSecondLevelCacheInterceptor;
@@ -8,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Aiursoft.SDK;
 
@@ -17,12 +16,6 @@ public static class ServicesExtends
 {
     public static IServiceCollection AddAiurMvc(this IServiceCollection services)
     {
-        JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-        {
-            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
-
         // TODO: Use it as an attribute to only apply to API.
         services.AddCors(options =>
             options.AddDefaultPolicy(builder =>
@@ -31,11 +24,7 @@ public static class ServicesExtends
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services
             .AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            })
+            .AddAiurProtocol()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
 

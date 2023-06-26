@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Aiursoft.Canon;
-using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Services;

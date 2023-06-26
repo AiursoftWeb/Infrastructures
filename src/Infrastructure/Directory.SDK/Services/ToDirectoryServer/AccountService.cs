@@ -4,7 +4,6 @@ using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
-using Aiursoft.AiurProtocol.Services;
 using Aiursoft.AiurProtocol;
 
 namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
