@@ -6,16 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		
-		
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.19" />
-		
-		
-		
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Abstracts\DocGenerator.Abstract\Aiursoft.DocGenerator.Abstract.csproj" />
 		<ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
 	</ItemGroup>
 </Project>
