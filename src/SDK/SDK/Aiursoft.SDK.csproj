@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
 		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.19" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.19" />
@@ -22,7 +23,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
 		<ProjectReference Include="..\..\WebExtends\DocGenerator\Aiursoft.DocGenerator.csproj" />
-		<ProjectReference Include="..\..\WebExtends\WebTools\Aiursoft.WebTools.csproj" />
 	</ItemGroup>
 
 </Project>
