@@ -10,6 +10,7 @@ namespace Aiursoft.SDK;
 
 public static class ProgramExtends
 {
+    // TODO: Migrate to DB tools!
     public static async Task<IHost> UpdateDbAsync<TContext>(this IHost host) where TContext : DbContext
     {
         if (EntryExtends.IsInEntityFramework())
