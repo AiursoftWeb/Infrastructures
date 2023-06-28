@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Canon;
-using Aiursoft.DBTools;
+using Aiursoft.DbTools;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK.Models;

@@ -1,7 +1,7 @@
-﻿using Aiursoft.SDK;
-using Aiursoft.Wiki.Data;
+﻿using Aiursoft.Wiki.Data;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
+using Aiursoft.DbTools;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Wiki;

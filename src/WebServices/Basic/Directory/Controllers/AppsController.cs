@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.DBTools;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.DbTools;
 
 namespace Aiursoft.Directory.Controllers;
 

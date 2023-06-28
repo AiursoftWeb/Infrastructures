@@ -1,9 +1,9 @@
 ﻿using System;
-using Aiursoft.DBTools;
+using Aiursoft.DbTools;
 
 namespace Aiursoft.Status.Models;
 
-public class MonitorRule : ISyncable<MonitorRule>
+public class MonitorRule : ISynchronizable<MonitorRule>
 {
     public string ProjectName { get; set; }
     public string CheckAddress { get; set; }

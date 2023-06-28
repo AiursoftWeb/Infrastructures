@@ -14,13 +14,13 @@ namespace Aiursoft.Status.Data;
 
 public class MonitorDataProvider : ISingletonDependency
 {
-    private readonly List<MonitorRule> customRules;
-    private readonly ObserverConfiguration observerLocator;
-    private readonly ProbeConfiguration probeLocator;
-    private readonly DirectoryConfiguration directoryConfiguration;
-    private readonly ServiceLocation serviceLocation;
-    private readonly StargateConfiguration stargateLocator;
-    private readonly WarpgateConfiguration warpgateLocator;
+    private readonly List<MonitorRule> _customRules;
+    private readonly ObserverConfiguration _observerLocator;
+    private readonly ProbeConfiguration _probeLocator;
+    private readonly DirectoryConfiguration _directoryConfiguration;
+    private readonly ServiceLocation _serviceLocation;
+    private readonly StargateConfiguration _stargateLocator;
+    private readonly WarpgateConfiguration _warpgateLocator;
 
     public MonitorDataProvider(
         IOptions<DirectoryConfiguration> directoryConfiguration,
@@ -31,13 +31,13 @@ public class MonitorDataProvider : ISingletonDependency
         IOptions<WarpgateConfiguration> warpgateLocator,
         IOptions<List<MonitorRule>> customRules)
     {
-        this.directoryConfiguration = directoryConfiguration.Value;
-        observerLocator = observerConfiguration.Value;
-        this.serviceLocation = serviceLocation;
-        this.stargateLocator = stargateLocator.Value;
-        this.probeLocator = probeLocator.Value;
-        this.warpgateLocator = warpgateLocator.Value;
-        this.customRules = customRules.Value;
+        _directoryConfiguration = directoryConfiguration.Value;
+        _observerLocator = observerConfiguration.Value;
+        _serviceLocation = serviceLocation;
+        _stargateLocator = stargateLocator.Value;
+        _probeLocator = probeLocator.Value;
+        _warpgateLocator = warpgateLocator.Value;
+        _customRules = customRules.Value;
         MonitorRules = BuildDefaultRules().ToArray();
     }
 
@@ -50,7 +50,7 @@ public class MonitorDataProvider : ISingletonDependency
             new()
             {
                 ProjectName = "Aiursoft Home Page",
-                CheckAddress = $"{serviceLocation.WWW}/?show=direct",
+                CheckAddress = $"{_serviceLocation.WWW}/?show=direct",
                 ExpectedContent =
                     "Free training, tools, and community to help you grow your skills, career, or business."
             },
@@ -58,53 +58,53 @@ public class MonitorDataProvider : ISingletonDependency
             {
                 ProjectName = "Aiursoft Directory service",
                 CheckAddress =
-                    $"{directoryConfiguration.Instance}/oauth/authorize?appid={directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
+                    $"{_directoryConfiguration.Instance}/oauth/authorize?appid={_directoryConfiguration.AppId}&redirect_uri=https%3A%2F%2Fwrong.aiursoft.com%2FAuth%2FAuthResult&state=%2F&scope=snsapi_base&response_type=code",
                 ExpectedContent = "This app can not use our authentication system"
             },
             new()
             {
                 ProjectName = "Aiursoft Probe",
-                CheckAddress = probeLocator.Instance,
+                CheckAddress = _probeLocator.Instance,
                 ExpectedContent = "Welcome to Probe!"
             },
             new()
             {
                 ProjectName = "Aiursoft Stargate",
-                CheckAddress = stargateLocator.Instance,
+                CheckAddress = _stargateLocator.Instance,
                 ExpectedContent = "Welcome to"
             },
             new()
             {
                 ProjectName = "Aiursoft Account Center",
-                CheckAddress = $"{serviceLocation.Account}/?show=direct",
+                CheckAddress = $"{_serviceLocation.Account}/?show=direct",
                 ExpectedContent = "Unlock the power of your"
             },
             new()
             {
                 ProjectName = "Aiursoft Wiki",
-                CheckAddress = $"{serviceLocation.Wiki}/Welcome/Home.md",
+                CheckAddress = $"{_serviceLocation.Wiki}/Welcome/Home.md",
                 ExpectedContent = "Wiki Center"
             },
             new()
             {
                 ProjectName = "Aiursoft Observer",
-                CheckAddress = $"{observerLocator.Instance}",
+                CheckAddress = $"{_observerLocator.Instance}",
                 ExpectedContent = "Welcome"
             },
             new()
             {
                 ProjectName = "Aiursoft Warpgate",
-                CheckAddress = warpgateLocator.Instance,
+                CheckAddress = _warpgateLocator.Instance,
                 ExpectedContent = "Welcome"
             },
             new()
             {
                 ProjectName = "Aiursoft UI",
-                CheckAddress = $"{serviceLocation.UI}/index.html",
+                CheckAddress = $"{_serviceLocation.UI}/index.html",
                 ExpectedContent = "Welcome"
             }
         };
-        defaultList.AddRange(customRules);
+        defaultList.AddRange(_customRules);
         return defaultList;
     }
 }

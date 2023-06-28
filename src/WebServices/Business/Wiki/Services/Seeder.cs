@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Aiursoft.Directory.SDK.Services;
-using Aiursoft.DBTools;
 using Aiursoft.DocGenerator.Middlewares;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.DocGenerator.Tools;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Aiursoft.Canon;
+using Aiursoft.DbTools;
 using Aiursoft.SDK.Services;
 
 namespace Aiursoft.Wiki.Services;

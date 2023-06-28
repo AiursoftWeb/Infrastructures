@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
+		<PackageReference Include="Aiursoft.DBTools" Version="6.0.23" />
 		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.19" />
 		<PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
@@ -18,10 +19,6 @@
 	<ItemGroup>
 		
 		<ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\WebExtends\DBTools\Aiursoft.DBTools.csproj" />
 	</ItemGroup>
 
 </Project>
