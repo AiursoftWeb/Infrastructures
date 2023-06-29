@@ -29,7 +29,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<DirectoryDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<DirectoryDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddSession(options =>
         {

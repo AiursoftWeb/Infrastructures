@@ -22,7 +22,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddIdentity<EEUser, IdentityRole>()
             .AddEntityFrameworkStores<EEDbContext>()

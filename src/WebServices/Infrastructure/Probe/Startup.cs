@@ -30,7 +30,7 @@ public class Startup
         services.Configure<ProbeDownloadPatternConfig>(Configuration.GetSection("DownloadPatternConfig"));
         services.Configure<DiskAccessConfig>(Configuration.GetSection("DiskAccessConfig"));
 
-        services.AddDbContextWithCache<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));

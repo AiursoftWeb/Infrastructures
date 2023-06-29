@@ -11,7 +11,7 @@ public class Program
     public static async Task Main(string[] args)
     {
         var app = App<Startup>(args);
-        await app.UpdateDbAsync<WikiDbContext>();
+        await app.UpdateDbAsync<WikiDbContext>(UpdateMode.MigrateThenUse);
         await app.SeedAsync();
         await app.RunAsync();
     }

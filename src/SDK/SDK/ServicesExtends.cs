@@ -4,7 +4,7 @@ using System.Reflection;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Scanner;
 using Aiursoft.CSTools.Tools;
-using EFCoreSecondLevelCacheInterceptor;
+using Aiursoft.DbTools;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,30 +58,17 @@ public static class ServicesExtends
         return services;
     }
 
-    public static IServiceCollection AddDbContextWithCache<T>(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddDbContextForInfraApps<T>(this IServiceCollection services, string connectionString)
         where T : DbContext
     {
         if (EntryExtends.IsInUnitTests())
         {
-            services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
-                optionsBuilder
-                    .UseInMemoryDatabase("inmemory")
-                    .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            services.AddAiurInMemoryDb<T>();
         }
-        // Consider some new EF technology like use memory cache.
         else
         {
-            services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-                optionsBuilder
-                    .UseSqlServer(connectionString)
-                    .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>()));
+            services.AddAiurSqlServerWithCache<T>(connectionString);
         }
-
-        services.AddEFSecondLevelCache(options =>
-        {
-            options.UseMemoryCacheProvider().DisableLogging(true);
-            options.CacheAllQueries(CacheExpirationMode.Absolute, TimeSpan.FromMinutes(30));
-        });
         return services;
     }
 }

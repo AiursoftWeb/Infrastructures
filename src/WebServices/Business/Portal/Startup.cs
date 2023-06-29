@@ -24,7 +24,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<PortalDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<PortalDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddIdentity<PortalUser, IdentityRole>()
             .AddEntityFrameworkStores<PortalDbContext>()

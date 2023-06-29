@@ -21,7 +21,7 @@ public class Startup
 
     public virtual void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurMvc();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));

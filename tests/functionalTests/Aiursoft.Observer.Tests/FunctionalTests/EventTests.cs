@@ -35,7 +35,7 @@ public class EventTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = await App<TestStartup>(port: _port).UpdateDbAsync<ObserverDbContext>();
+        _server = await App<TestStartup>(port: _port).UpdateDbAsync<ObserverDbContext>(UpdateMode.RecreateThenUse);
         _http = new HttpClient();
         await _server.StartAsync();
 

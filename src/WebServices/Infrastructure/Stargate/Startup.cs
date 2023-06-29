@@ -22,7 +22,7 @@ public class Startup
 
     public virtual void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurMvc();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));

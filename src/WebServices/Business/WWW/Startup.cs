@@ -23,7 +23,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
         services.Configure<List<Navbar>>(Configuration.GetSection("Navbar"));
 
         services.AddIdentity<WWWUser, IdentityRole>()

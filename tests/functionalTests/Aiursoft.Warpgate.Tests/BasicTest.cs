@@ -36,7 +36,7 @@ public class BasicTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<WarpgateDbContext>());
+        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<WarpgateDbContext>(UpdateMode.RecreateThenUse));
         _http = new HttpClient();
         await _server.StartAsync();
 

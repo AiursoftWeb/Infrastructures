@@ -24,7 +24,7 @@ public class Startup
     public virtual void ConfigureServices(IServiceCollection services)
     {
         services.Configure<RedirectConfiguration>(Configuration.GetSection("RedirectConfig"));
-        services.AddDbContextWithCache<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
         services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));

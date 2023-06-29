@@ -25,7 +25,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextWithCache<WikiDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<WikiDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddIdentity<WikiUser, IdentityRole>()
             .AddEntityFrameworkStores<WikiDbContext>()
