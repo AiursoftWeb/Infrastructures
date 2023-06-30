@@ -11,6 +11,7 @@ namespace Aiursoft.SDK.Middlewares;
 /// <summary>
 /// This middleware will send the exception message in this app to Aiursoft Observer server.
 /// </summary>
+// TODO: This might not be working now!
 public class ObserverExceptionUploader
 {
     private readonly DirectoryAppTokenService _directoryAppTokenService;
