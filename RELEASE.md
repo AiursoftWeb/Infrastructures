@@ -97,3 +97,4 @@ services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
 - Use AiurProtocol instead of Aiursoft.Handler
 - EnsureUniqueString method will return if conflict instead of generating an exception.
 - Using new grammar of response code instead of the original error type.
+- Use Aiursoft.DbTools.
