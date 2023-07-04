@@ -94,7 +94,7 @@ public class GitHubService : IAuthProvider
     private async Task<string> GetAccessToken(string clientId, string clientSecret, string code)
     {
         var apiAddress = "https://github.com/login/oauth/access_token";
-        var url = new AiurApiEndpoint(apiAddress, new GitHubAccessTokenAddressModel
+        var url = new AiurApiEndpoint(apiAddress, "/", new GitHubAccessTokenAddressModel
         {
             ClientId = clientId,
             ClientSecret = clientSecret,

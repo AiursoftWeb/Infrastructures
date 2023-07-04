@@ -15,9 +15,9 @@ public class ServerPublicKeyAccess : IScopedDependency
     private readonly AiurProtocolClient _proxy;
     private readonly CacheService _cacheService;
     private readonly DirectoryConfiguration _directoryConfiguration;
-    
+
     public ServerPublicKeyAccess(
-        AiurProtocolClient  proxy,
+        AiurProtocolClient proxy,
         CacheService cacheService,
         IOptions<DirectoryConfiguration> directoryConfiguration)
     {
@@ -30,7 +30,9 @@ public class ServerPublicKeyAccess : IScopedDependency
     {
         return _cacheService.RunWithCache("server-public-key", async () =>
         {
-            var response = await _proxy.Get<DirectoryServerConfiguration>(new AiurApiEndpoint(_directoryConfiguration.Instance));
+            var response =
+                await _proxy.Get<DirectoryServerConfiguration>(new AiurApiEndpoint(_directoryConfiguration.Instance,
+                    "/", new { }));
             var publicKey = new RSAParameters
             {
                 Modulus = response.Modulus.Base64ToBytes(),

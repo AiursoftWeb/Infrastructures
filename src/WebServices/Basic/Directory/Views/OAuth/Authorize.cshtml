@@ -53,7 +53,7 @@
                             @foreach (var provider in AuthProviders.Where(t => t.IsEnabled()))
                             {
                                 <div class="col-lg-6 pb-3">
-                                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurApiEndpoint(string.Empty, oauthInfo).ToString())">
+                                    <a class="btn btn-@provider.GetButtonColor() btn-block" href="@provider.GetSignInRedirectLink(new AiurApiEndpoint(string.Empty, string.Empty, oauthInfo).ToString())">
                                         <i class="@provider.GetButtonIcon() mr-1"></i>@provider.GetName()
                                     </a>
                                 </div>

@@ -9,8 +9,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
-		<PackageReference Include="Aiursoft.DBTools" Version="6.0.28" />
-		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.7" />
+		<PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.29" />
+		<PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.29" />
+		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.8" />
 		<PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
 	</ItemGroup>
 	

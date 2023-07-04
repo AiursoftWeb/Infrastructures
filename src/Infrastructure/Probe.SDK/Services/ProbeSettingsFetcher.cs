@@ -31,7 +31,7 @@ public class ProbeSettingsFetcher : IScopedDependency
     {
         return _cacheService.RunWithCache("probe-server-config", async () =>
         {
-            return await _AiurProtocolClient.Get<ProbeDownloadPatternConfig>(new AiurApiEndpoint(_probeConfiguration.Instance));
+            return await _AiurProtocolClient.Get<ProbeDownloadPatternConfig>(new AiurApiEndpoint(_probeConfiguration.Instance, "/", new { }));
         });
     }
 

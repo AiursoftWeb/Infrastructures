@@ -146,7 +146,7 @@ public class OAuthController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            return this.Protocol(new AiurRelativePath("OAuth", nameof(SecondAuth), new
+            return this.Protocol(new AiurApiEndpoint(string.Empty, "OAuth", nameof(SecondAuth), new
             {
                 model.AppId,
                 model.RedirectUri,

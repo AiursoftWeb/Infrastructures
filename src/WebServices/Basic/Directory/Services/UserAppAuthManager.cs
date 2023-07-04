@@ -36,7 +36,7 @@ public class UserAppAuthManager : IScopedDependency
         {
             // Dont need to auth, and the user don't force to auth.
             var pack = await GeneratePack(user, model.AppId);
-            var url = new AiurApiEndpoint(GetRegexRedirectUri(model.RedirectUri), new AuthResultAddressModel
+            var url = new AiurApiEndpoint(GetRegexRedirectUri(model.RedirectUri), "/", new AuthResultAddressModel
             {
                 Code = pack.Code,
                 State = model.State
