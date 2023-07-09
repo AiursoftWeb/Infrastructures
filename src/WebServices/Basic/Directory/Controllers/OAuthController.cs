@@ -146,11 +146,11 @@ public class OAuthController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            return this.Protocol(new AiurApiEndpoint(string.Empty, "OAuth", nameof(SecondAuth), new
+            return this.Protocol(new AiurApiEndpoint(string.Empty, "OAuth", nameof(SecondAuth), new FinishAuthInfo
             {
-                model.AppId,
-                model.RedirectUri,
-                model.State
+                AppId = model.AppId,
+                RedirectUri = model.RedirectUri,
+                State = model.State
             }));
         }
 
