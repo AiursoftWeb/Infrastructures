@@ -108,10 +108,10 @@ public class FilesController : ControllerBase
 
     [HttpPost]
     [Route("DeleteFile/{SiteName}/{**FolderNames}")]
-    public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model)
+    public async Task<IActionResult> DeleteFile(DeleteFileAddressModel model, [FromForm]DeleteFileFormModel form)
     {
         var (folders, fileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
-        var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
+        var folder = await _folderRepo.GetFolderAsOwner(form.AccessToken, model.SiteName, folders);
         if (folder == null)
         {
             return this.Protocol(Code.NotFound, "Locate folder failed!");
@@ -130,13 +130,12 @@ public class FilesController : ControllerBase
     [HttpPost]
     [Route("CopyFile/{SiteName}/{**FolderNames}")]
     [Produces(typeof(UploadFileViewModel))]
-    public async Task<IActionResult> CopyFile(CopyFileAddressModel model)
+    public async Task<IActionResult> CopyFile(CopyFileAddressModel model, [FromForm]CopyFileFormModel form)
     {
         var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
-        var targetFolders = _folderSplitter.SplitToFolders(model.TargetFolderNames);
-        var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
-        var targetFolder =
-            await _folderRepo.GetFolderAsOwner(model.AccessToken, model.TargetSiteName, targetFolders, true);
+        var targetFolders = _folderSplitter.SplitToFolders(form.TargetFolderNames);
+        var sourceFolder = await _folderRepo.GetFolderAsOwner(form.AccessToken, model.SiteName, sourceFolders);
+        var targetFolder = await _folderRepo.GetFolderAsOwner(form.AccessToken, form.TargetSiteName, targetFolders, true);
         if (sourceFolder == null)
         {
             return this.Protocol(Code.NotFound, "Locate source folder failed!");
@@ -155,12 +154,12 @@ public class FilesController : ControllerBase
 
         var fileName = _folderSplitter.GetValidFileName(targetFolder.Files.Select(t => t.FileName), file.FileName);
         await _fileRepo.CopyFile(fileName, file.FileSize, targetFolder.Id, file.HardwareId);
-        var filePath = _probeLocator.GetProbeFullPath(model.TargetSiteName, string.Join('/', targetFolders), fileName);
+        var filePath = _probeLocator.GetProbeFullPath(form.TargetSiteName, string.Join('/', targetFolders), fileName);
         var internetPath = await _probeLocator.GetProbeOpenAddressAsync(filePath);
         return this.Protocol(new UploadFileViewModel
         {
             InternetPath = internetPath,
-            SiteName = model.TargetSiteName,
+            SiteName = form.TargetSiteName,
             FilePath = filePath,
             FileSize = file.FileSize,
             Code = Code.JobDone,
@@ -171,10 +170,10 @@ public class FilesController : ControllerBase
     [HttpPost]
     [Route("RenameFile/{SiteName}/{**Foldernames}")]
     [Produces(typeof(UploadFileViewModel))]
-    public async Task<IActionResult> RenameFile(RenameFileAddressModel model)
+    public async Task<IActionResult> RenameFile(RenameFileAddressModel model, [FromForm]RenameFileFormModel form)
     {
         var (sourceFolders, sourceFileName) = _folderSplitter.SplitToFoldersAndFile(model.FolderNames);
-        var sourceFolder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, sourceFolders);
+        var sourceFolder = await _folderRepo.GetFolderAsOwner(form.AccessToken, model.SiteName, sourceFolders);
         var file = sourceFolder.Files.SingleOrDefault(t => t.FileName == sourceFileName);
         if (file == null)
         {
@@ -184,7 +183,7 @@ public class FilesController : ControllerBase
         var newFileName = _folderSplitter.GetValidFileName(sourceFolder
             .Files
             .Where(t => t.Id != file.Id)
-            .Select(t => t.FileName), model.TargetFileName);
+            .Select(t => t.FileName), form.TargetFileName);
         await _fileRepo.UpdateName(file.Id, newFileName);
 
         var filePath = _probeLocator.GetProbeFullPath(model.SiteName, string.Join('/', sourceFileName), newFileName);

@@ -4,18 +4,17 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;
 using Aiursoft.Scanner.Abstractions;
-using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
 
 public class FoldersService : IScopedDependency
 {
-    private readonly AiurProtocolClient  _http;
+    private readonly AiurProtocolClient _http;
     private readonly ProbeConfiguration _serviceLocation;
 
     public FoldersService(
-        AiurProtocolClient  http,
+        AiurProtocolClient http,
         IOptions<ProbeConfiguration> serviceLocation)
     {
         _http = http;
@@ -25,8 +24,10 @@ public class FoldersService : IScopedDependency
     public async Task<AiurValue<Folder>> ViewContentAsync(string accessToken, string siteName, string folderNames)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance,
-            $"/Folders/ViewContent/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new ViewContentAddressModel
+            "/Folders/ViewContent/{SiteName}/{**FolderNames}", new ViewContentAddressModel
             {
+                SiteName = siteName,
+                FolderNames = folderNames,
                 AccessToken = accessToken
             });
         return await _http.Get<AiurValue<Folder>>(url);
@@ -36,8 +37,12 @@ public class FoldersService : IScopedDependency
         string newFolderName, bool recursiveCreate)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance,
-            $"/Folders/CreateNewFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurApiPayload( new CreateNewFolderAddressModel
+            "/Folders/CreateNewFolder/{SiteName}/{FolderNames}", new CreateNewFolderAddressModel
+            {
+                SiteName = siteName,
+                FolderNames = folderNames
+            });
+        var form = new AiurApiPayload(new CreateNewFolderFormModel
         {
             AccessToken = accessToken,
             NewFolderName = newFolderName,
@@ -49,8 +54,12 @@ public class FoldersService : IScopedDependency
     public async Task<AiurResponse> DeleteFolderAsync(string accessToken, string siteName, string folderNames)
     {
         var url = new AiurApiEndpoint(_serviceLocation.Instance,
-            $"/Folders/DeleteFolder/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurApiPayload( new DeleteFolderAddressModel
+            "/Folders/DeleteFolder/{SiteName}/{FolderNames}", new DeleteFolderAddressModel
+            {
+                SiteName = siteName,
+                FolderNames = folderNames
+            });
+        var form = new AiurApiPayload(new DeleteFolderFormModel
         {
             AccessToken = accessToken
         });

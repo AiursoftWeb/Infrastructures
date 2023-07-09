@@ -45,26 +45,26 @@ public class FoldersController : ControllerBase
 
     [HttpPost]
     [Route("CreateNewFolder/{SiteName}/{**FolderNames}")]
-    public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model)
+    public async Task<IActionResult> CreateNewFolder(CreateNewFolderAddressModel model, [FromForm]CreateNewFolderFormModel form)
     {
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
         var folder =
-            await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders, model.RecursiveCreate);
+            await _folderRepo.GetFolderAsOwner(form.AccessToken, model.SiteName, folders, form.RecursiveCreate);
         if (folder == null)
         {
             return this.Protocol(Code.NotFound, "Locate folder failed!");
         }
 
-        await _folderRepo.CreateNewFolder(folder.Id, model.NewFolderName);
+        await _folderRepo.CreateNewFolder(folder.Id, form.NewFolderName);
         return this.Protocol(Code.JobDone, "Successfully created your new folder!");
     }
 
     [HttpPost]
     [Route("DeleteFolder/{SiteName}/{**FolderNames}")]
-    public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model)
+    public async Task<IActionResult> DeleteFolder(DeleteFolderAddressModel model, [FromForm]DeleteFolderFormModel form)
     {
         var folders = _folderSplitter.SplitToFolders(model.FolderNames);
-        var folder = await _folderRepo.GetFolderAsOwner(model.AccessToken, model.SiteName, folders);
+        var folder = await _folderRepo.GetFolderAsOwner(form.AccessToken, model.SiteName, folders);
         if (folder == null)
         {
             return this.Protocol(Code.NotFound, "Locate folder failed!");

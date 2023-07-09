@@ -5,14 +5,18 @@ namespace Aiursoft.Probe.SDK.Models.FilesAddressModels;
 
 public class CopyFileAddressModel
 {
-    // TODO: Unify directory token.
-    [Required] public string AccessToken { get; set; }
-
     [Required] [FromRoute] public string SiteName { get; set; }
 
     [Required] [FromRoute] public string FolderNames { get; set; }
+}
 
+public class CopyFileFormModel
+{
+    // TODO: Unify directory token.
+
+    [Required] public string AccessToken { get; set; }
+    
     [Required] public string TargetSiteName { get; set; }
 
-    [Required] public string TargetFolderNames { get; set; }
+    public string TargetFolderNames { get; set; }
 }

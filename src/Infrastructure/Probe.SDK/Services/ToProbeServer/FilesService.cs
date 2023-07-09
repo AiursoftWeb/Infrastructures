@@ -6,7 +6,6 @@ using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.FilesAddressModels;
 using Aiursoft.Probe.SDK.Models.FilesViewModels;
 using Aiursoft.Scanner.Abstractions;
-using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Probe.SDK.Services.ToProbeServer;
@@ -34,10 +33,14 @@ public class FilesService : IScopedDependency
     public async Task<AiurResponse> DeleteFileAsync(string accessToken, string siteName, string folderNames)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance,
-            $"/Files/DeleteFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurApiPayload(new DeleteFileAddressModel
+            "/Files/DeleteFile/{SiteName}/{**FolderNames}", new DeleteFileAddressModel
+            {
+                SiteName = siteName,
+                FolderNames = folderNames
+            });
+        var form = new AiurApiPayload(new DeleteFileFormModel()
         {
-            AccessToken = accessToken
+            AccessToken = accessToken,
         });
         return await _http.Post<AiurResponse>(url, form);
     }
@@ -51,8 +54,12 @@ public class FilesService : IScopedDependency
         }
 
         var url = new AiurApiEndpoint(_probeLocator.Instance,
-            $"/Files/CopyFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurApiPayload(new CopyFileAddressModel
+            "/Files/CopyFile/{SiteName}/{**FolderNames}", new CopyFileAddressModel()
+            {
+                SiteName = siteName,
+                FolderNames = folderNames
+            });
+        var form = new AiurApiPayload(new CopyFileFormModel
         {
             AccessToken = accessToken,
             TargetSiteName = targetSiteName,
@@ -65,8 +72,12 @@ public class FilesService : IScopedDependency
         string targetFileName)
     {
         var url = new AiurApiEndpoint(_probeLocator.Instance,
-            $"/Files/RenameFile/{siteName.ToUrlEncoded()}/{folderNames.EncodePath()}", new { });
-        var form = new AiurApiPayload(new RenameFileAddressModel
+            "/Files/RenameFile/{SiteName}/{**FolderNames}", new RenameFileAddressModel
+            {
+                SiteName = siteName,
+                FolderNames = folderNames
+            });
+        var form = new AiurApiPayload(new RenameFileFormModel
         {
             AccessToken = accessToken,
             TargetFileName = targetFileName
