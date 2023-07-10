@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<Version>6.0.25</Version>
+		<Version>6.0.26</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -11,7 +11,7 @@
 		<PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
 		<PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.29" />
 		<PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.29" />
-		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.9" />
+		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.10" />
 		<PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
 	</ItemGroup>
 	
