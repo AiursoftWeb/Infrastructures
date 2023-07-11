@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstractions;
 
@@ -24,7 +25,8 @@ public class HttpService : IScopedDependency
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
-
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        
         using var response = await _client.SendAsync(request);
         if (response.IsSuccessStatusCode)
         {
@@ -41,6 +43,7 @@ public class HttpService : IScopedDependency
         {
             Content = new FormUrlEncodedContent(postDataStr)
         };
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         using var response = await _client.SendAsync(request);
         if (response.IsSuccessStatusCode)
