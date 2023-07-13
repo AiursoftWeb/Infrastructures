@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
+		<PackageReference Include="Aiursoft.WebTools" Version="6.0.25" />
 		<PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.30" />
 		<PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.30" />
 		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.10" />
