@@ -14,5 +14,5 @@ public class View2FAKeyViewModel : AccountViewModel
     }
 
     public string NewTwoFAKey { get; set; }
-    public string QRCodeBase64 { get; set; }
+    public string QRCodeSrc { get; set; }
 }

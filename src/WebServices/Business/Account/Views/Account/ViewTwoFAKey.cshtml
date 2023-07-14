@@ -35,7 +35,7 @@
                             @Localizer["Scan the QR Code or enter this key"] <kbd>@Model.NewTwoFAKey</kbd> @Localizer["into your two factor authenticator app. Spaces and casing do not matter."]
                         </p>
                         <div class="col-lg-6 col-md-8  col-sm-10 col-12">
-                            <img class="img-fluid" src="@Html.Raw(Model.QRCodeBase64)">
+                            <img class="img-fluid" src="@Html.Raw(Model.QRCodeSrc)">
                         </div>
                     </li>
                     <li>

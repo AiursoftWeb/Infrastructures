@@ -409,7 +409,7 @@ public class AccountController : Controller
         var model = new View2FAKeyViewModel(user)
         {
             NewTwoFAKey = key.TwoFAKey,
-            QRCodeBase64 = _qrCodeService.ToQRCodeBase64(key.TwoFAQRUri)
+            QRCodeSrc = _qrCodeService.ToQRCodeImgSrc(key.TwoFAQRUri)
         };
         return View(model);
     }
