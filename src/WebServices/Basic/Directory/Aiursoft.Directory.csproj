@@ -10,7 +10,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
-    <PackageReference Include="Twilio" Version="6.10.0" />
+    <PackageReference Include="Twilio" Version="6.10.1" />
     <PackageReference Include="Edi.Captcha" Version="3.16.0" />
   </ItemGroup>
   <ItemGroup>
