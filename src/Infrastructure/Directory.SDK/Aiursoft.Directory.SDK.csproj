@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.20" />
+		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.21" />
 		<PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.10" />
 		<PackageReference Include="Aiursoft.Scanner" Version="6.0.11" />
 		<PackageReference Include="Aiursoft.DocGenerator.Abstractions" Version="6.0.25" />
