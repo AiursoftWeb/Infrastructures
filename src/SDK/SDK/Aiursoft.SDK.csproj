@@ -20,7 +20,7 @@
         <PackageReference Include="Aiursoft.WebTools" Version="6.0.25" />
         <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.32" />
         <PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.32" />
-        <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.10" />
+        <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.11" />
         <PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
     </ItemGroup>
     <ItemGroup>
