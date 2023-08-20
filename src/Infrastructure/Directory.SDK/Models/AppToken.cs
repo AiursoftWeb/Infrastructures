@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Aiursoft.Directory.SDK.Models;
+﻿namespace Aiursoft.Directory.SDK.Models;
 
 public class AppToken
 {

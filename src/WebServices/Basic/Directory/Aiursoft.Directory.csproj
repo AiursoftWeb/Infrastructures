@@ -1,19 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
-    <Description>The core authentication portal for Aiursoft apps.</Description>
-  </PropertyGroup>
-
-  <ItemGroup>
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.21">
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  <PrivateAssets>all</PrivateAssets>
-	</PackageReference>
-    <PackageReference Include="Twilio" Version="6.11.0" />
-    <PackageReference Include="Edi.Captcha" Version="3.16.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.Directory</AssemblyName>
+        <RootNamespace>Aiursoft.Directory</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <IsPackable>false</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Description>The core authentication portal for Aiursoft apps.</Description>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.21">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Twilio" Version="6.11.0" />
+        <PackageReference Include="Edi.Captcha" Version="3.16.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
+    </ItemGroup>
 </Project>

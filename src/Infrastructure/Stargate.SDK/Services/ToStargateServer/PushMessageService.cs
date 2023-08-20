@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Stargate.SDK.Configuration;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;

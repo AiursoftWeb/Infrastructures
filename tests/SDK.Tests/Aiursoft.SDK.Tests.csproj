@@ -1,12 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<Version>6.0.26</Version>
-		<TargetFramework>net6.0</TargetFramework>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\SDK\SDK\Aiursoft.SDK.csproj" />
-	</ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.SDK.Tests</AssemblyName>
+        <RootNamespace>Aiursoft.SDK.Tests</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <IsPackable>false</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\SDK\SDK\Aiursoft.SDK.csproj" />
+    </ItemGroup>
 </Project>

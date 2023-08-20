@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.EE.Data;
+﻿using Aiursoft.EE.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aiursoft.EE.Models.ProfileViewModels;

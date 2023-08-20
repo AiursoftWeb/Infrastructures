@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;

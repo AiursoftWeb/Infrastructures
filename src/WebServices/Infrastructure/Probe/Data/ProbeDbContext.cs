@@ -12,5 +12,5 @@ public class ProbeDbContext : DbContext
     public DbSet<ProbeApp> Apps { get; set; }
     public DbSet<Site> Sites { get; set; }
     public DbSet<Folder> Folders { get; set; }
-    public DbSet<File> Files { get; set; }
+    public DbSet<Aiursoft.Probe.SDK.Models.File> Files { get; set; }
 }

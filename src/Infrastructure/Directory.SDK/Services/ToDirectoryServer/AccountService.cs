@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Configuration;
+﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API.AccountAddressModels;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Aiursoft.Scanner.Abstractions;

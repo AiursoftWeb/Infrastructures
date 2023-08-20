@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Probe.SDK.Models.FoldersAddressModels;

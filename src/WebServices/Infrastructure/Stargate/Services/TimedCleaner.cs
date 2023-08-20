@@ -1,14 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstractions;
+﻿using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Stargate.Data;
 using Aiursoft.CSTools.Tools;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Stargate.Services;
 

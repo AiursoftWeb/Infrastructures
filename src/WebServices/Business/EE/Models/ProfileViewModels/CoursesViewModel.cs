@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Aiursoft.EE.Models.ProfileViewModels;
+﻿namespace Aiursoft.EE.Models.ProfileViewModels;
 
 public class CoursesViewModel : ProfileViewModelBase
 {

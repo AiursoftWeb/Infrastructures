@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Aiursoft.Canon;
+﻿using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 using Aiursoft.Scanner.Abstractions;

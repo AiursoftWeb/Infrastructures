@@ -1,12 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<Version>6.0.26</Version>
-		<TargetFramework>net6.0</TargetFramework>
-	</PropertyGroup>
-	
-	<ItemGroup>
-		<ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
-	</ItemGroup>
-
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <Version>6.0.26</Version>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.Observer.SDK</AssemblyName>
+        <RootNamespace>Aiursoft.Observer.SDK</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Company>Aiursoft</Company>
+        <Product>SDK</Product>
+        <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
+        <PackageId>Aiursoft.Observer.SDK</PackageId>
+        <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
+    </ItemGroup>
 </Project>

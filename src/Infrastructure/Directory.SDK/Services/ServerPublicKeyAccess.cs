@@ -4,7 +4,6 @@ using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using Aiursoft.Canon;
 using Aiursoft.AiurProtocol;
 

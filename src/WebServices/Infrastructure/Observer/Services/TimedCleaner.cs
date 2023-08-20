@@ -1,15 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Aiursoft.Observer.Data;
+﻿using Aiursoft.Observer.Data;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Observer.Services;
 

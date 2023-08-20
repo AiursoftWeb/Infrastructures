@@ -1,13 +1,10 @@
 ﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.WWW.Services.Models;
 using Aiursoft.CSTools.Tools;
 using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch.Models;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ApiKeyServiceClientCredentials =
     Microsoft.Azure.CognitiveServices.Search.WebSearch.ApiKeyServiceClientCredentials;

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.Canon;
+﻿using Aiursoft.Canon;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Probe.Data;
-using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using File = Aiursoft.Probe.SDK.Models.File;
 
 namespace Aiursoft.Probe.Services;
 

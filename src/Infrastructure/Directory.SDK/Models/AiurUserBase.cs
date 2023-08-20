@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Aiursoft.Directory.SDK.Models.API.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;

@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.Controllers;
 using Aiursoft.Identity.Services;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.SDK;
-using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.Directory.Services;
 

@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Directory.SDK.Services;
@@ -11,7 +8,6 @@ using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
 using Aiursoft.Stargate.Services;
 using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Stargate.Controllers;
 

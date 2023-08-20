@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Probe.SDK.Configuration;
@@ -9,8 +6,6 @@ using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;

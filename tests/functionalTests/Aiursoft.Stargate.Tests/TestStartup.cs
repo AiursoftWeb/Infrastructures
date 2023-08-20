@@ -1,7 +1,5 @@
 ﻿using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Tests.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Aiursoft.Stargate.Tests;

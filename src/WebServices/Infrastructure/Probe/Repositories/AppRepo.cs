@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Services;
+﻿using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK.Models;
 using Aiursoft.Scanner.Abstractions;

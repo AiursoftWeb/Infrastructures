@@ -1,23 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-
-	<PropertyGroup>
-		<Version>6.0.26</Version>
-		<TargetFramework>net6.0</TargetFramework>
-		<Description>The base class, tools and extends for Aiursoft web apps.</Description>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Aiursoft.WebTools" Version="6.0.25" />
-		<PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.32" />
-		<PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.32" />
-		<PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.10" />
-		<PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		
-		<ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
-	</ItemGroup>
-
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <Version>6.0.26</Version>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.SDK</AssemblyName>
+        <RootNamespace>Aiursoft.SDK</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Company>Aiursoft</Company>
+        <Product>SDK</Product>
+        <Description>The base class, tools and extends for Aiursoft web apps.</Description>
+        <PackageId>Aiursoft.SDK</PackageId>
+        <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Aiursoft.WebTools" Version="6.0.25" />
+        <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="6.0.32" />
+        <PackageReference Include="Aiursoft.DbTools.InMemory" Version="6.0.32" />
+        <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="6.0.10" />
+        <PackageReference Include="Aiursoft.DocGenerator" Version="6.0.25" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
+    </ItemGroup>
 </Project>

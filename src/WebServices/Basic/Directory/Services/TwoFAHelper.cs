@@ -1,5 +1,4 @@
 ﻿using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Aiursoft.Directory.Models;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.SDK;

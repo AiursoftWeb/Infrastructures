@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.DownloadAddressModels;
@@ -9,8 +7,6 @@ using Aiursoft.Probe.Services;
 using Aiursoft.Probe.ViewModels.DownloadViewModels;
 using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SixLabors.ImageSharp;
 
 namespace Aiursoft.Probe.Controllers;
 

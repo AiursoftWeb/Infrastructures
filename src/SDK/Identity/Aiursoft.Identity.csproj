@@ -1,32 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-	<PropertyGroup>
-		<Version>6.0.26</Version>
-		<TargetFramework>net6.0</TargetFramework>
-		<Company>Aiursoft</Company>
-		<Product>AiursoftWeb</Product>
-		<Authors>Anduin</Authors>
-		<Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
-		<PackageTags>base-class shared-component aiursoft Identity</PackageTags>
-		<PackageIcon>Identity.png</PackageIcon>
-		<PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Include="Identity.png" Pack="true" PackagePath="\" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
-		
-		<ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
-	</ItemGroup>
-
-
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <Version>6.0.26</Version>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.Identity</AssemblyName>
+        <RootNamespace>Aiursoft.Identity</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Company>Aiursoft</Company>
+        <Product>AiursoftWeb</Product>
+        <Authors>Anduin</Authors>
+        <Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
+        <PackageId>Aiursoft.Identity</PackageId>
+        <PackageTags>base-class shared-component aiursoft Identity</PackageTags>
+        <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
+        <PackageIcon>Identity.png</PackageIcon>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="Identity.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />
+        <ProjectReference Include="..\..\Infrastructure\Probe.SDK\Aiursoft.Probe.SDK.csproj" />
+    </ItemGroup>
 </Project>

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Aiursoft.Wiki.Models.HomeViewModels;
 
 public class IndexViewModel

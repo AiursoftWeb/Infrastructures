@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Canon;
+﻿using Aiursoft.Canon;
 using Aiursoft.SDK.Services;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;

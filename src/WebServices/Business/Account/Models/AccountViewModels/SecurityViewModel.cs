@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.CSTools.Attributes;
 
 namespace Aiursoft.Account.Models.AccountViewModels;

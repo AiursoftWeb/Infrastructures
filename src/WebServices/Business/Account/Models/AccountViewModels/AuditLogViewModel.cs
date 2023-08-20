@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;

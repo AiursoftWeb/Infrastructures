@@ -1,6 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Stargate.SDK.Models;
 

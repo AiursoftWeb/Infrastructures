@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Scanner.Abstractions;
+﻿using Aiursoft.Scanner.Abstractions;
 
 namespace Aiursoft.Identity.Services.Authentication;
 

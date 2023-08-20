@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Aiursoft.Account.Models.AccountViewModels;
+﻿namespace Aiursoft.Account.Models.AccountViewModels;
 
 public class AvatarViewModel : AccountViewModel
 {

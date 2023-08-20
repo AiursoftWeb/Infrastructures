@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.Canon;
+﻿using Aiursoft.Canon;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;
 using Aiursoft.Directory.Models.PasswordViewModels;
@@ -10,7 +7,6 @@ using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Directory.Controllers;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.DbTools;
+﻿using Aiursoft.DbTools;
 
 namespace Aiursoft.Status.Models;
 

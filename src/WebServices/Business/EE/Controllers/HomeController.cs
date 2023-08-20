@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Configuration;
+﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.Identity;
@@ -8,7 +6,6 @@ using Aiursoft.Identity.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.EE.Controllers;

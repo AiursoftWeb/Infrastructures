@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Services;
+﻿using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK.Models;

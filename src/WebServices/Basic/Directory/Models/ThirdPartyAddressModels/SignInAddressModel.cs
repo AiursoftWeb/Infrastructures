@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using Aiursoft.AiurProtocol;
 using Aiursoft.Directory.SDK.Models;
 using Microsoft.AspNetCore.Mvc;

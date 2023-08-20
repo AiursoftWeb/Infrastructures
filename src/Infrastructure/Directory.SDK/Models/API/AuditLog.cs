@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Aiursoft.Directory.SDK.Models.API;
+﻿namespace Aiursoft.Directory.SDK.Models.API;
 
 public class AuditLog
 {

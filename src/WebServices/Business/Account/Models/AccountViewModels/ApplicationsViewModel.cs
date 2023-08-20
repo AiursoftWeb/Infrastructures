@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Aiursoft.Directory.SDK.Models;
+﻿using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 
 namespace Aiursoft.Account.Models.AccountViewModels;

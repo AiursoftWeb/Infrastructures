@@ -1,6 +1,4 @@
 ﻿using Aiursoft.Directory.Data;
-using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
 using Aiursoft.DbTools;
 using static Aiursoft.WebTools.Extends;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.Directory.SDK.Configuration;
+﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.SDK.Attributes;
 using Microsoft.AspNetCore.Mvc;

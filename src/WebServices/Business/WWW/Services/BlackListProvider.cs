@@ -1,9 +1,5 @@
 ﻿using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstractions;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Aiursoft.SDK.Services;
 
 namespace Aiursoft.WWW.Services;

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Directory.SDK.Configuration;
+﻿using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 using Aiursoft.Directory.SDK.Models.API.UserViewModels;

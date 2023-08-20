@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models.AddressModels;

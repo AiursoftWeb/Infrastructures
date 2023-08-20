@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-namespace Aiursoft.Probe.Services;
+﻿namespace Aiursoft.Probe.Services;
 
 public interface IStorageProvider
 {

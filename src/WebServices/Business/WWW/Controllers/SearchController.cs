@@ -1,6 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Aiursoft.Canon;
 
 using Aiursoft.Identity;

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Net.WebSockets;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net.WebSockets;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
-using Microsoft.AspNetCore.Http;
 
 namespace Aiursoft.Stargate.Services;
 

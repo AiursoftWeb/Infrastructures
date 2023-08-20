@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Aiursoft.Probe.SDK.Configuration;
+﻿using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Microsoft.Extensions.Configuration;

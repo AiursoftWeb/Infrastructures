@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Directory.SDK.Models.API;
 using Newtonsoft.Json;

@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using Aiursoft.Account.Models;
+﻿using Aiursoft.Account.Models;
 using Aiursoft.Directory.SDK.Configuration;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Account.Controllers;

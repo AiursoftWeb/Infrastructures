@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Scanner;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK;
@@ -10,8 +6,6 @@ using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static Aiursoft.WebTools.Extends;

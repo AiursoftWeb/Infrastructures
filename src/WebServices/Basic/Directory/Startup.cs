@@ -1,16 +1,10 @@
-﻿using System;
-using Aiursoft.Directory.Models;
+﻿using Aiursoft.Directory.Models;
 using Aiursoft.Identity;
 using Aiursoft.Identity.Services;
 using Aiursoft.Identity.Services.Authentication;
 using Aiursoft.SDK;
 using Edi.Captcha;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;

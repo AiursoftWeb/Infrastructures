@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;

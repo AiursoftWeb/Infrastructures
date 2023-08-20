@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using System.Threading.Tasks;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 

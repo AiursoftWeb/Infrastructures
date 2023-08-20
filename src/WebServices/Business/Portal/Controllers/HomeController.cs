@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Aiursoft.Portal.Models;
+﻿using Aiursoft.Portal.Models;
 using Aiursoft.Directory.SDK.Configuration;
 
 using Aiursoft.Identity;
 using Aiursoft.Identity.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Portal.Controllers;

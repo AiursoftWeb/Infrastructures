@@ -1,14 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Aiursoft.Directory.Data;
+﻿using Aiursoft.Directory.Data;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Directory.Services;
 

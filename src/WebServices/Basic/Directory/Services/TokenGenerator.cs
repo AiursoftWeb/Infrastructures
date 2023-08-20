@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.Directory.SDK.Models;
+﻿using Aiursoft.Directory.SDK.Models;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.CSTools.Tools;
 using Newtonsoft.Json;
