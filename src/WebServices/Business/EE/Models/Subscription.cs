@@ -8,7 +8,7 @@ public class Subscription
 
     // ReSharper disable once IdentifierTypo
     public DateTime SubscribTime { get; set; } = DateTime.UtcNow;
-    public bool Paid { get; set; } = false;
+    public bool Paid { get; set; }
 
     public string UserId { get; set; }
 
