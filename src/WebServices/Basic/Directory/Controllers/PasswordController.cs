@@ -221,7 +221,7 @@ public class PasswordController : Controller
             return NotFound();
         }
 
-        var phoneLast = user.PhoneNumber.Substring(user.PhoneNumber.Length - 4);
+        var phoneLast = user.PhoneNumber?.Substring(user.PhoneNumber.Length - 4) ?? string.Empty;
         var model = new EnterSMSCodeViewModel
         {
             Email = email,

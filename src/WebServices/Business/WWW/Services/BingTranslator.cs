@@ -20,7 +20,7 @@ public class BingTranslator : IScopedDependency
         var client = new RestClient(apiAddress);
         var request = new RestRequest();
         request
-            .AddHeader("Ocp-Apim-Subscription-Key", _configuration["TranslateAPIKey"])
+            .AddHeader("Ocp-Apim-Subscription-Key", _configuration["TranslateAPIKey"]!)
             .AddHeader("Content-Type", "application/json")
             .AddParameter("undefined", inputJson, ParameterType.RequestBody);
 

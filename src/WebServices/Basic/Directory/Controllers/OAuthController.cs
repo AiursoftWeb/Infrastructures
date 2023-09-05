@@ -48,8 +48,8 @@ public class OAuthController : Controller
         _authManager = authManager;
         _authLogger = authLogger;
         _cannonService = cannonService;
-        _allowRegistering = configuration["AllowSelfRegistering"].Trim().ToLower() == true.ToString().ToLower();
-        _allowPasswordSignIn = configuration["AllowPasswordSignIn"].Trim().ToLower() == true.ToString().ToLower();
+        _allowRegistering = configuration["AllowSelfRegistering"]!.Trim().ToLower() == true.ToString().ToLower();
+        _allowPasswordSignIn = configuration["AllowPasswordSignIn"]!.Trim().ToLower() == true.ToString().ToLower();
     }
 
     [HttpGet]
