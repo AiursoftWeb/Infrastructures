@@ -12,8 +12,8 @@ public class Startup : IWebStartup
     {
         services.AddDbContextForInfraApps<ObserverDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurMvc();
-        services.AddAiursoftSdk();
+        services.AddAiurosftWebFeatures();
+        services.AddScannedServices();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
     }

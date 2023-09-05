@@ -29,7 +29,7 @@ public class Startup : IWebStartup
             .AddEntityFrameworkStores<DirectoryDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddAiurMvc();
+        services.AddAiurosftWebFeatures();
     
         // TODO: After having gateway, these should be migrated.
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
@@ -37,7 +37,7 @@ public class Startup : IWebStartup
         services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));
 
         // TODO: After having gateway, these should be migrated.
-        services.AddAiursoftSdk(abstracts: typeof(IAuthProvider));
+        services.AddScannedServices(abstracts: typeof(IAuthProvider));
         services.AddScoped<UserImageGenerator<DirectoryUser>>();
         services.AddSessionBasedCaptcha();
     }

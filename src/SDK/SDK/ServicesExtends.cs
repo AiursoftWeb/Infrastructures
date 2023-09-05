@@ -13,7 +13,18 @@ namespace Aiursoft.SDK;
 
 public static class ServicesExtends
 {
-    public static IServiceCollection AddAiurMvc(this IServiceCollection services)
+    /// <summary>
+    /// This method will add all the features that Aiursoft web services need. Including:
+    ///  - CORS
+    ///  - Localization
+    ///  - AiurProtocol
+    ///  - ViewLocalization
+    ///  - DataAnnotationsLocalization
+    ///  - View Components
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IMvcBuilder AddAiurosftWebFeatures(this IServiceCollection services)
     {
         // TODO: Use it as an attribute to only apply to API.
         services.AddCors(options =>
@@ -21,38 +32,36 @@ public static class ServicesExtends
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
         services.AddLocalization(options => options.ResourcesPath = "Resources");
-        services
+        var mvcBuilder = services
             .AddControllersWithViews()
             .AddApplicationPart(Assembly.GetCallingAssembly())
+            .AddApplicationPart(Assembly.GetExecutingAssembly())
             .AddAiurProtocol()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
 
-        return services;
+        return mvcBuilder;
     }
 
-    public static IServiceCollection AddAiursoftSdk(this IServiceCollection services,
-        Assembly assembly = null,
+    public static IServiceCollection AddScannedServices(this IServiceCollection services,
+        Assembly callingAssembly = null,
         params Type[] abstracts)
     {
         services.AddHttpClient();
         services.AddMemoryCache();
         var abstractsList = abstracts.ToList();
         abstractsList.Add(typeof(IHostedService));
-        if (EntryExtends.IsProgramEntry())
-            // Program is starting itself.
+        if (EntryExtends.IsProgramEntry()) // Program is starting itself.
         {
             services.AddScannedDependencies(abstractsList.ToArray());
         }
-        else if (assembly != null)
-            // Program is started in UT or EF. Method called from extension.
-        {
-            services.AddAssemblyDependencies(assembly, abstractsList.ToArray());
-        }
         else
-            // Program is started in UT or EF. Method called from web project.
         {
-            services.AddAssemblyDependencies(Assembly.GetCallingAssembly(), abstractsList.ToArray());
+            if (callingAssembly == null)
+            {
+                callingAssembly = Assembly.GetCallingAssembly();
+            }
+            services.AddAssemblyDependencies(callingAssembly, abstractsList.ToArray());
         }
 
         return services;

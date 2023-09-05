@@ -21,12 +21,12 @@ public class Startup : IWebStartup
 
         services.AddDbContextForInfraApps<ProbeDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurMvc();
+        services.AddAiurosftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));
 
-        services.AddAiursoftSdk();
+        services.AddScannedServices();
         services.AddScoped<IStorageProvider, DiskAccess>();
     }
 

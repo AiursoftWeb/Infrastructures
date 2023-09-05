@@ -17,7 +17,7 @@ public class Startup : IWebStartup
         services.AddIdentity<WWWUser, IdentityRole>()
             .AddEntityFrameworkStores<WWWDbContext>()
             .AddDefaultTokenProviders();
-        services.AddAiurMvc();
+        services.AddAiurosftWebFeatures();
         services.AddAiursoftIdentity<WWWUser>(
             probeConfig: configuration.GetSection("AiursoftProbe"),
             authenticationConfig: configuration.GetSection("AiursoftAuthentication"),

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <Version>7.0.0</Version>
+        <Version>7.0.1</Version>
         <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>Aiursoft.Identity</AssemblyName>
         <RootNamespace>Aiursoft.Identity</RootNamespace>
@@ -18,12 +18,8 @@
         <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
-        <PackageIcon>Identity.png</PackageIcon>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     </PropertyGroup>
-    <ItemGroup>
-        <None Include="Identity.png" Pack="true" PackagePath="\" />
-    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />

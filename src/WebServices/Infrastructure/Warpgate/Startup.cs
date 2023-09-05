@@ -15,11 +15,11 @@ public class Startup : IWebStartup
         services.Configure<RedirectConfiguration>(configuration.GetSection("RedirectConfig"));
         services.AddDbContextForInfraApps<WarpgateDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurMvc();
+        services.AddAiurosftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));
-        services.AddAiursoftSdk();
+        services.AddScannedServices();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
