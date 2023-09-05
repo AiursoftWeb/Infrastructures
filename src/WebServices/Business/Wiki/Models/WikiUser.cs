@@ -8,7 +8,7 @@ namespace Aiursoft.Wiki.Models;
 public class WikiUser : AiurUserBase
 {
     [InverseProperty(nameof(Comment.CommentUser))]
-    public List<Comment> Comments { get; set; }
+    public IEnumerable<Comment> Comments { get; set; }
 }
 
 public class Collection
@@ -17,7 +17,7 @@ public class Collection
     public string CollectionTitle { get; set; }
 
     [InverseProperty(nameof(Article.Collection))]
-    public List<Article> Articles { get; set; }
+    public IEnumerable<Article> Articles { get; set; }
 
     public string DocAPIAddress { get; set; }
 }
