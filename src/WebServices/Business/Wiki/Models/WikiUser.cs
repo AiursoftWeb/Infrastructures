@@ -36,7 +36,7 @@ public class Article
 
     [InverseProperty(nameof(Comment.Article))]
     [JsonIgnore]
-    public List<Comment> Comments { get; set; }
+    public List<Comment> Comments { get; set; } = new List<Comment>();
 
     [JsonIgnore] public int? CollectionId { get; set; }
 
