@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <Version>6.0.26</Version>
-        <TargetFramework>net6.0</TargetFramework>
+        <Version>7.0.0</Version>
+        <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>Aiursoft.Observer.SDK</AssemblyName>
         <RootNamespace>Aiursoft.Observer.SDK</RootNamespace>
         <IsTestProject>false</IsTestProject>

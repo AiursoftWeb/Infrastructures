@@ -2,24 +2,18 @@ using Aiursoft.Configuration.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
+using Aiursoft.WebTools.Models;
 
 namespace Aiursoft.Configuration;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public virtual void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<ConfigurationDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<ConfigurationDbContext>(configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurMvc();
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftSdk();
     }
 

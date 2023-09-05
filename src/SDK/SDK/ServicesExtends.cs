@@ -23,6 +23,7 @@ public static class ServicesExtends
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services
             .AddControllersWithViews()
+            .AddApplicationPart(Assembly.GetCallingAssembly())
             .AddAiurProtocol()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();

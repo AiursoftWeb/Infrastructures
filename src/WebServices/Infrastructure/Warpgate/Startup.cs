@@ -4,28 +4,21 @@ using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.Models.Configuration;
 using Aiursoft.Warpgate.SDK;
+using Aiursoft.WebTools.Models;
 
 namespace Aiursoft.Warpgate;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public virtual void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public virtual void ConfigureServices(IServiceCollection services)
-    {
-        services.Configure<RedirectConfiguration>(Configuration.GetSection("RedirectConfig"));
-        services.AddDbContextForInfraApps<WarpgateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.Configure<RedirectConfiguration>(configuration.GetSection("RedirectConfig"));
+        services.AddDbContextForInfraApps<WarpgateDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
-
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));
         services.AddAiursoftSdk();
     }
 

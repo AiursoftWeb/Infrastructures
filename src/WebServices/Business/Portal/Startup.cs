@@ -4,33 +4,27 @@ using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Warpgate.SDK;
+using Aiursoft.WebTools.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Portal;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public IConfiguration Configuration { get; }
-
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<PortalDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<PortalDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddIdentity<PortalUser, IdentityRole>()
             .AddEntityFrameworkStores<PortalDbContext>()
             .AddDefaultTokenProviders();
         services.AddAiurMvc();
-        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
-        services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
+        services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));
+        services.AddAiursoftStargate(configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftIdentity<PortalUser>(
-            probeConfig: Configuration.GetSection("AiursoftProbe"),
-            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
-            observerConfig: Configuration.GetSection("AiursoftObserver"));
+            probeConfig: configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

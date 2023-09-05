@@ -9,21 +9,15 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
+using Aiursoft.WebTools.Models;
 
 namespace Aiursoft.Directory;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<DirectoryDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<DirectoryDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddSession(options =>
         {
@@ -38,9 +32,9 @@ public class Startup
         services.AddAiurMvc();
     
         // TODO: After having gateway, these should be migrated.
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));
 
         // TODO: After having gateway, these should be migrated.
         services.AddAiursoftSdk(abstracts: typeof(IAuthProvider));

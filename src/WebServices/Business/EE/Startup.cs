@@ -2,22 +2,16 @@
 using Aiursoft.EE.Models;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
+using Aiursoft.WebTools.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.EE;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<EEDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<EEDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddIdentity<EEUser, IdentityRole>()
             .AddEntityFrameworkStores<EEDbContext>()
@@ -25,9 +19,9 @@ public class Startup
 
         services.AddAiurMvc();
         services.AddAiursoftIdentity<EEUser>(
-            probeConfig: Configuration.GetSection("AiursoftProbe"),
-            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
-            observerConfig: Configuration.GetSection("AiursoftObserver"));
+            probeConfig: configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

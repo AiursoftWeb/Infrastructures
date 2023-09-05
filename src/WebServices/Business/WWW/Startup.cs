@@ -1,33 +1,27 @@
 ﻿using Aiursoft.Identity;
 using Aiursoft.SDK;
+using Aiursoft.WebTools.Models;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.WWW;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<WWWDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
-        services.Configure<List<Navbar>>(Configuration.GetSection("Navbar"));
+        services.AddDbContextForInfraApps<WWWDbContext>(configuration.GetConnectionString("DatabaseConnection"));
+        services.Configure<List<Navbar>>(configuration.GetSection("Navbar"));
 
         services.AddIdentity<WWWUser, IdentityRole>()
             .AddEntityFrameworkStores<WWWDbContext>()
             .AddDefaultTokenProviders();
         services.AddAiurMvc();
         services.AddAiursoftIdentity<WWWUser>(
-            probeConfig: Configuration.GetSection("AiursoftProbe"),
-            authenticationConfig: Configuration.GetSection("AiursoftAuthentication"),
-            observerConfig: Configuration.GetSection("AiursoftObserver"));
+            probeConfig: configuration.GetSection("AiursoftProbe"),
+            authenticationConfig: configuration.GetSection("AiursoftAuthentication"),
+            observerConfig: configuration.GetSection("AiursoftObserver"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

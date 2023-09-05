@@ -6,31 +6,25 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK;
+using Aiursoft.WebTools.Models;
 using Microsoft.AspNetCore.Http.Features;
 
 namespace Aiursoft.Probe;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public virtual void ConfigureServices(IServiceCollection services)
+    public virtual void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         services.Configure<FormOptions>(x => x.MultipartBodyLengthLimit = long.MaxValue);
-        services.Configure<ProbeDownloadPatternConfig>(Configuration.GetSection("DownloadPatternConfig"));
-        services.Configure<DiskAccessConfig>(Configuration.GetSection("DiskAccessConfig"));
+        services.Configure<ProbeDownloadPatternConfig>(configuration.GetSection("DownloadPatternConfig"));
+        services.Configure<DiskAccessConfig>(configuration.GetSection("DiskAccessConfig"));
 
-        services.AddDbContextForInfraApps<ProbeDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<ProbeDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
         services.AddAiurMvc();
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));
 
         services.AddAiursoftSdk();
         services.AddScoped<IStorageProvider, DiskAccess>();

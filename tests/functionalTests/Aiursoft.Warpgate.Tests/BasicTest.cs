@@ -6,6 +6,8 @@ using Aiursoft.Warpgate.SDK.Models;
 using Aiursoft.Warpgate.SDK.Services.ToWarpgateServer;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static Aiursoft.WebTools.Extends;
@@ -30,7 +32,7 @@ public class BasicTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<WarpgateDbContext>(UpdateMode.RecreateThenUse));
+        _server = (await App<TestStartup>(Array.Empty<string>(), port: _port).UpdateDbAsync<WarpgateDbContext>(UpdateMode.RecreateThenUse));
         _http = new HttpClient();
         await _server.StartAsync();
 

@@ -5,6 +5,8 @@ using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.SDK.Tests.Services;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static Aiursoft.WebTools.Extends;
@@ -29,7 +31,7 @@ public class EventTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = await App<TestStartup>(port: _port).UpdateDbAsync<ObserverDbContext>(UpdateMode.RecreateThenUse);
+        _server = await App<TestStartup>(Array.Empty<string>(), port: _port).UpdateDbAsync<ObserverDbContext>(UpdateMode.RecreateThenUse);
         _http = new HttpClient();
         await _server.StartAsync();
 

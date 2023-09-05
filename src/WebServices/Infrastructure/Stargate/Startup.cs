@@ -3,25 +3,19 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
+using Aiursoft.WebTools.Models;
 
 namespace Aiursoft.Stargate;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public virtual void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public virtual void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContextForInfraApps<StargateDbContext>(Configuration.GetConnectionString("DatabaseConnection"));
+        services.AddDbContextForInfraApps<StargateDbContext>(configuration.GetConnectionString("DatabaseConnection"));
         services.AddAiurMvc();
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftStargate(configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftSdk();
     }
 

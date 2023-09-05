@@ -6,6 +6,8 @@ using Aiursoft.Probe.SDK.Services.ToProbeServer;
 using Aiursoft.Scanner;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -31,7 +33,7 @@ public class SiteTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<ProbeDbContext>(UpdateMode.RecreateThenUse));
+        _server = (await App<TestStartup>(Array.Empty<string>(), port: _port).UpdateDbAsync<ProbeDbContext>(UpdateMode.RecreateThenUse));
         _http = new HttpClient();
         await _server.StartAsync();
 

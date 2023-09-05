@@ -10,6 +10,8 @@ using Aiursoft.Stargate.SDK.Services.ToStargateServer;
 using Aiursoft.Stargate.Tests.Services;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.DbTools;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -36,7 +38,7 @@ public class BasicTests
     [TestInitialize]
     public async Task CreateServer()
     {
-        _server = (await App<TestStartup>(port: _port).UpdateDbAsync<StargateDbContext>(UpdateMode.RecreateThenUse));
+        _server = (await App<TestStartup>(Array.Empty<string>(), port: _port).UpdateDbAsync<StargateDbContext>(UpdateMode.RecreateThenUse));
         _http = new HttpClient();
         await _server.StartAsync();
 

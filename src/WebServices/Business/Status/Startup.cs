@@ -5,27 +5,21 @@ using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK;
+using Aiursoft.WebTools.Models;
 
 namespace Aiursoft.Status;
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.Configure<List<MonitorRule>>(Configuration.GetSection("CustomRules"));
+        services.Configure<List<MonitorRule>>(configuration.GetSection("CustomRules"));
         services.AddAiurMvc();
-        services.AddAiursoftAppAuthentication(Configuration.GetSection("AiursoftAuthentication"));
-        services.AddAiursoftObserver(Configuration.GetSection("AiursoftObserver"));
-        services.AddAiursoftProbe(Configuration.GetSection("AiursoftProbe"));
-        services.AddAiursoftStargate(Configuration.GetSection("AiursoftStargate"));
-        services.AddAiursoftWarpgate(Configuration.GetSection("AiursoftWarpgate"));
+        services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
+        services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
+        services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));
+        services.AddAiursoftStargate(configuration.GetSection("AiursoftStargate"));
+        services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));
         services.AddAiursoftSdk();
     }
 
