@@ -450,10 +450,10 @@ public class UserController : ControllerBase
         await _userManager.SetTwoFactorEnabledAsync(user, true);
         var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
 
-        return this.Protocol(new AiurCollection<string>(recoveryCodes.ToList())
+        return this.Protocol(new AiurCollection<string>(recoveryCodes!.ToList())
         {
             Code = Code.JobDone,
-            Message = "Sucess regenerate recovery Codes!."
+            Message = "Success regenerate recovery Codes!."
         });
     }
 }
