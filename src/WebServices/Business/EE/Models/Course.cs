@@ -9,7 +9,7 @@ public class Course
     public string Name { get; set; }
     public string Description { get; set; }
     public string WhatYouWillLearn { get; set; }
-    public bool Finished { get; set; } = false;
+    public bool Finished { get; set; }
     public DateTime CreateTime { get; set; } = DateTime.UtcNow;
     public double Price { get; set; }
     public bool DisplayOwnerInfo { get; set; }
