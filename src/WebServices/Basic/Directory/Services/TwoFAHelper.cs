@@ -30,7 +30,7 @@ public class TwoFAHelper : ITransientDependency
             unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         }
 
-        var twoFAKey = string.Join(' ', unformattedKey.SplitInParts(4));
+        var twoFAKey = string.Join(' ', unformattedKey!.SplitInParts(4));
         var twoFAQRUri = GenerateQrCodeUri(user.Email, unformattedKey);
 
         return (twoFAKey, twoFAQRUri);
