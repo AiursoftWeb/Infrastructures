@@ -18,7 +18,7 @@ public class Startup : IWebStartup
             .AddEntityFrameworkStores<WikiDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
 
         services.AddAiursoftIdentity<WikiUser>(
             probeConfig: configuration.GetSection("AiursoftProbe"),

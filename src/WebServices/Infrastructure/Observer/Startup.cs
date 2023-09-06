@@ -12,7 +12,7 @@ public class Startup : IWebStartup
     {
         services.AddDbContextForInfraApps<ObserverDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddScannedServices();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));

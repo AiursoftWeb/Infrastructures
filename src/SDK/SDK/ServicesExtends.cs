@@ -24,7 +24,7 @@ public static class ServicesExtends
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IMvcBuilder AddAiurosftWebFeatures(this IServiceCollection services)
+    public static IMvcBuilder AddAiursoftWebFeatures(this IServiceCollection services)
     {
         // TODO: Use it as an attribute to only apply to API.
         services.AddCors(options =>

@@ -18,7 +18,7 @@ public class Startup : IWebStartup
         services.AddIdentity<PortalUser, IdentityRole>()
             .AddEntityFrameworkStores<PortalDbContext>()
             .AddDefaultTokenProviders();
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));
         services.AddAiursoftStargate(configuration.GetSection("AiursoftStargate"));
         services.AddAiursoftIdentity<PortalUser>(

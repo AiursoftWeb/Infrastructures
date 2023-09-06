@@ -29,7 +29,7 @@ public class Startup : IWebStartup
             .AddEntityFrameworkStores<DirectoryDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
     
         // TODO: After having gateway, these should be migrated.
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));

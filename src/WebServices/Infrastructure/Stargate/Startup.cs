@@ -12,7 +12,7 @@ public class Startup : IWebStartup
     public virtual void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         services.AddDbContextForInfraApps<StargateDbContext>(configuration.GetConnectionString("DatabaseConnection"));
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftStargate(configuration.GetSection("AiursoftStargate"));

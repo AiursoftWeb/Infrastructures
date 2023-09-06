@@ -11,7 +11,7 @@ public class Startup : IWebStartup
     public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         services.AddDbContextForInfraApps<ConfigurationDbContext>(configuration.GetConnectionString("DatabaseConnection"));
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddScannedServices();

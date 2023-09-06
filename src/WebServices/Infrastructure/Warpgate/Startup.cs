@@ -15,7 +15,7 @@ public class Startup : IWebStartup
         services.Configure<RedirectConfiguration>(configuration.GetSection("RedirectConfig"));
         services.AddDbContextForInfraApps<WarpgateDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftWarpgate(configuration.GetSection("AiursoftWarpgate"));

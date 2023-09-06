@@ -21,7 +21,7 @@ public class Startup : IWebStartup
 
         services.AddDbContextForInfraApps<ProbeDbContext>(configuration.GetConnectionString("DatabaseConnection"));
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftAppAuthentication(configuration.GetSection("AiursoftAuthentication"));
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
         services.AddAiursoftProbe(configuration.GetSection("AiursoftProbe"));

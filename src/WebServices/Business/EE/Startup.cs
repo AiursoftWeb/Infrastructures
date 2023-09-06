@@ -17,7 +17,7 @@ public class Startup : IWebStartup
             .AddEntityFrameworkStores<EEDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddAiurosftWebFeatures();
+        services.AddAiursoftWebFeatures();
         services.AddAiursoftIdentity<EEUser>(
             probeConfig: configuration.GetSection("AiursoftProbe"),
             authenticationConfig: configuration.GetSection("AiursoftAuthentication"),
