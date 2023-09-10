@@ -14,7 +14,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Twilio" Version="6.11.0" />
+        <PackageReference Include="Twilio" Version="6.13.0" />
         <PackageReference Include="Edi.Captcha" Version="3.17.0" />
     </ItemGroup>
     <ItemGroup>
