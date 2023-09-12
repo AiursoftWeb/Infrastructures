@@ -2,14 +2,14 @@
 using Aiursoft.CSTools.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.SDK;
 
 public static class Handlers
 {
-    public static IApplicationBuilder UseAiursoftHandler(
-        this IApplicationBuilder app, 
-        bool isDevelopment, 
+    public static WebApplication UseAiursoftHandler(
+        this WebApplication app, 
         bool allowCors = true, 
         bool addUserFriendlyPages = true)
     {
@@ -29,7 +29,7 @@ public static class Handlers
         app.UseHttpsRedirection();
 
         // Add error handlers.
-        if (isDevelopment || !EntryExtends.IsProgramEntry())
+        if (app.Environment.IsDevelopment() || !EntryExtends.IsProgramEntry())
         {
             app.UseDeveloperExceptionPage();
         }

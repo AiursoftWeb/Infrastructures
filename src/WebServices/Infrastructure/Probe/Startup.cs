@@ -30,9 +30,9 @@ public class Startup : IWebStartup
         services.AddScoped<IStorageProvider, DiskAccess>();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(WebApplication app)
     {
-        app.UseAiursoftHandler(env.IsDevelopment(), addUserFriendlyPages: true);
+        app.UseAiursoftHandler(addUserFriendlyPages: true);
         app.UseCors(builder => builder.AllowAnyOrigin());
         app.UseAiursoftAPIAppRouters();
     }

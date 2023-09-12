@@ -30,10 +30,9 @@ public static class MiddlewaresExtends
     /// <param name="app"></param>
     /// <param name="beforeMvc"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseAiursoftAppRouters(
-        this IApplicationBuilder app,
-        Func<IApplicationBuilder,
-            IApplicationBuilder> beforeMvc = null)
+    public static WebApplication UseAiursoftAppRouters(
+        this WebApplication app,
+        Func<WebApplication, WebApplication> beforeMvc = null)
     {
         app.UseRequestLocalization(new RequestLocalizationOptions
         {
@@ -68,10 +67,10 @@ public static class MiddlewaresExtends
     /// <param name="addRouting"></param>
     /// <param name="beforeMvc"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseAiursoftAPIAppRouters(
-        this IApplicationBuilder app,
+    public static WebApplication UseAiursoftAPIAppRouters(
+        this WebApplication app,
         bool addRouting = true,
-        Func<IApplicationBuilder, IApplicationBuilder> beforeMvc = null)
+        Func<WebApplication, WebApplication> beforeMvc = null)
     {
         beforeMvc?.Invoke(app);
         if (addRouting)

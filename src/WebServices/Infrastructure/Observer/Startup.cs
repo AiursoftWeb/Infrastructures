@@ -18,9 +18,9 @@ public class Startup : IWebStartup
         services.AddAiursoftObserver(configuration.GetSection("AiursoftObserver"));
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(WebApplication app)
     {
-        app.UseAiursoftHandler(env.IsDevelopment(), addUserFriendlyPages: false);
+        app.UseAiursoftHandler(addUserFriendlyPages: false);
         app.UseAiursoftAPIAppRouters();
     }
 }

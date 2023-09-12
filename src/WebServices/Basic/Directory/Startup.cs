@@ -42,9 +42,9 @@ public class Startup : IWebStartup
         services.AddSessionBasedCaptcha();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(WebApplication app)
     {
-        app.UseAiursoftHandler(env.IsDevelopment());
+        app.UseAiursoftHandler();
         
         // TODO: After having gateway, this should be migrated.
         app.UseSession();
