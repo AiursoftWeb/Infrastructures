@@ -79,7 +79,7 @@ public static class MiddlewaresExtends
             app.UseRouting();
         }
 
-        app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+        app.MapDefaultControllerRoute();
         app.UseAiursoftDocGenerator(options =>
         {
             options.IsApiAction = (action, controller) =>
