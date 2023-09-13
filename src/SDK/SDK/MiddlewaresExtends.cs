@@ -70,7 +70,7 @@ public static class MiddlewaresExtends
     public static WebApplication UseAiursoftAPIAppRouters(
         this WebApplication app,
         bool addRouting = true,
-        Func<WebApplication, WebApplication> beforeMvc = null)
+        Func<WebApplication, IApplicationBuilder> beforeMvc = null)
     {
         beforeMvc?.Invoke(app);
         if (addRouting)
