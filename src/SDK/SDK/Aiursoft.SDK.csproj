@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <Version>7.0.5</Version>
+        <Version>7.0.6</Version>
         <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>Aiursoft.SDK</AssemblyName>
         <RootNamespace>Aiursoft.SDK</RootNamespace>
@@ -17,7 +17,7 @@
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Aiursoft.WebTools" Version="7.0.3" />
+        <PackageReference Include="Aiursoft.WebTools" Version="7.0.4" />
         <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="7.0.1" />
         <PackageReference Include="Aiursoft.DbTools.InMemory" Version="7.0.1" />
         <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="7.0.1" />
