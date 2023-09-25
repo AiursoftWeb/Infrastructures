@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <Version>7.0.3</Version>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>Aiursoft.Stargate.SDK</AssemblyName>
-        <RootNamespace>Aiursoft.Stargate.SDK</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Company>Aiursoft</Company>
-        <Product>SDK</Product>
-        <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
-        <PackageId>Aiursoft.Stargate.SDK</PackageId>
-        <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
-    </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>7.0.4</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Aiursoft.Stargate.SDK</AssemblyName>
+    <RootNamespace>Aiursoft.Stargate.SDK</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Company>Aiursoft</Company>
+    <Product>SDK</Product>
+    <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
+    <PackageId>Aiursoft.Stargate.SDK</PackageId>
+    <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
+  </ItemGroup>
 </Project>
