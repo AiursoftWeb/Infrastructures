@@ -15,7 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Twilio" Version="6.14.1" />
-    <PackageReference Include="Edi.Captcha" Version="3.18.0" />
+    <PackageReference Include="Edi.Captcha" Version="3.19.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />
