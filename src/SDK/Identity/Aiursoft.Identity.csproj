@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.17</Version>
+    <Version>7.0.18</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.Identity</AssemblyName>
     <RootNamespace>Aiursoft.Identity</RootNamespace>
@@ -18,11 +18,13 @@
     <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SDK\Aiursoft.SDK.csproj" />

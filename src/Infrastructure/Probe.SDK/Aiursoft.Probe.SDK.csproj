@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.8</Version>
+    <Version>7.0.9</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.Probe.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Probe.SDK</RootNamespace>
@@ -14,9 +14,11 @@
     <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
     <PackageId>Aiursoft.Probe.SDK</PackageId>
     <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.13" />
+    <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
