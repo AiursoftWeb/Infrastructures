@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.17</Version>
+    <Version>7.0.18</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.SDK</AssemblyName>
     <RootNamespace>Aiursoft.SDK</RootNamespace>
@@ -14,6 +14,7 @@
     <Description>The base class, tools and extends for Aiursoft web apps.</Description>
     <PackageId>Aiursoft.SDK</PackageId>
     <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
@@ -22,6 +23,7 @@
     <PackageReference Include="Aiursoft.DbTools.InMemory" Version="7.0.4" />
     <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="7.0.5" />
     <PackageReference Include="Aiursoft.DocGenerator" Version="7.0.0" />
+    <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Observer.SDK\Aiursoft.Observer.SDK.csproj" />
