@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.11</Version>
+    <Version>7.0.12</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.Directory.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Directory.SDK</RootNamespace>
