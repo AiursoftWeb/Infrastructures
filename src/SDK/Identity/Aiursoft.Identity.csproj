@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.23</Version>
+    <Version>7.0.24</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.Identity</AssemblyName>
     <RootNamespace>Aiursoft.Identity</RootNamespace>
@@ -22,7 +22,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>

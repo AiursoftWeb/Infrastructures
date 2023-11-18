@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.23</Version>
+    <Version>7.0.24</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.SDK</AssemblyName>
     <RootNamespace>Aiursoft.SDK</RootNamespace>
