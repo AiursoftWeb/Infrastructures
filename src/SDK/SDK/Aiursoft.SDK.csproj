@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.27</Version>
+    <Version>7.0.28</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.SDK</AssemblyName>
     <RootNamespace>Aiursoft.SDK</RootNamespace>
@@ -22,7 +22,7 @@
     <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="7.0.10" />
     <PackageReference Include="Aiursoft.DbTools.InMemory" Version="7.0.8" />
     <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="7.0.12" />
-    <PackageReference Include="Aiursoft.DocGenerator" Version="7.0.0" />
+    <PackageReference Include="Aiursoft.DocGenerator" Version="7.0.1" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
