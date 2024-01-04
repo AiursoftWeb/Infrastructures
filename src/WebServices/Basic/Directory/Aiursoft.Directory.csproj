@@ -14,8 +14,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Twilio" Version="6.15.1" />
-    <PackageReference Include="Edi.Captcha" Version="3.19.1" />
+    <PackageReference Include="Twilio" Version="6.15.2" />
+    <PackageReference Include="Edi.Captcha" Version="3.21.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SDK\Identity\Aiursoft.Identity.csproj" />

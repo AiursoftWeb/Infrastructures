@@ -42,11 +42,6 @@ public class StargateMemory : ISingletonDependency
         return Channels.Select(t => t.Value).Where(t => t.AppId == appid);
     }
 
-    public IEnumerable<Channel> GetDeadChannels()
-    {
-        return Channels.Select(t => t.Value).Where(t => t.IsDead());
-    }
-
     public void DeleteChannels(IEnumerable<int> channels)
     {
         foreach (var channel in channels)
@@ -62,12 +57,5 @@ public class StargateMemory : ISingletonDependency
     {
         Channels[id] = null;
         return Channels.Remove(id, out _);
-    }
-
-    public (int channelsCount, int totalMessages) GetMonitoringReport()
-    {
-        return (Channels.Count, Channels
-            .SelectMany(t => t.Value.Messages)
-            .Count());
     }
 }

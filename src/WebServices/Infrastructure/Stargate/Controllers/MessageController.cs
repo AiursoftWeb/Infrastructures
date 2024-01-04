@@ -2,9 +2,7 @@
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Stargate.Data;
-using Aiursoft.Stargate.SDK.Models;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;
-using Aiursoft.CSTools.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
@@ -13,17 +11,14 @@ namespace Aiursoft.Stargate.Controllers;
 [ApiModelStateChecker]
 public class MessageController : ControllerBase
 {
-    private readonly Counter _counter;
     private readonly StargateMemory _memoryContext;
     private readonly AiursoftAppTokenValidator _tokenManager;
 
     public MessageController(
         StargateMemory memoryContext,
-        Counter counter,
         AiursoftAppTokenValidator tokenManager)
     {
         _memoryContext = memoryContext;
-        _counter = counter;
         _tokenManager = tokenManager;
     }
 
@@ -39,14 +34,7 @@ public class MessageController : ControllerBase
             return this.Protocol(Code.NotFound, $"We can not find your channel with id: '{model.ChannelId}'!");
         }
 
-        //Create Message
-        var message = new Message
-        {
-            Id = _counter.GetUniqueNo(),
-            ChannelId = channel.Id,
-            Content = model.MessageContent
-        };
-        channel.Push(message);
+        await channel.Messages.BroadcastAsync(model.MessageContent);
         return this.Protocol(new AiurResponse
         {
             Code = Code.JobDone,

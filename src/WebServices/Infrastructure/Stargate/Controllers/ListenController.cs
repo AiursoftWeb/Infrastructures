@@ -1,12 +1,9 @@
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
-using Aiursoft.Directory.SDK.Services;
-using Aiursoft.Observer.SDK.Services.ToObserverServer;
 using Aiursoft.Stargate.Attributes;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.ListenAddressModels;
-using Aiursoft.Stargate.Services;
-using Aiursoft.CSTools.Services;
+using Aiursoft.WebTools.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.Stargate.Controllers;
@@ -15,33 +12,16 @@ namespace Aiursoft.Stargate.Controllers;
 [ApiModelStateChecker]
 public class ListenController : ControllerBase
 {
-    private readonly DirectoryAppTokenService _directoryAppTokenService;
-    private readonly Counter _counter;
-    private readonly ObserverService _eventService;
-    private readonly ILogger<ListenController> _logger;
     private readonly StargateMemory _memoryContext;
-    private readonly WebSocketPusher _pusher;
 
-    public ListenController(
-        StargateMemory memoryContext,
-        WebSocketPusher pusher,
-        ILogger<ListenController> logger,
-        Counter counter,
-        DirectoryAppTokenService directoryAppTokenService,
-        ObserverService eventService)
+    public ListenController(StargateMemory memoryContext)
     {
         _memoryContext = memoryContext;
-        _pusher = pusher;
-        _logger = logger;
-        _counter = counter;
-        _directoryAppTokenService = directoryAppTokenService;
-        _eventService = eventService;
     }
 
     [AiurForceWebSocket]
     public async Task<IActionResult> Channel(ChannelAddressModel model)
     {
-        var lastReadId = _counter.GetCurrent;
         var channel = _memoryContext[model.Id];
         if (channel == null)
         {
@@ -56,52 +36,23 @@ public class ListenController : ControllerBase
                 Message = "Wrong connection key!"
             });
         }
-
-        await _pusher.Accept(HttpContext);
-        var sleepTime = 0;
+        
+        var pusher = await HttpContext.AcceptWebSocketClient();
+        var outSub = channel
+            .Messages
+            .Subscribe(pusher);
         try
         {
-            await Task.Factory.StartNew(_pusher.PendingClose);
-            channel.ConnectedUsers++;
-            while (_pusher.Connected && channel.IsAlive())
-            {
-                channel.LastAccessTime = DateTime.UtcNow;
-                var nextMessages = channel
-                    .GetMessagesFrom(lastReadId)
-                    .ToList();
-                if (nextMessages.Any())
-                {
-                    var messageToPush = nextMessages.MinBy(t => t.Id);
-                    if (messageToPush == null)
-                    {
-                        continue;
-                    }
-
-                    await _pusher.SendMessage(messageToPush.Content);
-                    lastReadId = messageToPush.Id;
-                    sleepTime = 0;
-                }
-                else
-                {
-                    if (sleepTime < 1000)
-                    {
-                        sleepTime += 5;
-                    }
-
-                    await Task.Delay(sleepTime);
-                }
-            }
+            await pusher.Listen(HttpContext.RequestAborted);
         }
-        catch (Exception e)
+        catch (TaskCanceledException)
         {
-            _logger.LogError(e, "Crashed while monitoring channel");
-            var accessToken = await _directoryAppTokenService.GetAccessTokenAsync();
-            await _eventService.LogExceptionAsync(accessToken, e, Request.Path);
+            // Ignore. This happens when the client closes the connection.
         }
         finally
         {
-            channel.ConnectedUsers--;
-            await _pusher.Close();
+            await pusher.Close(HttpContext.RequestAborted);
+            outSub.Unsubscribe();
         }
 
         return this.Protocol(new AiurResponse { Code = Code.UnknownError, Message = "You shouldn't be here." });

@@ -73,15 +73,6 @@ public class ChannelController : ControllerBase
             });
         }
 
-        if (channel.IsDead())
-        {
-            return this.Protocol(new AiurResponse
-            {
-                Code = Code.Timeout,
-                Message = "Your channel is out dated and about to be deleted!"
-            });
-        }
-
         if (channel.ConnectKey != model.Key)
         {
             return this.Protocol(new AiurResponse

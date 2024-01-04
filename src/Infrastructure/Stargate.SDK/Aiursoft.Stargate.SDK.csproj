@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.17</Version>
+    <Version>7.0.18</Version>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Aiursoft.Stargate.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Stargate.SDK</RootNamespace>
@@ -19,5 +19,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Directory.SDK\Aiursoft.Directory.SDK.csproj" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aiursoft.AiurObserver" Version="7.0.12" />
   </ItemGroup>
 </Project>
