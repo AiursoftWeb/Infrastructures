@@ -6,7 +6,7 @@ namespace Aiursoft.Directory.Services;
 public class PrivateKeyStore : ISingletonDependency
 {
     private RSAParameters? _privateKey;
-    private object _lock = new object();
+    private object _lock = new();
 
     public RSAParameters GetPrivateKey()
     {
