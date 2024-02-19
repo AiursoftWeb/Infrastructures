@@ -1,6 +1,8 @@
 ﻿using System.Net.WebSockets;
 using System.Text;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;

@@ -1,5 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Server;
+﻿using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.SDK.Services;
 using Aiursoft.Warpgate.Repositories;
 using Aiursoft.Warpgate.SDK.Models;

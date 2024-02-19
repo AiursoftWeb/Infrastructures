@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK.Models.API;
 using Aiursoft.Directory.SDK.Models.API.AppsAddressModels;
@@ -7,8 +8,8 @@ using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Directory.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.DbTools;
 
 namespace Aiursoft.Directory.Controllers;

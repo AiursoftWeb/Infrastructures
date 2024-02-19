@@ -1,5 +1,6 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.Probe.Repositories;
 using Aiursoft.Probe.SDK.Models.SitesAddressModels;
 using Aiursoft.Probe.SDK.Models.SitesViewModels;

@@ -1,4 +1,6 @@
 ﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Probe.SDK.Configuration;
 using Aiursoft.Probe.SDK.Models.TokenAddressModels;
 using Aiursoft.Scanner.Abstractions;

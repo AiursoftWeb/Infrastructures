@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Scanner;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.SDK;

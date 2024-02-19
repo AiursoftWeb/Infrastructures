@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
+using Microsoft.AspNetCore.Mvc;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 
 namespace Aiursoft.Observer.Controllers;
 

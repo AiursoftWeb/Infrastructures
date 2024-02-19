@@ -1,4 +1,6 @@
 ﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Observer.SDK.Configuration;
 using Aiursoft.Observer.SDK.Models;
 using Aiursoft.Observer.SDK.Models.EventAddressModels;

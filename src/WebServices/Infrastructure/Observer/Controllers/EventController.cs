@@ -1,5 +1,6 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.Canon;
 using Aiursoft.DbTools;
 using Aiursoft.Directory.SDK.Services;

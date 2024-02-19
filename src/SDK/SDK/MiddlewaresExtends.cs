@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using Aiursoft.AiurProtocol;
-using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.DocGenerator.Attributes;
 using Aiursoft.DocGenerator.Services;
 using Aiursoft.SDK.Attributes;

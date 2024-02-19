@@ -1,4 +1,6 @@
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Stargate.SDK.Configuration;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;

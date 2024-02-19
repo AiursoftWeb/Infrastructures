@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Reflection;
 using System.Text;
-using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.SDK.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

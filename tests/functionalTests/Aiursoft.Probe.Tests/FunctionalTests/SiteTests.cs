@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Probe.Data;
 using Aiursoft.Probe.SDK;
 using Aiursoft.Probe.SDK.Configuration;

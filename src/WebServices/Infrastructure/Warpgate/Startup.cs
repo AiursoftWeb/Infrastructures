@@ -4,7 +4,7 @@ using Aiursoft.SDK;
 using Aiursoft.Warpgate.Data;
 using Aiursoft.Warpgate.Models.Configuration;
 using Aiursoft.Warpgate.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 
 namespace Aiursoft.Warpgate;
 

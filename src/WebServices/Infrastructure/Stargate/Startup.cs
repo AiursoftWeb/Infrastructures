@@ -3,7 +3,7 @@ using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 
 namespace Aiursoft.Stargate;
 

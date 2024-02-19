@@ -1,5 +1,6 @@
 using System.Globalization;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;

@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Identity;
 using Aiursoft.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 using Aiursoft.Wiki.Data;
 using Aiursoft.Wiki.Models;
 using Aiursoft.Wiki.Services;

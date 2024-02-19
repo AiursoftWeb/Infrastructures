@@ -2,7 +2,7 @@
 using Aiursoft.Account.Models;
 using Aiursoft.Identity;
 using Aiursoft.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Account;

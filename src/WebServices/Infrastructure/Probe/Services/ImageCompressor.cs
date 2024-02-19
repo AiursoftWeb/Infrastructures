@@ -2,6 +2,8 @@
 using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace Aiursoft.Probe.Services;
 

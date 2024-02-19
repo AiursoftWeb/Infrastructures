@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Directory.SDK.Services;
 
 namespace Aiursoft.SDK.Tests.Services;

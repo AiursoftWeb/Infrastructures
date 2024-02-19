@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Identity;
 using Aiursoft.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 using Aiursoft.WWW.Data;
 using Aiursoft.WWW.Models;
 using Microsoft.AspNetCore.Identity;

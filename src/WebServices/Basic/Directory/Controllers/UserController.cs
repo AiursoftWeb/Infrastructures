@@ -1,6 +1,7 @@
 using System.Net.Mail;
-using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.Canon;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.Models;

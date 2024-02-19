@@ -5,6 +5,7 @@
 @using Aiursoft.SDK.Views.Shared.Components.ScrollToTop
 @using Aiursoft.SDK.Views.Shared.Components.AiurFooter
 @using Aiursoft.Identity.Views.Shared.Components.AiurLogout
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model AccountViewModel
 @{
     var title = $"{ViewData["Title"] ?? string.Empty} - {Values.ProjectName ?? string.Empty} {Localizer["Account"].ToString() ?? string.Empty}";

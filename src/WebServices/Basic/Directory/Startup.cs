@@ -9,7 +9,7 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Directory.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 
 namespace Aiursoft.Directory;
 

@@ -5,6 +5,8 @@ using Aiursoft.Directory.SDK.Models.API.UserViewModels;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 
 namespace Aiursoft.Directory.SDK.Services.ToDirectoryServer;
 

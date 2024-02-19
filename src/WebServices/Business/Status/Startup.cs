@@ -5,7 +5,7 @@ using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Status.Models;
 using Aiursoft.Warpgate.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 
 namespace Aiursoft.Status;
 

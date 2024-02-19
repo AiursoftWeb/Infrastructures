@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Microsoft.AspNetCore.Mvc;

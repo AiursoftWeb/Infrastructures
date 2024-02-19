@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Warpgate.SDK.Models.ViewModels;
 

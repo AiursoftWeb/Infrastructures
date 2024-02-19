@@ -4,7 +4,7 @@ using Aiursoft.Identity;
 using Aiursoft.SDK;
 using Aiursoft.Stargate.SDK;
 using Aiursoft.Warpgate.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aiursoft.Portal;

@@ -5,6 +5,7 @@ using Aiursoft.CSTools.Tools;
 using Microsoft.Extensions.Options;
 using Aiursoft.Canon;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Services;
 
 namespace Aiursoft.Probe.SDK.Services;
 

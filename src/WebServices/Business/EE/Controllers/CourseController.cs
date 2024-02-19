@@ -1,5 +1,6 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.EE.Data;
 using Aiursoft.EE.Models;
 using Aiursoft.EE.Models.CourseViewModels;

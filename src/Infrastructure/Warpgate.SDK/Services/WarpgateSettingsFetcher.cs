@@ -1,6 +1,7 @@
 ﻿using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
 using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Canon;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models.ViewModels;

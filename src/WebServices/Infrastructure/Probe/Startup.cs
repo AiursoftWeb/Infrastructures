@@ -6,7 +6,7 @@ using Aiursoft.Probe.SDK;
 using Aiursoft.Probe.SDK.Models.HomeViewModels;
 using Aiursoft.Probe.Services;
 using Aiursoft.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 using Microsoft.AspNetCore.Http.Features;
 
 namespace Aiursoft.Probe;

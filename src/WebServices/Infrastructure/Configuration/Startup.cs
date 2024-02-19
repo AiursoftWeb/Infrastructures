@@ -2,7 +2,7 @@ using Aiursoft.Configuration.Data;
 using Aiursoft.Directory.SDK;
 using Aiursoft.Observer.SDK;
 using Aiursoft.SDK;
-using Aiursoft.WebTools.Models;
+using Aiursoft.WebTools.Abstractions.Models;
 
 namespace Aiursoft.Configuration;
 

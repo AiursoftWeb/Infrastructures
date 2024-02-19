@@ -1,5 +1,6 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Server;
+using Aiursoft.AiurProtocol.Server.Attributes;
 using Aiursoft.Directory.SDK.Services;
 using Aiursoft.Stargate.Data;
 using Aiursoft.Stargate.SDK.Models.MessageAddressModels;

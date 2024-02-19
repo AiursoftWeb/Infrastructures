@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Observer.Data;
 using Aiursoft.Observer.SDK;
 using Aiursoft.Observer.SDK.Services.ToObserverServer;

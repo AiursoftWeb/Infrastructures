@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.Probe.SDK.Models.FilesViewModels;
 

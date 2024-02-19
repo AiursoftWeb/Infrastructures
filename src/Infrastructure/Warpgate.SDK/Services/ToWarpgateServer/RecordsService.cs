@@ -1,4 +1,6 @@
 ﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Scanner.Abstractions;
 using Aiursoft.Warpgate.SDK.Configuration;
 using Aiursoft.Warpgate.SDK.Models;

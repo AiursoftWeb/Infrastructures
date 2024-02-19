@@ -10,13 +10,7 @@ before_script:
   - 'export PATH=$PATH:$HOME/.dotnet/tools'
   - 'dotnet tool install JetBrains.ReSharper.GlobalTools --global || echo "JB already installed."'
   - 'dotnet tool install dotnet-reportgenerator-globaltool --global || echo "DRG already installed."'
-  - 'cat /etc/lsb-release && uname -a && pwd && ls -ashl'
   - 'echo "Hostname: $(hostname)"'
-  - 'echo "Uptime: $(uptime -p)"'
-  - 'echo "Memory: $(free -h | awk "/^Mem:/{print \$2}")"'
-  - 'echo "CPU Cores: $(nproc)"'
-  - 'echo "Available Disk Space: $(df -h --output=avail / | tail -1)"'
-  - 'echo "IP Address: $(hostname -I)"'
   - 'dotnet --info'
 
 restore:
@@ -36,7 +30,7 @@ lint:
   needs: 
     - build
   script:
-    - jb inspectcode ./*.sln --output=analyze_output.xml --build
+    - jb inspectcode ./*.sln --output=analyze_output.xml --build -f=xml
     - grep 'WARNING' analyze_output.xml && cat analyze_output.xml && exit 1 || echo "No warning found"
   artifacts:
     when: always
