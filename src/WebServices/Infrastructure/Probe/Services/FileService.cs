@@ -17,7 +17,7 @@ public static class FileService
     {
         var (etag, length) = GetFileHTTPProperties(path);
         // Handle etag
-        controller.Response.Headers.Add("ETag", '\"' + etag + '\"');
+        controller.Response.Headers.Append("ETag", '\"' + etag + '\"');
         if (controller.Request.Headers.Keys.Contains("If-None-Match"))
         {
             if (controller.Request.Headers["If-None-Match"].ToString().Trim('\"') == etag)
@@ -27,9 +27,9 @@ public static class FileService
         }
 
         // Return file result.
-        controller.Response.Headers.Add("Content-Length", length.ToString());
+        controller.Response.Headers.Append("Content-Length", length.ToString());
         // Allow cache
-        controller.Response.Headers.Add("Cache-Control", $"public, max-age={TimeSpan.FromDays(7).TotalSeconds}");
+        controller.Response.Headers.Append("Cache-Control", $"public, max-age={TimeSpan.FromDays(7).TotalSeconds}");
         return controller.PhysicalFile(path, Mime.GetContentType(extension), true);
     }
 }

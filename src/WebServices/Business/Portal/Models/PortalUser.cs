@@ -2,6 +2,4 @@
 
 namespace Aiursoft.Portal.Models;
 
-public class PortalUser : AiurUserBase
-{
-}
+public class PortalUser : AiurUserBase;

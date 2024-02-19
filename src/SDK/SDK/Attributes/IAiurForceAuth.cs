@@ -1,5 +1,3 @@
 ﻿namespace Aiursoft.SDK.Attributes;
 
-public interface IAiurForceAuth
-{
-}
+public interface IAiurForceAuth;

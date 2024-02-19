@@ -1,5 +1,3 @@
 ﻿namespace Aiursoft.Directory.SDK.Models.API.UserAddressModels;
 
-public class ViewPhoneNumberAddressModel : UserOperationAddressModel
-{
-}
+public class ViewPhoneNumberAddressModel : UserOperationAddressModel;

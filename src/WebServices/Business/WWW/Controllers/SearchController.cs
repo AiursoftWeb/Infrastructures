@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using Aiursoft.Canon;
-
 using Aiursoft.Identity;
 using Aiursoft.WebTools;
 using Aiursoft.WWW.Data;
@@ -9,7 +8,6 @@ using Aiursoft.WWW.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aiursoft.WWW.Controllers;
-
 
 public class SearchController : Controller
 {
@@ -73,7 +71,7 @@ public class SearchController : Controller
             .Take(10)
             .ToList();
 
-        Response.Headers.Add("access-control-allow-origin", "*");
+        Response.Headers.Append("access-control-allow-origin", "*");
         return Json(strings);
     }
 

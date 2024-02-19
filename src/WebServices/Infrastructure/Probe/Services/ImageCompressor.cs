@@ -2,8 +2,6 @@
 using Aiursoft.Probe.Models.Configuration;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Options;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 
 namespace Aiursoft.Probe.Services;
 
@@ -12,8 +10,8 @@ public class ImageCompressor : ITransientDependency
     private readonly ILogger<ImageCompressor> _logger;
     private readonly SizeCalculator _sizeCalculator;
     private readonly string _tempFilePath;
-    private static ConcurrentDictionary<string, object> ReadFileLockMapping = new();
-    private static ConcurrentDictionary<string, object> WriteFileLockMapping = new();
+    private static readonly ConcurrentDictionary<string, object> ReadFileLockMapping = new();
+    private static readonly ConcurrentDictionary<string, object> WriteFileLockMapping = new();
 
     private static object GetFileReadLock(string path)
     {

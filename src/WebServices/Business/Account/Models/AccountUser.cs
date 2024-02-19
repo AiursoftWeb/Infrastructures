@@ -2,6 +2,4 @@
 
 namespace Aiursoft.Account.Models;
 
-public class AccountUser : AiurUserBase
-{
-}
+public class AccountUser : AiurUserBase;
