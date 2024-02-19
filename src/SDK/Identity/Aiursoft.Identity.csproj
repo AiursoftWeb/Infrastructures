@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>7.0.31</Version>
-    <TargetFramework>net7.0</TargetFramework>
+    <Version>8.0.0</Version>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Aiursoft.Identity</AssemblyName>
     <RootNamespace>Aiursoft.Identity</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -22,8 +22,8 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
