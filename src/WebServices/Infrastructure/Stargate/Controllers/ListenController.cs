@@ -50,10 +50,17 @@ public class ListenController : ControllerBase
         {
             // Ignore. This happens when the client closes the connection.
         }
+        catch (ConnectionAbortedException)
+        {
+            // Ignore. This happens when the client closes the connection.
+        }
         finally
         {
-            await pusher.Close(HttpContext.RequestAborted);
             outSub.Unsubscribe();
+            if (pusher.Connected)
+            {
+                await pusher.Close(HttpContext.RequestAborted);
+            }
         }
 
         return this.Protocol(new AiurResponse { Code = Code.UnknownError, Message = "You shouldn't be here." });
