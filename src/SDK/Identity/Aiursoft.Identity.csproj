@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.0</Version>
+    <Version>9.0.1</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.Identity</AssemblyName>
     <RootNamespace>Aiursoft.Identity</RootNamespace>
@@ -15,6 +15,7 @@
     <Description>The base class, tools and extends for Aiursoft web apps with Aiursoft authentication.</Description>
     <PackageId>Aiursoft.Identity</PackageId>
     <PackageTags>base-class shared-component aiursoft Identity</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/Infrastructures.git</RepositoryUrl>
@@ -22,8 +23,8 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>

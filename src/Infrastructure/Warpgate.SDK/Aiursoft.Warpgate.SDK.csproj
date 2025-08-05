@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.0</Version>
+    <Version>9.0.1</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.Warpgate.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Warpgate.SDK</RootNamespace>
@@ -14,10 +14,14 @@
     <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
     <PackageId>Aiursoft.Warpgate.SDK</PackageId>
     <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures.git</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.8" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>

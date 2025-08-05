@@ -8,10 +8,13 @@ stages:
 before_script:
   - 'export DOTNET_CLI_TELEMETRY_OPTOUT=1'
   - 'export PATH=$PATH:$HOME/.dotnet/tools'
-  - 'dotnet tool install JetBrains.ReSharper.GlobalTools --global || echo "JB already installed."'
-  - 'dotnet tool install dotnet-reportgenerator-globaltool --global || echo "DRG already installed."'
+  - 'which jb || dotnet tool install JetBrains.ReSharper.GlobalTools --global --add-source https://nuget.aiursoft.cn/v3/index.json --configfile ./nuget.config -v d'
+  - 'which reportgenerator || dotnet tool install dotnet-reportgenerator-globaltool --global --add-source https://nuget.aiursoft.cn/v3/index.json --configfile ./nuget.config -v d'
   - 'echo "Hostname: $(hostname)"'
   - 'dotnet --info'
+
+variables:
+  GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_PROJECT_NAME/$CI_PIPELINE_ID'
 
 restore:
   stage: build
@@ -30,7 +33,13 @@ lint:
   needs: 
     - build
   script:
-    - jb inspectcode ./*.sln --output=analyze_output.xml --build -f=xml
+    # 3 times retry because sometimes the first time will fail
+    - jb inspectcode ./*.sln --output=analyze_output.xml --build -f=xml || jb inspectcode ./*.sln --output=analyze_output.xml --build -f=xml || jb inspectcode ./*.sln --output=analyze_output.xml --build -f=xml
+    # Remove the warning of UnusedAutoPropertyAccessor InconsistentNaming
+    - sed -i '/InconsistentNaming/d' analyze_output.xml
+    - sed -i '/AssignNullToNotNullAttribute/d' analyze_output.xml # This is because jetbrains is not smart enough to understand the nullability of C# 8.0
+    - sed -i '/UnusedAutoPropertyAccessor/d' analyze_output.xml
+    - sed -i '/DuplicateResource/d' analyze_output.xml
     - grep 'WARNING' analyze_output.xml && cat analyze_output.xml && exit 1 || echo "No warning found"
   artifacts:
     when: always
@@ -62,14 +71,6 @@ test:
         coverage_format: cobertura
         path: ./Cobertura.xml
 
-publish:
-  stage: publish
-  needs: 
-    - lint
-    - test
-  script:
-    - dotnet publish -maxcpucount:1 --configuration Release --runtime linux-x64 --no-self-contained *.sln
-
 pack:
   stage: publish
   needs: 
@@ -83,22 +84,7 @@ pack:
     paths:
       - '**/*.nupkg'
 
-upload_to_nuget:
-  stage: deploy
-  environment: production
-  needs:
-    - pack
-  dependencies:
-    - pack
-  script:
-    - |
-      for file in $(find . -name "*.nupkg"); do
-        dotnet nuget push "$file" --api-key "$NUGET_API_KEY" --source "https://api.nuget.org/v3/index.json" --skip-duplicate || exit 1;
-      done
-  only:
-    - master
-
-upload_to_local_nuget:
+deploy_local_nuget:
   stage: deploy
   environment: production
   needs:
@@ -113,16 +99,55 @@ upload_to_local_nuget:
   only:
     - master
 
-deploy_docker:
+deploy_public_nuget:
   stage: deploy
   environment: production
   needs:
-    - publish
+    - pack
+    - deploy_local_nuget
   dependencies:
-    - publish
+    - pack
   script:
+    - |
+      for file in $(find . -name "*.nupkg"); do
+        dotnet nuget push "$file" --api-key "$NUGET_API_KEY" --source "https://api.nuget.org/v3/index.json" --skip-duplicate || exit 1;
+      done
+  only:
+    - master
+
+deploy_docker_registry:
+  stage: deploy
+  environment: production
+  needs: 
+    - lint
+    - test
+  script:
+    - if [ "$CI_COMMIT_REF_NAME" = "master" ]; then TAG="latest"; else TAG="$CI_COMMIT_REF_NAME"; fi
+    - echo building image hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$TAG
     - docker build . -t hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
-    - docker push hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
+    - echo "Logging in to Docker Registry hub.aiursoft.cn..."
+    - echo "$LOCAL_DOCKER_PASSWORD" | docker login hub.aiursoft.cn -u "$LOCAL_DOCKER_USERNAME" --password-stdin
+    - docker save hub.aiursoft.cn/${CI_PROJECT_NAMESPACE}/$CI_PROJECT_NAME:$TAG -o temp.tar
+    - regctl image import hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$TAG temp.tar
+    - rm ./temp.tar
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      exists:
+      - Dockerfile
+
+deploy_docker_hub:
+  stage: deploy
+  environment: production
+  needs: 
+    - deploy_docker_registry
+  script:
+    - if [ "$CI_PROJECT_NAMESPACE" = "anduin" ]; then NAMESPACE="anduin2019"; else NAMESPACE="$CI_PROJECT_NAMESPACE"; fi
+    - if [ "$CI_COMMIT_REF_NAME" = "master" ]; then TAG="latest"; else TAG="$CI_COMMIT_REF_NAME"; fi
+    - echo building image $NAMESPACE/$CI_PROJECT_NAME:$TAG
+    - docker build . -t $NAMESPACE/$CI_PROJECT_NAME:$TAG
+    - echo "Logging in to Docker Hub..."
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push $NAMESPACE/$CI_PROJECT_NAME:$TAG
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       exists:

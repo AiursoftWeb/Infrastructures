@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.0</Version>
+    <Version>9.0.1</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.Directory.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Directory.SDK</RootNamespace>
@@ -14,13 +14,17 @@
     <Description>Nuget package of 'SDK' provided by Aiursoft</Description>
     <PackageId>Aiursoft.Directory.SDK</PackageId>
     <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures.git</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.2" />
-    <PackageReference Include="Aiursoft.AiurProtocol" Version="8.0.1" />
-    <PackageReference Include="Aiursoft.Scanner" Version="8.0.0" />
-    <PackageReference Include="Aiursoft.DocGenerator.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.8" />
+    <PackageReference Include="Aiursoft.AiurProtocol" Version="9.0.10" />
+    <PackageReference Include="Aiursoft.Scanner" Version="9.0.8" />
+    <PackageReference Include="Aiursoft.DocGenerator.Abstractions" Version="9.0.0" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
 </Project>
