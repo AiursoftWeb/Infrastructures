@@ -10,8 +10,8 @@
     <Description>The developer center and also the app management center for aiursoft.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.35.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
+    <PackageReference Include="Markdig" Version="0.41.3" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructure\Stargate.SDK\Aiursoft.Stargate.SDK.csproj" />

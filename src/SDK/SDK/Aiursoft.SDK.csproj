@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.0</Version>
+    <Version>9.0.1</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.SDK</AssemblyName>
     <RootNamespace>Aiursoft.SDK</RootNamespace>
@@ -14,15 +14,19 @@
     <Description>The base class, tools and extends for Aiursoft web apps.</Description>
     <PackageId>Aiursoft.SDK</PackageId>
     <PackageTags>nuget package dotnet csproj dependencies</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/infrastructures.git</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.WebTools" Version="8.0.0" />
-    <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="8.0.0" />
-    <PackageReference Include="Aiursoft.DbTools.InMemory" Version="8.0.0" />
-    <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="8.0.1" />
-    <PackageReference Include="Aiursoft.DocGenerator" Version="8.0.1" />
+    <PackageReference Include="Aiursoft.WebTools" Version="9.0.4" />
+    <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="9.0.20" />
+    <PackageReference Include="Aiursoft.DbTools.InMemory" Version="9.0.16" />
+    <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="9.0.15" />
+    <PackageReference Include="Aiursoft.DocGenerator" Version="9.0.5" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
