@@ -4,7 +4,7 @@
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/infrastructures/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/infrastructures/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/pipelines)
 [![NuGet version (Aiursoft.Identity)](https://img.shields.io/nuget/v/Aiursoft.Identity.svg)](https://www.nuget.org/packages/Aiursoft.Identity/)
-[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.com/aiursoft/Infrastructures.svg)](https://gitlab.aiursoft.com/aiursoft/Infrastructures/-/commits/master?ref_type=heads)
+[![ManHours](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/Infrastructures.svg)](https://gitlab.aiursoft.com/aiursoft/Infrastructures/-/commits/master?ref_type=heads)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fwww.aiursoft.com%2F%3Fshow%3Ddirect)](https://www.aiursoft.com)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
