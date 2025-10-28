@@ -1,4 +1,4 @@
-aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurscript/-/raw/master/$1.sh | sudo bash -s $arg; }
+aiur() { arg="$( cut -d ' ' -f 2- <<< "$@" )" && curl -sL https://gitlab.aiursoft.com/aiursoft/aiurscript/-/raw/master/$1.sh | sudo bash -s $arg; }
 
 update()
 {
@@ -23,7 +23,7 @@ update()
     fi
     
     # Upgrade AiurUI
-    curl -sL https://gitlab.aiursoft.cn/aiursoft/aiurui/-/raw/master/upgrade.sh | sudo bash
+    curl -sL https://gitlab.aiursoft.com/aiursoft/aiurui/-/raw/master/upgrade.sh | sudo bash
 
     infs_code="./Infrastructures"
     infs_path="/opt/apps/Infrastructures"
@@ -52,7 +52,7 @@ update()
     account_path="$infs_path/Account"
     ee_path="$infs_path/EE"
 
-    aiur git/clone_to https://gitlab.aiursoft.cn/aiursoft/Infrastructures $infs_code $branch_name
+    aiur git/clone_to https://gitlab.aiursoft.com/aiursoft/Infrastructures $infs_code $branch_name
     sed -i -e "s/\"Aiursoft\"/\"$instance_name\"/g" $infs_code/src/SDK/SDK/Values.cs
 
     systemctl stop "stargate.service"

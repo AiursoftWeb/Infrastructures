@@ -18,7 +18,7 @@ We're also interested in your feedback for the future of this project. You can s
 
 No condition. It only requires your passion and love for open-source software.
 
-With your contribution to Aiursoft, please submit a pull request to [here](https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/blob/master/doc/Welcome/About%20Aiursoft.md) and add yourself to the list.
+With your contribution to Aiursoft, please submit a pull request to [here](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/blob/master/doc/Welcome/About%20Aiursoft.md) and add yourself to the list.
 
 Or you can send an email to: [officials@aiursoft.com](mailto://officials@aiursoft.com)
 

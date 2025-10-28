@@ -1,10 +1,10 @@
 # Aiursoft Infrastructures
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/blob/master/LICENSE)
-[![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/pipeline.svg)](https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/pipelines)
-[![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/infrastructures/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/pipelines)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/blob/master/LICENSE)
+[![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/infrastructures/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/pipelines)
+[![Test Coverage](https://gitlab.aiursoft.com/aiursoft/infrastructures/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/infrastructures/-/pipelines)
 [![NuGet version (Aiursoft.Identity)](https://img.shields.io/nuget/v/Aiursoft.Identity.svg)](https://www.nuget.org/packages/Aiursoft.Identity/)
-[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.cn/aiursoft/Infrastructures.svg)](https://gitlab.aiursoft.cn/aiursoft/Infrastructures/-/commits/master?ref_type=heads)
+[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.com/aiursoft/Infrastructures.svg)](https://gitlab.aiursoft.com/aiursoft/Infrastructures/-/commits/master?ref_type=heads)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fwww.aiursoft.com%2F%3Fshow%3Ddirect)](https://www.aiursoft.com)
 
 Aiursoft micro-services platform. Powered by ASP.NET Core.
@@ -25,10 +25,10 @@ The enterprise can deploy their dedicated instance of Aiursoft Infrastructures a
 
 There are some example apps based on Aiursoft Infrastructures.
 
-* [Kahla](https://gitlab.aiursoft.cn/Aiursoft/Kahla)
-* [AiurDrive](https://gitlab.aiursoft.cn/Aiursoft/AiurDrive)
-* [Warp](https://gitlab.aiursoft.cn/Aiursoft/Warp)
-* [Tracer](https://gitlab.aiursoft.cn/Aiursoft/Tracer)
+* [Kahla](https://gitlab.aiursoft.com/Aiursoft/Kahla)
+* [AiurDrive](https://gitlab.aiursoft.com/Aiursoft/AiurDrive)
+* [Warp](https://gitlab.aiursoft.com/Aiursoft/Warp)
+* [Tracer](https://gitlab.aiursoft.com/Aiursoft/Tracer)
 
 ## Features
 
@@ -69,7 +69,7 @@ Create a wildcard domain record to your server's public IP.
 Execute the following command on the server (Replace the `instance.name` to your own brand name):
 
 ```bash
-curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/install.sh | sudo bash -s aiur.io instance.name master
+curl -sL https://gitlab.aiursoft.com/aiursoft/infrastructures/-/raw/master/install.sh | sudo bash -s aiur.io instance.name master
 ```
 
 ### Upgrade your server
@@ -77,7 +77,7 @@ curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/instal
 If we released a newer version, and you can upgrade your server via:
 
 ```bash
-curl -sL https://gitlab.aiursoft.cn/aiursoft/infrastructures/-/raw/master/upgrade.sh | sudo bash -s instance.name master
+curl -sL https://gitlab.aiursoft.com/aiursoft/infrastructures/-/raw/master/upgrade.sh | sudo bash -s instance.name master
 ```
 
 Also, you can run that upgrade script to repair some issues with your Infrastructures instance.
