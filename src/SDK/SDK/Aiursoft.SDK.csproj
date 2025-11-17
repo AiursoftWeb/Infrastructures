@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <Version>9.0.1</Version>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.SDK</AssemblyName>
     <RootNamespace>Aiursoft.SDK</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -22,11 +22,11 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.WebTools" Version="9.0.4" />
-    <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="9.0.20" />
-    <PackageReference Include="Aiursoft.DbTools.InMemory" Version="9.0.16" />
-    <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="9.0.15" />
-    <PackageReference Include="Aiursoft.DocGenerator" Version="9.0.5" />
+    <PackageReference Include="Aiursoft.WebTools" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.DbTools.SqlServer" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.DbTools.InMemory" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.AiurProtocol.Server" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.DocGenerator" Version="10.0.1" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>

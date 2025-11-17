@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <Version>9.0.1</Version>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.Observer.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Observer.SDK</RootNamespace>
     <IsTestProject>false</IsTestProject>

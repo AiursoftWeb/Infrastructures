@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <Version>9.0.1</Version>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.Warpgate.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Warpgate.SDK</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -21,7 +21,7 @@
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.0" />
     <None Include="../../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
