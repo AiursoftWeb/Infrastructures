@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.1</Version>
+    <Version>9.0.2</Version>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.Observer.SDK</AssemblyName>
     <RootNamespace>Aiursoft.Observer.SDK</RootNamespace>
